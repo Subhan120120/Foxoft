@@ -1,6 +1,6 @@
-﻿
-using DevExpress.XtraEditors.Controls;
+﻿using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -97,7 +97,7 @@ namespace Foxoft
             btn_ERP.Size = new Size(174, 114);
             btn_ERP.StyleController = lC_Root;
             btn_ERP.TabIndex = 9;
-            btn_ERP.Text = "Arxa Ofis";
+            btn_ERP.Text = Resources.Form_Login_ButtonERP;
             btn_ERP.Click += btn_ERP_Click;
             // 
             // lC_Root
@@ -125,7 +125,11 @@ namespace Foxoft
             LUE_Terminal.MenuManager = toolbarFormManager1;
             LUE_Terminal.Name = "LUE_Terminal";
             LUE_Terminal.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
-            LUE_Terminal.Properties.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo("TerminalId", "TerminalId"), new LookUpColumnInfo("TerminalDesc", "TerminalDesc") });
+            LUE_Terminal.Properties.Columns.AddRange(new LookUpColumnInfo[]
+            {
+                new LookUpColumnInfo(nameof(DcTerminal.TerminalId),    global::Foxoft.Properties.Resources.Entity_Terminal_Id),
+                new LookUpColumnInfo(nameof(DcTerminal.TerminalDesc),  global::Foxoft.Properties.Resources.Entity_Terminal_Desc)
+            });
             LUE_Terminal.Properties.DisplayMember = "TerminalDesc";
             LUE_Terminal.Properties.NullText = "";
             LUE_Terminal.Properties.ValueMember = "TerminalId";
@@ -180,14 +184,14 @@ namespace Foxoft
             // BBI_GetKey
             // 
             BBI_GetKey.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            BBI_GetKey.Caption = "bbi";
+            BBI_GetKey.Caption = Resources.Form_Login_GetKey;
             BBI_GetKey.Id = 2;
             BBI_GetKey.Name = "BBI_GetKey";
             BBI_GetKey.ItemClick += BBI_GetKey_ItemClick;
             // 
             // bbi_test
             // 
-            bbi_test.Caption = "run";
+            bbi_test.Caption = Resources.Form_Login_Test;
             bbi_test.Id = 4;
             bbi_test.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bbi_test.ImageOptions.SvgImage");
             bbi_test.Name = "bbi_test";
@@ -209,7 +213,7 @@ namespace Foxoft
             btn_POS.Size = new Size(173, 114);
             btn_POS.StyleController = lC_Root;
             btn_POS.TabIndex = 8;
-            btn_POS.Text = "Satış";
+            btn_POS.Text = Resources.Login_POS;
             btn_POS.Click += btn_POS_Click;
             // 
             // txtEdit_UserName
@@ -233,7 +237,7 @@ namespace Foxoft
             // 
             checkEdit_RemindMe.Location = new Point(12, 134);
             checkEdit_RemindMe.Name = "checkEdit_RemindMe";
-            checkEdit_RemindMe.Properties.Caption = "meni xatırla";
+            checkEdit_RemindMe.Properties.Caption = Resources.Form_Login_RememberMe;
             checkEdit_RemindMe.Size = new Size(351, 20);
             checkEdit_RemindMe.StyleController = lC_Root;
             checkEdit_RemindMe.TabIndex = 7;
@@ -244,7 +248,11 @@ namespace Foxoft
             LUE_Company.MenuManager = toolbarFormManager1;
             LUE_Company.Name = "LUE_Company";
             LUE_Company.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
-            LUE_Company.Properties.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo("CompanyCode", "ŞirkətKodu"), new LookUpColumnInfo("CompanyDesc", "Şirkət Adı") });
+            LUE_Company.Properties.Columns.AddRange(new LookUpColumnInfo[]
+            {
+                new LookUpColumnInfo(nameof(DcCompany.CompanyCode), global::Foxoft.Properties.Resources.Entity_Company_Code),
+                new LookUpColumnInfo(nameof(DcCompany.CompanyDesc), global::Foxoft.Properties.Resources.Entity_Company_Desc)
+            });
             LUE_Company.Properties.DisplayMember = "CompanyDesc";
             LUE_Company.Properties.NullText = "";
             LUE_Company.Properties.ValueMember = "CompanyCode";
@@ -261,7 +269,7 @@ namespace Foxoft
             simpleButton2.Size = new Size(63, 22);
             simpleButton2.StyleController = lC_Root;
             simpleButton2.TabIndex = 2;
-            simpleButton2.Text = "constr";
+            simpleButton2.Text = Resources.Form_Login_ConnectionString;
             simpleButton2.Click += btn_ConStr;
             // 
             // LUE_Language
@@ -270,7 +278,11 @@ namespace Foxoft
             LUE_Language.MenuManager = toolbarFormManager1;
             LUE_Language.Name = "LUE_Language";
             LUE_Language.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
-            LUE_Language.Properties.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo("LanguageCode", "Dil Kodu"), new LookUpColumnInfo("LanguageDesc", "Dil Açıqlaması") });
+            LUE_Language.Properties.Columns.AddRange(new LookUpColumnInfo[]
+            {
+                new LookUpColumnInfo(nameof(DcUILanguage.LanguageCode), global::Foxoft.Properties.Resources.Entity_UILanguage_Code),
+                new LookUpColumnInfo(nameof(DcUILanguage.LanguageDesc), global::Foxoft.Properties.Resources.Entity_UILanguage_Desc)
+            });
             LUE_Language.Properties.DisplayMember = "LanguageDesc";
             LUE_Language.Properties.NullText = "";
             LUE_Language.Properties.ValueMember = "LanguageCode";
@@ -313,7 +325,7 @@ namespace Foxoft
             lCI_UserName.Location = new Point(0, 50);
             lCI_UserName.Name = "lCI_UserName";
             lCI_UserName.Size = new Size(355, 24);
-            lCI_UserName.Text = "İstifadəçi";
+            lCI_UserName.Text = Resources.Common_UserName;
             lCI_UserName.TextSize = new Size(44, 13);
             // 
             // lCI_Password
@@ -322,7 +334,7 @@ namespace Foxoft
             lCI_Password.Location = new Point(0, 74);
             lCI_Password.Name = "lCI_Password";
             lCI_Password.Size = new Size(355, 24);
-            lCI_Password.Text = "Şifrə";
+            lCI_Password.Text = Resources.Common_Password;
             lCI_Password.TextSize = new Size(44, 13);
             // 
             // lCI_RemindMe
@@ -339,7 +351,7 @@ namespace Foxoft
             layoutControlItem3.Location = new Point(0, 26);
             layoutControlItem3.Name = "layoutControlItem3";
             layoutControlItem3.Size = new Size(355, 24);
-            layoutControlItem3.Text = "Terminal";
+            layoutControlItem3.Text = Resources.Common_Terminal;
             layoutControlItem3.TextSize = new Size(44, 13);
             // 
             // layoutControlItem4
@@ -348,7 +360,7 @@ namespace Foxoft
             layoutControlItem4.Location = new Point(0, 0);
             layoutControlItem4.Name = "layoutControlItem4";
             layoutControlItem4.Size = new Size(288, 26);
-            layoutControlItem4.Text = "Şirkət";
+            layoutControlItem4.Text = Resources.Common_Company;
             layoutControlItem4.TextSize = new Size(44, 13);
             // 
             // layoutControlItem2
@@ -365,7 +377,7 @@ namespace Foxoft
             LCI_lang.Location = new Point(0, 98);
             LCI_lang.Name = "LCI_lang";
             LCI_lang.Size = new Size(355, 24);
-            LCI_lang.Text = "Dil";
+            LCI_lang.Text = Resources.Common_Language;
             LCI_lang.TextSize = new Size(44, 13);
             // 
             // toolbarFormControl1
@@ -393,7 +405,7 @@ namespace Foxoft
             Controls.Add(toolbarFormControl1);
             Name = "FormLogin";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Giriş";
+            Text = Resources.Form_Login_Caption;
             ToolbarFormControl = toolbarFormControl1;
             Load += FormLogin_Load;
             ((System.ComponentModel.ISupportInitialize)lC_Root).EndInit();

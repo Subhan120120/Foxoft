@@ -34,7 +34,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+            string activeFilterStr = "[StoreCode] = '" + Authorization.StoreCode + "'";
 
             reportClass.AddReports(BSI_Reports, "PaymentDetails", nameof(trPaymentHeader.PaymentHeaderId), gV_PaymentLine, activeFilterStr);
 
@@ -80,7 +80,7 @@ namespace Foxoft
         {
             TrPaymentHeader paymentHeader = new();
             paymentHeader.PaymentHeaderId = paymentHeaderId;
-            string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
+            string NewDocNum = efMethods.GetNextDocNum(true, "PA", nameof(TrPaymentHeader.DocumentNumber), "TrPaymentHeaders", 6);
             paymentHeader.DocumentNumber = NewDocNum;
             paymentHeader.DocumentDate = DateTime.Now.Date;
             paymentHeader.OperationDate = DateTime.Now.Date;
@@ -124,7 +124,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
+                MessageBox.Show($"{Resources.Form_PaymentDetail_InvalidData} \n \n {ex}");
             }
         }
 
@@ -163,15 +163,6 @@ namespace Foxoft
 
             LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
 
-            //lV_paymentHeader.ForEach(x =>
-            //{
-            //    string fullName = "";
-            //    if (!lV_paymentHeader.Any(x => x.DcCurrAcc is null))
-            //        fullName = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
-
-            //    x.CurrAccDesc = fullName;
-            //});
-
             trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
             trPaymentHeader = trPaymentHeadersBindingSource.Current as TrPaymentHeader;
 
@@ -188,8 +179,6 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            //BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
-
             if (!trPaymentHeader.IsLocked)
             {
                 bool locked = (DateTime.Now - trPaymentHeader.DocumentDate).Days > Settings.Default.AppSetting.InvoiceEditGraceDays;
@@ -205,7 +194,7 @@ namespace Foxoft
         {
             if (efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
             {
-                if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (MessageBox.Show(Resources.Common_DeleteConfirm, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     efMethods.DeleteEntityById<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId);
 
@@ -213,7 +202,7 @@ namespace Foxoft
                 }
             }
             else
-                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+                XtraMessageBox.Show(Resources.Form_PaymentDetail_NoPaymentToDelete);
         }
 
         private void SelectCurrAcc()
@@ -224,9 +213,6 @@ namespace Foxoft
                 {
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                     trPaymentHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-
-                    //BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
-                    //CalcCurrAccBalance();
                 }
             }
         }
@@ -267,7 +253,7 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.Delete)
             {
-                if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                if (MessageBox.Show(Resources.Common_DeleteConfirm, Resources.Common_Attention, MessageBoxButtons.YesNo) != DialogResult.Yes)
                     return;
 
                 gV.DeleteSelectedRows();
@@ -284,7 +270,7 @@ namespace Foxoft
             if (e.KeyCode == Keys.F2)
             {
                 gV_PaymentLine.FocusedColumn = colReceivePayment;
-                e.Handled = true;   // Stop the character from being entered into the control.
+                e.Handled = true;
             }
         }
 
@@ -298,8 +284,8 @@ namespace Foxoft
             decimal summaryValue = CalcSummmaryValue();
             decimal balanceAfter = BalanceBefore + summaryValue;
 
-            lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Math.Round(balanceAfter, 2).ToString();
-            lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Math.Round(BalanceBefore, 2).ToString();
+            lbl_CurrAccBalansAfter.Text = Resources.Form_PaymentDetail_Label_CurrAccBalanceAfter + " " + Math.Round(balanceAfter, 2).ToString();
+            lbl_CurrAccBalansBefore.Text = Resources.Form_PaymentDetail_Label_CurrAccBalanceBefore + " " + Math.Round(BalanceBefore, 2).ToString();
         }
 
         private decimal CalcSummmaryValue()
@@ -316,30 +302,6 @@ namespace Foxoft
 
             return sum;
         }
-
-        //private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
-        //{
-        //object objExRate = gV_PaymentLine.GetFocusedRowCellValue(colExchangeRate);
-        //object objPayment = gV_PaymentLine.GetRowCellValue(e.RowHandle, colPayment);
-        //object objPaymentLoc = gV_PaymentLine.GetFocusedRowCellValue(colPaymentLoc);
-
-        //decimal exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
-        //decimal Payment = objPayment.IsNumeric() ? Convert.ToDecimal(objPayment, CultureInfo.InvariantCulture) : 0;
-        //decimal PaymentLoc = objPaymentLoc.IsNumeric() ? Convert.ToDecimal(objPaymentLoc, CultureInfo.InvariantCulture) : 0;
-
-        //if (e.Value != null && e.Column == colPayment)
-        //{
-        //    objPayment = e.Value;
-        //    Payment = objPayment.IsNumeric() ? Convert.ToDecimal(objPayment, CultureInfo.InvariantCulture) : 0;
-        //    gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLoc, Math.Round(Payment * exRate, 2));
-        //}
-        //else if (e.Value != null && e.Column == colExchangeRate)
-        //{
-        //    objExRate = e.Value;
-        //    exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
-        //    gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLoc, Math.Round(Payment * exRate, 2));
-        //}
-        //}
 
         private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
@@ -374,8 +336,6 @@ namespace Foxoft
             LookUpEdit textEditor = (LookUpEdit)sender;
             float exRate = efMethods.SelectEntityById<DcCurrency>(textEditor.EditValue.ToString()).ExchangeRate;
             gV_PaymentLine.SetFocusedRowCellValue(colExchangeRate, exRate);
-
-            //CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_PaymentLine.FocusedRowHandle, colExchangeRate, exRate));
         }
 
         private void bBI_SaveAndClose_ItemClick(object sender, ItemClickEventArgs e)
@@ -400,7 +360,7 @@ namespace Foxoft
                 sendWhatsApp(phoneNum, copyText);
             }
             else
-                MessageBox.Show("Cari Hesab qeyd olunmayıb.");
+                MessageBox.Show(Resources.Form_Payment_CurrAccNotSelected);
         }
 
         private string PaymentText(string newLine)
@@ -412,7 +372,7 @@ namespace Foxoft
 
                 decimal pay = trPaymentLine.Payment;
 
-                string txtPay = pay > 0 ? "Ödəniş alındı: " : "Ödəniş verildi: ";
+                string txtPay = pay > 0 ? Resources.Form_PaymentDetail_PaymentReceived : Resources.Form_PaymentDetail_PaymentGiven;
 
                 decimal payment = Math.Abs(Math.Round(pay, 2));
 
@@ -423,7 +383,7 @@ namespace Foxoft
 
             decimal summaryValue = CalcSummmaryValue();
             decimal balanceAfter = Math.Round(BalanceBefore + summaryValue, 2);
-            string balanceTxt = "Qalıq: " + balanceAfter.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+            string balanceTxt = Resources.Form_PaymentDetail_BalanceText + balanceAfter.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             return paidTxt + balanceTxt;
         }
@@ -434,7 +394,7 @@ namespace Foxoft
 
             if (String.IsNullOrEmpty(number))
             {
-                MessageBox.Show("Nömrə qeyd olunmayıb.");
+                MessageBox.Show(Resources.Form_PaymentDetail_PhoneNotFound);
                 return;
             }
 
@@ -487,9 +447,7 @@ namespace Foxoft
             {
             }
             else
-                MessageBox.Show("Cari Hesab qeyd olunmayıb.");
-
-
+                MessageBox.Show(Resources.Form_Payment_CurrAccNotSelected);
         }
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
@@ -511,7 +469,10 @@ namespace Foxoft
             string updatedUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + lastUpdatedUserName;
             string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
 
-            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate,
+                                Resources.Form_PaymentDetail_Info_Caption,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
         }
 
         private void gV_PaymentLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
@@ -522,9 +483,9 @@ namespace Foxoft
             {
                 if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName && !e.Column.ReadOnly && e.Column.OptionsColumn.AllowEdit)
                 {
-                    Object oldvalue1 = gV.ActiveEditor?.OldEditValue;
+                    object oldvalue1 = gV.ActiveEditor?.OldEditValue;
 
-                    if (!Object.Equals(e.Value, oldvalue1))
+                    if (!object.Equals(e.Value, oldvalue1))
                     {
                         string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
 
@@ -575,7 +536,7 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
-            e.ErrorText = "Belə bir cari yoxdur";
+            e.ErrorText = Resources.Form_PaymentDetail_CurrAccNotFound;
             e.ExceptionMode = ExceptionMode.DisplayError;
         }
 
@@ -616,7 +577,7 @@ namespace Foxoft
                 if (editor != null)
                 {
                     editor.Properties.Mask.MaskType = MaskType.Numeric;
-                    editor.Properties.Mask.Culture = customCulture; // Ensure '.' is used
+                    editor.Properties.Mask.Culture = customCulture; ; // Ensure '.' is used
                 }
             }
         }
@@ -631,7 +592,7 @@ namespace Foxoft
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "EditLockedPayment");
             if (!currAccHasClaims)
             {
-                MessageBox.Show("Yetkiniz yoxdur! ");
+                MessageBox.Show(Resources.Common_AccessDenied);
                 return;
             }
 

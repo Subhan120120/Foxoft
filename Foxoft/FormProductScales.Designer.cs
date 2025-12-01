@@ -1,11 +1,16 @@
-﻿namespace Foxoft
+﻿using Foxoft.Properties;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace Foxoft
 {
     partial class FormProductScales
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -28,7 +33,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            components = new Container();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             dcProductScaleBindingSource = new BindingSource(components);
             btn_Save = new DevExpress.XtraEditors.SimpleButton();
@@ -77,12 +82,16 @@
             btn_Save.Size = new Size(314, 22);
             btn_Save.StyleController = dataLayoutControl1;
             btn_Save.TabIndex = 1;
-            btn_Save.Text = "Yadda Saxla";
+            btn_Save.Text = Resources.Form_ProductScales_Button_Save;
             btn_Save.Click += btn_Save_Click;
             // 
             // txtEdit_ScaleProductNumber
             // 
-            txtEdit_ScaleProductNumber.DataBindings.Add(new Binding("EditValue", dcProductScaleBindingSource, "ScaleProductNumber", true));
+            txtEdit_ScaleProductNumber.DataBindings.Add(new Binding(
+                "EditValue",
+                dcProductScaleBindingSource,
+                "ScaleProductNumber",
+                true));
             txtEdit_ScaleProductNumber.Location = new Point(116, 36);
             txtEdit_ScaleProductNumber.Name = "txtEdit_ScaleProductNumber";
             txtEdit_ScaleProductNumber.Size = new Size(210, 20);
@@ -94,7 +103,11 @@
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             Root.GroupBordersVisible = false;
-            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1, layoutControlItem2, layoutControlItem4 });
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+                layoutControlItem4,
+                layoutControlItem1,
+                layoutControlItem2
+            });
             Root.Name = "Root";
             Root.Size = new Size(338, 197);
             Root.TextVisible = false;
@@ -120,16 +133,19 @@
             // 
             dxErrorProvider1.ContainerControl = this;
             // 
-            // checkEdit1
+            // chckEdit_UseInScale
             // 
-            chckEdit_UseInScale.DataBindings.Add(new Binding("EditValue", dcProductScaleBindingSource, "UseInScale", true));
+            chckEdit_UseInScale.DataBindings.Add(new Binding(
+                "EditValue",
+                dcProductScaleBindingSource,
+                "UseInScale",
+                true));
             chckEdit_UseInScale.Location = new Point(12, 12);
-            chckEdit_UseInScale.Name = "checkEdit1";
-            chckEdit_UseInScale.Properties.Caption = "Tərəzidə İstifadə Et";
+            chckEdit_UseInScale.Name = "chckEdit_UseInScale";
+            chckEdit_UseInScale.Properties.Caption = Resources.Form_ProductScales_CheckBox_UseInScale;
             chckEdit_UseInScale.Size = new Size(314, 20);
             chckEdit_UseInScale.StyleController = dataLayoutControl1;
-            chckEdit_UseInScale.TabIndex = 1;
-            // 
+            chckEdit_UseInScale.TabIndex = 0;
             // layoutControlItem4
             // 
             layoutControlItem4.Control = chckEdit_UseInScale;
@@ -147,7 +163,7 @@
             ClientSize = new Size(338, 197);
             Controls.Add(dataLayoutControl1);
             Name = "FormProductScales";
-            Text = "FormProductScales";
+            Text = Resources.Form_ProductScales_Caption;
             Load += FormProductScales_Load;
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);

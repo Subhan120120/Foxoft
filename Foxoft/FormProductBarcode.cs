@@ -6,6 +6,7 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -82,7 +83,9 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
+                MessageBox.Show(
+                    string.Format(Resources.Form_ProductBarcode_Message_SaveError, ex),
+                    Resources.Common_ErrorTitle);
             }
         }
 
@@ -95,7 +98,7 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            using FormCommonList<DcBarcodeType> form = new("", "BarcodeTypeCode", editor.EditValue?.ToString());
+            using FormCommonList<DcBarcodeType> form = new("", nameof(DcBarcodeType.BarcodeTypeCode), editor.EditValue?.ToString());
 
             try
             {
@@ -106,7 +109,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), Resources.Common_ErrorTitle);
             }
 
         }
@@ -124,7 +127,9 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Xeta No: 252124269 \n" + ex.ToString());
+                MessageBox.Show(
+                    string.Format(Resources.Form_ProductBarcode_Message_ProductSelectError, ex),
+                    Resources.Common_ErrorTitle);
             }
         }
 
@@ -134,7 +139,13 @@ namespace Foxoft
             int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
             if (buttonIndex == 0)
             {
-                string genNumber = efMethods.GetNextDocNum(false, "20", "Barcode", "TrProductBarcodes", 10);
+                string genNumber = efMethods.GetNextDocNum(
+                    false,
+                    "20",
+                    nameof(TrProductBarcode.Barcode),
+                    nameof(subContext.TrProductBarcodes),
+                    10);
+
                 string checkDigit = CalculateChecksumDigit("20", genNumber.Substring(2));
                 string barcode = genNumber + checkDigit;
                 editor.EditValue = barcode;
@@ -213,7 +224,7 @@ namespace Foxoft
                     DcProduct product = efMethods.SelectProductByBarcode(eValue);
                     if (product is not null)
                     {
-                        e.ErrorText = "Belə bir barcode var";
+                        e.ErrorText = Resources.Form_ProductBarcode_Validation_BarcodeExists;
                         e.Valid = false;
                     }
                 }
@@ -223,7 +234,7 @@ namespace Foxoft
         private void GV_ProductBarcode_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
-            e.WindowCaption = "Diqqət";
+            e.WindowCaption = Resources.Common_Attention;
         }
 
         private void myGridControl1_Click(object sender, EventArgs e)
@@ -240,7 +251,10 @@ namespace Foxoft
             {
                 if (e.KeyCode == Keys.Delete)
                 {
-                    if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    if (MessageBox.Show(
+                        Resources.Common_DeleteConfirm,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.YesNo) != DialogResult.Yes)
                         return;
 
                     gV.DeleteSelectedRows();

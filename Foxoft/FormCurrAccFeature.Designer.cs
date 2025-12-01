@@ -1,4 +1,5 @@
-﻿
+﻿using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormCurrAccFeature
@@ -8,10 +9,6 @@ namespace Foxoft
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,14 +19,9 @@ namespace Foxoft
         }
 
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductFeature));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCurrAccFeature));
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             simpleButtonOk = new DevExpress.XtraEditors.SimpleButton();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -83,7 +75,7 @@ namespace Foxoft
             layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
-            // FormProductFeature
+            // FormCurrAccFeature
             // 
             AcceptButton = simpleButtonOk;
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -92,8 +84,8 @@ namespace Foxoft
             ClientSize = new Size(298, 136);
             Controls.Add(layoutControl1);
             KeyPreview = true;
-            Name = "FormProductFeature";
-            Text = "Məhsul Özəllikləri";
+            Name = "FormCurrAccFeature";
+            Text = Resources.Form_CurrAccFeature_Caption;
             Load += FormCurrAccFeature_Load;
             KeyDown += FormCurrAccFeature_KeyDown;
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
@@ -103,7 +95,6 @@ namespace Foxoft
             ResumeLayout(false);
             PerformLayout();
         }
-
         #endregion
 
         private DevExpress.XtraLayout.LayoutControl layoutControl1;

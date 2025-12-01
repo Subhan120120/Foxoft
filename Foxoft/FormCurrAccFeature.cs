@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraLayout;
 using Foxoft.Models;
+using Foxoft.Properties; // <-- for Resources
 
 namespace Foxoft
 {
@@ -12,7 +13,6 @@ namespace Foxoft
         public FormCurrAccFeature()
         {
             InitializeComponent();
-            //AcceptButton = simpleButtonOk;
         }
 
         public FormCurrAccFeature(string currAccCode)

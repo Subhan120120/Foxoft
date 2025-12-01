@@ -8,6 +8,8 @@
 // You can find sample updates and versions for different programming languages here:
 // http://www.devexpress.com/example=E3575
 
+using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class WaitForm
@@ -53,8 +55,8 @@ namespace Foxoft
             progressPanel1.AppearanceCaption.Options.UseFont = true;
             progressPanel1.AppearanceDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             progressPanel1.AppearanceDescription.Options.UseFont = true;
-            progressPanel1.Caption = "Gözləyin";
-            progressPanel1.Description = "Yüklənir...";
+            progressPanel1.Caption = Resources.Form_WaitForm_Caption;
+            progressPanel1.Description = Resources.Form_WaitForm_Description;
             progressPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             progressPanel1.ImageHorzOffset = 10;
             progressPanel1.Location = new System.Drawing.Point(0, 17);
@@ -91,7 +93,7 @@ namespace Foxoft
             progressBarControl1.Size = new System.Drawing.Size(284, 48);
             progressBarControl1.TabIndex = 1;
             // 
-            // WaitForm1
+            // WaitForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -103,7 +105,7 @@ namespace Foxoft
             MinimumSize = new System.Drawing.Size(246, 0);
             Name = "WaitForm1";
             StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            Text = "Form1";
+            Text = Resources.Form_WaitForm_Title;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)progressBarControl1.Properties).EndInit();
             ResumeLayout(false);

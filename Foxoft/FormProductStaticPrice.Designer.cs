@@ -1,32 +1,21 @@
-﻿
+﻿using Foxoft.Properties;   // <-- added
+
 namespace Foxoft
 {
     partial class FormProductStaticPrice
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
+
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductStaticPrice));
@@ -50,7 +39,7 @@ namespace Foxoft
             layoutControl1.Name = "layoutControl1";
             layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(450, 54, 399, 400);
             layoutControl1.Root = Root;
-            layoutControl1.Size = new Size(298, 136);
+            layoutControl1.Size = new Size(62, 81);
             layoutControl1.TabIndex = 0;
             layoutControl1.Text = "layoutControl1";
             // 
@@ -58,9 +47,9 @@ namespace Foxoft
             // 
             simpleButtonOk.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             simpleButtonOk.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("simpleButtonOk.ImageOptions.SvgImage");
-            simpleButtonOk.Location = new Point(12, 12);
+            simpleButtonOk.Location = new Point(12, 33);
             simpleButtonOk.Name = "simpleButtonOk";
-            simpleButtonOk.Size = new Size(274, 36);
+            simpleButtonOk.Size = new Size(38, 36);
             simpleButtonOk.StyleController = layoutControl1;
             simpleButtonOk.TabIndex = 4;
             simpleButtonOk.Click += simpleButtonOk_Click;
@@ -71,7 +60,7 @@ namespace Foxoft
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1 });
             Root.Name = "Root";
-            Root.Size = new Size(298, 136);
+            Root.Size = new Size(62, 81);
             Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -79,7 +68,7 @@ namespace Foxoft
             layoutControlItem1.Control = simpleButtonOk;
             layoutControlItem1.Location = new Point(0, 0);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(278, 116);
+            layoutControlItem1.Size = new Size(42, 40);
             layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
@@ -93,7 +82,7 @@ namespace Foxoft
             Controls.Add(layoutControl1);
             KeyPreview = true;
             Name = "FormProductStaticPrice";
-            Text = "Məhsul Özəllikləri";
+            Text = Resources.Form_ProductStaticPrice_Caption;
             Load += FormProductStaticPrice_Load;
             KeyDown += FormProductStaticPrice_KeyDown;
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();

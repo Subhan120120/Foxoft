@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -74,7 +75,6 @@ namespace Foxoft
             gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeader.InvoiceHeaderId);
             gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeader.InvoiceHeaderId);
 
-
             if (invoiceHeader.DcCurrAcc is not null)
                 txt_CurrAccDesc.Text = invoiceHeader.DcCurrAcc.CurrAccDesc;
 
@@ -82,6 +82,7 @@ namespace Foxoft
 
             Tag = invoiceHeader.DocumentNumber;
         }
+
         private void CalcPaidAmount()
         {
             //decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
@@ -90,11 +91,6 @@ namespace Foxoft
 
         private void repobtn_ReturnLine_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            //ButtonEdit editor = (ButtonEdit)sender;
-            //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
-            //if (buttonIndex == 0)
-            //{
-
             Guid invoiceLineID = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
             decimal maxReturn = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
 
@@ -106,12 +102,17 @@ namespace Foxoft
                     {
                         if (!efMethods.EntityExists<TrInvoiceHeader>(returnInvoiceHeaderId)) //if invoiceHeader doesnt exist
                         {
-                            string NewDocNum = efMethods.GetNextDocNum(true, processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
+                            string newDocNum = efMethods.GetNextDocNum(
+                                true,
+                                processCode,
+                                nameof(TrInvoiceHeader.DocumentNumber),
+                                nameof(subContext.TrInvoiceHeaders),
+                                6);
 
                             returnInvoHeader = new();
                             returnInvoHeader.InvoiceHeaderId = returnInvoiceHeaderId;
                             returnInvoHeader.RelatedInvoiceId = trInvoiceHeader.InvoiceHeaderId;
-                            returnInvoHeader.DocumentNumber = NewDocNum;
+                            returnInvoHeader.DocumentNumber = newDocNum;
                             returnInvoHeader.ProcessCode = trInvoiceHeader.ProcessCode;
                             returnInvoHeader.IsReturn = true;
                             returnInvoHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
@@ -172,15 +173,17 @@ namespace Foxoft
                             efMethods.UpdateEntity(trInvoiceLine);
                         }
 
-                        List<TrInvoiceLine> asdas = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
-                        gC_ReturnInvoiceLine.DataSource = asdas;
+                        List<TrInvoiceLine> returnLines = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
+                        gC_ReturnInvoiceLine.DataSource = returnLines;
 
                         gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
                     }
                 }
             }
             else
-                XtraMessageBox.Show("Geri qaytarıla bilecek miqdar yoxdur");
+            {
+                XtraMessageBox.Show(Resources.Form_Return_Message_NoQtyToReturn);
+            }
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
@@ -192,14 +195,20 @@ namespace Foxoft
                 efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
                 //MakePayment(sumNetAmount, false);
-                if (DialogResult.OK == XtraMessageBox.Show("Qaiməni açmaq istəyirsiz?", "Qaiməni Aç", MessageBoxButtons.OKCancel))
+                if (DialogResult.OK == XtraMessageBox.Show(
+                        Resources.Form_Return_Message_OpenInvoiceQuestion,
+                        Resources.Form_Return_Caption_OpenInvoice,
+                        MessageBoxButtons.OKCancel))
                 {
                     OpenFormInvoice(returnInvoHeader.DocumentNumber);
                 }
 
                 ClearControls();
             }
-            else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
+            else
+            {
+                XtraMessageBox.Show(Resources.Form_Return_Message_PaymentIsZero);
+            }
         }
 
         private void ClearControls()
@@ -224,7 +233,7 @@ namespace Foxoft
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                 if (!currAccHasClaims)
                 {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    MessageBox.Show(Resources.Common_AccessDenied);
                     return;
                 }
 
@@ -238,7 +247,9 @@ namespace Foxoft
                 formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
             }
             else
-                MessageBox.Show("Belə bir sənəd yoxdur.");
+            {
+                MessageBox.Show(Resources.Form_Return_Message_InvoiceNotFound);
+            }
         }
 
         //private void MakePayment(decimal summaryInvoice, bool autoPayment)
@@ -248,7 +259,7 @@ namespace Foxoft
         //    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
         //    if (!currAccHasClaims)
         //    {
-        //        MessageBox.Show("Yetkiniz yoxdur! ");
+        //        MessageBox.Show(Resources.Common_AccessDenied);
         //        return;
         //    }
         //    else
@@ -261,27 +272,47 @@ namespace Foxoft
         {
             GridView view = sender as GridView;
             if (view == null) return;
-            //string Barcode = view.GetRowCellDisplayText(e.RowHandle, view.Columns["Barcode"]);
-            decimal PosDiscount = Convert.ToDecimal(view.GetRowCellDisplayText(e.RowHandle, view.Columns["PosDiscount"]));
-            decimal Amount = Convert.ToDecimal(view.GetRowCellDisplayText(e.RowHandle, view.Columns["Amount"]));
-            decimal NetAmount = Convert.ToDecimal(view.GetRowCellDisplayText(e.RowHandle, view.Columns["NetAmount"]));
-            string strVatRate = view.GetRowCellDisplayText(e.RowHandle, view.Columns["VatRate"]);
-            string SalesPersonCode = view.GetRowCellDisplayText(e.RowHandle, view.Columns["SalesPersonCode"]);
-            float VatRate = float.Parse(strVatRate);
 
-            e.PreviewText = CustomExtensions.GetPreviewText(PosDiscount, Amount, NetAmount, VatRate, String.Empty, SalesPersonCode);
+            decimal posDiscount = Convert.ToDecimal(
+                view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.PosDiscount)]));
+
+            decimal amount = Convert.ToDecimal(
+                view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.Amount)]));
+
+            decimal netAmount = Convert.ToDecimal(
+                view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.NetAmount)]));
+
+            string strVatRate = view.GetRowCellDisplayText(
+                e.RowHandle, view.Columns[nameof(TrInvoiceLine.VatRate)]);
+
+            string salesPersonCode = view.GetRowCellDisplayText(
+                e.RowHandle, view.Columns[nameof(TrInvoiceLine.SalesPersonCode)]);
+
+            float vatRate = float.Parse(strVatRate);
+
+            e.PreviewText = CustomExtensions.GetPreviewText(
+                posDiscount,
+                amount,
+                netAmount,
+                vatRate,
+                string.Empty,
+                salesPersonCode);
         }
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Geri Qaytarma Ləğv Edilsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(
+                    Resources.Form_Return_Message_CancelReturnQuestion,
+                    Resources.Form_Return_Caption_Confirmation,
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
                 if (efMethods.EntityExists<TrInvoiceHeader>(returnInvoiceHeaderId))
                 {
                     efMethods.DeleteInvoice(returnInvoiceHeaderId);
 
                     ClearControls();
                 }
-
+            }
         }
     }
 }

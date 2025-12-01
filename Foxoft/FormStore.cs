@@ -2,15 +2,9 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -58,10 +52,6 @@ namespace Foxoft
                 ClearControlsAddNew();
             else
             {
-                //dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
-                //                    .LoadAsync()
-                //                    .ContinueWith(loadTask => dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-
                 dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
                                     .Include(x => x.SettingStore)
                                     .Load();
@@ -85,10 +75,6 @@ namespace Foxoft
 
         private void dcCurrAccsBindingSource_AddingNew(object sender, AddingNewEventArgs e)
         {
-            //dcCurrAcc = new DcCurrAcc();
-            //dcCurrAcc.CurrAccCode = efMethods.GetNextDocNum("CA", "CurrAccCode", "DcCurrAccs");
-            //dcCurrAcc.DataLanguageCode = "AZ";
-            //e.NewObject = dcCurrAcc;
         }
 
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
@@ -106,7 +92,7 @@ namespace Foxoft
             {
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
 
-                if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode)) //if invoiceHeader doesnt exist
+                if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode))
                     efMethods.InsertEntity(dcCurrAcc);
                 else
                     dbContext.SaveChanges();
@@ -114,7 +100,7 @@ namespace Foxoft
             }
             else
             {
-                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+                string combinedString = errorList.Aggregate((x, y) => x + " " + y);
                 XtraMessageBox.Show(combinedString);
             }
         }
@@ -129,11 +115,10 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(te.Text))
             {
                 if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(te.Text, dcCurrAcc.CurrAccCode))
-                    dxErrorProvider1.SetError(PhoneNumTextEdit, "Bu nömrə bazada mövcuddur.", ErrorType.Warning);
+                    dxErrorProvider1.SetError(PhoneNumTextEdit, Resources.Validation_Phone_ExistsInAnotherStore, ErrorType.Warning);
                 else
                     dxErrorProvider1.ClearErrors();
             }
-
         }
     }
 }

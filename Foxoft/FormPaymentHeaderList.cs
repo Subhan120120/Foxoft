@@ -52,76 +52,57 @@ namespace Foxoft
             this.processCode = processCode;
 
             LoadPaymentHeaders();
-            gV_PaymentHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+            gV_PaymentHeaderList.ActiveFilterString =
+                $"[{nameof(TrPaymentHeader.StoreCode)}] = '{storeCode}'";
         }
 
         private void LoadPaymentHeaders()
         {
             dbContext = new subContext();
 
-            //dbContext.TrPaymentHeaders.Include(x => x.TrPaymentLines)
-            //                          .Include(x => x.TrInvoiceHeader)
-            //                          .Include(x => x.DcCurrAcc)
-            //                          .OrderByDescending(x => x.OperationDate)
-            //                          .LoadAsync()
-            //                          .ContinueWith(loadTask =>
-            //                          {
-            //                              LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
-
-            //                              //lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => Math.Round(x.PaymentLoc / (decimal)1.703, 2)));
-
-            //                              trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
-
-            //                              //string date = DateTime.Now.ToString("2022.06.30");
-            //                              //this.gV_PaymentHeaderList.ActiveFilterCriteria = CriteriaOperator.Parse("DocumentDate >= " + date);
-            //                              //string result = CriteriaToWhereClauseHelper.GetDataSetWhere(gV_PaymentHeaderList.ActiveFilterString);
-            //                              //trPaymentHeadersBindingSource.Filter = result;
-
-            //                              gV_PaymentHeaderList.BestFitColumns();
-
-            //                          }, TaskScheduler.FromCurrentSynchronizationContext());
-
             IQueryable<TrPaymentHeader> trPaymentHeaders = dbContext.TrPaymentHeaders;
             CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-            IQueryable<TrPaymentHeader> filteredData = trPaymentHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_PaymentHeaderList.ActiveFilterCriteria) as IQueryable<TrPaymentHeader>;
+            IQueryable<TrPaymentHeader> filteredData =
+                trPaymentHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_PaymentHeaderList.ActiveFilterCriteria)
+                as IQueryable<TrPaymentHeader>;
 
-
-            List<TrPaymentHeader> headerList = filteredData.Include(x => x.TrPaymentLines)
-                                                           .Include(x => x.DcCurrAcc)
-                                                           .Where(x => x.IsMainTF == true)
-                                                           .Where(x => x.ProcessCode == processCode)
-                                                           .OrderByDescending(x => x.OperationDate)
-                                                           .ThenByDescending(x => x.OperationTime)
-                                                           .Select(x => new TrPaymentHeader
-                                                           {
-                                                               TrInvoiceHeader = x.TrInvoiceHeader,
-                                                               CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
-                                                               TotalPayment = x.TrPaymentLines.Sum(x => x.PaymentLoc),
-                                                               PaymentHeaderId = x.PaymentHeaderId,
-                                                               InvoiceHeaderId = x.InvoiceHeaderId,
-                                                               DocumentNumber = x.DocumentNumber,
-                                                               DocumentDate = x.DocumentDate,
-                                                               DocumentTime = x.DocumentTime,
-                                                               OperationDate = x.OperationDate,
-                                                               OperationTime = x.OperationTime,
-                                                               CurrAccCode = x.CurrAccCode,
-                                                               Description = x.Description,
-                                                               PaymentKindId = x.PaymentKindId,
-                                                               CompanyCode = x.CompanyCode,
-                                                               OfficeCode = x.OfficeCode,
-                                                               StoreCode = x.StoreCode,
-                                                               PosterminalId = x.PosterminalId,
-                                                               IsCompleted = x.IsCompleted,
-                                                               IsLocked = x.IsLocked,
-                                                               IsSent = x.IsSent,
-                                                               CreatedUserName = x.CreatedUserName,
-                                                               CreatedDate = x.CreatedDate,
-                                                               LastUpdatedUserName = x.LastUpdatedUserName,
-                                                               LastUpdatedDate = x.LastUpdatedDate,
-                                                               //FromCashRegCode = x.FromCashRegCode,
-                                                               ToCashRegCode = x.ToCashRegCode,
-                                                           })
-                                                           .ToList();
+            List<TrPaymentHeader> headerList = filteredData
+                .Include(x => x.TrPaymentLines)
+                .Include(x => x.DcCurrAcc)
+                .Where(x => x.IsMainTF == true)
+                .Where(x => x.ProcessCode == processCode)
+                .OrderByDescending(x => x.OperationDate)
+                .ThenByDescending(x => x.OperationTime)
+                .Select(x => new TrPaymentHeader
+                {
+                    TrInvoiceHeader = x.TrInvoiceHeader,
+                    CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
+                    TotalPayment = x.TrPaymentLines.Sum(x => x.PaymentLoc),
+                    PaymentHeaderId = x.PaymentHeaderId,
+                    InvoiceHeaderId = x.InvoiceHeaderId,
+                    DocumentNumber = x.DocumentNumber,
+                    DocumentDate = x.DocumentDate,
+                    DocumentTime = x.DocumentTime,
+                    OperationDate = x.OperationDate,
+                    OperationTime = x.OperationTime,
+                    CurrAccCode = x.CurrAccCode,
+                    Description = x.Description,
+                    PaymentKindId = x.PaymentKindId,
+                    CompanyCode = x.CompanyCode,
+                    OfficeCode = x.OfficeCode,
+                    StoreCode = x.StoreCode,
+                    PosterminalId = x.PosterminalId,
+                    IsCompleted = x.IsCompleted,
+                    IsLocked = x.IsLocked,
+                    IsSent = x.IsSent,
+                    CreatedUserName = x.CreatedUserName,
+                    CreatedDate = x.CreatedDate,
+                    LastUpdatedUserName = x.LastUpdatedUserName,
+                    LastUpdatedDate = x.LastUpdatedDate,
+                    //FromCashRegCode = x.FromCashRegCode,
+                    ToCashRegCode = x.ToCashRegCode,
+                })
+                .ToList();
 
             trPaymentHeadersBindingSource.DataSource = headerList;
         }
@@ -133,10 +114,7 @@ namespace Foxoft
             GridHitInfo info = view.CalcHitInfo(ea.Location);
             if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
             {
-                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-
                 trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
-
                 DialogResult = DialogResult.OK;
             }
         }
@@ -252,7 +230,7 @@ namespace Foxoft
                         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
                         if (!currAccHasClaims)
                         {
-                            MessageBox.Show("Yetkiniz yoxdur! ");
+                            MessageBox.Show(Resources.Common_AccessDenied);
                             return;
                         }
                         else
@@ -281,7 +259,7 @@ namespace Foxoft
                         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
                         if (!currAccHasClaims)
                         {
-                            MessageBox.Show("Yetkiniz yoxdur! ");
+                            MessageBox.Show(Resources.Common_AccessDenied);
                             return;
                         }
                         else
@@ -300,31 +278,6 @@ namespace Foxoft
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
             CustomExtensions.ExportToExcel(this, $@"PaymentHeaderList.xlsx", gC_PaymentHeaderList);
-            //XtraSaveFileDialog sFD = new();
-            //sFD.Filter = "Excel Faylı|*.xlsx";
-            //sFD.Title = "Excel Faylı Yadda Saxla";
-            //sFD.FileName = $@"PaymentHeaderList.xlsx";
-            //sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //sFD.DefaultExt = "*.xlsx";
-
-            //var fileName = Invoke((Func<string>)(() =>
-            //{
-            //    if (sFD.ShowDialog() == DialogResult.OK)
-            //    {
-            //        gV_PaymentHeaderList.ExportToXlsx(sFD.FileName);
-
-            //        if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            //        {
-            //            Process p = new Process();
-            //            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-            //            p.Start();
-            //        }
-
-            //        return "Ok";
-            //    }
-            //    else
-            //        return "Fail";
-            //}));
         }
 
         private void gV_PaymentHeaderList_ColumnFilterChanged(object sender, EventArgs e)

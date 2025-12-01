@@ -256,31 +256,36 @@ namespace Foxoft
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
-        {
-            if (DialogResult.OK == XtraMessageBox.Show("Qaiməni açmaq istəyirsiz?", "Qaiməni Aç", MessageBoxButtons.OKCancel))
-            {
-                OpenFormInvoice(deliveryInvoHeader.DocumentNumber);
-            }
+{
+    if (DialogResult.OK == XtraMessageBox.Show(
+            Resources.Form_HandOver_OpenInvoiceQuestion,
+            Resources.Common_Attention,
+            MessageBoxButtons.OKCancel))
+    {
+        OpenFormInvoice(deliveryInvoHeader.DocumentNumber);
+    }
 
-            ClearControls();
-
-            LoadDataStreamedAsync();
-        }
+    ClearControls();
+    LoadDataStreamedAsync();
+}
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Təhvil Ləğv Edilsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(
+                    Resources.Form_HandOver_CancelQuestion,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
                 if (efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId))
                 {
                     efMethods.DeleteInvoice(deliveryInvoiceHeaderId);
 
                     ClearControls();
-
-
                     LoadDataStreamedAsync();
                 }
-
+            }
         }
+
 
 
         private void OpenFormInvoice(string strDocNum)
@@ -294,7 +299,7 @@ namespace Foxoft
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                 if (!currAccHasClaims)
                 {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    MessageBox.Show(Resources.Common_AccessDenied);
                     return;
                 }
 
@@ -308,8 +313,11 @@ namespace Foxoft
                 formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
             }
             else
-                MessageBox.Show("Belə bir sənəd yoxdur.");
+            {
+                MessageBox.Show(Resources.Form_HandOver_NoDocument);
+            }
         }
+
 
         private void gV_DeliveryInvoiceLine_CalcPreviewText(object sender, CalcPreviewTextEventArgs e)
         {
@@ -347,7 +355,7 @@ namespace Foxoft
             decimal maxDelivery = (decimal)(view.GetFocusedRowCellValue(col_RemainingQty));
             if (!(maxDelivery > 0))
             {
-                XtraMessageBox.Show("Təhvil edilə biləcək miqdar yoxdur");
+                XtraMessageBox.Show(Resources.Form_HandOver_NoRemainingQty);
                 return;
             }
 
@@ -439,14 +447,28 @@ namespace Foxoft
                 FormDisplaySpeed = AlertFormDisplaySpeed.Fast
             };
 
-            alertControl1.Show(this, "Print Göndərilir...", "Printer: " + printerName, "", (Image)null, null);
+            alertControl1.Show(
+                this,
+                Resources.Common_PrintSending,
+                string.Format(Resources.Common_PrinterLabel, printerName),
+                "",
+                (Image)null,
+                null);
 
             if (deliveryInvoHeader is not null)
                 await Task.Run(() => GetPrint(deliveryInvoHeader.InvoiceHeaderId, printerName));
-            else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
+            else
+                MessageBox.Show(Resources.Form_HandOver_NoInvoiceToPrint);
 
-            alertControl1.Show(this, "Print Göndərildi.", "Printer: " + printerName, "", (Image)null, null);
+            alertControl1.Show(
+                this,
+                Resources.Common_PrintSent,
+                string.Format(Resources.Common_PrinterLabel, printerName),
+                "",
+                (Image)null,
+                null);
         }
+
 
         private void GetPrint(Guid invoiceHeaderId, string printerName)
         {
@@ -492,7 +514,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Xeta: 1256795721 \n" + ex.Message);
+                MessageBox.Show(string.Format(Resources.Form_HandOver_PrinterError, ex.Message));
             }
 
             e.Cancel = false;

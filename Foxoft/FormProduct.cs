@@ -123,10 +123,6 @@ namespace Foxoft
                 ClearControlsAddNew();
             else
             {
-                //dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
-                //                    .LoadAsync()
-                //                    .ContinueWith(loadTask => dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-
                 dbContext.DcProducts.Where(x => x.ProductCode == dcProduct.ProductCode)
                                     .Include(x => x.DcProductType)
                                     .Include(x => x.TrInvoiceLines).ThenInclude(x => x.TrInvoiceHeader)
@@ -160,7 +156,13 @@ namespace Foxoft
         {
             dcProduct = dcProductsBindingSource.AddNew() as DcProduct;
 
-            string NewDocNum = efMethods.GetNextDocNum(true, "P", "ProductCode", "DcProducts", 6);
+            string NewDocNum = efMethods.GetNextDocNum(
+                true,
+                "P",
+                nameof(DcProduct.ProductCode),
+                nameof(dbContext.DcProducts),
+                6);
+
             dcProduct.ProductCode = NewDocNum;
             dcProduct.ProductTypeCode = productTypeCode;
             dcProduct.CreatedUserName = Authorization.CurrAccCode;
@@ -183,7 +185,6 @@ namespace Foxoft
         {
             try
             {
-                //bitmap = pictureEdit.Image
                 if (pictureEdit.Image is not null)
                 {
                     if (!Directory.Exists(productFolder))
@@ -196,14 +197,13 @@ namespace Foxoft
                 {
                     if (File.Exists(productFolder))
                         File.Delete(imageFilePath);
-                    //Directory.Delete(productFolder); // access danied
                 }
-
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("error code 154484: " + ex.Message);
+                MessageBox.Show(
+                    string.Format(Resources.Form_Product_Message_SaveImageError, ex.Message),
+                    Resources.Common_ErrorTitle);
             }
         }
 
@@ -214,8 +214,7 @@ namespace Foxoft
                         "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" +
                         "All files (*.*)|*.*";
 
-            //dialog.Multiselect = true;
-            dialog.Title = "Foxoft üçün şəkil seçin.";
+            dialog.Title = Resources.Form_Product_OpenFileDialog_Title;
 
             DialogResult dr = dialog.ShowDialog();
             if (dr == DialogResult.OK)
@@ -225,7 +224,6 @@ namespace Foxoft
                     try
                     {
                         Image.GetThumbnailImageAbort myCallback = new(ThumbnailCallback);
-                        //Image myThumbnail = myBitmap.GetThumbnailImage(300, 300, myCallback, IntPtr.Zero);
 
                         using (FileStream fs = new(file, FileMode.Open, FileAccess.Read))
                         {
@@ -238,7 +236,9 @@ namespace Foxoft
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error: " + ex.Message);
+                        MessageBox.Show(
+                            $"{Resources.Common_ErrorTitle}: {ex.Message}",
+                            Resources.Common_ErrorTitle);
                     }
                 }
             }
@@ -398,7 +398,7 @@ namespace Foxoft
         {
             OpenFileDialog openFileDialog = new();
             openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-            openFileDialog.Title = "Select an Image";
+            openFileDialog.Title = Resources.Form_Product_OpenFileDialog_Title;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -439,12 +439,16 @@ namespace Foxoft
                 }
                 else
                 {
-                    MessageBox.Show("No image found in the selected gallery item.");
+                    MessageBox.Show(
+                        Resources.Form_Product_Message_NoGalleryImage,
+                        Resources.Common_Attention);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error deleting file: {ex.Message}");
+                MessageBox.Show(
+                    string.Format(Resources.Form_Product_Message_DeleteFileError, ex.Message),
+                    Resources.Common_ErrorTitle);
             }
         }
 
@@ -477,13 +481,16 @@ namespace Foxoft
             }
             else
             {
-                Console.WriteLine("No image in the clipboard.");
+                Console.WriteLine(Resources.Form_Product_Message_NoImageInClipboard);
             }
         }
 
         private void BBI_GalleryDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (XtraMessageBox.Show("Silmek Isteyirsiz? \n ", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (XtraMessageBox.Show(
+                Resources.Common_DeleteConfirm,
+                Resources.Common_Attention,
+                MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 string caption = galleryControl1.Gallery.GetCheckedItem().Caption;
                 string imagePath = Path.Combine(productFolder, caption);
@@ -496,11 +503,15 @@ namespace Foxoft
                         LoadGalleryImages();
                     }
                     else
-                        MessageBox.Show("File does not exist.");
+                        MessageBox.Show(
+                            Resources.Form_Product_Message_FileDoesNotExist,
+                            Resources.Common_Attention);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error deleting file: {ex.Message}");
+                    MessageBox.Show(
+                        string.Format(Resources.Form_Product_Message_DeleteFileError, ex.Message),
+                        Resources.Common_ErrorTitle);
                 }
             }
         }
@@ -527,9 +538,9 @@ namespace Foxoft
             var pasteItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuPaste);
             var deleteItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuDelete);
 
-            AddMenuItem("Yapışdır", pasteItem, PictureEdit_PasteItem_Click, Clipboard.ContainsImage());
-            AddMenuItem("Yüklə", loadItem, PictureEdit_LoadItem_Click);
-            AddMenuItem("Sil", deleteItem, PictureEdit_DeleteItem_Click, pictureEdit.Image != null);
+            AddMenuItem(Resources.Common_Paste, pasteItem, PictureEdit_PasteItem_Click, Clipboard.ContainsImage());
+            AddMenuItem(Resources.Common_Load, loadItem, PictureEdit_LoadItem_Click);
+            AddMenuItem(Resources.Common_Delete, deleteItem, PictureEdit_DeleteItem_Click, pictureEdit.Image != null);
 
             RemoveMenuItem(StringId.PictureEditMenuCut);
             RemoveMenuItem(StringId.PictureEditMenuSave);
@@ -541,18 +552,15 @@ namespace Foxoft
         private void PictureEdit_LoadItem_Click(object sender, EventArgs e)
         {
             openFileDialog();
-            //SaveImage();
         }
 
         private void PictureEdit_DeleteItem_Click(object sender, EventArgs e)
         {
             pictureEdit.Image = null;
-            //SaveImage();
         }
         private void PictureEdit_PasteItem_Click(object sender, EventArgs e)
         {
             pictureEdit.Image = Clipboard.GetImage();
-            //SaveImage();
         }
 
         private void popupMenu_Gallery_BeforePopup(object sender, CancelEventArgs e)
@@ -591,7 +599,9 @@ namespace Foxoft
                     if (!efMethods.ProductExist(dcProduct.ProductCode))
                         efMethods.InsertProduct(dcProduct);
                     else
-                        MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");
+                        MessageBox.Show(
+                            Resources.Form_Product_Message_ProductCodeExists,
+                            Resources.Common_Attention);
                 else
                     dbContext.SaveChanges();
 
@@ -615,7 +625,9 @@ namespace Foxoft
                     if (!efMethods.ProductExist(dcProduct.ProductCode))
                         efMethods.InsertProduct(dcProduct);
                     else
-                        MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");
+                        MessageBox.Show(
+                            Resources.Form_Product_Message_ProductCodeExists,
+                            Resources.Common_Attention);
                 else
                     dbContext.SaveChanges();
 
@@ -648,7 +660,10 @@ namespace Foxoft
             if (string.IsNullOrEmpty(ProductDescTextEdit.Text)) return;
 
             if (efMethods.ProductExistByNameExceptProduct(ProductDescTextEdit.Text, dcProduct.ProductCode))
-                dxErrorProvider1.SetError(ProductDescTextEdit, "Bu adda məhsul mövcuddur.", ErrorType.Information);
+                dxErrorProvider1.SetError(
+                    ProductDescTextEdit,
+                    Resources.Form_Product_Validation_ProductNameExists,
+                    ErrorType.Information);
             else
                 dxErrorProvider1.ClearErrors();
         }

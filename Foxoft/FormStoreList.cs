@@ -10,7 +10,6 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
@@ -34,7 +33,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            colCurrAccCode = gV_StoreList.Columns["CurrAccCode"];
+            colCurrAccCode = gV_StoreList.Columns[nameof(DcCurrAcc.CurrAccCode)];
 
             //string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
@@ -88,11 +87,14 @@ namespace Foxoft
                         dcCurrAccsBindingSource.DataSource = dt;
                 }
             }
-            else MessageBox.Show("Report_Embedded_StoreList sorğusu DcReports cədvəlində tapılmadı");
+            else
+            {
+                MessageBox.Show(Resources.Form_StoreList_ReportNotFound, Resources.Common_Attention);
+            }
 
             if (gV_StoreList.FocusedRowHandle >= 0)
             {
-                object storeCode = gV_StoreList.GetFocusedRowCellValue("CurrAccCode");
+                object storeCode = gV_StoreList.GetFocusedRowCellValue(nameof(DcCurrAcc.CurrAccCode));
                 if (storeCode is not null)
                     dcCurrAcc = efMethods.SelectCurrAcc(storeCode.ToString());
             }
@@ -106,8 +108,11 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "FormStoreList.xml";
-            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
-            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
+            string layoutFilePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Foxoft",
+                Settings.Default.CompanyCode,
+                "Layout Xml Files");
 
             if (!Directory.Exists(layoutFilePath))
                 Directory.CreateDirectory(layoutFilePath);
@@ -120,8 +125,12 @@ namespace Foxoft
         {
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             string fileName = "FormStoreList.xml";
-            //string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
-            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+            string layoutFilePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Foxoft",
+                Settings.Default.CompanyCode,
+                "Layout Xml Files",
+                fileName);
 
             if (File.Exists(layoutFilePath))
                 gV_StoreList.RestoreLayoutFromXml(layoutFilePath, option);
@@ -132,7 +141,7 @@ namespace Foxoft
                 gV_StoreList.RestoreLayoutFromStream(stream, option);
             }
 
-            colBalance = gV_StoreList.Columns["Balance"];
+            colBalance = gV_StoreList.Columns[nameof(DcCurrAcc.Balance)];
             if (colBalance is not null)
             {
                 RepositoryItemTextEdit repoMoney = new();
@@ -150,7 +159,7 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object currAccCode = view.GetFocusedRowCellValue("StoreCode");
+                object currAccCode = view.GetFocusedRowCellValue(nameof(DcCurrAcc.StoreCode));
                 if (currAccCode is not null)
                     dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
             }
@@ -179,8 +188,6 @@ namespace Foxoft
 
         private void bBI_CurrAccEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //ApplySelectedCurrAcc();
-
             if (dcCurrAcc is not null)
             {
                 FormStore form = new(dcCurrAcc.CurrAccCode);
@@ -200,10 +207,9 @@ namespace Foxoft
             else
                 gV_StoreList.MoveLast();
 
-
             if (gV_StoreList.FocusedRowHandle >= 0)
             {
-                object currAccCode = gV_StoreList.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
+                object currAccCode = gV_StoreList.GetFocusedRowCellValue(nameof(DcCurrAcc.CurrAccCode));
                 if (currAccCode is not null)
                     dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
             }
@@ -234,7 +240,6 @@ namespace Foxoft
                     Clipboard.SetText(cellValue);
                     e.Handled = true;
                 }
-
             }
         }
 
@@ -244,7 +249,7 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object currAccCode = view.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
+                object currAccCode = view.GetRowCellValue(view.FocusedRowHandle, nameof(DcCurrAcc.CurrAccCode));
                 if (currAccCode is not null)
                     dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
             }
@@ -263,18 +268,18 @@ namespace Foxoft
             {
                 if (efMethods.CurrAccExist(dcCurrAcc.CurrAccCode))
                 {
-                    if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcCurrAcc.CurrAccDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    string msg = Resources.Common_DeleteConfirm + Environment.NewLine + dcCurrAcc.CurrAccDesc;
+                    if (XtraMessageBox.Show(msg, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         efMethods.DeleteEntity(dcCurrAcc);
-
                         LoadCurrAccs();
                     }
                 }
                 else
-                    XtraMessageBox.Show("Silinmeli olan cari yoxdur");
+                    XtraMessageBox.Show(Resources.Form_StoreList_Message_NoStoreToDelete, Resources.Common_Attention);
             }
             else
-                XtraMessageBox.Show("Məhsul seçin");
+                XtraMessageBox.Show(Resources.Form_StoreList_Message_SelectStore, Resources.Common_Attention);
         }
 
         private void bBI_CurAccRefresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -292,10 +297,9 @@ namespace Foxoft
             if (e.MenuType == GridMenuType.Column)
             {
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
-                //menu.Items.Clear();
                 if (menu.Column != null)
                 {
-                    menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
+                    menu.Items.Add(CreateItem(Resources.Common_SaveLayout, menu.Column, null));
                 }
             }
         }
@@ -335,12 +339,14 @@ namespace Foxoft
 
         private void BBI_test_ItemClick(object sender, ItemClickEventArgs e)
         {
-            SaveFileDialog sFD = new();
-            sFD.Filter = "Excel Faylı|*.xlsx";
-            sFD.Title = "Excel Faylı Yadda Saxla";
-            sFD.FileName = this.Text;
-            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            sFD.DefaultExt = "*.xlsx";
+            SaveFileDialog sFD = new()
+            {
+                Filter = Resources.Common_File_ExcelFilter,
+                Title = Resources.Common_File_SaveExcel,
+                FileName = this.Text,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                DefaultExt = "*.xlsx"
+            };
 
             var fileName = Invoke((Func<string>)(() =>
             {
@@ -348,7 +354,11 @@ namespace Foxoft
                 {
                     gC_StoreList.ExportToXlsx(sFD.FileName);
 
-                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    if (XtraMessageBox.Show(
+                            this,
+                            Resources.Form_ReportGrid_Message_OpenExportedFileQuestion,
+                            Resources.Common_Attention,
+                            MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         Process p = new();
                         p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
@@ -364,9 +374,7 @@ namespace Foxoft
 
         private void BBI_query_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcReport dcReport = null;
-
-            dcReport = efMethods.SelectReportByName("Report_Embedded_StoreList");
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_StoreList");
 
             if (dcReport is not null)
             {

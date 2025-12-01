@@ -1,5 +1,4 @@
-﻿
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
@@ -14,6 +13,7 @@ using System.Windows.Forms;
 using System;
 using DevExpress.Data;
 using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -286,7 +286,7 @@ namespace Foxoft
             lbl_InvoicePaidTotalSumTxt.Size = new Size(65, 19);
             lbl_InvoicePaidTotalSumTxt.StyleController = lC_InvoiceLine;
             lbl_InvoicePaidTotalSumTxt.TabIndex = 1;
-            lbl_InvoicePaidTotalSumTxt.Text = "Ödənilib:";
+            lbl_InvoicePaidTotalSumTxt.Text = Resources.Form_RetailSale_Label_PaidTotal;
             // 
             // lbl_InvoicePaidCashlessSum
             // 
@@ -308,7 +308,7 @@ namespace Foxoft
             lbl_InvoicePaidCashlessSumTxt.Size = new Size(61, 19);
             lbl_InvoicePaidCashlessSumTxt.StyleController = lC_InvoiceLine;
             lbl_InvoicePaidCashlessSumTxt.TabIndex = 1;
-            lbl_InvoicePaidCashlessSumTxt.Text = "Nağdsız:";
+            lbl_InvoicePaidCashlessSumTxt.Text = Resources.Form_RetailSale_Label_PaidCashless;
             // 
             // labelControl2
             // 
@@ -330,7 +330,7 @@ namespace Foxoft
             lbl_InvoicePaidCashSumTxt.Size = new Size(43, 19);
             lbl_InvoicePaidCashSumTxt.StyleController = lC_InvoiceLine;
             lbl_InvoicePaidCashSumTxt.TabIndex = 1;
-            lbl_InvoicePaidCashSumTxt.Text = "Nağd:";
+            lbl_InvoicePaidCashSumTxt.Text = Resources.Form_RetailSale_Label_PaidCash;
             // 
             // txt_PrintCount
             // 
@@ -688,7 +688,7 @@ namespace Foxoft
             // 
             // col_ProductDesc
             // 
-            col_ProductDesc.Caption = "Məhsul";
+            col_ProductDesc.Caption = Resources.Entity_InvoiceLine_ProductDesc;
             col_ProductDesc.FieldName = "DcProduct.ProductDesc";
             col_ProductDesc.Name = "col_ProductDesc";
             col_ProductDesc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Custom, "ProductDes", "Toplam:") });
@@ -697,7 +697,7 @@ namespace Foxoft
             // 
             // col_Qty
             // 
-            col_Qty.Caption = "Say";
+            col_Qty.Caption = Resources.Entity_InvoiceLine_Qty;
             col_Qty.FieldName = "Qty";
             col_Qty.Name = "col_Qty";
             col_Qty.Visible = true;
@@ -706,7 +706,7 @@ namespace Foxoft
             // 
             // col_Price
             // 
-            col_Price.Caption = "Qiymət";
+            col_Price.Caption = Resources.Entity_InvoiceLine_Price;
             col_Price.FieldName = "Price";
             col_Price.Name = "col_Price";
             col_Price.Visible = true;
@@ -715,7 +715,7 @@ namespace Foxoft
             // 
             // col_NetAmount
             // 
-            col_NetAmount.Caption = "Net Tutar";
+            col_NetAmount.Caption = Resources.Entity_InvoiceLine_NetAmount;
             col_NetAmount.DisplayFormat.FormatString = "{0:0.##}";
             col_NetAmount.DisplayFormat.FormatType = FormatType.Numeric;
             col_NetAmount.FieldName = "NetAmount";
@@ -727,19 +727,19 @@ namespace Foxoft
             // 
             // col_Barcode
             // 
-            col_Barcode.Caption = "Barkod";
+            col_Barcode.Caption = Resources.Entity_ProductBarcode_Barcode;
             col_Barcode.FieldName = "Barcode";
             col_Barcode.Name = "col_Barcode";
             // 
             // col_PosDiscount
             // 
-            col_PosDiscount.Caption = "Endirim Faizi";
+            col_PosDiscount.Caption = Resources.Entity_InvoiceLine_PosDiscount;
             col_PosDiscount.FieldName = "PosDiscount";
             col_PosDiscount.Name = "col_PosDiscount";
             // 
             // col_Amount
             // 
-            col_Amount.Caption = "Tutar";
+            col_Amount.Caption = Resources.Entity_InvoiceLine_Amount;
             col_Amount.FieldName = "Amount";
             col_Amount.Name = "col_Amount";
             // 
@@ -750,13 +750,13 @@ namespace Foxoft
             // 
             // col_VatRate
             // 
-            col_VatRate.Caption = "ƏDV";
+            col_VatRate.Caption = Resources.Entity_InvoiceLine_VatRate;
             col_VatRate.FieldName = "VatRate";
             col_VatRate.Name = "col_VatRate";
             // 
             // col_SalesPersonCode
             // 
-            col_SalesPersonCode.Caption = "Satıcı";
+            col_SalesPersonCode.Caption = Resources.Entity_InvoiceLine_SalesPersonCode;
             col_SalesPersonCode.FieldName = "SalesPersonCode";
             col_SalesPersonCode.Name = "col_SalesPersonCode";
             // 
@@ -798,7 +798,7 @@ namespace Foxoft
             btn_ProductSearch.Size = new Size(111, 63);
             btn_ProductSearch.StyleController = lC_InvoiceLine;
             btn_ProductSearch.TabIndex = 1;
-            btn_ProductSearch.Text = "Məhsul";
+            btn_ProductSearch.Text = Resources.Form_RetailSale_Button_Product;
             btn_ProductSearch.Click += btn_ProductSearch_Click;
             // 
             // btn_LineDiscount
@@ -814,7 +814,7 @@ namespace Foxoft
             btn_LineDiscount.Size = new Size(111, 63);
             btn_LineDiscount.StyleController = lC_InvoiceLine;
             btn_LineDiscount.TabIndex = 1;
-            btn_LineDiscount.Text = "Sətir Endirimi";
+            btn_LineDiscount.Text = Resources.Form_RetailSale_Button_LineDiscount;
             btn_LineDiscount.Click += btn_LineDiscount_Click;
             // 
             // btn_CancelInvoice
@@ -830,7 +830,7 @@ namespace Foxoft
             btn_CancelInvoice.Size = new Size(111, 63);
             btn_CancelInvoice.StyleController = lC_InvoiceLine;
             btn_CancelInvoice.TabIndex = 1;
-            btn_CancelInvoice.Text = "Çeki Ləğv Et";
+            btn_CancelInvoice.Text = Resources.Form_RetailSale_Button_CancelInvoice;
             btn_CancelInvoice.Click += btn_CancelInvoice_Click;
             // 
             // btn_DeleteLine
@@ -846,7 +846,7 @@ namespace Foxoft
             btn_DeleteLine.Size = new Size(111, 63);
             btn_DeleteLine.StyleController = lC_InvoiceLine;
             btn_DeleteLine.TabIndex = 1;
-            btn_DeleteLine.Text = "Sətri Sil";
+            btn_DeleteLine.Text = Resources.Form_RetailSale_Button_DeleteLine;
             btn_DeleteLine.Click += btn_DeleteLine_Click;
             // 
             // btn_SalesPerson
@@ -861,7 +861,7 @@ namespace Foxoft
             btn_SalesPerson.Size = new Size(111, 63);
             btn_SalesPerson.StyleController = lC_InvoiceLine;
             btn_SalesPerson.TabIndex = 1;
-            btn_SalesPerson.Text = "Satıcı";
+            btn_SalesPerson.Text = Resources.Form_RetailSale_Button_SalesPerson;
             btn_SalesPerson.Click += btn_SalesPerson_Click;
             // 
             // btn_Cash
@@ -877,7 +877,7 @@ namespace Foxoft
             btn_Cash.Size = new Size(111, 72);
             btn_Cash.StyleController = lC_InvoiceLine;
             btn_Cash.TabIndex = 1;
-            btn_Cash.Text = "Cash";
+            btn_Cash.Text = Resources.Form_RetailSale_Button_PaymentCash;
             btn_Cash.Click += btn_Payment_Click;
             // 
             // btn_Cashless
@@ -891,7 +891,7 @@ namespace Foxoft
             btn_Cashless.Size = new Size(111, 72);
             btn_Cashless.StyleController = lC_InvoiceLine;
             btn_Cashless.TabIndex = 1;
-            btn_Cashless.Text = "Nağdsız";
+            btn_Cashless.Text = Resources.Form_RetailSale_Button_PaymentCashless;
             btn_Cashless.Click += btn_Payment_Click;
             // 
             // btn_CustomerBonus
@@ -905,7 +905,7 @@ namespace Foxoft
             btn_CustomerBonus.Size = new Size(111, 72);
             btn_CustomerBonus.StyleController = lC_InvoiceLine;
             btn_CustomerBonus.TabIndex = 1;
-            btn_CustomerBonus.Text = "Bonus";
+            btn_CustomerBonus.Text = Resources.Form_RetailSale_Button_PaymentBonus;
             btn_CustomerBonus.Click += btn_Payment_Click;
             // 
             // btn_Print
@@ -918,7 +918,7 @@ namespace Foxoft
             btn_Print.Size = new Size(111, 63);
             btn_Print.StyleController = lC_InvoiceLine;
             btn_Print.TabIndex = 1;
-            btn_Print.Text = "Çap";
+            btn_Print.Text = Resources.Form_RetailSale_Button_Print;
             btn_Print.Click += btn_Print_Click;
             // 
             // btn_PrintPreview
@@ -931,7 +931,7 @@ namespace Foxoft
             btn_PrintPreview.Size = new Size(111, 63);
             btn_PrintPreview.StyleController = lC_InvoiceLine;
             btn_PrintPreview.TabIndex = 1;
-            btn_PrintPreview.Text = "Çap Görünüş";
+            btn_PrintPreview.Text = Resources.Form_RetailSale_Button_PrintPreview;
             btn_PrintPreview.Click += btn_PrintPrevieww_Click;
             // 
             // btn_ReportZ
@@ -944,7 +944,7 @@ namespace Foxoft
             btn_ReportZ.Size = new Size(111, 63);
             btn_ReportZ.StyleController = lC_InvoiceLine;
             btn_ReportZ.TabIndex = 1;
-            btn_ReportZ.Text = "Gün Sonu";
+            btn_ReportZ.Text = Resources.Form_RetailSale_Button_ReportZ;
             btn_ReportZ.Click += btn_ReportZ_Click;
             // 
             // btn_NewInvoice
@@ -957,7 +957,7 @@ namespace Foxoft
             btn_NewInvoice.Size = new Size(111, 63);
             btn_NewInvoice.StyleController = lC_InvoiceLine;
             btn_NewInvoice.TabIndex = 1;
-            btn_NewInvoice.Text = "Yeni";
+            btn_NewInvoice.Text = Resources.Form_RetailSale_Button_New;
             btn_NewInvoice.Click += Btn_NewInvoice_Click;
             // 
             // btn_IncomplatedInvoices
@@ -970,7 +970,7 @@ namespace Foxoft
             btn_IncomplatedInvoices.Size = new Size(111, 63);
             btn_IncomplatedInvoices.StyleController = lC_InvoiceLine;
             btn_IncomplatedInvoices.TabIndex = 6;
-            btn_IncomplatedInvoices.Text = "simpleButton3";
+            btn_IncomplatedInvoices.Text = Resources.Form_RetailSale_Button_IncompletedInvoices;
             btn_IncomplatedInvoices.Click += btn_IncomplatedInvoices_Click;
             // 
             // btn_InvoiceDiscount
@@ -985,7 +985,7 @@ namespace Foxoft
             btn_InvoiceDiscount.Size = new Size(111, 63);
             btn_InvoiceDiscount.StyleController = lC_InvoiceLine;
             btn_InvoiceDiscount.TabIndex = 7;
-            btn_InvoiceDiscount.Text = "Qaimə Endirimi";
+            btn_InvoiceDiscount.Text = Resources.Form_RetailSale_Button_InvoiceDiscount;
             btn_InvoiceDiscount.Click += btn_InvoiceDiscount_Click;
             // 
             // lCG_Root
@@ -1004,7 +1004,7 @@ namespace Foxoft
             lCG_Barcode.Location = new Point(323, 0);
             lCG_Barcode.Name = "lCG_Barcode";
             lCG_Barcode.Size = new Size(248, 369);
-            lCG_Barcode.Text = "Barcode";
+            lCG_Barcode.Text = Resources.Common_Barcode;
             // 
             // lCI_ComboBox
             // 
@@ -1051,7 +1051,7 @@ namespace Foxoft
             lCG_Invoice.Location = new Point(0, 0);
             lCG_Invoice.Name = "lCG_Invoice";
             lCG_Invoice.Size = new Size(323, 630);
-            lCG_Invoice.Text = "Satış";
+            lCG_Invoice.Text = Resources.Form_RetailSale_Group_Invoice;
             // 
             // lCI_GridView
             // 
@@ -1089,7 +1089,7 @@ namespace Foxoft
             rowDefinition4.SizeType = SizeType.Percent;
             lCG_Function.OptionsTableLayoutGroup.RowDefinitions.AddRange(new RowDefinition[] { rowDefinition1, rowDefinition2, rowDefinition3, rowDefinition4 });
             lCG_Function.Size = new Size(484, 314);
-            lCG_Function.Text = "Əməliyat";
+            lCG_Function.Text = Resources.Form_RetailSale_Group_Function;
             // 
             // lCI_ProductSearch
             // 
@@ -1246,7 +1246,7 @@ namespace Foxoft
             rowDefinition5.SizeType = SizeType.Percent;
             lCG_Payment.OptionsTableLayoutGroup.RowDefinitions.AddRange(new RowDefinition[] { rowDefinition5 });
             lCG_Payment.Size = new Size(484, 121);
-            lCG_Payment.Text = "Ödəmə";
+            lCG_Payment.Text = Resources.Form_RetailSale_Group_Payment;
             // 
             // lCI_Cash
             // 
@@ -1293,7 +1293,7 @@ namespace Foxoft
             LCG_Total.Location = new Point(323, 369);
             LCG_Total.Name = "LCG_Total";
             LCG_Total.Size = new Size(248, 261);
-            LCG_Total.Text = "Toplam";
+            LCG_Total.Text = Resources.Form_RetailSale_Group_Total;
             // 
             // layoutControlItem6
             // 
@@ -1301,7 +1301,7 @@ namespace Foxoft
             layoutControlItem6.Location = new Point(0, 0);
             layoutControlItem6.Name = "layoutControlItem6";
             layoutControlItem6.Size = new Size(224, 24);
-            layoutControlItem6.Text = "Çap Sayı";
+            layoutControlItem6.Text = Resources.Form_RetailSale_Label_PrintCount;
             layoutControlItem6.TextSize = new Size(42, 13);
             // 
             // layoutControlGroup3
@@ -1385,7 +1385,7 @@ namespace Foxoft
             layoutControlGroup2.Location = new Point(571, 0);
             layoutControlGroup2.Name = "layoutControlGroup2";
             layoutControlGroup2.Size = new Size(484, 195);
-            layoutControlGroup2.Text = "Müştəri";
+            layoutControlGroup2.Text = Resources.Form_RetailSale_Group_Customer;
             // 
             // layoutControlItem2
             // 
@@ -1613,3 +1613,4 @@ namespace Foxoft
         private LayoutControlItem layoutControlItem9;
     }
 }
+

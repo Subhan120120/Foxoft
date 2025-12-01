@@ -35,10 +35,9 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            colCurrAccCode = gV_CashRegList.Columns["CurrAccCode"];
+            colCurrAccCode = gV_CashRegList.Columns[nameof(DcCurrAcc.CurrAccCode)];
 
-            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
+            // Reports group name from resources
             reportClass.AddReports(BSI_Reports, "CashRegisters", nameof(TrPaymentLine.CashRegisterCode), gV_CashRegList);
 
             UpdateGridViewData();
@@ -89,7 +88,7 @@ namespace Foxoft
 
             if (dcReport is not null)
             {
-                if (!String.IsNullOrEmpty(dcReport.ReportQuery))
+                if (!string.IsNullOrEmpty(dcReport.ReportQuery))
                 {
                     SqlParameter[] sqlParameters;
                     string qryMaster = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters);
@@ -99,7 +98,7 @@ namespace Foxoft
                         dcCurrAccsBindingSource.DataSource = dt;
                 }
             }
-            else MessageBox.Show("Report_Embedded_CashRegList sorğusu DcReports cədvəlində tapılmadı");
+            else XtraMessageBox.Show(Resources.Form_CashRegisterList_NotFoundReport);
 
             if (gV_CashRegList.FocusedRowHandle >= 0)
             {
@@ -117,7 +116,6 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "FormCashRegisterList.xml";
-            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
             string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
 
             if (!Directory.Exists(layoutFilePath))
@@ -131,7 +129,6 @@ namespace Foxoft
         {
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             string fileName = "FormCashRegisterList.xml";
-            //string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
             string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
 
             if (File.Exists(layoutFilePath))
@@ -139,7 +136,7 @@ namespace Foxoft
             else
             {
                 byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-                MemoryStream stream = new(byteArray);
+                using MemoryStream stream = new(byteArray);
                 gV_CashRegList.RestoreLayoutFromStream(stream, option);
             }
 
@@ -186,13 +183,10 @@ namespace Foxoft
             FormCashRegister form = new(5);
             if (form.ShowDialog(this) == DialogResult.OK)
                 UpdateGridViewData();
-
         }
 
         private void bBI_CurrAccEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //ApplySelectedCurrAcc();
-
             if (dcCurrAcc is not null)
             {
                 FormCashRegister form = new(dcCurrAcc.CurrAccCode);
@@ -211,7 +205,6 @@ namespace Foxoft
                 gV_CashRegList.FocusedRowHandle = fr;
             else
                 gV_CashRegList.MoveLast();
-
 
             if (gV_CashRegList.FocusedRowHandle >= 0)
             {
@@ -242,11 +235,10 @@ namespace Foxoft
 
                 if (e.KeyCode == Keys.C && e.Control)
                 {
-                    string cellValue = gV_CashRegList.GetFocusedValue().ToString();
+                    string cellValue = gV_CashRegList.GetFocusedValue()?.ToString() ?? string.Empty;
                     Clipboard.SetText(cellValue);
                     e.Handled = true;
                 }
-
             }
         }
 
@@ -275,18 +267,17 @@ namespace Foxoft
             {
                 if (efMethods.CurrAccExist(dcCurrAcc.CurrAccCode))
                 {
-                    if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcCurrAcc.CurrAccDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    if (XtraMessageBox.Show(string.Format(Resources.Message_DeleteConfirm, dcCurrAcc.CurrAccDesc), Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         efMethods.DeleteEntity(dcCurrAcc);
-
                         LoadCurrAccs();
                     }
                 }
                 else
-                    XtraMessageBox.Show("Silinmeli olan cari yoxdur");
+                    XtraMessageBox.Show(Resources.Message_NoCurrAccToDelete);
             }
             else
-                XtraMessageBox.Show("Məhsul seçin");
+                XtraMessageBox.Show(Resources.Message_SelectCurrAcc);
         }
 
         private void bBI_CurAccRefresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -294,7 +285,6 @@ namespace Foxoft
             UpdateGridViewData();
         }
 
-        //AutoFocus FindPanel 
         private void gC_CurrAccList_Load(object sender, EventArgs e)
         {
         }
@@ -304,10 +294,9 @@ namespace Foxoft
             if (e.MenuType == GridMenuType.Column)
             {
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
-                //menu.Items.Clear();
                 if (menu.Column != null)
                 {
-                    menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
+                    menu.Items.Add(CreateItem(Resources.Common_SaveLayout, menu.Column, null));
                 }
             }
         }
@@ -324,36 +313,24 @@ namespace Foxoft
             DXMenuItem item = sender as DXMenuItem;
             MenuColumnInfo info = item.Tag as MenuColumnInfo;
             if (info == null) return;
-
             SaveLayout();
         }
 
         class MenuColumnInfo
         {
-            public MenuColumnInfo(GridColumn column)
-            {
-                this.Column = column;
-            }
+            public MenuColumnInfo(GridColumn column) { this.Column = column; }
             public GridColumn Column;
         }
 
-        private void FormCashRegisterList_VisibleChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
-        {
-        }
-
-        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
-        {
-        }
+        private void FormCashRegisterList_VisibleChanged(object sender, EventArgs e) { }
+        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e) { }
+        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e) { }
 
         private void BBI_test_ItemClick(object sender, ItemClickEventArgs e)
         {
             SaveFileDialog sFD = new();
-            sFD.Filter = "Excel Faylı|*.xlsx";
-            sFD.Title = "Excel Faylı Yadda Saxla";
+            sFD.Filter = Resources.Common_File_Excel + "|*.xlsx";
+            sFD.Title = Resources.Common_File_SaveExcel;
             sFD.FileName = this.Text;
             sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             sFD.DefaultExt = "*.xlsx";
@@ -364,13 +341,12 @@ namespace Foxoft
                 {
                     gC_CashRegList.ExportToXlsx(sFD.FileName);
 
-                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    if (XtraMessageBox.Show(this, Resources.Common_OpenQuestion, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         Process p = new();
                         p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
                         p.Start();
                     }
-
                     return "Ok";
                 }
                 else
@@ -380,9 +356,7 @@ namespace Foxoft
 
         private void BBI_query_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcReport dcReport = null;
-
-            dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
 
             if (dcReport is not null)
             {
@@ -393,9 +367,7 @@ namespace Foxoft
             }
         }
 
-        private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
-        {
-        }
+        private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e) { }
 
         private void FormCashRegisterList_KeyDown(object sender, KeyEventArgs e)
         {

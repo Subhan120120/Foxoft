@@ -1,7 +1,10 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using Foxoft.Properties;
+using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -13,6 +16,7 @@ namespace Foxoft
         public FormInput()
         {
             InitializeComponent();
+
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
         }
@@ -83,8 +87,8 @@ namespace Foxoft
         private void textEditInput_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
-            e.WindowCaption = "Diqqət";
-            e.ErrorText = "Dəyər 0 ilə " + maxInput.ToString() + " arasında olmalıdır";
+            e.WindowCaption = Resources.Common_Attention;
+            e.ErrorText = string.Format(Resources.Common_Validation_InputRange, maxInput);
             label_Message.Text = e.ErrorText;
         }
     }

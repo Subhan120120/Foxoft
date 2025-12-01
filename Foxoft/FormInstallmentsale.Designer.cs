@@ -2,6 +2,9 @@
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using Foxoft.Models;
+using Foxoft.Properties;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace Foxoft
 {
@@ -41,7 +44,7 @@ namespace Foxoft
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
-            bindingSourceTrInstallmentSale = new BindingSource(components);
+            bindingSourceTrInstallmentSale = new System.Windows.Forms.BindingSource(components);
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             repoBtnEdit_Payment = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             col_Buttons = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -73,11 +76,11 @@ namespace Foxoft
             // 
             gridControl1.DataSource = bindingSourceTrInstallmentSale;
             gridControl1.Dock = DockStyle.Fill;
-            gridControl1.Location = new Point(0, 158);
+            gridControl1.Location = new System.Drawing.Point(0, 158);
             gridControl1.MainView = gridView1;
             gridControl1.Name = "gridControl1";
             gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_Payment });
-            gridControl1.Size = new Size(954, 368);
+            gridControl1.Size = new System.Drawing.Size(954, 368);
             gridControl1.TabIndex = 0;
             gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
@@ -94,7 +97,7 @@ namespace Foxoft
             // 
             repoBtnEdit_Payment.AutoHeight = false;
             editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
-            repoBtnEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+            repoBtnEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
             repoBtnEdit_Payment.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             repoBtnEdit_Payment.Name = "repoBtnEdit_Payment";
             repoBtnEdit_Payment.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -119,15 +122,15 @@ namespace Foxoft
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
             ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_Refresh, BBI_GridOptions, BSI_Reports, BBI_QueryEdit, BCI_FilterDay, BBI_FilterWeek, BBI_FilterMonth });
-            ribbonControl1.Location = new Point(0, 0);
+            ribbonControl1.Location = new System.Drawing.Point(0, 0);
             ribbonControl1.MaxItemId = 16;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new RibbonPage[] { ribbonPage1, ribbonPage2 });
-            ribbonControl1.Size = new Size(954, 158);
+            ribbonControl1.Size = new System.Drawing.Size(954, 158);
             // 
             // BBI_Refresh
             // 
-            BBI_Refresh.Caption = "Yenilə";
+            BBI_Refresh.Caption = Resources.Common_Refresh;
             BBI_Refresh.Id = 1;
             BBI_Refresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Refresh.ImageOptions.SvgImage");
             BBI_Refresh.Name = "BBI_Refresh";
@@ -135,7 +138,7 @@ namespace Foxoft
             // 
             // BBI_GridOptions
             // 
-            BBI_GridOptions.Caption = "Dizayn Düzəltmə";
+            BBI_GridOptions.Caption = Resources.Form_InstallmentSale_Button_GridOptions;
             BBI_GridOptions.Id = 2;
             BBI_GridOptions.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GridOptions.ImageOptions.SvgImage");
             BBI_GridOptions.Name = "BBI_GridOptions";
@@ -143,14 +146,14 @@ namespace Foxoft
             // 
             // BSI_Reports
             // 
-            BSI_Reports.Caption = "Hesabatlar";
+            BSI_Reports.Caption = Resources.Common_Report;
             BSI_Reports.Id = 3;
             BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
             BSI_Reports.Name = "BSI_Reports";
             // 
             // BBI_QueryEdit
             // 
-            BBI_QueryEdit.Caption = "Sorğunu Dəyiş";
+            BBI_QueryEdit.Caption = Resources.Form_InstallmentSale_Button_QueryEdit;
             BBI_QueryEdit.Id = 4;
             BBI_QueryEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_QueryEdit.ImageOptions.SvgImage");
             BBI_QueryEdit.Name = "BBI_QueryEdit";
@@ -159,7 +162,7 @@ namespace Foxoft
             // BCI_FilterDay
             // 
             BCI_FilterDay.AllowAllUp = true;
-            BCI_FilterDay.Caption = "Son Gün";
+            BCI_FilterDay.Caption = Resources.Form_InstallmentSale_Filter_Day;
             BCI_FilterDay.GroupIndex = 1;
             BCI_FilterDay.Id = 13;
             BCI_FilterDay.ImageOptions.Image = (Image)resources.GetObject("BCI_FilterDay.ImageOptions.Image");
@@ -170,7 +173,7 @@ namespace Foxoft
             // BBI_FilterWeek
             // 
             BBI_FilterWeek.AllowAllUp = true;
-            BBI_FilterWeek.Caption = "Son Həftə";
+            BBI_FilterWeek.Caption = Resources.Form_InstallmentSale_Filter_Week;
             BBI_FilterWeek.GroupIndex = 1;
             BBI_FilterWeek.Id = 14;
             BBI_FilterWeek.ImageOptions.Image = (Image)resources.GetObject("BBI_FilterWeek.ImageOptions.Image");
@@ -181,7 +184,7 @@ namespace Foxoft
             // BBI_FilterMonth
             // 
             BBI_FilterMonth.AllowAllUp = true;
-            BBI_FilterMonth.Caption = "Son Ay";
+            BBI_FilterMonth.Caption = Resources.Form_InstallmentSale_Filter_Month;
             BBI_FilterMonth.GroupIndex = 1;
             BBI_FilterMonth.Id = 15;
             BBI_FilterMonth.ImageOptions.Image = (Image)resources.GetObject("BBI_FilterMonth.ImageOptions.Image");
@@ -193,25 +196,25 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3, ribbonPageGroup5 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Kredit";
+            ribbonPage1.Text = Resources.Form_InstallmentSale_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
             ribbonPageGroup1.ItemLinks.Add(BBI_Refresh);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Əməliyyat";
+            ribbonPageGroup1.Text = Resources.Form_InstallmentSale_RibbonGroup_Operation;
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(BBI_GridOptions);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Dizayn";
+            ribbonPageGroup2.Text = Resources.Form_InstallmentSale_RibbonGroup_Design;
             // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.ItemLinks.Add(BSI_Reports);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Print";
+            ribbonPageGroup3.Text = Resources.Common_Print;
             // 
             // ribbonPageGroup5
             // 
@@ -219,30 +222,30 @@ namespace Foxoft
             ribbonPageGroup5.ItemLinks.Add(BBI_FilterWeek);
             ribbonPageGroup5.ItemLinks.Add(BBI_FilterMonth);
             ribbonPageGroup5.Name = "ribbonPageGroup5";
-            ribbonPageGroup5.Text = "Filter";
+            ribbonPageGroup5.Text = Resources.Form_InstallmentSale_RibbonGroup_Filter;
             // 
             // ribbonPage2
             // 
             ribbonPage2.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup4 });
             ribbonPage2.Name = "ribbonPage2";
-            ribbonPage2.Text = "Ayarlar";
+            ribbonPage2.Text = Resources.Form_InstallmentSale_RibbonPage_Settings;
             // 
             // ribbonPageGroup4
             // 
             ribbonPageGroup4.ItemLinks.Add(BBI_QueryEdit);
             ribbonPageGroup4.Name = "ribbonPageGroup4";
-            ribbonPageGroup4.Text = "Query";
+            ribbonPageGroup4.Text = Resources.Form_InstallmentSale_RibbonGroup_Query;
             // 
             // FormInstallmentSale
             // 
-            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(954, 526);
+            ClientSize = new System.Drawing.Size(954, 526);
             Controls.Add(gridControl1);
             Controls.Add(ribbonControl1);
             Name = "FormInstallmentSale";
             Ribbon = ribbonControl1;
-            Text = "FormInstallmentSale";
+            Text = Resources.Form_InstallmentSale_Caption;
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
@@ -256,7 +259,7 @@ namespace Foxoft
 
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private BindingSource bindingSourceTrInstallmentSale;
+        private System.Windows.Forms.BindingSource bindingSourceTrInstallmentSale;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_Payment;
         private DevExpress.XtraGrid.Columns.GridColumn col_Buttons;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
@@ -266,7 +269,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.BarButtonItem BBI_Refresh;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem BBI_GridOptions;
         private BarSubItem BSI_Reports;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;

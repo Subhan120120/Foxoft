@@ -1,5 +1,5 @@
-﻿
-using Foxoft.Models;
+﻿using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -179,7 +179,12 @@ namespace Foxoft
             lUE_CashlessCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_CashlessCurrency.Properties.Appearance.Options.UseFont = true;
             lUE_CashlessCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            lUE_CashlessCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", "") });
+            lUE_CashlessCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
+            {
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyCode), ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyDesc), ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.ExchangeRate), "")
+            });
             lUE_CashlessCurrency.Properties.DisplayMember = "CurrencyDesc";
             lUE_CashlessCurrency.Properties.NullText = "";
             lUE_CashlessCurrency.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
@@ -305,7 +310,7 @@ namespace Foxoft
             btn_Cancel.Size = new Size(98, 77);
             btn_Cancel.StyleController = lC_Root;
             btn_Cancel.TabIndex = 18;
-            btn_Cancel.Text = "simpleButton1";
+            btn_Cancel.Text = Resources.Common_Cancel;
             // 
             // btn_Ok
             // 
@@ -316,7 +321,7 @@ namespace Foxoft
             btn_Ok.Size = new Size(97, 77);
             btn_Ok.StyleController = lC_Root;
             btn_Ok.TabIndex = 17;
-            btn_Ok.Text = "Ödə";
+            btn_Ok.Text = Resources.Form_Payment_Button_Ok;
             btn_Ok.Click += btn_Ok_Click;
             // 
             // lUE_cashCurrency
@@ -327,7 +332,12 @@ namespace Foxoft
             lUE_cashCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_cashCurrency.Properties.Appearance.Options.UseFont = true;
             lUE_cashCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            lUE_cashCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", "") });
+            lUE_cashCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
+            {
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyCode), ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyDesc), ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.ExchangeRate), "")
+            });
             lUE_cashCurrency.Properties.DisplayMember = "CurrencyDesc";
             lUE_cashCurrency.Properties.Name = "lUE_cashCurrency";
             lUE_cashCurrency.Properties.NullText = "";
@@ -347,7 +357,13 @@ namespace Foxoft
             lUE_PaymentMethod.Properties.Appearance.Font = new Font("Tahoma", 10F);
             lUE_PaymentMethod.Properties.Appearance.Options.UseFont = true;
             lUE_PaymentMethod.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            lUE_PaymentMethod.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentMethodId", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentMethodDesc", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("DefaultCashRegCode", "") });
+            lUE_PaymentMethod.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
+            {
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentMethod.PaymentMethodId), ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentMethod.PaymentMethodDesc), ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentMethod.PaymentTypeCode), ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentMethod.DefaultCashRegCode), "")
+            });
             lUE_PaymentMethod.Properties.DisplayMember = "PaymentMethodDesc";
             lUE_PaymentMethod.Properties.NullText = "";
             lUE_PaymentMethod.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
@@ -382,7 +398,7 @@ namespace Foxoft
             lCG_Cash.Location = new Point(0, 0);
             lCG_Cash.Name = "layoutControlGroupCash";
             lCG_Cash.Size = new Size(350, 105);
-            lCG_Cash.Text = "Nağd";
+            lCG_Cash.Text = Resources.Form_Payment_Group_Cash;
             // 
             // lCI_Cash
             // 
@@ -391,7 +407,7 @@ namespace Foxoft
             lCI_Cash.Location = new Point(0, 0);
             lCI_Cash.Name = "layoutControlItemCash";
             lCI_Cash.Size = new Size(202, 36);
-            lCI_Cash.Text = "Nağd";
+            lCI_Cash.Text = Resources.Form_Payment_Label_Cash;
             lCI_Cash.TextSize = new Size(74, 32);
             // 
             // lCI_CashRegister
@@ -400,7 +416,7 @@ namespace Foxoft
             lCI_CashRegister.Location = new Point(0, 36);
             lCI_CashRegister.Name = "lCI_CashRegister";
             lCI_CashRegister.Size = new Size(326, 24);
-            lCI_CashRegister.Text = "Kassa Hesabı";
+            lCI_CashRegister.Text = Resources.Form_Payment_CashRegister;
             lCI_CashRegister.TextSize = new Size(74, 13);
             // 
             // lCI_CashCurrency
@@ -409,7 +425,7 @@ namespace Foxoft
             lCI_CashCurrency.Location = new Point(202, 0);
             lCI_CashCurrency.Name = "lCI_CashCurrency";
             lCI_CashCurrency.Size = new Size(124, 36);
-            lCI_CashCurrency.Text = "Valyuta";
+            lCI_CashCurrency.Text = Resources.Form_Payment_Currency;
             lCI_CashCurrency.TextVisible = false;
             // 
             // lCG_Cashless
@@ -419,7 +435,7 @@ namespace Foxoft
             lCG_Cashless.Location = new Point(0, 105);
             lCG_Cashless.Name = "layoutControlGroupCashless";
             lCG_Cashless.Size = new Size(350, 179);
-            lCG_Cashless.Text = "Nağdsız";
+            lCG_Cashless.Text = Resources.Form_Payment_Group_Cashless;
             // 
             // lCI_Cashless
             // 
@@ -428,7 +444,7 @@ namespace Foxoft
             lCI_Cashless.Location = new Point(0, 0);
             lCI_Cashless.Name = "layoutControlItemCashless";
             lCI_Cashless.Size = new Size(202, 36);
-            lCI_Cashless.Text = "Nağdsız";
+            lCI_Cashless.Text = Resources.Form_Payment_Group_Cashless;
             lCI_Cashless.TextSize = new Size(74, 32);
             // 
             // lCI_BankCurrAcc
@@ -437,7 +453,7 @@ namespace Foxoft
             lCI_BankCurrAcc.Location = new Point(0, 62);
             lCI_BankCurrAcc.Name = "lCI_BankCurrAcc";
             lCI_BankCurrAcc.Size = new Size(326, 24);
-            lCI_BankCurrAcc.Text = "Bank Hesabı";
+            lCI_BankCurrAcc.Text = Resources.Form_Payment_BankAccount;
             lCI_BankCurrAcc.TextSize = new Size(74, 13);
             // 
             // lCI_CashlessCurrency
@@ -446,7 +462,7 @@ namespace Foxoft
             lCI_CashlessCurrency.Location = new Point(202, 0);
             lCI_CashlessCurrency.Name = "lCI_CashlessCurrency";
             lCI_CashlessCurrency.Size = new Size(124, 36);
-            lCI_CashlessCurrency.Text = "Valyuta";
+            lCI_CashlessCurrency.Text = Resources.Form_Payment_Currency;
             lCI_CashlessCurrency.TextVisible = false;
             // 
             // lCI_PaymentMethod
@@ -455,7 +471,7 @@ namespace Foxoft
             lCI_PaymentMethod.Location = new Point(0, 36);
             lCI_PaymentMethod.Name = "lCI_PaymentMethod";
             lCI_PaymentMethod.Size = new Size(326, 26);
-            lCI_PaymentMethod.Text = "Ödəmə Metodu";
+            lCI_PaymentMethod.Text = Resources.Form_Payment_PaymentMethod;
             lCI_PaymentMethod.TextSize = new Size(74, 13);
             // 
             // LCI_PaymentPlan
@@ -464,7 +480,7 @@ namespace Foxoft
             LCI_PaymentPlan.Location = new Point(0, 86);
             LCI_PaymentPlan.Name = "LCI_PaymentPlan";
             LCI_PaymentPlan.Size = new Size(326, 24);
-            LCI_PaymentPlan.Text = "Ödəmə Planı";
+            LCI_PaymentPlan.Text = Resources.Form_Payment_PaymentPlan;
             LCI_PaymentPlan.TextSize = new Size(74, 13);
             LCI_PaymentPlan.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             // 
@@ -474,7 +490,7 @@ namespace Foxoft
             LCI_CashlessCommission.Location = new Point(0, 110);
             LCI_CashlessCommission.Name = "LCI_CashlessCommission";
             LCI_CashlessCommission.Size = new Size(326, 24);
-            LCI_CashlessCommission.Text = "Komissiya";
+            LCI_CashlessCommission.Text = Resources.Form_Payment_Commission;
             LCI_CashlessCommission.TextSize = new Size(74, 13);
             LCI_CashlessCommission.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             // 
@@ -486,7 +502,7 @@ namespace Foxoft
             lCG_CustomerBonus.Location = new Point(0, 284);
             lCG_CustomerBonus.Name = "layoutControlGroupCustomerBonus";
             lCG_CustomerBonus.Size = new Size(350, 117);
-            lCG_CustomerBonus.Text = "Bonus";
+            lCG_CustomerBonus.Text = Resources.Form_Payment_Group_Bonus;
             // 
             // lCI_CustomerBonus
             // 
@@ -495,16 +511,16 @@ namespace Foxoft
             lCI_CustomerBonus.Location = new Point(0, 0);
             lCI_CustomerBonus.Name = "layoutControlItemCustomerBonus";
             lCI_CustomerBonus.Size = new Size(326, 36);
-            lCI_CustomerBonus.Text = "Bonus";
+            lCI_CustomerBonus.Text = Resources.Form_Payment_Bonus;
             lCI_CustomerBonus.TextSize = new Size(74, 32);
             // 
             // lCI_CusBonus
             // 
             lCI_CusBonus.Control = txtEdit_CustomerBonus;
             lCI_CusBonus.Location = new Point(0, 36);
-            lCI_CusBonus.Name = "layoutControlItemCusBonus";
+            lCI_CusBonus.Name = "lCI_CusBonus";
             lCI_CusBonus.Size = new Size(326, 36);
-            lCI_CusBonus.Text = "Puan";
+            lCI_CusBonus.Text = Resources.Form_Payment_Puan;
             lCI_CusBonus.TextSize = new Size(74, 13);
             // 
             // lCI_Cancel
@@ -512,7 +528,7 @@ namespace Foxoft
             lCI_Cancel.Control = btn_Cancel;
             lCI_Cancel.Location = new Point(639, 411);
             lCI_Cancel.MinSize = new Size(78, 26);
-            lCI_Cancel.Name = "layoutControlItemCancel";
+            lCI_Cancel.Name = "lCI_Cancel";
             lCI_Cancel.Size = new Size(102, 81);
             lCI_Cancel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Cancel.TextVisible = false;
@@ -522,7 +538,7 @@ namespace Foxoft
             lCI_Ok.Control = btn_Ok;
             lCI_Ok.Location = new Point(538, 411);
             lCI_Ok.MinSize = new Size(78, 26);
-            lCI_Ok.Name = "layoutControlItemOk";
+            lCI_Ok.Name = "lCI_Ok";
             lCI_Ok.Size = new Size(101, 81);
             lCI_Ok.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Ok.TextVisible = false;
@@ -540,7 +556,7 @@ namespace Foxoft
             LCG_InputPad.Location = new Point(350, 48);
             LCG_InputPad.Name = "LCG_InputPad2";
             LCG_InputPad.Size = new Size(391, 363);
-            LCG_InputPad.Text = "Giriş Paneli";
+            LCG_InputPad.Text = Resources.Form_Payment_InputPad;
             // 
             // LCI_InpudPad
             // 
@@ -556,7 +572,7 @@ namespace Foxoft
             lCI_Date.Location = new Point(350, 0);
             lCI_Date.Name = "lCI_Date";
             lCI_Date.Size = new Size(391, 24);
-            lCI_Date.Text = "Tarix";
+            lCI_Date.Text = Resources.Form_Payment_Date;
             lCI_Date.TextSize = new Size(74, 13);
             // 
             // LCI_LineDescription
@@ -565,7 +581,7 @@ namespace Foxoft
             LCI_LineDescription.Location = new Point(350, 24);
             LCI_LineDescription.Name = "LCI_LineDescription";
             LCI_LineDescription.Size = new Size(391, 24);
-            LCI_LineDescription.Text = "Açıqlama";
+            LCI_LineDescription.Text = Resources.Entity_PaymentHeader_Description;
             LCI_LineDescription.TextSize = new Size(74, 13);
             // 
             // emptySpaceItem2
@@ -586,7 +602,7 @@ namespace Foxoft
             Controls.Add(lC_Root);
             Name = "FormPayment";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Ödəmə";
+            Text = Resources.Form_Payment_Caption;
             Load += FormPayment_Load;
             ((System.ComponentModel.ISupportInitialize)lC_Root).EndInit();
             lC_Root.ResumeLayout(false);
@@ -671,8 +687,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlGroup LCG_InputPad;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InpudPad;
         private DevExpress.XtraEditors.TextEdit txt_CashlessCommission;
-        private DevExpress.XtraEditors.TextEdit textEdit1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraEditors.TextEdit TxtEdit_Description;
         private DevExpress.XtraLayout.LayoutControlItem LCI_LineDescription;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;

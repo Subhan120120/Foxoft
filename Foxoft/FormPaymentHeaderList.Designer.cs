@@ -1,4 +1,5 @@
-﻿
+﻿using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormPaymentHeaderList
@@ -88,7 +89,22 @@ namespace Foxoft
             // 
             // gV_PaymentHeaderList
             // 
-            gV_PaymentHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaymentHeaderId, colDocumentNumber, colInvoiceNumber, colOperationDate, colOperationTime, colCurrAccCode, colCurrAccDesc, colDescription, colStoreCode, colPosterminalId, colInvoiceHeaderId, colTotalPayment, colFromCashRegCode, colToCashRegCode, colIsSent });
+            gV_PaymentHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+                colPaymentHeaderId,
+                colDocumentNumber,
+                colInvoiceNumber,
+                colOperationDate,
+                colOperationTime,
+                colCurrAccCode,
+                colCurrAccDesc,
+                colDescription,
+                colStoreCode,
+                colPosterminalId,
+                colInvoiceHeaderId,
+                colTotalPayment,
+                colFromCashRegCode,
+                colToCashRegCode,
+                colIsSent});
             gV_PaymentHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(796, 370, 264, 272);
             gV_PaymentHeaderList.GridControl = gC_PaymentHeaderList;
             gV_PaymentHeaderList.Name = "gV_PaymentHeaderList";
@@ -108,6 +124,7 @@ namespace Foxoft
             // 
             // colDocumentNumber
             // 
+            colDocumentNumber.Caption = Resources.Entity_PaymentHeader_DocumentNumber;
             colDocumentNumber.ColumnEdit = repoHLE_DocNum;
             colDocumentNumber.FieldName = "DocumentNumber";
             colDocumentNumber.Name = "colDocumentNumber";
@@ -124,6 +141,7 @@ namespace Foxoft
             // 
             // colInvoiceNumber
             // 
+            colInvoiceNumber.Caption = Resources.Entity_TrInvoiceHeader_DocumentNumber;
             colInvoiceNumber.ColumnEdit = repoHLE_InvoiceNumber;
             colInvoiceNumber.FieldName = "TrInvoiceHeader.DocumentNumber";
             colInvoiceNumber.Name = "colInvoiceNumber";
@@ -141,6 +159,7 @@ namespace Foxoft
             // 
             // colOperationDate
             // 
+            colOperationDate.Caption = Resources.Entity_PaymentHeader_OperationDate;
             colOperationDate.FieldName = "OperationDate";
             colOperationDate.Name = "colOperationDate";
             colOperationDate.Visible = true;
@@ -148,6 +167,7 @@ namespace Foxoft
             // 
             // colOperationTime
             // 
+            colOperationTime.Caption = Resources.Entity_PaymentHeader_OperationTime;
             colOperationTime.FieldName = "OperationTime";
             colOperationTime.Name = "colOperationTime";
             colOperationTime.Visible = true;
@@ -155,6 +175,7 @@ namespace Foxoft
             // 
             // colCurrAccCode
             // 
+            colCurrAccCode.Caption = Resources.Entity_PaymentHeader_CurrAccCode;
             colCurrAccCode.FieldName = "CurrAccCode";
             colCurrAccCode.Name = "colCurrAccCode";
             colCurrAccCode.Visible = true;
@@ -162,6 +183,7 @@ namespace Foxoft
             // 
             // colCurrAccDesc
             // 
+            colCurrAccDesc.Caption = Resources.Entity_PaymentHeader_CurrAccDesc;
             colCurrAccDesc.FieldName = "CurrAccDesc";
             colCurrAccDesc.Name = "colCurrAccDesc";
             colCurrAccDesc.Visible = true;
@@ -169,6 +191,7 @@ namespace Foxoft
             // 
             // colDescription
             // 
+            colDescription.Caption = Resources.Entity_PaymentHeader_Description;
             colDescription.FieldName = "Description";
             colDescription.Name = "colDescription";
             colDescription.Visible = true;
@@ -176,11 +199,13 @@ namespace Foxoft
             // 
             // colStoreCode
             // 
+            colStoreCode.Caption = Resources.Entity_PaymentHeader_StoreCode;
             colStoreCode.FieldName = "StoreCode";
             colStoreCode.Name = "colStoreCode";
             // 
             // colPosterminalId
             // 
+            colPosterminalId.Caption = Resources.Entity_PaymentHeader_PosterminalId;
             colPosterminalId.FieldName = "PosterminalId";
             colPosterminalId.Name = "colPosterminalId";
             // 
@@ -191,6 +216,7 @@ namespace Foxoft
             // 
             // colTotalPayment
             // 
+            colTotalPayment.Caption = Resources.Entity_PaymentHeader_TotalPayment;
             colTotalPayment.FieldName = "TotalPayment";
             colTotalPayment.Name = "colTotalPayment";
             colTotalPayment.Visible = true;
@@ -198,6 +224,7 @@ namespace Foxoft
             // 
             // colFromCashRegCode
             // 
+            colFromCashRegCode.Caption = Resources.Entity_PaymentHeader_FromCashRegCode;
             colFromCashRegCode.FieldName = "FromCashRegCode";
             colFromCashRegCode.Name = "colFromCashRegCode";
             colFromCashRegCode.Visible = true;
@@ -205,6 +232,7 @@ namespace Foxoft
             // 
             // colToCashRegCode
             // 
+            colToCashRegCode.Caption = Resources.Entity_PaymentHeader_ToCashRegCode;
             colToCashRegCode.FieldName = "ToCashRegCode";
             colToCashRegCode.Name = "colToCashRegCode";
             colToCashRegCode.Visible = true;
@@ -212,13 +240,19 @@ namespace Foxoft
             // 
             // colIsSent
             // 
+            colIsSent.Caption = Resources.Entity_PaymentHeader_IsSent;
             colIsSent.FieldName = "IsSent";
             colIsSent.Name = "colIsSent";
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_ReceivePayment, bBI_MakePayment, bBI_ExportXlsx });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+                ribbonControl1.ExpandCollapseItem,
+                ribbonControl1.SearchEditItem,
+                bBI_ReceivePayment,
+                bBI_MakePayment,
+                bBI_ExportXlsx});
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
             ribbonControl1.MaxItemId = 4;
             ribbonControl1.Name = "ribbonControl1";
@@ -228,7 +262,7 @@ namespace Foxoft
             // 
             // bBI_ReceivePayment
             // 
-            bBI_ReceivePayment.Caption = "Ödəniş Al";
+            bBI_ReceivePayment.Caption = Resources.Form_PaymentHeaderList_Button_ReceivePayment;
             bBI_ReceivePayment.Id = 1;
             bBI_ReceivePayment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReceivePayment.ImageOptions.SvgImage");
             bBI_ReceivePayment.Name = "bBI_ReceivePayment";
@@ -236,7 +270,7 @@ namespace Foxoft
             // 
             // bBI_MakePayment
             // 
-            bBI_MakePayment.Caption = "Ödəniş Et";
+            bBI_MakePayment.Caption = Resources.Form_PaymentHeaderList_Button_MakePayment;
             bBI_MakePayment.Id = 2;
             bBI_MakePayment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_MakePayment.ImageOptions.SvgImage");
             bBI_MakePayment.Name = "bBI_MakePayment";
@@ -244,7 +278,7 @@ namespace Foxoft
             // 
             // bBI_ExportXlsx
             // 
-            bBI_ExportXlsx.Caption = "Excelə İxrac";
+            bBI_ExportXlsx.Caption = Resources.Form_PaymentHeaderList_Button_ExportXlsx;
             bBI_ExportXlsx.Id = 3;
             bBI_ExportXlsx.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage");
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
@@ -254,20 +288,20 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Ödəmə";
+            ribbonPage1.Text = Resources.Form_PaymentHeaderList_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
             ribbonPageGroup1.ItemLinks.Add(bBI_ReceivePayment);
             ribbonPageGroup1.ItemLinks.Add(bBI_MakePayment);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Əməliyat";
+            ribbonPageGroup1.Text = Resources.Form_PaymentHeaderList_RibbonGroup_Operation;
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(bBI_ExportXlsx);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Export";
+            ribbonPageGroup2.Text = Resources.Form_PaymentHeaderList_RibbonGroup_Export;
             // 
             // ribbonStatusBar1
             // 
@@ -293,7 +327,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = "Ödəmələr";
+            Text = Resources.Form_PaymentHeaderList_Caption;
             ((System.ComponentModel.ISupportInitialize)gC_PaymentHeaderList).EndInit();
             ((System.ComponentModel.ISupportInitialize)trPaymentHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_PaymentHeaderList).EndInit();

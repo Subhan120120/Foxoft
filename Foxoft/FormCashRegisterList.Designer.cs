@@ -1,5 +1,5 @@
-﻿
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -265,7 +265,7 @@ namespace Foxoft
             // 
             // bBI_CurrAccNew
             // 
-            bBI_CurrAccNew.Caption = "Yeni";
+            bBI_CurrAccNew.Caption = Resources.Common_New;
             bBI_CurrAccNew.Id = 1;
             bBI_CurrAccNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccNew.ImageOptions.SvgImage");
             bBI_CurrAccNew.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
@@ -274,7 +274,7 @@ namespace Foxoft
             // 
             // bBI_CurAccEdit
             // 
-            bBI_CurAccEdit.Caption = "Dəyiş";
+            bBI_CurAccEdit.Caption = Resources.Common_Edit;
             bBI_CurAccEdit.Id = 2;
             bBI_CurAccEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccEdit.ImageOptions.SvgImage");
             bBI_CurAccEdit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
@@ -283,7 +283,7 @@ namespace Foxoft
             // 
             // bBI_ExportXlsx
             // 
-            bBI_ExportXlsx.Caption = "Excelə Göndər";
+            bBI_ExportXlsx.Caption = Resources.Common_ExportToExcel;
             bBI_ExportXlsx.Id = 6;
             bBI_ExportXlsx.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage");
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
@@ -291,7 +291,7 @@ namespace Foxoft
             // 
             // bBI_CurrAccDelete
             // 
-            bBI_CurrAccDelete.Caption = "Sil";
+            bBI_CurrAccDelete.Caption = Resources.Common_Delete;
             bBI_CurrAccDelete.Id = 7;
             bBI_CurrAccDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccDelete.ImageOptions.SvgImage");
             bBI_CurrAccDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Delete);
@@ -300,7 +300,7 @@ namespace Foxoft
             // 
             // bBI_CurAccRefresh
             // 
-            bBI_CurAccRefresh.Caption = "Yenilə";
+            bBI_CurAccRefresh.Caption = Resources.Common_Refresh;
             bBI_CurAccRefresh.Id = 8;
             bBI_CurAccRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccRefresh.ImageOptions.SvgImage");
             bBI_CurAccRefresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
@@ -309,35 +309,35 @@ namespace Foxoft
             // 
             // barButtonItem3
             // 
-            barButtonItem3.Caption = "Musteri ile Haqq Hesab";
+            barButtonItem3.Caption = "Musteri ile Haqq Hesab"; // TODO: add to resources if needed
             barButtonItem3.Id = 25;
             barButtonItem3.Name = "barButtonItem3";
             barButtonItem3.ItemClick += barButtonItem3_ItemClick;
             // 
             // barButtonItem4
             // 
-            barButtonItem4.Caption = "Malin Butun Hereketi";
+            barButtonItem4.Caption = "Malin Butun Hereketi"; // TODO: add to resources if needed
             barButtonItem4.Id = 26;
             barButtonItem4.Name = "barButtonItem4";
             barButtonItem4.ItemClick += barButtonItem4_ItemClick;
             // 
             // BBI_test
             // 
-            BBI_test.Caption = "test";
+            BBI_test.Caption = Resources.Common_Test;
             BBI_test.Id = 27;
             BBI_test.Name = "BBI_test";
             BBI_test.ItemClick += BBI_test_ItemClick;
             // 
             // BBI_query
             // 
-            BBI_query.Caption = "Sorğu";
+            BBI_query.Caption = Resources.Common_Query; // can be moved to resources if needed
             BBI_query.Id = 28;
             BBI_query.Name = "BBI_query";
             BBI_query.ItemClick += BBI_query_ItemClick;
             // 
             // BSI_Reports
             // 
-            BSI_Reports.Caption = "Hesabat";
+            BSI_Reports.Caption = Resources.Common_Report;
             BSI_Reports.Id = 30;
             BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
             BSI_Reports.Name = "BSI_Reports";
@@ -346,7 +346,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Cari Hesab";
+            ribbonPage1.Text = Resources.Form_CashRegisterList_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
@@ -355,26 +355,26 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_CurrAccDelete);
             ribbonPageGroup1.ItemLinks.Add(bBI_CurAccRefresh);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "İdarə";
+            ribbonPageGroup1.Text = Resources.Form_CashRegisterList_RibbonGroup_Manage;
             // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.ItemLinks.Add(bBI_ExportXlsx);
             ribbonPageGroup3.ItemLinks.Add(BSI_Reports);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Hesabat";
+            ribbonPageGroup3.Text = Resources.Form_CashRegisterList_RibbonGroup_Report;
             // 
             // ribbonPage3
             // 
             ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2 });
             ribbonPage3.Name = "ribbonPage3";
-            ribbonPage3.Text = "Ayarlar";
+            ribbonPage3.Text = Resources.Form_CashRegisterList_RibbonPage_Settings;
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(BBI_query);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Data";
+            ribbonPageGroup2.Text = Resources.Form_CashRegisterList_RibbonGroup_Data;
             // 
             // ribbonStatusBar1
             // 
@@ -407,7 +407,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = "Cari Hesablar";
+            Text = Resources.Form_CashRegisterList_Caption;
             Activated += FormCashRegisterList_Activated;
             Load += FormCashRegisterList_Load;
             VisibleChanged += FormCashRegisterList_VisibleChanged;

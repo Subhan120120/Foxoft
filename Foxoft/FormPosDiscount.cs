@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using Foxoft.Properties;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -65,7 +66,6 @@ namespace Foxoft
             decimal val = Convert.ToDecimal(textEdit.EditValue);
             if (val < 0)
                 e.Cancel = true;
-
             else if (val > 100)
                 e.Cancel = true;
         }
@@ -73,8 +73,8 @@ namespace Foxoft
         private void textEditDiscountRate_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
-            e.WindowCaption = "Diqqət";
-            e.ErrorText = "Dəyər 0 ilə 100 arasında olmalıdır";
+            e.WindowCaption = Resources.Common_Attention;
+            e.ErrorText = Resources.Form_PosDiscount_Validation_DiscountRateRange;
         }
 
         private void textEditNetAmount_Validating(object sender, CancelEventArgs e)
@@ -83,7 +83,6 @@ namespace Foxoft
             decimal val = Convert.ToDecimal(textEdit.EditValue);
             if (val < 0)
                 e.Cancel = true;
-
             else if (val > Amount)
                 e.Cancel = true;
         }
@@ -91,8 +90,8 @@ namespace Foxoft
         private void textEditNetAmount_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
-            e.WindowCaption = "Diqqət";
-            e.ErrorText = "Dəyər 0 ilə " + Amount.ToString() + " arasında olmalıdır";
+            e.WindowCaption = Resources.Common_Attention;
+            e.ErrorText = string.Format(Resources.Form_PosDiscount_Validation_NetAmountRange, Amount);
         }
 
         private void simpleButtonOk_Click(object sender, EventArgs e)
@@ -127,6 +126,5 @@ namespace Foxoft
                     break;
             }
         }
-
     }
 }

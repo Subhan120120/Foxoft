@@ -61,7 +61,7 @@ namespace Foxoft
             productsFolder = Path.Combine(settingStore.ImageFolder, "Products");
             reportClass = new ReportClass(settingStore.DesignFileFolder);
 
-            string activeFilterStr = "[StoreCode] = \'" + settingStore.StoreCode + "\'";
+            string activeFilterStr = $"[{nameof(SettingStore.StoreCode)}] = '" + settingStore.StoreCode + "'";
             reportClass.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_ProductList);
 
             AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore?.ImageFolder);
@@ -70,7 +70,7 @@ namespace Foxoft
 
             RepositoryItemPictureEdit riPictureEdit = new();
             colImage.FieldName = "Image";
-            colImage.Caption = "Şəkil";
+            colImage.Caption = Resources.Form_ProductList_Column_Image;
             colImage.UnboundType = UnboundColumnType.Object;
             colImage.OptionsColumn.AllowEdit = false;
             colImage.Visible = true;
@@ -162,8 +162,11 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "FormProductList.xml";
-            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
-            string layoutFileDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
+            string layoutFileDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Foxoft",
+                Settings.Default.CompanyCode,
+                "Layout Xml Files");
 
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
@@ -178,12 +181,21 @@ namespace Foxoft
             colBalance = gV_ProductList.Columns[nameof(DcProduct.Balance)];
             colProductCost = gV_ProductList.Columns[nameof(DcProduct.ProductCost)];
 
-            gV_ProductList.OptionsFind.FindFilterColumns = "*;Məhsulun Geniş Adı;" + nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
-            gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+            // Qeyd: "Məhsulun Geniş Adı" burada SQL sorğusundakı sütun alias-ı kimi istifadə olunur
+            gV_ProductList.OptionsFind.FindFilterColumns =
+                "*;Məhsulun Geniş Adı;" +
+                nameof(DcProduct.ProductDesc) + ';' +
+                nameof(DcProduct.HierarchyCode);
+
+            gV_ProductList.OptionsFind.FindNullPrompt = Resources.Form_ProductList_FindPanelPrompt;
 
             string fileName = "FormProductList.xml";
-            //string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
-            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+            string layoutFilePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Foxoft",
+                Settings.Default.CompanyCode,
+                "Layout Xml Files",
+                fileName);
 
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
 
@@ -213,6 +225,7 @@ namespace Foxoft
         }
 
         public Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
+
         private void gV_ProductList_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
             if (e.Column.FieldName != "Image" || !e.IsGetData) return;
@@ -267,15 +280,15 @@ namespace Foxoft
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_ProductList");
             if (dcReport is not null)
             {
-                if (!String.IsNullOrEmpty(dcReport.ReportQuery))
+                if (!string.IsNullOrEmpty(dcReport.ReportQuery))
                 {
-                    string tArr = String.Join(",", productTypeArr);
-                    string filtered = "[ProductTypeCode] IN (" + tArr + ") ";
+                    string tArr = string.Join(",", productTypeArr);
+                    string filtered = $"[{nameof(DcProduct.ProductTypeCode)}] IN ({tArr}) ";
 
                     if (productCodes is not null && productCodes.Length > 0)
                     {
-                        string pArr = String.Join(",", productCodes.Select(x => $"'{x.Replace("'", "''")}'"));
-                        filtered += " AND [ProductCode] IN (" + pArr + ") ";
+                        string pArr = string.Join(",", productCodes.Select(x => $"'{x.Replace("'", "''")}'"));
+                        filtered += $" AND [{nameof(DcProduct.ProductCode)}] IN ({pArr}) ";
                     }
 
                     if (isDisabled.HasValue)
@@ -297,7 +310,7 @@ namespace Foxoft
 
             if (gV_ProductList.FocusedRowHandle >= 0)
             {
-                object productCode = gV_ProductList.GetFocusedRowCellValue("ProductCode");
+                object productCode = gV_ProductList.GetFocusedRowCellValue(nameof(DcProduct.ProductCode));
                 if (productCode is not null)
                     dcProduct = efMethods.SelectProduct(productCode.ToString(), productTypeArr);
             }
@@ -306,7 +319,6 @@ namespace Foxoft
 
             gV_ProductList.BestFitColumns();
             gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
-
         }
 
         private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -315,7 +327,7 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object productCode = view.GetFocusedRowCellValue(nameof(dcProduct.ProductCode));
+                object productCode = view.GetFocusedRowCellValue(nameof(DcProduct.ProductCode));
                 if (productCode is not null)
                     dcProduct = efMethods.SelectProduct(productCode.ToString(), productTypeArr);
             }
@@ -340,7 +352,11 @@ namespace Foxoft
 
         private void btn_productEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (dcProduct is null) { MessageBox.Show("Məhsul Seçilməyib"); return; }
+            if (dcProduct is null)
+            {
+                MessageBox.Show(Resources.Form_ProductList_Message_ProductNotSelected, Resources.Common_Attention);
+                return;
+            }
 
             using FormProduct formProduct = new(dcProduct.ProductTypeCode, dcProduct.ProductCode);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
@@ -365,7 +381,6 @@ namespace Foxoft
 
                 gV_ProductList.FocusedRowHandle = fr;
             }
-
         }
 
         private void gC_ProductList_ProcessGridKey(object sender, KeyEventArgs e)
@@ -383,9 +398,9 @@ namespace Foxoft
                 if (e.KeyCode == Keys.C && e.Control)
                 {
                     object cellValue = view.GetFocusedValue();
-                    if (view.FocusedColumn == colImage)
-                        Clipboard.SetImage((Image)cellValue);
-                    else
+                    if (view.FocusedColumn == colImage && cellValue is Image image)
+                        Clipboard.SetImage(image);
+                    else if (cellValue is not null)
                         Clipboard.SetText(cellValue.ToString());
 
                     e.Handled = true;
@@ -413,7 +428,6 @@ namespace Foxoft
                             Clipboard.SetImage(img);
                         }
                     }
-                    ;
 
                     e.Handled = true;
                 }
@@ -431,7 +445,7 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object productCode = view.GetFocusedRowCellValue(nameof(dcProduct.ProductCode));
+                object productCode = view.GetFocusedRowCellValue(nameof(DcProduct.ProductCode));
                 if (productCode is not null)
                     dcProduct = efMethods.SelectProduct(productCode.ToString(), productTypeArr);
             }
@@ -445,40 +459,7 @@ namespace Foxoft
 
         private void gV_ProductList_RowCellStyle(object sender, RowCellStyleEventArgs e)
         {
-            //GridView gridView = sender as GridView;
-
-            //try
-            //{
-            //   // Apply the ReadOnly style  
-            //   if (e.RowHandle >= 0 && e.Column == colBalance)
-            //   {
-            //      GridViewInfo viewInfo = gridView.GetViewInfo() as GridViewInfo;
-            //      GridDataRowInfo rowInfo = viewInfo.RowsInfo.GetInfoByHandle(e.RowHandle) as GridDataRowInfo;
-            //      // Check if there are style conditions  
-            //      if (rowInfo == null || (rowInfo != null && rowInfo.ConditionInfo.GetCellAppearance(e.Column) == null))
-            //      {
-            //         // Check if there are FormatRules that should override the ReadOnly style  
-            //         bool hasrules = false;
-            //         foreach (var rule in gridView.FormatRules)
-            //         {
-            //            if (rule.IsFit(e.CellValue, gridView.GetDataSourceRowIndex(e.RowHandle)))
-            //            {
-            //               hasrules = true;
-            //               break;
-            //            }
-            //         }
-            //         if (!hasrules)
-            //            e.Appearance.ForeColor = Color.Gray;
-            //      }
-            //   }
-            //   // This is to fix the selection color when a color is set for the column  
-            //   if (e.Column.AppearanceCell.Options.UseBackColor && gridView.IsCellSelected(e.RowHandle, e.Column))
-            //      e.Appearance.BackColor = gridView.PaintAppearance.SelectedRow.BackColor;
-            //}
-            //catch (Exception ex)
-            //{
-            //   System.Diagnostics.Debug.Print(ex.Message);
-            //}
+            // stil üçün istifadə edilmir (şərh olaraq saxlanılıb)
         }
 
         private void gV_ProductList_RowStyle(object sender, RowStyleEventArgs e)
@@ -498,11 +479,23 @@ namespace Foxoft
         {
             if (efMethods.ProductExist(dcProduct.ProductCode))
             {
-                if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Silmek Isteyirsiz? \n " + dcProduct.ProductDesc, "actions_delete")) == DialogResult.OK)
+                if (XtraMessageBox.Show(
+                        xtraMessageBox(
+                            Resources.Common_Attention,
+                            string.Format(Resources.Form_ProductList_Message_DeleteProductConfirm, dcProduct.ProductDesc),
+                            "actions_delete")) == DialogResult.OK)
                 {
                     if (efMethods.BarcodeExistByProduct(dcProduct.ProductCode))
-                        if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Barkodları da Silmək istəyirsiz? \n " + dcProduct.ProductDesc, "barcode")) == DialogResult.OK)
+                    {
+                        if (XtraMessageBox.Show(
+                                xtraMessageBox(
+                                    Resources.Common_Attention,
+                                    string.Format(Resources.Form_ProductList_Message_DeleteBarcodeConfirm, dcProduct.ProductDesc),
+                                    "barcode")) == DialogResult.OK)
+                        {
                             efMethods.DeleteBarcodesByProduct(dcProduct.ProductCode);
+                        }
+                    }
 
                     efMethods.DeleteProduct(dcProduct);
 
@@ -520,7 +513,9 @@ namespace Foxoft
                 }
             }
             else
-                XtraMessageBox.Show("Silinmeli olan mal yoxdur");
+            {
+                XtraMessageBox.Show(Resources.Form_ProductList_Message_NoProductToDelete, Resources.Common_Attention);
+            }
         }
 
         private void bBI_ProductRefresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -541,7 +536,6 @@ namespace Foxoft
             if (e.MenuType == GridMenuType.Column)
             {
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
-                //menu.Items.Clear();
                 if (menu.Column != null)
                 {
                     menu.Items.Add(CreateMenuItem("Save Layout", menu.Column, null));
@@ -552,7 +546,11 @@ namespace Foxoft
 
         DXMenuCheckItem CreateCheckItem(string caption, GridColumn column, Image image)
         {
-            DXMenuCheckItem item = new DXMenuCheckItem(caption, gV_ProductList.OptionsFind.FindFilterColumns.Contains(column.FieldName), image, new EventHandler(MenuCheckItem_Click));
+            DXMenuCheckItem item = new DXMenuCheckItem(
+                caption,
+                gV_ProductList.OptionsFind.FindFilterColumns.Contains(column.FieldName),
+                image,
+                new EventHandler(MenuCheckItem_Click));
             item.Tag = new MenuColumnInfo(column);
             return item;
         }
@@ -666,13 +664,12 @@ namespace Foxoft
             if (asd != null)
             {
                 gV_ProductList.SetAutoFilterValue(colProductCode, asd.ProductCode, AutoFilterCondition.Default);
-
                 gV_ProductList.FocusedRowHandle = gV_ProductList.GetVisibleRowHandle(0);
             }
-
             else
+            {
                 gV_ProductList.SetAutoFilterValue(colProductCode, null, AutoFilterCondition.Default);
-
+            }
         }
 
         private XtraMessageBoxArgs xtraMessageBox(string caption, string text, string imageName)

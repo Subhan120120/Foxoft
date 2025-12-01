@@ -48,7 +48,13 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            FormCommonList<DcFeature> frm = new("F", "FeatureCode", editor.EditValue, "FeatureTypeId", Convert.ToInt32(editor.Name));
+            FormCommonList<DcFeature> frm = new(
+                "F",
+                nameof(DcFeature.FeatureCode),
+                editor.EditValue,
+                nameof(DcFeature.FeatureTypeId),
+                Convert.ToInt32(editor.Name));
+
             if (DialogResult.OK == frm.ShowDialog())
                 editor.EditValue = frm.Value_Id;
         }
@@ -61,7 +67,11 @@ namespace Foxoft
 
                 if (edit is ButtonEdit && edit is not null && edit.EditValue is not null)
                 {
-                    efMethods.UpdateDcFeature_Value(Convert.ToByte(edit.Name), dcProduct.ProductCode, edit.EditValue.ToString().Trim());
+                    efMethods.UpdateDcFeature_Value(
+                        Convert.ToByte(edit.Name),
+                        dcProduct.ProductCode,
+                        edit.EditValue.ToString().Trim());
+
                     DialogResult = DialogResult.OK;
                 }
             }

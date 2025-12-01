@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraEditors;
+﻿using DevExpress.Utils.Svg;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -65,13 +66,13 @@ namespace Foxoft
             // 
             // BBI_query
             // 
-            BBI_query.Caption = "Sorğu";
+            BBI_query.Caption = Resources.Common_Query;
             BBI_query.Id = 23;
             BBI_query.Name = "BBI_query";
             // 
             // bBI_ExportExcel
             // 
-            bBI_ExportExcel.Caption = "Excele At";
+            bBI_ExportExcel.Caption = Resources.Common_ExportToExcel;
             bBI_ExportExcel.Id = 5;
             bBI_ExportExcel.Name = "bBI_ExportExcel";
             bBI_ExportExcel.ItemClick += bBI_ExportExcel_ItemClick;
@@ -80,7 +81,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Əməliyatlar";
+            ribbonPage1.Text = Resources.Common_Operations;
             // 
             // ribbonPageGroup1
             // 
@@ -89,11 +90,11 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_Delete);
             ribbonPageGroup1.ItemLinks.Add(bBI_Refresh);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Alətlər";
+            ribbonPageGroup1.Text = Resources.Common_Tools;
             // 
             // BBI_New
             // 
-            BBI_New.Caption = "Yeni";
+            BBI_New.Caption = Resources.Common_New;
             BBI_New.Id = 1;
             BBI_New.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
             BBI_New.Name = "BBI_New";
@@ -101,7 +102,7 @@ namespace Foxoft
             // 
             // BBI_Edit
             // 
-            BBI_Edit.Caption = "Dəyiş";
+            BBI_Edit.Caption = Resources.Common_Edit;
             BBI_Edit.Id = 2;
             BBI_Edit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
             BBI_Edit.Name = "BBI_Edit";
@@ -109,7 +110,7 @@ namespace Foxoft
             // 
             // bBI_Delete
             // 
-            bBI_Delete.Caption = "Sil";
+            bBI_Delete.Caption = Resources.Common_Delete;
             bBI_Delete.Id = 8;
             bBI_Delete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Delete);
             bBI_Delete.Name = "bBI_Delete";
@@ -117,7 +118,7 @@ namespace Foxoft
             // 
             // bBI_Refresh
             // 
-            bBI_Refresh.Caption = "Yenilə";
+            bBI_Refresh.Caption = Resources.Common_Refresh;
             bBI_Refresh.Id = 9;
             bBI_Refresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
             bBI_Refresh.Name = "bBI_Refresh";
@@ -127,14 +128,14 @@ namespace Foxoft
             // 
             ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2 });
             ribbonPage2.Name = "ribbonPage2";
-            ribbonPage2.Text = "Ayarlar";
+            ribbonPage2.Text = Resources.Common_Settings;
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(BBI_query);
             ribbonPageGroup2.ItemLinks.Add(bBI_ExportExcel);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Data";
+            ribbonPageGroup2.Text = Resources.Common_Data;
             // 
             // svgImageCollection1
             // 
@@ -179,7 +180,6 @@ namespace Foxoft
             KeyPreview = true;
             Name = "FormCommonList";
             Ribbon = ribbonControl1;
-            Text = "FormCommonList";
             Activated += FormCommonList_Activated;
             Load += FormCommonList_Load;
             KeyDown += FormCommonList_KeyDown;

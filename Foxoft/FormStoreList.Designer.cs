@@ -1,5 +1,15 @@
-﻿
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
 using DevExpress.Utils;
+using DevExpress.XtraBars;
+using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Grid;
+using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -33,52 +43,49 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStoreList));
-            gC_StoreList = new DevExpress.XtraGrid.GridControl();
+            gC_StoreList = new GridControl();
             dcCurrAccsBindingSource = new BindingSource(components);
-            gV_StoreList = new DevExpress.XtraGrid.Views.Grid.GridView();
-            colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCurrAccTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCompanyCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colOfficeCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colFirstName = new DevExpress.XtraGrid.Columns.GridColumn();
-            colLastName = new DevExpress.XtraGrid.Columns.GridColumn();
-            colFatherName = new DevExpress.XtraGrid.Columns.GridColumn();
-            colIdentityNum = new DevExpress.XtraGrid.Columns.GridColumn();
-            colTaxNum = new DevExpress.XtraGrid.Columns.GridColumn();
-            colDataLanguageCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCreditLimit = new DevExpress.XtraGrid.Columns.GridColumn();
-            colIsVip = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCustomerTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colVendorTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCustomerPosDiscountRate = new DevExpress.XtraGrid.Columns.GridColumn();
-            colIsDisabled = new DevExpress.XtraGrid.Columns.GridColumn();
-            colBonusCardNum = new DevExpress.XtraGrid.Columns.GridColumn();
-            colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPhoneNum = new DevExpress.XtraGrid.Columns.GridColumn();
-            repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
-            colBirthDate = new DevExpress.XtraGrid.Columns.GridColumn();
-            colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
-            ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            bBI_CurrAccNew = new DevExpress.XtraBars.BarButtonItem();
-            bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
-            bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
-            bBI_CurrAccDelete = new DevExpress.XtraBars.BarButtonItem();
-            bBI_CurAccRefresh = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
-            BBI_test = new DevExpress.XtraBars.BarButtonItem();
-            BBI_query = new DevExpress.XtraBars.BarButtonItem();
-            BSI_Reports = new DevExpress.XtraBars.BarSubItem();
-            ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
-            ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            gV_StoreList = new GridView();
+            colCurrAccCode = new GridColumn();
+            colCurrAccDesc = new GridColumn();
+            colCurrAccTypeCode = new GridColumn();
+            colCompanyCode = new GridColumn();
+            colOfficeCode = new GridColumn();
+            colStoreCode = new GridColumn();
+            colFirstName = new GridColumn();
+            colLastName = new GridColumn();
+            colFatherName = new GridColumn();
+            colIdentityNum = new GridColumn();
+            colTaxNum = new GridColumn();
+            colDataLanguageCode = new GridColumn();
+            colCreditLimit = new GridColumn();
+            colIsVip = new GridColumn();
+            colCustomerTypeCode = new GridColumn();
+            colVendorTypeCode = new GridColumn();
+            colCustomerPosDiscountRate = new GridColumn();
+            colIsDisabled = new GridColumn();
+            colBonusCardNum = new GridColumn();
+            colAddress = new GridColumn();
+            colPhoneNum = new GridColumn();
+            repositoryItemTextEdit1 = new RepositoryItemTextEdit();
+            colBirthDate = new GridColumn();
+            colBalance = new GridColumn();
+            ribbonControl1 = new RibbonControl();
+            bBI_CurrAccNew = new BarButtonItem();
+            bBI_CurAccEdit = new BarButtonItem();
+            bBI_ExportXlsx = new BarButtonItem();
+            bBI_CurrAccDelete = new BarButtonItem();
+            bBI_CurAccRefresh = new BarButtonItem();
+            BBI_query = new BarButtonItem();
+            BSI_Reports = new BarSubItem();
+            ribbonPage1 = new RibbonPage();
+            ribbonPageGroup1 = new RibbonPageGroup();
+            ribbonPageGroup3 = new RibbonPageGroup();
+            ribbonPage3 = new RibbonPage();
+            ribbonPageGroup2 = new RibbonPageGroup();
+            ribbonStatusBar1 = new RibbonStatusBar();
+            popupMenuReports = new PopupMenu(components);
+            ribbonPage2 = new RibbonPage();
             ((System.ComponentModel.ISupportInitialize)gC_StoreList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_StoreList).BeginInit();
@@ -87,26 +94,30 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
             SuspendLayout();
             // 
-            // gC_CashRegList
+            // gC_StoreList
             // 
             gC_StoreList.DataSource = dcCurrAccsBindingSource;
             gC_StoreList.Dock = DockStyle.Fill;
             gC_StoreList.Location = new Point(0, 158);
             gC_StoreList.MainView = gV_StoreList;
-            gC_StoreList.Name = "gC_CashRegList";
-            gC_StoreList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemTextEdit1 });
+            gC_StoreList.Name = "gC_StoreList";
+            gC_StoreList.RepositoryItems.AddRange(new RepositoryItem[] { repositoryItemTextEdit1 });
             gC_StoreList.Size = new Size(858, 413);
             gC_StoreList.TabIndex = 0;
             gC_StoreList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_StoreList });
             gC_StoreList.Load += gC_CurrAccList_Load;
             gC_StoreList.ProcessGridKey += gC_CurrAccList_ProcessGridKey;
             // 
-            // gV_CashRegList
+            // dcCurrAccsBindingSource
             // 
-            gV_StoreList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCurrAccCode, colCurrAccDesc, colCurrAccTypeCode, colCompanyCode, colOfficeCode, colStoreCode, colFirstName, colLastName, colFatherName, colIdentityNum, colTaxNum, colDataLanguageCode, colCreditLimit, colIsVip, colCustomerTypeCode, colVendorTypeCode, colCustomerPosDiscountRate, colIsDisabled, colBonusCardNum, colAddress, colPhoneNum, colBirthDate, colBalance });
+            dcCurrAccsBindingSource.DataSource = typeof(DcCurrAcc);
+            // 
+            // gV_StoreList
+            // 
+            gV_StoreList.Columns.AddRange(new GridColumn[] { colCurrAccCode, colCurrAccDesc, colCurrAccTypeCode, colCompanyCode, colOfficeCode, colStoreCode, colFirstName, colLastName, colFatherName, colIdentityNum, colTaxNum, colDataLanguageCode, colCreditLimit, colIsVip, colCustomerTypeCode, colVendorTypeCode, colCustomerPosDiscountRate, colIsDisabled, colBonusCardNum, colAddress, colPhoneNum, colBirthDate, colBalance });
             gV_StoreList.CustomizationFormBounds = new Rectangle(760, 248, 264, 272);
             gV_StoreList.GridControl = gC_StoreList;
-            gV_StoreList.Name = "gV_CashRegList";
+            gV_StoreList.Name = "gV_StoreList";
             gV_StoreList.OptionsBehavior.Editable = false;
             gV_StoreList.OptionsFind.FindDelay = 100;
             gV_StoreList.OptionsView.ShowGroupPanel = false;
@@ -255,35 +266,35 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, barButtonItem3, barButtonItem4, BBI_test, BBI_query, BSI_Reports });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, BBI_query, BSI_Reports });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 31;
             ribbonControl1.Name = "ribbonControl1";
-            ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage3 });
+            ribbonControl1.Pages.AddRange(new RibbonPage[] { ribbonPage1, ribbonPage3 });
             ribbonControl1.Size = new Size(858, 158);
             ribbonControl1.StatusBar = ribbonStatusBar1;
             // 
             // bBI_CurrAccNew
             // 
-            bBI_CurrAccNew.Caption = "Yeni";
+            bBI_CurrAccNew.Caption = Resources.Common_New;
             bBI_CurrAccNew.Id = 1;
             bBI_CurrAccNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccNew.ImageOptions.SvgImage");
-            bBI_CurrAccNew.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
+            bBI_CurrAccNew.ItemShortcut = new BarShortcut(Keys.Control | Keys.N);
             bBI_CurrAccNew.Name = "bBI_CurrAccNew";
             bBI_CurrAccNew.ItemClick += bBI_CurrAccNew_ItemClick;
             // 
             // bBI_CurAccEdit
             // 
-            bBI_CurAccEdit.Caption = "Dəyiş";
+            bBI_CurAccEdit.Caption = Resources.Common_Edit;
             bBI_CurAccEdit.Id = 2;
             bBI_CurAccEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccEdit.ImageOptions.SvgImage");
-            bBI_CurAccEdit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
+            bBI_CurAccEdit.ItemShortcut = new BarShortcut(Keys.F2);
             bBI_CurAccEdit.Name = "bBI_CurAccEdit";
             bBI_CurAccEdit.ItemClick += bBI_CurrAccEdit_ItemClick;
             // 
             // bBI_ExportXlsx
             // 
-            bBI_ExportXlsx.Caption = "Excelə Göndər";
+            bBI_ExportXlsx.Caption = Resources.Common_ExportToExcel;
             bBI_ExportXlsx.Id = 6;
             bBI_ExportXlsx.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage");
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
@@ -291,46 +302,25 @@ namespace Foxoft
             // 
             // bBI_CurrAccDelete
             // 
-            bBI_CurrAccDelete.Caption = "Sil";
+            bBI_CurrAccDelete.Caption = Resources.Common_Delete;
             bBI_CurrAccDelete.Id = 7;
             bBI_CurrAccDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccDelete.ImageOptions.SvgImage");
-            bBI_CurrAccDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Delete);
+            bBI_CurrAccDelete.ItemShortcut = new BarShortcut(Keys.Delete);
             bBI_CurrAccDelete.Name = "bBI_CurrAccDelete";
             bBI_CurrAccDelete.ItemClick += bBI_CurrAccDelete_ItemClick;
             // 
             // bBI_CurAccRefresh
             // 
-            bBI_CurAccRefresh.Caption = "Yenilə";
+            bBI_CurAccRefresh.Caption = Resources.Common_Refresh;
             bBI_CurAccRefresh.Id = 8;
             bBI_CurAccRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccRefresh.ImageOptions.SvgImage");
-            bBI_CurAccRefresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
+            bBI_CurAccRefresh.ItemShortcut = new BarShortcut(Keys.F5);
             bBI_CurAccRefresh.Name = "bBI_CurAccRefresh";
             bBI_CurAccRefresh.ItemClick += bBI_CurAccRefresh_ItemClick;
             // 
-            // barButtonItem3
-            // 
-            barButtonItem3.Caption = "Musteri ile Haqq Hesab";
-            barButtonItem3.Id = 25;
-            barButtonItem3.Name = "barButtonItem3";
-            barButtonItem3.ItemClick += barButtonItem3_ItemClick;
-            // 
-            // barButtonItem4
-            // 
-            barButtonItem4.Caption = "Malin Butun Hereketi";
-            barButtonItem4.Id = 26;
-            barButtonItem4.Name = "barButtonItem4";
-            barButtonItem4.ItemClick += barButtonItem4_ItemClick;
-            // 
-            // BBI_test
-            // 
-            BBI_test.Caption = "test";
-            BBI_test.Id = 27;
-            BBI_test.Name = "BBI_test";
-            BBI_test.ItemClick += BBI_test_ItemClick;
-            // 
             // BBI_query
             // 
-            BBI_query.Caption = "Sorğu";
+            BBI_query.Caption = Resources.Common_Query;
             BBI_query.Id = 28;
             BBI_query.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_query.ImageOptions.SvgImage");
             BBI_query.Name = "BBI_query";
@@ -338,16 +328,16 @@ namespace Foxoft
             // 
             // BSI_Reports
             // 
-            BSI_Reports.Caption = "Hesabat";
+            BSI_Reports.Caption = Resources.ERP_ACE_Reports;
             BSI_Reports.Id = 30;
             BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
             BSI_Reports.Name = "BSI_Reports";
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
+            ribbonPage1.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Cari Hesab";
+            ribbonPage1.Text = Resources.ERP_ACE_StoreList;
             // 
             // ribbonPageGroup1
             // 
@@ -356,26 +346,26 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_CurrAccDelete);
             ribbonPageGroup1.ItemLinks.Add(bBI_CurAccRefresh);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "İdarə";
+            ribbonPageGroup1.Text = Resources.Common_Operations;
             // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.ItemLinks.Add(bBI_ExportXlsx);
             ribbonPageGroup3.ItemLinks.Add(BSI_Reports);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Hesabat";
+            ribbonPageGroup3.Text = Resources.Common_Report;
             // 
             // ribbonPage3
             // 
-            ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2 });
+            ribbonPage3.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup2 });
             ribbonPage3.Name = "ribbonPage3";
-            ribbonPage3.Text = "Ayarlar";
+            ribbonPage3.Text = Resources.Common_Settings;
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(BBI_query);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Data";
+            ribbonPageGroup2.Text = Resources.Common_Data;
             // 
             // ribbonStatusBar1
             // 
@@ -408,7 +398,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = "Cari Hesablar";
+            Text = Resources.ERP_ACE_StoreList;
             Activated += FormStoreList_Activated;
             KeyDown += FormStoreList_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_StoreList).EndInit();
@@ -423,51 +413,48 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_StoreList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_StoreList;
-        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
-        private DevExpress.XtraBars.BarButtonItem bBI_CurrAccNew;
-        private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
-        private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
-        private System.Windows.Forms.BindingSource dcCurrAccsBindingSource;
-        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
-        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccTypeCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colCompanyCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colOfficeCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colStoreCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colFirstName;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastName;
-        private DevExpress.XtraGrid.Columns.GridColumn colFatherName;
-        private DevExpress.XtraGrid.Columns.GridColumn colIdentityNum;
-        private DevExpress.XtraGrid.Columns.GridColumn colTaxNum;
-        private DevExpress.XtraGrid.Columns.GridColumn colDataLanguageCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colCreditLimit;
-        private DevExpress.XtraGrid.Columns.GridColumn colIsVip;
-        private DevExpress.XtraGrid.Columns.GridColumn colCustomerTypeCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colVendorTypeCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colCustomerPosDiscountRate;
-        private DevExpress.XtraGrid.Columns.GridColumn colIsDisabled;
-        private DevExpress.XtraGrid.Columns.GridColumn colBonusCardNum;
-        private DevExpress.XtraGrid.Columns.GridColumn colAddress;
-        private DevExpress.XtraGrid.Columns.GridColumn colPhoneNum;
-        private DevExpress.XtraGrid.Columns.GridColumn colBirthDate;
-        private DevExpress.XtraGrid.Columns.GridColumn colBalance;
-        private DevExpress.XtraBars.BarButtonItem bBI_CurrAccDelete;
-        private DevExpress.XtraBars.BarButtonItem bBI_CurAccRefresh;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem4;
-        private DevExpress.XtraBars.BarButtonItem BBI_test;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
-        private DevExpress.XtraBars.BarButtonItem BBI_query;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
-        private DevExpress.XtraBars.PopupMenu popupMenuReports;
-        private DevExpress.XtraBars.BarSubItem BSI_Reports;
+        private GridControl gC_StoreList;
+        private GridView gV_StoreList;
+        private RibbonControl ribbonControl1;
+        private RibbonPage ribbonPage1;
+        private RibbonPageGroup ribbonPageGroup1;
+        private RibbonStatusBar ribbonStatusBar1;
+        private RibbonPage ribbonPage2;
+        private BarButtonItem bBI_CurrAccNew;
+        private BarButtonItem bBI_CurAccEdit;
+        private RibbonPageGroup ribbonPageGroup3;
+        private BarButtonItem bBI_ExportXlsx;
+        private BindingSource dcCurrAccsBindingSource;
+        private GridColumn colCurrAccCode;
+        private GridColumn colCurrAccDesc;
+        private GridColumn colCurrAccTypeCode;
+        private GridColumn colCompanyCode;
+        private GridColumn colOfficeCode;
+        private GridColumn colStoreCode;
+        private GridColumn colFirstName;
+        private GridColumn colLastName;
+        private GridColumn colFatherName;
+        private GridColumn colIdentityNum;
+        private GridColumn colTaxNum;
+        private GridColumn colDataLanguageCode;
+        private GridColumn colCreditLimit;
+        private GridColumn colIsVip;
+        private GridColumn colCustomerTypeCode;
+        private GridColumn colVendorTypeCode;
+        private GridColumn colCustomerPosDiscountRate;
+        private GridColumn colIsDisabled;
+        private GridColumn colBonusCardNum;
+        private GridColumn colAddress;
+        private GridColumn colPhoneNum;
+        private GridColumn colBirthDate;
+        private GridColumn colBalance;
+        private BarButtonItem bBI_CurrAccDelete;
+        private BarButtonItem bBI_CurAccRefresh;
+        private RibbonPage ribbonPage3;
+        private RibbonPageGroup ribbonPageGroup2;
+        private BarButtonItem BBI_query;
+        private RepositoryItemTextEdit repositoryItemTextEdit1;
+        private PopupMenu popupMenuReports;
+        private BarSubItem BSI_Reports;
     }
 }

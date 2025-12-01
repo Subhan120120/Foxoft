@@ -1,5 +1,4 @@
-﻿
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Utils;
@@ -35,7 +34,6 @@ namespace Foxoft
             gV_InvoiceLineList.OptionsFind.FindMode = FindMode.Always;
         }
 
-
         public FormInvoiceLineList(string[] processCode)
             : this()
         {
@@ -43,7 +41,8 @@ namespace Foxoft
             LoadInvoiveHeaders();
 
             string storeCode = Authorization.StoreCode;
-            gV_InvoiceLineList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+            gV_InvoiceLineList.ActiveFilterString =
+                $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{storeCode}'";
 
             gV_InvoiceLineList.BestFitColumns();
         }
@@ -52,33 +51,16 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-            //filteredData
-            //            .Include(x => x.DcCurrAcc)
-            //            .Include(x => x.TrInvoiceLines)
-            //            .Where(x => x.ProcessCode == processCode)
-            //            .OrderByDescending(x => x.DocumentDate)
-            //            .LoadAsync()
-            //            .ContinueWith(loadTask =>
-            //            {
-            //                LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
-
-            //                lV_invoiceHeader.ForEach(x =>
-            //                {
-            //                    x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount);
-            //                });
-
-            //                trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
-
-            //            }, TaskScheduler.FromCurrentSynchronizationContext());
-
             IQueryable<TrInvoiceLine> trInvoiceLines = dbContext.TrInvoiceLines;
-            IQueryable<TrInvoiceLine> filteredData = trInvoiceLines.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceLineList.ActiveFilterCriteria) as IQueryable<TrInvoiceLine>;
+            IQueryable<TrInvoiceLine> filteredData =
+                trInvoiceLines.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceLineList.ActiveFilterCriteria) as IQueryable<TrInvoiceLine>;
 
-
-            var headerList = filteredData.Include(x => x.TrInvoiceHeader)
+            var headerList = filteredData
+                        .Include(x => x.TrInvoiceHeader)
                         .ThenInclude(x => x.DcCurrAcc)
                         .Where(x => processCode.Contains(x.TrInvoiceHeader.ProcessCode) && x.TrInvoiceHeader.IsReturn == false)
-                        .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate).ThenByDescending(x => x.TrInvoiceHeader.DocumentTime)
+                        .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
+                        .ThenByDescending(x => x.TrInvoiceHeader.DocumentTime)
                         .Select(x => new
                         {
                             x.InvoiceLineId,
@@ -129,9 +111,6 @@ namespace Foxoft
             GridHitInfo info = view.CalcHitInfo(ea.Location);
             if ((info.InRow || info.InRowCell) && trInvoiceLine is not null)
             {
-                //info.RowHandle
-                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-
                 DialogResult = DialogResult.OK;
             }
         }
@@ -159,7 +138,7 @@ namespace Foxoft
                 if (e.KeyCode == Keys.C && e.Control)
                 {
                     object cellValue = view.GetFocusedValue();
-                    Clipboard.SetText(cellValue.ToString());
+                    Clipboard.SetText(cellValue?.ToString());
                 }
             }
         }
@@ -191,7 +170,6 @@ namespace Foxoft
 
             if (e.RowHandle >= 0)
             {
-                //string col = view.GetRowCellDisplayText(e.RowHandle, isre);
                 object isReturn = view.GetRowCellValue(e.RowHandle, colIsReturn);
                 bool value = (bool)isReturn;
 
@@ -237,7 +215,7 @@ namespace Foxoft
 
             string productCode = efMethods.SelectProductByBarcode(barcode)?.ProductCode;
 
-            if (String.IsNullOrEmpty(barcode))
+            if (string.IsNullOrEmpty(barcode))
             {
                 gV_InvoiceLineList.ActiveFilterCriteria = new BinaryOperator(colProductCode.FieldName, "");
             }
@@ -247,7 +225,6 @@ namespace Foxoft
             }
 
             gV_InvoiceLineList.RefreshData();
-
         }
     }
 }

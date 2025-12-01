@@ -1,32 +1,10 @@
-﻿
+﻿using DevExpress.Utils;
+using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormChange
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChange));
@@ -68,7 +46,7 @@ namespace Foxoft
             this.txtEdit_Cash.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.txtEdit_Cash.Properties.Appearance.Options.UseFont = true;
             this.txtEdit_Cash.Properties.Appearance.Options.UseTextOptions = true;
-            this.txtEdit_Cash.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtEdit_Cash.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
             this.txtEdit_Cash.Size = new System.Drawing.Size(183, 22);
             this.txtEdit_Cash.StyleController = this.lC_Root;
             this.txtEdit_Cash.TabIndex = 4;
@@ -80,7 +58,7 @@ namespace Foxoft
             this.txtEdit_Change.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 40F);
             this.txtEdit_Change.Properties.Appearance.Options.UseFont = true;
             this.txtEdit_Change.Properties.Appearance.Options.UseTextOptions = true;
-            this.txtEdit_Change.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtEdit_Change.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
             this.txtEdit_Change.Properties.Mask.EditMask = "n2";
             this.txtEdit_Change.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             this.txtEdit_Change.Properties.Mask.UseMaskAsDisplayFormat = true;
@@ -91,13 +69,13 @@ namespace Foxoft
             // btn_Ok
             // 
             this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.btn_Ok.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButtonOk.ImageOptions.SvgImage")));
+            this.btn_Ok.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Ok.ImageOptions.SvgImage")));
             this.btn_Ok.Location = new System.Drawing.Point(12, 112);
             this.btn_Ok.Name = "btn_Ok";
             this.btn_Ok.Size = new System.Drawing.Size(264, 90);
             this.btn_Ok.StyleController = this.lC_Root;
             this.btn_Ok.TabIndex = 6;
-            this.btn_Ok.Text = "simpleButton1";
+            this.btn_Ok.Text = Resources.Common_Ok;
             this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
             // 
             // lCG_Root
@@ -118,17 +96,17 @@ namespace Foxoft
             this.lCI_Cash.Location = new System.Drawing.Point(0, 0);
             this.lCI_Cash.Name = "lCI_Cash";
             this.lCI_Cash.Size = new System.Drawing.Size(268, 26);
-            this.lCI_Cash.Text = "Nağd ödəmə";
+            this.lCI_Cash.Text = Resources.Form_Change_Label_Cash;
             this.lCI_Cash.TextSize = new System.Drawing.Size(78, 13);
             // 
             // lCI_Change
             // 
             this.lCI_Change.Control = this.txtEdit_Change;
-            this.lCI_Change.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("layoutControlItemChange.ImageOptions.SvgImage")));
+            this.lCI_Change.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("lCI_Change.ImageOptions.SvgImage")));
             this.lCI_Change.Location = new System.Drawing.Point(0, 26);
             this.lCI_Change.Name = "lCI_Change";
             this.lCI_Change.Size = new System.Drawing.Size(268, 74);
-            this.lCI_Change.Text = "Pul qalığı";
+            this.lCI_Change.Text = Resources.Form_Change_Label_Change;
             this.lCI_Change.TextSize = new System.Drawing.Size(78, 32);
             // 
             // lCI_Ok
@@ -150,7 +128,7 @@ namespace Foxoft
             this.Controls.Add(this.lC_Root);
             this.Name = "FormChange";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormChange";
+            this.Text = Resources.Form_Change_Caption;
             this.Load += new System.EventHandler(this.FormChange_Load);
             ((System.ComponentModel.ISupportInitialize)(this.lC_Root)).EndInit();
             this.lC_Root.ResumeLayout(false);
@@ -161,10 +139,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Change)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Ok)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
 
         private DevExpress.XtraLayout.LayoutControl lC_Root;
         private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;

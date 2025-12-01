@@ -12,7 +12,7 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.AppCode;
 using Foxoft.Models;
-using Foxoft.Properties;
+using Foxoft.Properties; // Resources üçün
 using Microsoft.Data.SqlClient;
 using System.ComponentModel;
 using System.Data;
@@ -49,7 +49,7 @@ namespace Foxoft
             this.currAccTypeArr = currAccTypeArr;
             this.isDisabled = isDisabled;
 
-            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+            //string activeFilterStr = "[StoreCode] = '" + Authorization.StoreCode + "'";
 
             reportClass.AddReports(BSI_Reports, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
 
@@ -163,7 +163,6 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "FormCurrAccList.xml";
-            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
 
             string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
 
@@ -248,22 +247,6 @@ namespace Foxoft
 
         private void gV_CurrAccList_DoubleClick(object sender, EventArgs e)
         {
-            #region comment
-            //DXMouseEventArgs ea = e as DXMouseEventArgs;
-            //GridView view = sender as GridView;
-            //GridHitInfo info = view.CalcHitInfo(ea.Location);
-            //if (info.InRow || info.InRowCell)
-            //{
-            //    //info.RowHandle
-            //    string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-            //    dcCurrAcc = new DcCurrAcc();
-            //    string CurrAccCode = view.GetRowCellValue(view.FocusedRowHandle, view.Columns["CurrAccCode"]).ToString();
-            //    dcCurrAcc = efMethods.SelectCurrAcc(CurrAccCode);
-
-            //    DialogResult = DialogResult.OK;
-            //} 
-            #endregion
-
             if (dcCurrAcc is not null)
                 AcceptForm();
         }
@@ -326,7 +309,7 @@ namespace Foxoft
 
                 if (e.KeyCode == Keys.C && e.Control)
                 {
-                    string cellValue = gV_CurrAccList.GetFocusedValue().ToString();
+                    string cellValue = gV_CurrAccList.GetFocusedValue()?.ToString() ?? string.Empty;
                     Clipboard.SetText(cellValue);
                     e.Handled = true;
                 }
@@ -365,7 +348,7 @@ namespace Foxoft
             {
                 if (efMethods.CurrAccExist(dcCurrAcc.CurrAccCode))
                 {
-                    if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcCurrAcc.CurrAccDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    if (XtraMessageBox.Show(Resources.Common_DeleteConfirm + " \n " + dcCurrAcc.CurrAccDesc, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         efMethods.DeleteEntity(dcCurrAcc);
 
@@ -373,10 +356,10 @@ namespace Foxoft
                     }
                 }
                 else
-                    XtraMessageBox.Show("Silinmeli olan cari yoxdur");
+                    XtraMessageBox.Show(Resources.Form_CurrAccList_NoAccountToDelete);
             }
             else
-                XtraMessageBox.Show("Məhsul seçin");
+                XtraMessageBox.Show(Resources.Form_CurrAccList_SelectAccount);
         }
 
         private void bBI_CurAccRefresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -394,10 +377,10 @@ namespace Foxoft
             if (e.MenuType == GridMenuType.Column)
             {
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
-                //menu.Items.Clear();
                 if (menu.Column != null)
                 {
-                    menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
+                    // "Save Layout" -> resx
+                    menu.Items.Add(CreateItem(Resources.Common_SaveLayout, menu.Column, null));
                 }
             }
         }
@@ -417,8 +400,6 @@ namespace Foxoft
             if (info == null) return;
 
             SaveLayout();
-
-            //GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
         }
 
         class MenuColumnInfo
@@ -445,8 +426,8 @@ namespace Foxoft
         private void BBI_test_ItemClick(object sender, ItemClickEventArgs e)
         {
             SaveFileDialog sFD = new();
-            sFD.Filter = "Excel Faylı|*.xlsx";
-            sFD.Title = "Excel Faylı Yadda Saxla";
+            sFD.Filter = Resources.Common_File_ExcelFilter;
+            sFD.Title = Resources.Common_File_SaveExcel;
             sFD.FileName = this.Text;
             sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             sFD.DefaultExt = "*.xlsx";
@@ -457,7 +438,7 @@ namespace Foxoft
                 {
                     gC_CurrAccList.ExportToXlsx(sFD.FileName);
 
-                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    if (XtraMessageBox.Show(this, Resources.Common_OpenQuestion, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         Process p = new();
                         p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };

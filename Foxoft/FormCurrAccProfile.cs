@@ -5,6 +5,7 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraTreeList.Nodes;
 using Foxoft.Models;
+using Foxoft.Properties; // Resources
 using System.Data;
 
 namespace Foxoft
@@ -68,9 +69,7 @@ namespace Foxoft
 
         private void btnEdit_RoleCode_EditValueChanged(object sender, EventArgs e)
         {
-            //ButtonEdit buttonEdit = (ButtonEdit)sender;
-            //string roleCode = buttonEdit.EditValue?.ToString();
-            //LoadRoleClaim(roleCode);
+            // reserved for future
         }
 
         private void gV_CurrAccRole_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
@@ -112,7 +111,7 @@ namespace Foxoft
 
         private void BBI_Delete_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (XtraMessageBox.Show("Silmək istədiyinizə əminmisiniz?", "Diqqət", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (XtraMessageBox.Show(Resources.Common_DeleteConfirm, Resources.Common_Attention, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 int currAccRolId = Convert.ToInt32(gV_CurrAccRole.GetFocusedRowCellValue(colCurrAccRoleId));
 
@@ -130,9 +129,9 @@ namespace Foxoft
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            if (txtEdit_NewPassword.EditValue?.ToString() != txtEdit_ConfirmPassword.EditValue.ToString())
+            if (txtEdit_NewPassword.EditValue?.ToString() != txtEdit_ConfirmPassword.EditValue?.ToString())
             {
-                dxErrorProvider1.SetError(txtEdit_ConfirmPassword, "Təsdiq şifrəsi eyni deyil!");
+                dxErrorProvider1.SetError(txtEdit_ConfirmPassword, Resources.Common_Validation_PasswordConfirmMismatch);
                 return;
             }
             else
@@ -172,7 +171,6 @@ namespace Foxoft
                 TreeListNode node = e.Node;
 
                 SetChildNodesChecked(node, isChecked);
-
                 SetParentNodesChecked(node);
             }
         }
@@ -212,7 +210,6 @@ namespace Foxoft
 
             foreach (TreeListNode child in nodes)
             {
-
                 DcReport report = efMethods.SelectEntityById<DcReport>(Convert.ToInt32(child.GetValue("ReportId")));
                 bool chckd = (bool)child.GetValue("IsSelected");
 
@@ -236,6 +233,5 @@ namespace Foxoft
                 }
             }
         }
-
     }
 }

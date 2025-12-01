@@ -1,6 +1,6 @@
-﻿
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -216,7 +216,7 @@ namespace Foxoft
             Controls.Add(gC_InvoiceHeaderList);
             Name = "FormInvoiceHeaderList";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "FormInvoiceHeaderList";
+            Text = Resources.Form_InvoiceHeaderList_Caption;
             Activated += FormInvoiceHeaderList_Activated;
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceHeaderList).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();

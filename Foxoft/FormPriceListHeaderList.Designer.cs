@@ -1,4 +1,5 @@
 ﻿using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -67,7 +68,17 @@ namespace Foxoft
             // 
             // gV_priceListHeader
             // 
-            gV_priceListHeader.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPriceListHeaderId, colDocumentNumber, colDescription, colPriceListTypeCode, colDocumentDate, colDocumentTime, colDueDate, colDueTime, colIsConfirmed, colIsDisabled });
+            gV_priceListHeader.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+                colPriceListHeaderId,
+                colDocumentNumber,
+                colDescription,
+                colPriceListTypeCode,
+                colDocumentDate,
+                colDocumentTime,
+                colDueDate,
+                colDueTime,
+                colIsConfirmed,
+                colIsDisabled});
             gV_priceListHeader.DetailHeight = 303;
             gV_priceListHeader.GridControl = myGridControl1;
             gV_priceListHeader.Name = "gV_priceListHeader";
@@ -151,7 +162,7 @@ namespace Foxoft
             ClientSize = new System.Drawing.Size(1123, 470);
             Controls.Add(myGridControl1);
             Name = "FormPriceListHeaderList";
-            Text = "Qiymət Siyahısı";
+            Text = Resources.Form_PriceListHeaderList_Caption;
             ((System.ComponentModel.ISupportInitialize)myGridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trPriceListBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_priceListHeader).EndInit();

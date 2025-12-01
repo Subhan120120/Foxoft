@@ -3,14 +3,9 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -23,6 +18,10 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            // Form caption (ribbon form başlığı)
+            this.Text = Resources.Form_HierarchyFeatureType_Caption;
+
+            // Sütun başlıqları Display attributelə gəlir
             colHierarchyDesc.Caption = ReflectionExt.GetDisplayName<DcHierarchy>(x => x.HierarchyDesc);
             colHierarchyCode.Caption = ReflectionExt.GetDisplayName<TrHierarchyFeatureType>(x => x.HierarchyCode);
 
@@ -55,34 +54,36 @@ namespace Foxoft
 
         private void BBI_FeatureTypeAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //FormCommon<DcFeatureType> common = new FormCommon<DcFeatureType>("", true, "FeatureTypeId");
+            FormCommon<TrHierarchyFeatureType> common =
+                new("", true, nameof(TrHierarchyFeatureType.FeatureTypeId), "", nameof(TrHierarchyFeatureType.HierarchyCode), btn_Hierarchy.EditValue?.ToString());
 
-            FormCommon<TrHierarchyFeatureType> common = new("", true, "FeatureTypeId", "", "HierarchyCode", btn_Hierarchy.EditValue?.ToString());
             if (DialogResult.OK == common.ShowDialog())
                 LoadHierarchyFeatureType(btn_Hierarchy.EditValue?.ToString());
-
         }
 
         private void gV_PriceListLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-            if (e.Column.FieldName == "DcFeatureType.FeatureTypeName" && e.IsGetData)
+            if (e.Column.FieldName == $"{nameof(DcFeatureType)}.{nameof(DcFeatureType.FeatureTypeName)}" && e.IsGetData)
             {
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 int featureTypeId = Convert.ToInt32(view.GetRowCellValue(rowInd, colFeatureTypeId));
+
                 DcFeatureType dcfeaturetype = efMethods.SelectEntityById<DcFeatureType>(featureTypeId);
                 e.Value = dcfeaturetype?.FeatureTypeName;
             }
 
-            if (e.Column.FieldName == "DcHierarchy.HierarchyDesc" && e.IsGetData)
+            if (e.Column.FieldName == $"{nameof(DcHierarchy)}.{nameof(DcHierarchy.HierarchyDesc)}" && e.IsGetData)
             {
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string hierarchy = view.GetRowCellValue(rowInd, colHierarchyCode) as string ?? string.Empty;
+
                 DcHierarchy dcHierarchy = efMethods.SelectEntityById<DcHierarchy>(hierarchy);
                 e.Value = dcHierarchy?.HierarchyDesc;
             }
         }
+
 
         private void BBI_Update_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -95,6 +96,7 @@ namespace Foxoft
             int featureTypeId = Convert.ToInt32(gridView1.GetFocusedRowCellValue(colFeatureTypeId));
 
             efMethods.DeleteEntityById<TrHierarchyFeatureType>(hierarchyCode, featureTypeId);
+            LoadHierarchyFeatureType(btn_Hierarchy.EditValue?.ToString());
         }
     }
 }

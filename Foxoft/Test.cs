@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace Foxoft
 {
 
-    public partial class FormTest : RibbonForm
+    public partial class Test : RibbonForm
     {
         RibbonControl ribbon;
         RibbonPage pageHome;
@@ -19,7 +19,7 @@ namespace Foxoft
         RichEditControl richEdit;
         bool _syncingUI; // prevent feedback loops
 
-        public FormTest()
+        public Test()
         {
             InitializeComponent();
             BuildUi();

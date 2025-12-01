@@ -6,9 +6,12 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -29,8 +32,6 @@ namespace Foxoft
         public FormReportPreview(string query, string filter, DcReport dcReport)
             : this()
         {
-            //dcReport = efMethods.SelectReport(dcReport.ReportId);
-
             SqlParameter[] sqlParameters;
 
             query = this.reportClass.ApplyFilter(dcReport, query, filter, out sqlParameters);
@@ -68,31 +69,30 @@ namespace Foxoft
             }
         }
 
+        private void BBI_EditDesign_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            using (XRDesignRibbonForm FormDesignRibbon = new())
+            {
+                RibbonPageGroup pageGroup = FormDesignRibbon.RibbonControl.Pages[0].GetGroupByName("Report");
+                BarButtonItem bbi_Design = CreateItem();
+                pageGroup.ItemLinks.Add(bbi_Design);
+
+                FormDesignRibbon.OpenReport(xReport);
+                FormDesignRibbon.ShowDialog();
+            }
+        }
+
         private BarButtonItem CreateItem()
         {
             BarButtonItem item = new();
             item.ItemClick += item_ItemClick;
-            item.Caption = "Get Help";
+            item.Caption = Resources.Form_ReportPreview_EditDesign;
             return item;
         }
 
         void item_ItemClick(object sender, ItemClickEventArgs e)
         {
             MessageBox.Show("Item clicked");
-        }
-
-        private void BBI_EditDesign_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            using (XRDesignRibbonForm FormDesignRibbon = new XRDesignRibbonForm())
-            {
-                // Customize the ribbon form as needed
-                RibbonPageGroup pageGroup = FormDesignRibbon.RibbonControl.Pages[0].GetGroupByName("Report");
-                BarButtonItem bbi_Design = CreateItem();
-                pageGroup.ItemLinks.Add(bbi_Design);
-
-                FormDesignRibbon.OpenReport(xReport);
-                FormDesignRibbon.ShowDialog();  // Blocks until the form is closed
-            }
         }
 
         private void BBI_CopyToClipboard_ItemClick(object sender, ItemClickEventArgs e)

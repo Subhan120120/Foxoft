@@ -1,4 +1,5 @@
-﻿
+﻿using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormInvoiceLineUndeliveredList
@@ -93,6 +94,7 @@ namespace Foxoft
             // 
             // colDocumentNumber
             // 
+            colDocumentNumber.Caption = Resources.Entity_InvoiceHeader_DocumentNumber;
             colDocumentNumber.FieldName = "DocumentNumber";
             colDocumentNumber.Name = "colDocumentNumber";
             colDocumentNumber.Visible = true;
@@ -107,6 +109,7 @@ namespace Foxoft
             // 
             // colDocumentDate
             // 
+            colDocumentDate.Caption = Resources.Entity_InvoiceHeader_DocumentDate;
             colDocumentDate.FieldName = "DocumentDate";
             colDocumentDate.Name = "colDocumentDate";
             colDocumentDate.Visible = true;
@@ -115,37 +118,44 @@ namespace Foxoft
             // 
             // colCurrAccCode
             // 
+            colCurrAccCode.Caption = Resources.Entity_InvoiceHeader_CurrAccCode;
             colCurrAccCode.FieldName = "CurrAccCode";
             colCurrAccCode.Name = "colCurrAccCode";
             // 
             // colDocumentTime
             // 
+            colDocumentTime.Caption = Resources.Entity_InvoiceHeader_DocumentTime;
             colDocumentTime.FieldName = "DocumentTime";
             colDocumentTime.Name = "colDocumentTime";
             // 
             // colOperationDate
             // 
+            colOperationDate.Caption = Resources.Entity_InvoiceHeader_OperationDate;
             colOperationDate.FieldName = "OperationDate";
             colOperationDate.Name = "colOperationDate";
             // 
             // colOperationTime
             // 
+            colOperationTime.Caption = Resources.Entity_InvoiceHeader_OperationTime;
             colOperationTime.FieldName = "OperationTime";
             colOperationTime.Name = "colOperationTime";
             // 
             // colStoreCode
             // 
+            colStoreCode.Caption = Resources.Entity_InvoiceHeader_StoreCode;
             colStoreCode.FieldName = "StoreCode";
             colStoreCode.Name = "colStoreCode";
             // 
             // colTotalNetAmount
             // 
+            colTotalNetAmount.Caption = Resources.Entity_InvoiceHeader_TotalNetAmount;
             colTotalNetAmount.FieldName = "TotalNetAmount";
             colTotalNetAmount.Name = "colTotalNetAmount";
             colTotalNetAmount.Width = 194;
             // 
             // colCurrAccDesc
             // 
+            colCurrAccDesc.Caption = Resources.Entity_InvoiceHeader_CurrAccDesc;
             colCurrAccDesc.FieldName = "CurrAccDesc";
             colCurrAccDesc.Name = "colCurrAccDesc";
             colCurrAccDesc.Visible = true;
@@ -154,23 +164,25 @@ namespace Foxoft
             // 
             // colWarehouseCode
             // 
+            colWarehouseCode.Caption = Resources.Entity_InvoiceHeader_WarehouseCode;
             colWarehouseCode.FieldName = "WarehouseCode";
             colWarehouseCode.Name = "colWarehouseCode";
             // 
             // colToWarehouseCode
             // 
+            colToWarehouseCode.Caption = Resources.Entity_InvoiceHeader_ToWarehouseCode;
             colToWarehouseCode.FieldName = "ToWarehouseCode";
             colToWarehouseCode.Name = "colToWarehouseCode";
             // 
             // colProductCode
             // 
-            colProductCode.Caption = "Mehsul";
+            colProductCode.Caption = Resources.Entity_InvoiceLine_ProductCode;
             colProductCode.FieldName = "ProductCode";
             colProductCode.Name = "colProductCode";
             // 
             // colProductDesc
             // 
-            colProductDesc.Caption = "Məhsul Adı";
+            colProductDesc.Caption = Resources.Entity_InvoiceLine_ProductDesc;
             colProductDesc.FieldName = "ProductDesc";
             colProductDesc.Name = "colProductDesc";
             colProductDesc.Visible = true;
@@ -178,7 +190,7 @@ namespace Foxoft
             // 
             // colInvoiceLineId
             // 
-            colInvoiceLineId.Caption = "InvoiceLineId";
+            colInvoiceLineId.Caption = Resources.Entity_InvoiceLine_Id;
             colInvoiceLineId.FieldName = "InvoiceLineId";
             colInvoiceLineId.Name = "colInvoiceLineId";
             // 
@@ -189,7 +201,7 @@ namespace Foxoft
             // 
             // colCurrencyCode
             // 
-            colCurrencyCode.Caption = "Valyuta";
+            colCurrencyCode.Caption = Resources.Entity_InvoiceLine_CurrencyCode;
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
@@ -197,7 +209,7 @@ namespace Foxoft
             // 
             // colPrice
             // 
-            colPrice.Caption = "Qiymət";
+            colPrice.Caption = Resources.Entity_InvoiceLine_Price;
             colPrice.FieldName = "Price";
             colPrice.Name = "colPrice";
             colPrice.Visible = true;
@@ -205,27 +217,27 @@ namespace Foxoft
             // 
             // colPriceLoc
             // 
-            colPriceLoc.Caption = "Qiymət (YPV)";
+            colPriceLoc.Caption = Resources.Entity_InvoiceLine_PriceLoc;
             colPriceLoc.FieldName = "PriceLoc";
             colPriceLoc.Name = "colPriceLoc";
             // 
             // colQty
             // 
-            colQty.Caption = "Say";
+            colQty.Caption = Resources.Entity_InvoiceLine_Qty;
             colQty.FieldName = "Qty";
             colQty.Name = "colQty";
             colQty.Visible = true;
             colQty.VisibleIndex = 4;
             // 
-            // FormInvoiceLineList
+            // FormInvoiceLineUndeliveredList
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(872, 475);
             Controls.Add(gC_InvoiceLineList);
-            Name = "FormInvoiceLineList";
+            Name = "FormInvoiceLineUndeliveredList";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = "FormInvoiceLineList";
+            Text = global::Foxoft.Properties.Resources.Form_InvoiceLineUndeliveredList_Caption;
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLineList).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLineList).EndInit();

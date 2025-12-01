@@ -1,4 +1,6 @@
-﻿
+﻿using Foxoft.Models;
+using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormInvoiceLineList
@@ -82,11 +84,33 @@ namespace Foxoft
             // 
             // trInvoiceHeadersBindingSource
             // 
-            trInvoiceHeadersBindingSource.DataSource = typeof(Models.TrInvoiceHeader);
+            trInvoiceHeadersBindingSource.DataSource = typeof(TrInvoiceHeader);
             // 
             // gV_InvoiceLineList
             // 
-            gV_InvoiceLineList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colDocumentNumber, colIsReturn, colDocumentDate, colCurrAccCode, colDocumentTime, colOperationDate, colOperationTime, colStoreCode, colTotalNetAmount, colCurrAccDesc, colWarehouseCode, colToWarehouseCode, colProductCode, colProductDesc, colInvoiceLineId, colInvoiceHeaderId, colCurrencyCode, colPrice, colPriceLoc, colQty, colSerialNumberCode });
+            gV_InvoiceLineList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+                colDocumentNumber,
+                colIsReturn,
+                colDocumentDate,
+                colCurrAccCode,
+                colDocumentTime,
+                colOperationDate,
+                colOperationTime,
+                colStoreCode,
+                colTotalNetAmount,
+                colCurrAccDesc,
+                colWarehouseCode,
+                colToWarehouseCode,
+                colProductCode,
+                colProductDesc,
+                colInvoiceLineId,
+                colInvoiceHeaderId,
+                colCurrencyCode,
+                colPrice,
+                colPriceLoc,
+                colQty,
+                colSerialNumberCode
+            });
             gV_InvoiceLineList.CustomizationFormBounds = new Rectangle(622, 285, 264, 272);
             gV_InvoiceLineList.GridControl = gC_InvoiceLineList;
             gV_InvoiceLineList.Name = "gV_InvoiceLineList";
@@ -105,6 +129,7 @@ namespace Foxoft
             // 
             // colDocumentNumber
             // 
+            colDocumentNumber.Caption = Resources.Entity_InvoiceHeader_DocumentNumber;
             colDocumentNumber.FieldName = "DocumentNumber";
             colDocumentNumber.Name = "colDocumentNumber";
             colDocumentNumber.Visible = true;
@@ -113,12 +138,14 @@ namespace Foxoft
             // 
             // colIsReturn
             // 
+            colIsReturn.Caption = Resources.Entity_InvoiceHeader_IsReturn;
             colIsReturn.FieldName = "IsReturn";
             colIsReturn.Name = "colIsReturn";
             colIsReturn.Width = 93;
             // 
             // colDocumentDate
             // 
+            colDocumentDate.Caption = Resources.Entity_InvoiceHeader_DocumentDate;
             colDocumentDate.FieldName = "DocumentDate";
             colDocumentDate.Name = "colDocumentDate";
             colDocumentDate.Visible = true;
@@ -127,37 +154,44 @@ namespace Foxoft
             // 
             // colCurrAccCode
             // 
+            colCurrAccCode.Caption = Resources.Entity_CurrAcc_Code;
             colCurrAccCode.FieldName = "CurrAccCode";
             colCurrAccCode.Name = "colCurrAccCode";
             // 
             // colDocumentTime
             // 
+            colDocumentTime.Caption = Resources.Entity_InvoiceHeader_DocumentTime;
             colDocumentTime.FieldName = "DocumentTime";
             colDocumentTime.Name = "colDocumentTime";
             // 
             // colOperationDate
             // 
+            colOperationDate.Caption = Resources.Entity_InvoiceHeader_OperationDate;
             colOperationDate.FieldName = "OperationDate";
             colOperationDate.Name = "colOperationDate";
             // 
             // colOperationTime
             // 
+            colOperationTime.Caption = Resources.Entity_InvoiceHeader_OperationTime;
             colOperationTime.FieldName = "OperationTime";
             colOperationTime.Name = "colOperationTime";
             // 
             // colStoreCode
             // 
+            colStoreCode.Caption = Resources.Entity_InvoiceHeader_StoreCode;
             colStoreCode.FieldName = "StoreCode";
             colStoreCode.Name = "colStoreCode";
             // 
             // colTotalNetAmount
             // 
+            colTotalNetAmount.Caption = Resources.Entity_InvoiceHeader_TotalNetAmount;
             colTotalNetAmount.FieldName = "TotalNetAmount";
             colTotalNetAmount.Name = "colTotalNetAmount";
             colTotalNetAmount.Width = 194;
             // 
             // colCurrAccDesc
             // 
+            colCurrAccDesc.Caption = Resources.Entity_CurrAcc_Desc;
             colCurrAccDesc.FieldName = "CurrAccDesc";
             colCurrAccDesc.Name = "colCurrAccDesc";
             colCurrAccDesc.Visible = true;
@@ -166,23 +200,25 @@ namespace Foxoft
             // 
             // colWarehouseCode
             // 
+            colWarehouseCode.Caption = Resources.Entity_InvoiceHeader_WarehouseCode;
             colWarehouseCode.FieldName = "WarehouseCode";
             colWarehouseCode.Name = "colWarehouseCode";
             // 
             // colToWarehouseCode
             // 
+            colToWarehouseCode.Caption = Resources.Entity_InvoiceHeader_ToWarehouseCode;
             colToWarehouseCode.FieldName = "ToWarehouseCode";
             colToWarehouseCode.Name = "colToWarehouseCode";
             // 
             // colProductCode
             // 
-            colProductCode.Caption = "Mehsul";
+            colProductCode.Caption = Resources.Form_InvoiceLineList_Column_ProductCode;
             colProductCode.FieldName = "ProductCode";
             colProductCode.Name = "colProductCode";
             // 
             // colProductDesc
             // 
-            colProductDesc.Caption = "Məhsul Adı";
+            colProductDesc.Caption = Resources.Form_InvoiceLineList_Column_ProductDesc;
             colProductDesc.FieldName = "ProductDesc";
             colProductDesc.Name = "colProductDesc";
             colProductDesc.Visible = true;
@@ -190,18 +226,19 @@ namespace Foxoft
             // 
             // colInvoiceLineId
             // 
-            colInvoiceLineId.Caption = "InvoiceLineId";
+            colInvoiceLineId.Caption = Resources.Entity_InvoiceLineExt_Id;
             colInvoiceLineId.FieldName = "InvoiceLineId";
             colInvoiceLineId.Name = "colInvoiceLineId";
             // 
             // colInvoiceHeaderId
             // 
+            colInvoiceHeaderId.Caption = Resources.Entity_InvoiceHeader_InvoiceHeaderId;
             colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
             colInvoiceHeaderId.Name = "colInvoiceHeaderId";
             // 
             // colCurrencyCode
             // 
-            colCurrencyCode.Caption = "Valyuta";
+            colCurrencyCode.Caption = Resources.Form_InvoiceLineList_Column_CurrencyCode;
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
@@ -209,7 +246,7 @@ namespace Foxoft
             // 
             // colPrice
             // 
-            colPrice.Caption = "Qiymət";
+            colPrice.Caption = Resources.Form_InvoiceLineList_Column_Price;
             colPrice.FieldName = "Price";
             colPrice.Name = "colPrice";
             colPrice.Visible = true;
@@ -217,13 +254,13 @@ namespace Foxoft
             // 
             // colPriceLoc
             // 
-            colPriceLoc.Caption = "Qiymət (YPV)";
+            colPriceLoc.Caption = Resources.Form_InvoiceLineList_Column_PriceLoc;
             colPriceLoc.FieldName = "PriceLoc";
             colPriceLoc.Name = "colPriceLoc";
             // 
             // colQty
             // 
-            colQty.Caption = "Say";
+            colQty.Caption = Resources.Form_InvoiceLineList_Column_Qty;
             colQty.FieldName = "Qty";
             colQty.Name = "colQty";
             colQty.Visible = true;
@@ -231,7 +268,7 @@ namespace Foxoft
             // 
             // colSerialNumberCode
             // 
-            colSerialNumberCode.Caption = "Seria Nömrəsi";
+            colSerialNumberCode.Caption = Resources.Form_InvoiceLineList_Column_SerialNumberCode;
             colSerialNumberCode.FieldName = "SerialNumberCode";
             colSerialNumberCode.Name = "colSerialNumberCode";
             colSerialNumberCode.Visible = true;
@@ -244,7 +281,25 @@ namespace Foxoft
             btnEdit_FindBarcode.Name = "btnEdit_FindBarcode";
             editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
             editorButtonImageOptions1.SvgImageSize = new Size(13, 13);
-            btnEdit_FindBarcode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+            btnEdit_FindBarcode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(
+                    DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph,
+                    "",
+                    -1,
+                    true,
+                    true,
+                    false,
+                    editorButtonImageOptions1,
+                    new DevExpress.Utils.KeyShortcut(Keys.None),
+                    serializableAppearanceObject1,
+                    serializableAppearanceObject2,
+                    serializableAppearanceObject3,
+                    serializableAppearanceObject4,
+                    "",
+                    null,
+                    null,
+                    DevExpress.Utils.ToolTipAnchor.Default)
+            });
             btnEdit_FindBarcode.Size = new Size(214, 21);
             btnEdit_FindBarcode.TabIndex = 1;
             btnEdit_FindBarcode.EditValueChanged += BtnEdit_FindBarcode_EditValueChanged;
@@ -258,7 +313,7 @@ namespace Foxoft
             Controls.Add(gC_InvoiceLineList);
             Name = "FormInvoiceLineList";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "FormInvoiceLineList";
+            Text = Resources.Form_InvoiceLineList_Caption;
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLineList).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLineList).EndInit();
@@ -292,7 +347,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colPriceLoc;
         private DevExpress.XtraGrid.Columns.GridColumn colQty;
         private DevExpress.XtraGrid.Columns.GridColumn colSerialNumberCode;
-        private DevExpress.XtraEditors.ButtonEdit buttonEdit1;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_FindBarcode;
     }
 }

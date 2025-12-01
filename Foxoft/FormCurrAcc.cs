@@ -39,28 +39,27 @@ namespace Foxoft
                 ItemForCreditLimit.Visibility = LayoutVisibility.Never;
         }
 
-        public FormCurrAcc(string currAccCode)
+        public FormCurrAcc(string currAccCode) 
             : this()
         {
             dcCurrAcc.CurrAccCode = currAccCode;
-
             CurrAccCodeTextEdit.Properties.ReadOnly = true;
             CurrAccCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
         }
 
-        public FormCurrAcc(string currAccCode, bool isCustomer)
+        public FormCurrAcc(string currAccCode, bool isCustomer) 
             : this(currAccCode)
         {
             this.isCustomer = isCustomer;
         }
 
-        public FormCurrAcc(byte currAccTypeCode)
+        public FormCurrAcc(byte currAccTypeCode) 
             : this()
         {
             dcCurrAcc.CurrAccTypeCode = currAccTypeCode;
         }
 
-        public FormCurrAcc(byte currAccTypeCode, bool isCustomer)
+        public FormCurrAcc(byte currAccTypeCode, bool isCustomer) 
             : this(currAccTypeCode)
         {
             this.isCustomer = isCustomer;
@@ -69,9 +68,7 @@ namespace Foxoft
         private void FormCurrAcc_Load(object sender, EventArgs e)
         {
             LoadCurrAcc();
-
             LoadLayout();
-
             dataLayoutControl1.IsValid(out List<string> errorList);
         }
 
@@ -83,8 +80,7 @@ namespace Foxoft
                 ClearControlsAddNew();
             else
             {
-                dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
-                    .Load();
+                dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode).Load();
                 dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
             }
         }
@@ -118,14 +114,6 @@ namespace Foxoft
             CurrAccDescTextEdit.Select();
         }
 
-        private void dcCurrAccsBindingSource_AddingNew(object sender, AddingNewEventArgs e)
-        {
-            //dcCurrAcc = new DcCurrAcc();
-            //dcCurrAcc.CurrAccCode = efMethods.GetNextDocNum("CA", "CurrAccCode", "DcCurrAccs");
-            //dcCurrAcc.DataLanguageCode = "AZ";
-            //e.NewObject = dcCurrAcc;
-        }
-
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
         {
             if (e.FieldName == "ModifiedDate")
@@ -141,7 +129,7 @@ namespace Foxoft
             {
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
 
-                if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode)) //if doesnt exist
+                if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode))
                     efMethods.InsertEntity(dcCurrAcc);
                 else
                     dbContext.SaveChanges();
@@ -163,7 +151,7 @@ namespace Foxoft
 
         private void BBI_ContactDetail_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            FormCommonList<DcCurrAccContactDetail> formCommonList = new FormCommonList<DcCurrAccContactDetail>("", nameof(DcCurrAccContactDetail.Id), null, nameof(dcCurrAcc.CurrAccCode), dcCurrAcc.CurrAccCode);
+            FormCommonList<DcCurrAccContactDetail> formCommonList = new("", nameof(DcCurrAccContactDetail.Id), null, nameof(dcCurrAcc.CurrAccCode), dcCurrAcc.CurrAccCode);
             formCommonList.ShowDialog();
         }
 
@@ -177,7 +165,7 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(te.Text))
             {
                 if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(te.Text, dcCurrAcc.CurrAccCode))
-                    dxErrorProvider1.SetError(PhoneNumTextEdit, "Bu nömrə başqa Cari Hesabda mövcuddur.", ErrorType.Information);
+                    dxErrorProvider1.SetError(PhoneNumTextEdit, Resources.Validation_Phone_ExistsInAnotherCurrAcc, ErrorType.Information);
                 else
                     dxErrorProvider1.ClearErrors();
             }
@@ -185,10 +173,6 @@ namespace Foxoft
 
         private void PhoneNumTextEdit_EditValueChanged(object sender, EventArgs e)
         {
-
-
-
-
         }
     }
 }

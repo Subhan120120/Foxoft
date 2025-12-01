@@ -68,7 +68,7 @@ namespace Foxoft
         private void btn_POS_Click(object sender, EventArgs e)
         {
             if (Settings.Default.AppSetting.LocalCurrencyCode is null)
-                XtraMessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
+                XtraMessageBox.Show(Resources.Form_Login_LocalCurrencyNotSet);
 
             if (CheckLicense())
             {
@@ -81,25 +81,31 @@ namespace Foxoft
                 }
             }
             else
-                XtraMessageBox.Show("Lisenziya Aktiv Deyil!");
+                XtraMessageBox.Show(Resources.Form_Login_LicenseInactive);
 
         }
 
         private void btn_ERP_Click(object sender, EventArgs e)
         {
             if (Settings.Default.AppSetting.LocalCurrencyCode is null)
-                XtraMessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
+                XtraMessageBox.Show(Resources.Form_Login_LocalCurrencyNotSet);
 
             if (CheckLicense())
             {
                 if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
                 {
-                    SessionSave(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked, Convert.ToInt32(LUE_Terminal.EditValue), LUE_Company.EditValue?.ToString(), LUE_Language.EditValue?.ToString());
+                    SessionSave(
+                        txtEdit_UserName.Text,
+                        txtEdit_Password.Text,
+                        checkEdit_RemindMe.Checked,
+                        Convert.ToInt32(LUE_Terminal.EditValue),
+                        LUE_Company.EditValue?.ToString(),
+                        LUE_Language.EditValue?.ToString());
 
                     CultureInfo culture = CultureInfo.CreateSpecificCulture(LUE_Language.EditValue?.ToString());
                     Thread.CurrentThread.CurrentUICulture = culture;
-                    Thread.CurrentThread.CurrentCulture = culture;//
-                    CultureInfo.DefaultThreadCurrentCulture = culture;//
+                    Thread.CurrentThread.CurrentCulture = culture;
+                    CultureInfo.DefaultThreadCurrentCulture = culture;
                     CultureInfo.DefaultThreadCurrentUICulture = culture;
 
                     if (Convert.ToInt32(LUE_Terminal.EditValue) != 0)
@@ -110,11 +116,15 @@ namespace Foxoft
                         Close();
                     }
                     else
-                        XtraMessageBox.Show("Terminal boş buraxıla bilməz!");
+                        XtraMessageBox.Show(Resources.Form_Login_TerminalRequired);
                 }
             }
             else
-                XtraMessageBox.Show(new subContext().Database.GetDbConnection().Database + " Lisenziya Aktiv Deyil!");
+            {
+                using subContext db = new();
+                string databaseName = db.Database.GetDbConnection().Database;
+                XtraMessageBox.Show(string.Format(Resources.Form_Login_LicenseInactiveDb, databaseName));
+            }
         }
 
         private bool CheckLicense()
@@ -144,14 +154,13 @@ namespace Foxoft
                 }
                 catch (FormatException ex)
                 {
-                    XtraMessageBox.Show($"Lisenziya tarixi etibarsızdır: {ex.Message}");
+                    XtraMessageBox.Show(string.Format(Resources.Form_Login_LicenseDateInvalid, ex.Message));
                     return false;
                 }
                 catch (Exception)
                 {
                     return false;
                 }
-
             }
         }
 
@@ -181,11 +190,9 @@ namespace Foxoft
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         string nameConStr = "Foxoft.Properties.Settings.SubConnString";
 
-
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)
         {
             string localAddress = CustomExtensions.GetPhiscalAdress();
-
             System.Windows.Clipboard.SetText(localAddress);
         }
 
@@ -198,7 +205,8 @@ namespace Foxoft
         {
             DcCompany company = efMethods.SelectCompany(e.NewValue?.ToString());
 
-            if (!String.IsNullOrWhiteSpace(Settings.Default.SubConnString) && !String.IsNullOrEmpty(company?.CompanyCode))
+            if (!string.IsNullOrWhiteSpace(Settings.Default.SubConnString) &&
+                !string.IsNullOrEmpty(company?.CompanyCode))
             {
                 var builder = new SqlConnectionStringBuilder(Settings.Default.SubConnString);
                 builder.InitialCatalog = company.CompanyCode;
@@ -214,7 +222,7 @@ namespace Foxoft
                     }
                     else
                     {
-                        XtraMessageBox.Show("Databaza mövcud deyil.");
+                        XtraMessageBox.Show(Resources.Common_DatabaseNotFound);
                         e.Cancel = true;
                     }
                 }
@@ -248,35 +256,21 @@ namespace Foxoft
         {
             FormHandOver deliveryBrowser = new("WO");
             deliveryBrowser.ShowDialog();
-
         }
 
         private static async Task TestWhatsapp()
         {
-            // Fill your variables (you can also take them from configuration)
             var TOKEN = "EAAWMnYx6BxYBPa19qH7uteeer8zFHrwagkVtCLtd7NhFpjCSHdYL52O8zlB0m23N68VXm7qpa4xMYefYY8uLTe6bXXmCIRVXEQoTHJQmKouCcq1hjrrB8Ogf0NtAoHKUZCh50Rln8aRw0xffrZAnHkT1aYhQcsF26fVVt2gVL68k5o0mQEDMy3c7ivsP5oCUOePkziqloxpxnHCo7QKCMfpWt7ZC5BoZC53jXl4cNfTiFSu3nQveA6rmrOZCL6wZDZD";
             var PHONEID = "792567567267494";
             var TO = "994519678909";
 
-            // Local file path to upload & send
             var filePath = @"C:\Users\Subhan\Downloads\as.jpg";
 
             using var wa = new WhatsAppClient(TOKEN, PHONEID);
 
-            // Example 1: you already have a MemoryStream (e.g., from DB or upload)
-            using var ms = new MemoryStream(File.ReadAllBytes(filePath)); // or any existing MemoryStream
+            using var ms = new MemoryStream(File.ReadAllBytes(filePath));
             var messageId = await wa.UploadAndSendImageAsync(TO, ms, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
             Console.WriteLine($"Sent: {messageId}");
-
-            //// Example 2: PNG bytes → MemoryStream
-            //byte[] pngBytes = await File.ReadAllBytesAsync(@"C:\images\chart.png");
-            //using var msPng = new MemoryStream(pngBytes);
-            //var mediaId = await wa.UploadImageAsync(msPng, "image/png", "chart.png");
-            //await wa.SendImageByIdAsync(TO, mediaId, "PNG via MEDIA_ID");
-
-            //// Option C: send by public URL (no upload)
-            //var msg3 = await wa.SendImageByUrlAsync(TO, "https://example.com/your-image.jpg", "From URL");
-            //Console.WriteLine(msg3);
         }
     }
 }

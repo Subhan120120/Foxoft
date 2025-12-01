@@ -61,20 +61,11 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address.
+        ///   Looks up a localized string similar to Access denied..
         /// </summary>
-        public static string Common_Address {
+        public static string Common_AccessDenied {
             get {
-                return ResourceManager.GetString("Common_Address", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Apply.
-        /// </summary>
-        public static string Common_Apply {
-            get {
-                return ResourceManager.GetString("Common_Apply", resourceCulture);
+                return ResourceManager.GetString("Common_AccessDenied", resourceCulture);
             }
         }
         
@@ -106,11 +97,83 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Common_Cancel {
+            get {
+                return ResourceManager.GetString("Common_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Common_Clear {
+            get {
+                return ResourceManager.GetString("Common_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Common_Close {
+            get {
+                return ResourceManager.GetString("Common_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company.
+        /// </summary>
+        public static string Common_Company {
+            get {
+                return ResourceManager.GetString("Common_Company", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Common_Confirm {
+            get {
+                return ResourceManager.GetString("Common_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        public static string Common_ConfirmPassword {
+            get {
+                return ResourceManager.GetString("Common_ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string Common_Copy {
             get {
                 return ResourceManager.GetString("Common_Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string Common_Data {
+            get {
+                return ResourceManager.GetString("Common_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database does not exist..
+        /// </summary>
+        public static string Common_DatabaseNotFound {
+            get {
+                return ResourceManager.GetString("Common_DatabaseNotFound", resourceCulture);
             }
         }
         
@@ -124,11 +187,38 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete?.
+        /// </summary>
+        public static string Common_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("Common_DeleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design.
+        /// </summary>
+        public static string Common_Design {
+            get {
+                return ResourceManager.GetString("Common_Design", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Discount.
         /// </summary>
         public static string Common_Discount {
             get {
                 return ResourceManager.GetString("Common_Discount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Common_Edit {
+            get {
+                return ResourceManager.GetString("Common_Edit", resourceCulture);
             }
         }
         
@@ -142,6 +232,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export to Excel.
+        /// </summary>
+        public static string Common_ExportToExcel {
+            get {
+                return ResourceManager.GetString("Common_ExportToExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feature.
         /// </summary>
         public static string Common_Feature {
@@ -151,11 +250,83 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All files (*.*)|*.*.
+        /// </summary>
+        public static string Common_File_All {
+            get {
+                return ResourceManager.GetString("Common_File_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel File.
+        /// </summary>
+        public static string Common_File_Excel {
+            get {
+                return ResourceManager.GetString("Common_File_Excel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel File|*.xlsx.
+        /// </summary>
+        public static string Common_File_ExcelFilter {
+            get {
+                return ResourceManager.GetString("Common_File_ExcelFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images (*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF.
+        /// </summary>
+        public static string Common_File_ImageFilter {
+            get {
+                return ResourceManager.GetString("Common_File_ImageFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Excel File.
+        /// </summary>
+        public static string Common_File_SaveExcel {
+            get {
+                return ResourceManager.GetString("Common_File_SaveExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grid Design.
+        /// </summary>
+        public static string Common_GridDesign {
+            get {
+                return ResourceManager.GetString("Common_GridDesign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Grid Design.
+        /// </summary>
+        public static string Common_GridDesignSave {
+            get {
+                return ResourceManager.GetString("Common_GridDesignSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Identity.
         /// </summary>
         public static string Common_Identity {
             get {
                 return ResourceManager.GetString("Common_Identity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string Common_Info {
+            get {
+                return ResourceManager.GetString("Common_Info", resourceCulture);
             }
         }
         
@@ -178,6 +349,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Common_Language {
+            get {
+                return ResourceManager.GetString("Common_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load.
         /// </summary>
         public static string Common_Load {
@@ -192,6 +372,78 @@ namespace Foxoft.Properties {
         public static string Common_MouseMode {
             get {
                 return ResourceManager.GetString("Common_MouseMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string Common_New {
+            get {
+                return ResourceManager.GetString("Common_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Password.
+        /// </summary>
+        public static string Common_NewPassword {
+            get {
+                return ResourceManager.GetString("Common_NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Access denied..
+        /// </summary>
+        public static string Common_NoPermission {
+            get {
+                return ResourceManager.GetString("Common_NoPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not found.
+        /// </summary>
+        public static string Common_NotFound {
+            get {
+                return ResourceManager.GetString("Common_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string Common_Ok {
+            get {
+                return ResourceManager.GetString("Common_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to open?.
+        /// </summary>
+        public static string Common_OpenQuestion {
+            get {
+                return ResourceManager.GetString("Common_OpenQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operations.
+        /// </summary>
+        public static string Common_Operations {
+            get {
+                return ResourceManager.GetString("Common_Operations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Common_Password {
+            get {
+                return ResourceManager.GetString("Common_Password", resourceCulture);
             }
         }
         
@@ -223,11 +475,101 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        public static string Common_Print {
+            get {
+                return ResourceManager.GetString("Common_Print", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Printer.
+        /// </summary>
+        public static string Common_Printer {
+            get {
+                return ResourceManager.GetString("Common_Printer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Printer: {0}.
+        /// </summary>
+        public static string Common_PrinterLabel {
+            get {
+                return ResourceManager.GetString("Common_PrinterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fast Print.
+        /// </summary>
+        public static string Common_PrintFast {
+            get {
+                return ResourceManager.GetString("Common_PrintFast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print is being sent....
+        /// </summary>
+        public static string Common_PrintSending {
+            get {
+                return ResourceManager.GetString("Common_PrintSending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print has been sent..
+        /// </summary>
+        public static string Common_PrintSent {
+            get {
+                return ResourceManager.GetString("Common_PrintSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process not found..
+        /// </summary>
+        public static string Common_ProcessNotFound {
+            get {
+                return ResourceManager.GetString("Common_ProcessNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query.
+        /// </summary>
+        public static string Common_Query {
+            get {
+                return ResourceManager.GetString("Common_Query", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quit Program.
         /// </summary>
         public static string Common_QuitProgram {
             get {
                 return ResourceManager.GetString("Common_QuitProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string Common_Refresh {
+            get {
+                return ResourceManager.GetString("Common_Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Common_Report {
+            get {
+                return ResourceManager.GetString("Common_Report", resourceCulture);
             }
         }
         
@@ -250,11 +592,38 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save Layout.
+        /// </summary>
+        public static string Common_SaveLayout {
+            get {
+                return ResourceManager.GetString("Common_SaveLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scales.
         /// </summary>
         public static string Common_Scales {
             get {
                 return ResourceManager.GetString("Common_Scales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string Common_Search {
+            get {
+                return ResourceManager.GetString("Common_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Common_Select {
+            get {
+                return ResourceManager.GetString("Common_Select", resourceCulture);
             }
         }
         
@@ -268,6 +637,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Common_Settings {
+            get {
+                return ResourceManager.GetString("Common_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string Common_Show {
+            get {
+                return ResourceManager.GetString("Common_Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Site.
         /// </summary>
         public static string Common_Site {
@@ -277,11 +664,65 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Terminal.
+        /// </summary>
+        public static string Common_Terminal {
+            get {
+                return ResourceManager.GetString("Common_Terminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string Common_Test {
+            get {
+                return ResourceManager.GetString("Common_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Theme.
         /// </summary>
         public static string Common_Theme {
             get {
                 return ResourceManager.GetString("Common_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string Common_Tools {
+            get {
+                return ResourceManager.GetString("Common_Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string Common_UserName {
+            get {
+                return ResourceManager.GetString("Common_UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be between 0 and {0}.
+        /// </summary>
+        public static string Common_Validation_InputRange {
+            get {
+                return ResourceManager.GetString("Common_Validation_InputRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password confirmation does not match!.
+        /// </summary>
+        public static string Common_Validation_PasswordConfirmMismatch {
+            get {
+                return ResourceManager.GetString("Common_Validation_PasswordConfirmMismatch", resourceCulture);
             }
         }
         
@@ -300,6 +741,15 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_AutoSave {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_AutoSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear RAM.
+        /// </summary>
+        public static string Entity_AppSetting_ClearMemory {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_ClearMemory", resourceCulture);
             }
         }
         
@@ -363,6 +813,15 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_OptimizeDatabaseIndexes {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_OptimizeDatabaseIndexes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Optimize Database Indexes.
+        /// </summary>
+        public static string Entity_AppSetting_OptimizeDatabaseIndexes_Button {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_OptimizeDatabaseIndexes_Button", resourceCulture);
             }
         }
         
@@ -781,6 +1240,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string Entity_CurrAcc_Address {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birth Date.
         /// </summary>
         public static string Entity_CurrAcc_BirthDate {
@@ -831,6 +1299,33 @@ namespace Foxoft.Properties {
         public static string Entity_CurrAcc_CreditLimit {
             get {
                 return ResourceManager.GetString("Entity_CurrAcc_CreditLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Code.
+        /// </summary>
+        public static string Entity_CurrAcc_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Name.
+        /// </summary>
+        public static string Entity_CurrAcc_CurrAccDesc {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_CurrAccDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Type.
+        /// </summary>
+        public static string Entity_CurrAcc_CurrAccTypeCode {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_CurrAccTypeCode", resourceCulture);
             }
         }
         
@@ -898,6 +1393,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inactive.
+        /// </summary>
+        public static string Entity_CurrAcc_IsDisabled {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_IsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is VIP.
+        /// </summary>
+        public static string Entity_CurrAcc_IsVIP {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_IsVIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User Language.
         /// </summary>
         public static string Entity_CurrAcc_Language {
@@ -934,6 +1447,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        public static string Entity_CurrAcc_OfficeCode {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_OfficeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personal Type.
         /// </summary>
         public static string Entity_CurrAcc_PersonalType {
@@ -943,7 +1465,7 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Store Code.
+        ///   Looks up a localized string similar to Store.
         /// </summary>
         public static string Entity_CurrAcc_StoreCode {
             get {
@@ -1519,7 +2041,7 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invoice Id.
+        ///   Looks up a localized string similar to Invoice Header Id.
         /// </summary>
         public static string Entity_Installment_InvoiceHeaderId {
             get {
@@ -1681,6 +2203,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Curr. Acc. Code.
+        /// </summary>
+        public static string Entity_InvoiceHeader_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Account Name.
         /// </summary>
         public static string Entity_InvoiceHeader_CurrAccDesc {
@@ -1740,6 +2271,15 @@ namespace Foxoft.Properties {
         public static string Entity_InvoiceHeader_FiscalPrintedState {
             get {
                 return ResourceManager.GetString("Entity_InvoiceHeader_FiscalPrintedState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Header Id.
+        /// </summary>
+        public static string Entity_InvoiceHeader_InvoiceHeaderId {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_InvoiceHeaderId", resourceCulture);
             }
         }
         
@@ -1942,6 +2482,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Barcode.
+        /// </summary>
+        public static string Entity_InvoiceLine_Barcode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_Barcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Margin.
         /// </summary>
         public static string Entity_InvoiceLine_Benefit {
@@ -1974,6 +2523,15 @@ namespace Foxoft.Properties {
         public static string Entity_InvoiceLine_ExchangeRate {
             get {
                 return ResourceManager.GetString("Entity_InvoiceLine_ExchangeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoiceline Id.
+        /// </summary>
+        public static string Entity_InvoiceLine_Id {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_Id", resourceCulture);
             }
         }
         
@@ -2311,7 +2869,7 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invoice Id.
+        ///   Looks up a localized string similar to Invoice Header Id.
         /// </summary>
         public static string Entity_PaymentHeader_InvoiceHeaderId {
             get {
@@ -2563,7 +3121,7 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invoice Id.
+        ///   Looks up a localized string similar to Invoice Header Id.
         /// </summary>
         public static string Entity_PaymentLine_InvoiceHeaderId {
             get {
@@ -3508,15 +4066,6 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scale Product Number.
-        /// </summary>
-        public static string Entity_ProductScale_Number {
-            get {
-                return ResourceManager.GetString("Entity_ProductScale_Number", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Product Code.
         /// </summary>
         public static string Entity_ProductScale_ProductCode {
@@ -4444,6 +4993,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invoice Number.
+        /// </summary>
+        public static string Entity_TrInvoiceHeader_DocumentNumber {
+            get {
+                return ResourceManager.GetString("Entity_TrInvoiceHeader_DocumentNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interface Language.
         /// </summary>
         public static string Entity_UILanguage {
@@ -4723,6 +5281,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disabled Current Accounts.
+        /// </summary>
+        public static string ERP_ACE_CurrAccsDisabled {
+            get {
+                return ResourceManager.GetString("ERP_ACE_CurrAccsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expenses.
         /// </summary>
         public static string ERP_ACE_Expenses {
@@ -4863,6 +5430,15 @@ namespace Foxoft.Properties {
         public static string ERP_ACE_Products {
             get {
                 return ResourceManager.GetString("ERP_ACE_Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled Products.
+        /// </summary>
+        public static string ERP_ACE_ProductsDisabled {
+            get {
+                return ResourceManager.GetString("ERP_ACE_ProductsDisabled", resourceCulture);
             }
         }
         
@@ -5128,6 +5704,4293 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Application Settings.
+        /// </summary>
+        public static string Form_AppSetting_Caption {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Register.
+        /// </summary>
+        public static string Form_CashRegister_Caption {
+            get {
+                return ResourceManager.GetString("Form_CashRegister_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Registers.
+        /// </summary>
+        public static string Form_CashRegisterList_Caption {
+            get {
+                return ResourceManager.GetString("Form_CashRegisterList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query &apos;Report_Embedded_CashRegList&apos; was not found in DcReports table..
+        /// </summary>
+        public static string Form_CashRegisterList_NotFoundReport {
+            get {
+                return ResourceManager.GetString("Form_CashRegisterList_NotFoundReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string Form_CashRegisterList_RibbonGroup_Data {
+            get {
+                return ResourceManager.GetString("Form_CashRegisterList_RibbonGroup_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Form_CashRegisterList_RibbonGroup_Manage {
+            get {
+                return ResourceManager.GetString("Form_CashRegisterList_RibbonGroup_Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Form_CashRegisterList_RibbonGroup_Report {
+            get {
+                return ResourceManager.GetString("Form_CashRegisterList_RibbonGroup_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Registers.
+        /// </summary>
+        public static string Form_CashRegisterList_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_CashRegisterList_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Form_CashRegisterList_RibbonPage_Settings {
+            get {
+                return ResourceManager.GetString("Form_CashRegisterList_RibbonPage_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Form_Change_Caption {
+            get {
+                return ResourceManager.GetString("Form_Change_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Payment.
+        /// </summary>
+        public static string Form_Change_Label_Cash {
+            get {
+                return ResourceManager.GetString("Form_Change_Label_Cash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Amount.
+        /// </summary>
+        public static string Form_Change_Label_Change {
+            get {
+                return ResourceManager.GetString("Form_Change_Label_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claims.
+        /// </summary>
+        public static string Form_ClaimCategoryList_Button_Claims {
+            get {
+                return ResourceManager.GetString("Form_ClaimCategoryList_Button_Claims", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Categories.
+        /// </summary>
+        public static string Form_ClaimCategoryList_Caption {
+            get {
+                return ResourceManager.GetString("Form_ClaimCategoryList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data with this code already exists..
+        /// </summary>
+        public static string Form_Common_Exists {
+            get {
+                return ResourceManager.GetString("Form_Common_Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection String Builder.
+        /// </summary>
+        public static string Form_Connection_Caption {
+            get {
+                return ResourceManager.GetString("Form_Connection_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection String.
+        /// </summary>
+        public static string Form_Connection_ConnectionString {
+            get {
+                return ResourceManager.GetString("Form_Connection_ConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Database.
+        /// </summary>
+        public static string Form_Connection_CreateDatabase {
+            get {
+                return ResourceManager.GetString("Form_Connection_CreateDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database:.
+        /// </summary>
+        public static string Form_Connection_Database {
+            get {
+                return ResourceManager.GetString("Form_Connection_Database", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database was created successfully..
+        /// </summary>
+        public static string Form_Connection_DbCreated {
+            get {
+                return ResourceManager.GetString("Form_Connection_DbCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database already exists..
+        /// </summary>
+        public static string Form_Connection_DbExists {
+            get {
+                return ResourceManager.GetString("Form_Connection_DbExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        public static string Form_Connection_Password {
+            get {
+                return ResourceManager.GetString("Form_Connection_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection failed: {0}.
+        /// </summary>
+        public static string Form_Connection_Result_Fail {
+            get {
+                return ResourceManager.GetString("Form_Connection_Result_Fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection successful!.
+        /// </summary>
+        public static string Form_Connection_Result_Success {
+            get {
+                return ResourceManager.GetString("Form_Connection_Result_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Form_Connection_Save {
+            get {
+                return ResourceManager.GetString("Form_Connection_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection string saved successfully..
+        /// </summary>
+        public static string Form_Connection_Saved {
+            get {
+                return ResourceManager.GetString("Form_Connection_Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server:.
+        /// </summary>
+        public static string Form_Connection_Server {
+            get {
+                return ResourceManager.GetString("Form_Connection_Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Connection.
+        /// </summary>
+        public static string Form_Connection_TestConnection {
+            get {
+                return ResourceManager.GetString("Form_Connection_TestConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User:.
+        /// </summary>
+        public static string Form_Connection_User {
+            get {
+                return ResourceManager.GetString("Form_Connection_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact.
+        /// </summary>
+        public static string Form_CurrAcc_Bar_ContactDetail {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Bar_ContactDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Features.
+        /// </summary>
+        public static string Form_CurrAcc_Bar_Features {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Bar_Features", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional.
+        /// </summary>
+        public static string Form_CurrAcc_Group_Extra {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Group_Extra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal.
+        /// </summary>
+        public static string Form_CurrAcc_Group_Personal {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Group_Personal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Features.
+        /// </summary>
+        public static string Form_CurrAccFeature_Caption {
+            get {
+                return ResourceManager.GetString("Form_CurrAccFeature_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Accounts.
+        /// </summary>
+        public static string Form_CurrAccList_Caption {
+            get {
+                return ResourceManager.GetString("Form_CurrAccList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Statement.
+        /// </summary>
+        public static string Form_CurrAccList_Menu_CustomerReconciliation {
+            get {
+                return ResourceManager.GetString("Form_CurrAccList_Menu_CustomerReconciliation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Movements.
+        /// </summary>
+        public static string Form_CurrAccList_Menu_ProductMovements {
+            get {
+                return ResourceManager.GetString("Form_CurrAccList_Menu_ProductMovements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no account to delete..
+        /// </summary>
+        public static string Form_CurrAccList_NoAccountToDelete {
+            get {
+                return ResourceManager.GetString("Form_CurrAccList_NoAccountToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Form_CurrAccList_RibbonGroup_Manage {
+            get {
+                return ResourceManager.GetString("Form_CurrAccList_RibbonGroup_Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account.
+        /// </summary>
+        public static string Form_CurrAccList_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_CurrAccList_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select an account..
+        /// </summary>
+        public static string Form_CurrAccList_SelectAccount {
+            get {
+                return ResourceManager.GetString("Form_CurrAccList_SelectAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permissions.
+        /// </summary>
+        public static string Form_CurrAccProfile_Button_Permissions {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_Button_Permissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Profile.
+        /// </summary>
+        public static string Form_CurrAccProfile_Caption {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Permission.
+        /// </summary>
+        public static string Form_CurrAccProfile_Label_ClaimReport {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_Label_ClaimReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Role.
+        /// </summary>
+        public static string Form_CurrAccProfile_RibbonGroup_CurrAccRole {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_RibbonGroup_CurrAccRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Permissions.
+        /// </summary>
+        public static string Form_CurrAccProfile_RibbonGroup_RoleClaim {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_RibbonGroup_RoleClaim", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Authorization.
+        /// </summary>
+        public static string Form_CurrAccProfile_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        public static string Form_CurrAccSession_Caption {
+            get {
+                return ResourceManager.GetString("Form_CurrAccSession_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close window {0}?.
+        /// </summary>
+        public static string Form_CurrAccSession_CloseWindowQuestion {
+            get {
+                return ResourceManager.GetString("Form_CurrAccSession_CloseWindowQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kick User.
+        /// </summary>
+        public static string Form_CurrAccSession_KickUser {
+            get {
+                return ResourceManager.GetString("Form_CurrAccSession_KickUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to kick the user?.
+        /// </summary>
+        public static string Form_CurrAccSession_KickUserQuestion {
+            get {
+                return ResourceManager.GetString("Form_CurrAccSession_KickUserQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        public static string Form_CurrAccSession_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_CurrAccSession_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No such product..
+        /// </summary>
+        public static string Form_Expense_ProductNotFound {
+            get {
+                return ResourceManager.GetString("Form_Expense_ProductNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete selected row?.
+        /// </summary>
+        public static string Form_Expense_RowDeleteQuestion {
+            get {
+                return ResourceManager.GetString("Form_Expense_RowDeleteQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Form_HandOver_Button_AddWaybill {
+            get {
+                return ResourceManager.GetString("Form_HandOver_Button_AddWaybill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel hand over?.
+        /// </summary>
+        public static string Form_HandOver_CancelQuestion {
+            get {
+                return ResourceManager.GetString("Form_HandOver_CancelQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hand Over.
+        /// </summary>
+        public static string Form_HandOver_Caption {
+            get {
+                return ResourceManager.GetString("Form_HandOver_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delivered Quantity.
+        /// </summary>
+        public static string Form_HandOver_Column_DeliveredQty {
+            get {
+                return ResourceManager.GetString("Form_HandOver_Column_DeliveredQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining Quantity.
+        /// </summary>
+        public static string Form_HandOver_Column_RemainingQty {
+            get {
+                return ResourceManager.GetString("Form_HandOver_Column_RemainingQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hand Over.
+        /// </summary>
+        public static string Form_HandOver_Group_HandOver {
+            get {
+                return ResourceManager.GetString("Form_HandOver_Group_HandOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No such document exists..
+        /// </summary>
+        public static string Form_HandOver_NoDocument {
+            get {
+                return ResourceManager.GetString("Form_HandOver_NoDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no invoice to print..
+        /// </summary>
+        public static string Form_HandOver_NoInvoiceToPrint {
+            get {
+                return ResourceManager.GetString("Form_HandOver_NoInvoiceToPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no quantity to deliver..
+        /// </summary>
+        public static string Form_HandOver_NoRemainingQty {
+            get {
+                return ResourceManager.GetString("Form_HandOver_NoRemainingQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to open the invoice?.
+        /// </summary>
+        public static string Form_HandOver_OpenInvoiceQuestion {
+            get {
+                return ResourceManager.GetString("Form_HandOver_OpenInvoiceQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: 1256795721
+        ///{0}.
+        /// </summary>
+        public static string Form_HandOver_PrinterError {
+            get {
+                return ResourceManager.GetString("Form_HandOver_PrinterError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy Feature Types.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_Caption {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Child.
+        /// </summary>
+        public static string Form_HierarchyList_AddChild {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_AddChild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy.
+        /// </summary>
+        public static string Form_HierarchyList_Caption {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string Form_HierarchyList_NewDesc {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_NewDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images.
+        /// </summary>
+        public static string Form_Image_Caption {
+            get {
+                return ResourceManager.GetString("Form_Image_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Form_Image_GalleryItemCaption {
+            get {
+                return ResourceManager.GetString("Form_Image_GalleryItemCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select images for Foxoft..
+        /// </summary>
+        public static string Form_Image_OpenDialogTitle {
+            get {
+                return ResourceManager.GetString("Form_Image_OpenDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images.
+        /// </summary>
+        public static string Form_Image_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_Image_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input.
+        /// </summary>
+        public static string Form_Input_Caption {
+            get {
+                return ResourceManager.GetString("Form_Input_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string Form_Input_Label_Quantity {
+            get {
+                return ResourceManager.GetString("Form_Input_Label_Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Design.
+        /// </summary>
+        public static string Form_InstallmentSale_Button_GridOptions {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Button_GridOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Query.
+        /// </summary>
+        public static string Form_InstallmentSale_Button_QueryEdit {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Button_QueryEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Sales.
+        /// </summary>
+        public static string Form_InstallmentSale_Caption {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Day.
+        /// </summary>
+        public static string Form_InstallmentSale_Filter_Day {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Filter_Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Month.
+        /// </summary>
+        public static string Form_InstallmentSale_Filter_Month {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Filter_Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Week.
+        /// </summary>
+        public static string Form_InstallmentSale_Filter_Week {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Filter_Week", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document not found..
+        /// </summary>
+        public static string Form_InstallmentSale_Message_DocumentNotFound {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Message_DocumentNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice is already open..
+        /// </summary>
+        public static string Form_InstallmentSale_Message_InvoiceAlreadyOpen {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Message_InvoiceAlreadyOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design.
+        /// </summary>
+        public static string Form_InstallmentSale_RibbonGroup_Design {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_RibbonGroup_Design", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Form_InstallmentSale_RibbonGroup_Filter {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_RibbonGroup_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation.
+        /// </summary>
+        public static string Form_InstallmentSale_RibbonGroup_Operation {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_RibbonGroup_Operation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query.
+        /// </summary>
+        public static string Form_InstallmentSale_RibbonGroup_Query {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_RibbonGroup_Query", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment.
+        /// </summary>
+        public static string Form_InstallmentSale_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Form_InstallmentSale_RibbonPage_Settings {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_RibbonPage_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer credit limit is exceeded!.
+        /// </summary>
+        public static string Form_Invoice_CreditLimitExceeded {
+            get {
+                return ResourceManager.GetString("Form_Invoice_CreditLimitExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you also want to delete expenses for this invoice?.
+        /// </summary>
+        public static string Form_Invoice_DeleteExpensesForInvoiceQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_DeleteExpensesForInvoiceQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete?.
+        /// </summary>
+        public static string Form_Invoice_DeleteGuarantorQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_DeleteGuarantorQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete the invoice?.
+        /// </summary>
+        public static string Form_Invoice_DeleteInvoiceQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_DeleteInvoiceQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you also want to delete payments for this invoice?.
+        /// </summary>
+        public static string Form_Invoice_DeletePaymentsForInvoiceQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_DeletePaymentsForInvoiceQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete payments?.
+        /// </summary>
+        public static string Form_Invoice_DeletePaymentsQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_DeletePaymentsQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} not found or is disabled..
+        /// </summary>
+        public static string Form_Invoice_EntityNotFoundOrDisabled {
+            get {
+                return ResourceManager.GetString("Form_Invoice_EntityNotFoundOrDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expense.
+        /// </summary>
+        public static string Form_Invoice_Expense {
+            get {
+                return ResourceManager.GetString("Form_Invoice_Expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This guarantor is already added..
+        /// </summary>
+        public static string Form_Invoice_GuarantorAlreadyAdded {
+            get {
+                return ResourceManager.GetString("Form_Invoice_GuarantorAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a related delivery invoice. Current account code cannot be changed..
+        /// </summary>
+        public static string Form_Invoice_HandOverInvoiceExists_CurrAccCannotChange {
+            get {
+                return ResourceManager.GetString("Form_Invoice_HandOverInvoiceExists_CurrAccCannotChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a delivery operation for this line. Product code cannot be changed..
+        /// </summary>
+        public static string Form_Invoice_HandOverOperationExists_CannotChangeProductCode {
+            get {
+                return ResourceManager.GetString("Form_Invoice_HandOverOperationExists_CannotChangeProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a delivery of a product whose sale quantity is {0}. Quantity cannot be greater than this number..
+        /// </summary>
+        public static string Form_Invoice_HandOverQtyGreaterThanSale {
+            get {
+                return ResourceManager.GetString("Form_Invoice_HandOverQtyGreaterThanSale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are {0} units of delivery operation in this line. Quantity cannot be less than this number..
+        /// </summary>
+        public static string Form_Invoice_HandOverQtyLessThanDelivery {
+            get {
+                return ResourceManager.GetString("Form_Invoice_HandOverQtyLessThanDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no invoice to delete..
+        /// </summary>
+        public static string Form_Invoice_NoInvoiceToDelete {
+            get {
+                return ResourceManager.GetString("Form_Invoice_NoInvoiceToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no line..
+        /// </summary>
+        public static string Form_Invoice_NoLines {
+            get {
+                return ResourceManager.GetString("Form_Invoice_NoLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have no permission to delete expenses!.
+        /// </summary>
+        public static string Form_Invoice_NoPermissionDeleteExpense {
+            get {
+                return ResourceManager.GetString("Form_Invoice_NoPermissionDeleteExpense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have no permission to delete payments!.
+        /// </summary>
+        public static string Form_Invoice_NoPermissionDeletePayment {
+            get {
+                return ResourceManager.GetString("Form_Invoice_NoPermissionDeletePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have no permission for expenses!.
+        /// </summary>
+        public static string Form_Invoice_NoPermissionExpense {
+            get {
+                return ResourceManager.GetString("Form_Invoice_NoPermissionExpense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is not enough quantity in stock..
+        /// </summary>
+        public static string Form_Invoice_NoStockQuantity {
+            get {
+                return ResourceManager.GetString("Form_Invoice_NoStockQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Such customer does not exist..
+        /// </summary>
+        public static string Form_Invoice_NoSuchCurrAcc {
+            get {
+                return ResourceManager.GetString("Form_Invoice_NoSuchCurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment is equal to 0!
+        ///Do you want to return to the invoice?.
+        /// </summary>
+        public static string Form_Invoice_PaymentIsZeroReturnToInvoice {
+            get {
+                return ResourceManager.GetString("Form_Invoice_PaymentIsZeroReturnToInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: 1256795721 
+        ///{0}.
+        /// </summary>
+        public static string Form_Invoice_PrinterError_1256795721 {
+            get {
+                return ResourceManager.GetString("Form_Invoice_PrinterError_1256795721", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string Form_Invoice_Product {
+            get {
+                return ResourceManager.GetString("Form_Invoice_Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a delivery for this product..
+        /// </summary>
+        public static string Form_Invoice_ProductHasDelivery {
+            get {
+                return ResourceManager.GetString("Form_Invoice_ProductHasDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a return for this product..
+        /// </summary>
+        public static string Form_Invoice_ProductHasReturn {
+            get {
+                return ResourceManager.GetString("Form_Invoice_ProductHasReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a related delivery line. Product code cannot be changed..
+        /// </summary>
+        public static string Form_Invoice_RelatedHandOverLineExists_CannotChangeProductCode {
+            get {
+                return ResourceManager.GetString("Form_Invoice_RelatedHandOverLineExists_CannotChangeProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a related return line. Product code cannot be changed..
+        /// </summary>
+        public static string Form_Invoice_RelatedReturnLineExists_CannotChangeProductCode {
+            get {
+                return ResourceManager.GetString("Form_Invoice_RelatedReturnLineExists_CannotChangeProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a related return invoice. Current account code cannot be changed..
+        /// </summary>
+        public static string Form_Invoice_ReturnInvoiceExists_CurrAccCannotChange {
+            get {
+                return ResourceManager.GetString("Form_Invoice_ReturnInvoiceExists_CurrAccCannotChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a return operation for this line. Product code cannot be changed..
+        /// </summary>
+        public static string Form_Invoice_ReturnOperationExists_CannotChangeProductCode {
+            get {
+                return ResourceManager.GetString("Form_Invoice_ReturnOperationExists_CannotChangeProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a return of a product whose sale quantity is {0}. Quantity cannot be greater than this number..
+        /// </summary>
+        public static string Form_Invoice_ReturnQtyGreaterThanSale {
+            get {
+                return ResourceManager.GetString("Form_Invoice_ReturnQtyGreaterThanSale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are {0} units of return operation in this line. Quantity cannot be less than this number..
+        /// </summary>
+        public static string Form_Invoice_ReturnQtyLessThanExisting {
+            get {
+                return ResourceManager.GetString("Form_Invoice_ReturnQtyLessThanExisting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete row?.
+        /// </summary>
+        public static string Form_Invoice_RowDeleteQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_RowDeleteQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No such salesperson..
+        /// </summary>
+        public static string Form_Invoice_SalesPersonNotFound {
+            get {
+                return ResourceManager.GetString("Form_Invoice_SalesPersonNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial number not found..
+        /// </summary>
+        public static string Form_Invoice_SerialNumberNotFound {
+            get {
+                return ResourceManager.GetString("Form_Invoice_SerialNumberNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open link: {0}.
+        /// </summary>
+        public static string Form_Invoice_Whatsapp_FailedToOpenLink {
+            get {
+                return ResourceManager.GetString("Form_Invoice_Whatsapp_FailedToOpenLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number is not entered..
+        /// </summary>
+        public static string Form_Invoice_Whatsapp_NumberNotEntered {
+            get {
+                return ResourceManager.GetString("Form_Invoice_Whatsapp_NumberNotEntered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chrome profile &apos;{0}&apos; not found..
+        /// </summary>
+        public static string Form_Invoice_Whatsapp_ProfileNotFound {
+            get {
+                return ResourceManager.GetString("Form_Invoice_Whatsapp_ProfileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No such worker..
+        /// </summary>
+        public static string Form_Invoice_WorkerNotFound {
+            get {
+                return ResourceManager.GetString("Form_Invoice_WorkerNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice List.
+        /// </summary>
+        public static string Form_InvoiceHeaderList_Caption {
+            get {
+                return ResourceManager.GetString("Form_InvoiceHeaderList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice is open..
+        /// </summary>
+        public static string Form_InvoiceHeaderList_InvoiceIsOpen {
+            get {
+                return ResourceManager.GetString("Form_InvoiceHeaderList_InvoiceIsOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Lines.
+        /// </summary>
+        public static string Form_InvoiceLineList_Caption {
+            get {
+                return ResourceManager.GetString("Form_InvoiceLineList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Form_InvoiceLineList_Column_CurrencyCode {
+            get {
+                return ResourceManager.GetString("Form_InvoiceLineList_Column_CurrencyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Form_InvoiceLineList_Column_Price {
+            get {
+                return ResourceManager.GetString("Form_InvoiceLineList_Column_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price (LCY).
+        /// </summary>
+        public static string Form_InvoiceLineList_Column_PriceLoc {
+            get {
+                return ResourceManager.GetString("Form_InvoiceLineList_Column_PriceLoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string Form_InvoiceLineList_Column_ProductCode {
+            get {
+                return ResourceManager.GetString("Form_InvoiceLineList_Column_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Name.
+        /// </summary>
+        public static string Form_InvoiceLineList_Column_ProductDesc {
+            get {
+                return ResourceManager.GetString("Form_InvoiceLineList_Column_ProductDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string Form_InvoiceLineList_Column_Qty {
+            get {
+                return ResourceManager.GetString("Form_InvoiceLineList_Column_Qty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial Number.
+        /// </summary>
+        public static string Form_InvoiceLineList_Column_SerialNumberCode {
+            get {
+                return ResourceManager.GetString("Form_InvoiceLineList_Column_SerialNumberCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undelivered Invoice Line List.
+        /// </summary>
+        public static string Form_InvoiceLineUndeliveredList_Caption {
+            get {
+                return ResourceManager.GetString("Form_InvoiceLineUndeliveredList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back Office.
+        /// </summary>
+        public static string Form_Login_ButtonERP {
+            get {
+                return ResourceManager.GetString("Form_Login_ButtonERP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Form_Login_Caption {
+            get {
+                return ResourceManager.GetString("Form_Login_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection.
+        /// </summary>
+        public static string Form_Login_ConnectionString {
+            get {
+                return ResourceManager.GetString("Form_Login_ConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Key.
+        /// </summary>
+        public static string Form_Login_GetKey {
+            get {
+                return ResourceManager.GetString("Form_Login_GetKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License date is invalid: {0}.
+        /// </summary>
+        public static string Form_Login_LicenseDateInvalid {
+            get {
+                return ResourceManager.GetString("Form_Login_LicenseDateInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License is not active!.
+        /// </summary>
+        public static string Form_Login_LicenseInactive {
+            get {
+                return ResourceManager.GetString("Form_Login_LicenseInactive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} license is not active!.
+        /// </summary>
+        public static string Form_Login_LicenseInactiveDb {
+            get {
+                return ResourceManager.GetString("Form_Login_LicenseInactiveDb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local currency is not set..
+        /// </summary>
+        public static string Form_Login_LocalCurrencyNotSet {
+            get {
+                return ResourceManager.GetString("Form_Login_LocalCurrencyNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me.
+        /// </summary>
+        public static string Form_Login_RememberMe {
+            get {
+                return ResourceManager.GetString("Form_Login_RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminal cannot be empty!.
+        /// </summary>
+        public static string Form_Login_TerminalRequired {
+            get {
+                return ResourceManager.GetString("Form_Login_TerminalRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run.
+        /// </summary>
+        public static string Form_Login_Test {
+            get {
+                return ResourceManager.GetString("Form_Login_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance: .
+        /// </summary>
+        public static string Form_MoneyTransfer_Balance {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Payment.
+        /// </summary>
+        public static string Form_MoneyTransfer_Button_DeletePayment {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Button_DeletePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Payment.
+        /// </summary>
+        public static string Form_MoneyTransfer_Button_NewPayment {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Button_NewPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Close.
+        /// </summary>
+        public static string Form_MoneyTransfer_Button_SaveAndClose {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Button_SaveAndClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send to WhatsApp.
+        /// </summary>
+        public static string Form_MoneyTransfer_Button_SendWhatsapp {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Button_SendWhatsapp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Register Transfer.
+        /// </summary>
+        public static string Form_MoneyTransfer_Caption {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Final Balance.
+        /// </summary>
+        public static string Form_MoneyTransfer_Column_RunningTotal {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Column_RunningTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Balance.
+        /// </summary>
+        public static string Form_MoneyTransfer_Column_RunningTotalBefore {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Column_RunningTotalBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current account is not specified..
+        /// </summary>
+        public static string Form_MoneyTransfer_CurrAccNotDefined {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_CurrAccNotDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Next Balance: .
+        /// </summary>
+        public static string Form_MoneyTransfer_Label_CurrAccBalanceAfter {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Label_CurrAccBalanceAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Previous Balance: .
+        /// </summary>
+        public static string Form_MoneyTransfer_Label_CurrAccBalanceBefore {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Label_CurrAccBalanceBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no payment to delete..
+        /// </summary>
+        public static string Form_MoneyTransfer_NoPaymentToDelete {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_NoPaymentToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number is not specified..
+        /// </summary>
+        public static string Form_MoneyTransfer_NumberNotDefined {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_NumberNotDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment made: .
+        /// </summary>
+        public static string Form_MoneyTransfer_PaymentGiven {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_PaymentGiven", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment received: .
+        /// </summary>
+        public static string Form_MoneyTransfer_PaymentReceived {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_PaymentReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number is not specified..
+        /// </summary>
+        public static string Form_MoneyTransfer_PhoneNotDefined {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_PhoneNotDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_MoneyTransfer_RibbonGroup_Payment {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_RibbonGroup_Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_MoneyTransfer_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The entered data is not valid! 
+        ///
+        ///{0}.
+        /// </summary>
+        public static string Form_MoneyTransfer_SaveError {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bank Account.
+        /// </summary>
+        public static string Form_Payment_BankAccount {
+            get {
+                return ResourceManager.GetString("Form_Payment_BankAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bonus.
+        /// </summary>
+        public static string Form_Payment_Bonus {
+            get {
+                return ResourceManager.GetString("Form_Payment_Bonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pay.
+        /// </summary>
+        public static string Form_Payment_Button_Ok {
+            get {
+                return ResourceManager.GetString("Form_Payment_Button_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_Payment_Caption {
+            get {
+                return ResourceManager.GetString("Form_Payment_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Register Account.
+        /// </summary>
+        public static string Form_Payment_CashRegister {
+            get {
+                return ResourceManager.GetString("Form_Payment_CashRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Such a cash register does not exist.
+        /// </summary>
+        public static string Form_Payment_CashRegisterNotFound {
+            get {
+                return ResourceManager.GetString("Form_Payment_CashRegisterNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission.
+        /// </summary>
+        public static string Form_Payment_Commission {
+            get {
+                return ResourceManager.GetString("Form_Payment_Commission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer account has no identity document number.
+        /// </summary>
+        public static string Form_Payment_CurrAccIdentityMissing {
+            get {
+                return ResourceManager.GetString("Form_Payment_CurrAccIdentityMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer account is not selected.
+        /// </summary>
+        public static string Form_Payment_CurrAccNotSelected {
+            get {
+                return ResourceManager.GetString("Form_Payment_CurrAccNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer account has no phone number.
+        /// </summary>
+        public static string Form_Payment_CurrAccPhoneMissing {
+            get {
+                return ResourceManager.GetString("Form_Payment_CurrAccPhoneMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Form_Payment_Currency {
+            get {
+                return ResourceManager.GetString("Form_Payment_Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Form_Payment_Date {
+            get {
+                return ResourceManager.GetString("Form_Payment_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bonus.
+        /// </summary>
+        public static string Form_Payment_Group_Bonus {
+            get {
+                return ResourceManager.GetString("Form_Payment_Group_Bonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash.
+        /// </summary>
+        public static string Form_Payment_Group_Cash {
+            get {
+                return ResourceManager.GetString("Form_Payment_Group_Cash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cashless.
+        /// </summary>
+        public static string Form_Payment_Group_Cashless {
+            get {
+                return ResourceManager.GetString("Form_Payment_Group_Cashless", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input Panel.
+        /// </summary>
+        public static string Form_Payment_InputPad {
+            get {
+                return ResourceManager.GetString("Form_Payment_InputPad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash.
+        /// </summary>
+        public static string Form_Payment_Label_Cash {
+            get {
+                return ResourceManager.GetString("Form_Payment_Label_Cash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Method.
+        /// </summary>
+        public static string Form_Payment_PaymentMethod {
+            get {
+                return ResourceManager.GetString("Form_Payment_PaymentMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Plan.
+        /// </summary>
+        public static string Form_Payment_PaymentPlan {
+            get {
+                return ResourceManager.GetString("Form_Payment_PaymentPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points.
+        /// </summary>
+        public static string Form_Payment_Puan {
+            get {
+                return ResourceManager.GetString("Form_Payment_Puan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance: .
+        /// </summary>
+        public static string Form_PaymentDetail_BalanceText {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_BalanceText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string Form_PaymentDetail_Button_CopyPayment {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Button_CopyPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Payment.
+        /// </summary>
+        public static string Form_PaymentDetail_Button_DeletePayment {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Button_DeletePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Form_PaymentDetail_Button_EditPayment {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Button_EditPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string Form_PaymentDetail_Button_Info {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Button_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Payment.
+        /// </summary>
+        public static string Form_PaymentDetail_Button_NewPayment {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Button_NewPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and Close.
+        /// </summary>
+        public static string Form_PaymentDetail_Button_SaveAndClose {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Button_SaveAndClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send to Whatsapp.
+        /// </summary>
+        public static string Form_PaymentDetail_Button_SendWhatsapp {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Button_SendWhatsapp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_PaymentDetail_Caption {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Such a customer account does not exist..
+        /// </summary>
+        public static string Form_PaymentDetail_CurrAccNotFound {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_CurrAccNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string Form_PaymentDetail_Info_Caption {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Info_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entered data is not valid!.
+        /// </summary>
+        public static string Form_PaymentDetail_InvalidData {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_InvalidData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer New Balance:.
+        /// </summary>
+        public static string Form_PaymentDetail_Label_CurrAccBalanceAfter {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Label_CurrAccBalanceAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Previous Balance:.
+        /// </summary>
+        public static string Form_PaymentDetail_Label_CurrAccBalanceBefore {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_Label_CurrAccBalanceBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no payment to delete..
+        /// </summary>
+        public static string Form_PaymentDetail_NoPaymentToDelete {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_NoPaymentToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment given: .
+        /// </summary>
+        public static string Form_PaymentDetail_PaymentGiven {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_PaymentGiven", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment received: .
+        /// </summary>
+        public static string Form_PaymentDetail_PaymentReceived {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_PaymentReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number is not specified..
+        /// </summary>
+        public static string Form_PaymentDetail_PhoneNotFound {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_PhoneNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control.
+        /// </summary>
+        public static string Form_PaymentDetail_RibbonGroup_Control {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_RibbonGroup_Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string Form_PaymentDetail_RibbonGroup_Info {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_RibbonGroup_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_PaymentDetail_RibbonGroup_Payment {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_RibbonGroup_Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Form_PaymentDetail_RibbonGroup_Report {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_RibbonGroup_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string Form_PaymentDetail_RibbonGroup_Tools {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_RibbonGroup_Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_PaymentDetail_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to Excel.
+        /// </summary>
+        public static string Form_PaymentHeaderList_Button_ExportXlsx {
+            get {
+                return ResourceManager.GetString("Form_PaymentHeaderList_Button_ExportXlsx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make Payment.
+        /// </summary>
+        public static string Form_PaymentHeaderList_Button_MakePayment {
+            get {
+                return ResourceManager.GetString("Form_PaymentHeaderList_Button_MakePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receive Payment.
+        /// </summary>
+        public static string Form_PaymentHeaderList_Button_ReceivePayment {
+            get {
+                return ResourceManager.GetString("Form_PaymentHeaderList_Button_ReceivePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payments.
+        /// </summary>
+        public static string Form_PaymentHeaderList_Caption {
+            get {
+                return ResourceManager.GetString("Form_PaymentHeaderList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Form_PaymentHeaderList_RibbonGroup_Export {
+            get {
+                return ResourceManager.GetString("Form_PaymentHeaderList_RibbonGroup_Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation.
+        /// </summary>
+        public static string Form_PaymentHeaderList_RibbonGroup_Operation {
+            get {
+                return ResourceManager.GetString("Form_PaymentHeaderList_RibbonGroup_Operation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_PaymentHeaderList_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_PaymentHeaderList_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to Excel.
+        /// </summary>
+        public static string Form_PaymentLineList_Button_ExportXlsx {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_Button_ExportXlsx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make Payment.
+        /// </summary>
+        public static string Form_PaymentLineList_Button_MakePayment {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_Button_MakePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receive Payment.
+        /// </summary>
+        public static string Form_PaymentLineList_Button_ReceivePayment {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_Button_ReceivePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload.
+        /// </summary>
+        public static string Form_PaymentLineList_Button_Reload {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_Button_Reload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string Form_PaymentLineList_Button_Test {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_Button_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Line List.
+        /// </summary>
+        public static string Form_PaymentLineList_Caption {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment document link clicked..
+        /// </summary>
+        public static string Form_PaymentLineList_Message_DocNumButtonClick {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_Message_DocNumButtonClick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice link clicked..
+        /// </summary>
+        public static string Form_PaymentLineList_Message_InvoiceNumberButtonClick {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_Message_InvoiceNumberButtonClick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control.
+        /// </summary>
+        public static string Form_PaymentLineList_RibbonGroup_Control {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_RibbonGroup_Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Form_PaymentLineList_RibbonGroup_Export {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_RibbonGroup_Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operations.
+        /// </summary>
+        public static string Form_PaymentLineList_RibbonGroup_Operations {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_RibbonGroup_Operations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string Form_PaymentLineList_RibbonGroup_Test {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_RibbonGroup_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payments.
+        /// </summary>
+        public static string Form_PaymentLineList_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_PaymentLineList_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expenses.
+        /// </summary>
+        public static string Form_POS_Button_Expenses {
+            get {
+                return ResourceManager.GetString("Form_POS_Button_Expenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        public static string Form_POS_Button_Return {
+            get {
+                return ResourceManager.GetString("Form_POS_Button_Return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sale.
+        /// </summary>
+        public static string Form_POS_Button_Sale {
+            get {
+                return ResourceManager.GetString("Form_POS_Button_Sale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point of Sale.
+        /// </summary>
+        public static string Form_POS_Caption {
+            get {
+                return ResourceManager.GetString("Form_POS_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expenses.
+        /// </summary>
+        public static string Form_POS_Page_Expenses {
+            get {
+                return ResourceManager.GetString("Form_POS_Page_Expenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        public static string Form_POS_Page_Return {
+            get {
+                return ResourceManager.GetString("Form_POS_Page_Return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sale.
+        /// </summary>
+        public static string Form_POS_Page_Sale {
+            get {
+                return ResourceManager.GetString("Form_POS_Page_Sale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount.
+        /// </summary>
+        public static string Form_PosDiscount_Caption {
+            get {
+                return ResourceManager.GetString("Form_PosDiscount_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percent.
+        /// </summary>
+        public static string Form_PosDiscount_Label_DiscountRate {
+            get {
+                return ResourceManager.GetString("Form_PosDiscount_Label_DiscountRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Net Amount.
+        /// </summary>
+        public static string Form_PosDiscount_Label_NetAmount {
+            get {
+                return ResourceManager.GetString("Form_PosDiscount_Label_NetAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be between 0 and 100..
+        /// </summary>
+        public static string Form_PosDiscount_Validation_DiscountRateRange {
+            get {
+                return ResourceManager.GetString("Form_PosDiscount_Validation_DiscountRateRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be between 0 and {0}..
+        /// </summary>
+        public static string Form_PosDiscount_Validation_NetAmountRange {
+            get {
+                return ResourceManager.GetString("Form_PosDiscount_Validation_NetAmountRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Price List.
+        /// </summary>
+        public static string Form_PriceListDetail_Button_DeletePriceList {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Button_DeletePriceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to Excel.
+        /// </summary>
+        public static string Form_PriceListDetail_Button_ExportExcel {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Button_ExportExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import from Excel.
+        /// </summary>
+        public static string Form_PriceListDetail_Button_ImportExcel {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Button_ImportExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string Form_PriceListDetail_Button_Info {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Button_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Price List.
+        /// </summary>
+        public static string Form_PriceListDetail_Button_NewPriceList {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Button_NewPriceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and Close.
+        /// </summary>
+        public static string Form_PriceListDetail_Button_SaveAndClose {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Button_SaveAndClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price List.
+        /// </summary>
+        public static string Form_PriceListDetail_Caption {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete the price list?.
+        /// </summary>
+        public static string Form_PriceListDetail_Message_DeletePriceListConfirm {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Message_DeletePriceListConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the row?.
+        /// </summary>
+        public static string Form_PriceListDetail_Message_DeleteRowConfirm {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Message_DeleteRowConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import error.
+        /// </summary>
+        public static string Form_PriceListDetail_Message_ImportErrorCaption {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Message_ImportErrorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error No: 256543.
+        /// </summary>
+        public static string Form_PriceListDetail_Message_ImportErrorCode {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Message_ImportErrorCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entered data is not valid!.
+        /// </summary>
+        public static string Form_PriceListDetail_Message_InvalidData {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Message_InvalidData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no price list to delete..
+        /// </summary>
+        public static string Form_PriceListDetail_Message_NoPriceListToDelete {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Message_NoPriceListToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No value found for the following codes.
+        /// </summary>
+        public static string Form_PriceListDetail_Message_ValueNotFound {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_Message_ValueNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Excel file..
+        /// </summary>
+        public static string Form_PriceListDetail_OpenFileDialog_Title {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_OpenFileDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel.
+        /// </summary>
+        public static string Form_PriceListDetail_RibbonGroup_Excel {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_RibbonGroup_Excel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string Form_PriceListDetail_RibbonGroup_Info {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_RibbonGroup_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price List.
+        /// </summary>
+        public static string Form_PriceListDetail_RibbonGroup_PriceList {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_RibbonGroup_PriceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price List.
+        /// </summary>
+        public static string Form_PriceListDetail_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Form_PriceListDetail_RibbonPage_Settings {
+            get {
+                return ResourceManager.GetString("Form_PriceListDetail_RibbonPage_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Lists.
+        /// </summary>
+        public static string Form_PriceListHeaderList_Caption {
+            get {
+                return ResourceManager.GetString("Form_PriceListHeaderList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string Form_Product_Caption {
+            get {
+                return ResourceManager.GetString("Form_Product_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error deleting file: {0}.
+        /// </summary>
+        public static string Form_Product_Message_DeleteFileError {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_DeleteFileError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File does not exist..
+        /// </summary>
+        public static string Form_Product_Message_FileDoesNotExist {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_FileDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No image found in the selected gallery item..
+        /// </summary>
+        public static string Form_Product_Message_NoGalleryImage {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_NoGalleryImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No image in the clipboard..
+        /// </summary>
+        public static string Form_Product_Message_NoImageInClipboard {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_NoImageInClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A product with this code already exists!.
+        /// </summary>
+        public static string Form_Product_Message_ProductCodeExists {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_ProductCodeExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error code 154484: {0}.
+        /// </summary>
+        public static string Form_Product_Message_SaveImageError {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_SaveImageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select image for Foxoft..
+        /// </summary>
+        public static string Form_Product_OpenFileDialog_Title {
+            get {
+                return ResourceManager.GetString("Form_Product_OpenFileDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A product with this name already exists..
+        /// </summary>
+        public static string Form_Product_Validation_ProductNameExists {
+            get {
+                return ResourceManager.GetString("Form_Product_Validation_ProductNameExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product barcodes.
+        /// </summary>
+        public static string Form_ProductBarcode_Caption {
+            get {
+                return ResourceManager.GetString("Form_ProductBarcode_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error No: 252124269 
+        ///{0}.
+        /// </summary>
+        public static string Form_ProductBarcode_Message_ProductSelectError {
+            get {
+                return ResourceManager.GetString("Form_ProductBarcode_Message_ProductSelectError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The data you entered is not valid!
+        ///
+        ///{0}.
+        /// </summary>
+        public static string Form_ProductBarcode_Message_SaveError {
+            get {
+                return ResourceManager.GetString("Form_ProductBarcode_Message_SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Form_ProductBarcode_RibbonGroup_Manage {
+            get {
+                return ResourceManager.GetString("Form_ProductBarcode_RibbonGroup_Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode.
+        /// </summary>
+        public static string Form_ProductBarcode_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_ProductBarcode_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Such a barcode already exists..
+        /// </summary>
+        public static string Form_ProductBarcode_Validation_BarcodeExists {
+            get {
+                return ResourceManager.GetString("Form_ProductBarcode_Validation_BarcodeExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Features.
+        /// </summary>
+        public static string Form_ProductFeature_Caption {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string Form_ProductList_Button_Test {
+            get {
+                return ResourceManager.GetString("Form_ProductList_Button_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product List.
+        /// </summary>
+        public static string Form_ProductList_Caption {
+            get {
+                return ResourceManager.GetString("Form_ProductList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Form_ProductList_Column_Image {
+            get {
+                return ResourceManager.GetString("Form_ProductList_Column_Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter columns.
+        /// </summary>
+        public static string Form_ProductList_FilterColumnsLabel {
+            get {
+                return ResourceManager.GetString("Form_ProductList_FilterColumnsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string Form_ProductList_FindPanelPrompt {
+            get {
+                return ResourceManager.GetString("Form_ProductList_FindPanelPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you also want to delete its barcodes?
+        ///{0}.
+        /// </summary>
+        public static string Form_ProductList_Message_DeleteBarcodeConfirm {
+            get {
+                return ResourceManager.GetString("Form_ProductList_Message_DeleteBarcodeConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete this product?
+        ///{0}.
+        /// </summary>
+        public static string Form_ProductList_Message_DeleteProductConfirm {
+            get {
+                return ResourceManager.GetString("Form_ProductList_Message_DeleteProductConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no product to delete..
+        /// </summary>
+        public static string Form_ProductList_Message_NoProductToDelete {
+            get {
+                return ResourceManager.GetString("Form_ProductList_Message_NoProductToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No product selected..
+        /// </summary>
+        public static string Form_ProductList_Message_ProductNotSelected {
+            get {
+                return ResourceManager.GetString("Form_ProductList_Message_ProductNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control.
+        /// </summary>
+        public static string Form_ProductList_RibbonGroup_Control {
+            get {
+                return ResourceManager.GetString("Form_ProductList_RibbonGroup_Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string Form_ProductList_RibbonGroup_Data {
+            get {
+                return ResourceManager.GetString("Form_ProductList_RibbonGroup_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter columns.
+        /// </summary>
+        public static string Form_ProductList_RibbonGroup_FilterColumns {
+            get {
+                return ResourceManager.GetString("Form_ProductList_RibbonGroup_FilterColumns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Form_ProductList_RibbonGroup_Manage {
+            get {
+                return ResourceManager.GetString("Form_ProductList_RibbonGroup_Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Form_ProductList_RibbonGroup_Report {
+            get {
+                return ResourceManager.GetString("Form_ProductList_RibbonGroup_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string Form_ProductList_RibbonGroup_Tools {
+            get {
+                return ResourceManager.GetString("Form_ProductList_RibbonGroup_Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string Form_ProductList_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_ProductList_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Form_ProductList_RibbonPage_Settings {
+            get {
+                return ResourceManager.GetString("Form_ProductList_RibbonPage_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Form_ProductScales_Button_Save {
+            get {
+                return ResourceManager.GetString("Form_ProductScales_Button_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product scale settings.
+        /// </summary>
+        public static string Form_ProductScales_Caption {
+            get {
+                return ResourceManager.GetString("Form_ProductScales_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use on scale.
+        /// </summary>
+        public static string Form_ProductScales_CheckBox_UseInScale {
+            get {
+                return ResourceManager.GetString("Form_ProductScales_CheckBox_UseInScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This code is already used. Please enter a unique number..
+        /// </summary>
+        public static string Form_ProductScales_Validation_ScaleProductNumber_Duplicate {
+            get {
+                return ResourceManager.GetString("Form_ProductScales_Validation_ScaleProductNumber_Duplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid integer..
+        /// </summary>
+        public static string Form_ProductScales_Validation_ScaleProductNumber_Integer {
+            get {
+                return ResourceManager.GetString("Form_ProductScales_Validation_ScaleProductNumber_Integer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Product Prices.
+        /// </summary>
+        public static string Form_ProductStaticPrice_Caption {
+            get {
+                return ResourceManager.GetString("Form_ProductStaticPrice_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report editor.
+        /// </summary>
+        public static string Form_ReportEditor_Caption {
+            get {
+                return ResourceManager.GetString("Form_ReportEditor_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub queries.
+        /// </summary>
+        public static string Form_ReportEditor_Label_SubQueries {
+            get {
+                return ResourceManager.GetString("Form_ReportEditor_Label_SubQueries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foxoft Error Code: 1215451.
+        /// </summary>
+        public static string Form_ReportEditor_Message_CheckQueryErrorTitle {
+            get {
+                return ResourceManager.GetString("Form_ReportEditor_Message_CheckQueryErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete row?.
+        /// </summary>
+        public static string Form_ReportEditor_Message_DeleteRow {
+            get {
+                return ResourceManager.GetString("Form_ReportEditor_Message_DeleteRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete tab &apos;{0}&apos;?.
+        /// </summary>
+        public static string Form_ReportEditor_Message_DeleteTab {
+            get {
+                return ResourceManager.GetString("Form_ReportEditor_Message_DeleteTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New subquery.
+        /// </summary>
+        public static string Form_ReportEditor_SubQuery_DefaultName {
+            get {
+                return ResourceManager.GetString("Form_ReportEditor_SubQuery_DefaultName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -- SQL here.
+        /// </summary>
+        public static string Form_ReportEditor_SubQuery_DefaultText {
+            get {
+                return ResourceManager.GetString("Form_ReportEditor_SubQuery_DefaultText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main.
+        /// </summary>
+        public static string Form_ReportEditor_Tab_Main {
+            get {
+                return ResourceManager.GetString("Form_ReportEditor_Tab_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add design.
+        /// </summary>
+        public static string Form_ReportFilter_Button_CustomAdd {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Button_CustomAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete design.
+        /// </summary>
+        public static string Form_ReportFilter_Button_CustomDelete {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Button_CustomDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save design.
+        /// </summary>
+        public static string Form_ReportFilter_Button_CustomSave {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Button_CustomSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Filter.
+        /// </summary>
+        public static string Form_ReportFilter_Caption {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design file.
+        /// </summary>
+        public static string Form_ReportFilter_DesignFileLabel {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_DesignFileLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inter Error Code: 2565635 
+        ///{0}.
+        /// </summary>
+        public static string Form_ReportFilter_Error_OpenGridReport {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Error_OpenGridReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*.
+        /// </summary>
+        public static string Form_ReportFilter_ExcelDialogFilter {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_ExcelDialogFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only values in the first column will be imported..
+        /// </summary>
+        public static string Form_ReportFilter_ExcelDialogTitle {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_ExcelDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter design name.
+        /// </summary>
+        public static string Form_ReportFilter_Input_DesignName {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Input_DesignName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a customization to delete..
+        /// </summary>
+        public static string Form_ReportFilter_Message_NoCustomizationSelected {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Message_NoCustomizationSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No selection.
+        /// </summary>
+        public static string Form_ReportFilter_Message_NoCustomizationSelectedTitle {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Message_NoCustomizationSelectedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customization.
+        /// </summary>
+        public static string Form_ReportFilter_RibbonGroup_Customization {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_RibbonGroup_Customization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operations.
+        /// </summary>
+        public static string Form_ReportFilter_RibbonGroup_ReportOperations {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_RibbonGroup_ReportOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Form_ReportFilter_RibbonPage_Report {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_RibbonPage_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset layout.
+        /// </summary>
+        public static string Form_ReportGrid_Button_DesignClear {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Button_DesignClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load layout.
+        /// </summary>
+        public static string Form_ReportGrid_Button_LayoutLoad {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Button_LayoutLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print preview.
+        /// </summary>
+        public static string Form_ReportGrid_Button_PrintPreview {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Button_PrintPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string Form_ReportGrid_Button_Test {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Button_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report grid.
+        /// </summary>
+        public static string Form_ReportGrid_Caption {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Form_ReportGrid_Column_Image {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Column_Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column.
+        /// </summary>
+        public static string Form_ReportGrid_DefaultColumnNamePrefix {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_DefaultColumnNamePrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add column.
+        /// </summary>
+        public static string Form_ReportGrid_Input_AddColumnTitle {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Input_AddColumnTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add column.
+        /// </summary>
+        public static string Form_ReportGrid_Menu_AddColumn {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Menu_AddColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expression.
+        /// </summary>
+        public static string Form_ReportGrid_Menu_Expression {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Menu_Expression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The document is already open..
+        /// </summary>
+        public static string Form_ReportGrid_Message_InvoiceIsOpen {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Message_InvoiceIsOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to open the exported file?.
+        /// </summary>
+        public static string Form_ReportGrid_Message_OpenExportedFileQuestion {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_Message_OpenExportedFileQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Form_ReportGrid_RibbonGroup_Export {
+            get {
+                return ResourceManager.GetString("Form_ReportGrid_RibbonGroup_Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow row sizing.
+        /// </summary>
+        public static string Form_ReportGridOptions_AllowRowSizing {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowRowSizing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grid settings.
+        /// </summary>
+        public static string Form_ReportGridOptions_Caption {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editable.
+        /// </summary>
+        public static string Form_ReportGridOptions_Editable {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Editable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hidden.
+        /// </summary>
+        public static string Form_ReportGridOptions_GroupFooter_Hidden {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_GroupFooter_Hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible always.
+        /// </summary>
+        public static string Form_ReportGridOptions_GroupFooter_VisibleAlways {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_GroupFooter_VisibleAlways", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible if expanded.
+        /// </summary>
+        public static string Form_ReportGridOptions_GroupFooter_VisibleIfExpanded {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_GroupFooter_VisibleIfExpanded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group footer show mode.
+        /// </summary>
+        public static string Form_ReportGridOptions_GroupFooterShowMode {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_GroupFooterShowMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read only.
+        /// </summary>
+        public static string Form_ReportGridOptions_ReadOnly {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ReadOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show footer.
+        /// </summary>
+        public static string Form_ReportGridOptions_ShowFooter {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy to Clipboard.
+        /// </summary>
+        public static string Form_ReportPreview_CopyToClipboard {
+            get {
+                return ResourceManager.GetString("Form_ReportPreview_CopyToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Design.
+        /// </summary>
+        public static string Form_ReportPreview_EditDesign {
+            get {
+                return ResourceManager.GetString("Form_ReportPreview_EditDesign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode not found.
+        /// </summary>
+        public static string Form_RetailSale_BarcodeNotFound {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_BarcodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel Receipt.
+        /// </summary>
+        public static string Form_RetailSale_Button_CancelInvoice {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_CancelInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Line.
+        /// </summary>
+        public static string Form_RetailSale_Button_DeleteLine {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_DeleteLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incomplete invoices.
+        /// </summary>
+        public static string Form_RetailSale_Button_IncompletedInvoices {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_IncompletedInvoices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Discount.
+        /// </summary>
+        public static string Form_RetailSale_Button_InvoiceDiscount {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_InvoiceDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Discount.
+        /// </summary>
+        public static string Form_RetailSale_Button_LineDiscount {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_LineDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string Form_RetailSale_Button_New {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bonus.
+        /// </summary>
+        public static string Form_RetailSale_Button_PaymentBonus {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_PaymentBonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash.
+        /// </summary>
+        public static string Form_RetailSale_Button_PaymentCash {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_PaymentCash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cashless.
+        /// </summary>
+        public static string Form_RetailSale_Button_PaymentCashless {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_PaymentCashless", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        public static string Form_RetailSale_Button_Print {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_Print", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Preview.
+        /// </summary>
+        public static string Form_RetailSale_Button_PrintPreview {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_PrintPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string Form_RetailSale_Button_Product {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End of Day.
+        /// </summary>
+        public static string Form_RetailSale_Button_ReportZ {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_ReportZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salesperson.
+        /// </summary>
+        public static string Form_RetailSale_Button_SalesPerson {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_SalesPerson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot delete the last line.
+        ///To delete, cancel the receipt!.
+        /// </summary>
+        public static string Form_RetailSale_DeleteLastLineNotAllowed {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_DeleteLastLineNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete?.
+        /// </summary>
+        public static string Form_RetailSale_DeleteQuestion {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_DeleteQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer.
+        /// </summary>
+        public static string Form_RetailSale_Group_Customer {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Group_Customer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string Form_RetailSale_Group_Function {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Group_Function", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sale.
+        /// </summary>
+        public static string Form_RetailSale_Group_Invoice {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Group_Invoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_RetailSale_Group_Payment {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Group_Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Form_RetailSale_Group_Total {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Group_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice is empty.
+        /// </summary>
+        public static string Form_RetailSale_InvoiceEmpty {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_InvoiceEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash:.
+        /// </summary>
+        public static string Form_RetailSale_Label_PaidCash {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Label_PaidCash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cashless:.
+        /// </summary>
+        public static string Form_RetailSale_Label_PaidCashless {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Label_PaidCashless", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paid:.
+        /// </summary>
+        public static string Form_RetailSale_Label_PaidTotal {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Label_PaidTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print count.
+        /// </summary>
+        public static string Form_RetailSale_Label_PrintCount {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Label_PrintCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no invoice to print.
+        /// </summary>
+        public static string Form_RetailSale_NoInvoiceToPrint {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_NoInvoiceToPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not have permission.
+        /// </summary>
+        public static string Form_RetailSale_NoPermission {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_NoPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no product.
+        /// </summary>
+        public static string Form_RetailSale_NoProduct {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_NoProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not enough stock.
+        /// </summary>
+        public static string Form_RetailSale_NoStock {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_NoStock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment amount is zero.
+        /// </summary>
+        public static string Form_RetailSale_PaymentZero {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_PaymentZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product could not be added.
+        /// </summary>
+        public static string Form_RetailSale_ProductAddFailed {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_ProductAddFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a customer.
+        /// </summary>
+        public static string Form_RetailSale_SelectCustomer {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_SelectCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a product.
+        /// </summary>
+        public static string Form_RetailSale_SelectProduct {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_SelectProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        public static string Form_Return_Caption {
+            get {
+                return ResourceManager.GetString("Form_Return_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Form_Return_Caption_Confirmation {
+            get {
+                return ResourceManager.GetString("Form_Return_Caption_Confirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Invoice.
+        /// </summary>
+        public static string Form_Return_Caption_OpenInvoice {
+            get {
+                return ResourceManager.GetString("Form_Return_Caption_OpenInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Type.
+        /// </summary>
+        public static string Form_Return_Col_Payment_Type {
+            get {
+                return ResourceManager.GetString("Form_Return_Col_Payment_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice.
+        /// </summary>
+        public static string Form_Return_Group_InvoiceHeader {
+            get {
+                return ResourceManager.GetString("Form_Return_Group_InvoiceHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products.
+        /// </summary>
+        public static string Form_Return_Group_InvoiceLine {
+            get {
+                return ResourceManager.GetString("Form_Return_Group_InvoiceLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payments.
+        /// </summary>
+        public static string Form_Return_Group_Payment {
+            get {
+                return ResourceManager.GetString("Form_Return_Group_Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        public static string Form_Return_Group_ReturnInvoiceLine {
+            get {
+                return ResourceManager.GetString("Form_Return_Group_ReturnInvoiceLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer.
+        /// </summary>
+        public static string Form_Return_Label_CurrAcc {
+            get {
+                return ResourceManager.GetString("Form_Return_Label_CurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice.
+        /// </summary>
+        public static string Form_Return_Label_InvoiceHeader {
+            get {
+                return ResourceManager.GetString("Form_Return_Label_InvoiceHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel the return operation?.
+        /// </summary>
+        public static string Form_Return_Message_CancelReturnQuestion {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_CancelReturnQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document not found..
+        /// </summary>
+        public static string Form_Return_Message_InvoiceNotFound {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_InvoiceNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no quantity left to return..
+        /// </summary>
+        public static string Form_Return_Message_NoQtyToReturn {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_NoQtyToReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to open the invoice?.
+        /// </summary>
+        public static string Form_Return_Message_OpenInvoiceQuestion {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_OpenInvoiceQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment amount equals 0..
+        /// </summary>
+        public static string Form_Return_Message_PaymentIsZero {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_PaymentIsZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copyright © 2021 Subhan Huseynzade.
+        /// </summary>
+        public static string Form_Splash_Copyright {
+            get {
+                return ResourceManager.GetString("Form_Splash_Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting....
+        /// </summary>
+        public static string Form_Splash_Status_Starting {
+            get {
+                return ResourceManager.GetString("Form_Splash_Status_Starting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERP.
+        /// </summary>
+        public static string Form_Splash_Title_ERP {
+            get {
+                return ResourceManager.GetString("Form_Splash_Title_ERP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POS.
+        /// </summary>
+        public static string Form_Splash_Title_POS {
+            get {
+                return ResourceManager.GetString("Form_Splash_Title_POS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account code.
+        /// </summary>
+        public static string Form_Store_AccountCode {
+            get {
+                return ResourceManager.GetString("Form_Store_AccountCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Form_Store_Cancel {
+            get {
+                return ResourceManager.GetString("Form_Store_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store.
+        /// </summary>
+        public static string Form_Store_Caption {
+            get {
+                return ResourceManager.GetString("Form_Store_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default unit of measure.
+        /// </summary>
+        public static string Form_Store_DefaultUnitOfMeasure {
+            get {
+                return ResourceManager.GetString("Form_Store_DefaultUnitOfMeasure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design file folder.
+        /// </summary>
+        public static string Form_Store_DesignFileFolder {
+            get {
+                return ResourceManager.GetString("Form_Store_DesignFileFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image folder.
+        /// </summary>
+        public static string Form_Store_ImageFolder {
+            get {
+                return ResourceManager.GetString("Form_Store_ImageFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office code.
+        /// </summary>
+        public static string Form_Store_OfficeCode {
+            get {
+                return ResourceManager.GetString("Form_Store_OfficeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Printer name.
+        /// </summary>
+        public static string Form_Store_PrinterName {
+            get {
+                return ResourceManager.GetString("Form_Store_PrinterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Form_Store_Save {
+            get {
+                return ResourceManager.GetString("Form_Store_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no store to delete..
+        /// </summary>
+        public static string Form_StoreList_Message_NoStoreToDelete {
+            get {
+                return ResourceManager.GetString("Form_StoreList_Message_NoStoreToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a store..
+        /// </summary>
+        public static string Form_StoreList_Message_SelectStore {
+            get {
+                return ResourceManager.GetString("Form_StoreList_Message_SelectStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Embedded report &apos;Report_Embedded_StoreList&apos; was not found in DcReports table..
+        /// </summary>
+        public static string Form_StoreList_ReportNotFound {
+            get {
+                return ResourceManager.GetString("Form_StoreList_ReportNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait.
+        /// </summary>
+        public static string Form_WaitForm_Caption {
+            get {
+                return ResourceManager.GetString("Form_WaitForm_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string Form_WaitForm_Description {
+            get {
+                return ResourceManager.GetString("Form_WaitForm_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading.
+        /// </summary>
+        public static string Form_WaitForm_Title {
+            get {
+                return ResourceManager.GetString("Form_WaitForm_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouses.
+        /// </summary>
+        public static string Form_WarehouseList_Caption {
+            get {
+                return ResourceManager.GetString("Form_WarehouseList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No warehouse to delete.
+        /// </summary>
+        public static string Form_WarehouseList_NoWarehouseToDelete {
+            get {
+                return ResourceManager.GetString("Form_WarehouseList_NoWarehouseToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Form_WarehouseList_RibbonGroup_Manage {
+            get {
+                return ResourceManager.GetString("Form_WarehouseList_RibbonGroup_Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Form_WarehouseList_RibbonGroup_Report {
+            get {
+                return ResourceManager.GetString("Form_WarehouseList_RibbonGroup_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string Form_WarehouseList_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_WarehouseList_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Guarantor.
+        /// </summary>
+        public static string FormInvoice_AddInstallmentGuarantor {
+            get {
+                return ResourceManager.GetString("FormInvoice_AddInstallmentGuarantor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Invoice.
+        /// </summary>
+        public static string FormInvoice_CopyInvoice {
+            get {
+                return ResourceManager.GetString("FormInvoice_CopyInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Invoice.
+        /// </summary>
+        public static string FormInvoice_DeleteInvoice {
+            get {
+                return ResourceManager.GetString("FormInvoice_DeleteInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Invoice.
+        /// </summary>
+        public static string FormInvoice_EditInvoice {
+            get {
+                return ResourceManager.GetString("FormInvoice_EditInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to Excel.
+        /// </summary>
+        public static string FormInvoice_ExportToExcel {
+            get {
+                return ResourceManager.GetString("FormInvoice_ExportToExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fast Print.
+        /// </summary>
+        public static string FormInvoice_FastPrint {
+            get {
+                return ResourceManager.GetString("FormInvoice_FastPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment.
+        /// </summary>
+        public static string FormInvoice_Group_Installment {
+            get {
+                return ResourceManager.GetString("FormInvoice_Group_Installment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment.
+        /// </summary>
+        public static string FormInvoice_Group_InstallmentInfo {
+            get {
+                return ResourceManager.GetString("FormInvoice_Group_InstallmentInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string FormInvoice_Group_PaymentInfo {
+            get {
+                return ResourceManager.GetString("FormInvoice_Group_PaymentInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import from Excel.
+        /// </summary>
+        public static string FormInvoice_ImportFromExcel {
+            get {
+                return ResourceManager.GetString("FormInvoice_ImportFromExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string FormInvoice_Info {
+            get {
+                return ResourceManager.GetString("FormInvoice_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission.
+        /// </summary>
+        public static string FormInvoice_InstallmentCommission {
+            get {
+                return ResourceManager.GetString("FormInvoice_InstallmentCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission: .
+        /// </summary>
+        public static string FormInvoice_InstallmentCommissionSum {
+            get {
+                return ResourceManager.GetString("FormInvoice_InstallmentCommissionSum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Code.
+        /// </summary>
+        public static string FormInvoice_InstallmentGuarantor_CurrAccCode {
+            get {
+                return ResourceManager.GetString("FormInvoice_InstallmentGuarantor_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guarantors.
+        /// </summary>
+        public static string FormInvoice_InstallmentGuarantors {
+            get {
+                return ResourceManager.GetString("FormInvoice_InstallmentGuarantors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment: .
+        /// </summary>
+        public static string FormInvoice_InstallmentSum {
+            get {
+                return ResourceManager.GetString("FormInvoice_InstallmentSum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Installment: .
+        /// </summary>
+        public static string FormInvoice_InstallmentTotalSum {
+            get {
+                return ResourceManager.GetString("FormInvoice_InstallmentTotalSum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Discount.
+        /// </summary>
+        public static string FormInvoice_InvoiceDiscount {
+            get {
+                return ResourceManager.GetString("FormInvoice_InvoiceDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Expenses.
+        /// </summary>
+        public static string FormInvoice_InvoiceExpenses {
+            get {
+                return ResourceManager.GetString("FormInvoice_InvoiceExpenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string FormInvoice_New {
+            get {
+                return ResourceManager.GetString("FormInvoice_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash: .
+        /// </summary>
+        public static string FormInvoice_PaidCash {
+            get {
+                return ResourceManager.GetString("FormInvoice_PaidCash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cashless: .
+        /// </summary>
+        public static string FormInvoice_PaidCashless {
+            get {
+                return ResourceManager.GetString("FormInvoice_PaidCashless", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paid: .
+        /// </summary>
+        public static string FormInvoice_PaidTotal {
+            get {
+                return ResourceManager.GetString("FormInvoice_PaidTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string FormInvoice_Payment {
+            get {
+                return ResourceManager.GetString("FormInvoice_Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Payment.
+        /// </summary>
+        public static string FormInvoice_PaymentDelete {
+            get {
+                return ResourceManager.GetString("FormInvoice_PaymentDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pictures.
+        /// </summary>
+        public static string FormInvoice_Pictures {
+            get {
+                return ResourceManager.GetString("FormInvoice_Pictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Print Settings.
+        /// </summary>
+        public static string FormInvoice_PrintSettingSave {
+            get {
+                return ResourceManager.GetString("FormInvoice_PrintSettingSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Preview.
+        /// </summary>
+        public static string FormInvoice_ReportPreview {
+            get {
+                return ResourceManager.GetString("FormInvoice_ReportPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_Control {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_Info {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_Installment {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Installment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_InvoiceExtra {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_InvoiceExtra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operations.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_InvoiceOperations {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_InvoiceOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_Payment {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_Print {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Print", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Settings.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_PrintSettings {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_PrintSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_Report {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_Show {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_Test {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice.
+        /// </summary>
+        public static string FormInvoice_RibbonPage_Invoice {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonPage_Invoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string FormInvoice_RibbonPage_Settings {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonPage_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salesman.
+        /// </summary>
+        public static string FormInvoice_Salesman {
+            get {
+                return ResourceManager.GetString("FormInvoice_Salesman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string FormInvoice_Save {
+            get {
+                return ResourceManager.GetString("FormInvoice_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and New.
+        /// </summary>
+        public static string FormInvoice_SaveAndNew {
+            get {
+                return ResourceManager.GetString("FormInvoice_SaveAndNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and Close.
+        /// </summary>
+        public static string FormInvoice_SaveAndQuit {
+            get {
+                return ResourceManager.GetString("FormInvoice_SaveAndQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Copy.
+        /// </summary>
+        public static string FormInvoice_ShowCopy {
+            get {
+                return ResourceManager.GetString("FormInvoice_ShowCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Picture.
+        /// </summary>
+        public static string FormInvoice_ShowPicture {
+            get {
+                return ResourceManager.GetString("FormInvoice_ShowPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Printer.
+        /// </summary>
+        public static string FormInvoice_ShowPrint {
+            get {
+                return ResourceManager.GetString("FormInvoice_ShowPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string FormInvoice_Test1 {
+            get {
+                return ResourceManager.GetString("FormInvoice_Test1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string FormInvoice_Test2 {
+            get {
+                return ResourceManager.GetString("FormInvoice_Test2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send via Whatsapp.
+        /// </summary>
+        public static string FormInvoice_WhatsappSend {
+            get {
+                return ResourceManager.GetString("FormInvoice_WhatsappSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to POS.
         /// </summary>
         public static string Login_POS {
@@ -5137,12 +10000,61 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to Do you want to delete?
+        ///{0}.
         /// </summary>
-        public static System.Drawing.Bitmap startup550x363_png {
+        public static string Message_ConfirmDelete {
             get {
-                object obj = ResourceManager.GetObject("startup550x363.png", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("Message_ConfirmDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete?
+        /// {0}.
+        /// </summary>
+        public static string Message_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("Message_DeleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No current account to delete.
+        /// </summary>
+        public static string Message_NoCurrAccToDelete {
+            get {
+                return ResourceManager.GetString("Message_NoCurrAccToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No row selected..
+        /// </summary>
+        public static string Message_NoRowSelected {
+            get {
+                return ResourceManager.GetString("Message_NoRowSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Current Account.
+        /// </summary>
+        public static string Message_SelectCurrAcc {
+            get {
+                return ResourceManager.GetString("Message_SelectCurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot connect to server.
+        ///Connection string:
+        ///{0}
+        ///Error: {1}.
+        /// </summary>
+        public static string Message_ServerConnectionError {
+            get {
+                return ResourceManager.GetString("Message_ServerConnectionError", resourceCulture);
             }
         }
         
@@ -5152,6 +10064,24 @@ namespace Foxoft.Properties {
         public static string Validation_Compare_Mismatch {
             get {
                 return ResourceManager.GetString("Validation_Compare_Mismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This phone number is already used by another current account..
+        /// </summary>
+        public static string Validation_Phone_ExistsInAnotherCurrAcc {
+            get {
+                return ResourceManager.GetString("Validation_Phone_ExistsInAnotherCurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This phone number is already used by another store.
+        /// </summary>
+        public static string Validation_Phone_ExistsInAnotherStore {
+            get {
+                return ResourceManager.GetString("Validation_Phone_ExistsInAnotherStore", resourceCulture);
             }
         }
         

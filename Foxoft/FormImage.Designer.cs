@@ -109,7 +109,12 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, btn_Add, btn_Delete });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+                ribbonControl1.ExpandCollapseItem,
+                ribbonControl1.SearchEditItem,
+                btn_Add,
+                btn_Delete
+            });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 3;
             ribbonControl1.Name = "ribbonControl1";
@@ -118,7 +123,7 @@ namespace Foxoft
             // 
             // btn_Add
             // 
-            btn_Add.Caption = "Əlavə Et";
+            btn_Add.Caption = Resources.Common_New; // əvvəl: "Əlavə Et"
             btn_Add.Id = 1;
             btn_Add.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Add.ImageOptions.SvgImage");
             btn_Add.Name = "btn_Add";
@@ -126,7 +131,7 @@ namespace Foxoft
             // 
             // btn_Delete
             // 
-            btn_Delete.Caption = "Sil";
+            btn_Delete.Caption = Resources.Common_Delete; // əvvəl: "Sil"
             btn_Delete.Id = 2;
             btn_Delete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Delete.ImageOptions.SvgImage");
             btn_Delete.Name = "btn_Delete";
@@ -136,14 +141,14 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "ribbonPage1";
+            ribbonPage1.Text = Resources.Form_Image_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
             ribbonPageGroup1.ItemLinks.Add(btn_Add);
             ribbonPageGroup1.ItemLinks.Add(btn_Delete);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "İdarəetmə";
+            ribbonPageGroup1.Text = Resources.Common_Operations;
             // 
             // FormImage
             // 
@@ -154,7 +159,7 @@ namespace Foxoft
             Controls.Add(ribbonControl1);
             Name = "FormImage";
             Ribbon = ribbonControl1;
-            Text = "Form1";
+            Text = Resources.Form_Image_Caption; // əvvəl: "Form1"
             ((System.ComponentModel.ISupportInitialize)galleryControl1).EndInit();
             galleryControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();

@@ -1,5 +1,5 @@
-﻿
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
+using Foxoft.Properties; // Resources üçün
 using System.Data;
 
 namespace Foxoft
@@ -38,11 +38,6 @@ namespace Foxoft
         }
 
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
@@ -281,7 +276,7 @@ namespace Foxoft
             // 
             // bBI_CurrAccNew
             // 
-            bBI_CurrAccNew.Caption = "Yeni";
+            bBI_CurrAccNew.Caption = Resources.Common_New;                 // "Yeni" → resx
             bBI_CurrAccNew.Id = 1;
             bBI_CurrAccNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccNew.ImageOptions.SvgImage");
             bBI_CurrAccNew.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
@@ -290,7 +285,7 @@ namespace Foxoft
             // 
             // bBI_CurAccEdit
             // 
-            bBI_CurAccEdit.Caption = "Dəyiş";
+            bBI_CurAccEdit.Caption = Resources.Common_Edit;                 // "Dəyiş" → resx
             bBI_CurAccEdit.Id = 2;
             bBI_CurAccEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccEdit.ImageOptions.SvgImage");
             bBI_CurAccEdit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
@@ -299,7 +294,7 @@ namespace Foxoft
             // 
             // bBI_ExportXlsx
             // 
-            bBI_ExportXlsx.Caption = "Excelə Göndər";
+            bBI_ExportXlsx.Caption = Resources.Common_ExportToExcel;        // "Excelə Göndər" → resx
             bBI_ExportXlsx.Id = 6;
             bBI_ExportXlsx.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage");
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
@@ -307,7 +302,7 @@ namespace Foxoft
             // 
             // bBI_CurrAccDelete
             // 
-            bBI_CurrAccDelete.Caption = "Sil";
+            bBI_CurrAccDelete.Caption = Resources.Common_Delete;            // "Sil" → resx
             bBI_CurrAccDelete.Id = 7;
             bBI_CurrAccDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccDelete.ImageOptions.SvgImage");
             bBI_CurrAccDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Delete);
@@ -316,7 +311,7 @@ namespace Foxoft
             // 
             // bBI_CurAccRefresh
             // 
-            bBI_CurAccRefresh.Caption = "Yenilə";
+            bBI_CurAccRefresh.Caption = Resources.Common_Refresh;           // "Yenilə" → resx
             bBI_CurAccRefresh.Id = 8;
             bBI_CurAccRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccRefresh.ImageOptions.SvgImage");
             bBI_CurAccRefresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
@@ -325,28 +320,28 @@ namespace Foxoft
             // 
             // barButtonItem3
             // 
-            barButtonItem3.Caption = "Musteri ile Haqq Hesab";
+            barButtonItem3.Caption = Resources.Form_CurrAccList_Menu_CustomerReconciliation; // "Musteri ile Haqq Hesab" → resx
             barButtonItem3.Id = 25;
             barButtonItem3.Name = "barButtonItem3";
             barButtonItem3.ItemClick += barButtonItem3_ItemClick;
             // 
             // barButtonItem4
             // 
-            barButtonItem4.Caption = "Malin Butun Hereketi";
+            barButtonItem4.Caption = Resources.Form_CurrAccList_Menu_ProductMovements;       // "Malin Butun Hereketi" → resx
             barButtonItem4.Id = 26;
             barButtonItem4.Name = "barButtonItem4";
             barButtonItem4.ItemClick += barButtonItem4_ItemClick;
             // 
             // BBI_test
             // 
-            BBI_test.Caption = "test";
+            BBI_test.Caption = Resources.Common_Test;                         // "test" → resx
             BBI_test.Id = 27;
             BBI_test.Name = "BBI_test";
             BBI_test.ItemClick += BBI_test_ItemClick;
             // 
             // BBI_query
             // 
-            BBI_query.Caption = "Sorğu";
+            BBI_query.Caption = Resources.Common_Query;                       // "Sorğu" → resx
             BBI_query.Id = 28;
             BBI_query.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_query.ImageOptions.SvgImage");
             BBI_query.Name = "BBI_query";
@@ -354,7 +349,7 @@ namespace Foxoft
             // 
             // BSI_Reports
             // 
-            BSI_Reports.Caption = "Hesabat";
+            BSI_Reports.Caption = Resources.Common_Report;                    // "Hesabat" → resx
             BSI_Reports.Id = 30;
             BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
             BSI_Reports.Name = "BSI_Reports";
@@ -363,7 +358,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Cari Hesab";
+            ribbonPage1.Text = Resources.Form_CurrAccList_RibbonPage_Main;    // "Cari Hesab" → resx
             // 
             // ribbonPageGroup1
             // 
@@ -372,27 +367,27 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_CurrAccDelete);
             ribbonPageGroup1.ItemLinks.Add(bBI_CurAccRefresh);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "İdarə";
+            ribbonPageGroup1.Text = Resources.Form_CurrAccList_RibbonGroup_Manage; // "İdarə" → resx
             // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.ItemLinks.Add(bBI_ExportXlsx);
             ribbonPageGroup3.ItemLinks.Add(BSI_Reports);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Hesabat";
+            ribbonPageGroup3.Text = Resources.Common_Report;                   // "Hesabat" → resx
             // 
             // ribbonPage3
             // 
             ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2 });
             ribbonPage3.Name = "ribbonPage3";
-            ribbonPage3.Text = "Ayarlar";
+            ribbonPage3.Text = Resources.Common_Settings;                      // "Ayarlar" → resx
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(BBI_query);
             ribbonPageGroup2.ItemLinks.Add(barButtonItem1);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Data";
+            ribbonPageGroup2.Text = Resources.Common_Data;                     // "Data" → resx
             // 
             // ribbonStatusBar1
             // 
@@ -414,7 +409,7 @@ namespace Foxoft
             // 
             // barButtonItem1
             // 
-            barButtonItem1.Caption = "test";
+            barButtonItem1.Caption = Resources.Common_Test;                    // "test" → resx
             barButtonItem1.Id = 31;
             barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
             barButtonItem1.Name = "barButtonItem1";
@@ -433,7 +428,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = "Cari Hesablar";
+            Text = Resources.Form_CurrAccList_Caption;                         // "Cari Hesablar" → resx
             Activated += FormCurrAccList_Activated;
             Load += FormCurrAccList_Load;
             VisibleChanged += FormCurrAccList_VisibleChanged;

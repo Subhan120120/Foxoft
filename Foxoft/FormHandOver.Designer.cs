@@ -1,6 +1,7 @@
 ﻿
 using DevExpress.XtraBars;
 using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -184,7 +185,6 @@ namespace Foxoft
             // 
             // col_InvoiceLineId
             // 
-            col_InvoiceLineId.Caption = "Invoice Line Id";
             col_InvoiceLineId.FieldName = "TrInvoiceLine.InvoiceLineId";
             col_InvoiceLineId.Name = "col_InvoiceLineId";
             col_InvoiceLineId.Visible = true;
@@ -192,7 +192,6 @@ namespace Foxoft
             // 
             // col_HierarchyCode
             // 
-            col_HierarchyCode.Caption = "İyerarxiya Kodu";
             col_HierarchyCode.FieldName = "TrInvoiceLine.DcProduct.HierarchyCode";
             col_HierarchyCode.Name = "col_HierarchyCode";
             col_HierarchyCode.Visible = true;
@@ -200,7 +199,6 @@ namespace Foxoft
             // 
             // col_ProductCode
             // 
-            col_ProductCode.Caption = "Məhsul Kodu";
             col_ProductCode.FieldName = "TrInvoiceLine.ProductCode";
             col_ProductCode.Name = "col_ProductCode";
             col_ProductCode.OptionsColumn.AllowEdit = false;
@@ -210,7 +208,6 @@ namespace Foxoft
             // 
             // col_ProductDesc
             // 
-            col_ProductDesc.Caption = "Məhsul Adı";
             col_ProductDesc.FieldName = "TrInvoiceLine.DcProduct.ProductDesc";
             col_ProductDesc.Name = "col_ProductDesc";
             col_ProductDesc.Visible = true;
@@ -219,7 +216,6 @@ namespace Foxoft
             // 
             // col_Qty
             // 
-            col_Qty.Caption = "Say";
             col_Qty.FieldName = "TrInvoiceLine.Qty";
             col_Qty.Name = "col_Qty";
             col_Qty.OptionsColumn.AllowEdit = false;
@@ -229,7 +225,7 @@ namespace Foxoft
             // 
             // col_DeliveredQty
             // 
-            col_DeliveredQty.Caption = "Təhvil Olan Miqdar";
+            col_DeliveredQty.Caption = Resources.Form_HandOver_Column_DeliveredQty;
             col_DeliveredQty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             col_DeliveredQty.FieldName = "DeliveredQty";
             col_DeliveredQty.Name = "col_DeliveredQty";
@@ -241,7 +237,7 @@ namespace Foxoft
             // 
             // col_RemainingQty
             // 
-            col_RemainingQty.Caption = "Qalan Miqdar";
+            col_RemainingQty.Caption = Resources.Form_HandOver_Column_RemainingQty;
             col_RemainingQty.FieldName = "RemainingQty";
             col_RemainingQty.Name = "col_RemainingQty";
             col_RemainingQty.OptionsColumn.AllowEdit = false;
@@ -251,7 +247,6 @@ namespace Foxoft
             // 
             // col_Price
             // 
-            col_Price.Caption = "Qiymət";
             col_Price.FieldName = "TrInvoiceLine.Price";
             col_Price.Name = "col_Price";
             col_Price.OptionsColumn.AllowEdit = false;
@@ -261,7 +256,6 @@ namespace Foxoft
             // 
             // col_Amount
             // 
-            col_Amount.Caption = "Tutar";
             col_Amount.FieldName = "TrInvoiceLine.Amount";
             col_Amount.Name = "col_Amount";
             col_Amount.OptionsColumn.AllowEdit = false;
@@ -270,7 +264,6 @@ namespace Foxoft
             // 
             // col_PosDiscount
             // 
-            col_PosDiscount.Caption = "Pos Endirimi";
             col_PosDiscount.FieldName = "TrInvoiceLine.PosDiscount";
             col_PosDiscount.Name = "col_PosDiscount";
             col_PosDiscount.OptionsColumn.AllowEdit = false;
@@ -279,7 +272,6 @@ namespace Foxoft
             // 
             // col_DiscountCampaign
             // 
-            col_DiscountCampaign.Caption = "Endirim Kampaniyası";
             col_DiscountCampaign.FieldName = "TrInvoiceLine.DiscountCampaign";
             col_DiscountCampaign.Name = "col_DiscountCampaign";
             col_DiscountCampaign.OptionsColumn.AllowEdit = false;
@@ -288,7 +280,6 @@ namespace Foxoft
             // 
             // col_NetAmount
             // 
-            col_NetAmount.Caption = "Net Tutar";
             col_NetAmount.FieldName = "TrInvoiceLine.NetAmount";
             col_NetAmount.Name = "col_NetAmount";
             col_NetAmount.OptionsColumn.AllowEdit = false;
@@ -298,7 +289,6 @@ namespace Foxoft
             // 
             // col_LineDesc
             // 
-            col_LineDesc.Caption = "Sətir Açıqlaması";
             col_LineDesc.FieldName = "TrInvoiceLine.LineDescription";
             col_LineDesc.Name = "col_LineDesc";
             col_LineDesc.OptionsColumn.AllowEdit = false;
@@ -307,7 +297,6 @@ namespace Foxoft
             // 
             // col_SalesPersonCode
             // 
-            col_SalesPersonCode.Caption = "Satıcı";
             col_SalesPersonCode.FieldName = "TrInvoiceLine.SalesPersonCode";
             col_SalesPersonCode.Name = "col_SalesPersonCode";
             col_SalesPersonCode.OptionsColumn.AllowEdit = false;
@@ -316,7 +305,6 @@ namespace Foxoft
             // 
             // col_VatRate
             // 
-            col_VatRate.Caption = "ƏDV";
             col_VatRate.FieldName = "TrInvoiceLine.VatRate";
             col_VatRate.Name = "col_VatRate";
             col_VatRate.OptionsColumn.AllowEdit = false;
@@ -325,7 +313,6 @@ namespace Foxoft
             // 
             // col_SerialNumberCode
             // 
-            col_SerialNumberCode.Caption = "Seria nömrəsi";
             col_SerialNumberCode.FieldName = "TrInvoiceLine.SerialNumberCode";
             col_SerialNumberCode.Name = "col_SerialNumberCode";
             col_SerialNumberCode.Visible = true;
@@ -333,7 +320,6 @@ namespace Foxoft
             // 
             // col_UnitOfMeasureId
             // 
-            col_UnitOfMeasureId.Caption = "Ölçü Vahidi";
             col_UnitOfMeasureId.FieldName = "TrInvoiceLine.UnitOfMeasureId";
             col_UnitOfMeasureId.Name = "col_UnitOfMeasureId";
             col_UnitOfMeasureId.Visible = true;
@@ -341,7 +327,7 @@ namespace Foxoft
             // 
             // col_AddWaybill
             // 
-            col_AddWaybill.Caption = "Əlavə Et";
+            col_AddWaybill.Caption = Resources.Form_HandOver_Button_AddWaybill; // əvvəl: "Əlavə Et"
             col_AddWaybill.ColumnEdit = repoBtn_AddWaybill;
             col_AddWaybill.FieldName = "AddWaybill";
             col_AddWaybill.Name = "col_AddWaybill";
@@ -408,7 +394,6 @@ namespace Foxoft
             // 
             // col_DocumentNumber
             // 
-            col_DocumentNumber.Caption = "Sənəd Nömrəsi";
             col_DocumentNumber.FieldName = "TrInvoiceHeader.DocumentNumber";
             col_DocumentNumber.Name = "col_DocumentNumber";
             col_DocumentNumber.Visible = true;
@@ -416,13 +401,11 @@ namespace Foxoft
             // 
             // col_CurrAccCode
             // 
-            col_CurrAccCode.Caption = "Cari Hesab Kodu";
             col_CurrAccCode.FieldName = "TrInvoiceHeader.CurrAccCode";
             col_CurrAccCode.Name = "col_CurrAccCode";
             // 
             // col_CurrAccDesc
             // 
-            col_CurrAccDesc.Caption = "Cari Hesab Adı";
             col_CurrAccDesc.FieldName = "TrInvoiceHeader.DcCurrAcc.CurrAccDesc";
             col_CurrAccDesc.Name = "col_CurrAccDesc";
             col_CurrAccDesc.Visible = true;
@@ -430,7 +413,6 @@ namespace Foxoft
             // 
             // col_DocumentDate
             // 
-            col_DocumentDate.Caption = "Sənəd Tarixi";
             col_DocumentDate.FieldName = "TrInvoiceHeader.DocumentDate";
             col_DocumentDate.Name = "col_DocumentDate";
             col_DocumentDate.Visible = true;
@@ -438,7 +420,6 @@ namespace Foxoft
             // 
             // col_WarehouseCode
             // 
-            col_WarehouseCode.Caption = "Anbar";
             col_WarehouseCode.FieldName = "TrInvoiceHeader.WarehouseCode";
             col_WarehouseCode.Name = "col_WarehouseCode";
             col_WarehouseCode.Visible = true;
@@ -446,7 +427,6 @@ namespace Foxoft
             // 
             // col_Description
             // 
-            col_Description.Caption = "Açıqlama";
             col_Description.FieldName = "TrInvoiceHeader.Description";
             col_Description.Name = "col_Description";
             col_Description.Visible = true;
@@ -454,7 +434,6 @@ namespace Foxoft
             // 
             // col_ProcessCode
             // 
-            col_ProcessCode.Caption = "Proses Kodu";
             col_ProcessCode.FieldName = "TrInvoiceHeader.ProcessCode";
             col_ProcessCode.Name = "col_ProcessCode";
             col_ProcessCode.Visible = true;
@@ -462,7 +441,6 @@ namespace Foxoft
             // 
             // col_DocumentTime
             // 
-            col_DocumentTime.Caption = "Faktura Vaxtı";
             col_DocumentTime.FieldName = "TrInvoiceHeader.DocumentTime";
             col_DocumentTime.Name = "col_DocumentTime";
             col_DocumentTime.Visible = true;
@@ -470,7 +448,6 @@ namespace Foxoft
             // 
             // col_OfficeCode
             // 
-            col_OfficeCode.Caption = "Ofis Kodu";
             col_OfficeCode.FieldName = "TrInvoiceHeader.OfficeCode";
             col_OfficeCode.Name = "col_OfficeCode";
             col_OfficeCode.Visible = true;
@@ -478,7 +455,6 @@ namespace Foxoft
             // 
             // col_StoreCode
             // 
-            col_StoreCode.Caption = "Mağaza Kodu";
             col_StoreCode.FieldName = "TrInvoiceHeader.StoreCode";
             col_StoreCode.Name = "col_StoreCode";
             col_StoreCode.Visible = true;
@@ -486,7 +462,6 @@ namespace Foxoft
             // 
             // col_CustomsDocumentNumber
             // 
-            col_CustomsDocumentNumber.Caption = "Xüsusi Sənəd Nömrəsi";
             col_CustomsDocumentNumber.FieldName = "TrInvoiceHeader.CustomsDocumentNumber";
             col_CustomsDocumentNumber.Name = "col_CustomsDocumentNumber";
             col_CustomsDocumentNumber.Visible = true;
@@ -611,7 +586,7 @@ namespace Foxoft
             // BBI_ReportPrintFast
             // 
             BBI_ReportPrintFast.ButtonStyle = BarButtonStyle.DropDown;
-            BBI_ReportPrintFast.Caption = "Sürətli Çap Et";
+            BBI_ReportPrintFast.Caption = Resources.Common_PrintFast;
             BBI_ReportPrintFast.DropDownControl = popupMenuPrinters;
             BBI_ReportPrintFast.Id = 30;
             BBI_ReportPrintFast.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportPrintFast.ImageOptions.SvgImage");
@@ -626,7 +601,7 @@ namespace Foxoft
             // 
             // BBI_Refresh
             // 
-            BBI_Refresh.Caption = "Yenilə";
+            BBI_Refresh.Caption = Resources.Common_Refresh;
             BBI_Refresh.Id = 2;
             BBI_Refresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Refresh.ImageOptions.SvgImage");
             BBI_Refresh.Name = "BBI_Refresh";
@@ -634,14 +609,14 @@ namespace Foxoft
             // 
             // BBI_GridOptions
             // 
-            BBI_GridOptions.Caption = "Grid Dizayn";
+            BBI_GridOptions.Caption = Resources.Common_GridDesign;
             BBI_GridOptions.Id = 3;
             BBI_GridOptions.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GridOptions.ImageOptions.SvgImage");
             BBI_GridOptions.Name = "BBI_GridOptions";
             // 
             // BBI_GridLayoutSave
             // 
-            BBI_GridLayoutSave.Caption = "Grid Dizayn Saxla";
+            BBI_GridLayoutSave.Caption = Resources.Common_GridDesignSave;
             BBI_GridLayoutSave.Id = 4;
             BBI_GridLayoutSave.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GridLayoutSave.ImageOptions.SvgImage");
             BBI_GridLayoutSave.Name = "BBI_GridLayoutSave";
@@ -651,32 +626,32 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2, ribbonPageGroup1 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Təhvil";
+            ribbonPage1.Text = Resources.Form_HandOver_Caption;
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(BBI_Refresh);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Əməliyatlar";
+            ribbonPageGroup2.Text = Resources.Common_Operations;
             // 
             // ribbonPageGroup1
             // 
             ribbonPageGroup1.ItemLinks.Add(BBI_ReportPrintFast);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Print";
+            ribbonPageGroup1.Text = Resources.Common_Print;
             // 
             // ribbonPage2
             // 
             ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup3 });
             ribbonPage2.Name = "ribbonPage2";
-            ribbonPage2.Text = "Ayarlar";
+            ribbonPage2.Text = Resources.Common_Settings;
             // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.ItemLinks.Add(BBI_GridOptions);
             ribbonPageGroup3.ItemLinks.Add(BBI_GridLayoutSave);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Dizayn";
+            ribbonPageGroup3.Text = Resources.Common_Design;
             // 
             // ItemForStoreCode
             // 
@@ -786,7 +761,7 @@ namespace Foxoft
             // 
             // col_RProductCode
             // 
-            col_RProductCode.Caption = "Məhsul";
+            col_RProductCode.Caption = Resources.Entity_InvoiceLine_ProductCode;
             col_RProductCode.FieldName = "ProductCode";
             col_RProductCode.Name = "col_RProductCode";
             col_RProductCode.Visible = true;
@@ -794,7 +769,7 @@ namespace Foxoft
             // 
             // col_RQty
             // 
-            col_RQty.Caption = "Say";
+            col_RQty.Caption = Resources.Entity_InvoiceLine_Qty;
             col_RQty.FieldName = "Qty";
             col_RQty.Name = "col_RQty";
             col_RQty.Visible = true;
@@ -802,49 +777,49 @@ namespace Foxoft
             // 
             // col_RPrice
             // 
-            col_RPrice.Caption = "Qiymət";
+            col_RPrice.Caption = Resources.Entity_InvoiceLine_Price;
             col_RPrice.FieldName = "Price";
             col_RPrice.Name = "col_RPrice";
             // 
             // col_RAmount
             // 
-            col_RAmount.Caption = "Tutar";
+            col_RAmount.Caption = Resources.Entity_InvoiceLine_Amount;
             col_RAmount.FieldName = "Amount";
             col_RAmount.Name = "col_RAmount";
             // 
             // col_RPosDiscount
             // 
-            col_RPosDiscount.Caption = "Endirim";
+            col_RPosDiscount.Caption = Resources.Entity_InvoiceLine_PosDiscount;
             col_RPosDiscount.FieldName = "PosDiscount";
             col_RPosDiscount.Name = "col_RPosDiscount";
             // 
             // col_RNetAmount
             // 
-            col_RNetAmount.Caption = "Net Tutar";
+            col_RNetAmount.Caption = Resources.Entity_InvoiceLine_NetAmount;
             col_RNetAmount.FieldName = "NetAmount";
             col_RNetAmount.Name = "col_RNetAmount";
             col_RNetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:0.##}") });
             // 
             // col_RVatRate
             // 
-            col_RVatRate.Caption = "ƏDV";
+            col_RVatRate.Caption = Resources.Entity_InvoiceLine_VatRate;
             col_RVatRate.FieldName = "VatRate";
             col_RVatRate.Name = "col_RVatRate";
             // 
             // col_RCurrencyCode
             // 
-            col_RCurrencyCode.Caption = "gridColumn1";
+            col_RCurrencyCode.Caption = Resources.Entity_InvoiceLine_CurrencyCode;
             col_RCurrencyCode.Name = "col_RCurrencyCode";
             // 
             // col_RSalesPersonCode
             // 
-            col_RSalesPersonCode.Caption = "Satıcı";
+            col_RSalesPersonCode.Caption = Resources.Entity_InvoiceLine_SalesPersonCode;
             col_RSalesPersonCode.FieldName = "SalesPersonCode";
             col_RSalesPersonCode.Name = "col_RSalesPersonCode";
             // 
             // col_RProductDesc
             // 
-            col_RProductDesc.Caption = "Məhsul Adı";
+            col_RProductDesc.Caption = Resources.Entity_InvoiceLine_ProductDesc;
             col_RProductDesc.FieldName = "DcProduct.ProductDesc";
             col_RProductDesc.Name = "col_RProductDesc";
             col_RProductDesc.Visible = true;
@@ -916,7 +891,8 @@ namespace Foxoft
             lCG_ReturnInvoiceLine.Location = new Point(0, 216);
             lCG_ReturnInvoiceLine.Name = "lCG_ReturnInvoiceLine";
             lCG_ReturnInvoiceLine.Size = new Size(1029, 325);
-            lCG_ReturnInvoiceLine.Text = "Tehvil Vermə";
+            lCG_ReturnInvoiceLine.Text = Resources.Form_HandOver_Group_HandOver;
+
             // 
             // layoutControlItem2
             // 
@@ -954,7 +930,6 @@ namespace Foxoft
             // 
             // col_CreatedUserName
             // 
-            col_CreatedUserName.Caption = "gridColumn1";
             col_CreatedUserName.FieldName = "TrInvoiceHeader.CreatedUserName";
             col_CreatedUserName.Name = "col_CreatedUserName";
             col_CreatedUserName.Visible = true;
@@ -968,6 +943,7 @@ namespace Foxoft
             Controls.Add(lC_Root);
             Controls.Add(ribbonControl1);
             Name = "FormHandOver";
+            Text = Resources.Form_HandOver_Caption;
             Ribbon = ribbonControl1;
             FormClosing += FormWaybill_FormClosing;
             Load += FormWaybill_Load;

@@ -1,27 +1,27 @@
-﻿
-using Foxoft.AppCode;
+﻿using Foxoft.AppCode;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
-   partial class FormReportFilter
-   {
-      /// <summary>
-      /// Required designer variable.
-      /// </summary>
-      private System.ComponentModel.IContainer components = null;
+    partial class FormReportFilter
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-      /// <summary>
-      /// Clean up any resources being used.
-      /// </summary>
-      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-      protected override void Dispose(bool disposing)
-      {
-         if (disposing && (components != null))
-         {
-            components.Dispose();
-         }
-         base.Dispose(disposing);
-      }
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         #region Windows Form Designer generated code
 
@@ -95,8 +95,13 @@ namespace Foxoft
             LUE_ReportCustomization.Location = new Point(12, 223);
             LUE_ReportCustomization.MenuManager = ribbonControl1;
             LUE_ReportCustomization.Name = "LUE_ReportCustomization";
-            LUE_ReportCustomization.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            LUE_ReportCustomization.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCustomizationId", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCustomizationDesc", "") });
+            LUE_ReportCustomization.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)
+            });
+            LUE_ReportCustomization.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCustomizationId", ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCustomizationDesc", "")
+            });
             LUE_ReportCustomization.Properties.DisplayMember = "ReportCustomizationDesc";
             LUE_ReportCustomization.Properties.NullText = "";
             LUE_ReportCustomization.Properties.ValueMember = "ReportCustomizationId";
@@ -108,7 +113,15 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_ReportEdit, bBI_ReportNew, bBI_ReportDelete, BBI_ReportCustomAdd, BBI_ReportCustomSave, BBI_ReportCustomDelete });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+                ribbonControl1.ExpandCollapseItem,
+                bBI_ReportEdit,
+                bBI_ReportNew,
+                bBI_ReportDelete,
+                BBI_ReportCustomAdd,
+                BBI_ReportCustomSave,
+                BBI_ReportCustomDelete
+            });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 11;
             ribbonControl1.Name = "ribbonControl1";
@@ -118,49 +131,55 @@ namespace Foxoft
             // 
             // bBI_ReportEdit
             // 
-            bBI_ReportEdit.Caption = "Dəyiş";
+            bBI_ReportEdit.Caption = Resources.Common_Edit;
             bBI_ReportEdit.Id = 1;
-            bBI_ReportEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReportEdit.ImageOptions.SvgImage");
+            bBI_ReportEdit.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReportEdit.ImageOptions.SvgImage");
             bBI_ReportEdit.Name = "bBI_ReportEdit";
             bBI_ReportEdit.ItemClick += bBI_ReportEdit_ItemClick;
             // 
             // bBI_ReportNew
             // 
-            bBI_ReportNew.Caption = "Yeni";
+            bBI_ReportNew.Caption = Resources.Common_New;
             bBI_ReportNew.Id = 5;
-            bBI_ReportNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReportNew.ImageOptions.SvgImage");
+            bBI_ReportNew.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReportNew.ImageOptions.SvgImage");
             bBI_ReportNew.Name = "bBI_ReportNew";
             bBI_ReportNew.ItemClick += bBI_ReportNew_ItemClick;
             // 
             // bBI_ReportDelete
             // 
-            bBI_ReportDelete.Caption = "Sil";
+            bBI_ReportDelete.Caption = Resources.Common_Delete;
             bBI_ReportDelete.Id = 6;
-            bBI_ReportDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReportDelete.ImageOptions.SvgImage");
+            bBI_ReportDelete.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReportDelete.ImageOptions.SvgImage");
             bBI_ReportDelete.Name = "bBI_ReportDelete";
             bBI_ReportDelete.ItemClick += bBI_ReportDelete_ItemClick;
             // 
             // BBI_ReportCustomAdd
             // 
-            BBI_ReportCustomAdd.Caption = "Dizayn Əlavə Et";
+            BBI_ReportCustomAdd.Caption = Resources.Form_ReportFilter_Button_CustomAdd;
             BBI_ReportCustomAdd.Id = 8;
-            BBI_ReportCustomAdd.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomAdd.ImageOptions.SvgImage");
+            BBI_ReportCustomAdd.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomAdd.ImageOptions.SvgImage");
             BBI_ReportCustomAdd.Name = "BBI_ReportCustomAdd";
             BBI_ReportCustomAdd.ItemClick += BBI_ReportCustomAdd_ItemClick;
             // 
             // BBI_ReportCustomSave
             // 
-            BBI_ReportCustomSave.Caption = "Dizaynı Yadda Saxla";
+            BBI_ReportCustomSave.Caption = Resources.Form_ReportFilter_Button_CustomSave;
             BBI_ReportCustomSave.Id = 9;
-            BBI_ReportCustomSave.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomSave.ImageOptions.SvgImage");
+            BBI_ReportCustomSave.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomSave.ImageOptions.SvgImage");
             BBI_ReportCustomSave.Name = "BBI_ReportCustomSave";
             BBI_ReportCustomSave.ItemClick += BBI_ReportCustomSave_ItemClick;
             // 
             // BBI_ReportCustomDelete
             // 
-            BBI_ReportCustomDelete.Caption = "Dizaynı Sil";
+            BBI_ReportCustomDelete.Caption = Resources.Form_ReportFilter_Button_CustomDelete;
             BBI_ReportCustomDelete.Id = 10;
-            BBI_ReportCustomDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomDelete.ImageOptions.SvgImage");
+            BBI_ReportCustomDelete.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomDelete.ImageOptions.SvgImage");
             BBI_ReportCustomDelete.Name = "BBI_ReportCustomDelete";
             BBI_ReportCustomDelete.ItemClick += BBI_ReportCustomDelete_ItemClick;
             // 
@@ -168,7 +187,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Hesaba, ribbonPageGroup1 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Hesabat";
+            ribbonPage1.Text = Resources.Form_ReportFilter_RibbonPage_Report;
             // 
             // Hesaba
             // 
@@ -176,7 +195,7 @@ namespace Foxoft
             Hesaba.ItemLinks.Add(bBI_ReportEdit);
             Hesaba.ItemLinks.Add(bBI_ReportDelete);
             Hesaba.Name = "Hesaba";
-            Hesaba.Text = "Əməliyat";
+            Hesaba.Text = Resources.Form_ReportFilter_RibbonGroup_ReportOperations;
             // 
             // ribbonPageGroup1
             // 
@@ -184,7 +203,7 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(BBI_ReportCustomSave);
             ribbonPageGroup1.ItemLinks.Add(BBI_ReportCustomDelete);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Fərdiləşdirmə";
+            ribbonPageGroup1.Text = Resources.Form_ReportFilter_RibbonGroup_Customization;
             // 
             // ribbonStatusBar1
             // 
@@ -208,13 +227,14 @@ namespace Foxoft
             // btn_ShowReport
             // 
             btn_ShowReport.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            btn_ShowReport.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ShowReport.ImageOptions.SvgImage");
+            btn_ShowReport.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ShowReport.ImageOptions.SvgImage");
             btn_ShowReport.Location = new Point(12, 468);
             btn_ShowReport.Name = "btn_ShowReport";
             btn_ShowReport.Size = new Size(968, 36);
             btn_ShowReport.StyleController = layoutControl1;
             btn_ShowReport.TabIndex = 4;
-            btn_ShowReport.Text = "Göstər";
+            btn_ShowReport.Text = Resources.Common_Show;
             btn_ShowReport.Click += btn_ShowReport_Click;
             // 
             // filterControl_Outer
@@ -234,7 +254,9 @@ namespace Foxoft
             BtnEdit_DesignFileFullPath.Location = new Point(81, 444);
             BtnEdit_DesignFileFullPath.MenuManager = ribbonControl1;
             BtnEdit_DesignFileFullPath.Name = "BtnEdit_DesignFileFullPath";
-            BtnEdit_DesignFileFullPath.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo) });
+            BtnEdit_DesignFileFullPath.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo)
+            });
             BtnEdit_DesignFileFullPath.Size = new Size(899, 20);
             BtnEdit_DesignFileFullPath.StyleController = layoutControl1;
             BtnEdit_DesignFileFullPath.TabIndex = 5;
@@ -243,7 +265,14 @@ namespace Foxoft
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             Root.GroupBordersVisible = false;
-            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem3, layoutControlItem4, layoutControlItem1, splitterItem1, layoutControlItem2, layoutControlItem5 });
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+                layoutControlItem3,
+                layoutControlItem4,
+                layoutControlItem1,
+                splitterItem1,
+                layoutControlItem2,
+                layoutControlItem5
+            });
             Root.Name = "Root";
             Root.Size = new Size(992, 516);
             Root.TextVisible = false;
@@ -299,7 +328,7 @@ namespace Foxoft
             layoutControlItem5.Location = new Point(0, 432);
             layoutControlItem5.Name = "layoutControlItem5";
             layoutControlItem5.Size = new Size(972, 24);
-            layoutControlItem5.Text = "Dizayn Faylı";
+            layoutControlItem5.Text = Resources.Form_ReportFilter_DesignFileLabel;
             layoutControlItem5.TextSize = new Size(57, 13);
             // 
             // ribbonPage2
@@ -322,7 +351,7 @@ namespace Foxoft
             Name = "FormReportFilter";
             Ribbon = ribbonControl1;
             StatusBar = ribbonStatusBar1;
-            Text = "Report Filter";
+            Text = Resources.Form_ReportFilter_Caption;
             WindowState = FormWindowState.Maximized;
             Load += FormReport_Load;
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
@@ -345,32 +374,28 @@ namespace Foxoft
         #endregion
 
         private DevExpress.XtraEditors.SimpleButton btn_ShowReport;
-      private ExcelButtonFilterControl filterControl_Outer;
-      private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-      private DevExpress.XtraBars.Ribbon.RibbonPageGroup Hesaba;
-      private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
-      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
-      private DevExpress.XtraLayout.LayoutControl layoutControl1;
-      private DevExpress.XtraLayout.LayoutControlGroup Root;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-      private DevExpress.XtraBars.BarButtonItem bBI_ReportEdit;
-      private DevExpress.XtraBars.BarButtonItem bBI_ReportNew;
-      private DevExpress.XtraBars.BarButtonItem bBI_ReportDelete;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-      private NotEditableFilterControl filterControl_Inner;
+        private ExcelButtonFilterControl filterControl_Outer;
+        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup Hesaba;
+        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
+        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+        private DevExpress.XtraLayout.LayoutControl layoutControl1;
+        private DevExpress.XtraLayout.LayoutControlGroup Root;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+        private DevExpress.XtraBars.BarButtonItem bBI_ReportEdit;
+        private DevExpress.XtraBars.BarButtonItem bBI_ReportNew;
+        private DevExpress.XtraBars.BarButtonItem bBI_ReportDelete;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private NotEditableFilterControl filterControl_Inner;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraEditors.SeparatorControl separatorControl1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraLayout.SplitterItem splitterItem1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportCustomAdd;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportCustomSave;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportCustomDelete;
         private DevExpress.XtraEditors.LookUpEdit LUE_ReportCustomization;
-        private DevExpress.XtraEditors.ButtonEdit buttonEdit1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraEditors.ButtonEdit BtnEdit_DesignFileFullPath;

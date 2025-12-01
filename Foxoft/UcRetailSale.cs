@@ -2,7 +2,6 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
@@ -10,7 +9,6 @@ using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing.Printing;
 using System.IO;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -37,7 +35,6 @@ namespace Foxoft
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             reportClass = new ReportClass(settingStore.DesignFileFolder);
 
-
             ClearControlsAddNew();
         }
 
@@ -50,14 +47,18 @@ namespace Foxoft
                 string defaultCustomer = efMethods.SelectDefaultCustomerByStore(Authorization.StoreCode);
                 trInvoiceHeader.CurrAccCode = defaultCustomer;
             }
-
         }
 
         private void trInvoiceHeadersBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
         {
             TrInvoiceHeader invoiceHeader = new();
             invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
-            string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
+            string NewDocNum = efMethods.GetNextDocNum(
+                true,
+                "RS",
+                nameof(TrInvoiceHeader.DocumentNumber),
+                nameof(subContext.TrInvoiceHeaders),
+                6);
             invoiceHeader.DocumentNumber = NewDocNum;
             invoiceHeader.DocumentDate = DateTime.Now;
             invoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
@@ -123,7 +124,10 @@ namespace Foxoft
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync()
-                                    .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+                                    .ContinueWith(loadTask =>
+                                    {
+                                        trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+                                    }, TaskScheduler.FromCurrentSynchronizationContext());
 
             LoadCurrAcc();
 
@@ -155,11 +159,8 @@ namespace Foxoft
                                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
-            //dataLayoutControl1.IsValid(out List<string> errorList);
-
             SplashScreenManager.CloseForm(false);
         }
-
 
         private void LoadCurrAcc()
         {
@@ -173,18 +174,16 @@ namespace Foxoft
             }
 
             dcCurrAcc = dcCurrAccBindingSource.Current as DcCurrAcc;
-
         }
 
         private void dcCurrAccBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
         {
-
         }
 
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e) // Parent Form Closing event
         {
             if (efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
-                efMethods.UpdateInvoiceIsSuspended(trInvoiceHeader.InvoiceHeaderId, true);                // delete incomplete invoice
+                efMethods.UpdateInvoiceIsSuspended(trInvoiceHeader.InvoiceHeaderId, true); // delete incomplete invoice
         }
 
         private void gV_InvoiceLine_CalcPreviewText(object sender, CalcPreviewTextEventArgs e)
@@ -192,17 +191,40 @@ namespace Foxoft
             GridView view = sender as GridView;
             if (view == null) return;
 
-            string Barcode = view.GetRowCellDisplayText(e.RowHandle, view.Columns["Barcode"]);
-            decimal PosDiscount = Convert.ToDecimal(view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.PosDiscount)]));
-            decimal Amount = Convert.ToDecimal(view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.Amount)]));
-            decimal NetAmount = Convert.ToDecimal(view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.NetAmount)]));
-            string SalesPersonCode = view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.SalesPersonCode)]);
-            string salesPersonDesc = efMethods.SelectEntityById<DcCurrAcc>(SalesPersonCode)?.CurrAccDesc;
+            string barcode = view.GetRowCellDisplayText(
+                e.RowHandle,
+                view.Columns[nameof(TrInvoiceLine.Barcode)]);
 
-            string strVatRate = view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.VatRate)]);
-            float VatRate = float.Parse(strVatRate);
+            decimal posDiscount = Convert.ToDecimal(
+                view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.PosDiscount)]));
 
-            e.PreviewText = CustomExtensions.GetPreviewText(PosDiscount, Amount, NetAmount, VatRate, Barcode, salesPersonDesc);
+            decimal amount = Convert.ToDecimal(
+                view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.Amount)]));
+
+            decimal netAmount = Convert.ToDecimal(
+                view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.NetAmount)]));
+
+            string salesPersonCode = view.GetRowCellDisplayText(
+                e.RowHandle,
+                view.Columns[nameof(TrInvoiceLine.SalesPersonCode)]);
+
+            string salesPersonDesc = efMethods
+                .SelectEntityById<DcCurrAcc>(salesPersonCode)
+                ?.CurrAccDesc;
+
+            string strVatRate = view.GetRowCellDisplayText(
+                e.RowHandle,
+                view.Columns[nameof(TrInvoiceLine.VatRate)]);
+
+            float vatRate = float.Parse(strVatRate);
+
+            e.PreviewText = CustomExtensions.GetPreviewText(
+                posDiscount,
+                amount,
+                netAmount,
+                vatRate,
+                barcode,
+                salesPersonDesc);
         }
 
         private void btn_ProductSearch_Click(object sender, EventArgs e)
@@ -213,7 +235,11 @@ namespace Foxoft
                 {
                     if (formProductList.dcProduct is null)
                     {
-                        XtraMessageBox.Show("Məhsul əlavə edilə bilmədi");
+                        XtraMessageBox.Show(
+                            Resources.Form_RetailSale_ProductAddFailed,
+                            Resources.Common_Attention,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -221,14 +247,20 @@ namespace Foxoft
                     {
                         string wareHouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
-                        bool permitNegativeStock = efMethods.SelectEntityById<DcWarehouse>(wareHouseCode).PermitNegativeStock;
+                        bool permitNegativeStock = efMethods
+                            .SelectEntityById<DcWarehouse>(wareHouseCode)
+                            .PermitNegativeStock;
 
                         decimal balance = CalcProductBalance(formProductList.dcProduct, wareHouseCode);
 
                         if (permitNegativeStock)
                             if (Convert.ToDecimal(1) > balance)
                             {
-                                MessageBox.Show("Stokda miqdar yoxdur");
+                                XtraMessageBox.Show(
+                                    Resources.Form_RetailSale_NoStock,
+                                    Resources.Common_Attention,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
                                 return;
                             }
                     }
@@ -255,7 +287,7 @@ namespace Foxoft
 
         private decimal CalcProductBalance(DcProduct dcProduct, string wareHouse)
         {
-            if (dcProduct is not null && !String.IsNullOrEmpty(dcProduct.ProductCode))
+            if (dcProduct is not null && !string.IsNullOrEmpty(dcProduct.ProductCode))
             {
                 return efMethods.SelectProductBalance(dcProduct.ProductCode, wareHouse);
             }
@@ -266,7 +298,11 @@ namespace Foxoft
         {
             if (rowIndx >= 0)
             {
-                DialogResult dialogResult = XtraMessageBox.Show("Silmək istədiyinizə əminmisiniz?", "Diqqət", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = XtraMessageBox.Show(
+                    Resources.Form_RetailSale_DeleteQuestion,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.YesNo);
+
                 if (dialogResult == DialogResult.Yes)
                 {
                     int result = efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
@@ -278,15 +314,24 @@ namespace Foxoft
                 }
             }
             else
-                XtraMessageBox.Show("Faktura boşdur");
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_InvoiceEmpty,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
-
 
         private void btn_DeleteLine_Click(object sender, EventArgs e)
         {
             if (gV_InvoiceLine.RowCount > 1)
             {
-                DialogResult dialogResult = XtraMessageBox.Show("Silmək istədiyinizə əminmisiniz?", "Diqqət", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = XtraMessageBox.Show(
+                    Resources.Form_RetailSale_DeleteQuestion,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.YesNo);
+
                 if (dialogResult == DialogResult.Yes)
                 {
                     gV_InvoiceLine.DeleteRow(gV_InvoiceLine.FocusedRowHandle);
@@ -295,39 +340,69 @@ namespace Foxoft
                 }
             }
             else if (gV_InvoiceLine.RowCount == 1)
-                XtraMessageBox.Show("Son Sətri Silmək Olmur.\nSilmək üçün çeki ləğv etməlisiniz!", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_DeleteLastLineNotAllowed,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
             else
-                XtraMessageBox.Show("Məhsul seçin", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_SelectProduct,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
-
 
         private void btn_LineDiscount_Click(object sender, EventArgs e)
         {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, nameof(TrInvoiceLine.PosDiscount));
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(
+                Authorization.CurrAccCode,
+                nameof(TrInvoiceLine.PosDiscount));
+
             if (!currAccHasClaims)
             {
-                XtraMessageBox.Show("Yetkiniz Yoxdur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_NoPermission,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 return;
             }
 
-            if (rowIndx >= 0) //if product selected
+            if (rowIndx >= 0) // if product selected
             {
-                decimal PosDiscount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.PosDiscount)));
-                decimal Amount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.Amount)));
+                decimal posDiscount = Convert.ToDecimal(
+                    gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.PosDiscount)));
 
-                using (FormPosDiscount formPosDiscount = new(PosDiscount, Amount))
+                decimal amount = Convert.ToDecimal(
+                    gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.Amount)));
+
+                using (FormPosDiscount formPosDiscount = new(posDiscount, amount))
                 {
                     if (formPosDiscount.ShowDialog(this) == DialogResult.OK)
                     {
-                        gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.PosDiscount), formPosDiscount.DiscountPercent);
+                        gV_InvoiceLine.SetRowCellValue(
+                            rowIndx,
+                            nameof(TrInvoiceLine.PosDiscount),
+                            formPosDiscount.DiscountPercent);
+
                         gV_InvoiceLine.RefreshData(); // footer yenilensin deye
                         gV_InvoiceLine.MoveLast();
                     }
                 }
             }
             else
-                XtraMessageBox.Show("Məhsul seçin", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_SelectProduct,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
 
         private void gC_Sale_MouseUp(object sender, MouseEventArgs e)
@@ -337,7 +412,8 @@ namespace Foxoft
 
         private void btn_Payment_Click(object sender, EventArgs e)
         {
-            decimal summaryNetAmount = Convert.ToDecimal(gV_InvoiceLine.Columns[nameof(TrInvoiceLine.NetAmount)].SummaryItem.SummaryValue);
+            decimal summaryNetAmount = Convert.ToDecimal(
+                gV_InvoiceLine.Columns[nameof(TrInvoiceLine.NetAmount)].SummaryItem.SummaryValue);
 
             if (summaryNetAmount > 0)
             {
@@ -371,7 +447,10 @@ namespace Foxoft
                             if (!File.Exists(designPath))
                                 designPath = reportClass.SelectDesign();
 
-                            ReportPrintTool printTool = new(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+                            ReportPrintTool printTool = new(
+                                reportClass.CreateReport(
+                                    efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId),
+                                    designPath));
                             printTool.Print();
                         }
 
@@ -381,7 +460,14 @@ namespace Foxoft
                     }
                 }
             }
-            else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
+            else
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_PaymentZero,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
         private void btn_CustomerAdd_Click(object sender, EventArgs e)
@@ -390,9 +476,6 @@ namespace Foxoft
             {
                 if (formCustomer.ShowDialog(this) == DialogResult.OK)
                 {
-                    //if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
-                    //    InsertInvoiceHeader();
-
                     trInvoiceHeader.CurrAccCode = formCustomer.dcCurrAcc.CurrAccCode;
 
                     SaveInvoice();
@@ -410,29 +493,20 @@ namespace Foxoft
                 {
                     if (formCustomer.ShowDialog(this) == DialogResult.OK)
                     {
-                        //if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
-                        //    InsertInvoiceHeader();
-
-                        //int result = efMethods.UpdateInvoiceCurrAccCode(invoiceHeaderId, formCustomer.dcCurrAcc.CurrAccCode);
-
-                        //if (result >= 0)
-                        //{
-                        //    trInvoiceHeader.CurrAccCode = formCustomer.dcCurrAcc.CurrAccCode;
-                        //    LoadCurrAcc();
-                        //}
-
                         LoadCurrAcc();
                     }
                 }
             }
             else
             {
-                XtraMessageBox.Show("Müştəri seçin");
-                return; // return btn_Customer_Click
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_SelectCustomer,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
             }
-
         }
-
 
         private void btn_CustomerSearch_Click(object sender, EventArgs e)
         {
@@ -452,15 +526,21 @@ namespace Foxoft
         private void gC_Sale_DoubleClick(object sender, EventArgs e)
         {
             if (gV_InvoiceLine.FocusedColumn == col_Qty)
+            {
                 using (FormInput formQty = new())
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
-                        gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.QtyOut), formQty.input);
+                        gV_InvoiceLine.SetRowCellValue(
+                            rowIndx,
+                            nameof(TrInvoiceLine.QtyOut),
+                            formQty.input);
+
                         gV_InvoiceLine.RefreshData(); // footer yenilensin deye
                         SaveInvoice();
                     }
                 }
+            }
 
             if (gV_InvoiceLine.FocusedColumn == col_Price)
             {
@@ -471,7 +551,11 @@ namespace Foxoft
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
-                        gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.Price), formQty.input);
+                        gV_InvoiceLine.SetRowCellValue(
+                            rowIndx,
+                            nameof(TrInvoiceLine.Price),
+                            formQty.input);
+
                         gV_InvoiceLine.RefreshData(); // footer yenilensin deye
                         SaveInvoice();
                     }
@@ -481,27 +565,49 @@ namespace Foxoft
 
         private async void btn_Print_Click(object sender, EventArgs e)
         {
-            string printerName = String.IsNullOrEmpty(settingStore.PrinterName) ? new PrinterSettings().PrinterName : settingStore.PrinterName;
+            string printerName =
+                string.IsNullOrEmpty(settingStore.PrinterName)
+                    ? new PrinterSettings().PrinterName
+                    : settingStore.PrinterName;
 
             await PrintFast(settingStore.PrinterName);
         }
 
         private async Task PrintFast(string printerName)
         {
-            alertControl1.Show(this.ParentForm, "Print Göndərilir...", "Printer: " + printerName, "", (Image)null, null);
+            alertControl1.Show(
+                this.ParentForm,
+                Resources.Common_PrintSending,
+                string.Format("{0}: {1}", Resources.Common_PrinterLabel, printerName),
+                string.Empty,
+                (Image)null,
+                null);
 
             if (trInvoiceHeader is not null)
                 await Task.Run(() => GetPrint(trInvoiceHeader.InvoiceHeaderId, printerName));
-            else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
+            else
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_NoInvoiceToPrint,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
 
             Task task = Task.Run((Action)ShowPrintCount);
 
-            alertControl1.Show(this.ParentForm, "Print Göndərildi.", "Printer: " + printerName, "", (Image)null, null);
+            alertControl1.Show(
+                this.ParentForm,
+                Resources.Common_PrintSent,
+                string.Format("{0}: {1}", Resources.Common_PrinterLabel, printerName),
+                string.Empty,
+                (Image)null,
+                null);
         }
 
         private void ShowPrintCount()
         {
-            int printCount = efMethods.SelectEntityById<TrInvoiceHeader>(trInvoiceHeader?.InvoiceHeaderId).PrintCount;
+            int printCount = efMethods
+                .SelectEntityById<TrInvoiceHeader>(trInvoiceHeader?.InvoiceHeaderId)
+                .PrintCount;
 
             txt_PrintCount.Text = printCount.ToString();
         }
@@ -554,7 +660,11 @@ namespace Foxoft
 
             if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString()))
             {
-                MessageBox.Show("Yetkiniz yoxdur! ");
+                XtraMessageBox.Show(
+                    Resources.Common_NoPermission,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 return;
             }
 
@@ -563,20 +673,14 @@ namespace Foxoft
                 if (item.VariableProperty == "StartDate")
                 {
                     item.VariableValue = DateTime.Now.ToString("yyyy-MM-dd");
-
-                    //efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, item.VariableValue);
                 }
                 else if (item.VariableProperty == "EndDate")
                 {
                     item.VariableValue = DateTime.Now.ToString("yyyy-MM-dd");
-
-                    //efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, item.VariableValue);
                 }
             }
 
             reportClass.ShowReport(dcReport, "");
-
-            //ShowReportForm(dcReport, "", "");
         }
 
         private void ShowReportForm(DcReport dcReport, string filter, string activeFilterStr)
@@ -605,13 +709,19 @@ namespace Foxoft
         {
             if (rowIndx >= 0)
             {
-                string salesPerson = gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.SalesPersonCode))?.ToString();
+                string salesPerson = gV_InvoiceLine
+                    .GetRowCellValue(rowIndx, nameof(TrInvoiceLine.SalesPersonCode))
+                    ?.ToString();
 
                 using (FormCurrAccList form = new(new byte[] { 3 }, false, salesPerson, new byte[] { 1 }))
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {
-                        gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.SalesPersonCode), form.dcCurrAcc.CurrAccCode);
+                        gV_InvoiceLine.SetRowCellValue(
+                            rowIndx,
+                            nameof(TrInvoiceLine.SalesPersonCode),
+                            form.dcCurrAcc.CurrAccCode);
+
                         gV_InvoiceLine.RefreshData(); // footer yenilensin deye
                         gV_InvoiceLine.MoveLast();
 
@@ -620,7 +730,13 @@ namespace Foxoft
                 }
             }
             else
-                XtraMessageBox.Show("Məhsul Seçin");
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_SelectProduct,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
 
         private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -663,12 +779,16 @@ namespace Foxoft
             else if (dcProductByScale != null)
             {
                 selectedProduct = dcProductByScale;
-                qty = int.Parse(input.Substring(7, 6)) / 10000m; //2 000003 02.0000
+                qty = int.Parse(input.Substring(7, 6)) / 10000m; // 2 000003 02.0000
             }
 
             if (dcProductByBarcode != null && dcProductByScale != null)
             {
-                using FormProductList formProductList = new(new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProductByScale.ProductCode });
+                using FormProductList formProductList = new(
+                    new byte[] { 1 },
+                    false,
+                    new[] { dcProductByBarcode.ProductCode, dcProductByScale.ProductCode });
+
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
                     selectedProduct = formProductList.dcProduct;
@@ -676,7 +796,7 @@ namespace Foxoft
                     if (selectedProduct?.ProductCode == dcProductByBarcode.ProductCode)
                         qty = dcProductByBarcode.TrProductBarcodes.FirstOrDefault().Qty;
                     else if (selectedProduct?.ProductCode == dcProductByScale.ProductCode)
-                        qty = int.Parse(input.Substring(7, 6)) / 10000m; //2 000003 02.0000
+                        qty = int.Parse(input.Substring(7, 6)) / 10000m; // 2 000003 02.0000
                 }
             }
 
@@ -688,7 +808,11 @@ namespace Foxoft
             }
             else
             {
-                XtraMessageBox.Show("Barkod Tapılmadı", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_BarcodeNotFound,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
 
             ActiveControl = txtEdit_Barcode;
@@ -702,12 +826,8 @@ namespace Foxoft
 
                 if (row != null)
                 {
-                    row.DcProduct = dbContext.DcProducts.FirstOrDefault(x => x.ProductCode == row.ProductCode);
-
-                    //if (tracked == null) // already tracked xetasi vermesin deye
-                    //    dbContext.Attach(tracked); // dbsavechanges eliyende dcproductu insert elemeye calismasin deye
-
-                    //gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
+                    row.DcProduct = dbContext.DcProducts.FirstOrDefault(
+                        x => x.ProductCode == row.ProductCode);
                 }
             }
         }
@@ -719,8 +839,6 @@ namespace Foxoft
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
             Tag = trInvoiceHeader.DocumentNumber;
-
-            //dbContext = new subContext();
         }
 
         private void Btn_NewInvoice_Click(object sender, EventArgs e)
@@ -742,40 +860,66 @@ namespace Foxoft
 
         private void CalcPaidAmount()
         {
-            decimal cashSum = efMethods.SelectPaymentLinesCashSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
-            lbl_InvoicePaidCashSum.Text = Math.Round(cashSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+            decimal cashSum = efMethods.SelectPaymentLinesCashSumByInvoice(
+                trInvoiceHeader.InvoiceHeaderId,
+                trInvoiceHeader.CurrAccCode);
 
-            decimal cashlessSum = efMethods.SelectPaymentLinesCashlessSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
-            lbl_InvoicePaidCashlessSum.Text = Math.Round(cashlessSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+            lbl_InvoicePaidCashSum.Text =
+                Math.Round(cashSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
-            decimal totalSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
-            lbl_InvoicePaidTotalSum.Text = Math.Round(totalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+            decimal cashlessSum = efMethods.SelectPaymentLinesCashlessSumByInvoice(
+                trInvoiceHeader.InvoiceHeaderId,
+                trInvoiceHeader.CurrAccCode);
+
+            lbl_InvoicePaidCashlessSum.Text =
+                Math.Round(cashlessSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+
+            decimal totalSum = efMethods.SelectPaymentLinesSumByInvoice(
+                trInvoiceHeader.InvoiceHeaderId,
+                trInvoiceHeader.CurrAccCode);
+
+            lbl_InvoicePaidTotalSum.Text =
+                Math.Round(totalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
         }
 
         private void btn_InvoiceDiscount_Click(object sender, EventArgs e)
         {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, nameof(TrInvoiceLine.PosDiscount));
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(
+                Authorization.CurrAccCode,
+                nameof(TrInvoiceLine.PosDiscount));
+
             if (!currAccHasClaims)
             {
-                XtraMessageBox.Show("Yetkiniz Yoxdur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_NoPermission,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 return;
             }
 
-            decimal Amount = efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId);
+            decimal amount = efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId);
 
             if (gV_InvoiceLine.DataRowCount <= 0)
             {
-                XtraMessageBox.Show("Məhsul yoxdur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_NoProduct,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 return;
             }
 
-            using (FormPosDiscount formPosDiscount = new(0, Amount))
+            using (FormPosDiscount formPosDiscount = new(0, amount))
             {
                 if (formPosDiscount.ShowDialog(this) == DialogResult.OK)
                 {
                     for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                     {
-                        gV_InvoiceLine.SetRowCellValue(i, nameof(TrInvoiceLine.PosDiscount), formPosDiscount.DiscountPercent);
+                        gV_InvoiceLine.SetRowCellValue(
+                            i,
+                            nameof(TrInvoiceLine.PosDiscount),
+                            formPosDiscount.DiscountPercent);
                     }
                 }
             }

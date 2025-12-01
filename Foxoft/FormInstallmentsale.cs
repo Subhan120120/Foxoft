@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace Foxoft
 {
@@ -55,7 +56,7 @@ namespace Foxoft
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             reportClass = new(settingStore.DesignFileFolder);
-            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+            string activeFilterStr = "[StoreCode] = '" + Authorization.StoreCode + "'";
             reportClass.AddReports(BSI_Reports, "InstallmentSale", nameof(TrInstallment.InvoiceHeaderId), gridView1, activeFilterStr);
 
             GridLocalizer.Active = new MyGridLocalizer();
@@ -114,7 +115,6 @@ namespace Foxoft
                 Value1 = 0,
                 Appearance = { ForeColor = Color.Red }
             };
-            //ruleLess.Appearance.Options.UseForeColor = true;
 
             formatRuleLess.Rule = ruleLess;
             gridView1.FormatRules.Add(formatRuleLess);
@@ -130,7 +130,6 @@ namespace Foxoft
                 Value1 = 0,
                 Appearance = { ForeColor = Color.Green }
             };
-            //ruleGreater.Appearance.Options.UseForeColor = true;
 
             formatRuleGreater.Rule = ruleGreater;
             gridView1.FormatRules.Add(formatRuleGreater);
@@ -138,7 +137,7 @@ namespace Foxoft
 
         private void HyperLinkColumns()
         {
-            GridColumn col_DocumentNumber = gridView1.Columns["DocumentNumber"];
+            GridColumn col_DocumentNumber = gridView1.Columns[nameof(TrInvoiceHeader.DocumentNumber)];
             if (col_DocumentNumber is not null)
             {
                 RepositoryItemHyperLinkEdit HLE_DocumentNum = new();
@@ -156,7 +155,7 @@ namespace Foxoft
                 col_InvoiceNum.ColumnEdit = HLE_InvoiceNum;
             }
 
-            GridColumn col_CurrAccCode = gridView1.Columns["CurrAccCode"];
+            GridColumn col_CurrAccCode = gridView1.Columns[nameof(TrInvoiceHeader.CurrAccCode)];
             if (col_CurrAccCode is not null)
             {
                 RepositoryItemHyperLinkEdit HLE_CurrAccCode = new();
@@ -168,6 +167,7 @@ namespace Foxoft
 
         GridColumn prevColumn = null; // Disable the Immediate Edit Cell
         int prevRow = -1;
+
         private void gV_Report_ShowingEditor(object sender, CancelEventArgs e)
         {
             GridView view = sender as GridView;
@@ -181,9 +181,9 @@ namespace Foxoft
 
         private void repoHLE_CurrAccCode_OpenLink(object sender, OpenLinkEventArgs e)
         {
-            object objCurrAccCode = gridView1.GetFocusedRowCellValue("CurrAccCode");
+            object objCurrAccCode = gridView1.GetFocusedRowCellValue(nameof(TrInvoiceHeader.CurrAccCode));
             string currAccCode = objCurrAccCode?.ToString();
-            if (!String.IsNullOrEmpty(currAccCode))
+            if (!string.IsNullOrEmpty(currAccCode))
                 OpenFormCurrAcc(currAccCode);
         }
 
@@ -201,7 +201,7 @@ namespace Foxoft
             object objDocNum = gridView1.GetFocusedValue();
             string strDocNum = objDocNum?.ToString();
 
-            if (!String.IsNullOrEmpty(strDocNum))
+            if (!string.IsNullOrEmpty(strDocNum))
             {
                 bool isOpen = InvoiceIsOpen(strDocNum);
 
@@ -222,7 +222,7 @@ namespace Foxoft
                     if (window.Tag == docNum)
                     {
                         isOpen = true;
-                        XtraMessageBox.Show("Qaimə açıqdır.");
+                        XtraMessageBox.Show(Resources.Form_InstallmentSale_Message_InvoiceAlreadyOpen);
                     }
 
                     // Close the window if necessary
@@ -245,7 +245,7 @@ namespace Foxoft
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                 if (!currAccHasClaims)
                 {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    MessageBox.Show(Resources.Common_NoPermission);
                     return;
                 }
 
@@ -265,7 +265,7 @@ namespace Foxoft
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                 if (!currAccHasClaims)
                 {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    MessageBox.Show(Resources.Common_NoPermission);
                     return;
                 }
 
@@ -290,7 +290,7 @@ namespace Foxoft
                 }
             }
             else
-                MessageBox.Show("Belə bir sənəd yoxdur.");
+                MessageBox.Show(Resources.Form_InstallmentSale_Message_DocumentNotFound);
         }
 
         private void ReloadData()
@@ -307,9 +307,6 @@ namespace Foxoft
             if (gridView1.FocusedRowHandle >= 0)
             {
                 trInstallmentViewModel = gridView1.GetFocusedRow() as TrInstallmentViewModel;
-                //object currAccCode = gridView1.GetFocusedRowCellValue(nameof(TrInstallmentViewModel.CurrAccCode));
-                //if (currAccCode is not null)
-                //    trInstallmentViewModel = efMethods.SelectCurrAcc(currAccCode.ToString());
             }
             else
                 trInstallmentViewModel = null;
@@ -321,7 +318,7 @@ namespace Foxoft
 
             if (dcReport is not null)
             {
-                if (!String.IsNullOrEmpty(dcReport.ReportQuery))
+                if (!string.IsNullOrEmpty(dcReport.ReportQuery))
                 {
                     ReportClass reportClass = new();
                     AdoMethods adoMethods = new();
@@ -350,11 +347,9 @@ namespace Foxoft
             colMonthlyPayment = gridView1.Columns[nameof(TrInstallment.MonthlyPayment)];
 
             Guid invoiceHeaderId = (Guid)gridView1.GetFocusedRowCellValue(colInvoiceHeaderId);
-            Decimal monthlyPayment = (Decimal)gridView1.GetFocusedRowCellValue(colMonthlyPayment);
-
+            decimal monthlyPayment = (decimal)gridView1.GetFocusedRowCellValue(colMonthlyPayment);
 
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
-
 
             MakePayment(monthlyPayment, trInvoiceHeader);
         }
@@ -365,7 +360,7 @@ namespace Foxoft
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {
-                MessageBox.Show("Yetkiniz yoxdur! ");
+                MessageBox.Show(Resources.Common_NoPermission);
                 return;
             }
             else
@@ -380,11 +375,11 @@ namespace Foxoft
             if (e.MenuType == GridMenuType.Column)
             {
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
-                //menu.Items.Clear();
                 if (menu.Column != null)
-                    menu.Items.Add(CreateMenuItem("Save Layout", menu.Column, null));
+                    menu.Items.Add(CreateMenuItem(Resources.Common_SaveLayout, menu.Column, null));
             }
         }
+
         DXMenuItem CreateMenuItem(string caption, GridColumn column, Image image)
         {
             DXMenuItem item = new(caption, new EventHandler(DXMenuItem_Click), image);
@@ -478,7 +473,7 @@ namespace Foxoft
             }
             else if (item == BBI_FilterMonth)
             {
-                cutoff = DateTime.Today.AddMonths(-1); 
+                cutoff = DateTime.Today.AddMonths(-1);
             }
             else
             {
@@ -486,13 +481,12 @@ namespace Foxoft
             }
 
             var criteria = new BinaryOperator(
-                new OperandProperty("InstallmentDate"),
+                new OperandProperty(nameof(TrInstallment.InstallmentDate)),
                 new OperandValue(cutoff),
                 BinaryOperatorType.GreaterOrEqual
             );
 
             gridView1.ActiveFilterCriteria = criteria;
-
         }
 
     }

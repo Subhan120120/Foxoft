@@ -1,4 +1,6 @@
-﻿namespace Foxoft
+﻿using Foxoft.Properties;
+
+namespace Foxoft
 {
     partial class FormClaimCategoryList
     {
@@ -84,7 +86,6 @@
             // 
             // treeListCol_ClaimDesc
             // 
-            treeListCol_ClaimDesc.Caption = "coltreeListColumn4";
             treeListCol_ClaimDesc.FieldName = "ClaimDesc";
             treeListCol_ClaimDesc.Name = "treeListCol_ClaimDesc";
             treeListCol_ClaimDesc.Visible = true;
@@ -106,7 +107,7 @@
             btn_Clear.Name = "btn_Clear";
             btn_Clear.Size = new Size(75, 23);
             btn_Clear.TabIndex = 1;
-            btn_Clear.Text = "Təmizlə";
+            btn_Clear.Text = Resources.Common_Clear; // was "Təmizlə"
             btn_Clear.UseVisualStyleBackColor = true;
             btn_Clear.Click += btnClear_Click;
             // 
@@ -116,7 +117,7 @@
             btn_Save.Name = "btn_Save";
             btn_Save.Size = new Size(75, 23);
             btn_Save.TabIndex = 2;
-            btn_Save.Text = "Yadda Saxla";
+            btn_Save.Text = Resources.Common_Save; // was "Yadda Saxla"
             btn_Save.Click += Btn_Save_Click;
             // 
             // btn_Claims
@@ -125,7 +126,7 @@
             btn_Claims.Name = "btn_Claims";
             btn_Claims.Size = new Size(75, 23);
             btn_Claims.TabIndex = 3;
-            btn_Claims.Text = "Yetkilər";
+            btn_Claims.Text = Resources.Form_ClaimCategoryList_Button_Claims; // was "Yetkilər"
             btn_Claims.Click += Btn_Claims_Click;
             // 
             // FormClaimCategoryList
@@ -138,7 +139,7 @@
             Controls.Add(btn_Clear);
             Controls.Add(treeList1);
             Name = "FormClaimCategoryList";
-            Text = "Form1";
+            Text = Resources.Form_ClaimCategoryList_Caption; // was "Form1"
             Load += FormTreeView_Load;
             ((System.ComponentModel.ISupportInitialize)treeList1).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
@@ -146,7 +147,6 @@
         }
 
         #endregion
-
         private DevExpress.XtraTreeList.TreeList treeList1;
         private DevExpress.Utils.ImageCollection ımageCollection1;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_CategoryId;

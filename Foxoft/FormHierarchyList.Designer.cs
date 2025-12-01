@@ -41,7 +41,11 @@
             // 
             // treeList1
             // 
-            treeList1.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] { treeListCol_HierarchyCode, treeListCol_HierarchyDesc, treeListCol_HierarchyParentCode });
+            treeList1.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
+                treeListCol_HierarchyCode,
+                treeListCol_HierarchyDesc,
+                treeListCol_HierarchyParentCode
+            });
             treeList1.Dock = DockStyle.Fill;
             treeList1.KeyFieldName = "HierarchyCode";
             treeList1.Location = new Point(0, 0);
@@ -80,7 +84,7 @@
             // 
             // treeListCol_HierarchyParentCode
             // 
-            treeListCol_HierarchyParentCode.FieldName = "treeListCol_HierarchyCode";
+            treeListCol_HierarchyParentCode.FieldName = "HierarchyParentCode";
             treeListCol_HierarchyParentCode.Name = "treeListCol_HierarchyParentCode";
             // 
             // svgImageCollection1
@@ -92,13 +96,13 @@
             svgImageCollection1.Add("edit", "image://svgimages/icon builder/actions_edit.svg");
             svgImageCollection1.Add("delete", "image://svgimages/icon builder/actions_delete.svg");
             // 
-            // button1
+            // btn_Clear
             // 
             btn_Clear.Location = new Point(292, 255);
-            btn_Clear.Name = "button1";
+            btn_Clear.Name = "btn_Clear";
             btn_Clear.Size = new Size(75, 23);
             btn_Clear.TabIndex = 1;
-            btn_Clear.Text = "Təmizlə";
+            btn_Clear.Text = Foxoft.Properties.Resources.Common_Clear;
             btn_Clear.UseVisualStyleBackColor = true;
             btn_Clear.Click += btnClear_Click;
             // 
@@ -110,7 +114,7 @@
             Controls.Add(btn_Clear);
             Controls.Add(treeList1);
             Name = "FormHierarchyList";
-            Text = "Form1";
+            Text = Foxoft.Properties.Resources.Form_HierarchyList_Caption;
             Activated += FormTreeView_Activated;
             Load += FormTreeView_Load;
             ((System.ComponentModel.ISupportInitialize)treeList1).EndInit();
@@ -121,7 +125,6 @@
         #endregion
 
         private DevExpress.XtraTreeList.TreeList treeList1;
-        private DevExpress.Utils.ImageCollection ımageCollection1;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_HierarchyCode;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_HierarchyDesc;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_HierarchyParentCode;

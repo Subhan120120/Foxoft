@@ -1,29 +1,27 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormProductScales : DevExpress.XtraEditors.XtraForm
+    public partial class FormProductScales : XtraForm
     {
         subContext dbContext;
         DcProductScale dcProductScale;
         DcProduct dcProduct;
         EfMethods efMethods = new EfMethods();
+
         public FormProductScales()
         {
             InitializeComponent();
         }
+
         public FormProductScales(DcProduct dcProduct)
             : this()
         {
@@ -43,19 +41,19 @@ namespace Foxoft
                 ClearControlsAddNew();
             else
             {
-                dbContext.DcProductScales.Where(x => x.ProductCode == dcProduct.ProductCode)
-                .Load();
+                dbContext.DcProductScales
+                    .Where(x => x.ProductCode == dcProduct.ProductCode)
+                    .Load();
 
-                dcProductScaleBindingSource.DataSource = dbContext.DcProductScales.Local.ToBindingList();
+                dcProductScaleBindingSource.DataSource =
+                    dbContext.DcProductScales.Local.ToBindingList();
             }
         }
 
         private void ClearControlsAddNew()
         {
             dcProductScale = dcProductScaleBindingSource.AddNew() as DcProductScale;
-
             dcProductScale.ProductCode = dcProduct.ProductCode;
-
             dcProductScaleBindingSource.DataSource = dcProductScale;
         }
 
@@ -88,7 +86,9 @@ namespace Foxoft
             if (!int.TryParse(inputValue, out int scaleProductNumber))
             {
                 e.Cancel = true;
-                dxErrorProvider1.SetError(editor, "Ədəd daxil edin.");
+                dxErrorProvider1.SetError(
+                    editor,
+                    Resources.Form_ProductScales_Validation_ScaleProductNumber_Integer);
                 return;
             }
 
@@ -99,13 +99,14 @@ namespace Foxoft
             if (isDuplicate)
             {
                 e.Cancel = true;
-                dxErrorProvider1.SetError(editor, "Bu kod istifadə olunub. Təkrarsız ədəd daxil edin.");
+                dxErrorProvider1.SetError(
+                    editor,
+                    Resources.Form_ProductScales_Validation_ScaleProductNumber_Duplicate);
             }
             else
             {
                 dxErrorProvider1.SetError(editor, string.Empty); // clear error
             }
         }
-
     }
 }

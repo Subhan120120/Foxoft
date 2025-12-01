@@ -4,6 +4,7 @@ using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Columns;
 using DevExpress.XtraTreeList.Nodes;
 using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -33,8 +34,8 @@ namespace Foxoft
             };
 
             // Add an unbound checkbox column
-            TreeListColumn checkBoxColumn = new TreeListColumn();
-            checkBoxColumn.Caption = "Select";
+            TreeListColumn checkBoxColumn = new();
+            checkBoxColumn.Caption = Resources.Common_Select; // was "Select"
             checkBoxColumn.FieldName = "IsSelected"; // Must match model property
             checkBoxColumn.ColumnEdit = repoCheck;
             checkBoxColumn.VisibleIndex = 1;
@@ -127,7 +128,6 @@ namespace Foxoft
             formCommonList.ShowDialog();
         }
 
-
         private void Btn_Save_Click(object sender, EventArgs e)
         {
             SaveNodesToDb(treeList1.Nodes);
@@ -170,6 +170,5 @@ namespace Foxoft
                 }
             }
         }
-
     }
 }

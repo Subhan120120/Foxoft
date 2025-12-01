@@ -1,5 +1,8 @@
-﻿
-using Foxoft.Models;
+﻿using Foxoft.Models;
+using Foxoft.Properties;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -17,18 +20,13 @@ namespace Foxoft
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
+
             base.Dispose(disposing);
         }
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
@@ -125,7 +123,26 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colProductCode, colAmount, colNetAmount, colLineDescription, colSalesPersonCode, colCurrencyCode, colExchangeRate, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colQtyIn, colProductDesc, gridColumn2, colBarcode });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[]
+            {
+                colInvoiceLineId,
+                colInvoiceHeaderId,
+                colProductCode,
+                colAmount,
+                colNetAmount,
+                colLineDescription,
+                colSalesPersonCode,
+                colCurrencyCode,
+                colExchangeRate,
+                colCreatedUserName,
+                colCreatedDate,
+                colLastUpdatedUserName,
+                colLastUpdatedDate,
+                colQtyIn,
+                colProductDesc,
+                gridColumn2,
+                colBarcode
+            });
             gV_InvoiceLine.CustomizationFormBounds = new Rectangle(1167, 397, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -153,6 +170,7 @@ namespace Foxoft
             // 
             colProductCode.ColumnEdit = repoBtnEdit_ProductCode;
             colProductCode.FieldName = "ProductCode";
+            colProductCode.Caption = Resources.Entity_InvoiceLine_ProductCode;
             colProductCode.Name = "colProductCode";
             colProductCode.Visible = true;
             colProductCode.VisibleIndex = 0;
@@ -160,23 +178,29 @@ namespace Foxoft
             // repoBtnEdit_ProductCode
             // 
             repoBtnEdit_ProductCode.AutoHeight = false;
-            repoBtnEdit_ProductCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            repoBtnEdit_ProductCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[]
+            {
+                new DevExpress.XtraEditors.Controls.EditorButton()
+            });
             repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
             repoBtnEdit_ProductCode.ButtonPressed += repoBtnEdit_ProductCode_ButtonPressed;
             // 
             // colAmount
             // 
             colAmount.FieldName = "Amount";
+            colAmount.Caption = Resources.Entity_InvoiceLine_Amount;
             colAmount.Name = "colAmount";
             // 
             // colNetAmount
             // 
             colNetAmount.FieldName = "NetAmount";
+            colNetAmount.Caption = Resources.Entity_InvoiceLine_NetAmount;
             colNetAmount.Name = "colNetAmount";
             // 
             // colLineDescription
             // 
             colLineDescription.FieldName = "LineDescription";
+            colLineDescription.Caption = Resources.Entity_InvoiceLine_LineDescription;
             colLineDescription.Name = "colLineDescription";
             colLineDescription.Visible = true;
             colLineDescription.VisibleIndex = 3;
@@ -184,46 +208,55 @@ namespace Foxoft
             // colSalesPersonCode
             // 
             colSalesPersonCode.FieldName = "SalesPersonCode";
+            colSalesPersonCode.Caption = Resources.Entity_InvoiceLine_SalesPersonCode;
             colSalesPersonCode.Name = "colSalesPersonCode";
             // 
             // colCurrencyCode
             // 
             colCurrencyCode.FieldName = "CurrencyCode";
+            colCurrencyCode.Caption = Resources.Entity_InvoiceLine_CurrencyCode;
             colCurrencyCode.Name = "colCurrencyCode";
             // 
             // colExchangeRate
             // 
             colExchangeRate.FieldName = "ExchangeRate";
+            colExchangeRate.Caption = Resources.Entity_InvoiceLine_ExchangeRate;
             colExchangeRate.Name = "colExchangeRate";
             // 
             // colCreatedUserName
             // 
             colCreatedUserName.FieldName = "CreatedUserName";
+            colCreatedUserName.Caption = Resources.Entity_Base_CreatedUserName;
             colCreatedUserName.Name = "colCreatedUserName";
             // 
             // colCreatedDate
             // 
             colCreatedDate.FieldName = "CreatedDate";
+            colCreatedDate.Caption = Resources.Entity_Base_CreatedDate;
             colCreatedDate.Name = "colCreatedDate";
             // 
             // colLastUpdatedUserName
             // 
             colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
+            colLastUpdatedUserName.Caption = Resources.Entity_Base_LastUpdatedUserName;
             colLastUpdatedUserName.Name = "colLastUpdatedUserName";
             // 
             // colLastUpdatedDate
             // 
             colLastUpdatedDate.FieldName = "LastUpdatedDate";
+            colLastUpdatedDate.Caption = Resources.Entity_Base_LastUpdatedDate;
             colLastUpdatedDate.Name = "colLastUpdatedDate";
             // 
             // colQtyIn
             // 
             colQtyIn.FieldName = "QtyIn";
+            colQtyIn.Caption = Resources.Entity_InvoiceLine_QtyIn;
             colQtyIn.Name = "colQtyIn";
             // 
             // colProductDesc
             // 
             colProductDesc.FieldName = "DcProduct.ProductDesc";
+            colProductDesc.Caption = Resources.Entity_InvoiceLine_ProductDesc;
             colProductDesc.Name = "colProductDesc";
             colProductDesc.Visible = true;
             colProductDesc.VisibleIndex = 1;
@@ -231,13 +264,15 @@ namespace Foxoft
             // gridColumn2
             // 
             gridColumn2.FieldName = "Price";
+            gridColumn2.Caption = Resources.Entity_InvoiceLine_Price;
             gridColumn2.Name = "gridColumn2";
             gridColumn2.Visible = true;
             gridColumn2.VisibleIndex = 2;
+
             // 
             // colBarcode
             // 
-            colBarcode.Caption = "Barkod";
+            colBarcode.Caption = Resources.Entity_InvoiceLine_Barcode;
             colBarcode.Name = "colBarcode";
             // 
             // btn_Save
@@ -247,16 +282,23 @@ namespace Foxoft
             btn_Save.Size = new Size(926, 89);
             btn_Save.StyleController = dataLayoutControl1;
             btn_Save.TabIndex = 10;
-            btn_Save.Text = "simpleButton1";
+            btn_Save.Text = Resources.Common_Save;
             btn_Save.Click += btn_Save_Click;
             // 
             // btnEdit_DocNum
             // 
-            btnEdit_DocNum.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentNumber", true));
+            btnEdit_DocNum.DataBindings.Add(new Binding(
+                "EditValue",
+                trInvoiceHeadersBindingSource,
+                "DocumentNumber",
+                true));
             btnEdit_DocNum.Location = new Point(112, 12);
             btnEdit_DocNum.Name = "btnEdit_DocNum";
             btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[]
+            {
+                new DevExpress.XtraEditors.Controls.EditorButton()
+            });
             btnEdit_DocNum.Size = new Size(361, 20);
             btnEdit_DocNum.StyleController = dataLayoutControl1;
             btnEdit_DocNum.TabIndex = 4;
@@ -269,32 +311,53 @@ namespace Foxoft
             // 
             // dateEdit_DocDate
             // 
-            dateEdit_DocDate.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentDate", true));
+            dateEdit_DocDate.DataBindings.Add(new Binding(
+                "EditValue",
+                trInvoiceHeadersBindingSource,
+                "DocumentDate",
+                true));
             dateEdit_DocDate.EditValue = null;
             dateEdit_DocDate.Location = new Point(577, 12);
             dateEdit_DocDate.Name = "dateEdit_DocDate";
             dateEdit_DocDate.Properties.AllowMouseWheel = false;
-            dateEdit_DocDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            dateEdit_DocDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            dateEdit_DocDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[]
+            {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)
+            });
+            dateEdit_DocDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[]
+            {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)
+            });
             dateEdit_DocDate.Size = new Size(361, 20);
             dateEdit_DocDate.StyleController = dataLayoutControl1;
             dateEdit_DocDate.TabIndex = 12;
             // 
             // dateEdit_DocTime
             // 
-            dateEdit_DocTime.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentTime", true));
+            dateEdit_DocTime.DataBindings.Add(new Binding(
+                "EditValue",
+                trInvoiceHeadersBindingSource,
+                "DocumentTime",
+                true));
             dateEdit_DocTime.EditValue = TimeSpan.Parse("00:00:00");
             dateEdit_DocTime.Location = new Point(577, 36);
             dateEdit_DocTime.Name = "dateEdit_DocTime";
             dateEdit_DocTime.Properties.AllowMouseWheel = false;
-            dateEdit_DocTime.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            dateEdit_DocTime.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[]
+            {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)
+            });
             dateEdit_DocTime.Size = new Size(361, 20);
             dateEdit_DocTime.StyleController = dataLayoutControl1;
             dateEdit_DocTime.TabIndex = 13;
             // 
             // memoEdit_InvoiceDesc
             // 
-            memoEdit_InvoiceDesc.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "Description", true));
+            memoEdit_InvoiceDesc.DataBindings.Add(new Binding(
+                "EditValue",
+                trInvoiceHeadersBindingSource,
+                "Description",
+                true));
             memoEdit_InvoiceDesc.Location = new Point(112, 36);
             memoEdit_InvoiceDesc.Name = "memoEdit_InvoiceDesc";
             memoEdit_InvoiceDesc.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
@@ -316,7 +379,15 @@ namespace Foxoft
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForDocumentNumber, ItemForDescription, layoutControlItem2, layoutControlItem1, ItemForDocumentDate, ItemForDocumentTime });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[]
+            {
+                ItemForDocumentNumber,
+                ItemForDescription,
+                layoutControlItem2,
+                layoutControlItem1,
+                ItemForDocumentDate,
+                ItemForDocumentTime
+            });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
             layoutControlGroup1.Size = new Size(930, 541);
@@ -327,7 +398,7 @@ namespace Foxoft
             ItemForDocumentNumber.Location = new Point(0, 0);
             ItemForDocumentNumber.Name = "ItemForDocumentNumber";
             ItemForDocumentNumber.Size = new Size(465, 24);
-            ItemForDocumentNumber.Text = "Document Number";
+            ItemForDocumentNumber.Text = Resources.Entity_InvoiceHeader_DocumentNumber;
             ItemForDocumentNumber.TextSize = new Size(88, 13);
             // 
             // ItemForDescription
@@ -336,7 +407,7 @@ namespace Foxoft
             ItemForDescription.Location = new Point(0, 24);
             ItemForDescription.Name = "ItemForDescription";
             ItemForDescription.Size = new Size(465, 24);
-            ItemForDescription.Text = "Description";
+            ItemForDescription.Text = Resources.Entity_InvoiceHeader_Description;
             ItemForDescription.TextSize = new Size(88, 13);
             // 
             // layoutControlItem2
@@ -365,7 +436,7 @@ namespace Foxoft
             ItemForDocumentDate.Location = new Point(465, 0);
             ItemForDocumentDate.Name = "ItemForDocumentDate";
             ItemForDocumentDate.Size = new Size(465, 24);
-            ItemForDocumentDate.Text = "Document Date";
+            ItemForDocumentDate.Text = Resources.Entity_InvoiceHeader_DocumentDate;
             ItemForDocumentDate.TextSize = new Size(88, 13);
             // 
             // ItemForDocumentTime
@@ -374,7 +445,7 @@ namespace Foxoft
             ItemForDocumentTime.Location = new Point(465, 24);
             ItemForDocumentTime.Name = "ItemForDocumentTime";
             ItemForDocumentTime.Size = new Size(465, 24);
-            ItemForDocumentTime.Text = "Document Time";
+            ItemForDocumentTime.Text = Resources.Entity_InvoiceHeader_DocumentTime;
             ItemForDocumentTime.TextSize = new Size(88, 13);
             // 
             // UcExpense
@@ -408,20 +479,17 @@ namespace Foxoft
             ResumeLayout(false);
         }
 
-
-
         #endregion
 
         private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
-        private System.Windows.Forms.BindingSource trInvoiceHeadersBindingSource;
+        private BindingSource trInvoiceHeadersBindingSource;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentNumber;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDescription;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccCode;
         private DevExpress.XtraEditors.SimpleButton btn_Save;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private System.Windows.Forms.BindingSource trInvoiceLinesBindingSource;
+        private BindingSource trInvoiceLinesBindingSource;
         private DevExpress.XtraGrid.GridControl gC_InvoiceLine;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceLine;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceLineId;

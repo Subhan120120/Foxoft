@@ -530,7 +530,10 @@ namespace Foxoft
             LUE_DefaultUnitOfMeasureId.Properties.Appearance.Options.UseTextOptions = true;
             LUE_DefaultUnitOfMeasureId.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
             LUE_DefaultUnitOfMeasureId.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            LUE_DefaultUnitOfMeasureId.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureId", "UnitOfMeasureId"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureDesc", "UnitOfMeasureDesc") });
+            LUE_DefaultUnitOfMeasureId.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureId", Resources.Entity_UnitOfMeasure_Id),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureDesc", Resources.Entity_UnitOfMeasure_Desc)
+            });
             LUE_DefaultUnitOfMeasureId.Properties.DisplayMember = "UnitOfMeasureDesc";
             LUE_DefaultUnitOfMeasureId.Properties.NullText = "";
             LUE_DefaultUnitOfMeasureId.Properties.ValueMember = "UnitOfMeasureId";
@@ -581,7 +584,7 @@ namespace Foxoft
             // 
             // BBI_ProductBarcode
             // 
-            BBI_ProductBarcode.Caption = Resources.Common_Barcode;
+            BBI_ProductBarcode.Caption = Resources.Entity_ProductBarcode_Barcode;
             BBI_ProductBarcode.Enabled = false;
             BBI_ProductBarcode.Id = 2;
             BBI_ProductBarcode.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductBarcode.ImageOptions.SvgImage");
@@ -992,7 +995,7 @@ namespace Foxoft
             Controls.Add(barDockControlBottom);
             Controls.Add(barDockControlTop);
             Name = "FormProduct";
-            Text = "Məhsul";
+            Text = Resources.Form_Product_Caption;
             Load += FormProduct_Load;
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);

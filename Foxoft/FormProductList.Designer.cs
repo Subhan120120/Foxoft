@@ -1,5 +1,5 @@
-﻿
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
+using Foxoft.Properties;
 using System.Data;
 
 namespace Foxoft
@@ -152,7 +152,20 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_ProductNew, btn_ProductEdit, bBI_ExportExcel, bBI_ProductDelete, bBI_ProductRefresh, BBI_query, barButtonItem4, txtEdit_filtercolumns, BBI_Save, BBI_Show, BSI_Reports });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+                ribbonControl1.ExpandCollapseItem,
+                BBI_ProductNew,
+                btn_ProductEdit,
+                bBI_ExportExcel,
+                bBI_ProductDelete,
+                bBI_ProductRefresh,
+                BBI_query,
+                barButtonItem4,
+                txtEdit_filtercolumns,
+                BBI_Save,
+                BBI_Show,
+                BSI_Reports
+            });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 41;
             ribbonControl1.Name = "ribbonControl1";
@@ -163,7 +176,7 @@ namespace Foxoft
             // 
             // BBI_ProductNew
             // 
-            BBI_ProductNew.Caption = "Yeni";
+            BBI_ProductNew.Caption = Resources.Common_New;
             BBI_ProductNew.Id = 1;
             BBI_ProductNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductNew.ImageOptions.SvgImage");
             BBI_ProductNew.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
@@ -171,7 +184,7 @@ namespace Foxoft
             // 
             // btn_ProductEdit
             // 
-            btn_ProductEdit.Caption = "Dəyiş";
+            btn_ProductEdit.Caption = Resources.Common_Edit;
             btn_ProductEdit.Id = 2;
             btn_ProductEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ProductEdit.ImageOptions.SvgImage");
             btn_ProductEdit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
@@ -179,14 +192,14 @@ namespace Foxoft
             // 
             // bBI_ExportExcel
             // 
-            bBI_ExportExcel.Caption = "Excele At";
+            bBI_ExportExcel.Caption = Resources.Common_ExportToExcel;
             bBI_ExportExcel.Id = 5;
             bBI_ExportExcel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ExportExcel.ImageOptions.SvgImage");
             bBI_ExportExcel.Name = "bBI_ExportExcel";
             // 
             // bBI_ProductDelete
             // 
-            bBI_ProductDelete.Caption = "Sil";
+            bBI_ProductDelete.Caption = Resources.Common_Delete;
             bBI_ProductDelete.Id = 8;
             bBI_ProductDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ProductDelete.ImageOptions.SvgImage");
             bBI_ProductDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.Delete);
@@ -194,7 +207,7 @@ namespace Foxoft
             // 
             // bBI_ProductRefresh
             // 
-            bBI_ProductRefresh.Caption = "Yenilə";
+            bBI_ProductRefresh.Caption = Resources.Common_Refresh;
             bBI_ProductRefresh.Id = 9;
             bBI_ProductRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ProductRefresh.ImageOptions.SvgImage");
             bBI_ProductRefresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
@@ -202,20 +215,20 @@ namespace Foxoft
             // 
             // BBI_query
             // 
-            BBI_query.Caption = "Sorğu";
+            BBI_query.Caption = Resources.Common_Query;
             BBI_query.Id = 23;
             BBI_query.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_query.ImageOptions.SvgImage");
             BBI_query.Name = "BBI_query";
             // 
             // barButtonItem4
             // 
-            barButtonItem4.Caption = "test";
+            barButtonItem4.Caption = Resources.Form_ProductList_Button_Test;
             barButtonItem4.Id = 28;
             barButtonItem4.Name = "barButtonItem4";
             // 
             // txtEdit_filtercolumns
             // 
-            txtEdit_filtercolumns.Caption = "filter columns";
+            txtEdit_filtercolumns.Caption = Resources.Form_ProductList_FilterColumnsLabel;
             txtEdit_filtercolumns.Edit = repositoryItemTextEdit1;
             txtEdit_filtercolumns.Id = 34;
             txtEdit_filtercolumns.Name = "txtEdit_filtercolumns";
@@ -227,28 +240,33 @@ namespace Foxoft
             // 
             // BBI_Save
             // 
-            BBI_Save.Caption = "Save";
+            BBI_Save.Caption = Resources.Common_Save;
             BBI_Save.Id = 35;
             BBI_Save.Name = "BBI_Save";
             // 
             // BBI_Show
             // 
-            BBI_Show.Caption = "Show";
+            BBI_Show.Caption = Resources.Common_Show;
             BBI_Show.Id = 36;
             BBI_Show.Name = "BBI_Show";
             // 
             // BSI_Reports
             // 
-            BSI_Reports.Caption = "Hesabat";
+            BSI_Reports.Caption = Resources.Common_Report;
             BSI_Reports.Id = 39;
             BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
             BSI_Reports.Name = "BSI_Reports";
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3, ribbonPageGroup4, ribbonPageGroup2 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+                ribbonPageGroup1,
+                ribbonPageGroup3,
+                ribbonPageGroup4,
+                ribbonPageGroup2
+            });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Məhsul";
+            ribbonPage1.Text = Resources.Form_ProductList_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
@@ -257,30 +275,30 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_ProductDelete);
             ribbonPageGroup1.ItemLinks.Add(bBI_ProductRefresh);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "İdarə";
+            ribbonPageGroup1.Text = Resources.Form_ProductList_RibbonGroup_Manage;
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Nəzarət";
+            ribbonPageGroup2.Text = Resources.Form_ProductList_RibbonGroup_Control;
             // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.ItemLinks.Add(BSI_Reports);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Hesabat";
+            ribbonPageGroup3.Text = Resources.Form_ProductList_RibbonGroup_Report;
             // 
             // ribbonPage3
             // 
             ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup5, ribbonPageGroup6 });
             ribbonPage3.Name = "ribbonPage3";
-            ribbonPage3.Text = "Ayarlar";
+            ribbonPage3.Text = Resources.Form_ProductList_RibbonPage_Settings;
             // 
             // ribbonPageGroup5
             // 
             ribbonPageGroup5.ItemLinks.Add(BBI_query);
             ribbonPageGroup5.Name = "ribbonPageGroup5";
-            ribbonPageGroup5.Text = "Data";
+            ribbonPageGroup5.Text = Resources.Form_ProductList_RibbonGroup_Data;
             // 
             // ribbonPageGroup6
             // 
@@ -288,7 +306,7 @@ namespace Foxoft
             ribbonPageGroup6.ItemLinks.Add(BBI_Show);
             ribbonPageGroup6.ItemLinks.Add(BBI_Save);
             ribbonPageGroup6.Name = "ribbonPageGroup6";
-            ribbonPageGroup6.Text = "Filter Columns";
+            ribbonPageGroup6.Text = Resources.Form_ProductList_RibbonGroup_FilterColumns;
             // 
             // ribbonStatusBar1
             // 
@@ -326,9 +344,44 @@ namespace Foxoft
             repositoryItemRibbonSearchEdit1.AutoHeight = false;
             repositoryItemRibbonSearchEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
             editorButtonImageOptions1.AllowGlyphSkinning = DefaultBoolean.True;
-            repositoryItemRibbonSearchEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions1, new KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions2, new KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, ToolTipAnchor.Default) });
+            repositoryItemRibbonSearchEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(
+                    DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph,
+                    "",
+                    -1,
+                    true,
+                    true,
+                    true,
+                    editorButtonImageOptions1,
+                    new KeyShortcut(Keys.None),
+                    serializableAppearanceObject1,
+                    serializableAppearanceObject2,
+                    serializableAppearanceObject3,
+                    serializableAppearanceObject4,
+                    "",
+                    null,
+                    null,
+                    ToolTipAnchor.Default),
+                new DevExpress.XtraEditors.Controls.EditorButton(
+                    DevExpress.XtraEditors.Controls.ButtonPredefines.Clear,
+                    "",
+                    -1,
+                    true,
+                    false,
+                    false,
+                    editorButtonImageOptions2,
+                    new KeyShortcut(Keys.None),
+                    serializableAppearanceObject5,
+                    serializableAppearanceObject6,
+                    serializableAppearanceObject7,
+                    serializableAppearanceObject8,
+                    "",
+                    null,
+                    null,
+                    ToolTipAnchor.Default)
+            });
             repositoryItemRibbonSearchEdit1.Name = "repositoryItemRibbonSearchEdit1";
-            repositoryItemRibbonSearchEdit1.NullText = "Search";
+            repositoryItemRibbonSearchEdit1.NullText = Resources.Common_Search;
             // 
             // repositoryItemRibbonSearchEdit2
             // 
@@ -336,9 +389,44 @@ namespace Foxoft
             repositoryItemRibbonSearchEdit2.AutoHeight = false;
             repositoryItemRibbonSearchEdit2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
             editorButtonImageOptions3.AllowGlyphSkinning = DefaultBoolean.True;
-            repositoryItemRibbonSearchEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions3, new KeyShortcut(Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions4, new KeyShortcut(Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "", null, null, ToolTipAnchor.Default) });
+            repositoryItemRibbonSearchEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(
+                    DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph,
+                    "",
+                    -1,
+                    true,
+                    true,
+                    true,
+                    editorButtonImageOptions3,
+                    new KeyShortcut(Keys.None),
+                    serializableAppearanceObject9,
+                    serializableAppearanceObject10,
+                    serializableAppearanceObject11,
+                    serializableAppearanceObject12,
+                    "",
+                    null,
+                    null,
+                    ToolTipAnchor.Default),
+                new DevExpress.XtraEditors.Controls.EditorButton(
+                    DevExpress.XtraEditors.Controls.ButtonPredefines.Clear,
+                    "",
+                    -1,
+                    true,
+                    false,
+                    false,
+                    editorButtonImageOptions4,
+                    new KeyShortcut(Keys.None),
+                    serializableAppearanceObject13,
+                    serializableAppearanceObject14,
+                    serializableAppearanceObject15,
+                    serializableAppearanceObject16,
+                    "",
+                    null,
+                    null,
+                    ToolTipAnchor.Default)
+            });
             repositoryItemRibbonSearchEdit2.Name = "repositoryItemRibbonSearchEdit2";
-            repositoryItemRibbonSearchEdit2.NullText = "Search";
+            repositoryItemRibbonSearchEdit2.NullText = Resources.Common_Search;
             // 
             // btnEdit_BarcodeSearch
             // 
@@ -347,7 +435,25 @@ namespace Foxoft
             btnEdit_BarcodeSearch.Name = "btnEdit_BarcodeSearch";
             editorButtonImageOptions5.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions5.SvgImage");
             editorButtonImageOptions5.SvgImageSize = new Size(16, 16);
-            btnEdit_BarcodeSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions5, new KeyShortcut(Keys.None), serializableAppearanceObject17, serializableAppearanceObject18, serializableAppearanceObject19, serializableAppearanceObject20, "", null, null, ToolTipAnchor.Default) });
+            btnEdit_BarcodeSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(
+                    DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph,
+                    "",
+                    -1,
+                    true,
+                    true,
+                    false,
+                    editorButtonImageOptions5,
+                    new KeyShortcut(Keys.None),
+                    serializableAppearanceObject17,
+                    serializableAppearanceObject18,
+                    serializableAppearanceObject19,
+                    serializableAppearanceObject20,
+                    "",
+                    null,
+                    null,
+                    ToolTipAnchor.Default)
+            });
             btnEdit_BarcodeSearch.Size = new Size(150, 24);
             btnEdit_BarcodeSearch.TabIndex = 6;
             btnEdit_BarcodeSearch.EditValueChanged += btnEdit_BarcodeSearch_EditValueChanged;
@@ -356,7 +462,7 @@ namespace Foxoft
             // 
             ribbonPageGroup4.ItemLinks.Add(bBI_ExportExcel);
             ribbonPageGroup4.Name = "ribbonPageGroup4";
-            ribbonPageGroup4.Text = "Alət";
+            ribbonPageGroup4.Text = Resources.Form_ProductList_RibbonGroup_Tools;
             // 
             // FormProductList
             // 
@@ -372,7 +478,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterParent;
             StatusBar = ribbonStatusBar1;
-            Text = "Məhsul Siyahısı";
+            Text = Resources.Form_ProductList_Caption;
             KeyDown += FormProductList_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).EndInit();

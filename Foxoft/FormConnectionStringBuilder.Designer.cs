@@ -1,4 +1,6 @@
-﻿namespace Foxoft
+﻿using Foxoft.Properties;
+
+namespace Foxoft
 {
     partial class FormConnectionStringBuilder
     {
@@ -37,7 +39,7 @@
             lblServer.Name = "lblServer";
             lblServer.Size = new Size(42, 15);
             lblServer.TabIndex = 0;
-            lblServer.Text = "Server:";
+            lblServer.Text = Resources.Form_Connection_Server;
             // 
             // txtServer
             // 
@@ -54,7 +56,7 @@
             lblDatabase.Name = "lblDatabase";
             lblDatabase.Size = new Size(58, 15);
             lblDatabase.TabIndex = 2;
-            lblDatabase.Text = "Database:";
+            lblDatabase.Text = Resources.Form_Connection_Database;
             // 
             // txtDatabase
             // 
@@ -71,7 +73,7 @@
             lblUser.Name = "lblUser";
             lblUser.Size = new Size(33, 15);
             lblUser.TabIndex = 4;
-            lblUser.Text = "User:";
+            lblUser.Text = Resources.Form_Connection_User;
             // 
             // txtUser
             // 
@@ -88,7 +90,7 @@
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(60, 15);
             lblPassword.TabIndex = 6;
-            lblPassword.Text = "Password:";
+            lblPassword.Text = Resources.Form_Connection_Password;
             // 
             // txtPassword
             // 
@@ -106,6 +108,7 @@
             txtConnectionString.ReadOnly = true;
             txtConnectionString.Size = new Size(257, 23);
             txtConnectionString.TabIndex = 9;
+            txtConnectionString.PlaceholderText = Resources.Form_Connection_ConnectionString;
             // 
             // btnTestConnection
             // 
@@ -113,7 +116,7 @@
             btnTestConnection.Name = "btnTestConnection";
             btnTestConnection.Size = new Size(151, 23);
             btnTestConnection.TabIndex = 10;
-            btnTestConnection.Text = "Test Connection";
+            btnTestConnection.Text = Resources.Form_Connection_TestConnection;
             btnTestConnection.UseVisualStyleBackColor = true;
             btnTestConnection.Click += btnTestConnection_Click;
             // 
@@ -131,7 +134,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(151, 23);
             btnSave.TabIndex = 12;
-            btnSave.Text = "Yadda Saxla";
+            btnSave.Text = Resources.Common_Save;
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
@@ -141,7 +144,7 @@
             button1.Name = "button1";
             button1.Size = new Size(103, 23);
             button1.TabIndex = 13;
-            button1.Text = "Databaza yarat";
+            button1.Text = Resources.Form_Connection_CreateDatabase;
             button1.UseVisualStyleBackColor = true;
             button1.Click += btnCreateDatabase_Click;
             // 
@@ -162,7 +165,7 @@
             Controls.Add(txtServer);
             Controls.Add(lblServer);
             Name = "FormConnectionStringBuilder";
-            Text = "Connection String Tester";
+            Text = Resources.Form_Connection_Caption;
             Load += Form2_Load;
             ResumeLayout(false);
             PerformLayout();

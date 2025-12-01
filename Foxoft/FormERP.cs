@@ -9,6 +9,7 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -31,6 +32,23 @@ namespace Foxoft
             InitializeComponent();
 
             InitComponentName();
+
+            repositoryItemLookUpEdit1.DataSource = efMethods.SelectEntities<DcUILanguage>();
+
+            BEI_Language.EditValueChanged += (s, e) =>
+            {
+                var key = BEI_Language.EditValue as DcUILanguage;
+
+                if (key is not null)
+                {
+                    CultureInfo culture = CultureInfo.CreateSpecificCulture(key.LanguageCode);
+                    Thread.CurrentThread.CurrentUICulture = culture;
+                    Thread.CurrentThread.CurrentCulture = culture;
+                    CultureInfo.DefaultThreadCurrentCulture = culture;
+                    CultureInfo.DefaultThreadCurrentUICulture = culture;
+                }
+            };
+
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
             reportClass.AddReports(BSI_Report, "ERP", null, null, activeFilterStr);
@@ -165,7 +183,7 @@ namespace Foxoft
                 case "CashTransfer": ShowNewForm<FormMoneyTransfer>(); break;
                 case "CashRegs": ShowExistForm<FormCashRegisterList>(); break;
                 case "InstallmentSales": ShowExistForm<FormInstallmentSale>(); break;
-                case "PriceList": ShowNewForm<FormPriceListDetail>(); break;
+                case "PriceList": ShowNewForm<FormPriceList>(); break;
                 case "ProductDiscountList": ShowExistForm<FormCommonList<DcDiscount>>("", nameof(DcDiscount.DiscountId)); break;
                 case "RetailSaleOrder": ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null); break;
                 case "Session": ShowExistForm<FormCurrAccSession>(); break;
@@ -190,7 +208,7 @@ namespace Foxoft
 
                     if (!currAccHasClaims)
                     {
-                        MessageBox.Show("Yetkiniz yoxdur! ");
+                        MessageBox.Show(Resources.Common_AccessDenied);
                         return;
                     }
 

@@ -1,9 +1,9 @@
-﻿
-using Foxoft.Models;
+﻿using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
-    partial class FormPriceListDetail
+    partial class FormPriceList
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPriceListDetail));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPriceList));
             ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_DeletePriceList = new DevExpress.XtraBars.BarButtonItem();
             bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
@@ -135,7 +135,7 @@ namespace Foxoft
             // 
             // bBI_DeletePriceList
             // 
-            bBI_DeletePriceList.Caption = "Qiymət Siyahısını Sil";
+            bBI_DeletePriceList.Caption = Resources.Form_PriceListDetail_Button_DeletePriceList;
             bBI_DeletePriceList.Id = 1;
             bBI_DeletePriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_DeletePriceList.ImageOptions.SvgImage");
             bBI_DeletePriceList.Name = "bBI_DeletePriceList";
@@ -143,7 +143,7 @@ namespace Foxoft
             // 
             // bBI_SaveAndClose
             // 
-            bBI_SaveAndClose.Caption = "Yadda Saxla Bağla";
+            bBI_SaveAndClose.Caption = Resources.Form_PriceListDetail_Button_SaveAndClose;
             bBI_SaveAndClose.Id = 2;
             bBI_SaveAndClose.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SaveAndClose.ImageOptions.SvgImage");
             bBI_SaveAndClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
@@ -152,7 +152,7 @@ namespace Foxoft
             // 
             // bBI_NewPriceList
             // 
-            bBI_NewPriceList.Caption = "Yeni Qiymət Siyahısı";
+            bBI_NewPriceList.Caption = Resources.Form_PriceListDetail_Button_NewPriceList;
             bBI_NewPriceList.Id = 5;
             bBI_NewPriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_NewPriceList.ImageOptions.SvgImage");
             bBI_NewPriceList.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N);
@@ -161,14 +161,14 @@ namespace Foxoft
             // 
             // BBI_Info
             // 
-            BBI_Info.Caption = "İnfo";
+            BBI_Info.Caption = Resources.Form_PriceListDetail_Button_Info;
             BBI_Info.Id = 10;
             BBI_Info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Info.ImageOptions.SvgImage");
             BBI_Info.Name = "BBI_Info";
             // 
             // BBI_ImportExcel
             // 
-            BBI_ImportExcel.Caption = "Excel'dən Al";
+            BBI_ImportExcel.Caption = Resources.Form_PriceListDetail_Button_ImportExcel;
             BBI_ImportExcel.Id = 11;
             BBI_ImportExcel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ImportExcel.ImageOptions.SvgImage");
             BBI_ImportExcel.Name = "BBI_ImportExcel";
@@ -176,7 +176,7 @@ namespace Foxoft
             // 
             // BBI_exportXLSX
             // 
-            BBI_exportXLSX.Caption = "Excel'ə Göndər";
+            BBI_exportXLSX.Caption = Resources.Form_PriceListDetail_Button_ExportExcel;
             BBI_exportXLSX.Id = 22;
             BBI_exportXLSX.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_exportXLSX.ImageOptions.SvgImage");
             BBI_exportXLSX.Name = "BBI_exportXLSX";
@@ -186,7 +186,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Ödəmə";
+            ribbonPage1.Text = Resources.Form_PriceListDetail_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
@@ -194,27 +194,27 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_NewPriceList);
             ribbonPageGroup1.ItemLinks.Add(bBI_DeletePriceList);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Ödəmə";
+            ribbonPageGroup1.Text = Resources.Form_PriceListDetail_RibbonGroup_PriceList;
             // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
             ribbonPageGroup3.ItemLinks.Add(BBI_Info);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Məlumat";
+            ribbonPageGroup3.Text = Resources.Form_PriceListDetail_RibbonGroup_Info;
             // 
             // ribbonPage2
             // 
             ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2 });
             ribbonPage2.Name = "ribbonPage2";
-            ribbonPage2.Text = "Ayarlar";
+            ribbonPage2.Text = Resources.Form_PriceListDetail_RibbonPage_Settings;
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(BBI_ImportExcel);
             ribbonPageGroup2.ItemLinks.Add(BBI_exportXLSX);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Excel";
+            ribbonPageGroup2.Text = Resources.Form_PriceListDetail_RibbonGroup_Excel;
             // 
             // ribbonStatusBar
             // 
@@ -294,6 +294,7 @@ namespace Foxoft
             // 
             // colProductCode
             // 
+            colProductCode.Caption = Resources.Entity_PriceListLine_ProductCode;
             colProductCode.ColumnEdit = repoBtnEdit_ProductCode;
             colProductCode.FieldName = "ProductCode";
             colProductCode.Name = "colProductCode";
@@ -310,6 +311,7 @@ namespace Foxoft
             // 
             // colPrice
             // 
+            colPrice.Caption = Resources.Entity_PriceListLine_Price;
             colPrice.FieldName = "Price";
             colPrice.Name = "colPrice";
             colPrice.Visible = true;
@@ -318,6 +320,7 @@ namespace Foxoft
             // 
             // colCurrencyCode
             // 
+            colCurrencyCode.Caption = Resources.Entity_PriceListLine_CurrencyCode;
             colCurrencyCode.ColumnEdit = repoLUE_CurrencyCode;
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
@@ -330,7 +333,10 @@ namespace Foxoft
             repoLUE_CurrencyCode.AutoHeight = false;
             repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
             repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "") });
+            repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", Resources.Entity_Currency_Code),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", Resources.Entity_Currency_Desc)
+            });
             repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
             repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
             repoLUE_CurrencyCode.NullText = "";
@@ -340,6 +346,7 @@ namespace Foxoft
             // 
             // colLineDescription
             // 
+            colLineDescription.Caption = Resources.Entity_PriceListLine_LineDescription;
             colLineDescription.FieldName = "LineDescription";
             colLineDescription.Name = "colLineDescription";
             colLineDescription.Visible = true;
@@ -357,7 +364,7 @@ namespace Foxoft
             colProductDesc.VisibleIndex = 1;
             colProductDesc.Width = 421;
             // 
-            // colLastPurchasePrice
+            // colProductCost
             // 
             colProductCost.FieldName = "DcProduct.ProductCost";
             colProductCost.Name = "colProductCost";
@@ -451,7 +458,7 @@ namespace Foxoft
             IsDisabledCheckEdit.Location = new System.Drawing.Point(138, 84);
             IsDisabledCheckEdit.MenuManager = ribbon;
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
-            IsDisabledCheckEdit.Properties.Caption = "Ləğv Edilib";
+            IsDisabledCheckEdit.Properties.Caption = Resources.Entity_PriceListHeader_IsDisabled;
             IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             IsDisabledCheckEdit.Size = new System.Drawing.Size(122, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
@@ -463,7 +470,7 @@ namespace Foxoft
             IsConfirmedCheckEdit.Location = new System.Drawing.Point(12, 84);
             IsConfirmedCheckEdit.MenuManager = ribbon;
             IsConfirmedCheckEdit.Name = "IsConfirmedCheckEdit";
-            IsConfirmedCheckEdit.Properties.Caption = "Təsdiqlənib";
+            IsConfirmedCheckEdit.Properties.Caption = Resources.Entity_PriceListHeader_IsConfirmed;
             IsConfirmedCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             IsConfirmedCheckEdit.Size = new System.Drawing.Size(122, 20);
             IsConfirmedCheckEdit.StyleController = dataLayoutControl1;
@@ -528,6 +535,7 @@ namespace Foxoft
             ItemForDocumentDate.Location = new System.Drawing.Point(0, 24);
             ItemForDocumentDate.Name = "ItemForDocumentDate";
             ItemForDocumentDate.Size = new System.Drawing.Size(464, 24);
+            ItemForDocumentDate.Text = Resources.Entity_PriceListHeader_DocumentDate;
             ItemForDocumentDate.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForDocumentTime
@@ -536,6 +544,7 @@ namespace Foxoft
             ItemForDocumentTime.Location = new System.Drawing.Point(0, 48);
             ItemForDocumentTime.Name = "ItemForDocumentTime";
             ItemForDocumentTime.Size = new System.Drawing.Size(464, 24);
+            ItemForDocumentTime.Text = Resources.Entity_PriceListHeader_DocumentTime;
             ItemForDocumentTime.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForDueDate
@@ -544,6 +553,7 @@ namespace Foxoft
             ItemForDueDate.Location = new System.Drawing.Point(464, 24);
             ItemForDueDate.Name = "ItemForDueDate";
             ItemForDueDate.Size = new System.Drawing.Size(464, 24);
+            ItemForDueDate.Text = Resources.Entity_PriceListHeader_DueDate;
             ItemForDueDate.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForDueTime
@@ -552,6 +562,7 @@ namespace Foxoft
             ItemForDueTime.Location = new System.Drawing.Point(464, 48);
             ItemForDueTime.Name = "ItemForDueTime";
             ItemForDueTime.Size = new System.Drawing.Size(464, 24);
+            ItemForDueTime.Text = Resources.Entity_PriceListHeader_DueTime;
             ItemForDueTime.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForDescription
@@ -560,6 +571,7 @@ namespace Foxoft
             ItemForDescription.Location = new System.Drawing.Point(464, 72);
             ItemForDescription.Name = "ItemForDescription";
             ItemForDescription.Size = new System.Drawing.Size(464, 24);
+            ItemForDescription.Text = Resources.Entity_PriceListHeader_Description;
             ItemForDescription.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForIsConfirmed
@@ -592,16 +604,18 @@ namespace Foxoft
             // 
             layoutControlItem2.Control = btnEdit_DocNum;
             layoutControlItem2.Location = new System.Drawing.Point(0, 0);
-            layoutControlItem2.Name = "Faktura Nömrəsi";
+            layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new System.Drawing.Size(464, 24);
+            layoutControlItem2.Text = Resources.Entity_PriceListHeader_DocumentNumber;
             layoutControlItem2.TextSize = new System.Drawing.Size(111, 13);
             // 
             // layoutControlItem3
             // 
             layoutControlItem3.Control = btnEdit_PriceTypeCode;
             layoutControlItem3.Location = new System.Drawing.Point(464, 0);
-            layoutControlItem3.Name = "Qiymət Siyahı Tipi Kodu";
+            layoutControlItem3.Name = "layoutControlItem3";
             layoutControlItem3.Size = new System.Drawing.Size(464, 24);
+            layoutControlItem3.Text = Resources.Entity_PriceListHeader_PriceTypeCode;
             layoutControlItem3.TextSize = new System.Drawing.Size(111, 13);
             // 
             // FormPriceListDetail
@@ -615,7 +629,7 @@ namespace Foxoft
             Name = "FormPriceListDetail";
             Ribbon = ribbon;
             StatusBar = ribbonStatusBar;
-            Text = "Qiymət Siyahısı";
+            Text = Resources.Form_PriceListDetail_Caption;
             ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);

@@ -1,4 +1,5 @@
-﻿
+﻿using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormProductFeature
@@ -93,7 +94,7 @@ namespace Foxoft
             Controls.Add(layoutControl1);
             KeyPreview = true;
             Name = "FormProductFeature";
-            Text = "Məhsul Özəllikləri";
+            Text = Resources.Form_ProductFeature_Caption;
             Load += FormProductFeature_Load;
             KeyDown += FormProductFeature_KeyDown;
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();

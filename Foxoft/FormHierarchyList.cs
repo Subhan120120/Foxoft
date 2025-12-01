@@ -4,6 +4,7 @@ using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Menu;
 using DevExpress.XtraTreeList.Nodes;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -40,7 +41,11 @@ namespace Foxoft
             List<DcHierarchy> DcHierarchies = efMethods.SelectHierarchies();
             treeList1.DataSource = DcHierarchies;
 
-            TreeListNode node = treeList1.FindNodeByFieldValue("HierarchyCode", DcHierarchy?.HierarchyCode);
+            TreeListNode node = treeList1.FindNodeByFieldValue(
+                nameof(DcHierarchy.HierarchyCode),
+                DcHierarchy?.HierarchyCode
+            );
+
             treeList1.FocusedNode = node;
             if (node is not null)
                 node.Expanded = true;
@@ -48,7 +53,7 @@ namespace Foxoft
 
         private void FormTreeView_Activated(object sender, EventArgs e)
         {
-            //AutoFocus FindPanel
+            // AutoFocus FindPanel
             if (treeList1 is not null)
             {
                 treeList1.FindPanelVisible = false;
@@ -59,22 +64,28 @@ namespace Foxoft
 
         private void treeList1_InitNewRow(object sender, TreeListInitNewRowEventArgs e)
         {
-            string NewDocNum = efMethods.GetNextDocNum(false, "H", "HierarchyCode", "DcHierarchies", 4);
-            e.SetValue(treeListCol_HierarchyCode, NewDocNum);
+            string newDocNum = efMethods.GetNextDocNum(
+                false,
+                "H",
+                nameof(DcHierarchy.HierarchyCode),
+                nameof(DcHierarchy),
+                4);
+
+            e.SetValue(treeListCol_HierarchyCode, newDocNum);
         }
 
         private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
         {
-            object HierarchyCode = e.Node?.GetValue(treeListCol_HierarchyCode);
+            object hierarchyCode = e.Node?.GetValue(treeListCol_HierarchyCode);
 
-            if (HierarchyCode is not null)
-                DcHierarchy = efMethods.SelectEntityById<DcHierarchy>(HierarchyCode.ToString());
+            if (hierarchyCode is not null)
+                DcHierarchy = efMethods.SelectEntityById<DcHierarchy>(hierarchyCode.ToString());
         }
 
         private void dx_AddChild_ItemClick(object sender, EventArgs e)
         {
             TreeListNode newNode = treeList1.AppendNode(null, treeList1.FocusedNode);
-            //newNode.SetValue("HierarchyCode", "");
+            // newNode.SetValue(treeListCol_HierarchyCode, nameof(DcHierarchy.HierarchyCode));
             treeList1.FocusedNode = newNode;
 
             treeList1.OptionsBehavior.Editable = true;
@@ -120,10 +131,29 @@ namespace Foxoft
             {
                 treeList1.FocusedNode = ((TreeListNodeMenu)e.Menu).Node;
 
-                DXMenuItem dx_Edit = new("Dəyiş", dx_Edit_ItemClick, svgImageCollection1["edit"], DXMenuItemPriority.Normal);
-                DXMenuItem dx_Add = new("Əlavə et", dx_Add_ItemClick, svgImageCollection1["add"], DXMenuItemPriority.Normal);
-                DXMenuItem dx_AddChild = new("Uşaq əlavə et", dx_AddChild_ItemClick, svgImageCollection1["child"], DXMenuItemPriority.Normal);
-                DXMenuItem dx_Delete = new("Sil", dx_Delete_ItemClick, svgImageCollection1["delete"], DXMenuItemPriority.Normal);
+                DXMenuItem dx_Edit = new(
+                    Resources.Common_Edit,
+                    dx_Edit_ItemClick,
+                    svgImageCollection1["edit"],
+                    DXMenuItemPriority.Normal);
+
+                DXMenuItem dx_Add = new(
+                    Resources.Common_New,
+                    dx_Add_ItemClick,
+                    svgImageCollection1["add"],
+                    DXMenuItemPriority.Normal);
+
+                DXMenuItem dx_AddChild = new(
+                    Resources.Form_HierarchyList_AddChild,
+                    dx_AddChild_ItemClick,
+                    svgImageCollection1["child"],
+                    DXMenuItemPriority.Normal);
+
+                DXMenuItem dx_Delete = new(
+                    Resources.Common_Delete,
+                    dx_Delete_ItemClick,
+                    svgImageCollection1["delete"],
+                    DXMenuItemPriority.Normal);
 
                 e.Menu.Items.Add(dx_Add);
                 e.Menu.Items.Add(dx_AddChild);
@@ -159,7 +189,15 @@ namespace Foxoft
 
                 if (DcHierarchy == null)
                 {
-                    DcHierarchy = new() { HierarchyCode = hierarchyCode, HierarchyDesc = "Yeni", HierarchyLevel = treeList1.FocusedNode.Level, HierarchyParentCode = treeList1.FocusedNode.ParentNode?.GetValue(treeListCol_HierarchyCode)?.ToString() };
+                    DcHierarchy = new()
+                    {
+                        HierarchyCode = hierarchyCode,
+                        HierarchyDesc = Resources.Form_HierarchyList_NewDesc,
+                        HierarchyLevel = treeList1.FocusedNode.Level,
+                        HierarchyParentCode = treeList1.FocusedNode.ParentNode?
+                            .GetValue(treeListCol_HierarchyCode)?.ToString()
+                    };
+
                     efMethods.InsertEntity(DcHierarchy);
                 }
 

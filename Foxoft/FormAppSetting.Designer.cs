@@ -1,4 +1,5 @@
-﻿using Foxoft.Properties;
+﻿
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -24,10 +25,6 @@ namespace Foxoft
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
@@ -118,7 +115,6 @@ namespace Foxoft
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.Location = new Point(0, 0);
             dataLayoutControl1.Name = "dataLayoutControl1";
-            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(848, 189, 650, 400);
             dataLayoutControl1.Root = Root;
             dataLayoutControl1.Size = new Size(506, 403);
             dataLayoutControl1.TabIndex = 0;
@@ -131,7 +127,7 @@ namespace Foxoft
             btn_OptimizeDatabaseIndexes.Size = new Size(482, 22);
             btn_OptimizeDatabaseIndexes.StyleController = dataLayoutControl1;
             btn_OptimizeDatabaseIndexes.TabIndex = 0;
-            btn_OptimizeDatabaseIndexes.Text = "Optimize Database Indexes";
+            btn_OptimizeDatabaseIndexes.Text = Resources.Entity_AppSetting_OptimizeDatabaseIndexes_Button;
             btn_OptimizeDatabaseIndexes.Click += Btn_OptimizeDatabaseIndexes_Click;
             // 
             // btn_Save
@@ -159,7 +155,7 @@ namespace Foxoft
             // 
             appSettingBindingSource.DataSource = typeof(Models.AppSetting);
             // 
-            // GetPrintCheckEdit
+            // AutoPrintCheckEdit
             // 
             AutoPrintCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "AutoPrint", true));
             AutoPrintCheckEdit.Location = new Point(12, 12);
@@ -179,7 +175,7 @@ namespace Foxoft
             PrinterNameTextEdit.StyleController = dataLayoutControl1;
             PrinterNameTextEdit.TabIndex = 5;
             // 
-            // PrinterCopyNumSpinEdit
+            // PrintCountSpinEdit
             // 
             PrintCountSpinEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "PrintCount", true));
             PrintCountSpinEdit.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
@@ -188,7 +184,6 @@ namespace Foxoft
             PrintCountSpinEdit.Properties.Appearance.Options.UseTextOptions = true;
             PrintCountSpinEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             PrintCountSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            PrintCountSpinEdit.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
             PrintCountSpinEdit.Properties.Mask.EditMask = "N0";
             PrintCountSpinEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
             PrintCountSpinEdit.Size = new Size(292, 20);
@@ -240,7 +235,7 @@ namespace Foxoft
             AutoSaveCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "AutoSave", true));
             AutoSaveCheckEdit.Location = new Point(12, 180);
             AutoSaveCheckEdit.Name = "AutoSaveCheckEdit";
-            AutoSaveCheckEdit.Properties.Caption = "Avtomatik Yadda Saxla";
+            AutoSaveCheckEdit.Properties.Caption = Resources.Entity_AppSetting_AutoSave;
             AutoSaveCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             AutoSaveCheckEdit.Size = new Size(482, 20);
             AutoSaveCheckEdit.StyleController = dataLayoutControl1;
@@ -256,7 +251,6 @@ namespace Foxoft
             InvoiceEditGraceDaysSpinEdit.Properties.Appearance.Options.UseTextOptions = true;
             InvoiceEditGraceDaysSpinEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             InvoiceEditGraceDaysSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            InvoiceEditGraceDaysSpinEdit.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
             InvoiceEditGraceDaysSpinEdit.Properties.Mask.EditMask = "N0";
             InvoiceEditGraceDaysSpinEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
             InvoiceEditGraceDaysSpinEdit.Size = new Size(292, 20);
@@ -273,7 +267,6 @@ namespace Foxoft
             PaymentEditGraceDaysSpinEdit.Properties.Appearance.Options.UseTextOptions = true;
             PaymentEditGraceDaysSpinEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             PaymentEditGraceDaysSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            PaymentEditGraceDaysSpinEdit.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
             PaymentEditGraceDaysSpinEdit.Properties.Mask.EditMask = "N0";
             PaymentEditGraceDaysSpinEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
             PaymentEditGraceDaysSpinEdit.Size = new Size(292, 20);
@@ -312,14 +305,16 @@ namespace Foxoft
             ItemForPrinterName.Location = new Point(0, 24);
             ItemForPrinterName.Name = "ItemForPrinterName";
             ItemForPrinterName.Size = new Size(486, 24);
+            ItemForPrinterName.Text = Resources.Entity_AppSetting_PrinterName;
             ItemForPrinterName.TextSize = new Size(178, 13);
             // 
-            // ItemForPrinterCopyNum
+            // ItemForPrintCount
             // 
             ItemForPrintCount.Control = PrintCountSpinEdit;
             ItemForPrintCount.Location = new Point(0, 48);
-            ItemForPrintCount.Name = "ItemForPrinterCopyNum";
+            ItemForPrintCount.Name = "ItemForPrintCount";
             ItemForPrintCount.Size = new Size(486, 24);
+            ItemForPrintCount.Text = Resources.Entity_AppSetting_PrintCount;
             ItemForPrintCount.TextSize = new Size(178, 13);
             // 
             // ItemForPrintDesignPath
@@ -328,6 +323,7 @@ namespace Foxoft
             ItemForPrintDesignPath.Location = new Point(0, 72);
             ItemForPrintDesignPath.Name = "ItemForPrintDesignPath";
             ItemForPrintDesignPath.Size = new Size(486, 24);
+            ItemForPrintDesignPath.Text = Resources.Entity_AppSetting_PrintDesignPath;
             ItemForPrintDesignPath.TextSize = new Size(178, 13);
             // 
             // ItemForLocalCurrencyCode
@@ -336,6 +332,7 @@ namespace Foxoft
             ItemForLocalCurrencyCode.Location = new Point(0, 96);
             ItemForLocalCurrencyCode.Name = "ItemForLocalCurrencyCode";
             ItemForLocalCurrencyCode.Size = new Size(486, 24);
+            ItemForLocalCurrencyCode.Text = Resources.Entity_AppSetting_LocalCurrencyCode;
             ItemForLocalCurrencyCode.TextSize = new Size(178, 13);
             // 
             // ItemForWhatsappChromeProfileName
@@ -344,6 +341,7 @@ namespace Foxoft
             ItemForWhatsappChromeProfileName.Location = new Point(0, 120);
             ItemForWhatsappChromeProfileName.Name = "ItemForWhatsappChromeProfileName";
             ItemForWhatsappChromeProfileName.Size = new Size(486, 24);
+            ItemForWhatsappChromeProfileName.Text = Resources.Entity_AppSetting_WhatsappChromeProfileName;
             ItemForWhatsappChromeProfileName.TextSize = new Size(178, 13);
             // 
             // ItemForUsePriceList
@@ -368,6 +366,7 @@ namespace Foxoft
             ItemForInvoiceEditGraceDays.Location = new Point(0, 192);
             ItemForInvoiceEditGraceDays.Name = "ItemForInvoiceEditGraceDays";
             ItemForInvoiceEditGraceDays.Size = new Size(486, 24);
+            ItemForInvoiceEditGraceDays.Text = Resources.Entity_AppSetting_InvoiceEditGraceDays;
             ItemForInvoiceEditGraceDays.TextSize = new Size(178, 13);
             // 
             // ItemForPaymentEditGraceDays
@@ -376,6 +375,7 @@ namespace Foxoft
             ItemForPaymentEditGraceDays.Location = new Point(0, 216);
             ItemForPaymentEditGraceDays.Name = "ItemForPaymentEditGraceDays";
             ItemForPaymentEditGraceDays.Size = new Size(486, 24);
+            ItemForPaymentEditGraceDays.Text = Resources.Entity_AppSetting_PaymentEditGraceDays;
             ItemForPaymentEditGraceDays.TextSize = new Size(178, 13);
             // 
             // emptySpaceItem1
@@ -408,6 +408,7 @@ namespace Foxoft
             ItemForGridViewLayout.Location = new Point(0, 240);
             ItemForGridViewLayout.Name = "ItemForGridViewLayout";
             ItemForGridViewLayout.Size = new Size(486, 24);
+            ItemForGridViewLayout.Text = Resources.Entity_AppSetting_GridViewLayout;
             ItemForGridViewLayout.TextSize = new Size(178, 13);
             // 
             // btn_ClearMemory
@@ -417,7 +418,8 @@ namespace Foxoft
             btn_ClearMemory.Size = new Size(482, 22);
             btn_ClearMemory.StyleController = dataLayoutControl1;
             btn_ClearMemory.TabIndex = 14;
-            btn_ClearMemory.Text = "RAM-ı təmizlə";
+            btn_ClearMemory.Text = Resources.Entity_AppSetting_ClearMemory;
+            btn_ClearMemory.Click += Btn_ClearMemory_Click;
             // 
             // LCI_ClearMemory
             // 
@@ -426,7 +428,6 @@ namespace Foxoft
             LCI_ClearMemory.Name = "LCI_ClearMemory";
             LCI_ClearMemory.Size = new Size(486, 26);
             LCI_ClearMemory.TextVisible = false;
-            LCI_ClearMemory.Click += Btn_ClearMemory_Click;
             // 
             // FormAppSetting
             // 
@@ -435,7 +436,7 @@ namespace Foxoft
             ClientSize = new Size(506, 403);
             Controls.Add(dataLayoutControl1);
             Name = "FormAppSetting";
-            Text = "FormAppSetting";
+            Text = Resources.Form_AppSetting_Caption;
             Load += FormAppSetting_Load;
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
@@ -449,8 +450,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)WhatsappChromeProfileNameTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)UsePriceListCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)AutoSaveCheckEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)InvoiceEditGraceDaysSpinEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)PaymentEditGraceDaysSpinEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)InvoiceEditGraceDaysSpinEdit).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PaymentEditGraceDaysSpinEdit).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGetPrint).EndInit();
@@ -475,36 +476,21 @@ namespace Foxoft
 
         private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+        private DevExpress.XtraEditors.SimpleButton btn_Save;
+        private DevExpress.XtraEditors.SimpleButton btn_OptimizeDatabaseIndexes;
         private DevExpress.XtraEditors.TextEdit GridViewLayoutTextEdit;
         private BindingSource appSettingBindingSource;
         private DevExpress.XtraEditors.CheckEdit AutoPrintCheckEdit;
         private DevExpress.XtraEditors.TextEdit PrinterNameTextEdit;
-        private DevExpress.XtraEditors.TextEdit PrintDesignPathTextEdit;
-        private DevExpress.XtraEditors.TextEdit LocalCurrencyCodeTextEdit;
-        private DevExpress.XtraEditors.TextEdit TwilioTokenTextEdit;
-        private DevExpress.XtraEditors.TextEdit LicenseTextEdit;
-        private DevExpress.XtraEditors.TextEdit DueDateTextEdit;
-        private DevExpress.XtraEditors.CheckEdit UsePriceListCheckEdit;
-        private DevExpress.XtraEditors.CheckEdit AutoSaveCheckEdit;
-        private DevExpress.XtraEditors.TextEdit InvoiceEditGraceDaysTextEdit;
-        private DevExpress.XtraEditors.TextEdit PaymentEditGraceDaysTextEdit;
-        private DevExpress.XtraEditors.TextEdit DcCurrencyTextEdit;
-        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-        private DevExpress.XtraEditors.SimpleButton btn_Save;
-        private DevExpress.XtraEditors.LookUpEdit LocalCurrencyCodeLookUpEdit;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraEditors.SimpleButton btn_OptimizeDatabaseIndexes;
-        private DevExpress.XtraEditors.ButtonEdit PrintDesignPathButtonEdit;
-        private DevExpress.XtraEditors.SpinEdit InvoiceEditGraceDaysSpinEdit;
-        private DevExpress.XtraEditors.SpinEdit PaymentEditGraceDaysSpinEdit;
         private DevExpress.XtraEditors.SpinEdit PrintCountSpinEdit;
+        private DevExpress.XtraEditors.ButtonEdit PrintDesignPathButtonEdit;
         private DevExpress.XtraEditors.ButtonEdit LocalCurrencyCodeButtonEdit;
         private DevExpress.XtraEditors.TextEdit WhatsappChromeProfileNameTextEdit;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForGridViewLayout;
+        private DevExpress.XtraEditors.CheckEdit UsePriceListCheckEdit;
+        private DevExpress.XtraEditors.CheckEdit AutoSaveCheckEdit;
+        private DevExpress.XtraEditors.SpinEdit InvoiceEditGraceDaysSpinEdit;
+        private DevExpress.XtraEditors.SpinEdit PaymentEditGraceDaysSpinEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForGetPrint;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPrinterName;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPrintCount;
@@ -515,6 +501,10 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForAutoSave;
         private DevExpress.XtraLayout.LayoutControlItem ItemForInvoiceEditGraceDays;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPaymentEditGraceDays;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForGridViewLayout;
         private DevExpress.XtraEditors.SimpleButton btn_ClearMemory;
         private DevExpress.XtraLayout.LayoutControlItem LCI_ClearMemory;
     }

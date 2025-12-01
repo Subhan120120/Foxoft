@@ -113,7 +113,8 @@ namespace Foxoft
             trInvoiceHeadersBindingSource.DataSource = headerList;
 
             string storeCode = Authorization.StoreCode;
-            this.gV_InvoiceHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+            gV_InvoiceHeaderList.ActiveFilterString =
+                $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{storeCode}'";
 
             gV_InvoiceHeaderList.BestFitColumns();
         }
@@ -147,7 +148,7 @@ namespace Foxoft
                     if (window.Tag == docNum)
                     {
                         isOpen = true;
-                        XtraMessageBox.Show("Qaimə açıqdır.");
+                        XtraMessageBox.Show(Resources.Form_InvoiceHeaderList_InvoiceIsOpen);
                     }
                 }
             }

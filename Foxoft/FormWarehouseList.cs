@@ -68,22 +68,6 @@ namespace Foxoft
 
         private void gV_WarehouseList_DoubleClick(object sender, EventArgs e)
         {
-            #region comment
-            //DXMouseEventArgs ea = e as DXMouseEventArgs;
-            //GridView view = sender as GridView;
-            //GridHitInfo info = view.CalcHitInfo(ea.Location);
-            //if (info.InRow || info.InRowCell)
-            //{
-            //    //info.RowHandle
-            //    string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-            //    dcCurrAcc = new DcCurrAcc();
-            //    string CurrAccCode = view.GetRowCellValue(view.FocusedRowHandle, view.Columns["CurrAccCode"]).ToString();
-            //    dcCurrAcc = efMethods.SelectCurrAcc(CurrAccCode);
-
-            //    DialogResult = DialogResult.OK;
-            //} 
-            #endregion
-
             GridView view = sender as GridView;
             if (dcWarehouse is not null)
                 DialogResult = DialogResult.OK;
@@ -101,8 +85,6 @@ namespace Foxoft
 
         private void bBI_WarehouseEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //ApplySelectedCurrAcc();
-
             if (dcWarehouse is not null)
             {
                 FormCurrAcc form = new(dcWarehouse.WarehouseCode);
@@ -121,7 +103,8 @@ namespace Foxoft
         private void gC_WarehouseList_ProcessGridKey(object sender, KeyEventArgs e)
         {
             ColumnView view = (sender as GridControl).FocusedView as ColumnView;
-            if (view == null) return;
+            if (view == null)
+                return;
 
             if (dcWarehouse is not null)
             {
@@ -132,16 +115,13 @@ namespace Foxoft
 
                 if (e.KeyCode == Keys.C && e.Control)
                 {
-                    //if (view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn) != null && view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString() != String.Empty)
-                    //   Clipboard.SetText(view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString());
-                    //else
-                    //   MessageBox.Show("The value in the selected cell is null or empty!");
-
-                    string cellValue = gV_WarehouseList.GetFocusedValue().ToString();
-                    Clipboard.SetText(cellValue);
-                    e.Handled = true;
+                    string cellValue = gV_WarehouseList.GetFocusedValue()?.ToString();
+                    if (!string.IsNullOrEmpty(cellValue))
+                    {
+                        Clipboard.SetText(cellValue);
+                        e.Handled = true;
+                    }
                 }
-
             }
         }
 
@@ -158,8 +138,7 @@ namespace Foxoft
                     gV.ShowFindPanel();
                 gV.ShowFindPanel();
 
-                gV.OptionsFind.FindFilterColumns = "CurrAccDesc";
-                gV.OptionsFind.FindNullPrompt = "Axtarın...";
+                gV.OptionsFind.FindNullPrompt = Resources.Common_Search;
             }
             isFirstPaint = false;
         }
@@ -186,17 +165,26 @@ namespace Foxoft
 
         private void bBI_WarehouseDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (dcWarehouse is null)
+                return;
+
             if (efMethods.CurrAccExist(dcWarehouse.WarehouseCode))
             {
-                if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcWarehouse.WarehouseDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (XtraMessageBox.Show(
+                        Resources.Message_DeleteConfirm + Environment.NewLine + dcWarehouse.WarehouseDesc,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     efMethods.DeleteEntity(dcWarehouse);
-
                     LoadWarehouses();
                 }
             }
             else
-                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_WarehouseList_NoWarehouseToDelete,
+                    Resources.Common_Attention);
+            }
         }
 
         private void bBI_WarehouseRefresh_ItemClick(object sender, ItemClickEventArgs e)

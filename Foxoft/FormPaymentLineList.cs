@@ -45,12 +45,13 @@ namespace Foxoft
 
             gV_PaymentLineList.OptionsFind.FindMode = FindMode.Always;
 
-            //this.gV_PaymentLineList.ActiveFilterString = $"[DocumentDate] = #{DateTime.Now.ToString("yyyy-MM-dd")}#";
+            //this.gV_PaymentLineList.ActiveFilterString = $"[{nameof(TrPaymentHeader.DocumentDate)}] = #{DateTime.Now:yyyy-MM-dd}#";
 
             LoadPaymentLines();
 
             string storeCode = Authorization.StoreCode;
-            gV_PaymentLineList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+            gV_PaymentLineList.ActiveFilterString =
+                $"[{nameof(TrPaymentHeader.StoreCode)}] = '{storeCode}'";
         }
 
         private void LoadPaymentLines()
@@ -59,42 +60,42 @@ namespace Foxoft
 
             IQueryable<TrPaymentLine> trPaymentLines = dbContext.TrPaymentLines;
             CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-            IQueryable<TrPaymentLine> filteredData = trPaymentLines.AppendWhere(new CriteriaToExpressionConverter(), gV_PaymentLineList.ActiveFilterCriteria) as IQueryable<TrPaymentLine>;
-
+            IQueryable<TrPaymentLine> filteredData =
+                trPaymentLines.AppendWhere(new CriteriaToExpressionConverter(), gV_PaymentLineList.ActiveFilterCriteria)
+                as IQueryable<TrPaymentLine>;
 
             List<TrPaymentLine> LineList = filteredData
-                                                        .Include(x => x.TrPaymentHeader).ThenInclude(x => x.TrInvoiceHeader)
-                                                        .Include(x => x.TrPaymentHeader).ThenInclude(x => x.DcCurrAcc)
-                                                        .OrderByDescending(x => x.TrPaymentHeader.DocumentDate).ThenByDescending(x => x.CreatedDate)
-                                                        .Select(x => new TrPaymentLine
-                                                        {
-                                                            CurrAccCode = x.TrPaymentHeader.CurrAccCode,
-                                                            CurrAccDesc = x.TrPaymentHeader.DcCurrAcc.CurrAccDesc,
-                                                            DocumentNumber = x.TrPaymentHeader.DocumentNumber,
-                                                            DocumentDate = x.TrPaymentHeader.DocumentDate,
-                                                            InvoiceNumber = x.TrPaymentHeader.TrInvoiceHeader.DocumentNumber,
-                                                            PaymentLineId = x.PaymentLineId,
-                                                            PaymentHeaderId = x.PaymentHeaderId,
-                                                            InvoiceHeaderId = x.TrPaymentHeader.InvoiceHeaderId,
-                                                            PaymentTypeCode = x.PaymentTypeCode,
-                                                            Payment = x.Payment,
-                                                            LineDescription = x.LineDescription,
-                                                            ExchangeRate = x.ExchangeRate,
-                                                            CreatedUserName = x.CreatedUserName,
-                                                            CreatedDate = x.CreatedDate,
-                                                            LastUpdatedUserName = x.LastUpdatedUserName,
-                                                            LastUpdatedDate = x.LastUpdatedDate,
-                                                            CurrencyCode = x.CurrencyCode,
-                                                            PaymentLoc = x.PaymentLoc,
-                                                            CashRegisterCode = x.CashRegisterCode,
-                                                        }).ToList();
+                .Include(x => x.TrPaymentHeader).ThenInclude(x => x.TrInvoiceHeader)
+                .Include(x => x.TrPaymentHeader).ThenInclude(x => x.DcCurrAcc)
+                .OrderByDescending(x => x.TrPaymentHeader.DocumentDate)
+                .ThenByDescending(x => x.CreatedDate)
+                .Select(x => new TrPaymentLine
+                {
+                    CurrAccCode = x.TrPaymentHeader.CurrAccCode,
+                    CurrAccDesc = x.TrPaymentHeader.DcCurrAcc.CurrAccDesc,
+                    DocumentNumber = x.TrPaymentHeader.DocumentNumber,
+                    DocumentDate = x.TrPaymentHeader.DocumentDate,
+                    InvoiceNumber = x.TrPaymentHeader.TrInvoiceHeader.DocumentNumber,
+                    PaymentLineId = x.PaymentLineId,
+                    PaymentHeaderId = x.PaymentHeaderId,
+                    InvoiceHeaderId = x.TrPaymentHeader.InvoiceHeaderId,
+                    PaymentTypeCode = x.PaymentTypeCode,
+                    Payment = x.Payment,
+                    LineDescription = x.LineDescription,
+                    ExchangeRate = x.ExchangeRate,
+                    CreatedUserName = x.CreatedUserName,
+                    CreatedDate = x.CreatedDate,
+                    LastUpdatedUserName = x.LastUpdatedUserName,
+                    LastUpdatedDate = x.LastUpdatedDate,
+                    CurrencyCode = x.CurrencyCode,
+                    PaymentLoc = x.PaymentLoc,
+                    CashRegisterCode = x.CashRegisterCode,
+                }).ToList();
 
             trPaymentLinesBindingSource.DataSource = LineList;
 
             gV_PaymentLineList.BestFitColumns();
         }
-
-
 
         private void gV_PaymentLineList_DoubleClick(object sender, EventArgs e)
         {
@@ -103,10 +104,7 @@ namespace Foxoft
             GridHitInfo info = view.CalcHitInfo(ea.Location);
             if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
             {
-                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-
                 trPaymentLine = view.GetFocusedRow() as TrPaymentLine;
-
                 DialogResult = DialogResult.OK;
             }
         }
@@ -130,7 +128,7 @@ namespace Foxoft
                 if (e.KeyCode == Keys.C && e.Control)
                 {
                     object cellValue = view.GetFocusedValue();
-                    Clipboard.SetText(cellValue.ToString());
+                    Clipboard.SetText(cellValue?.ToString() ?? string.Empty);
                 }
             }
         }
@@ -163,12 +161,12 @@ namespace Foxoft
 
         private void repoHLE_InvoiceNumber_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            MessageBox.Show("repoHLE_InvoiceNumber_ButtonClick klik");
+            MessageBox.Show(Resources.Form_PaymentLineList_Message_InvoiceNumberButtonClick);
         }
 
         private void repoHLE_InvoiceNumber_OpenLink(object sender, OpenLinkEventArgs e)
         {
-            object obj = gV_PaymentLineList.GetFocusedRowCellValue(colInvoiceHeaderId); //deyisdir
+            object obj = gV_PaymentLineList.GetFocusedRowCellValue(colInvoiceHeaderId);
 
             if (obj is not null)
             {
@@ -188,8 +186,7 @@ namespace Foxoft
 
         private void repoHLE_DocNum_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-
-            MessageBox.Show("repoHLE_DocNum_ButtonClick klik");
+            MessageBox.Show(Resources.Form_PaymentLineList_Message_DocNumButtonClick);
         }
 
         private void repoHLE_DocNum_OpenLink(object sender, OpenLinkEventArgs e)
@@ -206,7 +203,6 @@ namespace Foxoft
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                 formPayment.MdiParent = formERP;
                 formPayment.WindowState = FormWindowState.Maximized;
-                //formaPayment.Show();
                 if (formERP.parentRibbonControl.MergedPages.Count > 0)
                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
             }
@@ -225,14 +221,13 @@ namespace Foxoft
                         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
                         if (!currAccHasClaims)
                         {
-                            MessageBox.Show("Yetkiniz yoxdur! ");
+                            MessageBox.Show(Resources.Common_AccessDenied);
                             return;
                         }
                         else
                         {
                             if (formPayment.ShowDialog(this) == DialogResult.OK)
                             {
-                                //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
                                 LoadPaymentLines();
                             }
                         }
@@ -253,7 +248,6 @@ namespace Foxoft
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {
-                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
                             LoadPaymentLines();
                         }
                     }
@@ -268,34 +262,9 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CustomExtensions.ExportToExcel(this, $@"PaymentLineList.xlsx", gC_PaymentLineList);
-            //XtraSaveFileDialog sFD = new();
-            //sFD.Filter = "Excel Faylı|*.xlsx";
-            //sFD.Title = "Excel Faylı Yadda Saxla";
-            //sFD.FileName = $@"PaymentLineList.xlsx";
-            //sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //sFD.DefaultExt = "*.xlsx";
-
-            //var fileName = Invoke((Func<string>)(() =>
-            //{
-            //    if (sFD.ShowDialog() == DialogResult.OK)
-            //    {
-            //        gV_PaymentLineList.ExportToXlsx(sFD.FileName);
-
-            //        if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            //        {
-            //            Process p = new Process();
-            //            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-            //            p.Start();
-
-            //        }
-
-            //        return "Ok";
-            //    }
-            //    else
-            //        return "Fail";
-            //}));
+            CustomExtensions.ExportToExcel(this, @"PaymentLineList.xlsx", gC_PaymentLineList);
         }
+
         private void gV_PaymentLineList_ColumnFilterChanged(object sender, EventArgs e)
         {
             GridView view = sender as GridView;
@@ -312,23 +281,7 @@ namespace Foxoft
 
         private void test_ItemClick()
         {
-            //try
-            //{
-            //   string accountSid = "AC3975230c878fd8f23210d643a30a94b6";
-            //   string authToken = "a17365de8e7d28057adef930da03ee71";
-
-            //   TwilioClient.Init(accountSid, authToken);
-            //   var mediaUrl = new[] {
-            //           new Uri(@"https://www.gardendesign.com/pictures/images/675x529Max/site_3/helianthus-yellow-flower-pixabay_11863.jpg")
-            //       }.ToList();
-            //   var message = MessageResource.Create(mediaUrl: mediaUrl, from: new PhoneNumber("whatsapp: +18507578553"), body: "Profile", to: new PhoneNumber("whatsapp:+994519678909"));
-            //   MessageBox.Show(message.Sid);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //   MessageBox.Show(ex.ToString());
-            //}
+            // test method body commented out
         }
 
         private void gV_PaymentLineList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)

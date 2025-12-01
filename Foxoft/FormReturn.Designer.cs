@@ -1,4 +1,6 @@
-﻿namespace Foxoft
+﻿using Foxoft.Properties;
+
+namespace Foxoft
 {
     partial class FormReturn
     {
@@ -36,7 +38,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Name = "FormReturn";
-            Text = "Geri Qaytarma";
+            Text = Resources.Form_Return_Caption;
             ResumeLayout(false);
         }
 

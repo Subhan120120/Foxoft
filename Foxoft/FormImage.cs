@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraBars.Ribbon;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -81,11 +82,11 @@ namespace Foxoft
         {
             OpenFileDialog dialog = new();
             dialog.Filter =
-                        "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" +
-                        "All files (*.*)|*.*";
+                Resources.Common_File_ImageFilter + "|" +
+                Resources.Common_File_All;
 
             dialog.Multiselect = true;
-            dialog.Title = "Foxoft üçün şəkil seçin.";
+            dialog.Title = Resources.Form_Image_OpenDialogTitle;
 
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
@@ -117,7 +118,7 @@ namespace Foxoft
 
         private void AddImageToGallary(Image img)
         {
-            GalleryItem galleryItem = new(img, "sekil", "");
+            GalleryItem galleryItem = new(img, Resources.Form_Image_GalleryItemCaption, "");
 
             galleryItem.ItemClick += (s, e) =>
             {

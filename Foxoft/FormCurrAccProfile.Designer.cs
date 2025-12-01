@@ -1,4 +1,5 @@
 ﻿using Foxoft.Models;
+using Foxoft.Properties; // Resources
 
 namespace Foxoft
 {
@@ -126,7 +127,7 @@ namespace Foxoft
             // 
             // BBI_Add
             // 
-            BBI_Add.Caption = "Əlavə Et";
+            BBI_Add.Caption = Resources.Common_New; // Əlavə Et
             BBI_Add.Id = 1;
             BBI_Add.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Add.ImageOptions.SvgImage");
             BBI_Add.Name = "BBI_Add";
@@ -134,7 +135,7 @@ namespace Foxoft
             // 
             // BBI_Delete
             // 
-            BBI_Delete.Caption = "Sil";
+            BBI_Delete.Caption = Resources.Common_Delete; // Sil
             BBI_Delete.Id = 3;
             BBI_Delete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Delete.ImageOptions.SvgImage");
             BBI_Delete.Name = "BBI_Delete";
@@ -142,7 +143,7 @@ namespace Foxoft
             // 
             // BBI_EditCurrAccRole
             // 
-            BBI_EditCurrAccRole.Caption = "Dəyiş";
+            BBI_EditCurrAccRole.Caption = Resources.Common_Edit; // Dəyiş
             BBI_EditCurrAccRole.Id = 4;
             BBI_EditCurrAccRole.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_EditCurrAccRole.ImageOptions.SvgImage");
             BBI_EditCurrAccRole.Name = "BBI_EditCurrAccRole";
@@ -152,7 +153,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Cari Hesab Yetkisi";
+            ribbonPage1.Text = Resources.Form_CurrAccProfile_RibbonPage_Main; // Cari Hesab Yetkisi
             // 
             // ribbonPageGroup1
             // 
@@ -160,12 +161,12 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(BBI_EditCurrAccRole);
             ribbonPageGroup1.ItemLinks.Add(BBI_Delete);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Cari Hesab Rolu";
+            ribbonPageGroup1.Text = Resources.Form_CurrAccProfile_RibbonGroup_CurrAccRole; // Cari Hesab Rolu
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Rol Yetkisi";
+            ribbonPageGroup2.Text = Resources.Form_CurrAccProfile_RibbonGroup_RoleClaim; // Rol Yetkisi
             // 
             // ribbonStatusBar
             // 
@@ -203,7 +204,7 @@ namespace Foxoft
             layoutControl1.Text = "layoutControl1";
             // 
             // btn_Save
-            // 
+            //
             btn_Save.Location = new Point(457, 84);
             btn_Save.Name = "btn_Save";
             btn_Save.Size = new Size(160, 20);
@@ -302,12 +303,11 @@ namespace Foxoft
             Root.TextVisible = false;
             // 
             // layoutControlItem1
-            // 
             layoutControlItem1.Control = btnEdit_CurrAccCode;
             layoutControlItem1.Location = new Point(0, 0);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(609, 24);
-            layoutControlItem1.Text = "Cari Hesab";
+            layoutControlItem1.Text = Resources.Entity_CurrAcc; // Cari Hesab
             layoutControlItem1.TextSize = new Size(72, 13);
             // 
             // layoutControlItem2
@@ -324,7 +324,7 @@ namespace Foxoft
             LCI_NewPassword.Location = new Point(0, 24);
             LCI_NewPassword.Name = "LCI_NewPassword";
             LCI_NewPassword.Size = new Size(609, 24);
-            LCI_NewPassword.Text = "Yeni Şifrə";
+            LCI_NewPassword.Text = Resources.Common_NewPassword;
             LCI_NewPassword.TextSize = new Size(72, 13);
             // 
             // LCI_ConfirmPassword
@@ -333,7 +333,7 @@ namespace Foxoft
             LCI_ConfirmPassword.Location = new Point(0, 48);
             LCI_ConfirmPassword.Name = "LCI_ConfirmPassword";
             LCI_ConfirmPassword.Size = new Size(609, 24);
-            LCI_ConfirmPassword.Text = "Şifrəni Təsdiqlə";
+            LCI_ConfirmPassword.Text = Resources.Common_ConfirmPassword;
             LCI_ConfirmPassword.TextSize = new Size(72, 13);
             // 
             // layoutControlItem3
@@ -381,7 +381,7 @@ namespace Foxoft
             btn_ClaimReportSave.Size = new Size(657, 22);
             btn_ClaimReportSave.StyleController = layoutControl2;
             btn_ClaimReportSave.TabIndex = 13;
-            btn_ClaimReportSave.Text = "Yadda saxla";
+            btn_ClaimReportSave.Text = Resources.Common_Save; // Yadda saxla
             btn_ClaimReportSave.Click += btn_ClaimReportSave_Click;
             // 
             // treeList1
@@ -399,7 +399,7 @@ namespace Foxoft
             // 
             // coltreeListColumn0
             // 
-            coltreeListColumn0.Caption = "Select";
+            coltreeListColumn0.Caption = Resources.Common_Select;
             coltreeListColumn0.ColumnEdit = repoCheckEdit;
             coltreeListColumn0.FieldName = "IsSelected";
             coltreeListColumn0.Name = "coltreeListColumn0";
@@ -431,7 +431,7 @@ namespace Foxoft
             btn_ClaimCategoryList.Size = new Size(657, 22);
             btn_ClaimCategoryList.StyleController = layoutControl2;
             btn_ClaimCategoryList.TabIndex = 10;
-            btn_ClaimCategoryList.Text = "Yetkiler";
+            btn_ClaimCategoryList.Text = Resources.Form_CurrAccProfile_Button_Permissions; // Yetkilər
             btn_ClaimCategoryList.Click += Btn_ClaimCategoryList_Click;
             // 
             // btnEdit_RoleCode
@@ -477,7 +477,7 @@ namespace Foxoft
             LCI_ClaimReport.Location = new Point(0, 50);
             LCI_ClaimReport.Name = "LCI_ClaimReport";
             LCI_ClaimReport.Size = new Size(661, 24);
-            LCI_ClaimReport.Text = "Hesabat Yetkisi";
+            LCI_ClaimReport.Text = Resources.Form_CurrAccProfile_Label_ClaimReport;
             LCI_ClaimReport.TextSize = new Size(73, 13);
             // 
             // layoutControlItem5
@@ -546,10 +546,11 @@ namespace Foxoft
             Controls.Add(layoutControl1);
             Controls.Add(ribbonStatusBar);
             Controls.Add(ribbon);
+            // Form
             Name = "FormCurrAccProfile";
             Ribbon = ribbon;
             StatusBar = ribbonStatusBar;
-            Text = "FormCurrAccProfile";
+            Text = Resources.Form_CurrAccProfile_Caption;
             ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();

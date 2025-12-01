@@ -55,8 +55,13 @@ namespace Foxoft
             filterControl_Inner.SourceControl = GetColumnsFromDatabase(dcReport.DcReportVariables); //For Column Types
             filterControl_Inner.FilterCriteria = GetFiltersFromDatabase(dcReport.DcReportVariables);
 
-            LUE_ReportCustomization.Properties.DataSource = efMethods.SelectReportCustomizationByCurrAcc(dcReport.ReportId ,Authorization.CurrAccCode);
-            LUE_ReportCustomization.EditValue = Settings.Default.TrReportCustomizations.FirstOrDefault(x => x.ReportId == dcReport.ReportId && x.CurrAccCode == Authorization.CurrAccCode)?.ReportCustomizationId;
+            LUE_ReportCustomization.Properties.DataSource =
+                efMethods.SelectReportCustomizationByCurrAcc(dcReport.ReportId, Authorization.CurrAccCode);
+            LUE_ReportCustomization.EditValue =
+                Settings.Default.TrReportCustomizations
+                         .FirstOrDefault(x => x.ReportId == dcReport.ReportId &&
+                                              x.CurrAccCode == Authorization.CurrAccCode)
+                         ?.ReportCustomizationId;
         }
 
         private DataTable opToDt(GroupOperator groupOperand)
@@ -110,15 +115,19 @@ namespace Foxoft
 
         private void btn_ShowReport_Click(object sender, EventArgs e)
         {
-            //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
-
             string filter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
 
             switch (dcReport.ReportTypeId)
             {
-                case 1: OpenGridReport(dcReport.ReportQuery, filter); break;
-                case 2: OpenDetailReport(dcReport.ReportQuery, filter); break;
-                default: OpenGridReport(dcReport.ReportQuery, filter); break;
+                case 1:
+                    OpenGridReport(dcReport.ReportQuery, filter);
+                    break;
+                case 2:
+                    OpenDetailReport(dcReport.ReportQuery, filter);
+                    break;
+                default:
+                    OpenGridReport(dcReport.ReportQuery, filter);
+                    break;
             }
 
             SaveOuterFilterToDB();
@@ -144,7 +153,9 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show("Inter Error Code: 2565635 \n" + ex.ToString());
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_ReportFilter_Error_OpenGridReport, ex),
+                    Resources.Common_ErrorTitle);
             }
         }
 
@@ -164,7 +175,7 @@ namespace Foxoft
         {
             BarButtonItem item = new();
             item.ItemClick += item_ItemClick;
-            item.Caption = "Get Help";
+            item.Caption = "Get Help"; // istəyə görə sonradan resx-ə də çıxarıla bilər
             return item;
         }
 
@@ -241,7 +252,10 @@ namespace Foxoft
 
         private void bBI_ReportDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (MessageBox.Show("Silmək İstəyirsiniz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show(
+                    Resources.Common_DeleteConfirm,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 efMethods.DeleteEntityById<DcReport>(dcReport.ReportId);
             }
@@ -270,9 +284,8 @@ namespace Foxoft
         private void ExcelButtonFilterControl_ExcelButtonClick(object sender, ExcelButtonEventArgs e)
         {
             OpenFileDialog dialog = new();
-            dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|" +
-                            "All files (*.*)|*.*";
-            dialog.Title = "Yalnız ilk sütünda olan məlumatlar daxil edilir.";
+            dialog.Filter = Resources.Form_ReportFilter_ExcelDialogFilter;
+            dialog.Title = Resources.Form_ReportFilter_ExcelDialogTitle;
 
             DialogResult dr = dialog.ShowDialog();
             if (dr == DialogResult.OK)
@@ -281,7 +294,6 @@ namespace Foxoft
                 excelDataSource.FileName = dialog.FileName;
 
                 ExcelWorksheetSettings excelWorksheetSettings = new(0, "A1:A10000");
-                //excelWorksheetSettings.WorksheetName = "10QK";
 
                 ExcelSourceOptions excelOptions = new();
                 excelOptions.ImportSettings = excelWorksheetSettings;
@@ -292,8 +304,7 @@ namespace Foxoft
 
                 excelDataSource.Fill();
 
-                DataTable dt = new();
-                dt = ToDataTableFromExcelDataSource(excelDataSource);
+                DataTable dt = ToDataTableFromExcelDataSource(excelDataSource);
 
                 ClauseNode clauseNode = (ClauseNode)e.LabelInfo.Owner;
 
@@ -333,7 +344,9 @@ namespace Foxoft
 
         private void BBI_ReportCustomAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
-            String name = Interaction.InputBox("Dizayn Adını daxil edin", "Diqqət");
+            string name = Interaction.InputBox(
+                Resources.Form_ReportFilter_Input_DesignName,
+                Resources.Common_Attention);
 
             string filterCriteria = filterControl_Outer?.FilterCriteria?.ToString();
 
@@ -346,7 +359,8 @@ namespace Foxoft
                 ReportId = dcReport.ReportId
             });
 
-            List<TrReportCustomization> dataSource = (List<TrReportCustomization>)LUE_ReportCustomization.Properties.DataSource;
+            List<TrReportCustomization> dataSource =
+                (List<TrReportCustomization>)LUE_ReportCustomization.Properties.DataSource;
 
             dataSource.Add(entity);
 
@@ -356,16 +370,17 @@ namespace Foxoft
 
         private void BBI_ReportCustomDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
-            TrReportCustomization selectedEntity = LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
+            TrReportCustomization selectedEntity =
+                LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
 
             if (selectedEntity != null)
             {
-                var dataSource = LUE_ReportCustomization.Properties.DataSource as List<TrReportCustomization>;
+                var dataSource =
+                    LUE_ReportCustomization.Properties.DataSource as List<TrReportCustomization>;
 
                 if (dataSource != null)
                 {
                     dataSource.Remove(selectedEntity);
-
                     LUE_ReportCustomization.Refresh();
                 }
 
@@ -373,13 +388,21 @@ namespace Foxoft
             }
             else
             {
-                MessageBox.Show("Please select a customization to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    Resources.Form_ReportFilter_Message_NoCustomizationSelected,
+                    Resources.Form_ReportFilter_Message_NoCustomizationSelectedTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 
         private void BBI_ReportCustomSave_ItemClick(object sender, ItemClickEventArgs e)
         {
-            TrReportCustomization selectedEntity = LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
+            TrReportCustomization selectedEntity =
+                LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
+
+            if (selectedEntity == null)
+                return;
 
             selectedEntity.ReportFilter = filterControl_Outer?.FilterCriteria?.ToString();
             selectedEntity.ReportDesignFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString();

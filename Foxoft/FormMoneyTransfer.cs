@@ -73,8 +73,8 @@ namespace Foxoft
         {
             TrPaymentHeader paymentHeader = new();
             paymentHeader.PaymentHeaderId = paymentHeaderId;
-            string NewDocNum = efMethods.GetNextDocNum(true, "CT", "DocumentNumber", "TrPaymentHeaders", 6);
-            paymentHeader.DocumentNumber = NewDocNum;
+            string newDocNum = efMethods.GetNextDocNum(true, "CT", nameof(TrPaymentHeader.DocumentNumber), "TrPaymentHeaders", 6);
+            paymentHeader.DocumentNumber = newDocNum;
             paymentHeader.DocumentDate = DateTime.Now.Date;
             paymentHeader.OperationDate = DateTime.Now.Date;
             paymentHeader.ProcessCode = "CT";
@@ -115,7 +115,6 @@ namespace Foxoft
             {
                 dbContext.SaveChanges(false);
 
-                //List<EntityEntry> entityEntry = new();
                 IEnumerable<EntityEntry> entityEntry = dbContext.ChangeTracker.Entries();
 
                 foreach (var entry in entityEntry)
@@ -177,7 +176,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
+                MessageBox.Show(string.Format(Resources.Form_MoneyTransfer_SaveError, ex));
             }
         }
 
@@ -252,7 +251,7 @@ namespace Foxoft
         {
             if (efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
             {
-                if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (MessageBox.Show(Resources.Common_DeleteConfirm, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     efMethods.DeleteMoneyTransfer(trPaymentHeader.PaymentHeaderId);
 
@@ -260,7 +259,7 @@ namespace Foxoft
                 }
             }
             else
-                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+                XtraMessageBox.Show(Resources.Form_MoneyTransfer_NoPaymentToDelete);
         }
 
         private DcCurrAcc SelectCurrAcc()
@@ -310,7 +309,7 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.Delete)
             {
-                if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                if (MessageBox.Show(Resources.Common_DeleteConfirm, Resources.Common_Attention, MessageBoxButtons.YesNo) != DialogResult.Yes)
                     return;
 
                 gV.DeleteSelectedRows();
@@ -336,8 +335,8 @@ namespace Foxoft
             decimal summaryValue = CalcSummaryValue();
             decimal balanceAfter = BalanceBefore + summaryValue;
 
-            lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + balanceAfter.ToString();
-            lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + BalanceBefore.ToString();
+            lbl_CurrAccBalansAfter.Text = Resources.Form_MoneyTransfer_Label_CurrAccBalanceAfter + balanceAfter.ToString();
+            lbl_CurrAccBalansBefore.Text = Resources.Form_MoneyTransfer_Label_CurrAccBalanceBefore + BalanceBefore.ToString();
         }
 
         private decimal CalcSummmaryValue()
@@ -416,10 +415,10 @@ namespace Foxoft
                     sendWhatsApp(phoneNum, copyText);
                 }
                 else
-                    MessageBox.Show("Telefon nömrəsi qeyd olunmayıb.");
+                    MessageBox.Show(Resources.Form_MoneyTransfer_PhoneNotDefined);
             }
             else
-                MessageBox.Show("Cari Hesab qeyd olunmayıb.");
+                MessageBox.Show(Resources.Form_MoneyTransfer_CurrAccNotDefined);
         }
 
         private string PaymentText(string newLine)
@@ -431,7 +430,7 @@ namespace Foxoft
 
                 decimal pay = trPaymentLine.Payment;
 
-                string txtPay = pay > 0 ? "Ödəniş alındı: " : "Ödəniş verildi: ";
+                string txtPay = pay > 0 ? Resources.Form_MoneyTransfer_PaymentReceived : Resources.Form_MoneyTransfer_PaymentGiven;
 
                 decimal payment = Math.Abs(Math.Round(pay, 2));
 
@@ -442,7 +441,7 @@ namespace Foxoft
 
             decimal summaryValue = CalcSummaryValue();
             decimal balanceAfter = Math.Round(BalanceBefore - summaryValue, 2);
-            string balanceTxt = "Qalıq: " + balanceAfter.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+            string balanceTxt = Resources.Form_MoneyTransfer_Balance + balanceAfter.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             return paidTxt + balanceTxt;
         }
@@ -468,7 +467,7 @@ namespace Foxoft
 
             if (String.IsNullOrEmpty(number))
             {
-                MessageBox.Show("Nömrə qeyd olunmayıb.");
+                MessageBox.Show(Resources.Form_MoneyTransfer_NumberNotDefined);
                 return;
             }
 
@@ -541,7 +540,7 @@ namespace Foxoft
             string updatedUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + lastUpdatedUserName;
             string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
 
-            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void gV_PaymentLine_CellValueChanged(object sender, CellValueChangedEventArgs e)

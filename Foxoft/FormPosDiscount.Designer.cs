@@ -1,4 +1,5 @@
-﻿
+﻿using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormPosDiscount
@@ -207,7 +208,7 @@ namespace Foxoft
             this.btn_Ok.Size = new System.Drawing.Size(74, 54);
             this.btn_Ok.StyleController = this.lC_Root;
             this.btn_Ok.TabIndex = 7;
-            this.btn_Ok.Text = "simpleButtonOk";
+            this.btn_Ok.Text = Resources.Common_Ok;
             this.btn_Ok.Click += new System.EventHandler(this.simpleButtonOk_Click);
             // 
             // btn_Num8
@@ -233,7 +234,7 @@ namespace Foxoft
             this.btn_Cancel.Size = new System.Drawing.Size(76, 54);
             this.btn_Cancel.StyleController = this.lC_Root;
             this.btn_Cancel.TabIndex = 9;
-            this.btn_Cancel.Text = "simpleButtonCancel";
+            this.btn_Cancel.Text = Resources.Common_Cancel;
             this.btn_Cancel.Click += new System.EventHandler(this.simpleButtonCancel_Click);
             // 
             // btn_Num9
@@ -488,7 +489,7 @@ namespace Foxoft
             this.lCI_TxtBxPercent.Name = "layoutControlItemTxtBxPercent";
             this.lCI_TxtBxPercent.OptionsTableLayoutItem.ColumnSpan = 4;
             this.lCI_TxtBxPercent.Size = new System.Drawing.Size(314, 46);
-            this.lCI_TxtBxPercent.Text = "Faiz";
+            this.lCI_TxtBxPercent.Text = Resources.Form_PosDiscount_Label_DiscountRate;
             this.lCI_TxtBxPercent.TextSize = new System.Drawing.Size(26, 13);
             // 
             // lCI_TxtBxAmount
@@ -500,7 +501,7 @@ namespace Foxoft
             this.lCI_TxtBxAmount.OptionsTableLayoutItem.ColumnSpan = 4;
             this.lCI_TxtBxAmount.OptionsTableLayoutItem.RowIndex = 5;
             this.lCI_TxtBxAmount.Size = new System.Drawing.Size(314, 48);
-            this.lCI_TxtBxAmount.Text = "Tutar";
+            this.lCI_TxtBxAmount.Text = Resources.Form_PosDiscount_Label_NetAmount;
             this.lCI_TxtBxAmount.TextSize = new System.Drawing.Size(26, 13);
             // 
             // lCI_Ok
@@ -720,7 +721,7 @@ namespace Foxoft
             this.Controls.Add(this.lC_Root);
             this.Name = "FormPosDiscount";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Form1";
+            this.Text = Resources.Form_PosDiscount_Caption;
             this.Load += new System.EventHandler(this.FormPosDiscount_Load);
             ((System.ComponentModel.ISupportInitialize)(this.lC_Root)).EndInit();
             this.lC_Root.ResumeLayout(false);

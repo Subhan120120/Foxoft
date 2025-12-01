@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="startup550x363.png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\startup550x363.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Common_QuitProgram" xml:space="preserve">
     <value>Quit Program</value>
   </data>
@@ -473,7 +469,7 @@
     <value>Office</value>
   </data>
   <data name="Entity_CurrAcc_StoreCode" xml:space="preserve">
-    <value>Store Code</value>
+    <value>Store</value>
   </data>
   <data name="Entity_CurrAcc_FirstName" xml:space="preserve">
     <value>First Name</value>
@@ -529,7 +525,7 @@
   <data name="Entity_CurrAcc_BonusCardNum" xml:space="preserve">
     <value>Bonus Card</value>
   </data>
-  <data name="Common_Address" xml:space="preserve">
+  <data name="Entity_CurrAcc_Address" xml:space="preserve">
     <value>Address</value>
   </data>
   <data name="Common_Phone" xml:space="preserve">
@@ -877,9 +873,6 @@
   <data name="Entity_ProductScale_Id" xml:space="preserve">
     <value>Feature Code</value>
   </data>
-  <data name="Entity_ProductScale_Number" xml:space="preserve">
-    <value>Scale Product Number</value>
-  </data>
   <data name="Entity_ProductScale_UseInScale" xml:space="preserve">
     <value>Use in Scale</value>
   </data>
@@ -1223,7 +1216,7 @@
     <value>Payment Header</value>
   </data>
   <data name="Entity_PaymentHeader_InvoiceHeaderId" xml:space="preserve">
-    <value>Invoice Id</value>
+    <value>Invoice Header Id</value>
   </data>
   <data name="Entity_PaymentHeader_DocumentNumber" xml:space="preserve">
     <value>Document Number</value>
@@ -1337,7 +1330,7 @@
     <value>Invoice Number</value>
   </data>
   <data name="Entity_PaymentLine_InvoiceHeaderId" xml:space="preserve">
-    <value>Invoice Id</value>
+    <value>Invoice Header Id</value>
   </data>
   <data name="Entity_PaymentLine_DocumentDate" xml:space="preserve">
     <value>Document Date</value>
@@ -1550,7 +1543,7 @@
     <value>Installment Id</value>
   </data>
   <data name="Entity_Installment_InvoiceHeaderId" xml:space="preserve">
-    <value>Invoice Id</value>
+    <value>Invoice Header Id</value>
   </data>
   <data name="Entity_Installment_Date" xml:space="preserve">
     <value>Installment Date</value>
@@ -1822,10 +1815,1671 @@
   <data name="Common_PriceList" xml:space="preserve">
     <value>PriceList</value>
   </data>
-  <data name="Common_Apply" xml:space="preserve">
-    <value>Apply</value>
-  </data>
   <data name="Common_Site" xml:space="preserve">
     <value>Site</value>
+  </data>
+  <data name="Form_AppSetting_Caption" xml:space="preserve">
+    <value>Application Settings</value>
+  </data>
+  <data name="Entity_AppSetting_ClearMemory" xml:space="preserve">
+    <value>Clear RAM</value>
+  </data>
+  <data name="Entity_AppSetting_OptimizeDatabaseIndexes_Button" xml:space="preserve">
+    <value>Optimize Database Indexes</value>
+  </data>
+  <data name="Common_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Form_CashRegister_Caption" xml:space="preserve">
+    <value>Cash Register</value>
+  </data>
+  <data name="Entity_CurrAcc_CurrAccCode" xml:space="preserve">
+    <value>Current Account Code</value>
+  </data>
+  <data name="Entity_CurrAcc_CurrAccTypeCode" xml:space="preserve">
+    <value>Current Account Type</value>
+  </data>
+  <data name="Entity_CurrAcc_CurrAccDesc" xml:space="preserve">
+    <value>Current Account Name</value>
+  </data>
+  <data name="Entity_CurrAcc_OfficeCode" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="Entity_CurrAcc_IsDisabled" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="Common_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Common_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Common_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Common_ExportToExcel" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="Common_Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Common_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Common_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Common_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Common_SaveLayout" xml:space="preserve">
+    <value>Save Layout</value>
+  </data>
+  <data name="Common_OpenQuestion" xml:space="preserve">
+    <value>Do you want to open?</value>
+  </data>
+  <data name="Common_File_Excel" xml:space="preserve">
+    <value>Excel File</value>
+  </data>
+  <data name="Common_File_SaveExcel" xml:space="preserve">
+    <value>Save Excel File</value>
+  </data>
+  <data name="Common_NotFound" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="Form_CashRegisterList_Caption" xml:space="preserve">
+    <value>Cash Registers</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonPage_Main" xml:space="preserve">
+    <value>Cash Registers</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonGroup_Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonGroup_Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonPage_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonGroup_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Form_CashRegisterList_NotFoundReport" xml:space="preserve">
+    <value>Query 'Report_Embedded_CashRegList' was not found in DcReports table.</value>
+  </data>
+  <data name="Message_DeleteConfirm" xml:space="preserve">
+    <value>Do you want to delete?
+ {0}</value>
+  </data>
+  <data name="Message_NoCurrAccToDelete" xml:space="preserve">
+    <value>No current account to delete</value>
+  </data>
+  <data name="Message_SelectCurrAcc" xml:space="preserve">
+    <value>Select Current Account</value>
+  </data>
+  <data name="Common_Query" xml:space="preserve">
+    <value>Query</value>
+  </data>
+  <data name="Form_Change_Caption" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Form_Change_Label_Cash" xml:space="preserve">
+    <value>Cash Payment</value>
+  </data>
+  <data name="Form_Change_Label_Change" xml:space="preserve">
+    <value>Change Amount</value>
+  </data>
+  <data name="Common_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Common_Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="Form_ClaimCategoryList_Caption" xml:space="preserve">
+    <value>Claim Categories</value>
+  </data>
+  <data name="Form_ClaimCategoryList_Button_Claims" xml:space="preserve">
+    <value>Claims</value>
+  </data>
+  <data name="Form_Common_Exists" xml:space="preserve">
+    <value>Data with this code already exists.</value>
+  </data>
+  <data name="Common_Operations" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="Common_Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="Message_ConfirmDelete" xml:space="preserve">
+    <value>Do you want to delete?
+{0}</value>
+  </data>
+  <data name="Message_NoRowSelected" xml:space="preserve">
+    <value>No row selected.</value>
+  </data>
+  <data name="Form_Connection_Caption" xml:space="preserve">
+    <value>Connection String Builder</value>
+  </data>
+  <data name="Form_Connection_Server" xml:space="preserve">
+    <value>Server:</value>
+  </data>
+  <data name="Form_Connection_Database" xml:space="preserve">
+    <value>Database:</value>
+  </data>
+  <data name="Form_Connection_User" xml:space="preserve">
+    <value>User:</value>
+  </data>
+  <data name="Form_Connection_Password" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="Form_Connection_ConnectionString" xml:space="preserve">
+    <value>Connection String</value>
+  </data>
+  <data name="Form_Connection_TestConnection" xml:space="preserve">
+    <value>Test Connection</value>
+  </data>
+  <data name="Form_Connection_CreateDatabase" xml:space="preserve">
+    <value>Create Database</value>
+  </data>
+  <data name="Form_Connection_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Form_Connection_Result_Success" xml:space="preserve">
+    <value>Connection successful!</value>
+  </data>
+  <data name="Form_Connection_Result_Fail" xml:space="preserve">
+    <value>Connection failed: {0}</value>
+  </data>
+  <data name="Form_Connection_Saved" xml:space="preserve">
+    <value>Connection string saved successfully.</value>
+  </data>
+  <data name="Form_Connection_DbExists" xml:space="preserve">
+    <value>Database already exists.</value>
+  </data>
+  <data name="Form_Connection_DbCreated" xml:space="preserve">
+    <value>Database was created successfully.</value>
+  </data>
+  <data name="Form_CurrAcc_Group_Personal" xml:space="preserve">
+    <value>Personal</value>
+  </data>
+  <data name="Form_CurrAcc_Group_Extra" xml:space="preserve">
+    <value>Additional</value>
+  </data>
+  <data name="Form_CurrAcc_Bar_Features" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="Form_CurrAcc_Bar_ContactDetail" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Validation_Phone_ExistsInAnotherCurrAcc" xml:space="preserve">
+    <value>This phone number is already used by another current account.</value>
+  </data>
+  <data name="Entity_CurrAcc_IsVIP" xml:space="preserve">
+    <value>Is VIP</value>
+  </data>
+  <data name="Form_CurrAccFeature_Caption" xml:space="preserve">
+    <value>Customer Features</value>
+  </data>
+  <data name="Form_CurrAccList_Caption" xml:space="preserve">
+    <value>Current Accounts</value>
+  </data>
+  <data name="Form_CurrAccList_RibbonPage_Main" xml:space="preserve">
+    <value>Current Account</value>
+  </data>
+  <data name="Form_CurrAccList_RibbonGroup_Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="Form_CurrAccList_Menu_CustomerReconciliation" xml:space="preserve">
+    <value>Customer Statement</value>
+  </data>
+  <data name="Form_CurrAccList_Menu_ProductMovements" xml:space="preserve">
+    <value>Product Movements</value>
+  </data>
+  <data name="Common_DeleteConfirm" xml:space="preserve">
+    <value>Do you want to delete?</value>
+  </data>
+  <data name="Form_CurrAccList_NoAccountToDelete" xml:space="preserve">
+    <value>There is no account to delete.</value>
+  </data>
+  <data name="Form_CurrAccList_SelectAccount" xml:space="preserve">
+    <value>Please select an account.</value>
+  </data>
+  <data name="Common_File_ExcelFilter" xml:space="preserve">
+    <value>Excel File|*.xlsx</value>
+  </data>
+  <data name="Form_CurrAccProfile_Caption" xml:space="preserve">
+    <value>Current Account Profile</value>
+  </data>
+  <data name="Form_CurrAccProfile_RibbonPage_Main" xml:space="preserve">
+    <value>Account Authorization</value>
+  </data>
+  <data name="Form_CurrAccProfile_RibbonGroup_CurrAccRole" xml:space="preserve">
+    <value>Account Role</value>
+  </data>
+  <data name="Form_CurrAccProfile_RibbonGroup_RoleClaim" xml:space="preserve">
+    <value>Role Permissions</value>
+  </data>
+  <data name="Form_CurrAccProfile_Button_Permissions" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="Form_CurrAccProfile_Label_ClaimReport" xml:space="preserve">
+    <value>Report Permission</value>
+  </data>
+  <data name="Common_NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="Common_ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="Common_Validation_PasswordConfirmMismatch" xml:space="preserve">
+    <value>Password confirmation does not match!</value>
+  </data>
+  <data name="Form_CurrAccSession_Caption" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Form_CurrAccSession_RibbonPage_Main" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Form_CurrAccSession_KickUser" xml:space="preserve">
+    <value>Kick User</value>
+  </data>
+  <data name="Form_CurrAccSession_CloseWindowQuestion" xml:space="preserve">
+    <value>Close window {0}?</value>
+  </data>
+  <data name="Form_CurrAccSession_KickUserQuestion" xml:space="preserve">
+    <value>Do you want to kick the user?</value>
+  </data>
+  <data name="Common_ProcessNotFound" xml:space="preserve">
+    <value>Process not found.</value>
+  </data>
+  <data name="Common_AccessDenied" xml:space="preserve">
+    <value>Access denied.</value>
+  </data>
+  <data name="ERP_ACE_ProductsDisabled" xml:space="preserve">
+    <value>Disabled Products</value>
+  </data>
+  <data name="ERP_ACE_CurrAccsDisabled" xml:space="preserve">
+    <value>Disabled Current Accounts</value>
+  </data>
+  <data name="Common_NoPermission" xml:space="preserve">
+    <value>Access denied.</value>
+  </data>
+  <data name="Form_HandOver_Caption" xml:space="preserve">
+    <value>Hand Over</value>
+  </data>
+  <data name="Form_HandOver_Group_HandOver" xml:space="preserve">
+    <value>Hand Over</value>
+  </data>
+  <data name="Form_HandOver_OpenInvoiceQuestion" xml:space="preserve">
+    <value>Do you want to open the invoice?</value>
+  </data>
+  <data name="Form_HandOver_CancelQuestion" xml:space="preserve">
+    <value>Cancel hand over?</value>
+  </data>
+  <data name="Form_HandOver_NoDocument" xml:space="preserve">
+    <value>No such document exists.</value>
+  </data>
+  <data name="Form_HandOver_NoRemainingQty" xml:space="preserve">
+    <value>There is no quantity to deliver.</value>
+  </data>
+  <data name="Form_HandOver_NoInvoiceToPrint" xml:space="preserve">
+    <value>There is no invoice to print.</value>
+  </data>
+  <data name="Form_HandOver_PrinterError" xml:space="preserve">
+    <value>Error: 1256795721
+{0}</value>
+  </data>
+  <data name="Form_HandOver_Column_DeliveredQty" xml:space="preserve">
+    <value>Delivered Quantity</value>
+  </data>
+  <data name="Form_HandOver_Column_RemainingQty" xml:space="preserve">
+    <value>Remaining Quantity</value>
+  </data>
+  <data name="Form_HandOver_Button_AddWaybill" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Common_PrintFast" xml:space="preserve">
+    <value>Fast Print</value>
+  </data>
+  <data name="Common_GridDesign" xml:space="preserve">
+    <value>Grid Design</value>
+  </data>
+  <data name="Common_GridDesignSave" xml:space="preserve">
+    <value>Save Grid Design</value>
+  </data>
+  <data name="Common_Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="Common_Design" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="Common_PrintSending" xml:space="preserve">
+    <value>Print is being sent...</value>
+  </data>
+  <data name="Common_PrintSent" xml:space="preserve">
+    <value>Print has been sent.</value>
+  </data>
+  <data name="Common_PrinterLabel" xml:space="preserve">
+    <value>Printer: {0}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Caption" xml:space="preserve">
+    <value>Hierarchy Feature Types</value>
+  </data>
+  <data name="Form_HierarchyList_Caption" xml:space="preserve">
+    <value>Hierarchy</value>
+  </data>
+  <data name="Form_HierarchyList_AddChild" xml:space="preserve">
+    <value>Add Child</value>
+  </data>
+  <data name="Form_HierarchyList_NewDesc" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Form_Image_Caption" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="Form_Image_RibbonPage_Main" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="Form_Image_GalleryItemCaption" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Form_Image_OpenDialogTitle" xml:space="preserve">
+    <value>Select images for Foxoft.</value>
+  </data>
+  <data name="Common_File_ImageFilter" xml:space="preserve">
+    <value>Images (*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF</value>
+  </data>
+  <data name="Common_File_All" xml:space="preserve">
+    <value>All files (*.*)|*.*</value>
+  </data>
+  <data name="Form_Input_Caption" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="Form_Input_Label_Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="Common_Validation_InputRange" xml:space="preserve">
+    <value>Value must be between 0 and {0}</value>
+  </data>
+  <data name="Form_InstallmentSale_Caption" xml:space="preserve">
+    <value>Installment Sales</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonPage_Main" xml:space="preserve">
+    <value>Installment</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonPage_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Design" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Query" xml:space="preserve">
+    <value>Query</value>
+  </data>
+  <data name="Form_InstallmentSale_Button_GridOptions" xml:space="preserve">
+    <value>Edit Design</value>
+  </data>
+  <data name="Form_InstallmentSale_Button_QueryEdit" xml:space="preserve">
+    <value>Edit Query</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Day" xml:space="preserve">
+    <value>Last Day</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Week" xml:space="preserve">
+    <value>Last Week</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Month" xml:space="preserve">
+    <value>Last Month</value>
+  </data>
+  <data name="Form_InstallmentSale_Message_InvoiceAlreadyOpen" xml:space="preserve">
+    <value>Invoice is already open.</value>
+  </data>
+  <data name="Form_InstallmentSale_Message_DocumentNotFound" xml:space="preserve">
+    <value>Document not found.</value>
+  </data>
+  <data name="FormInvoice_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="FormInvoice_SaveAndNew" xml:space="preserve">
+    <value>Save and New</value>
+  </data>
+  <data name="FormInvoice_SaveAndQuit" xml:space="preserve">
+    <value>Save and Close</value>
+  </data>
+  <data name="FormInvoice_Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="FormInvoice_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="FormInvoice_ReportPreview" xml:space="preserve">
+    <value>Invoice Preview</value>
+  </data>
+  <data name="FormInvoice_DeleteInvoice" xml:space="preserve">
+    <value>Delete Invoice</value>
+  </data>
+  <data name="FormInvoice_PaymentDelete" xml:space="preserve">
+    <value>Delete Payment</value>
+  </data>
+  <data name="FormInvoice_CopyInvoice" xml:space="preserve">
+    <value>Copy Invoice</value>
+  </data>
+  <data name="FormInvoice_WhatsappSend" xml:space="preserve">
+    <value>Send via Whatsapp</value>
+  </data>
+  <data name="FormInvoice_EditInvoice" xml:space="preserve">
+    <value>Edit Invoice</value>
+  </data>
+  <data name="FormInvoice_ExportToExcel" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="FormInvoice_ImportFromExcel" xml:space="preserve">
+    <value>Import from Excel</value>
+  </data>
+  <data name="FormInvoice_FastPrint" xml:space="preserve">
+    <value>Fast Print</value>
+  </data>
+  <data name="FormInvoice_PrintSettingSave" xml:space="preserve">
+    <value>Save Print Settings</value>
+  </data>
+  <data name="FormInvoice_Test1" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="FormInvoice_Test2" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="FormInvoice_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="FormInvoice_Pictures" xml:space="preserve">
+    <value>Pictures</value>
+  </data>
+  <data name="FormInvoice_InvoiceExpenses" xml:space="preserve">
+    <value>Invoice Expenses</value>
+  </data>
+  <data name="FormInvoice_ShowPicture" xml:space="preserve">
+    <value>Show Picture</value>
+  </data>
+  <data name="FormInvoice_ShowPrint" xml:space="preserve">
+    <value>Show Printer</value>
+  </data>
+  <data name="FormInvoice_ShowCopy" xml:space="preserve">
+    <value>Show Copy</value>
+  </data>
+  <data name="FormInvoice_AddInstallmentGuarantor" xml:space="preserve">
+    <value>Add Guarantor</value>
+  </data>
+  <data name="FormInvoice_InvoiceDiscount" xml:space="preserve">
+    <value>Invoice Discount</value>
+  </data>
+  <data name="FormInvoice_Salesman" xml:space="preserve">
+    <value>Salesman</value>
+  </data>
+  <data name="FormInvoice_RibbonPage_Invoice" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_InvoiceOperations" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Installment" xml:space="preserve">
+    <value>Installment</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Control" xml:space="preserve">
+    <value>Control</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_InvoiceExtra" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="FormInvoice_RibbonPage_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_PrintSettings" xml:space="preserve">
+    <value>Print Settings</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="FormInvoice_PaidCashless" xml:space="preserve">
+    <value>Cashless: </value>
+  </data>
+  <data name="FormInvoice_PaidCash" xml:space="preserve">
+    <value>Cash: </value>
+  </data>
+  <data name="FormInvoice_PaidTotal" xml:space="preserve">
+    <value>Paid: </value>
+  </data>
+  <data name="FormInvoice_InstallmentSum" xml:space="preserve">
+    <value>Installment: </value>
+  </data>
+  <data name="FormInvoice_InstallmentCommissionSum" xml:space="preserve">
+    <value>Commission: </value>
+  </data>
+  <data name="FormInvoice_InstallmentTotalSum" xml:space="preserve">
+    <value>Total Installment: </value>
+  </data>
+  <data name="FormInvoice_Group_InstallmentInfo" xml:space="preserve">
+    <value>Installment</value>
+  </data>
+  <data name="FormInvoice_Group_PaymentInfo" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="FormInvoice_Group_Installment" xml:space="preserve">
+    <value>Installment</value>
+  </data>
+  <data name="FormInvoice_InstallmentGuarantors" xml:space="preserve">
+    <value>Guarantors</value>
+  </data>
+  <data name="FormInvoice_InstallmentCommission" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="FormInvoice_InstallmentGuarantor_CurrAccCode" xml:space="preserve">
+    <value>Current Account Code</value>
+  </data>
+  <data name="Common_Printer" xml:space="preserve">
+    <value>Printer</value>
+  </data>
+  <data name="Common_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Form_Invoice_NoLines" xml:space="preserve">
+    <value>There is no line.</value>
+  </data>
+  <data name="Form_Invoice_SerialNumberNotFound" xml:space="preserve">
+    <value>Serial number not found.</value>
+  </data>
+  <data name="Form_Invoice_Expense" xml:space="preserve">
+    <value>Expense</value>
+  </data>
+  <data name="Form_Invoice_Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Form_Invoice_EntityNotFoundOrDisabled" xml:space="preserve">
+    <value>{0} not found or is disabled.</value>
+  </data>
+  <data name="Form_Invoice_ReturnOperationExists_CannotChangeProductCode" xml:space="preserve">
+    <value>There is a return operation for this line. Product code cannot be changed.</value>
+  </data>
+  <data name="Form_Invoice_HandOverOperationExists_CannotChangeProductCode" xml:space="preserve">
+    <value>There is a delivery operation for this line. Product code cannot be changed.</value>
+  </data>
+  <data name="Form_Invoice_RelatedReturnLineExists_CannotChangeProductCode" xml:space="preserve">
+    <value>There is a related return line. Product code cannot be changed.</value>
+  </data>
+  <data name="Form_Invoice_RelatedHandOverLineExists_CannotChangeProductCode" xml:space="preserve">
+    <value>There is a related delivery line. Product code cannot be changed.</value>
+  </data>
+  <data name="Form_Invoice_NoStockQuantity" xml:space="preserve">
+    <value>There is not enough quantity in stock.</value>
+  </data>
+  <data name="Form_Invoice_ReturnQtyLessThanExisting" xml:space="preserve">
+    <value>There are {0} units of return operation in this line. Quantity cannot be less than this number.</value>
+  </data>
+  <data name="Form_Invoice_ReturnQtyGreaterThanSale" xml:space="preserve">
+    <value>This is a return of a product whose sale quantity is {0}. Quantity cannot be greater than this number.</value>
+  </data>
+  <data name="Form_Invoice_HandOverQtyLessThanDelivery" xml:space="preserve">
+    <value>There are {0} units of delivery operation in this line. Quantity cannot be less than this number.</value>
+  </data>
+  <data name="Form_Invoice_HandOverQtyGreaterThanSale" xml:space="preserve">
+    <value>This is a delivery of a product whose sale quantity is {0}. Quantity cannot be greater than this number.</value>
+  </data>
+  <data name="Form_Invoice_CreditLimitExceeded" xml:space="preserve">
+    <value>Customer credit limit is exceeded!</value>
+  </data>
+  <data name="Form_Invoice_SalesPersonNotFound" xml:space="preserve">
+    <value>No such salesperson.</value>
+  </data>
+  <data name="Form_Invoice_WorkerNotFound" xml:space="preserve">
+    <value>No such worker.</value>
+  </data>
+  <data name="Form_Invoice_NoInvoiceToDelete" xml:space="preserve">
+    <value>There is no invoice to delete.</value>
+  </data>
+  <data name="Form_Invoice_ProductHasReturn" xml:space="preserve">
+    <value>There is a return for this product.</value>
+  </data>
+  <data name="Form_Invoice_ProductHasDelivery" xml:space="preserve">
+    <value>There is a delivery for this product.</value>
+  </data>
+  <data name="Form_Invoice_DeleteInvoiceQuestion" xml:space="preserve">
+    <value>Do you want to delete the invoice?</value>
+  </data>
+  <data name="Form_Invoice_DeletePaymentsForInvoiceQuestion" xml:space="preserve">
+    <value>Do you also want to delete payments for this invoice?</value>
+  </data>
+  <data name="Form_Invoice_DeleteExpensesForInvoiceQuestion" xml:space="preserve">
+    <value>Do you also want to delete expenses for this invoice?</value>
+  </data>
+  <data name="Form_Invoice_NoPermissionDeletePayment" xml:space="preserve">
+    <value>You have no permission to delete payments!</value>
+  </data>
+  <data name="Form_Invoice_NoPermissionDeleteExpense" xml:space="preserve">
+    <value>You have no permission to delete expenses!</value>
+  </data>
+  <data name="Form_Invoice_NoPermissionExpense" xml:space="preserve">
+    <value>You have no permission for expenses!</value>
+  </data>
+  <data name="Form_Invoice_DeletePaymentsQuestion" xml:space="preserve">
+    <value>Do you want to delete payments?</value>
+  </data>
+  <data name="Form_Invoice_PaymentIsZeroReturnToInvoice" xml:space="preserve">
+    <value>Payment is equal to 0!
+Do you want to return to the invoice?</value>
+  </data>
+  <data name="Form_Invoice_RowDeleteQuestion" xml:space="preserve">
+    <value>Delete row?</value>
+  </data>
+  <data name="Form_Invoice_GuarantorAlreadyAdded" xml:space="preserve">
+    <value>This guarantor is already added.</value>
+  </data>
+  <data name="Form_Invoice_Whatsapp_NumberNotEntered" xml:space="preserve">
+    <value>Number is not entered.</value>
+  </data>
+  <data name="Form_Invoice_Whatsapp_ProfileNotFound" xml:space="preserve">
+    <value>Chrome profile '{0}' not found.</value>
+  </data>
+  <data name="Form_Invoice_Whatsapp_FailedToOpenLink" xml:space="preserve">
+    <value>Failed to open link: {0}</value>
+  </data>
+  <data name="Form_Invoice_NoSuchCurrAcc" xml:space="preserve">
+    <value>Such customer does not exist.</value>
+  </data>
+  <data name="Form_Invoice_ReturnInvoiceExists_CurrAccCannotChange" xml:space="preserve">
+    <value>There is a related return invoice. Current account code cannot be changed.</value>
+  </data>
+  <data name="Form_Invoice_HandOverInvoiceExists_CurrAccCannotChange" xml:space="preserve">
+    <value>There is a related delivery invoice. Current account code cannot be changed.</value>
+  </data>
+  <data name="Form_Invoice_PrinterError_1256795721" xml:space="preserve">
+    <value>Error: 1256795721 
+{0}</value>
+  </data>
+  <data name="Form_Invoice_DeleteGuarantorQuestion" xml:space="preserve">
+    <value>Do you want to delete?</value>
+  </data>
+  <data name="Form_InvoiceHeaderList_Caption" xml:space="preserve">
+    <value>Invoice List</value>
+  </data>
+  <data name="Form_InvoiceHeaderList_InvoiceIsOpen" xml:space="preserve">
+    <value>Invoice is open.</value>
+  </data>
+  <data name="Form_InvoiceLineList_Caption" xml:space="preserve">
+    <value>Invoice Lines</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_ProductCode" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_ProductDesc" xml:space="preserve">
+    <value>Product Name</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_CurrencyCode" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_PriceLoc" xml:space="preserve">
+    <value>Price (LCY)</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_Qty" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_SerialNumberCode" xml:space="preserve">
+    <value>Serial Number</value>
+  </data>
+  <data name="Entity_InvoiceHeader_InvoiceHeaderId" xml:space="preserve">
+    <value>Invoice Header Id</value>
+  </data>
+  <data name="Form_InvoiceLineUndeliveredList_Caption" xml:space="preserve">
+    <value>Undelivered Invoice Line List</value>
+  </data>
+  <data name="Entity_InvoiceLine_Id" xml:space="preserve">
+    <value>Invoiceline Id</value>
+  </data>
+  <data name="Entity_InvoiceHeader_CurrAccCode" xml:space="preserve">
+    <value>Curr. Acc. Code</value>
+  </data>
+  <data name="Form_Login_Caption" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Form_Login_ButtonERP" xml:space="preserve">
+    <value>Back Office</value>
+  </data>
+  <data name="Form_Login_RememberMe" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="Form_Login_ConnectionString" xml:space="preserve">
+    <value>Connection</value>
+  </data>
+  <data name="Form_Login_LicenseInactive" xml:space="preserve">
+    <value>License is not active!</value>
+  </data>
+  <data name="Form_Login_LocalCurrencyNotSet" xml:space="preserve">
+    <value>Local currency is not set.</value>
+  </data>
+  <data name="Form_Login_TerminalRequired" xml:space="preserve">
+    <value>Terminal cannot be empty!</value>
+  </data>
+  <data name="Form_Login_LicenseDateInvalid" xml:space="preserve">
+    <value>License date is invalid: {0}</value>
+  </data>
+  <data name="Form_Login_LicenseInactiveDb" xml:space="preserve">
+    <value>{0} license is not active!</value>
+  </data>
+  <data name="Form_Login_GetKey" xml:space="preserve">
+    <value>Get Key</value>
+  </data>
+  <data name="Form_Login_Test" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="Common_UserName" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="Common_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Common_Terminal" xml:space="preserve">
+    <value>Terminal</value>
+  </data>
+  <data name="Common_Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="Common_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Common_DatabaseNotFound" xml:space="preserve">
+    <value>Database does not exist.</value>
+  </data>
+  <data name="Form_MoneyTransfer_Caption" xml:space="preserve">
+    <value>Cash Register Transfer</value>
+  </data>
+  <data name="Form_MoneyTransfer_RibbonPage_Main" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Form_MoneyTransfer_RibbonGroup_Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Form_MoneyTransfer_Button_DeletePayment" xml:space="preserve">
+    <value>Delete Payment</value>
+  </data>
+  <data name="Form_MoneyTransfer_Button_SaveAndClose" xml:space="preserve">
+    <value>Save Close</value>
+  </data>
+  <data name="Form_MoneyTransfer_Button_SendWhatsapp" xml:space="preserve">
+    <value>Send to WhatsApp</value>
+  </data>
+  <data name="Form_MoneyTransfer_Button_NewPayment" xml:space="preserve">
+    <value>New Payment</value>
+  </data>
+  <data name="Common_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Form_MoneyTransfer_Label_CurrAccBalanceBefore" xml:space="preserve">
+    <value>Current Account Previous Balance: </value>
+  </data>
+  <data name="Form_MoneyTransfer_Label_CurrAccBalanceAfter" xml:space="preserve">
+    <value>Current Account Next Balance: </value>
+  </data>
+  <data name="Form_MoneyTransfer_Column_RunningTotal" xml:space="preserve">
+    <value>Final Balance</value>
+  </data>
+  <data name="Form_MoneyTransfer_Column_RunningTotalBefore" xml:space="preserve">
+    <value>Previous Balance</value>
+  </data>
+  <data name="Form_MoneyTransfer_SaveError" xml:space="preserve">
+    <value>The entered data is not valid! 
+
+{0}</value>
+  </data>
+  <data name="Form_MoneyTransfer_NoPaymentToDelete" xml:space="preserve">
+    <value>There is no payment to delete.</value>
+  </data>
+  <data name="Form_MoneyTransfer_PaymentReceived" xml:space="preserve">
+    <value>Payment received: </value>
+  </data>
+  <data name="Form_MoneyTransfer_PaymentGiven" xml:space="preserve">
+    <value>Payment made: </value>
+  </data>
+  <data name="Form_MoneyTransfer_Balance" xml:space="preserve">
+    <value>Balance: </value>
+  </data>
+  <data name="Form_MoneyTransfer_PhoneNotDefined" xml:space="preserve">
+    <value>Phone number is not specified.</value>
+  </data>
+  <data name="Form_MoneyTransfer_CurrAccNotDefined" xml:space="preserve">
+    <value>Current account is not specified.</value>
+  </data>
+  <data name="Form_MoneyTransfer_NumberNotDefined" xml:space="preserve">
+    <value>Number is not specified.</value>
+  </data>
+  <data name="Form_Payment_Caption" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Form_Payment_Group_Cash" xml:space="preserve">
+    <value>Cash</value>
+  </data>
+  <data name="Form_Payment_Label_Cash" xml:space="preserve">
+    <value>Cash</value>
+  </data>
+  <data name="Form_Payment_CashRegister" xml:space="preserve">
+    <value>Cash Register Account</value>
+  </data>
+  <data name="Form_Payment_Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Form_Payment_Group_Cashless" xml:space="preserve">
+    <value>Cashless</value>
+  </data>
+  <data name="Form_Payment_BankAccount" xml:space="preserve">
+    <value>Bank Account</value>
+  </data>
+  <data name="Form_Payment_PaymentMethod" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
+  <data name="Form_Payment_PaymentPlan" xml:space="preserve">
+    <value>Payment Plan</value>
+  </data>
+  <data name="Form_Payment_Commission" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="Form_Payment_Group_Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="Form_Payment_Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="Form_Payment_Puan" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="Form_Payment_InputPad" xml:space="preserve">
+    <value>Input Panel</value>
+  </data>
+  <data name="Form_Payment_Button_Ok" xml:space="preserve">
+    <value>Pay</value>
+  </data>
+  <data name="Form_Payment_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Form_Payment_CashRegisterNotFound" xml:space="preserve">
+    <value>Such a cash register does not exist</value>
+  </data>
+  <data name="Form_Payment_CurrAccNotSelected" xml:space="preserve">
+    <value>Customer account is not selected</value>
+  </data>
+  <data name="Form_Payment_CurrAccIdentityMissing" xml:space="preserve">
+    <value>Customer account has no identity document number</value>
+  </data>
+  <data name="Form_Payment_CurrAccPhoneMissing" xml:space="preserve">
+    <value>Customer account has no phone number</value>
+  </data>
+  <data name="Form_PaymentDetail_Caption" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonPage_Main" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Control" xml:space="preserve">
+    <value>Control</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_DeletePayment" xml:space="preserve">
+    <value>Delete Payment</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_SaveAndClose" xml:space="preserve">
+    <value>Save and Close</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_SendWhatsapp" xml:space="preserve">
+    <value>Send to Whatsapp</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_NewPayment" xml:space="preserve">
+    <value>New Payment</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_CopyPayment" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_EditPayment" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Form_PaymentDetail_Label_CurrAccBalanceBefore" xml:space="preserve">
+    <value>Customer Previous Balance:</value>
+  </data>
+  <data name="Form_PaymentDetail_Label_CurrAccBalanceAfter" xml:space="preserve">
+    <value>Customer New Balance:</value>
+  </data>
+  <data name="Form_PaymentDetail_InvalidData" xml:space="preserve">
+    <value>Entered data is not valid!</value>
+  </data>
+  <data name="Form_PaymentDetail_NoPaymentToDelete" xml:space="preserve">
+    <value>There is no payment to delete.</value>
+  </data>
+  <data name="Form_PaymentDetail_PhoneNotFound" xml:space="preserve">
+    <value>Phone number is not specified.</value>
+  </data>
+  <data name="Form_PaymentDetail_PaymentReceived" xml:space="preserve">
+    <value>Payment received: </value>
+  </data>
+  <data name="Form_PaymentDetail_PaymentGiven" xml:space="preserve">
+    <value>Payment given: </value>
+  </data>
+  <data name="Form_PaymentDetail_BalanceText" xml:space="preserve">
+    <value>Balance: </value>
+  </data>
+  <data name="Form_PaymentDetail_CurrAccNotFound" xml:space="preserve">
+    <value>Such a customer account does not exist.</value>
+  </data>
+  <data name="Form_PaymentDetail_Info_Caption" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Entity_TrInvoiceHeader_DocumentNumber" xml:space="preserve">
+    <value>Invoice Number</value>
+  </data>
+  <data name="Form_PaymentHeaderList_Caption" xml:space="preserve">
+    <value>Payments</value>
+  </data>
+  <data name="Form_PaymentHeaderList_RibbonPage_Main" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Form_PaymentHeaderList_RibbonGroup_Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="Form_PaymentHeaderList_RibbonGroup_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Form_PaymentHeaderList_Button_ReceivePayment" xml:space="preserve">
+    <value>Receive Payment</value>
+  </data>
+  <data name="Form_PaymentHeaderList_Button_MakePayment" xml:space="preserve">
+    <value>Make Payment</value>
+  </data>
+  <data name="Form_PaymentHeaderList_Button_ExportXlsx" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="Form_PaymentLineList_Caption" xml:space="preserve">
+    <value>Payment Line List</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonPage_Main" xml:space="preserve">
+    <value>Payments</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonGroup_Operations" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonGroup_Control" xml:space="preserve">
+    <value>Control</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonGroup_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonGroup_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_ReceivePayment" xml:space="preserve">
+    <value>Receive Payment</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_MakePayment" xml:space="preserve">
+    <value>Make Payment</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_ExportXlsx" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Form_PaymentLineList_Message_InvoiceNumberButtonClick" xml:space="preserve">
+    <value>Invoice link clicked.</value>
+  </data>
+  <data name="Form_PaymentLineList_Message_DocNumButtonClick" xml:space="preserve">
+    <value>Payment document link clicked.</value>
+  </data>
+  <data name="Form_POS_Caption" xml:space="preserve">
+    <value>Point of Sale</value>
+  </data>
+  <data name="Form_POS_Button_Sale" xml:space="preserve">
+    <value>Sale</value>
+  </data>
+  <data name="Form_POS_Button_Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Form_POS_Button_Expenses" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="Form_POS_Page_Sale" xml:space="preserve">
+    <value>Sale</value>
+  </data>
+  <data name="Form_POS_Page_Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Form_POS_Page_Expenses" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="Form_PosDiscount_Caption" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="Form_PosDiscount_Label_DiscountRate" xml:space="preserve">
+    <value>Percent</value>
+  </data>
+  <data name="Form_PosDiscount_Label_NetAmount" xml:space="preserve">
+    <value>Net Amount</value>
+  </data>
+  <data name="Form_PosDiscount_Validation_DiscountRateRange" xml:space="preserve">
+    <value>Value must be between 0 and 100.</value>
+  </data>
+  <data name="Form_PosDiscount_Validation_NetAmountRange" xml:space="preserve">
+    <value>Value must be between 0 and {0}.</value>
+  </data>
+  <data name="Form_PriceListDetail_Caption" xml:space="preserve">
+    <value>Price List</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonPage_Main" xml:space="preserve">
+    <value>Price List</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonGroup_PriceList" xml:space="preserve">
+    <value>Price List</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonPage_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonGroup_Excel" xml:space="preserve">
+    <value>Excel</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonGroup_Info" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_DeletePriceList" xml:space="preserve">
+    <value>Delete Price List</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_SaveAndClose" xml:space="preserve">
+    <value>Save and Close</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_NewPriceList" xml:space="preserve">
+    <value>New Price List</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_ImportExcel" xml:space="preserve">
+    <value>Import from Excel</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_ExportExcel" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_DeletePriceListConfirm" xml:space="preserve">
+    <value>Do you want to delete the price list?</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_NoPriceListToDelete" xml:space="preserve">
+    <value>There is no price list to delete.</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_DeleteRowConfirm" xml:space="preserve">
+    <value>Delete the row?</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_InvalidData" xml:space="preserve">
+    <value>Entered data is not valid!</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_ImportErrorCode" xml:space="preserve">
+    <value>Error No: 256543</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_ImportErrorCaption" xml:space="preserve">
+    <value>Import error</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_ValueNotFound" xml:space="preserve">
+    <value>No value found for the following codes</value>
+  </data>
+  <data name="Form_PriceListDetail_OpenFileDialog_Title" xml:space="preserve">
+    <value>Select Excel file.</value>
+  </data>
+  <data name="Form_PriceListHeaderList_Caption" xml:space="preserve">
+    <value>Price Lists</value>
+  </data>
+  <data name="Form_Product_Caption" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Form_Product_OpenFileDialog_Title" xml:space="preserve">
+    <value>Select image for Foxoft.</value>
+  </data>
+  <data name="Form_Product_Message_SaveImageError" xml:space="preserve">
+    <value>Error code 154484: {0}</value>
+  </data>
+  <data name="Form_Product_Message_FileDoesNotExist" xml:space="preserve">
+    <value>File does not exist.</value>
+  </data>
+  <data name="Form_Product_Message_NoGalleryImage" xml:space="preserve">
+    <value>No image found in the selected gallery item.</value>
+  </data>
+  <data name="Form_Product_Message_DeleteFileError" xml:space="preserve">
+    <value>Error deleting file: {0}</value>
+  </data>
+  <data name="Form_Product_Message_NoImageInClipboard" xml:space="preserve">
+    <value>No image in the clipboard.</value>
+  </data>
+  <data name="Form_Product_Message_ProductCodeExists" xml:space="preserve">
+    <value>A product with this code already exists!</value>
+  </data>
+  <data name="Form_Product_Validation_ProductNameExists" xml:space="preserve">
+    <value>A product with this name already exists.</value>
+  </data>
+  <data name="Form_ProductBarcode_Caption" xml:space="preserve">
+    <value>Product barcodes</value>
+  </data>
+  <data name="Form_ProductBarcode_RibbonPage_Main" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
+  <data name="Form_ProductBarcode_RibbonGroup_Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="Form_ProductBarcode_Message_SaveError" xml:space="preserve">
+    <value>The data you entered is not valid!
+
+{0}</value>
+  </data>
+  <data name="Form_ProductBarcode_Message_ProductSelectError" xml:space="preserve">
+    <value>Error No: 252124269 
+{0}</value>
+  </data>
+  <data name="Form_ProductBarcode_Validation_BarcodeExists" xml:space="preserve">
+    <value>Such a barcode already exists.</value>
+  </data>
+  <data name="Form_ProductFeature_Caption" xml:space="preserve">
+    <value>Product Features</value>
+  </data>
+  <data name="Common_Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Common_Search" xml:space="preserve">
+    <value>Search...</value>
+  </data>
+  <data name="Form_ProductList_Caption" xml:space="preserve">
+    <value>Product List</value>
+  </data>
+  <data name="Form_ProductList_RibbonPage_Main" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Control" xml:space="preserve">
+    <value>Control</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Form_ProductList_RibbonPage_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_FilterColumns" xml:space="preserve">
+    <value>Filter columns</value>
+  </data>
+  <data name="Form_ProductList_FilterColumnsLabel" xml:space="preserve">
+    <value>Filter columns</value>
+  </data>
+  <data name="Form_ProductList_FindPanelPrompt" xml:space="preserve">
+    <value>Search...</value>
+  </data>
+  <data name="Form_ProductList_Column_Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Form_ProductList_Message_ProductNotSelected" xml:space="preserve">
+    <value>No product selected.</value>
+  </data>
+  <data name="Form_ProductList_Message_DeleteProductConfirm" xml:space="preserve">
+    <value>Do you want to delete this product?
+{0}</value>
+  </data>
+  <data name="Form_ProductList_Message_DeleteBarcodeConfirm" xml:space="preserve">
+    <value>Do you also want to delete its barcodes?
+{0}</value>
+  </data>
+  <data name="Form_ProductList_Message_NoProductToDelete" xml:space="preserve">
+    <value>There is no product to delete.</value>
+  </data>
+  <data name="Form_ProductList_Button_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Form_ProductScales_Caption" xml:space="preserve">
+    <value>Product scale settings</value>
+  </data>
+  <data name="Form_ProductScales_Button_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Form_ProductScales_CheckBox_UseInScale" xml:space="preserve">
+    <value>Use on scale</value>
+  </data>
+  <data name="Form_ProductScales_Validation_ScaleProductNumber_Integer" xml:space="preserve">
+    <value>Enter a valid integer.</value>
+  </data>
+  <data name="Form_ProductScales_Validation_ScaleProductNumber_Duplicate" xml:space="preserve">
+    <value>This code is already used. Please enter a unique number.</value>
+  </data>
+  <data name="Form_ProductStaticPrice_Caption" xml:space="preserve">
+    <value>Static Product Prices</value>
+  </data>
+  <data name="Form_ReportEditor_Caption" xml:space="preserve">
+    <value>Report editor</value>
+  </data>
+  <data name="Form_ReportEditor_Tab_Main" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="Form_ReportEditor_Label_SubQueries" xml:space="preserve">
+    <value>Sub queries</value>
+  </data>
+  <data name="Form_ReportEditor_SubQuery_DefaultName" xml:space="preserve">
+    <value>New subquery</value>
+  </data>
+  <data name="Form_ReportEditor_SubQuery_DefaultText" xml:space="preserve">
+    <value>-- SQL here</value>
+  </data>
+  <data name="Form_ReportEditor_Message_DeleteRow" xml:space="preserve">
+    <value>Delete row?</value>
+  </data>
+  <data name="Form_ReportEditor_Message_DeleteTab" xml:space="preserve">
+    <value>Delete tab '{0}'?</value>
+  </data>
+  <data name="Form_ReportEditor_Message_CheckQueryErrorTitle" xml:space="preserve">
+    <value>Foxoft Error Code: 1215451</value>
+  </data>
+  <data name="Form_ReportFilter_Caption" xml:space="preserve">
+    <value>Report Filter</value>
+  </data>
+  <data name="Form_ReportFilter_RibbonPage_Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Form_ReportFilter_RibbonGroup_ReportOperations" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="Form_ReportFilter_RibbonGroup_Customization" xml:space="preserve">
+    <value>Customization</value>
+  </data>
+  <data name="Form_ReportFilter_DesignFileLabel" xml:space="preserve">
+    <value>Design file</value>
+  </data>
+  <data name="Form_ReportFilter_ExcelDialogFilter" xml:space="preserve">
+    <value>Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*</value>
+  </data>
+  <data name="Form_ReportFilter_ExcelDialogTitle" xml:space="preserve">
+    <value>Only values in the first column will be imported.</value>
+  </data>
+  <data name="Form_ReportFilter_Input_DesignName" xml:space="preserve">
+    <value>Enter design name</value>
+  </data>
+  <data name="Form_ReportFilter_Message_NoCustomizationSelected" xml:space="preserve">
+    <value>Please select a customization to delete.</value>
+  </data>
+  <data name="Form_ReportFilter_Message_NoCustomizationSelectedTitle" xml:space="preserve">
+    <value>No selection</value>
+  </data>
+  <data name="Form_ReportFilter_Error_OpenGridReport" xml:space="preserve">
+    <value>Inter Error Code: 2565635 
+{0}</value>
+  </data>
+  <data name="Form_ReportFilter_Button_CustomAdd" xml:space="preserve">
+    <value>Add design</value>
+  </data>
+  <data name="Form_ReportFilter_Button_CustomSave" xml:space="preserve">
+    <value>Save design</value>
+  </data>
+  <data name="Form_ReportFilter_Button_CustomDelete" xml:space="preserve">
+    <value>Delete design</value>
+  </data>
+  <data name="Form_ReportGrid_Caption" xml:space="preserve">
+    <value>Report grid</value>
+  </data>
+  <data name="Form_ReportGrid_Column_Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Form_ReportGrid_Message_InvoiceIsOpen" xml:space="preserve">
+    <value>The document is already open.</value>
+  </data>
+  <data name="Form_ReportGrid_Message_OpenExportedFileQuestion" xml:space="preserve">
+    <value>Do you want to open the exported file?</value>
+  </data>
+  <data name="Form_ReportGrid_Menu_Expression" xml:space="preserve">
+    <value>Expression</value>
+  </data>
+  <data name="Form_ReportGrid_Menu_AddColumn" xml:space="preserve">
+    <value>Add column</value>
+  </data>
+  <data name="Form_ReportGrid_Input_AddColumnTitle" xml:space="preserve">
+    <value>Add column</value>
+  </data>
+  <data name="Form_ReportGrid_DefaultColumnNamePrefix" xml:space="preserve">
+    <value>Column</value>
+  </data>
+  <data name="Form_ReportGrid_Button_LayoutLoad" xml:space="preserve">
+    <value>Load layout</value>
+  </data>
+  <data name="Form_ReportGrid_Button_DesignClear" xml:space="preserve">
+    <value>Reset layout</value>
+  </data>
+  <data name="Form_ReportGrid_Button_PrintPreview" xml:space="preserve">
+    <value>Print preview</value>
+  </data>
+  <data name="Form_ReportGrid_Button_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Form_ReportGrid_RibbonGroup_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Form_ReportGridOptions_Caption" xml:space="preserve">
+    <value>Grid settings</value>
+  </data>
+  <data name="Form_ReportGridOptions_ReadOnly" xml:space="preserve">
+    <value>Read only</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowRowSizing" xml:space="preserve">
+    <value>Allow row sizing</value>
+  </data>
+  <data name="Form_ReportGridOptions_GroupFooterShowMode" xml:space="preserve">
+    <value>Group footer show mode</value>
+  </data>
+  <data name="Form_ReportGridOptions_Editable" xml:space="preserve">
+    <value>Editable</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowFooter" xml:space="preserve">
+    <value>Show footer</value>
+  </data>
+  <data name="Form_ReportGridOptions_GroupFooter_Hidden" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
+  <data name="Form_ReportGridOptions_GroupFooter_VisibleAlways" xml:space="preserve">
+    <value>Visible always</value>
+  </data>
+  <data name="Form_ReportGridOptions_GroupFooter_VisibleIfExpanded" xml:space="preserve">
+    <value>Visible if expanded</value>
+  </data>
+  <data name="Form_ReportPreview_EditDesign" xml:space="preserve">
+    <value>Edit Design</value>
+  </data>
+  <data name="Form_ReportPreview_CopyToClipboard" xml:space="preserve">
+    <value>Copy to Clipboard</value>
+  </data>
+  <data name="Form_Return_Caption" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Form_Store_Caption" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="Form_Store_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Form_Store_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Form_Store_DesignFileFolder" xml:space="preserve">
+    <value>Design file folder</value>
+  </data>
+  <data name="Form_Store_ImageFolder" xml:space="preserve">
+    <value>Image folder</value>
+  </data>
+  <data name="Form_Store_PrinterName" xml:space="preserve">
+    <value>Printer name</value>
+  </data>
+  <data name="Form_Store_DefaultUnitOfMeasure" xml:space="preserve">
+    <value>Default unit of measure</value>
+  </data>
+  <data name="Form_Store_OfficeCode" xml:space="preserve">
+    <value>Office code</value>
+  </data>
+  <data name="Form_Store_AccountCode" xml:space="preserve">
+    <value>Account code</value>
+  </data>
+  <data name="Validation_Phone_ExistsInAnotherStore" xml:space="preserve">
+    <value>This phone number is already used by another store</value>
+  </data>
+  <data name="Form_WarehouseList_Caption" xml:space="preserve">
+    <value>Warehouses</value>
+  </data>
+  <data name="Form_WarehouseList_RibbonPage_Main" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="Form_WarehouseList_RibbonGroup_Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="Form_WarehouseList_RibbonGroup_Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Form_WarehouseList_NoWarehouseToDelete" xml:space="preserve">
+    <value>No warehouse to delete</value>
+  </data>
+  <data name="Message_ServerConnectionError" xml:space="preserve">
+    <value>Cannot connect to server.
+Connection string:
+{0}
+Error: {1}</value>
+  </data>
+  <data name="Form_Splash_Status_Starting" xml:space="preserve">
+    <value>Starting...</value>
+  </data>
+  <data name="Form_Splash_Copyright" xml:space="preserve">
+    <value>Copyright © 2021 Subhan Huseynzade</value>
+  </data>
+  <data name="Form_Splash_Title_ERP" xml:space="preserve">
+    <value>ERP</value>
+  </data>
+  <data name="Form_Splash_Title_POS" xml:space="preserve">
+    <value>POS</value>
+  </data>
+  <data name="Form_Expense_RowDeleteQuestion" xml:space="preserve">
+    <value>Delete selected row?</value>
+  </data>
+  <data name="Form_Expense_ProductNotFound" xml:space="preserve">
+    <value>No such product.</value>
+  </data>
+  <data name="Entity_InvoiceLine_Barcode" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
+  <data name="Form_RetailSale_ProductAddFailed" xml:space="preserve">
+    <value>Product could not be added</value>
+  </data>
+  <data name="Form_RetailSale_NoStock" xml:space="preserve">
+    <value>Not enough stock</value>
+  </data>
+  <data name="Form_RetailSale_DeleteQuestion" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="Form_RetailSale_InvoiceEmpty" xml:space="preserve">
+    <value>Invoice is empty</value>
+  </data>
+  <data name="Form_RetailSale_DeleteLastLineNotAllowed" xml:space="preserve">
+    <value>Cannot delete the last line.
+To delete, cancel the receipt!</value>
+  </data>
+  <data name="Form_RetailSale_SelectProduct" xml:space="preserve">
+    <value>Select a product</value>
+  </data>
+  <data name="Form_RetailSale_NoPermission" xml:space="preserve">
+    <value>You do not have permission</value>
+  </data>
+  <data name="Form_RetailSale_PaymentZero" xml:space="preserve">
+    <value>Payment amount is zero</value>
+  </data>
+  <data name="Form_RetailSale_SelectCustomer" xml:space="preserve">
+    <value>Select a customer</value>
+  </data>
+  <data name="Form_RetailSale_NoProduct" xml:space="preserve">
+    <value>There is no product</value>
+  </data>
+  <data name="Form_RetailSale_NoInvoiceToPrint" xml:space="preserve">
+    <value>There is no invoice to print</value>
+  </data>
+  <data name="Form_RetailSale_BarcodeNotFound" xml:space="preserve">
+    <value>Barcode not found</value>
+  </data>
+  <data name="Form_RetailSale_Group_Invoice" xml:space="preserve">
+    <value>Sale</value>
+  </data>
+  <data name="Form_RetailSale_Group_Function" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Form_RetailSale_Group_Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Form_RetailSale_Group_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Form_RetailSale_Group_Customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="Form_RetailSale_Button_Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Form_RetailSale_Button_LineDiscount" xml:space="preserve">
+    <value>Line Discount</value>
+  </data>
+  <data name="Form_RetailSale_Button_CancelInvoice" xml:space="preserve">
+    <value>Cancel Receipt</value>
+  </data>
+  <data name="Form_RetailSale_Button_DeleteLine" xml:space="preserve">
+    <value>Delete Line</value>
+  </data>
+  <data name="Form_RetailSale_Button_SalesPerson" xml:space="preserve">
+    <value>Salesperson</value>
+  </data>
+  <data name="Form_RetailSale_Button_PaymentCash" xml:space="preserve">
+    <value>Cash</value>
+  </data>
+  <data name="Form_RetailSale_Button_PaymentCashless" xml:space="preserve">
+    <value>Cashless</value>
+  </data>
+  <data name="Form_RetailSale_Button_PaymentBonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="Form_RetailSale_Button_Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="Form_RetailSale_Button_PrintPreview" xml:space="preserve">
+    <value>Print Preview</value>
+  </data>
+  <data name="Form_RetailSale_Button_ReportZ" xml:space="preserve">
+    <value>End of Day</value>
+  </data>
+  <data name="Form_RetailSale_Button_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Form_RetailSale_Button_IncompletedInvoices" xml:space="preserve">
+    <value>Incomplete invoices</value>
+  </data>
+  <data name="Form_RetailSale_Button_InvoiceDiscount" xml:space="preserve">
+    <value>Invoice Discount</value>
+  </data>
+  <data name="Form_RetailSale_Label_PaidCash" xml:space="preserve">
+    <value>Cash:</value>
+  </data>
+  <data name="Form_RetailSale_Label_PaidCashless" xml:space="preserve">
+    <value>Cashless:</value>
+  </data>
+  <data name="Form_RetailSale_Label_PaidTotal" xml:space="preserve">
+    <value>Paid:</value>
+  </data>
+  <data name="Form_RetailSale_Label_PrintCount" xml:space="preserve">
+    <value>Print count</value>
+  </data>
+  <data name="Form_Return_Group_ReturnInvoiceLine" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Form_Return_Group_InvoiceHeader" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="Form_Return_Group_InvoiceLine" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="Form_Return_Group_Payment" xml:space="preserve">
+    <value>Payments</value>
+  </data>
+  <data name="Form_Return_Label_InvoiceHeader" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="Form_Return_Label_CurrAcc" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="Form_Return_Message_NoQtyToReturn" xml:space="preserve">
+    <value>There is no quantity left to return.</value>
+  </data>
+  <data name="Form_Return_Message_OpenInvoiceQuestion" xml:space="preserve">
+    <value>Do you want to open the invoice?</value>
+  </data>
+  <data name="Form_Return_Caption_OpenInvoice" xml:space="preserve">
+    <value>Open Invoice</value>
+  </data>
+  <data name="Form_Return_Message_PaymentIsZero" xml:space="preserve">
+    <value>Payment amount equals 0.</value>
+  </data>
+  <data name="Form_Return_Message_InvoiceNotFound" xml:space="preserve">
+    <value>Document not found.</value>
+  </data>
+  <data name="Form_Return_Message_CancelReturnQuestion" xml:space="preserve">
+    <value>Cancel the return operation?</value>
+  </data>
+  <data name="Form_Return_Caption_Confirmation" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Form_WaitForm_Title" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="Form_WaitForm_Caption" xml:space="preserve">
+    <value>Please wait</value>
+  </data>
+  <data name="Form_WaitForm_Description" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="Form_StoreList_ReportNotFound" xml:space="preserve">
+    <value>Embedded report 'Report_Embedded_StoreList' was not found in DcReports table.</value>
+  </data>
+  <data name="Form_StoreList_Message_NoStoreToDelete" xml:space="preserve">
+    <value>There is no store to delete.</value>
+  </data>
+  <data name="Form_StoreList_Message_SelectStore" xml:space="preserve">
+    <value>Please select a store.</value>
+  </data>
+  <data name="Form_Return_Col_Payment_Type" xml:space="preserve">
+    <value>Payment Type</value>
   </data>
 </root>

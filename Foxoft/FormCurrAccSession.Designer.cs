@@ -1,4 +1,6 @@
-﻿namespace Foxoft
+﻿using Foxoft.Properties;
+
+namespace Foxoft
 {
     partial class FormCurrAccSession
     {
@@ -65,7 +67,7 @@
             // 
             // bBI_Update
             // 
-            bBI_Update.Caption = "Yenilə";
+            bBI_Update.Caption = Resources.Common_Refresh; // "Yenilə" → resx
             bBI_Update.Id = 1;
             bBI_Update.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Update.ImageOptions.SvgImage");
             bBI_Update.Name = "bBI_Update";
@@ -73,7 +75,7 @@
             // 
             // bBI_KickUser
             // 
-            bBI_KickUser.Caption = "Istifadəçini At";
+            bBI_KickUser.Caption = Resources.Form_CurrAccSession_KickUser;
             bBI_KickUser.Id = 2;
             bBI_KickUser.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_KickUser.ImageOptions.SvgImage");
             bBI_KickUser.Name = "bBI_KickUser";
@@ -83,7 +85,7 @@
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "İstifadəçilər";
+            ribbonPage1.Text = Resources.Form_CurrAccSession_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
@@ -173,8 +175,8 @@
             Controls.Add(ribbon);
             Name = "FormUser";
             Ribbon = ribbon;
-            StatusBar = ribbonStatusBar;
-            Text = "İstifadəçilər";
+            StatusBar = ribbonStatusBar; 
+            Text = Resources.Form_CurrAccSession_Caption;
             Load += RibbonForm1_Load;
             ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();

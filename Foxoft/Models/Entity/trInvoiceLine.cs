@@ -194,6 +194,10 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductDesc), ResourceType = typeof(Resources))]
         public string ProductDesc { get; set; }
 
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_ProductBarcode_Barcode), ResourceType = typeof(Resources))]
+        public string Barcode { get; set; }
+
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }
         public virtual DcSerialNumber DcSerialNumber { get; set; }

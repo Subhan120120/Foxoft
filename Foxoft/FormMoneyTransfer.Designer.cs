@@ -1,4 +1,5 @@
-﻿
+﻿using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormMoneyTransfer
@@ -144,7 +145,7 @@ namespace Foxoft
             // 
             // bBI_DeletePayment
             // 
-            bBI_DeletePayment.Caption = "Ödənişi Sil";
+            bBI_DeletePayment.Caption = Resources.Form_MoneyTransfer_Button_DeletePayment;
             bBI_DeletePayment.Id = 1;
             bBI_DeletePayment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_DeletePayment.ImageOptions.SvgImage");
             bBI_DeletePayment.Name = "bBI_DeletePayment";
@@ -152,7 +153,7 @@ namespace Foxoft
             // 
             // bBI_SaveAndClose
             // 
-            bBI_SaveAndClose.Caption = "Yadda Saxla Bağla";
+            bBI_SaveAndClose.Caption = Resources.Form_MoneyTransfer_Button_SaveAndClose;
             bBI_SaveAndClose.Id = 2;
             bBI_SaveAndClose.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SaveAndClose.ImageOptions.SvgImage");
             bBI_SaveAndClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F12);
@@ -161,7 +162,7 @@ namespace Foxoft
             // 
             // bBI_SendWhatsapp
             // 
-            bBI_SendWhatsapp.Caption = "Whatsapa Göndər";
+            bBI_SendWhatsapp.Caption = Resources.Form_MoneyTransfer_Button_SendWhatsapp;
             bBI_SendWhatsapp.Id = 3;
             bBI_SendWhatsapp.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SendWhatsapp.ImageOptions.SvgImage");
             bBI_SendWhatsapp.Name = "bBI_SendWhatsapp";
@@ -169,7 +170,7 @@ namespace Foxoft
             // 
             // bBI_NewPayment
             // 
-            bBI_NewPayment.Caption = "Yeni Ödəniş";
+            bBI_NewPayment.Caption = Resources.Form_MoneyTransfer_Button_NewPayment;
             bBI_NewPayment.Id = 5;
             bBI_NewPayment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_NewPayment.ImageOptions.SvgImage");
             bBI_NewPayment.Name = "bBI_NewPayment";
@@ -177,7 +178,7 @@ namespace Foxoft
             // 
             // bBI_CopyPayment
             // 
-            bBI_CopyPayment.Caption = "Kopyala";
+            bBI_CopyPayment.Caption = Resources.Common_Copy;
             bBI_CopyPayment.Id = 6;
             bBI_CopyPayment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CopyPayment.ImageOptions.SvgImage");
             bBI_CopyPayment.Name = "bBI_CopyPayment";
@@ -185,7 +186,7 @@ namespace Foxoft
             // 
             // BBI_Info
             // 
-            BBI_Info.Caption = "İnfo";
+            BBI_Info.Caption = Resources.Common_Info;
             BBI_Info.Id = 7;
             BBI_Info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Info.ImageOptions.SvgImage");
             BBI_Info.Name = "BBI_Info";
@@ -195,7 +196,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Ödəmə";
+            ribbonPage1.Text = Resources.Form_MoneyTransfer_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
@@ -203,21 +204,21 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_NewPayment);
             ribbonPageGroup1.ItemLinks.Add(bBI_DeletePayment);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Ödəmə";
+            ribbonPageGroup1.Text = Resources.Form_MoneyTransfer_RibbonGroup_Payment;
             // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyPayment);
             ribbonPageGroup2.ItemLinks.Add(bBI_SendWhatsapp);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Alət";
+            ribbonPageGroup2.Text = Resources.Common_Tools;
             // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
             ribbonPageGroup3.ItemLinks.Add(BBI_Info);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Məlumat";
+            ribbonPageGroup3.Text = Resources.Common_Info;
             // 
             // ribbonStatusBar
             // 
@@ -249,7 +250,7 @@ namespace Foxoft
             dataLayoutControl1.Root = Root;
             dataLayoutControl1.Size = new Size(899, 396);
             dataLayoutControl1.TabIndex = 2;
-            dataLayoutControl1.Text = "Kassadan";
+            dataLayoutControl1.Text = Resources.Entity_PaymentHeader_FromCashRegCode;
             // 
             // lbl_CurrAccBalansBefore
             // 
@@ -258,7 +259,7 @@ namespace Foxoft
             lbl_CurrAccBalansBefore.Size = new Size(435, 15);
             lbl_CurrAccBalansBefore.StyleController = dataLayoutControl1;
             lbl_CurrAccBalansBefore.TabIndex = 1;
-            lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: ";
+            lbl_CurrAccBalansBefore.Text = Resources.Form_MoneyTransfer_Label_CurrAccBalanceBefore;
             // 
             // lbl_CurrAccBalansAfter
             // 
@@ -267,7 +268,7 @@ namespace Foxoft
             lbl_CurrAccBalansAfter.Size = new Size(436, 15);
             lbl_CurrAccBalansAfter.StyleController = dataLayoutControl1;
             lbl_CurrAccBalansAfter.TabIndex = 1;
-            lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: ";
+            lbl_CurrAccBalansAfter.Text = Resources.Form_MoneyTransfer_Label_CurrAccBalanceAfter;
             // 
             // lbl_FromCashRegDesc
             // 
@@ -343,7 +344,11 @@ namespace Foxoft
             repoLUE_PaymentTypeCode.AutoHeight = false;
             repoLUE_PaymentTypeCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
             repoLUE_PaymentTypeCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_PaymentTypeCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeDesc", "") });
+            repoLUE_PaymentTypeCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
+            {
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(Foxoft.Models.DcPaymentType.PaymentTypeCode), ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(Foxoft.Models.DcPaymentType.PaymentTypeDesc), "")
+            });
             repoLUE_PaymentTypeCode.DisplayMember = "PaymentTypeDesc";
             repoLUE_PaymentTypeCode.Name = "repoLUE_PaymentTypeCode";
             repoLUE_PaymentTypeCode.NullText = "";
@@ -392,7 +397,11 @@ namespace Foxoft
             repoLUE_CurrencyCode.AutoHeight = false;
             repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
             repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "") });
+            repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
+            {
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(Foxoft.Models.DcCurrency.CurrencyCode), ""),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(Foxoft.Models.DcCurrency.CurrencyDesc), "")
+            });
             repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
             repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
             repoLUE_CurrencyCode.NullText = "";
@@ -461,7 +470,7 @@ namespace Foxoft
             // 
             // colRunningTotal
             // 
-            colRunningTotal.Caption = "Yekun Borc";
+            colRunningTotal.Caption = Resources.Form_MoneyTransfer_Column_RunningTotal;
             colRunningTotal.FieldName = "colRunningTotal";
             colRunningTotal.Name = "colRunningTotal";
             colRunningTotal.UnboundDataType = typeof(decimal);
@@ -470,7 +479,7 @@ namespace Foxoft
             // 
             // colRunningTotalBefore
             // 
-            colRunningTotalBefore.Caption = "Əvvəlki Borc";
+            colRunningTotalBefore.Caption = Resources.Form_MoneyTransfer_Column_RunningTotalBefore;
             colRunningTotalBefore.FieldName = "colRunningTotalBefore";
             colRunningTotalBefore.Name = "colRunningTotalBefore";
             colRunningTotalBefore.UnboundDataType = typeof(decimal);
@@ -579,7 +588,7 @@ namespace Foxoft
             ItemForCurrAccCode.Location = new Point(439, 24);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
             ItemForCurrAccCode.Size = new Size(157, 24);
-            ItemForCurrAccCode.Text = "Cari Hesab";
+            ItemForCurrAccCode.Text = Resources.Entity_PaymentHeader_CurrAccCode;
             ItemForCurrAccCode.TextSize = new Size(74, 13);
             // 
             // Root
@@ -615,7 +624,7 @@ namespace Foxoft
             ItemForDocumentNumber.Location = new Point(0, 0);
             ItemForDocumentNumber.Name = "ItemForDocumentNumber";
             ItemForDocumentNumber.Size = new Size(439, 24);
-            ItemForDocumentNumber.Text = "Ödəniş Nömrəsi";
+            ItemForDocumentNumber.Text = Resources.Entity_PaymentHeader_DocumentNumber;
             ItemForDocumentNumber.TextSize = new Size(74, 13);
             // 
             // layoutControlItem4
@@ -646,7 +655,7 @@ namespace Foxoft
             ItemForToCashRegCode.Location = new Point(439, 24);
             ItemForToCashRegCode.Name = "ItemForToCashRegCode";
             ItemForToCashRegCode.Size = new Size(172, 24);
-            ItemForToCashRegCode.Text = "Kassaya";
+            ItemForToCashRegCode.Text = Resources.Entity_PaymentHeader_ToCashRegCode;
             ItemForToCashRegCode.TextSize = new Size(74, 13);
             // 
             // ItemForOperationTime
@@ -655,7 +664,7 @@ namespace Foxoft
             ItemForOperationTime.Location = new Point(0, 48);
             ItemForOperationTime.Name = "ItemForOperationTime";
             ItemForOperationTime.Size = new Size(439, 24);
-            ItemForOperationTime.Text = "Sənəd Vaxtı";
+            ItemForOperationTime.Text = Resources.Entity_PaymentHeader_DocumentTime;
             ItemForOperationTime.TextSize = new Size(74, 13);
             // 
             // ItemForDescription
@@ -664,7 +673,7 @@ namespace Foxoft
             ItemForDescription.Location = new Point(439, 48);
             ItemForDescription.Name = "ItemForDescription";
             ItemForDescription.Size = new Size(440, 24);
-            ItemForDescription.Text = "Açıqlama";
+            ItemForDescription.Text = Resources.Entity_PaymentHeader_Description;
             ItemForDescription.TextSize = new Size(74, 13);
             // 
             // ItemForFromCashRegCode
@@ -673,7 +682,7 @@ namespace Foxoft
             ItemForFromCashRegCode.Location = new Point(439, 0);
             ItemForFromCashRegCode.Name = "ItemForFromCashRegCode";
             ItemForFromCashRegCode.Size = new Size(172, 24);
-            ItemForFromCashRegCode.Text = "Kassadan";
+            ItemForFromCashRegCode.Text = Resources.Entity_PaymentHeader_FromCashRegCode;
             ItemForFromCashRegCode.TextSize = new Size(74, 13);
             // 
             // ItemForOperationDate
@@ -682,7 +691,7 @@ namespace Foxoft
             ItemForOperationDate.Location = new Point(0, 24);
             ItemForOperationDate.Name = "ItemForOperationDate";
             ItemForOperationDate.Size = new Size(439, 24);
-            ItemForOperationDate.Text = "Sənəd Tarixi";
+            ItemForOperationDate.Text = Resources.Entity_PaymentHeader_DocumentDate;
             ItemForOperationDate.TextSize = new Size(74, 13);
             // 
             // layoutControlItem2
@@ -718,7 +727,7 @@ namespace Foxoft
             Name = "FormMoneyTransfer";
             Ribbon = ribbon;
             StatusBar = ribbonStatusBar;
-            Text = "Kassalar Arası Transfer";
+            Text = Resources.Form_MoneyTransfer_Caption;
             ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);

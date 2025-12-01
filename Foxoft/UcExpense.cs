@@ -18,7 +18,7 @@ namespace Foxoft
     {
         subContext dbContext;
 
-        EfMethods efMethods = new EfMethods();
+        EfMethods efMethods = new();
         TrInvoiceHeader trInvoiceHeader;
         Guid invoiceHeaderId;
 
@@ -36,7 +36,7 @@ namespace Foxoft
         {
             TrInvoiceHeader invoiceHeader = new();
             invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
-            string NewDocNum = efMethods.GetNextDocNum(true, "EX", "DocumentNumber", "TrInvoiceHeaders", 6);
+            string NewDocNum = efMethods.GetNextDocNum(true, "EX", nameof(TrInvoiceHeader.DocumentNumber), nameof(subContext.TrInvoiceHeaders), 6);
             invoiceHeader.DocumentNumber = NewDocNum;
             invoiceHeader.DocumentDate = DateTime.Now;
             invoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
@@ -76,59 +76,57 @@ namespace Foxoft
 
             invoiceHeaderId = Guid.NewGuid();
 
-            dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
-                                      .Include(x => x.DcCurrAcc)
-                                      .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                      .Load();
+            dbContext.TrInvoiceHeaders
+                     .Include(x => x.DcProcess)
+                     .Include(x => x.DcCurrAcc)
+                     .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                     .Load();
 
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
-            dbContext.TrInvoiceLines.Include(x => x.DcProduct)
-                                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
-                                    .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
-                                    .LoadAsync()
-                                    .ContinueWith(loadTask =>
-                                    {
-                                        trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
-                                        gV_InvoiceLine.Focus();
-                                    }, TaskScheduler.FromCurrentSynchronizationContext());
+            dbContext.TrInvoiceLines
+                     .Include(x => x.DcProduct)
+                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                     .LoadAsync()
+                     .ContinueWith(loadTask =>
+                     {
+                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+                         gV_InvoiceLine.Focus();
+                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-
             Tag = btnEdit_DocNum.EditValue;
-
-            //checkEdit_IsReturn.Enabled = false;
         }
-
 
         private void LoadInvoice()
         {
-            SplashScreenManager.ShowForm(this.ParentForm, typeof(WaitForm), true, true, false);
+            SplashScreenManager.ShowForm(ParentForm, typeof(WaitForm), true, true, false);
 
             dbContext = new subContext();
 
-            dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
-                                      .Load();
+            dbContext.TrInvoiceHeaders
+                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                     .Load();
 
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
-            dbContext.TrInvoiceLines.Include(o => o.DcProduct)
-                                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
-                                    .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
-                                    .OrderBy(x => x.CreatedDate)
-                                    .LoadAsync()
-                                    .ContinueWith(loadTask =>
-                                    {
-                                        trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
-
-                                        gV_InvoiceLine.Focus();
-
-                                    }, TaskScheduler.FromCurrentSynchronizationContext());
+            dbContext.TrInvoiceLines
+                     .Include(o => o.DcProduct)
+                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                     .OrderBy(x => x.CreatedDate)
+                     .LoadAsync()
+                     .ContinueWith(loadTask =>
+                     {
+                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+                         gV_InvoiceLine.Focus();
+                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
@@ -144,7 +142,6 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     trInvoiceHeader.InvoiceHeaderId = form.trInvoiceHeader.InvoiceHeaderId;
-
                     LoadInvoice();
                 }
             }
@@ -165,7 +162,10 @@ namespace Foxoft
             {
                 if (e.KeyCode == Keys.Delete && gV_InvoiceLine.ActiveEditor == null)
                 {
-                    if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    if (MessageBox.Show(
+                            Resources.Form_Expense_RowDeleteQuestion,
+                            Resources.Common_Attention,
+                            MessageBoxButtons.YesNo) != DialogResult.Yes)
                         return;
 
                     gV_InvoiceLine.DeleteSelectedRows();
@@ -190,7 +190,7 @@ namespace Foxoft
 
                     gV_InvoiceLine.CloseEditor();
 
-                    e.Handled = true;   // Stop the character from being entered into the control.
+                    e.Handled = true;  // Stop the character from being entered into the control.
                 }
             }
         }
@@ -210,9 +210,9 @@ namespace Foxoft
                     editor.EditValue = form.dcProduct.ProductCode;
 
                     gV_InvoiceLine.CloseEditor();
-                    gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+                    gV_InvoiceLine.UpdateCurrentRow();
 
-                    gV_InvoiceLine.FocusedColumn = colPrice;
+                    gV_InvoiceLine.FocusedColumn = colPrice; // Price column
                 }
             }
             catch (Exception ex)
@@ -229,14 +229,11 @@ namespace Foxoft
 
                 if (row != null)
                 {
-                    var tracked = dbContext.TrInvoiceLines.Where(x => x.DcProduct.ProductCode == row.ProductCode).Select(x => x.DcProduct);
-
-                    //if (tracked == null) // already tracked xetasi vermesin deye
-                    //    dbContext.Attach(tracked); // dbsavechanges eliyende dcproductu insert elemeye calismasin deye
+                    var tracked = dbContext.TrInvoiceLines
+                                           .Where(x => x.DcProduct.ProductCode == row.ProductCode)
+                                           .Select(x => x.DcProduct);
 
                     row.DcProduct = tracked.FirstOrDefault();
-
-                    //gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
                 }
             }
         }
@@ -252,9 +249,9 @@ namespace Foxoft
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            //TrInvoiceHeader trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
             if (!efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
                 dbContext.TrInvoiceHeaders.Add(trInvoiceHeader);
+
             dbContext.SaveChanges();
             efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
@@ -265,13 +262,13 @@ namespace Foxoft
         {
             if (new Type[] { typeof(decimal), typeof(float), typeof(Single) }.Contains(gV_InvoiceLine.FocusedColumn.ColumnType))
             {
-                TextEdit? editor = gV_InvoiceLine.ActiveEditor as TextEdit;
+                TextEdit editor = gV_InvoiceLine.ActiveEditor as TextEdit;
                 if (editor != null)
                 {
                     CultureInfo customCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
                     customCulture.NumberFormat.NumberDecimalSeparator = ".";
                     editor.Properties.Mask.MaskType = MaskType.Numeric;
-                    editor.Properties.Mask.Culture = customCulture; // Ensure '.' is used
+                    editor.Properties.Mask.Culture = customCulture;
                 }
             }
         }
@@ -283,7 +280,7 @@ namespace Foxoft
 
             if (column == colBarcode || column == colProductCode)
             {
-                string eValue = (e.Value ??= String.Empty).ToString();
+                string eValue = (e.Value ??= string.Empty).ToString();
 
                 if (!string.IsNullOrEmpty(eValue))
                 {
@@ -292,20 +289,17 @@ namespace Foxoft
                     if (column == colBarcode)
                         product = efMethods.SelectProductByBarcode(eValue);
                     if (column == colProductCode)
-                    {
                         product = efMethods.SelectExpense(eValue);
-                    }
 
                     if (product is not null)
                     {
                         gV_InvoiceLine.SetRowCellValue(view.FocusedRowHandle, colProductCode, product.ProductCode);
-                        view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
-
-                        view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
+                        view.UpdateCurrentRow();
+                        view.SetRowCellValue(view.FocusedRowHandle, colQtyIn, 1);
                     }
                     else
                     {
-                        e.ErrorText = "Belə bir məhsul yoxdur";
+                        e.ErrorText = Resources.Form_Expense_ProductNotFound;
                         e.Valid = false;
                     }
                 }
@@ -319,8 +313,7 @@ namespace Foxoft
         private void GV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
-            e.WindowCaption = "Diqqət";
+            e.WindowCaption = Resources.Common_Attention;
         }
-
     }
 }

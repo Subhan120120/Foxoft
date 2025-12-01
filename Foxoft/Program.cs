@@ -58,8 +58,6 @@ namespace Foxoft
                 }
             }
 
-
-
             bool SqlServerConnected()
             {
                 string connString = Settings.Default.MainConnString;
@@ -80,7 +78,13 @@ namespace Foxoft
                     }
                     catch (Exception ex)
                     {
-                        XtraMessageBox.Show($"Server ilə əlaqə qurula bilmir. \nConnection string: \n{builder.ConnectionString} \nError: {ex.Message}", "Diqqət");
+                        XtraMessageBox.Show(
+                            string.Format(
+                                Resources.Message_ServerConnectionError,
+                                builder.ConnectionString,
+                                ex.Message),
+                            Resources.Common_Attention);
+
                         return false;
                     }
                 }
@@ -99,7 +103,9 @@ namespace Foxoft
                 GoogleDriveAPI googleDriveAPI = new();
                 string result = googleDriveAPI.Drive();
 
-                string[] txtLisence = result.Split(new string[] { " ", "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                string[] txtLisence = result.Split(
+                    new string[] { " ", "\r\n", "\r", "\n" },
+                    StringSplitOptions.None);
 
                 if (txtLisence is not null && txtLisence.Length % 3 == 0)
                 {

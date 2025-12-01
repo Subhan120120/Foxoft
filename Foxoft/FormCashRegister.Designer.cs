@@ -1,11 +1,16 @@
 ﻿
+// =====================================
+// FormCashRegister.Designer.cs (updated)
+// =====================================
+using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormCashRegister
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
+    {   
+            /// <summary>
+             /// Required designer variable.
+             /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
@@ -74,9 +79,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForIsDisabled).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             SuspendLayout();
-            // 
+            //
             // dataLayoutControl1
-            // 
+            //
             dataLayoutControl1.Controls.Add(btn_Cancel);
             dataLayoutControl1.Controls.Add(btn_Ok);
             dataLayoutControl1.Controls.Add(CurrAccCodeTextEdit);
@@ -89,62 +94,60 @@ namespace Foxoft
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.Location = new Point(0, 0);
             dataLayoutControl1.Name = "dataLayoutControl1";
-            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(1023, 140, 650, 400);
-            dataLayoutControl1.OptionsFocus.MoveFocusRightToLeft = false;
             dataLayoutControl1.Root = Root;
             dataLayoutControl1.Size = new Size(600, 156);
             dataLayoutControl1.TabIndex = 0;
             dataLayoutControl1.Text = "dataLayoutControl1";
             dataLayoutControl1.FieldRetrieving += dataLayoutControl1_FieldRetrieving;
-            // 
+            //
             // btn_Cancel
-            // 
+            //
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.Location = new Point(436, 84);
             btn_Cancel.Name = "btn_Cancel";
             btn_Cancel.Size = new Size(74, 60);
             btn_Cancel.StyleController = dataLayoutControl1;
             btn_Cancel.TabIndex = 19;
-            btn_Cancel.Text = "simpleButton2";
-            // 
+            btn_Cancel.Text = Resources.Common_Cancel;
+            //
             // btn_Ok
-            // 
+            //
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.Location = new Point(514, 84);
             btn_Ok.Name = "btn_Ok";
             btn_Ok.Size = new Size(74, 60);
             btn_Ok.StyleController = dataLayoutControl1;
             btn_Ok.TabIndex = 20;
-            btn_Ok.Text = "simpleButton1";
+            btn_Ok.Text = Resources.Common_Ok;
             btn_Ok.Click += btn_Ok_Click;
-            // 
+            //
             // CurrAccCodeTextEdit
-            // 
+            //
             CurrAccCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccCode", true));
             CurrAccCodeTextEdit.Location = new Point(122, 12);
             CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
             CurrAccCodeTextEdit.Size = new Size(175, 20);
             CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
             CurrAccCodeTextEdit.TabIndex = 0;
-            // 
+            //
             // dcCurrAccsBindingSource
-            // 
+            //
             dcCurrAccsBindingSource.DataSource = typeof(Models.DcCurrAcc);
             dcCurrAccsBindingSource.AddingNew += dcCurrAccsBindingSource_AddingNew;
-            // 
+            //
             // IsDisabledCheckEdit
-            // 
+            //
             IsDisabledCheckEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "IsDisabled", true));
             IsDisabledCheckEdit.Location = new Point(301, 60);
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
-            IsDisabledCheckEdit.Properties.Caption = "Qeyri-Aktiv";
+            IsDisabledCheckEdit.Properties.Caption = Resources.Entity_CurrAcc_IsDisabled;
             IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             IsDisabledCheckEdit.Size = new Size(287, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
             IsDisabledCheckEdit.TabIndex = 17;
-            // 
+            //
             // CurrAccTypeCodeLookUpEdit
-            // 
+            //
             CurrAccTypeCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccTypeCode", true));
             CurrAccTypeCodeLookUpEdit.Location = new Point(122, 36);
             CurrAccTypeCodeLookUpEdit.Name = "CurrAccTypeCodeLookUpEdit";
@@ -158,18 +161,18 @@ namespace Foxoft
             CurrAccTypeCodeLookUpEdit.Size = new Size(175, 20);
             CurrAccTypeCodeLookUpEdit.StyleController = dataLayoutControl1;
             CurrAccTypeCodeLookUpEdit.TabIndex = 3;
-            // 
+            //
             // CurrAccDescTextEdit
-            // 
+            //
             CurrAccDescTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccDesc", true));
             CurrAccDescTextEdit.Location = new Point(122, 60);
             CurrAccDescTextEdit.Name = "CurrAccDescTextEdit";
             CurrAccDescTextEdit.Size = new Size(175, 20);
             CurrAccDescTextEdit.StyleController = dataLayoutControl1;
             CurrAccDescTextEdit.TabIndex = 5;
-            // 
+            //
             // OfficeCodeLookUpEdit
-            // 
+            //
             OfficeCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "OfficeCode", true));
             OfficeCodeLookUpEdit.Location = new Point(411, 36);
             OfficeCodeLookUpEdit.Name = "OfficeCodeLookUpEdit";
@@ -182,9 +185,9 @@ namespace Foxoft
             OfficeCodeLookUpEdit.Size = new Size(177, 20);
             OfficeCodeLookUpEdit.StyleController = dataLayoutControl1;
             OfficeCodeLookUpEdit.TabIndex = 6;
-            // 
+            //
             // StoreCodeLookUpEdit
-            // 
+            //
             StoreCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "StoreCode", true));
             StoreCodeLookUpEdit.Location = new Point(411, 12);
             StoreCodeLookUpEdit.Name = "StoreCodeLookUpEdit";
@@ -196,135 +199,118 @@ namespace Foxoft
             StoreCodeLookUpEdit.Size = new Size(177, 20);
             StoreCodeLookUpEdit.StyleController = dataLayoutControl1;
             StoreCodeLookUpEdit.TabIndex = 2;
-            // 
+            //
             // Root
-            // 
-            Root.CustomizationFormText = "Root";
+            //
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { autoGeneratedGroup0 });
             Root.Name = "Root";
             Root.Size = new Size(600, 156);
             Root.TextVisible = false;
-            // 
+            //
             // autoGeneratedGroup0
-            // 
+            //
             autoGeneratedGroup0.AllowDrawBackground = false;
-            autoGeneratedGroup0.CustomizationFormText = "autoGeneratedGroup0";
             autoGeneratedGroup0.GroupBordersVisible = false;
             autoGeneratedGroup0.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForCurrAccCode, ItemForCurrAccTypeCode, layoutControlItem1, layoutControlItem2, emptySpaceItem1, ItemForCurrAccDesc, ItemForOfficeCode, ItemForStoreCode, ItemForIsDisabled });
             autoGeneratedGroup0.Location = new Point(0, 0);
             autoGeneratedGroup0.Name = "autoGeneratedGroup0";
             autoGeneratedGroup0.Size = new Size(580, 136);
-            // 
+            //
             // ItemForCurrAccCode
-            // 
+            //
             ItemForCurrAccCode.Control = CurrAccCodeTextEdit;
-            ItemForCurrAccCode.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForCurrAccCode.CustomizationFormText = "Cari Hesab Kodu";
             ItemForCurrAccCode.Location = new Point(0, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
             ItemForCurrAccCode.Size = new Size(289, 24);
-            ItemForCurrAccCode.Text = "Cari Hesab Kodu";
+            ItemForCurrAccCode.Text = Resources.Entity_CurrAcc_CurrAccCode;
             ItemForCurrAccCode.TextSize = new Size(98, 13);
-            // 
+            //
             // ItemForCurrAccTypeCode
-            // 
+            //
             ItemForCurrAccTypeCode.Control = CurrAccTypeCodeLookUpEdit;
-            ItemForCurrAccTypeCode.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForCurrAccTypeCode.CustomizationFormText = "Cari Hesab Tipi Kodu";
             ItemForCurrAccTypeCode.Location = new Point(0, 24);
             ItemForCurrAccTypeCode.Name = "ItemForCurrAccTypeCode";
             ItemForCurrAccTypeCode.Size = new Size(289, 24);
-            ItemForCurrAccTypeCode.Text = "Cari Hesab Tipi Kodu";
+            ItemForCurrAccTypeCode.Text = Resources.Entity_CurrAcc_CurrAccTypeCode;
             ItemForCurrAccTypeCode.TextSize = new Size(98, 13);
-            // 
-            // layoutControlItem1
-            // 
+            //
+            // layoutControlItem1 (OK button)
+            //
             layoutControlItem1.Control = btn_Ok;
-            layoutControlItem1.ControlAlignment = ContentAlignment.TopLeft;
-            layoutControlItem1.CustomizationFormText = "layoutControlItem1";
             layoutControlItem1.Location = new Point(502, 72);
             layoutControlItem1.MinSize = new Size(78, 26);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(78, 64);
             layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
-            // 
-            // layoutControlItem2
-            // 
+            //
+            // layoutControlItem2 (Cancel button)
+            //
             layoutControlItem2.Control = btn_Cancel;
-            layoutControlItem2.ControlAlignment = ContentAlignment.TopLeft;
-            layoutControlItem2.CustomizationFormText = "layoutControlItem2";
             layoutControlItem2.Location = new Point(424, 72);
             layoutControlItem2.MinSize = new Size(78, 26);
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(78, 64);
             layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
-            // 
+            //
             // emptySpaceItem1
-            // 
+            //
             emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
             emptySpaceItem1.Location = new Point(0, 72);
             emptySpaceItem1.Name = "emptySpaceItem1";
             emptySpaceItem1.Size = new Size(424, 64);
             emptySpaceItem1.TextSize = new Size(0, 0);
-            // 
+            //
             // ItemForCurrAccDesc
-            // 
+            //
             ItemForCurrAccDesc.Control = CurrAccDescTextEdit;
             ItemForCurrAccDesc.Location = new Point(0, 48);
             ItemForCurrAccDesc.Name = "ItemForCurrAccDesc";
             ItemForCurrAccDesc.Size = new Size(289, 24);
-            ItemForCurrAccDesc.Text = "Cari Hesab Adı";
+            ItemForCurrAccDesc.Text = Resources.Entity_CurrAcc_CurrAccDesc;
             ItemForCurrAccDesc.TextSize = new Size(98, 13);
-            // 
+            //
             // ItemForOfficeCode
-            // 
+            //
             ItemForOfficeCode.Control = OfficeCodeLookUpEdit;
             ItemForOfficeCode.Location = new Point(289, 24);
             ItemForOfficeCode.Name = "ItemForOfficeCode";
             ItemForOfficeCode.Size = new Size(291, 24);
-            ItemForOfficeCode.Text = "Ofis";
+            ItemForOfficeCode.Text = Resources.Entity_CurrAcc_OfficeCode;
             ItemForOfficeCode.TextSize = new Size(98, 13);
-            // 
+            //
             // ItemForStoreCode
-            // 
+            //
             ItemForStoreCode.Control = StoreCodeLookUpEdit;
             ItemForStoreCode.Location = new Point(289, 0);
             ItemForStoreCode.Name = "ItemForStoreCode";
             ItemForStoreCode.Size = new Size(291, 24);
-            ItemForStoreCode.Text = "Mağaza";
+            ItemForStoreCode.Text = Resources.Entity_CurrAcc_StoreCode;
             ItemForStoreCode.TextSize = new Size(98, 13);
-            // 
+            //
             // ItemForIsDisabled
-            // 
+            //
             ItemForIsDisabled.Control = IsDisabledCheckEdit;
-            ItemForIsDisabled.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForIsDisabled.CustomizationFormText = "Qeyri-Aktiv";
             ItemForIsDisabled.Location = new Point(289, 48);
             ItemForIsDisabled.Name = "ItemForIsDisabled";
             ItemForIsDisabled.Size = new Size(291, 24);
-            ItemForIsDisabled.Text = "Qeyri-Aktiv";
-            ItemForIsDisabled.TextSize = new Size(0, 0);
             ItemForIsDisabled.TextVisible = false;
-            // 
+            //           
             // bindingSource1
             // 
             bindingSource1.DataSource = typeof(Models.DcCurrAcc);
             // 
             // FormCashRegister
-            // 
+            //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(600, 156);
             Controls.Add(dataLayoutControl1);
             Name = "FormCashRegister";
-            Text = "Cari Hesab";
+            Text = Resources.Form_CashRegister_Caption;
             Load += FormCashRegister_Load;
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);

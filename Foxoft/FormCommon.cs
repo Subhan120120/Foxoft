@@ -7,6 +7,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
@@ -62,7 +63,6 @@ namespace Foxoft
         private void FormCommon_Load(object sender, EventArgs e)
         {
             RetrieveFields();
-
             FillDataLayout();
         }
 
@@ -198,14 +198,11 @@ namespace Foxoft
             Control_Id.Control.Text = NewDocNum;
         }
 
-
         private void btn_Ok_Click(object sender, EventArgs e)
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
                 Entity = bindingSource1.Current as T;
-
-                //string id = Control_Id.Control.value;
 
                 Func<T, bool> predicate_id = ConvertToPredicate(FieldName_Id, Value_Id);
                 Func<T, bool> predicate_2 = string.IsNullOrEmpty(FieldName_2) ? _ => true : ConvertToPredicate(FieldName_2, Value_2);
@@ -217,7 +214,7 @@ namespace Foxoft
                         dbContext.SaveChanges();
                     }
                     else
-                        MessageBox.Show("Bu kodda məlumat artıq mövcuddur.");
+                        MessageBox.Show(Resources.Form_Common_Exists);
                 else
                     dbContext.SaveChanges();
 
@@ -278,68 +275,67 @@ namespace Foxoft
 
         private void dataLayoutControl1_FieldRetrieved(object sender, FieldRetrievedEventArgs e)
         {
-
-            if (e.FieldName == nameof(DcProduct.ProductCode)) // add FieldRetrieving too
+            if (e.FieldName == nameof(DcProduct.ProductCode))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ProductCode_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcCurrAcc.CurrAccCode)) // add FieldRetrieving too
+            if (e.FieldName == nameof(DcCurrAcc.CurrAccCode))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_CurrAccCode_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcDiscount.DiscountId))// add FieldRetrieving too
+            if (e.FieldName == nameof(DcDiscount.DiscountId))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_DiscountId_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcForm.FormCode))// add FieldRetrieving too
+            if (e.FieldName == nameof(DcForm.FormCode))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FormCode_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcReport.ReportId))// add FieldRetrieving too
+            if (e.FieldName == nameof(DcReport.ReportId))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ReportId_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcRole.RoleCode))// add FieldRetrieving too
+            if (e.FieldName == nameof(DcRole.RoleCode))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_RoleCode_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcHierarchy.HierarchyCode))// add FieldRetrieving too
+            if (e.FieldName == nameof(DcHierarchy.HierarchyCode))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_HierarchyCode_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcFeatureType.FeatureTypeId))// add FieldRetrieving too
+            if (e.FieldName == nameof(DcFeatureType.FeatureTypeId))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FeatureTypeId_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcClaim.ClaimCode))// add FieldRetrieving too
+            if (e.FieldName == nameof(DcClaim.ClaimCode))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCode_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcClaimCategory.CategoryId))// add FieldRetrieving too
+            if (e.FieldName == nameof(DcClaimCategory.CategoryId))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCategoryId_ButtonPressed);
             }
-            if (e.FieldName == nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId))// add FieldRetrieving too
+            if (e.FieldName == nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId))
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)

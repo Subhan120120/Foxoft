@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+    using Foxoft.Properties;
 using System;
 using System.Windows.Forms;
 
@@ -8,11 +9,12 @@ namespace Foxoft
     {
         public decimal Cash { get; set; }
         public decimal Change { get; set; }
-        public FormChange(decimal Cash, decimal Change)
+
+        public FormChange(decimal cash, decimal change)
         {
             InitializeComponent();
-            this.Cash = Cash;
-            this.Change = Change;
+            Cash = cash;
+            Change = change;
             AcceptButton = btn_Ok;
         }
 

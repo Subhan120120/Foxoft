@@ -1,4 +1,5 @@
 ﻿using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -122,7 +123,42 @@ namespace Foxoft
             editorButtonImageOptions1.SvgImageSize = new Size(16, 16);
             editorButtonImageOptions2.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions2.SvgImage");
             editorButtonImageOptions2.SvgImageSize = new Size(16, 16);
-            RepoBtnEdit_BarcodeGenerate.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+            RepoBtnEdit_BarcodeGenerate.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(
+                    DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph,
+                    "",
+                    -1,
+                    true,
+                    true,
+                    false,
+                    editorButtonImageOptions1,
+                    new DevExpress.Utils.KeyShortcut(Keys.None),
+                    serializableAppearanceObject1,
+                    serializableAppearanceObject2,
+                    serializableAppearanceObject3,
+                    serializableAppearanceObject4,
+                    "",
+                    null,
+                    null,
+                    DevExpress.Utils.ToolTipAnchor.Default),
+                new DevExpress.XtraEditors.Controls.EditorButton(
+                    DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph,
+                    "",
+                    -1,
+                    true,
+                    true,
+                    false,
+                    editorButtonImageOptions2,
+                    new DevExpress.Utils.KeyShortcut(Keys.None),
+                    serializableAppearanceObject5,
+                    serializableAppearanceObject6,
+                    serializableAppearanceObject7,
+                    serializableAppearanceObject8,
+                    "",
+                    null,
+                    null,
+                    DevExpress.Utils.ToolTipAnchor.Default)
+            });
             RepoBtnEdit_BarcodeGenerate.Name = "RepoBtnEdit_BarcodeGenerate";
             RepoBtnEdit_BarcodeGenerate.ButtonPressed += RepoBtnEdit_Barcode_ButtonPressed;
             // 
@@ -143,7 +179,7 @@ namespace Foxoft
             // 
             // colProductCode
             // 
-            colProductCode.ColumnEdit = RepoBtnEdit_ProductCode;
+           colProductCode.ColumnEdit = RepoBtnEdit_ProductCode;
             colProductCode.FieldName = "ProductCode";
             colProductCode.Name = "colProductCode";
             // 
@@ -200,7 +236,7 @@ namespace Foxoft
             // BBI_PrintBarcode
             // 
             BBI_PrintBarcode.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
-            BBI_PrintBarcode.Caption = "Barkod";
+            BBI_PrintBarcode.Caption = Resources.Common_Barcode;
             BBI_PrintBarcode.Id = 1;
             BBI_PrintBarcode.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_PrintBarcode.ImageOptions.SvgImage");
             BBI_PrintBarcode.Name = "BBI_PrintBarcode";
@@ -210,13 +246,13 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "ribbonPage1";
+            ribbonPage1.Text = Resources.Form_ProductBarcode_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
             ribbonPageGroup1.ItemLinks.Add(BBI_PrintBarcode);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "İdarə";
+            ribbonPageGroup1.Text = Resources.Form_ProductBarcode_RibbonGroup_Manage;
             // 
             // repositoryItemLookUpEdit1
             // 
@@ -241,7 +277,7 @@ namespace Foxoft
             KeyPreview = true;
             Name = "FormProductBarcode";
             Ribbon = ribbonControl1;
-            Text = "FormBarcode";
+            Text = Resources.Form_ProductBarcode_Caption;
             KeyDown += FormProductBarcode_KeyDown;
             ((System.ComponentModel.ISupportInitialize)GC_ProductBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceProductBarcode).EndInit();

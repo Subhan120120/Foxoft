@@ -295,10 +295,10 @@
     <value>Giriş Modu</value>
   </data>
   <data name="Entity_AppSetting_OptimizeDatabaseIndexes" xml:space="preserve">
-    <value>Verilənlər Bazası İndekslərini Optimallaşdırın ({0}%)</value>
+    <value>Verilənlər bazası indekslərini optimallaşdırın ({0}%)</value>
   </data>
   <data name="Common_Save" xml:space="preserve">
-    <value>Yadda Saxla</value>
+    <value>Yadda saxla</value>
   </data>
   <data name="Entity_AppSetting_AutoPrint" xml:space="preserve">
     <value>Avtomatik Çap</value>
@@ -307,13 +307,13 @@
     <value>Printer Adı</value>
   </data>
   <data name="Entity_AppSetting_UsePriceList" xml:space="preserve">
-    <value>Qiymət Cədvəli İstifadə Et</value>
+    <value>Qiymət Siyahısından istifadə et</value>
   </data>
   <data name="Entity_AppSetting_PrintCount" xml:space="preserve">
-    <value>Çap Sayı</value>
+    <value>Çap sayı</value>
   </data>
   <data name="Entity_AppSetting_PrintDesignPath" xml:space="preserve">
-    <value>Print Dizayn Yolu</value>
+    <value>Çap Dizayn Yolu</value>
   </data>
   <data name="Entity_AppSetting_LocalCurrencyCode" xml:space="preserve">
     <value>Yerli Valyuta Kodu</value>
@@ -331,13 +331,13 @@
     <value>Avtomatik Yadda Saxla</value>
   </data>
   <data name="Entity_AppSetting_GridViewLayout" xml:space="preserve">
-    <value>Cədvəl Dizaynı</value>
+    <value>GridView Quruluşu</value>
   </data>
   <data name="Entity_AppSetting_InvoiceEditGraceDays" xml:space="preserve">
-    <value>Faktura Redaktə Üçün Möhlət Günləri</value>
+    <value>Faktura düzəliş limiti (gün)</value>
   </data>
   <data name="Entity_AppSetting_PaymentEditGraceDays" xml:space="preserve">
-    <value>Ödəniş Redaktə Üçün Möhlət Günləri</value>
+    <value>Ödəniş düzəliş limiti (gün)</value>
   </data>
   <data name="Entity_AppSetting_DefaultUnitOfMeasureId" xml:space="preserve">
     <value>Ölçü Vahidi ID</value>
@@ -469,7 +469,7 @@
     <value>Ofis</value>
   </data>
   <data name="Entity_CurrAcc_StoreCode" xml:space="preserve">
-    <value>Mağaza Kodu</value>
+    <value>Mağaza</value>
   </data>
   <data name="Entity_CurrAcc_FirstName" xml:space="preserve">
     <value>Adı</value>
@@ -525,7 +525,7 @@
   <data name="Entity_CurrAcc_BonusCardNum" xml:space="preserve">
     <value>Bonus Kartı</value>
   </data>
-  <data name="Common_Address" xml:space="preserve">
+  <data name="Entity_CurrAcc_Address" xml:space="preserve">
     <value>Adres</value>
   </data>
   <data name="Common_Phone" xml:space="preserve">
@@ -872,9 +872,6 @@
   </data>
   <data name="Entity_ProductScale_Id" xml:space="preserve">
     <value>Özəllik Kodu</value>
-  </data>
-  <data name="Entity_ProductScale_Number" xml:space="preserve">
-    <value>Tərəzi Məhsul Nömrəsi</value>
   </data>
   <data name="Entity_ProductScale_UseInScale" xml:space="preserve">
     <value>Tərəzi İstifadə Et</value>
@@ -1818,10 +1815,1671 @@
   <data name="Common_PriceList" xml:space="preserve">
     <value>Qiymət Siyahısı</value>
   </data>
-  <data name="Common_Apply" xml:space="preserve">
-    <value>Tətbiq Et</value>
-  </data>
   <data name="Common_Site" xml:space="preserve">
     <value>Sayt</value>
+  </data>
+  <data name="Form_AppSetting_Caption" xml:space="preserve">
+    <value>Tətbiq Ayarları</value>
+  </data>
+  <data name="Entity_AppSetting_ClearMemory" xml:space="preserve">
+    <value>RAM-ı təmizlə</value>
+  </data>
+  <data name="Entity_AppSetting_OptimizeDatabaseIndexes_Button" xml:space="preserve">
+    <value>İndeksləri optimallaşdır</value>
+  </data>
+  <data name="Common_Ok" xml:space="preserve">
+    <value>Təsdiq et</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Ləğv et</value>
+  </data>
+  <data name="Form_CashRegister_Caption" xml:space="preserve">
+    <value>Cari Hesab</value>
+  </data>
+  <data name="Entity_CurrAcc_CurrAccCode" xml:space="preserve">
+    <value>Cari Hesab Kodu</value>
+  </data>
+  <data name="Entity_CurrAcc_CurrAccTypeCode" xml:space="preserve">
+    <value>Cari Hesab Tipi Kodu</value>
+  </data>
+  <data name="Entity_CurrAcc_CurrAccDesc" xml:space="preserve">
+    <value>Cari Hesab Adı</value>
+  </data>
+  <data name="Entity_CurrAcc_OfficeCode" xml:space="preserve">
+    <value>Ofis</value>
+  </data>
+  <data name="Entity_CurrAcc_IsDisabled" xml:space="preserve">
+    <value>Qeyri-Aktiv</value>
+  </data>
+  <data name="Common_New" xml:space="preserve">
+    <value>Yeni</value>
+  </data>
+  <data name="Common_Edit" xml:space="preserve">
+    <value>Dəyiş</value>
+  </data>
+  <data name="Common_Refresh" xml:space="preserve">
+    <value>Yenilə</value>
+  </data>
+  <data name="Common_ExportToExcel" xml:space="preserve">
+    <value>Excelə göndər</value>
+  </data>
+  <data name="Common_Report" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="Common_Settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="Common_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Common_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Common_SaveLayout" xml:space="preserve">
+    <value>Quruluşu yadda saxla</value>
+  </data>
+  <data name="Common_OpenQuestion" xml:space="preserve">
+    <value>Açmaq istəyirsiniz?</value>
+  </data>
+  <data name="Common_File_Excel" xml:space="preserve">
+    <value>Excel Faylı</value>
+  </data>
+  <data name="Common_File_SaveExcel" xml:space="preserve">
+    <value>Excel faylını yadda saxla</value>
+  </data>
+  <data name="Common_NotFound" xml:space="preserve">
+    <value>Tapılmadı</value>
+  </data>
+  <data name="Form_CashRegisterList_Caption" xml:space="preserve">
+    <value>Kassa (Cari Hesablar)</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonPage_Main" xml:space="preserve">
+    <value>Cari Hesab</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonGroup_Manage" xml:space="preserve">
+    <value>İdarə</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonGroup_Report" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonPage_Settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="Form_CashRegisterList_RibbonGroup_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Form_CashRegisterList_NotFoundReport" xml:space="preserve">
+    <value>Report_Embedded_CashRegList sorğusu DcReports cədvəlində tapılmadı</value>
+  </data>
+  <data name="Message_DeleteConfirm" xml:space="preserve">
+    <value>Silmək istəyirsiniz?
+ {0}</value>
+  </data>
+  <data name="Message_NoCurrAccToDelete" xml:space="preserve">
+    <value>Silinməli olan cari yoxdur</value>
+  </data>
+  <data name="Message_SelectCurrAcc" xml:space="preserve">
+    <value>Cari Hesab Seçin</value>
+  </data>
+  <data name="Common_Query" xml:space="preserve">
+    <value>Sorğu</value>
+  </data>
+  <data name="Form_Change_Caption" xml:space="preserve">
+    <value>Pul qalığı</value>
+  </data>
+  <data name="Form_Change_Label_Cash" xml:space="preserve">
+    <value>Nağd ödəmə</value>
+  </data>
+  <data name="Form_Change_Label_Change" xml:space="preserve">
+    <value>Pul qalığı</value>
+  </data>
+  <data name="Common_Clear" xml:space="preserve">
+    <value>Təmizlə</value>
+  </data>
+  <data name="Common_Select" xml:space="preserve">
+    <value>Seç</value>
+  </data>
+  <data name="Form_ClaimCategoryList_Caption" xml:space="preserve">
+    <value>Yetki Kateqoriyaları</value>
+  </data>
+  <data name="Form_ClaimCategoryList_Button_Claims" xml:space="preserve">
+    <value>Yetkilər</value>
+  </data>
+  <data name="Form_Common_Exists" xml:space="preserve">
+    <value>Bu kodla data artıq mövcuddur.</value>
+  </data>
+  <data name="Common_Operations" xml:space="preserve">
+    <value>Əməliyyatlar</value>
+  </data>
+  <data name="Common_Tools" xml:space="preserve">
+    <value>Alətlər</value>
+  </data>
+  <data name="Message_ConfirmDelete" xml:space="preserve">
+    <value>Silmək istəyirsinizmi?
+{0}</value>
+  </data>
+  <data name="Message_NoRowSelected" xml:space="preserve">
+    <value>Sətir seçilməyib.</value>
+  </data>
+  <data name="Form_Connection_Caption" xml:space="preserve">
+    <value>Bağlantı Sətiri Qurucu</value>
+  </data>
+  <data name="Form_Connection_Server" xml:space="preserve">
+    <value>Server:</value>
+  </data>
+  <data name="Form_Connection_Database" xml:space="preserve">
+    <value>Databaza:</value>
+  </data>
+  <data name="Form_Connection_User" xml:space="preserve">
+    <value>İstifadəçi:</value>
+  </data>
+  <data name="Form_Connection_Password" xml:space="preserve">
+    <value>Şifrə:</value>
+  </data>
+  <data name="Form_Connection_ConnectionString" xml:space="preserve">
+    <value>Bağlantı sətiri</value>
+  </data>
+  <data name="Form_Connection_TestConnection" xml:space="preserve">
+    <value>Bağlantını yoxla</value>
+  </data>
+  <data name="Form_Connection_CreateDatabase" xml:space="preserve">
+    <value>Databaza yarat</value>
+  </data>
+  <data name="Form_Connection_Save" xml:space="preserve">
+    <value>Yadda saxla</value>
+  </data>
+  <data name="Form_Connection_Result_Success" xml:space="preserve">
+    <value>Bağlantı uğurludur!</value>
+  </data>
+  <data name="Form_Connection_Result_Fail" xml:space="preserve">
+    <value>Bağlantı alınmadı: {0}</value>
+  </data>
+  <data name="Form_Connection_Saved" xml:space="preserve">
+    <value>Bağlantı sətiri uğurla yadda saxlanıldı.</value>
+  </data>
+  <data name="Form_Connection_DbExists" xml:space="preserve">
+    <value>Databaza mövcuddur.</value>
+  </data>
+  <data name="Form_Connection_DbCreated" xml:space="preserve">
+    <value>Databaza uğurla yaradıldı.</value>
+  </data>
+  <data name="Form_CurrAcc_Group_Personal" xml:space="preserve">
+    <value>Şəxsi</value>
+  </data>
+  <data name="Form_CurrAcc_Group_Extra" xml:space="preserve">
+    <value>Əlavə</value>
+  </data>
+  <data name="Form_CurrAcc_Bar_Features" xml:space="preserve">
+    <value>Özəllik</value>
+  </data>
+  <data name="Form_CurrAcc_Bar_ContactDetail" xml:space="preserve">
+    <value>Əlaqə</value>
+  </data>
+  <data name="Validation_Phone_ExistsInAnotherCurrAcc" xml:space="preserve">
+    <value>Bu nömrə başqa Cari Hesabda mövcuddur.</value>
+  </data>
+  <data name="Entity_CurrAcc_IsVIP" xml:space="preserve">
+    <value>VIP-dir</value>
+  </data>
+  <data name="Form_CurrAccFeature_Caption" xml:space="preserve">
+    <value>Cari Hesab Özəllikləri</value>
+  </data>
+  <data name="Form_CurrAccList_Caption" xml:space="preserve">
+    <value>Cari Hesablar</value>
+  </data>
+  <data name="Form_CurrAccList_RibbonPage_Main" xml:space="preserve">
+    <value>Cari Hesab</value>
+  </data>
+  <data name="Form_CurrAccList_RibbonGroup_Manage" xml:space="preserve">
+    <value>İdarə</value>
+  </data>
+  <data name="Form_CurrAccList_Menu_CustomerReconciliation" xml:space="preserve">
+    <value>Müştəri ilə Haqq Hesab</value>
+  </data>
+  <data name="Form_CurrAccList_Menu_ProductMovements" xml:space="preserve">
+    <value>Malın Bütün Hərəkəti</value>
+  </data>
+  <data name="Common_DeleteConfirm" xml:space="preserve">
+    <value>Silmək istəyirsiniz?</value>
+  </data>
+  <data name="Form_CurrAccList_NoAccountToDelete" xml:space="preserve">
+    <value>Silinməli olan cari yoxdur.</value>
+  </data>
+  <data name="Form_CurrAccList_SelectAccount" xml:space="preserve">
+    <value>Zəhmət olmasa cari hesab seçin.</value>
+  </data>
+  <data name="Common_File_ExcelFilter" xml:space="preserve">
+    <value>Excel Faylı|*.xlsx</value>
+  </data>
+  <data name="Form_CurrAccProfile_Caption" xml:space="preserve">
+    <value>Cari Hesab Profili</value>
+  </data>
+  <data name="Form_CurrAccProfile_RibbonPage_Main" xml:space="preserve">
+    <value>Cari Hesab Yetkisi</value>
+  </data>
+  <data name="Form_CurrAccProfile_RibbonGroup_CurrAccRole" xml:space="preserve">
+    <value>Cari Hesab Rolu</value>
+  </data>
+  <data name="Form_CurrAccProfile_RibbonGroup_RoleClaim" xml:space="preserve">
+    <value>Rol Yetkisi</value>
+  </data>
+  <data name="Form_CurrAccProfile_Button_Permissions" xml:space="preserve">
+    <value>Yetkilər</value>
+  </data>
+  <data name="Form_CurrAccProfile_Label_ClaimReport" xml:space="preserve">
+    <value>Hesabat Yetkisi</value>
+  </data>
+  <data name="Common_NewPassword" xml:space="preserve">
+    <value>Yeni Şifrə</value>
+  </data>
+  <data name="Common_ConfirmPassword" xml:space="preserve">
+    <value>Şifrəni Təsdiqlə</value>
+  </data>
+  <data name="Common_Validation_PasswordConfirmMismatch" xml:space="preserve">
+    <value>Təsdiq şifrəsi eyni deyil!</value>
+  </data>
+  <data name="Form_CurrAccSession_Caption" xml:space="preserve">
+    <value>İstifadəçilər</value>
+  </data>
+  <data name="Form_CurrAccSession_RibbonPage_Main" xml:space="preserve">
+    <value>İstifadəçilər</value>
+  </data>
+  <data name="Form_CurrAccSession_KickUser" xml:space="preserve">
+    <value>İstifadəçini At</value>
+  </data>
+  <data name="Form_CurrAccSession_CloseWindowQuestion" xml:space="preserve">
+    <value>{0} Pəncərəni bağlamaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_CurrAccSession_KickUserQuestion" xml:space="preserve">
+    <value>İstifadəçini atmaq istəyirsiniz?</value>
+  </data>
+  <data name="Common_ProcessNotFound" xml:space="preserve">
+    <value>Proses tapılmadı.</value>
+  </data>
+  <data name="Common_AccessDenied" xml:space="preserve">
+    <value>Yetkiniz yoxdur.</value>
+  </data>
+  <data name="ERP_ACE_ProductsDisabled" xml:space="preserve">
+    <value>Deaktiv Məhsullar</value>
+  </data>
+  <data name="ERP_ACE_CurrAccsDisabled" xml:space="preserve">
+    <value>Deaktiv Cari Hesablar</value>
+  </data>
+  <data name="Common_NoPermission" xml:space="preserve">
+    <value>Yetkiniz yoxdur.</value>
+  </data>
+  <data name="Form_HandOver_Caption" xml:space="preserve">
+    <value>Təhvil</value>
+  </data>
+  <data name="Form_HandOver_Group_HandOver" xml:space="preserve">
+    <value>Təhvil Vermə</value>
+  </data>
+  <data name="Form_HandOver_OpenInvoiceQuestion" xml:space="preserve">
+    <value>Qaiməni açmaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_HandOver_CancelQuestion" xml:space="preserve">
+    <value>Təhvil ləğv edilsin?</value>
+  </data>
+  <data name="Form_HandOver_NoDocument" xml:space="preserve">
+    <value>Belə bir sənəd yoxdur.</value>
+  </data>
+  <data name="Form_HandOver_NoRemainingQty" xml:space="preserve">
+    <value>Təhvil edilə biləcək miqdar yoxdur.</value>
+  </data>
+  <data name="Form_HandOver_NoInvoiceToPrint" xml:space="preserve">
+    <value>Çap olunmaq üçün qaimə yoxdur.</value>
+  </data>
+  <data name="Form_HandOver_PrinterError" xml:space="preserve">
+    <value>Xəta: 1256795721
+{0}</value>
+  </data>
+  <data name="Form_HandOver_Column_DeliveredQty" xml:space="preserve">
+    <value>Təhvil olunan miqdar</value>
+  </data>
+  <data name="Form_HandOver_Column_RemainingQty" xml:space="preserve">
+    <value>Qalan miqdar</value>
+  </data>
+  <data name="Form_HandOver_Button_AddWaybill" xml:space="preserve">
+    <value>Əlavə Et</value>
+  </data>
+  <data name="Common_PrintFast" xml:space="preserve">
+    <value>Sürətli Çap Et</value>
+  </data>
+  <data name="Common_GridDesign" xml:space="preserve">
+    <value>Grid Dizayn</value>
+  </data>
+  <data name="Common_GridDesignSave" xml:space="preserve">
+    <value>Grid Dizayn Saxla</value>
+  </data>
+  <data name="Common_Print" xml:space="preserve">
+    <value>Çap</value>
+  </data>
+  <data name="Common_Design" xml:space="preserve">
+    <value>Dizayn</value>
+  </data>
+  <data name="Common_PrintSending" xml:space="preserve">
+    <value>Çap göndərilir...</value>
+  </data>
+  <data name="Common_PrintSent" xml:space="preserve">
+    <value>Çap göndərildi.</value>
+  </data>
+  <data name="Common_PrinterLabel" xml:space="preserve">
+    <value>Printer: {0}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Caption" xml:space="preserve">
+    <value>İyerarxiya Özəllik Tipləri</value>
+  </data>
+  <data name="Form_HierarchyList_Caption" xml:space="preserve">
+    <value>İyerarxiya</value>
+  </data>
+  <data name="Form_HierarchyList_AddChild" xml:space="preserve">
+    <value>Uşaq əlavə et</value>
+  </data>
+  <data name="Form_HierarchyList_NewDesc" xml:space="preserve">
+    <value>Yeni</value>
+  </data>
+  <data name="Form_Image_Caption" xml:space="preserve">
+    <value>Şəkillər</value>
+  </data>
+  <data name="Form_Image_RibbonPage_Main" xml:space="preserve">
+    <value>Şəkillər</value>
+  </data>
+  <data name="Form_Image_GalleryItemCaption" xml:space="preserve">
+    <value>Şəkil</value>
+  </data>
+  <data name="Form_Image_OpenDialogTitle" xml:space="preserve">
+    <value>Foxoft üçün şəkil seçin.</value>
+  </data>
+  <data name="Common_File_ImageFilter" xml:space="preserve">
+    <value>Şəkillər (*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF</value>
+  </data>
+  <data name="Common_File_All" xml:space="preserve">
+    <value>Bütün fayllar (*.*)|*.*</value>
+  </data>
+  <data name="Form_Input_Caption" xml:space="preserve">
+    <value>Miqdar Daxil Edin</value>
+  </data>
+  <data name="Form_Input_Label_Quantity" xml:space="preserve">
+    <value>Miqdar</value>
+  </data>
+  <data name="Common_Validation_InputRange" xml:space="preserve">
+    <value>Dəyər 0 ilə {0} arasında olmalıdır</value>
+  </data>
+  <data name="Form_InstallmentSale_Caption" xml:space="preserve">
+    <value>Kredit Satışları</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonPage_Main" xml:space="preserve">
+    <value>Kredit</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonPage_Settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Operation" xml:space="preserve">
+    <value>Əməliyyat</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Design" xml:space="preserve">
+    <value>Dizayn</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Query" xml:space="preserve">
+    <value>Sorğu</value>
+  </data>
+  <data name="Form_InstallmentSale_Button_GridOptions" xml:space="preserve">
+    <value>Dizayn Düzəltmə</value>
+  </data>
+  <data name="Form_InstallmentSale_Button_QueryEdit" xml:space="preserve">
+    <value>Sorğunu Dəyiş</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Day" xml:space="preserve">
+    <value>Son Gün</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Week" xml:space="preserve">
+    <value>Son Həftə</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Month" xml:space="preserve">
+    <value>Son Ay</value>
+  </data>
+  <data name="Form_InstallmentSale_Message_InvoiceAlreadyOpen" xml:space="preserve">
+    <value>Qaimə açıqdır.</value>
+  </data>
+  <data name="Form_InstallmentSale_Message_DocumentNotFound" xml:space="preserve">
+    <value>Belə bir sənəd yoxdur.</value>
+  </data>
+  <data name="FormInvoice_Save" xml:space="preserve">
+    <value>Yadda Saxla</value>
+  </data>
+  <data name="FormInvoice_SaveAndNew" xml:space="preserve">
+    <value>Yadda Saxla Yeni</value>
+  </data>
+  <data name="FormInvoice_SaveAndQuit" xml:space="preserve">
+    <value>Yadda Saxla Bağla</value>
+  </data>
+  <data name="FormInvoice_Payment" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="FormInvoice_New" xml:space="preserve">
+    <value>Yeni</value>
+  </data>
+  <data name="FormInvoice_ReportPreview" xml:space="preserve">
+    <value>Faktura Görünüş</value>
+  </data>
+  <data name="FormInvoice_DeleteInvoice" xml:space="preserve">
+    <value>Fakturanı Sil</value>
+  </data>
+  <data name="FormInvoice_PaymentDelete" xml:space="preserve">
+    <value>Ödəməni Sil</value>
+  </data>
+  <data name="FormInvoice_CopyInvoice" xml:space="preserve">
+    <value>Kopyala</value>
+  </data>
+  <data name="FormInvoice_WhatsappSend" xml:space="preserve">
+    <value>Whatsappdan Göndər</value>
+  </data>
+  <data name="FormInvoice_EditInvoice" xml:space="preserve">
+    <value>Dəyiş</value>
+  </data>
+  <data name="FormInvoice_ExportToExcel" xml:space="preserve">
+    <value>Excel'ə Göndər</value>
+  </data>
+  <data name="FormInvoice_ImportFromExcel" xml:space="preserve">
+    <value>Excel'dən Al</value>
+  </data>
+  <data name="FormInvoice_FastPrint" xml:space="preserve">
+    <value>Sürətli Çap Et</value>
+  </data>
+  <data name="FormInvoice_PrintSettingSave" xml:space="preserve">
+    <value>Yadda Saxla</value>
+  </data>
+  <data name="FormInvoice_Test1" xml:space="preserve">
+    <value>test</value>
+  </data>
+  <data name="FormInvoice_Test2" xml:space="preserve">
+    <value>test</value>
+  </data>
+  <data name="FormInvoice_Info" xml:space="preserve">
+    <value>info</value>
+  </data>
+  <data name="FormInvoice_Pictures" xml:space="preserve">
+    <value>Şəkillər</value>
+  </data>
+  <data name="FormInvoice_InvoiceExpenses" xml:space="preserve">
+    <value>Xərclər</value>
+  </data>
+  <data name="FormInvoice_ShowPicture" xml:space="preserve">
+    <value>Rəsim Göstər</value>
+  </data>
+  <data name="FormInvoice_ShowPrint" xml:space="preserve">
+    <value>Printer Göstər</value>
+  </data>
+  <data name="FormInvoice_ShowCopy" xml:space="preserve">
+    <value>Kopya Göstər</value>
+  </data>
+  <data name="FormInvoice_AddInstallmentGuarantor" xml:space="preserve">
+    <value>Zamin Əlavə Et</value>
+  </data>
+  <data name="FormInvoice_InvoiceDiscount" xml:space="preserve">
+    <value>Qaimə Endirimi</value>
+  </data>
+  <data name="FormInvoice_Salesman" xml:space="preserve">
+    <value>Satıcı</value>
+  </data>
+  <data name="FormInvoice_RibbonPage_Invoice" xml:space="preserve">
+    <value>Faktura</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_InvoiceOperations" xml:space="preserve">
+    <value>Əməliyat</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Payment" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Installment" xml:space="preserve">
+    <value>Kredit</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Control" xml:space="preserve">
+    <value>Nəzarət</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Info" xml:space="preserve">
+    <value>Məlumat</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_InvoiceExtra" xml:space="preserve">
+    <value>Faktura</value>
+  </data>
+  <data name="FormInvoice_RibbonPage_Settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Report" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_PrintSettings" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="FormInvoice_PaidCashless" xml:space="preserve">
+    <value>Nağdsız: </value>
+  </data>
+  <data name="FormInvoice_PaidCash" xml:space="preserve">
+    <value>Nağd: </value>
+  </data>
+  <data name="FormInvoice_PaidTotal" xml:space="preserve">
+    <value>Ödənilib: </value>
+  </data>
+  <data name="FormInvoice_InstallmentSum" xml:space="preserve">
+    <value>Kredit: </value>
+  </data>
+  <data name="FormInvoice_InstallmentCommissionSum" xml:space="preserve">
+    <value>Komissiya: </value>
+  </data>
+  <data name="FormInvoice_InstallmentTotalSum" xml:space="preserve">
+    <value>Toplam Kredit: </value>
+  </data>
+  <data name="FormInvoice_Group_InstallmentInfo" xml:space="preserve">
+    <value>Kredit</value>
+  </data>
+  <data name="FormInvoice_Group_PaymentInfo" xml:space="preserve">
+    <value>Ödəniş</value>
+  </data>
+  <data name="FormInvoice_Group_Installment" xml:space="preserve">
+    <value>Kredit</value>
+  </data>
+  <data name="FormInvoice_InstallmentGuarantors" xml:space="preserve">
+    <value>Zaminlər</value>
+  </data>
+  <data name="FormInvoice_InstallmentCommission" xml:space="preserve">
+    <value>Komissiya</value>
+  </data>
+  <data name="FormInvoice_InstallmentGuarantor_CurrAccCode" xml:space="preserve">
+    <value>Cari Hesab Kodu</value>
+  </data>
+  <data name="Common_Printer" xml:space="preserve">
+    <value>Printer</value>
+  </data>
+  <data name="Common_Confirm" xml:space="preserve">
+    <value>Təsdiqlə</value>
+  </data>
+  <data name="Form_Invoice_NoLines" xml:space="preserve">
+    <value>Sətir yoxdur</value>
+  </data>
+  <data name="Form_Invoice_SerialNumberNotFound" xml:space="preserve">
+    <value>Seriya nömrəsi tapılmadı.</value>
+  </data>
+  <data name="Form_Invoice_Expense" xml:space="preserve">
+    <value>Xərc</value>
+  </data>
+  <data name="Form_Invoice_Product" xml:space="preserve">
+    <value>Məhsul</value>
+  </data>
+  <data name="Form_Invoice_EntityNotFoundOrDisabled" xml:space="preserve">
+    <value>{0} tapılmadı və ya deaktiv edilib.</value>
+  </data>
+  <data name="Form_Invoice_ReturnOperationExists_CannotChangeProductCode" xml:space="preserve">
+    <value>Bu sətir üzrə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.</value>
+  </data>
+  <data name="Form_Invoice_HandOverOperationExists_CannotChangeProductCode" xml:space="preserve">
+    <value>Bu sətir üzrə təhvil-təslim əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.</value>
+  </data>
+  <data name="Form_Invoice_RelatedReturnLineExists_CannotChangeProductCode" xml:space="preserve">
+    <value>Bu geri qaytarma üzrə əlaqəli sətir mövcuddur. Məhsul kodu dəyişilə bilməz.</value>
+  </data>
+  <data name="Form_Invoice_RelatedHandOverLineExists_CannotChangeProductCode" xml:space="preserve">
+    <value>Bu təhvil-təslim üzrə əlaqəli sətir mövcuddur. Məhsul kodu dəyişilə bilməz.</value>
+  </data>
+  <data name="Form_Invoice_NoStockQuantity" xml:space="preserve">
+    <value>Stokda miqdar yoxdur.</value>
+  </data>
+  <data name="Form_Invoice_ReturnQtyLessThanExisting" xml:space="preserve">
+    <value>Bu sətirdə {0} ədəd geri qaytarma əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.</value>
+  </data>
+  <data name="Form_Invoice_ReturnQtyGreaterThanSale" xml:space="preserve">
+    <value>Satışı {0} ədəd olan məhsulun geri qaytarmasıdır. Miqdar bu rəqəmdən çox ola bilməz.</value>
+  </data>
+  <data name="Form_Invoice_HandOverQtyLessThanDelivery" xml:space="preserve">
+    <value>Bu sətirdə {0} ədəd təhvil-təslim əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.</value>
+  </data>
+  <data name="Form_Invoice_HandOverQtyGreaterThanSale" xml:space="preserve">
+    <value>Satışı {0} ədəd olan məhsulun təhvil-təslimidir. Miqdar bu rəqəmdən çox ola bilməz.</value>
+  </data>
+  <data name="Form_Invoice_CreditLimitExceeded" xml:space="preserve">
+    <value>Müştəri kredit limitini aşır!</value>
+  </data>
+  <data name="Form_Invoice_SalesPersonNotFound" xml:space="preserve">
+    <value>Belə bir satıcı yoxdur.</value>
+  </data>
+  <data name="Form_Invoice_WorkerNotFound" xml:space="preserve">
+    <value>Belə bir usta yoxdur.</value>
+  </data>
+  <data name="Form_Invoice_NoInvoiceToDelete" xml:space="preserve">
+    <value>Silinməli olan faktura yoxdur.</value>
+  </data>
+  <data name="Form_Invoice_ProductHasReturn" xml:space="preserve">
+    <value>Bu məhsul üzrə geri qaytarma mövcuddur.</value>
+  </data>
+  <data name="Form_Invoice_ProductHasDelivery" xml:space="preserve">
+    <value>Bu məhsul üzrə təhvil mövcuddur.</value>
+  </data>
+  <data name="Form_Invoice_DeleteInvoiceQuestion" xml:space="preserve">
+    <value>Silmək istəyirsiniz?</value>
+  </data>
+  <data name="Form_Invoice_DeletePaymentsForInvoiceQuestion" xml:space="preserve">
+    <value>Qaimə üzrə olan ödənişləri də silirsiniz?</value>
+  </data>
+  <data name="Form_Invoice_DeleteExpensesForInvoiceQuestion" xml:space="preserve">
+    <value>Qaimə üzrə olan xərcləri də silirsiniz?</value>
+  </data>
+  <data name="Form_Invoice_NoPermissionDeletePayment" xml:space="preserve">
+    <value>Ödəniş silmək üçün yetkiniz yoxdur!</value>
+  </data>
+  <data name="Form_Invoice_NoPermissionDeleteExpense" xml:space="preserve">
+    <value>Xərci silmək üçün yetkiniz yoxdur!</value>
+  </data>
+  <data name="Form_Invoice_NoPermissionExpense" xml:space="preserve">
+    <value>Xərc üçün yetkiniz yoxdur!</value>
+  </data>
+  <data name="Form_Invoice_DeletePaymentsQuestion" xml:space="preserve">
+    <value>Ödənişləri silmək istəyirsiniz?</value>
+  </data>
+  <data name="Form_Invoice_PaymentIsZeroReturnToInvoice" xml:space="preserve">
+    <value>Ödəmə 0-a bərabərdir!
+Fakturaya qayıtmaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_Invoice_RowDeleteQuestion" xml:space="preserve">
+    <value>Sətir silinsin?</value>
+  </data>
+  <data name="Form_Invoice_GuarantorAlreadyAdded" xml:space="preserve">
+    <value>Bu cari artıq əlavə olunub.</value>
+  </data>
+  <data name="Form_Invoice_Whatsapp_NumberNotEntered" xml:space="preserve">
+    <value>Nömrə qeyd olunmayıb.</value>
+  </data>
+  <data name="Form_Invoice_Whatsapp_ProfileNotFound" xml:space="preserve">
+    <value>Chrome profil '{0}' tapılmadı.</value>
+  </data>
+  <data name="Form_Invoice_Whatsapp_FailedToOpenLink" xml:space="preserve">
+    <value>Link açılarkən xəta baş verdi: {0}</value>
+  </data>
+  <data name="Form_Invoice_NoSuchCurrAcc" xml:space="preserve">
+    <value>Belə bir cari yoxdur.</value>
+  </data>
+  <data name="Form_Invoice_ReturnInvoiceExists_CurrAccCannotChange" xml:space="preserve">
+    <value>Bu geri qaytarma üzrə əlaqəli qaimə mövcuddur. Cari hesab kodu dəyişilə bilməz.</value>
+  </data>
+  <data name="Form_Invoice_HandOverInvoiceExists_CurrAccCannotChange" xml:space="preserve">
+    <value>Bu təhvil-təslim üzrə əlaqəli qaimə mövcuddur. Cari hesab kodu dəyişilə bilməz.</value>
+  </data>
+  <data name="Form_Invoice_PrinterError_1256795721" xml:space="preserve">
+    <value>Xəta: 1256795721 
+{0}</value>
+  </data>
+  <data name="Form_Invoice_DeleteGuarantorQuestion" xml:space="preserve">
+    <value>Silmək istəyirsiniz?</value>
+  </data>
+  <data name="Form_InvoiceHeaderList_Caption" xml:space="preserve">
+    <value>Qaimə Siyahısı</value>
+  </data>
+  <data name="Form_InvoiceHeaderList_InvoiceIsOpen" xml:space="preserve">
+    <value>Qaimə açıqdır.</value>
+  </data>
+  <data name="Form_InvoiceLineList_Caption" xml:space="preserve">
+    <value>Qaimə Sətirləri</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_ProductCode" xml:space="preserve">
+    <value>Məhsul</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_ProductDesc" xml:space="preserve">
+    <value>Məhsul Adı</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_CurrencyCode" xml:space="preserve">
+    <value>Valyuta</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_Price" xml:space="preserve">
+    <value>Qiymət</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_PriceLoc" xml:space="preserve">
+    <value>Qiymət (YPV)</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_Qty" xml:space="preserve">
+    <value>Say</value>
+  </data>
+  <data name="Form_InvoiceLineList_Column_SerialNumberCode" xml:space="preserve">
+    <value>Seria Nömrəsi</value>
+  </data>
+  <data name="Entity_InvoiceHeader_InvoiceHeaderId" xml:space="preserve">
+    <value>Faktura Id</value>
+  </data>
+  <data name="Form_InvoiceLineUndeliveredList_Caption" xml:space="preserve">
+    <value>Çatdırılmamış Sənəd Sətirləri</value>
+  </data>
+  <data name="Entity_InvoiceLine_Id" xml:space="preserve">
+    <value>Faktura Sətir İd</value>
+  </data>
+  <data name="Entity_InvoiceHeader_CurrAccCode" xml:space="preserve">
+    <value>Cari Hesab Kodu</value>
+  </data>
+  <data name="Form_Login_Caption" xml:space="preserve">
+    <value>Giriş</value>
+  </data>
+  <data name="Form_Login_ButtonERP" xml:space="preserve">
+    <value>Arxa Ofis</value>
+  </data>
+  <data name="Form_Login_RememberMe" xml:space="preserve">
+    <value>Məni xatırla</value>
+  </data>
+  <data name="Form_Login_ConnectionString" xml:space="preserve">
+    <value>Əlaqə sətri</value>
+  </data>
+  <data name="Form_Login_LicenseInactive" xml:space="preserve">
+    <value>Lisenziya aktiv deyil!</value>
+  </data>
+  <data name="Form_Login_LocalCurrencyNotSet" xml:space="preserve">
+    <value>Yerli pul vahidi təyin olunmayıb</value>
+  </data>
+  <data name="Form_Login_TerminalRequired" xml:space="preserve">
+    <value>Terminal boş buraxıla bilməz!</value>
+  </data>
+  <data name="Form_Login_LicenseDateInvalid" xml:space="preserve">
+    <value>Lisenziya tarixi etibarsızdır: {0}</value>
+  </data>
+  <data name="Form_Login_LicenseInactiveDb" xml:space="preserve">
+    <value>{0} üçün lisenziya aktiv deyil!</value>
+  </data>
+  <data name="Form_Login_GetKey" xml:space="preserve">
+    <value>Açarı götür</value>
+  </data>
+  <data name="Form_Login_Test" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="Common_UserName" xml:space="preserve">
+    <value>İstifadəçi</value>
+  </data>
+  <data name="Common_Password" xml:space="preserve">
+    <value>Şifrə</value>
+  </data>
+  <data name="Common_Terminal" xml:space="preserve">
+    <value>Terminal</value>
+  </data>
+  <data name="Common_Company" xml:space="preserve">
+    <value>Şirkət</value>
+  </data>
+  <data name="Common_Language" xml:space="preserve">
+    <value>Dil</value>
+  </data>
+  <data name="Common_DatabaseNotFound" xml:space="preserve">
+    <value>Databaza mövcud deyil.</value>
+  </data>
+  <data name="Form_MoneyTransfer_Caption" xml:space="preserve">
+    <value>Kassalar Arası Transfer</value>
+  </data>
+  <data name="Form_MoneyTransfer_RibbonPage_Main" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_MoneyTransfer_RibbonGroup_Payment" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_MoneyTransfer_Button_DeletePayment" xml:space="preserve">
+    <value>Ödənişi Sil</value>
+  </data>
+  <data name="Form_MoneyTransfer_Button_SaveAndClose" xml:space="preserve">
+    <value>Yadda Saxla Bağla</value>
+  </data>
+  <data name="Form_MoneyTransfer_Button_SendWhatsapp" xml:space="preserve">
+    <value>WhatsApp-a Göndər</value>
+  </data>
+  <data name="Form_MoneyTransfer_Button_NewPayment" xml:space="preserve">
+    <value>Yeni Ödəniş</value>
+  </data>
+  <data name="Common_Info" xml:space="preserve">
+    <value>Məlumat</value>
+  </data>
+  <data name="Form_MoneyTransfer_Label_CurrAccBalanceBefore" xml:space="preserve">
+    <value>Cari Hesab Əvvəlki Borc: </value>
+  </data>
+  <data name="Form_MoneyTransfer_Label_CurrAccBalanceAfter" xml:space="preserve">
+    <value>Cari Hesab Sonrakı Borc: </value>
+  </data>
+  <data name="Form_MoneyTransfer_Column_RunningTotal" xml:space="preserve">
+    <value>Yekun Borc</value>
+  </data>
+  <data name="Form_MoneyTransfer_Column_RunningTotalBefore" xml:space="preserve">
+    <value>Əvvəlki Borc</value>
+  </data>
+  <data name="Form_MoneyTransfer_SaveError" xml:space="preserve">
+    <value>Daxil etdiyiniz məlumatlar əsaslı deyil! 
+
+{0}</value>
+  </data>
+  <data name="Form_MoneyTransfer_NoPaymentToDelete" xml:space="preserve">
+    <value>Silinməli olan ödəniş yoxdur.</value>
+  </data>
+  <data name="Form_MoneyTransfer_PaymentReceived" xml:space="preserve">
+    <value>Ödəniş alındı: </value>
+  </data>
+  <data name="Form_MoneyTransfer_PaymentGiven" xml:space="preserve">
+    <value>Ödəniş verildi: </value>
+  </data>
+  <data name="Form_MoneyTransfer_Balance" xml:space="preserve">
+    <value>Qalıq: </value>
+  </data>
+  <data name="Form_MoneyTransfer_PhoneNotDefined" xml:space="preserve">
+    <value>Telefon nömrəsi qeyd olunmayıb.</value>
+  </data>
+  <data name="Form_MoneyTransfer_CurrAccNotDefined" xml:space="preserve">
+    <value>Cari hesab qeyd olunmayıb.</value>
+  </data>
+  <data name="Form_MoneyTransfer_NumberNotDefined" xml:space="preserve">
+    <value>Nömrə qeyd olunmayıb.</value>
+  </data>
+  <data name="Form_Payment_Caption" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_Payment_Group_Cash" xml:space="preserve">
+    <value>Nağd</value>
+  </data>
+  <data name="Form_Payment_Label_Cash" xml:space="preserve">
+    <value>Nağd</value>
+  </data>
+  <data name="Form_Payment_CashRegister" xml:space="preserve">
+    <value>Kassa Hesabı</value>
+  </data>
+  <data name="Form_Payment_Currency" xml:space="preserve">
+    <value>Valyuta</value>
+  </data>
+  <data name="Form_Payment_Group_Cashless" xml:space="preserve">
+    <value>Nağdsız</value>
+  </data>
+  <data name="Form_Payment_BankAccount" xml:space="preserve">
+    <value>Bank Hesabı</value>
+  </data>
+  <data name="Form_Payment_PaymentMethod" xml:space="preserve">
+    <value>Ödəmə Metodu</value>
+  </data>
+  <data name="Form_Payment_PaymentPlan" xml:space="preserve">
+    <value>Ödəmə Planı</value>
+  </data>
+  <data name="Form_Payment_Commission" xml:space="preserve">
+    <value>Komissiya</value>
+  </data>
+  <data name="Form_Payment_Group_Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="Form_Payment_Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="Form_Payment_Puan" xml:space="preserve">
+    <value>Puan</value>
+  </data>
+  <data name="Form_Payment_InputPad" xml:space="preserve">
+    <value>Giriş Paneli</value>
+  </data>
+  <data name="Form_Payment_Button_Ok" xml:space="preserve">
+    <value>Ödə</value>
+  </data>
+  <data name="Form_Payment_Date" xml:space="preserve">
+    <value>Tarix</value>
+  </data>
+  <data name="Form_Payment_CashRegisterNotFound" xml:space="preserve">
+    <value>Belə bir kassa yoxdur</value>
+  </data>
+  <data name="Form_Payment_CurrAccNotSelected" xml:space="preserve">
+    <value>Cari Hesab Seçilməyib</value>
+  </data>
+  <data name="Form_Payment_CurrAccIdentityMissing" xml:space="preserve">
+    <value>Cari Hesabın Şəxsiyyət Vəsiqəsinin Nömrəsi yoxdur</value>
+  </data>
+  <data name="Form_Payment_CurrAccPhoneMissing" xml:space="preserve">
+    <value>Cari Hesabın Telefon Nömrəsi yoxdur</value>
+  </data>
+  <data name="Form_PaymentDetail_Caption" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonPage_Main" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Payment" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Tools" xml:space="preserve">
+    <value>Alət</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Report" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Info" xml:space="preserve">
+    <value>Məlumat</value>
+  </data>
+  <data name="Form_PaymentDetail_RibbonGroup_Control" xml:space="preserve">
+    <value>Nəzarət</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_DeletePayment" xml:space="preserve">
+    <value>Ödənişi Sil</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_SaveAndClose" xml:space="preserve">
+    <value>Yadda Saxla Bağla</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_SendWhatsapp" xml:space="preserve">
+    <value>Whatsappa Göndər</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_NewPayment" xml:space="preserve">
+    <value>Yeni Ödəniş</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_CopyPayment" xml:space="preserve">
+    <value>Kopyala</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_Info" xml:space="preserve">
+    <value>İnfo</value>
+  </data>
+  <data name="Form_PaymentDetail_Button_EditPayment" xml:space="preserve">
+    <value>Dəyiş</value>
+  </data>
+  <data name="Form_PaymentDetail_Label_CurrAccBalanceBefore" xml:space="preserve">
+    <value>Cari Hesab Əvvəlki Borc:</value>
+  </data>
+  <data name="Form_PaymentDetail_Label_CurrAccBalanceAfter" xml:space="preserve">
+    <value>Cari Hesab Sonrakı Borc:</value>
+  </data>
+  <data name="Form_PaymentDetail_InvalidData" xml:space="preserve">
+    <value>Daxil etdiyiniz məlumatlar əsaslı deyil!</value>
+  </data>
+  <data name="Form_PaymentDetail_NoPaymentToDelete" xml:space="preserve">
+    <value>Silinməli olan ödəniş yoxdur.</value>
+  </data>
+  <data name="Form_PaymentDetail_PhoneNotFound" xml:space="preserve">
+    <value>Nömrə qeyd olunmayıb.</value>
+  </data>
+  <data name="Form_PaymentDetail_PaymentReceived" xml:space="preserve">
+    <value>Ödəniş alındı: </value>
+  </data>
+  <data name="Form_PaymentDetail_PaymentGiven" xml:space="preserve">
+    <value>Ödəniş verildi: </value>
+  </data>
+  <data name="Form_PaymentDetail_BalanceText" xml:space="preserve">
+    <value>Qalıq: </value>
+  </data>
+  <data name="Form_PaymentDetail_CurrAccNotFound" xml:space="preserve">
+    <value>Belə bir cari yoxdur</value>
+  </data>
+  <data name="Form_PaymentDetail_Info_Caption" xml:space="preserve">
+    <value>Məlumat</value>
+  </data>
+  <data name="Entity_TrInvoiceHeader_DocumentNumber" xml:space="preserve">
+    <value>Qaimə Nömrəsi</value>
+  </data>
+  <data name="Form_PaymentHeaderList_Caption" xml:space="preserve">
+    <value>Ödəmələr</value>
+  </data>
+  <data name="Form_PaymentHeaderList_RibbonPage_Main" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_PaymentHeaderList_RibbonGroup_Operation" xml:space="preserve">
+    <value>Əməliyyat</value>
+  </data>
+  <data name="Form_PaymentHeaderList_RibbonGroup_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Form_PaymentHeaderList_Button_ReceivePayment" xml:space="preserve">
+    <value>Ödəniş Al</value>
+  </data>
+  <data name="Form_PaymentHeaderList_Button_MakePayment" xml:space="preserve">
+    <value>Ödəniş Et</value>
+  </data>
+  <data name="Form_PaymentHeaderList_Button_ExportXlsx" xml:space="preserve">
+    <value>Excelə İxrac</value>
+  </data>
+  <data name="Form_PaymentLineList_Caption" xml:space="preserve">
+    <value>Ödəniş Sətirləri Siyahısı</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonPage_Main" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonGroup_Operations" xml:space="preserve">
+    <value>Əməliyyat</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonGroup_Control" xml:space="preserve">
+    <value>Nəzarət</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonGroup_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Form_PaymentLineList_RibbonGroup_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_ReceivePayment" xml:space="preserve">
+    <value>Ödəniş Al</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_MakePayment" xml:space="preserve">
+    <value>Ödəniş Et</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_Reload" xml:space="preserve">
+    <value>Yenilə</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_ExportXlsx" xml:space="preserve">
+    <value>Excelə İxrac</value>
+  </data>
+  <data name="Form_PaymentLineList_Button_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Form_PaymentLineList_Message_InvoiceNumberButtonClick" xml:space="preserve">
+    <value>Qaimə linki klikləndi.</value>
+  </data>
+  <data name="Form_PaymentLineList_Message_DocNumButtonClick" xml:space="preserve">
+    <value>Ödəniş sənədi linki klikləndi.</value>
+  </data>
+  <data name="Form_POS_Caption" xml:space="preserve">
+    <value>POS</value>
+  </data>
+  <data name="Form_POS_Button_Sale" xml:space="preserve">
+    <value>Satış</value>
+  </data>
+  <data name="Form_POS_Button_Return" xml:space="preserve">
+    <value>Geri Qaytarma</value>
+  </data>
+  <data name="Form_POS_Button_Expenses" xml:space="preserve">
+    <value>Xərclər</value>
+  </data>
+  <data name="Form_POS_Page_Sale" xml:space="preserve">
+    <value>Satış</value>
+  </data>
+  <data name="Form_POS_Page_Return" xml:space="preserve">
+    <value>Geri Qaytarma</value>
+  </data>
+  <data name="Form_POS_Page_Expenses" xml:space="preserve">
+    <value>Xərclər</value>
+  </data>
+  <data name="Form_PosDiscount_Caption" xml:space="preserve">
+    <value>Endirim</value>
+  </data>
+  <data name="Form_PosDiscount_Label_DiscountRate" xml:space="preserve">
+    <value>Faiz</value>
+  </data>
+  <data name="Form_PosDiscount_Label_NetAmount" xml:space="preserve">
+    <value>Tutar</value>
+  </data>
+  <data name="Form_PosDiscount_Validation_DiscountRateRange" xml:space="preserve">
+    <value>Dəyər 0 ilə 100 arasında olmalıdır</value>
+  </data>
+  <data name="Form_PosDiscount_Validation_NetAmountRange" xml:space="preserve">
+    <value>Dəyər 0 ilə {0} arasında olmalıdır</value>
+  </data>
+  <data name="Form_PriceListDetail_Caption" xml:space="preserve">
+    <value>Qiymət Siyahısı</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonPage_Main" xml:space="preserve">
+    <value>Qiymət Siyahısı</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonGroup_PriceList" xml:space="preserve">
+    <value>Qiymət Siyahısı</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonPage_Settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonGroup_Excel" xml:space="preserve">
+    <value>Excel</value>
+  </data>
+  <data name="Form_PriceListDetail_RibbonGroup_Info" xml:space="preserve">
+    <value>Məlumat</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_DeletePriceList" xml:space="preserve">
+    <value>Qiymət Siyahısını Sil</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_SaveAndClose" xml:space="preserve">
+    <value>Yadda Saxla Bağla</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_NewPriceList" xml:space="preserve">
+    <value>Yeni Qiymət Siyahısı</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_Info" xml:space="preserve">
+    <value>İnfo</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_ImportExcel" xml:space="preserve">
+    <value>Excel'dən Al</value>
+  </data>
+  <data name="Form_PriceListDetail_Button_ExportExcel" xml:space="preserve">
+    <value>Excel'ə Göndər</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_DeletePriceListConfirm" xml:space="preserve">
+    <value>Qiymət siyahısını silmək istəyirsiniz?</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_NoPriceListToDelete" xml:space="preserve">
+    <value>Silinməli qiymət siyahısı yoxdur.</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_DeleteRowConfirm" xml:space="preserve">
+    <value>Sətir silinsin?</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_InvalidData" xml:space="preserve">
+    <value>Daxil etdiyiniz məlumatlar əsaslı deyil!</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_ImportErrorCode" xml:space="preserve">
+    <value>Xəta No: 256543</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_ImportErrorCaption" xml:space="preserve">
+    <value>Import xətası</value>
+  </data>
+  <data name="Form_PriceListDetail_Message_ValueNotFound" xml:space="preserve">
+    <value>Aşağıdakı kodlar üzrə dəyər tapılmadı</value>
+  </data>
+  <data name="Form_PriceListDetail_OpenFileDialog_Title" xml:space="preserve">
+    <value>Excel faylı seçin.</value>
+  </data>
+  <data name="Form_PriceListHeaderList_Caption" xml:space="preserve">
+    <value>Qiymət Siyahıları</value>
+  </data>
+  <data name="Form_Product_Caption" xml:space="preserve">
+    <value>Məhsul</value>
+  </data>
+  <data name="Form_Product_OpenFileDialog_Title" xml:space="preserve">
+    <value>Foxoft üçün şəkil seçin.</value>
+  </data>
+  <data name="Form_Product_Message_SaveImageError" xml:space="preserve">
+    <value>Xəta kodu 154484: {0}</value>
+  </data>
+  <data name="Form_Product_Message_FileDoesNotExist" xml:space="preserve">
+    <value>Fayl mövcud deyil.</value>
+  </data>
+  <data name="Form_Product_Message_NoGalleryImage" xml:space="preserve">
+    <value>Seçilmiş qalereya elementində şəkil tapılmadı.</value>
+  </data>
+  <data name="Form_Product_Message_DeleteFileError" xml:space="preserve">
+    <value>Fayl silinərkən xəta baş verdi: {0}</value>
+  </data>
+  <data name="Form_Product_Message_NoImageInClipboard" xml:space="preserve">
+    <value>Mübadilə yaddaşında şəkil yoxdur.</value>
+  </data>
+  <data name="Form_Product_Message_ProductCodeExists" xml:space="preserve">
+    <value>Bu kodda məhsul artıq mövcuddur!</value>
+  </data>
+  <data name="Form_Product_Validation_ProductNameExists" xml:space="preserve">
+    <value>Bu adda məhsul mövcuddur.</value>
+  </data>
+  <data name="Form_ProductBarcode_Caption" xml:space="preserve">
+    <value>Məhsul barkodları</value>
+  </data>
+  <data name="Form_ProductBarcode_RibbonPage_Main" xml:space="preserve">
+    <value>Barkod</value>
+  </data>
+  <data name="Form_ProductBarcode_RibbonGroup_Manage" xml:space="preserve">
+    <value>İdarə</value>
+  </data>
+  <data name="Form_ProductBarcode_Message_SaveError" xml:space="preserve">
+    <value>Daxil etdiyiniz məlumatlar əsaslı deyil!
+
+{0}</value>
+  </data>
+  <data name="Form_ProductBarcode_Message_ProductSelectError" xml:space="preserve">
+    <value>Xəta No: 252124269 
+{0}</value>
+  </data>
+  <data name="Form_ProductBarcode_Validation_BarcodeExists" xml:space="preserve">
+    <value>Belə bir barkod var.</value>
+  </data>
+  <data name="Form_ProductFeature_Caption" xml:space="preserve">
+    <value>Məhsul Özəllikləri</value>
+  </data>
+  <data name="Common_Show" xml:space="preserve">
+    <value>Göstər</value>
+  </data>
+  <data name="Common_Search" xml:space="preserve">
+    <value>Axtarın...</value>
+  </data>
+  <data name="Form_ProductList_Caption" xml:space="preserve">
+    <value>Məhsul Siyahısı</value>
+  </data>
+  <data name="Form_ProductList_RibbonPage_Main" xml:space="preserve">
+    <value>Məhsul</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Manage" xml:space="preserve">
+    <value>İdarə</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Tools" xml:space="preserve">
+    <value>Alət</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Control" xml:space="preserve">
+    <value>Nəzarət</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Report" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="Form_ProductList_RibbonPage_Settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Form_ProductList_RibbonGroup_FilterColumns" xml:space="preserve">
+    <value>Filter sütunları</value>
+  </data>
+  <data name="Form_ProductList_FilterColumnsLabel" xml:space="preserve">
+    <value>Filter sütunları</value>
+  </data>
+  <data name="Form_ProductList_FindPanelPrompt" xml:space="preserve">
+    <value>Axtarın...</value>
+  </data>
+  <data name="Form_ProductList_Column_Image" xml:space="preserve">
+    <value>Şəkil</value>
+  </data>
+  <data name="Form_ProductList_Message_ProductNotSelected" xml:space="preserve">
+    <value>Məhsul seçilməyib.</value>
+  </data>
+  <data name="Form_ProductList_Message_DeleteProductConfirm" xml:space="preserve">
+    <value>Məhsulu silmək istəyirsiniz?
+{0}</value>
+  </data>
+  <data name="Form_ProductList_Message_DeleteBarcodeConfirm" xml:space="preserve">
+    <value>Barkodları da silmək istəyirsiniz?
+{0}</value>
+  </data>
+  <data name="Form_ProductList_Message_NoProductToDelete" xml:space="preserve">
+    <value>Silinməli olan məhsul yoxdur.</value>
+  </data>
+  <data name="Form_ProductList_Button_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Form_ProductScales_Caption" xml:space="preserve">
+    <value>Məhsul tərəzi parametrləri</value>
+  </data>
+  <data name="Form_ProductScales_Button_Save" xml:space="preserve">
+    <value>Yadda saxla</value>
+  </data>
+  <data name="Form_ProductScales_CheckBox_UseInScale" xml:space="preserve">
+    <value>Tərəzidə istifadə et</value>
+  </data>
+  <data name="Form_ProductScales_Validation_ScaleProductNumber_Integer" xml:space="preserve">
+    <value>Ədəd daxil edin.</value>
+  </data>
+  <data name="Form_ProductScales_Validation_ScaleProductNumber_Duplicate" xml:space="preserve">
+    <value>Bu kod istifadə olunub. Təkrarsız ədəd daxil edin.</value>
+  </data>
+  <data name="Form_ProductStaticPrice_Caption" xml:space="preserve">
+    <value>Məhsul Sabit Qiymətləri</value>
+  </data>
+  <data name="Form_ReportEditor_Caption" xml:space="preserve">
+    <value>Hesabat redaktoru</value>
+  </data>
+  <data name="Form_ReportEditor_Tab_Main" xml:space="preserve">
+    <value>Əsas</value>
+  </data>
+  <data name="Form_ReportEditor_Label_SubQueries" xml:space="preserve">
+    <value>Alt sorğular</value>
+  </data>
+  <data name="Form_ReportEditor_SubQuery_DefaultName" xml:space="preserve">
+    <value>Yeni alt sorğu</value>
+  </data>
+  <data name="Form_ReportEditor_SubQuery_DefaultText" xml:space="preserve">
+    <value>-- SQL buraya</value>
+  </data>
+  <data name="Form_ReportEditor_Message_DeleteRow" xml:space="preserve">
+    <value>Sətir silinsin?</value>
+  </data>
+  <data name="Form_ReportEditor_Message_DeleteTab" xml:space="preserve">
+    <value>"{0}" vərəqi silinsin?</value>
+  </data>
+  <data name="Form_ReportEditor_Message_CheckQueryErrorTitle" xml:space="preserve">
+    <value>Foxoft Xəta Kodu: 1215451</value>
+  </data>
+  <data name="Form_ReportFilter_Caption" xml:space="preserve">
+    <value>Hesabat filtri</value>
+  </data>
+  <data name="Form_ReportFilter_RibbonPage_Report" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="Form_ReportFilter_RibbonGroup_ReportOperations" xml:space="preserve">
+    <value>Əməliyyat</value>
+  </data>
+  <data name="Form_ReportFilter_RibbonGroup_Customization" xml:space="preserve">
+    <value>Fərdiləşdirmə</value>
+  </data>
+  <data name="Form_ReportFilter_DesignFileLabel" xml:space="preserve">
+    <value>Dizayn faylı</value>
+  </data>
+  <data name="Form_ReportFilter_ExcelDialogFilter" xml:space="preserve">
+    <value>Excel faylları (*.xls;*.xlsx)|*.xls;*.xlsx|Bütün fayllar (*.*)|*.*</value>
+  </data>
+  <data name="Form_ReportFilter_ExcelDialogTitle" xml:space="preserve">
+    <value>Yalnız ilk sütunda olan məlumatlar daxil edilir.</value>
+  </data>
+  <data name="Form_ReportFilter_Input_DesignName" xml:space="preserve">
+    <value>Dizayn adını daxil edin</value>
+  </data>
+  <data name="Form_ReportFilter_Message_NoCustomizationSelected" xml:space="preserve">
+    <value>Silinməsi üçün dizayn seçin.</value>
+  </data>
+  <data name="Form_ReportFilter_Message_NoCustomizationSelectedTitle" xml:space="preserve">
+    <value>Seçim yoxdur</value>
+  </data>
+  <data name="Form_ReportFilter_Error_OpenGridReport" xml:space="preserve">
+    <value>Inter Xəta Kodu: 2565635 
+{0}</value>
+  </data>
+  <data name="Form_ReportFilter_Button_CustomAdd" xml:space="preserve">
+    <value>Dizayn əlavə et</value>
+  </data>
+  <data name="Form_ReportFilter_Button_CustomSave" xml:space="preserve">
+    <value>Dizaynı yadda saxla</value>
+  </data>
+  <data name="Form_ReportFilter_Button_CustomDelete" xml:space="preserve">
+    <value>Dizaynı sil</value>
+  </data>
+  <data name="Form_ReportGrid_Caption" xml:space="preserve">
+    <value>Hesabat cədvəli</value>
+  </data>
+  <data name="Form_ReportGrid_Column_Image" xml:space="preserve">
+    <value>Şəkil</value>
+  </data>
+  <data name="Form_ReportGrid_Message_InvoiceIsOpen" xml:space="preserve">
+    <value>Qaimə artıq açıqdır.</value>
+  </data>
+  <data name="Form_ReportGrid_Message_OpenExportedFileQuestion" xml:space="preserve">
+    <value>Yadda saxlanılan faylı açmaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_ReportGrid_Menu_Expression" xml:space="preserve">
+    <value>İfadə</value>
+  </data>
+  <data name="Form_ReportGrid_Menu_AddColumn" xml:space="preserve">
+    <value>Kolon əlavə et</value>
+  </data>
+  <data name="Form_ReportGrid_Input_AddColumnTitle" xml:space="preserve">
+    <value>Kolon əlavə et</value>
+  </data>
+  <data name="Form_ReportGrid_DefaultColumnNamePrefix" xml:space="preserve">
+    <value>Kolon</value>
+  </data>
+  <data name="Form_ReportGrid_Button_LayoutLoad" xml:space="preserve">
+    <value>Dizaynı yüklə</value>
+  </data>
+  <data name="Form_ReportGrid_Button_DesignClear" xml:space="preserve">
+    <value>Dizaynı sıfırla</value>
+  </data>
+  <data name="Form_ReportGrid_Button_PrintPreview" xml:space="preserve">
+    <value>Çap görünüşü</value>
+  </data>
+  <data name="Form_ReportGrid_Button_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Form_ReportGrid_RibbonGroup_Export" xml:space="preserve">
+    <value>İxrac</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Bağla</value>
+  </data>
+  <data name="Form_ReportGridOptions_Caption" xml:space="preserve">
+    <value>Cədvəl parametrləri</value>
+  </data>
+  <data name="Form_ReportGridOptions_ReadOnly" xml:space="preserve">
+    <value>Yalnız oxuma rejimi</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowRowSizing" xml:space="preserve">
+    <value>Sətir ölçüsünü dəyişməyə icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_GroupFooterShowMode" xml:space="preserve">
+    <value>Qrup alt cəmi görüntüsü</value>
+  </data>
+  <data name="Form_ReportGridOptions_Editable" xml:space="preserve">
+    <value>Redaktə oluna bilər</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowFooter" xml:space="preserve">
+    <value>Alt cəmi göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_GroupFooter_Hidden" xml:space="preserve">
+    <value>Gizli</value>
+  </data>
+  <data name="Form_ReportGridOptions_GroupFooter_VisibleAlways" xml:space="preserve">
+    <value>Həmişə görünən</value>
+  </data>
+  <data name="Form_ReportGridOptions_GroupFooter_VisibleIfExpanded" xml:space="preserve">
+    <value>Yalnız genişlənəndə görünən</value>
+  </data>
+  <data name="Form_ReportPreview_EditDesign" xml:space="preserve">
+    <value>Dizaynı Dəyişdir</value>
+  </data>
+  <data name="Form_ReportPreview_CopyToClipboard" xml:space="preserve">
+    <value>Kopyala</value>
+  </data>
+  <data name="Form_Return_Caption" xml:space="preserve">
+    <value>Geri Qaytarma</value>
+  </data>
+  <data name="Form_Store_Caption" xml:space="preserve">
+    <value>Mağaza</value>
+  </data>
+  <data name="Form_Store_Save" xml:space="preserve">
+    <value>Saxla</value>
+  </data>
+  <data name="Form_Store_Cancel" xml:space="preserve">
+    <value>İmtina et</value>
+  </data>
+  <data name="Form_Store_DesignFileFolder" xml:space="preserve">
+    <value>Dizayn fayl qovluğu</value>
+  </data>
+  <data name="Form_Store_ImageFolder" xml:space="preserve">
+    <value>Şəkil qovluğu</value>
+  </data>
+  <data name="Form_Store_PrinterName" xml:space="preserve">
+    <value>Çapçı adı</value>
+  </data>
+  <data name="Form_Store_DefaultUnitOfMeasure" xml:space="preserve">
+    <value>Standart ölçü vahidi</value>
+  </data>
+  <data name="Form_Store_OfficeCode" xml:space="preserve">
+    <value>Ofis kodu</value>
+  </data>
+  <data name="Form_Store_AccountCode" xml:space="preserve">
+    <value>Hesab kodu</value>
+  </data>
+  <data name="Validation_Phone_ExistsInAnotherStore" xml:space="preserve">
+    <value>Bu nömrə başqa Mağazada mövcuddur.</value>
+  </data>
+  <data name="Form_WarehouseList_Caption" xml:space="preserve">
+    <value>Depolar</value>
+  </data>
+  <data name="Form_WarehouseList_RibbonPage_Main" xml:space="preserve">
+    <value>Depo</value>
+  </data>
+  <data name="Form_WarehouseList_RibbonGroup_Manage" xml:space="preserve">
+    <value>İdarə</value>
+  </data>
+  <data name="Form_WarehouseList_RibbonGroup_Report" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="Form_WarehouseList_NoWarehouseToDelete" xml:space="preserve">
+    <value>Silinməli olan depo yoxdur</value>
+  </data>
+  <data name="Message_ServerConnectionError" xml:space="preserve">
+    <value>Server ilə əlaqə qurula bilmir.
+Connection string:
+{0}
+Xəta: {1}</value>
+  </data>
+  <data name="Form_Splash_Status_Starting" xml:space="preserve">
+    <value>Başladılır...</value>
+  </data>
+  <data name="Form_Splash_Copyright" xml:space="preserve">
+    <value>Copyright © 2021 Subhan Hüseynzadə</value>
+  </data>
+  <data name="Form_Splash_Title_ERP" xml:space="preserve">
+    <value>ERP</value>
+  </data>
+  <data name="Form_Splash_Title_POS" xml:space="preserve">
+    <value>POS</value>
+  </data>
+  <data name="Form_Expense_RowDeleteQuestion" xml:space="preserve">
+    <value>Sətir silinsin?</value>
+  </data>
+  <data name="Form_Expense_ProductNotFound" xml:space="preserve">
+    <value>Belə bir məhsul yoxdur</value>
+  </data>
+  <data name="Entity_InvoiceLine_Barcode" xml:space="preserve">
+    <value>Barkod</value>
+  </data>
+  <data name="Form_RetailSale_ProductAddFailed" xml:space="preserve">
+    <value>Məhsul əlavə edilə bilmədi</value>
+  </data>
+  <data name="Form_RetailSale_NoStock" xml:space="preserve">
+    <value>Stokda miqdar yoxdur</value>
+  </data>
+  <data name="Form_RetailSale_DeleteQuestion" xml:space="preserve">
+    <value>Silmək istədiyinizə əminmisiniz?</value>
+  </data>
+  <data name="Form_RetailSale_InvoiceEmpty" xml:space="preserve">
+    <value>Faktura boşdur</value>
+  </data>
+  <data name="Form_RetailSale_DeleteLastLineNotAllowed" xml:space="preserve">
+    <value>Son Sətri Silmək Olmur.
+Silmək üçün çeki ləğv etməlisiniz!</value>
+  </data>
+  <data name="Form_RetailSale_SelectProduct" xml:space="preserve">
+    <value>Məhsul seçin</value>
+  </data>
+  <data name="Form_RetailSale_NoPermission" xml:space="preserve">
+    <value>Yetkiniz Yoxdur</value>
+  </data>
+  <data name="Form_RetailSale_PaymentZero" xml:space="preserve">
+    <value>Ödəmə 0a bərabərdir</value>
+  </data>
+  <data name="Form_RetailSale_SelectCustomer" xml:space="preserve">
+    <value>Müştəri seçin</value>
+  </data>
+  <data name="Form_RetailSale_NoProduct" xml:space="preserve">
+    <value>Məhsul yoxdur</value>
+  </data>
+  <data name="Form_RetailSale_NoInvoiceToPrint" xml:space="preserve">
+    <value>Çap olunmaq üçün qaimə yoxdur</value>
+  </data>
+  <data name="Form_RetailSale_BarcodeNotFound" xml:space="preserve">
+    <value>Barkod Tapılmadı</value>
+  </data>
+  <data name="Form_RetailSale_Group_Invoice" xml:space="preserve">
+    <value>Satış</value>
+  </data>
+  <data name="Form_RetailSale_Group_Function" xml:space="preserve">
+    <value>Əməliyat</value>
+  </data>
+  <data name="Form_RetailSale_Group_Payment" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_RetailSale_Group_Total" xml:space="preserve">
+    <value>Toplam</value>
+  </data>
+  <data name="Form_RetailSale_Group_Customer" xml:space="preserve">
+    <value>Müştəri</value>
+  </data>
+  <data name="Form_RetailSale_Button_Product" xml:space="preserve">
+    <value>Məhsul</value>
+  </data>
+  <data name="Form_RetailSale_Button_LineDiscount" xml:space="preserve">
+    <value>Sətir Endirimi</value>
+  </data>
+  <data name="Form_RetailSale_Button_CancelInvoice" xml:space="preserve">
+    <value>Çeki Ləğv Et</value>
+  </data>
+  <data name="Form_RetailSale_Button_DeleteLine" xml:space="preserve">
+    <value>Sətri Sil</value>
+  </data>
+  <data name="Form_RetailSale_Button_SalesPerson" xml:space="preserve">
+    <value>Satıcı</value>
+  </data>
+  <data name="Form_RetailSale_Button_PaymentCash" xml:space="preserve">
+    <value>Nağd</value>
+  </data>
+  <data name="Form_RetailSale_Button_PaymentCashless" xml:space="preserve">
+    <value>Nağdsız</value>
+  </data>
+  <data name="Form_RetailSale_Button_PaymentBonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="Form_RetailSale_Button_Print" xml:space="preserve">
+    <value>Çap</value>
+  </data>
+  <data name="Form_RetailSale_Button_PrintPreview" xml:space="preserve">
+    <value>Çap Görünüş</value>
+  </data>
+  <data name="Form_RetailSale_Button_ReportZ" xml:space="preserve">
+    <value>Gün Sonu</value>
+  </data>
+  <data name="Form_RetailSale_Button_New" xml:space="preserve">
+    <value>Yeni</value>
+  </data>
+  <data name="Form_RetailSale_Button_IncompletedInvoices" xml:space="preserve">
+    <value>Natamam fakturalar</value>
+  </data>
+  <data name="Form_RetailSale_Button_InvoiceDiscount" xml:space="preserve">
+    <value>Qaimə Endirimi</value>
+  </data>
+  <data name="Form_RetailSale_Label_PaidCash" xml:space="preserve">
+    <value>Nağd:</value>
+  </data>
+  <data name="Form_RetailSale_Label_PaidCashless" xml:space="preserve">
+    <value>Nağdsız:</value>
+  </data>
+  <data name="Form_RetailSale_Label_PaidTotal" xml:space="preserve">
+    <value>Ödənilib:</value>
+  </data>
+  <data name="Form_RetailSale_Label_PrintCount" xml:space="preserve">
+    <value>Çap Sayı</value>
+  </data>
+  <data name="Form_Return_Group_ReturnInvoiceLine" xml:space="preserve">
+    <value>Geri Qaytarma</value>
+  </data>
+  <data name="Form_Return_Group_InvoiceHeader" xml:space="preserve">
+    <value>Faktura</value>
+  </data>
+  <data name="Form_Return_Group_InvoiceLine" xml:space="preserve">
+    <value>Məhsul</value>
+  </data>
+  <data name="Form_Return_Group_Payment" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
+  <data name="Form_Return_Label_InvoiceHeader" xml:space="preserve">
+    <value>Faktura</value>
+  </data>
+  <data name="Form_Return_Label_CurrAcc" xml:space="preserve">
+    <value>Cari Hesab</value>
+  </data>
+  <data name="Form_Return_Message_NoQtyToReturn" xml:space="preserve">
+    <value>Geri qaytarıla biləcək miqdar yoxdur.</value>
+  </data>
+  <data name="Form_Return_Message_OpenInvoiceQuestion" xml:space="preserve">
+    <value>Qaiməni açmaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_Return_Caption_OpenInvoice" xml:space="preserve">
+    <value>Qaiməni Aç</value>
+  </data>
+  <data name="Form_Return_Message_PaymentIsZero" xml:space="preserve">
+    <value>Ödəmə 0-a bərabərdir.</value>
+  </data>
+  <data name="Form_Return_Message_InvoiceNotFound" xml:space="preserve">
+    <value>Belə bir sənəd yoxdur.</value>
+  </data>
+  <data name="Form_Return_Message_CancelReturnQuestion" xml:space="preserve">
+    <value>Geri qaytarma ləğv edilsin?</value>
+  </data>
+  <data name="Form_Return_Caption_Confirmation" xml:space="preserve">
+    <value>Təsdiqlə</value>
+  </data>
+  <data name="Form_WaitForm_Title" xml:space="preserve">
+    <value>Yüklənir</value>
+  </data>
+  <data name="Form_WaitForm_Caption" xml:space="preserve">
+    <value>Gözləyin</value>
+  </data>
+  <data name="Form_WaitForm_Description" xml:space="preserve">
+    <value>Yüklənir...</value>
+  </data>
+  <data name="Form_StoreList_ReportNotFound" xml:space="preserve">
+    <value>'Report_Embedded_StoreList' sorğusu DcReports cədvəlində tapılmadı.</value>
+  </data>
+  <data name="Form_StoreList_Message_NoStoreToDelete" xml:space="preserve">
+    <value>Silinməli olan mağaza yoxdur.</value>
+  </data>
+  <data name="Form_StoreList_Message_SelectStore" xml:space="preserve">
+    <value>Mağaza seçin.</value>
+  </data>
+  <data name="Form_Return_Col_Payment_Type" xml:space="preserve">
+    <value>Ödəmə Tipi</value>
   </data>
 </root>

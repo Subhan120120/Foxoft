@@ -1,27 +1,28 @@
-﻿
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
+using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
-   partial class FormWarehouseList
-   {
-      /// <summary>
-      /// Required designer variable.
-      /// </summary>
-      private System.ComponentModel.IContainer components = null;
+    partial class FormWarehouseList
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-      /// <summary>
-      /// Clean up any resources being used.
-      /// </summary>
-      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-      protected override void Dispose(bool disposing)
-      {
-         if (disposing && (components != null))
-         {
-            components.Dispose();
-         }
-         base.Dispose(disposing);
-      }
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         #region Windows Form Designer generated code
 
@@ -44,7 +45,6 @@ namespace Foxoft
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_WarehouseNew = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
-            bBI_Report1 = new DevExpress.XtraBars.BarButtonItem();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_WarehouseDelete = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurAccRefresh = new DevExpress.XtraBars.BarButtonItem();
@@ -121,7 +121,7 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_WarehouseNew, bBI_CurAccEdit, bBI_Report1, bBI_ExportXlsx, bBI_WarehouseDelete, bBI_CurAccRefresh });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_WarehouseNew, bBI_CurAccEdit, bBI_ExportXlsx, bBI_WarehouseDelete, bBI_CurAccRefresh });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 9;
             ribbonControl1.Name = "ribbonControl1";
@@ -131,42 +131,35 @@ namespace Foxoft
             // 
             // bBI_WarehouseNew
             // 
-            bBI_WarehouseNew.Caption = "Yeni";
+            bBI_WarehouseNew.Caption = Resources.Common_New;
             bBI_WarehouseNew.Id = 1;
             bBI_WarehouseNew.Name = "bBI_WarehouseNew";
             bBI_WarehouseNew.ItemClick += bBI_WarehouseNew_ItemClick;
             // 
             // bBI_CurAccEdit
             // 
-            bBI_CurAccEdit.Caption = "Dəyiş";
+            bBI_CurAccEdit.Caption = Resources.Common_Edit;
             bBI_CurAccEdit.Id = 2;
             bBI_CurAccEdit.Name = "bBI_CurAccEdit";
             bBI_CurAccEdit.ItemClick += bBI_WarehouseEdit_ItemClick;
             // 
-            // bBI_Report1
-            // 
-            bBI_Report1.Caption = "Müştəri ilə Haqq Hesab";
-            bBI_Report1.Id = 5;
-            bBI_Report1.Name = "bBI_Report1";
-            bBI_Report1.ItemClick += bBI_Report1_ItemClick;
-            // 
             // bBI_ExportXlsx
             // 
-            bBI_ExportXlsx.Caption = "Excelə Göndər";
+            bBI_ExportXlsx.Caption = Resources.Common_ExportToExcel;
             bBI_ExportXlsx.Id = 6;
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
             bBI_ExportXlsx.ItemClick += bBI_ExportXlsx_ItemClick;
             // 
             // bBI_WarehouseDelete
             // 
-            bBI_WarehouseDelete.Caption = "Sil";
+            bBI_WarehouseDelete.Caption = Resources.Common_Delete;
             bBI_WarehouseDelete.Id = 7;
             bBI_WarehouseDelete.Name = "bBI_WarehouseDelete";
             bBI_WarehouseDelete.ItemClick += bBI_WarehouseDelete_ItemClick;
             // 
             // bBI_CurAccRefresh
             // 
-            bBI_CurAccRefresh.Caption = "Yenilə";
+            bBI_CurAccRefresh.Caption = Resources.Common_Refresh;
             bBI_CurAccRefresh.Id = 8;
             bBI_CurAccRefresh.Name = "bBI_CurAccRefresh";
             bBI_CurAccRefresh.ItemClick += bBI_WarehouseRefresh_ItemClick;
@@ -175,7 +168,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Depo";
+            ribbonPage1.Text = Resources.Form_WarehouseList_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
@@ -184,14 +177,13 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_WarehouseDelete);
             ribbonPageGroup1.ItemLinks.Add(bBI_CurAccRefresh);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "İdarə";
+            ribbonPageGroup1.Text = Resources.Form_WarehouseList_RibbonGroup_Manage;
             // 
             // ribbonPageGroup3
             // 
-            ribbonPageGroup3.ItemLinks.Add(bBI_Report1);
             ribbonPageGroup3.ItemLinks.Add(bBI_ExportXlsx);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Hesabat";
+            ribbonPageGroup3.Text = Resources.Form_WarehouseList_RibbonGroup_Report;
             // 
             // ribbonStatusBar1
             // 
@@ -218,7 +210,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = "Depolar";
+            Text = Resources.Form_WarehouseList_Caption;
             KeyDown += FormWarehouseList_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_WarehouseList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcWarehousesBindingSource).EndInit();
@@ -231,25 +223,24 @@ namespace Foxoft
         #endregion
 
         private DevExpress.XtraGrid.GridControl gC_WarehouseList;
-      private DevExpress.XtraGrid.Views.Grid.GridView gV_WarehouseList;
-      private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-      private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
-      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
-      private DevExpress.XtraBars.BarButtonItem bBI_WarehouseNew;
-      private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
-      private DevExpress.XtraBars.BarButtonItem bBI_Report1;
-      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
-      private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
-      private System.Windows.Forms.BindingSource dcWarehousesBindingSource;
-      private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
-      private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
-      private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
-      private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
-      private DevExpress.XtraBars.BarButtonItem bBI_WarehouseDelete;
-      private DevExpress.XtraBars.BarButtonItem bBI_CurAccRefresh;
-      private DevExpress.XtraGrid.Columns.GridColumn col_WarehouseCode;
-      private DevExpress.XtraGrid.Columns.GridColumn col_WarehouseDesc;
-   }
+        private DevExpress.XtraGrid.Views.Grid.GridView gV_WarehouseList;
+        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
+        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+        private DevExpress.XtraBars.BarButtonItem bBI_WarehouseNew;
+        private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+        private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
+        private System.Windows.Forms.BindingSource dcWarehousesBindingSource;
+        private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
+        private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
+        private DevExpress.XtraBars.BarButtonItem bBI_WarehouseDelete;
+        private DevExpress.XtraBars.BarButtonItem bBI_CurAccRefresh;
+        private DevExpress.XtraGrid.Columns.GridColumn col_WarehouseCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_WarehouseDesc;
+    }
 }

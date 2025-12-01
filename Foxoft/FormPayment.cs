@@ -211,8 +211,8 @@ namespace Foxoft
         private void textEditCash_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
-            e.WindowCaption = "Diqqət";
-            e.ErrorText = "Dəyər 0 dan böyük olmalıdır";
+            e.WindowCaption = Resources.Common_Attention;
+            e.ErrorText = Resources.Validation_Range_Min;
         }
 
         private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
@@ -253,9 +253,6 @@ namespace Foxoft
 
             LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, hasPlans ? LayoutVisibility.Always : LayoutVisibility.Never);
             LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, hasPlans ? LayoutVisibility.Always : LayoutVisibility.Never);
-
-
-
         }
 
         private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -302,7 +299,7 @@ namespace Foxoft
 
         private void btnEdit_CashRegister_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
-            e.ErrorText = "Belə bir kassa yoxdur";
+            e.ErrorText = Resources.Form_Payment_CashRegisterNotFound;
             e.ExceptionMode = ExceptionMode.DisplayError;
         }
 
@@ -403,8 +400,6 @@ namespace Foxoft
         //    //    float commisionRate = ((DcPaymentPlan)row).CommissionRate;
         //    //    txt_InstallmentCommission.EditValue = trInstallment.AmountLoc * (decimal)commisionRate / 100;
         //    //}
-
-
         //}
 
         private void btn_Ok_Click(object sender, EventArgs e)
@@ -421,14 +416,14 @@ namespace Foxoft
             {
                 if (lUE_PaymentMethod.EditValue == null)
                 {
-                    dxErrorProvider1.SetError(lUE_PaymentMethod, "Boş buraxıla bilməz!");
+                    dxErrorProvider1.SetError(lUE_PaymentMethod, Resources.Validation_Required);
                     return;
                 }
                 else
                 {
                     if (((List<DcPaymentPlan>)LUE_PaymentPlan.Properties.DataSource)?.Count > 0 && LUE_PaymentPlan.EditValue == null)
                     {
-                        dxErrorProvider1.SetError(LUE_PaymentPlan, "Boş buraxıla bilməz!");
+                        dxErrorProvider1.SetError(LUE_PaymentPlan, Resources.Validation_Required);
                         return;
                     }
                 }
@@ -438,7 +433,7 @@ namespace Foxoft
             //{
             //    if (LUE_InstallmentPlan.EditValue == null)
             //    {
-            //        dxErrorProvider1.SetError(LUE_InstallmentPlan, "Boş buraxıla bilməz!");
+            //        dxErrorProvider1.SetError(LUE_InstallmentPlan, Resources.Validation_Required);
             //        return;
             //    }
 
@@ -446,26 +441,26 @@ namespace Foxoft
 
             //    if (dcCurrAcc is null)
             //    {
-            //        XtraMessageBox.Show("Cari Hesab Seçilməyib");
+            //        XtraMessageBox.Show(Resources.Form_Payment_CurrAccNotSelected);
             //        return;
             //    }
 
             //    if (String.IsNullOrEmpty(dcCurrAcc.IdentityNum))
             //    {
-            //        XtraMessageBox.Show("Cari Hesabın Şəxsiyyət Vəsiqəsinin Nömrəsi yoxdur");
+            //        XtraMessageBox.Show(Resources.Form_Payment_CurrAccIdentityMissing);
             //        return;
             //    }
 
             //    if (String.IsNullOrEmpty(dcCurrAcc.PhoneNum))
             //    {
-            //        XtraMessageBox.Show("Cari Hesabın Telefon Nömrəsi yoxdur");
+            //        XtraMessageBox.Show(Resources.Form_Payment_CurrAccPhoneMissing);
             //        return;
             //    }
             //}
 
             if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
             {
-                string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
+                string NewDocNum = efMethods.GetNextDocNum(true, "PA", nameof(TrPaymentHeader.DocumentNumber), "TrPaymentHeaders", 6);
                 trPaymentHeader.DocumentNumber = NewDocNum;
                 trPaymentHeader.Description = TxtEdit_Description.EditValue?.ToString();
 
@@ -500,7 +495,7 @@ namespace Foxoft
                         var redirectedHeader = new TrPaymentHeader
                         {
                             PaymentHeaderId = Guid.NewGuid(),
-                            DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6),
+                            DocumentNumber = efMethods.GetNextDocNum(true, "PA", nameof(TrPaymentHeader.DocumentNumber), "TrPaymentHeaders", 6),
                             CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString(),
                             PaymentKindId = 1,
                             CreatedUserName = Authorization.CurrAccCode,
@@ -518,6 +513,7 @@ namespace Foxoft
                         var redirectedLine = new TrPaymentLine
                         {
                             PaymentLineId = Guid.NewGuid(),
+                            PaymentMethodId = dcPaymentMethod.PaymentMethodId,
                             PaymentHeaderId = redirectedHeader.PaymentHeaderId,
                             PaymentTypeCode = 2,
                             CurrencyCode = trPaymentLineCashless.CurrencyCode,

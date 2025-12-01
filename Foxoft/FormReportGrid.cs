@@ -1,5 +1,4 @@
-﻿
-#region usings
+﻿#region usings
 using DevExpress.Data;
 using DevExpress.Utils;
 using DevExpress.Utils.Design;
@@ -23,6 +22,7 @@ using DevExpress.XtraReports.UserDesigner;
 using DevExpress.XtraReports.UserDesigner.Native;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -213,25 +213,17 @@ namespace Foxoft
 
         private void CreateColImage()
         {
-            //if (colImage is null)
-            //{
-            //   colImage = new();
-            //}
             colImage.FieldName = "Image";
-            colImage.Caption = "Şəkil";
+            colImage.Caption = Resources.Form_ReportGrid_Column_Image;
             colImage.UnboundType = UnboundColumnType.Object;
             colImage.OptionsColumn.AllowEdit = false;
             colImage.OptionsColumn.FixedWidth = false;
             colImage.Visible = true;
 
-            //if (riPictureEdit is null)
-            //{
-            //   riPictureEdit = new();
             colImage.ColumnEdit = riPictureEdit;
             riPictureEdit.SizeMode = PictureSizeMode.Zoom;
             riPictureEdit.NullText = " ";
             gC_Report.RepositoryItems.Add(riPictureEdit);
-            //}
         }
 
         private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -246,7 +238,6 @@ namespace Foxoft
                 efMethods.UpdateReportLayout(dcReport.ReportId, layoutTxt);
             }
         }
-
 
         private void bBI_LayoutLoad_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -264,7 +255,6 @@ namespace Foxoft
             }
             TrimNumbersFormat();
         }
-
 
         private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -289,7 +279,6 @@ namespace Foxoft
             prevColumn = view.FocusedColumn;
             prevRow = view.FocusedRowHandle;
         }
-
 
         private void repoHLE_ProductCode_OpenLink(object sender, OpenLinkEventArgs e)
         {
@@ -333,11 +322,8 @@ namespace Foxoft
                     if (window.Tag == docNum)
                     {
                         isOpen = true;
-                        XtraMessageBox.Show("Qaimə açıqdır.");
+                        XtraMessageBox.Show(Resources.Form_ReportGrid_Message_InvoiceIsOpen);
                     }
-
-                    // Close the window if necessary
-                    // CloseWindow(window.Handle);
                 }
             }
 
@@ -356,7 +342,7 @@ namespace Foxoft
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                 if (!currAccHasClaims)
                 {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    MessageBox.Show(Resources.Common_AccessDenied);
                     return;
                 }
 
@@ -376,7 +362,7 @@ namespace Foxoft
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                 if (!currAccHasClaims)
                 {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    MessageBox.Show(Resources.Common_AccessDenied);
                     return;
                 }
 
@@ -401,7 +387,7 @@ namespace Foxoft
                 }
             }
             else
-                MessageBox.Show("Belə bir sənəd yoxdur.");
+                MessageBox.Show(Resources.Common_NotFound);
         }
 
         private void gV_Report_RowStyle(object sender, RowStyleEventArgs e)
@@ -431,8 +417,8 @@ namespace Foxoft
         {
             using var sFD = new XtraSaveFileDialog
             {
-                Filter = "Excel Faylı|*.xlsx",
-                Title = "Excel Faylı Yadda Saxla",
+                Filter = Resources.Common_File_ExcelFilter,
+                Title = Resources.Common_File_SaveExcel,
                 FileName = dcReport.ReportName,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 DefaultExt = "*.xlsx",
@@ -442,7 +428,11 @@ namespace Foxoft
             {
                 gV_Report.ExportToXlsx(sFD.FileName);
 
-                if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (XtraMessageBox.Show(
+                        this,
+                        Resources.Form_ReportGrid_Message_OpenExportedFileQuestion,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     using var p = new Process
                     {
@@ -452,8 +442,6 @@ namespace Foxoft
                 }
             }
         }
-
-
 
         private void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -513,7 +501,11 @@ namespace Foxoft
             {
                 if (menu.Column != null)
                 {
-                    menu.Items.Add(CreateItemExpression("Expression", e.HitInfo.RowHandle, menu.Column, null));
+                    menu.Items.Add(CreateItemExpression(
+                        Resources.Form_ReportGrid_Menu_Expression,
+                        e.HitInfo.RowHandle,
+                        menu.Column,
+                        null));
 
                     DXSubMenuItem menuSubItem = CreateSubMenuReports(e.HitInfo.Column, e.HitInfo.RowHandle);
                     menuSubItem.BeginGroup = true;
@@ -541,7 +533,7 @@ namespace Foxoft
             int rowHandle = eMenu.HitInfo.RowHandle;
             GridColumn gridColumn = eMenu.HitInfo.Column;
 
-            DXMenuItem menuItem = new("Dəyiş");
+            DXMenuItem menuItem = new(Resources.Common_Edit);
             menuItem.ImageOptions.SvgImage = svgImageCollection1[1];
 
             object objCellValue = gV_Report.GetRowCellValue(rowHandle, gridColumn);
@@ -586,6 +578,7 @@ namespace Foxoft
                 LoadData();
             }
         }
+
         private void OpenFormProduct(string productCode)
         {
             using (var formProduct = new FormProduct(0, productCode))
@@ -605,10 +598,9 @@ namespace Foxoft
             }
         }
 
-
         DXSubMenuItem CreateSubMenuReports(GridColumn gridColumn, int rowHandle)
         {
-            DXSubMenuItem subMenu = new("Hesabat");
+            DXSubMenuItem subMenu = new(Resources.ERP_BSI_Reports);
 
             subMenu.ImageOptions.SvgImage = svgImageCollection1[0];
 
@@ -622,7 +614,6 @@ namespace Foxoft
             {
                 DXMenuItem dxItem = new(report.DcReport.ReportName);
                 dxItem.Tag = new CellInfo(rowHandle, gridColumn);
-                //dxItem.Enabled = gV_Report.IsDataRow(rowHandle) || gV_Report.IsGroupRow(rowHandle);
                 dxItem.ImageOptions.SvgImage = svgImageCollection1[0];
                 subMenu.Items.Add(dxItem);
 
@@ -653,7 +644,6 @@ namespace Foxoft
                         if (item.VariableProperty == gridColumn?.FieldName && !string.IsNullOrEmpty(columnValue))
                         {
                             item.VariableValue = columnValue;
-                            //efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, item.VariableValue);
                         }
                     }
 
@@ -682,7 +672,6 @@ namespace Foxoft
 
             return resp;
         }
-
 
         DXMenuItem CreateItemExpression(string caption, int rowHandle, GridColumn column, Image image)
         {
@@ -751,7 +740,12 @@ namespace Foxoft
             BarButtonItem clickedItem = e.Item as BarButtonItem;
             if (clickedItem != null)
             {
-                string input = Interaction.InputBox(clickedItem.Caption, "Kolon Əlavə Et", "Kolon" + gV_Report.Columns.Count);
+                string title = Resources.Form_ReportGrid_Input_AddColumnTitle;
+                string defaultName = Resources.Form_ReportGrid_DefaultColumnNamePrefix + gV_Report.Columns.Count;
+                string input = Interaction.InputBox(clickedItem.Caption, title, defaultName);
+                if (string.IsNullOrWhiteSpace(input))
+                    return;
+
                 GridColumn col = gV_Report.Columns.AddVisible(input);
                 col.UnboundDataType = Type.GetType(clickedItem.Caption);
             }

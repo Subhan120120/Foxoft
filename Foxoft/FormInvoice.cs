@@ -158,11 +158,8 @@ namespace Foxoft
 
         private void InitializeColumnName()
         {
-            colProductCost.Caption = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ProductCost);
             colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
             col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
-            checkEdit_IsSent.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsSent);
-            checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
         }
 
         private void ClearControlsAddNew()
@@ -226,7 +223,7 @@ namespace Foxoft
             TrInvoiceHeader invoiceHeader = new();
             invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
             invoiceHeader.RelatedInvoiceId = relatedInvoiceId;
-            string NewDocNum = efMethods.GetNextDocNum(true, dcProcess.ProcessCode, "DocumentNumber", "TrInvoiceHeaders", 6);
+            string NewDocNum = efMethods.GetNextDocNum(true, dcProcess.ProcessCode, nameof(TrInvoiceHeader.DocumentNumber), nameof(subContext.TrInvoiceHeaders), 6);
             invoiceHeader.DocumentNumber = NewDocNum;
             invoiceHeader.DocumentDate = DateTime.Now;
             invoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
@@ -413,7 +410,7 @@ namespace Foxoft
                     if (form.dcCurrAcc.CreditLimit > Math.Abs(form.dcCurrAcc.Balance) || form.dcCurrAcc.CreditLimit == 0)
                         btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                     else
-                        XtraMessageBox.Show("Müştəri Kredit Limitin Aşır", "Diqqət");
+                        XtraMessageBox.Show(Resources.Form_Invoice_CreditLimitExceeded, Resources.Common_Attention);
                 }
             }
         }
@@ -464,11 +461,14 @@ namespace Foxoft
                     bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                     if (!currAccHasClaims)
                     {
-                        MessageBox.Show("Yetkiniz yoxdur! ");
+                        MessageBox.Show(Resources.Common_NoPermission);
                         return;
                     }
 
-                    if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    if (MessageBox.Show(
+                            Resources.Form_Invoice_RowDeleteQuestion,
+                            Resources.Common_Confirm,
+                            MessageBoxButtons.YesNo) != DialogResult.Yes)
                         return;
 
                     gV.DeleteSelectedRows();
@@ -520,27 +520,35 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
-
         }
 
         private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
+            if (e.Value is null)
+                return;
+
+            string value = e.Value.ToString()?.Trim();
+            if (string.IsNullOrWhiteSpace(value))
+                return;
+
+            DcProduct product = null;
+
             if (e.Column == col_ProductCode)
-            {
-                DcProduct product = null;
+                product = efMethods.SelectProduct(value, productTypeArr);
+            else if (e.Column == colBarcode)
+                product = efMethods.SelectProductByBarcode(value);
+            else if (e.Column == colSerialNumberCode)
+                product = efMethods.SelectProductBySerialNumber(value);
 
-                if (dcProcess.ProcessCode == "EX")
-                    product = efMethods.SelectExpense(e.Value?.ToString());
-                else
-                    product = efMethods.SelectProduct(e.Value?.ToString(), productTypeArr);
+            if (product is null)
+                return;
 
-                if (product is null)
-                    return;
+            if (e.Column != col_ProductCode)
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_ProductCode, product.ProductCode);
 
-                gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+            FillRow(e.RowHandle, product);
 
-                FillRow(gV_InvoiceLine.FocusedRowHandle, product);
-            }
+            gV_InvoiceLine.UpdateCurrentRow();
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -576,10 +584,8 @@ namespace Foxoft
                 return;
             }
 
-
             if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
             {
-
                 DcProduct product = null;
 
                 if (column == col_ProductCode)
@@ -592,7 +598,7 @@ namespace Foxoft
                     if (!sN_Exist)
                     {
                         e.Valid = false;
-                        e.ErrorText = $"Seria Nömrəsi tapılmadı.";
+                        e.ErrorText = Resources.Form_Invoice_SerialNumberNotFound;
                         return;
                     }
 
@@ -601,56 +607,61 @@ namespace Foxoft
 
                 if (product == null)
                 {
+                    string entityName = dcProcess.ProcessCode == "EX"
+                        ? Resources.Form_Invoice_Expense
+                        : Resources.Form_Invoice_Product;
+
                     e.Valid = false;
-                    e.ErrorText = $"{(dcProcess.ProcessCode == "EX" ? "Xərc" : "Məhsul")} tapılmadı və ya deaktiv edilib.";
+                    e.ErrorText = string.Format(
+                        Resources.Form_Invoice_EntityNotFoundOrDisabled,
+                        entityName);
 
                     return;
                 }
 
                 string returnProductCode = efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
-                                             .FirstOrDefault()?.ProductCode;
+                                                    .FirstOrDefault()?.ProductCode;
 
                 if (!string.IsNullOrEmpty(returnProductCode) && product.ProductCode != returnProductCode)
                 {
                     e.Valid = false;
-                    e.ErrorText = $"Bu sətir üzrə geri qaytarma əməliyyatı mövcuddur. Məhsul Kodu dəyişilə bilməz.";
+                    e.ErrorText = Resources.Form_Invoice_ReturnOperationExists_CannotChangeProductCode;
                     return;
                 }
 
                 string waybillProductCode = efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
-                                             .FirstOrDefault()?.ProductCode;
+                                                     .FirstOrDefault()?.ProductCode;
 
                 if (!string.IsNullOrEmpty(waybillProductCode) && product.ProductCode != waybillProductCode)
                 {
                     e.Valid = false;
-                    e.ErrorText = $"Bu sətir üzrə təhvil-təslim əməliyyatı mövcuddur. Məhsul Kodu dəyişilə bilməz.";
+                    e.ErrorText = Resources.Form_Invoice_HandOverOperationExists_CannotChangeProductCode;
                     return;
                 }
 
                 if (tr.RelatedLineId is not null)
                 {
                     string invoiceProductCode = efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader.ProcessCode)
-                                             .FirstOrDefault()?.ProductCode;
+                                                         .FirstOrDefault()?.ProductCode;
 
                     if (!string.IsNullOrEmpty(invoiceProductCode) && product.ProductCode != invoiceProductCode)
                     {
                         e.Valid = false;
-                        e.ErrorText = $"Bu geri qaytarma üzrə əlaqəli sətir mövcuddur. Məhsul Kodu dəyişilə bilməz.";
+                        e.ErrorText = Resources.Form_Invoice_RelatedReturnLineExists_CannotChangeProductCode;
                         return;
                     }
 
                     string invoiceProductCode2 = efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
-                                                 .FirstOrDefault()?.ProductCode;
+                                                          .FirstOrDefault()?.ProductCode;
 
                     if (!string.IsNullOrEmpty(invoiceProductCode2) && product.ProductCode != invoiceProductCode2)
                     {
                         e.Valid = false;
-                        e.ErrorText = $"Bu təhvil-təslim üzrə əlaqəli sətir mövcuddur. Məhsul Kodu dəyişilə bilməz.";
+                        e.ErrorText = Resources.Form_Invoice_RelatedHandOverLineExists_CannotChangeProductCode;
                         return;
                     }
                 }
             }
-
             else if (column == colQty)
             {
                 if (new[] { "RP", "WP", "RS", "WS", "IS", "IT" }.Contains(trInvoiceHeader.ProcessCode)
@@ -670,46 +681,54 @@ namespace Foxoft
                         if (permitNegativeStock && Convert.ToDecimal(e.Value) > balance)
                         {
                             e.Valid = false;
-                            e.ErrorText = "Stokda miqdar yoxdur";
+                            e.ErrorText = Resources.Form_Invoice_NoStockQuantity;
                             return;
                         }
                     }
                 }
 
                 decimal returnSum = Math.Abs(efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
-                                             .Sum(x => x.QtyIn - x.QtyOut));
+                                                     .Sum(x => x.QtyIn - x.QtyOut));
                 if (Convert.ToDecimal(e.Value) < returnSum)
                 {
                     e.Valid = false;
-                    e.ErrorText = $"Bu sətirdə {returnSum} ədəd geri qaytarma əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.";
+                    e.ErrorText = string.Format(
+                        Resources.Form_Invoice_ReturnQtyLessThanExisting,
+                        returnSum);
                     return;
                 }
 
                 decimal invoiceSum = Math.Abs(efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader?.ProcessCode)
-                                             .Sum(x => x.QtyIn - x.QtyOut));
+                                                      .Sum(x => x.QtyIn - x.QtyOut));
                 if (trInvoiceHeader.IsReturn && Convert.ToDecimal(e.Value) > invoiceSum)
                 {
                     e.Valid = false;
-                    e.ErrorText = $"Satışı {invoiceSum} ədəd olan məhsulun geri qaytarmasıdır. Miqdar bu rəqəmdən çox ola bilməz.";
+                    e.ErrorText = string.Format(
+                        Resources.Form_Invoice_ReturnQtyGreaterThanSale,
+                        invoiceSum);
                     return;
                 }
 
                 decimal waybillSum = Math.Abs(efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
-                                             .Sum(x => x.QtyIn - x.QtyOut));
+                                                     .Sum(x => x.QtyIn - x.QtyOut));
                 if (Convert.ToDecimal(e.Value) < waybillSum)
                 {
                     e.Valid = false;
-                    e.ErrorText = $"Bu sətirdə {waybillSum} ədəd təhvil-təslim əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.";
+                    e.ErrorText = string.Format(
+                        Resources.Form_Invoice_HandOverQtyLessThanDelivery,
+                        waybillSum);
                     return;
                 }
 
                 decimal invoiceSum2 = Math.Abs(efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
-                                             .Sum(x => x.QtyIn - x.QtyOut));
+                                                      .Sum(x => x.QtyIn - x.QtyOut));
 
                 if (trInvoiceHeader.ProcessCode == "WO" && Convert.ToDecimal(e.Value) > invoiceSum2)
                 {
                     e.Valid = false;
-                    e.ErrorText = $"Satışı {invoiceSum2} ədəd olan məhsulun təhvil-təslimidir. Miqdar bu rəqəmdən çox ola bilməz.";
+                    e.ErrorText = string.Format(
+                        Resources.Form_Invoice_HandOverQtyGreaterThanSale,
+                        invoiceSum2);
                     return;
                 }
 
@@ -724,30 +743,28 @@ namespace Foxoft
                     if (Math.Abs(currAccBalance) > dc.CreditLimit && dc.CreditLimit != 0 && Convert.ToInt32(e.Value) != 0)
                     {
                         e.Valid = false;
-                        e.ErrorText = "Müştəri Kredit Limitini Aşır!";
+                        e.ErrorText = Resources.Form_Invoice_CreditLimitExceeded;
                         return;
                     }
                 }
             }
-
             else if (column == col_SalesPersonCode)
             {
                 var acc = efMethods.SelectSalesPerson(input);
                 if (acc == null || acc.CurrAccTypeCode != 3)
                 {
                     e.Valid = false;
-                    e.ErrorText = "Belə bir satıcı yoxdur";
+                    e.ErrorText = Resources.Form_Invoice_SalesPersonNotFound;
                     return;
                 }
             }
-
             else if (column == colWorkerCode)
             {
                 var acc = efMethods.SelectWorker(input);
                 if (acc == null || acc.CurrAccTypeCode != 3)
                 {
                     e.Valid = false;
-                    e.ErrorText = "Belə bir usta yoxdur";
+                    e.ErrorText = Resources.Form_Invoice_WorkerNotFound;
                 }
             }
         }
@@ -756,7 +773,7 @@ namespace Foxoft
         private void gV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
-            e.WindowCaption = "Diqqət";
+            e.WindowCaption = Resources.Common_Attention;
         }
 
         private decimal CalcCurrAccCreditBalance(int eValue, GridView view, string currAccCode)
@@ -837,7 +854,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
 
-            using FormCommonList<DcSerialNumber> form = new("SN", "SerialNumberCode", editor.EditValue?.ToString(), "ProductCode", productCode);
+            using FormCommonList<DcSerialNumber> form = new("SN", nameof(DcSerialNumber.SerialNumberCode), editor.EditValue?.ToString(), nameof(DcSerialNumber.ProductCode), productCode);
 
             try
             {
@@ -984,12 +1001,20 @@ namespace Foxoft
             if (efMethods.ReturnExistByInvoiceLine(invoiceLineId))
             {
                 e.Cancel = true;
-                XtraMessageBox.Show("Bu məhsul üzrə geri qaytarma mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(
+                    Resources.Form_Invoice_ProductHasReturn,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             if (efMethods.WaybillExistByInvoiceLine(invoiceLineId))
             {
                 e.Cancel = true;
-                XtraMessageBox.Show("Bu məhsul üzrə təhvil mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(
+                    Resources.Form_Invoice_ProductHasDelivery,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
         }
 
@@ -1110,7 +1135,7 @@ namespace Foxoft
                 trPaymentHeader = efMethods.SelectPaymentHeaderByInvoice(trInvoiceHeader.InvoiceHeaderId);
             else
             {
-                string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
+                string NewDocNum = efMethods.GetNextDocNum(true, "PA", nameof(TrPaymentHeader.DocumentNumber), nameof(subContext.TrPaymentHeaders), 6);
                 trPaymentHeader.DocumentNumber = NewDocNum;
                 trPaymentHeader.Description = trInvoiceHeader.Description;
 
@@ -1299,7 +1324,7 @@ namespace Foxoft
         {
             if (!efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
             {
-                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+                XtraMessageBox.Show(Resources.Form_Invoice_NoInvoiceToDelete);
                 return;
             }
 
@@ -1307,7 +1332,7 @@ namespace Foxoft
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
             if (!currAccHasClaims)
             {
-                MessageBox.Show("Yetkiniz yoxdur! ");
+                MessageBox.Show(Resources.Common_NoPermission);
                 return;
             }
 
@@ -1317,18 +1342,30 @@ namespace Foxoft
             {
                 if (efMethods.ReturnExistByInvoiceLine(invoiceline.InvoiceLineId))
                 {
-                    XtraMessageBox.Show("Bu məhsul üzrə geri qaytarma mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    XtraMessageBox.Show(
+                        Resources.Form_Invoice_ProductHasReturn,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                     return;
                 }
 
                 if (efMethods.WaybillExistByInvoiceLine(invoiceline.InvoiceLineId))
                 {
-                    XtraMessageBox.Show("Bu məhsul üzrə təhvil mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    XtraMessageBox.Show(
+                        Resources.Form_Invoice_ProductHasDelivery,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                     return;
                 }
             }
 
-            if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Silmek Isteyirsiz?", "DeleteInvoice")) == DialogResult.OK)
+            if (XtraMessageBox.Show(
+                    xtraMessageBox(
+                        Resources.Common_Attention,
+                        Resources.Form_Invoice_DeleteInvoiceQuestion,
+                        "DeleteInvoice")) == DialogResult.OK)
             {
                 bool currAccHasPayClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
                 bool currAccHasExpenceClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
@@ -1338,27 +1375,29 @@ namespace Foxoft
                 if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
                     if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                         efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-                    else if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Qaimə üzrə olan ödənişləri də silirsiniz?", "DeletePayment")) == DialogResult.OK)
+                    else if (XtraMessageBox.Show(
+                                 xtraMessageBox(
+                                     Resources.Common_Attention,
+                                     Resources.Form_Invoice_DeletePaymentsForInvoiceQuestion,
+                                     "DeletePayment")) == DialogResult.OK)
                         if (currAccHasPayClaims)
                             efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
                         else
-                            XtraMessageBox.Show("Ödəniş Yetkiniz yoxdur!");
+                            XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionDeletePayment);
 
                 if (efMethods.ExpensesExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
-                    if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Qaimə üzrə olan xərcləri də Silirsiniz?", "DeleteExpenses")) == DialogResult.OK)
+                    if (XtraMessageBox.Show(
+                            xtraMessageBox(
+                                Resources.Common_Attention,
+                                Resources.Form_Invoice_DeleteExpensesForInvoiceQuestion,
+                                "DeleteExpenses")) == DialogResult.OK)
                         if (currAccHasExpenceClaims)
                             if (currAccHasDeleteEXClaims)
                                 efMethods.DeleteExpensesByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-                            else XtraMessageBox.Show("Xərci Silmə Yetkiniz yoxdur!");
+                            else
+                                XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionDeleteExpense);
                         else
-                            XtraMessageBox.Show("Xərc Yetkiniz yoxdur!");
-
-                //if (efMethods.InstallmentsExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
-                //    if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Qaimə üzrə olan kreditləri də Silirsiniz?", Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["DeleteInvoiceIS"] } }) == DialogResult.OK)
-                //        if (currAccHasDeleteISClaims)
-                //            efMethods.DeleteInstallmentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-                //        else
-                //            XtraMessageBox.Show("Kredit Silmə Yetkiniz yoxdur!");
+                            XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionExpense);
 
                 efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
 
@@ -1380,12 +1419,16 @@ namespace Foxoft
 
         private void bBI_PaymentDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (MessageBox.Show("Ödənişləri Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show(
+                    Resources.Form_Invoice_DeletePaymentsQuestion,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
                 CalcPaidAmount();
             }
         }
+
 
         private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
         {
@@ -1405,7 +1448,10 @@ namespace Foxoft
                     SaveInvoice();
                     Close();
                 }
-                else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                else if (XtraMessageBox.Show(
+                             Resources.Form_Invoice_PaymentIsZeroReturnToInvoice,
+                             Resources.Common_Attention,
+                             MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                 {
                     Close();
                 }
@@ -1509,7 +1555,7 @@ namespace Foxoft
         {
             if (string.IsNullOrEmpty(number))
             {
-                MessageBox.Show("Nömrə qeyd olunmayıb.");
+                MessageBox.Show(Resources.Form_Invoice_Whatsapp_NumberNotEntered);
                 return;
             }
 
@@ -1526,7 +1572,7 @@ namespace Foxoft
                 string profileCode = GetChromeProfileCodeByName(profileName);
                 if (profileCode == null)
                 {
-                    MessageBox.Show($"Chrome profil '{profileName}' tapılmadı."); // Chrome profil couldn't find
+                    MessageBox.Show(string.Format(Resources.Form_Invoice_Whatsapp_ProfileNotFound, profileName));
                     return;
                 }
                 else
@@ -1554,7 +1600,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to open link: {ex.Message}");
+                MessageBox.Show(string.Format(Resources.Form_Invoice_Whatsapp_FailedToOpenLink, ex.Message));
             }
         }
 
@@ -1594,7 +1640,7 @@ namespace Foxoft
 
             if (curr is null)
             {
-                dxErrorProvider1.SetError(editor, "Belə bir cari yoxdur", ErrorType.Critical);
+                dxErrorProvider1.SetError(editor, Resources.Form_Invoice_NoSuchCurrAcc, ErrorType.Critical);
                 e.Cancel = true;
                 return;
             }
@@ -1606,17 +1652,17 @@ namespace Foxoft
 
                 if (curr.CurrAccCode != curr1)
                 {
-                    dxErrorProvider1.SetError(editor, "Bu geri qaytarma üzrə əlaqəli qaimə mövcuddur. Cari Hesab Kodu dəyişilə bilməz.", ErrorType.Critical);
+                    dxErrorProvider1.SetError(editor, Resources.Form_Invoice_ReturnInvoiceExists_CurrAccCannotChange, ErrorType.Critical);
                     e.Cancel = true;
                     return;
                 }
 
                 string curr2 = efMethods.SelectInvoiceLinesByHeaderId(trInvoiceHeader.RelatedInvoiceId)
-                                             .FirstOrDefault().CurrAccCode;
+                                         .FirstOrDefault().CurrAccCode;
 
                 if (curr.CurrAccCode != curr2)
                 {
-                    dxErrorProvider1.SetError(editor, "Bu təhvil-təslim üzrə əlaqəli qaimə mövcuddur. Cari Hesab Kodu dəyişilə bilməz.", ErrorType.Critical);
+                    dxErrorProvider1.SetError(editor, Resources.Form_Invoice_HandOverInvoiceExists_CurrAccCannotChange, ErrorType.Critical);
                     e.Cancel = true;
                     return;
                 }
@@ -2050,7 +2096,6 @@ namespace Foxoft
 
         private void FillRow(int rowHandle, DcProduct product)
         {
-
             gV_InvoiceLine.SetRowCellValue(rowHandle, colProductCost, product.ProductCost);
             gV_InvoiceLine.SetRowCellValue(rowHandle, colUnitOfMeasureId, product.DefaultUnitOfMeasureId);
 
@@ -2424,7 +2469,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Xeta: 1256795721 \n" + ex.Message);
+                MessageBox.Show(string.Format(Resources.Form_Invoice_PrinterError_1256795721, ex.Message));
             }
 
             e.Cancel = false;
@@ -2488,8 +2533,8 @@ namespace Foxoft
             if (gV_InstallmentGarantor.FocusedRowHandle >= 0)
             {
                 DialogResult result = XtraMessageBox.Show(
-                    "Silmək istəyirsiz?",
-                    "Diqqət!",
+                    Resources.Form_Invoice_DeleteGuarantorQuestion,
+                    Resources.Common_Attention,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 
@@ -2517,11 +2562,15 @@ namespace Foxoft
                 };
 
                 var existingEntity = dbContext2.ChangeTracker.Entries<DcCurrAcc>()
-                    .FirstOrDefault(e => e.Entity.CurrAccCode == form.dcCurrAcc.CurrAccCode);
+                    .FirstOrDefault(en => en.Entity.CurrAccCode == form.dcCurrAcc.CurrAccCode);
 
                 if (existingEntity != null)
                 {
-                    XtraMessageBox.Show("Bu cari artıq əlavə olunub", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    XtraMessageBox.Show(
+                        Resources.Form_Invoice_GuarantorAlreadyAdded,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -2565,7 +2614,8 @@ namespace Foxoft
         {
             if (trInvoiceHeader is null) return;
             if (trInvoiceHeader.ProcessCode == "IS" && trInvoiceHeader?.TrInstallment is not null)
-                trInvoiceHeader.TrInstallment.InterestRate = (float)LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate));
+                if (LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate)) is float interestRate)
+                    trInvoiceHeader.TrInstallment.InterestRate = interestRate;
         }
 
         private void BBI_InvoiceDiscount_ItemClick(object sender, ItemClickEventArgs e)
@@ -2573,7 +2623,11 @@ namespace Foxoft
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, nameof(TrInvoiceLine.PosDiscount));
             if (!currAccHasClaims)
             {
-                XtraMessageBox.Show("Yetkiniz Yoxdur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(
+                    Resources.Common_NoPermission,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 return;
             }
 
@@ -2591,9 +2645,15 @@ namespace Foxoft
                 }
             }
             else
-                XtraMessageBox.Show("Sətir yoxdur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_Invoice_NoLines,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
+
 
         private void BBI_Salesman_ItemClick(object sender, ItemClickEventArgs e)
         {

@@ -150,7 +150,7 @@ namespace Foxoft.Models
             ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? BonusCardNum { get; set; }
 
-        [Display(Name = nameof(Resources.Common_Address), ResourceType = typeof(Resources))]
+        [Display(Name = nameof(Resources.Entity_CurrAcc_Address), ResourceType = typeof(Resources))]
         [StringLength(150,
             ErrorMessageResourceType = typeof(Resources),
             ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]

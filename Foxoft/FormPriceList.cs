@@ -4,6 +4,7 @@ using DevExpress.DataAccess.Native.Excel;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
@@ -18,21 +19,22 @@ using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.ServiceModel;
 
 namespace Foxoft
 {
-    public partial class FormPriceListDetail : RibbonForm
+    public partial class FormPriceList : RibbonForm
     {
         private TrPriceListHeader trPriceListHeader;
         private EfMethods efMethods = new();
         private subContext dbContext;
         private Guid PriceListHeaderId;
 
-        public FormPriceListDetail()
+        public FormPriceList()
         {
             InitializeComponent();
-            colProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
-            colProductCost.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductCost);
+            colProductDesc.Caption = Resources.Entity_Product_Desc;
+            colProductCost.Caption = Resources.Entity_Product_ProductCost;
 
             //StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
@@ -40,7 +42,7 @@ namespace Foxoft
             ClearControlsAddNew();
         }
 
-        public FormPriceListDetail(Guid PriceListHeaderId)
+        public FormPriceList(Guid PriceListHeaderId)
             : this()
         {
             trPriceListHeader = efMethods.SelectEntityById<TrPriceListHeader>(PriceListHeaderId);
@@ -77,7 +79,7 @@ namespace Foxoft
         {
             TrPriceListHeader PriceListHeader = new();
             PriceListHeader.PriceListHeaderId = PriceListHeaderId;
-            string NewDocNum = efMethods.GetNextDocNum(true, "PL", "DocumentNumber", "TrPriceListHeaders", 6);
+            string NewDocNum = efMethods.GetNextDocNum(true, "PL", nameof(TrPriceListHeader.DocumentNumber), "TrPriceListHeaders", 6);
             PriceListHeader.DocumentNumber = NewDocNum;
             PriceListHeader.DocumentDate = DateTime.Now;
             PriceListHeader.OperationDate = DateTime.Now;
@@ -109,7 +111,9 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
+                MessageBox.Show(
+                    $"{Resources.Form_PriceListDetail_Message_InvalidData}\n\n{ex}",
+                    Resources.Common_ErrorTitle);
             }
         }
 
@@ -164,7 +168,10 @@ namespace Foxoft
         {
             if (efMethods.EntityExists<TrPriceListHeader>(trPriceListHeader.PriceListHeaderId))
             {
-                if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (MessageBox.Show(
+                        Resources.Form_PriceListDetail_Message_DeletePriceListConfirm,
+                        Resources.Common_OpenQuestion,
+                        MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     efMethods.DeleteEntityById<TrPriceListHeader>(trPriceListHeader.PriceListHeaderId);
 
@@ -172,7 +179,9 @@ namespace Foxoft
                 }
             }
             else
-                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+                XtraMessageBox.Show(
+                    Resources.Form_PriceListDetail_Message_NoPriceListToDelete,
+                    Resources.Common_Attention);
         }
 
         private void gV_PriceListLine_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -201,7 +210,10 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.Delete)
             {
-                if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                if (MessageBox.Show(
+                        Resources.Form_PriceListDetail_Message_DeleteRowConfirm,
+                        Resources.Common_OpenQuestion,
+                        MessageBoxButtons.YesNo) != DialogResult.Yes)
                     return;
 
                 gV.DeleteSelectedRows();
@@ -252,7 +264,7 @@ namespace Foxoft
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            string productCode = gV_PriceListLine.GetFocusedRowCellValue("ProductCode")?.ToString();
+            string productCode = gV_PriceListLine.GetFocusedRowCellValue(nameof(TrPriceListLine.ProductCode))?.ToString();
 
             ButtonEdit editor = (ButtonEdit)sender;
 
@@ -330,7 +342,7 @@ namespace Foxoft
 
         private void BBI_exportXLSX_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            // Burada istəsən sonradan ExportToExcel çağırışı əlavə edə bilərsən
         }
 
         private void BBI_ImportExcel_ItemClick(object sender, ItemClickEventArgs e)
@@ -338,9 +350,8 @@ namespace Foxoft
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
                 OpenFileDialog dialog = new();
-                dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|" +
-                                "All files (*.*)|*.*";
-                dialog.Title = "Excel faylı seçin.";
+                dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*";
+                dialog.Title = Resources.Form_PriceListDetail_OpenFileDialog_Title;
 
                 DialogResult dr = dialog.ShowDialog();
                 if (dr == DialogResult.OK)
@@ -399,10 +410,6 @@ namespace Foxoft
                         {
                             try
                             {
-                                //string captionLineDesc = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.LineDescription);
-                                //if (column.ColumnName == captionLineDesc)
-                                //    gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, col_LineDesc, row[captionLineDesc].ToString());
-
                                 string captionPrice = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Price);
                                 if (column.ColumnName == captionPrice)
                                     gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, colPrice, row[captionPrice].ToString());
@@ -425,7 +432,9 @@ namespace Foxoft
                             }
                             catch (ArgumentException ae)
                             {
-                                MessageBox.Show("Xəta No: 256543 \n" + ae.Message, "Import xetası");
+                                MessageBox.Show(
+                                    $"{Resources.Form_PriceListDetail_Message_ImportErrorCode}\n{ae.Message}",
+                                    Resources.Form_PriceListDetail_Message_ImportErrorCaption);
                             }
                         }
 
@@ -437,7 +446,11 @@ namespace Foxoft
             }
 
             if (!string.IsNullOrEmpty(errorCodes))
-                MessageBox.Show("Aşağıdakı kodlar üzrə Dəyər tapılmadı \n" + errorCodes, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    Resources.Form_PriceListDetail_Message_ValueNotFound + " \n" + errorCodes,
+                    Resources.Common_ErrorTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
         }
 
         public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)

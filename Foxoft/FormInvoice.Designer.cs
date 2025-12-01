@@ -3,6 +3,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Columns;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 
 namespace Foxoft
@@ -112,7 +113,6 @@ namespace Foxoft
             lbl_InstallmentSum = new DevExpress.XtraEditors.LabelControl();
             lbl_InstallmentSumTxt = new DevExpress.XtraEditors.LabelControl();
             lbl_InstallmentCommissionSumTxt = new DevExpress.XtraEditors.LabelControl();
-            LBL_SalesPersonDesc = new DevExpress.XtraEditors.LabelControl();
             lbl_CurrAccDesc = new DevExpress.XtraEditors.LabelControl();
             lbl_InstallmentTotalSumTxt = new DevExpress.XtraEditors.LabelControl();
             lbl_InvoicePaidTotalSumTxt = new DevExpress.XtraEditors.LabelControl();
@@ -128,7 +128,6 @@ namespace Foxoft
             lUE_WarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
             lUE_ToWarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
             txtEdit_PrintCount = new DevExpress.XtraEditors.TextEdit();
-            btnEdit_SalesPerson = new DevExpress.XtraEditors.ButtonEdit();
             gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
             gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
             col_InvoiceLineId = new GridColumn();
@@ -173,8 +172,6 @@ namespace Foxoft
             DateEdit_InstallmentDate = new DevExpress.XtraEditors.DateEdit();
             TrInstallmentTextEdit = new DevExpress.XtraEditors.TextEdit();
             txtEdit_Installment_InterestRate = new DevExpress.XtraEditors.TextEdit();
-            LCI_SalesPerson = new DevExpress.XtraLayout.LayoutControlItem();
-            LCI_SalesPersonDesc = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForTrInstallment = new DevExpress.XtraLayout.LayoutControlItem();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             LCG_Invoice = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -216,7 +213,7 @@ namespace Foxoft
             LCI_InstallmentDate = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_InstallmentGarantors = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_InstallmentCommission = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_InterestRate = new DevExpress.XtraLayout.LayoutControlItem();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
@@ -252,7 +249,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lUE_WarehouseCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lUE_ToWarehouseCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_PrintCount.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)btnEdit_SalesPerson.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).BeginInit();
@@ -268,8 +264,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)DateEdit_InstallmentDate.Properties.CalendarTimeProperties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TrInstallmentTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Installment_InterestRate.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_SalesPerson).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_SalesPersonDesc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTrInstallment).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCG_Invoice).BeginInit();
@@ -311,7 +305,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentDate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentGarantors).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentCommission).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_InterestRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
@@ -336,7 +330,6 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(lbl_InstallmentSum);
             dataLayoutControl1.Controls.Add(lbl_InstallmentSumTxt);
             dataLayoutControl1.Controls.Add(lbl_InstallmentCommissionSumTxt);
-            dataLayoutControl1.Controls.Add(LBL_SalesPersonDesc);
             dataLayoutControl1.Controls.Add(lbl_CurrAccDesc);
             dataLayoutControl1.Controls.Add(lbl_InstallmentTotalSumTxt);
             dataLayoutControl1.Controls.Add(lbl_InvoicePaidTotalSumTxt);
@@ -352,14 +345,13 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(lUE_WarehouseCode);
             dataLayoutControl1.Controls.Add(lUE_ToWarehouseCode);
             dataLayoutControl1.Controls.Add(txtEdit_PrintCount);
-            dataLayoutControl1.Controls.Add(btnEdit_SalesPerson);
             dataLayoutControl1.Controls.Add(gC_InvoiceLine);
             dataLayoutControl1.Controls.Add(DateEdit_InstallmentDate);
             dataLayoutControl1.Controls.Add(TrInstallmentTextEdit);
             dataLayoutControl1.Controls.Add(txtEdit_Installment_InterestRate);
             dataLayoutControl1.DataSource = trInvoiceHeadersBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
-            dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_SalesPerson, LCI_SalesPersonDesc, ItemForTrInstallment });
+            dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForTrInstallment });
             dataLayoutControl1.Location = new Point(0, 158);
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(670, 403, 650, 400);
@@ -372,12 +364,12 @@ namespace Foxoft
             // gC_InstallmentGarantor
             // 
             gC_InstallmentGarantor.DataSource = trInstallmentGuarantorsBindingSource;
-            gC_InstallmentGarantor.Location = new Point(685, 120);
+            gC_InstallmentGarantor.Location = new Point(694, 120);
             gC_InstallmentGarantor.MainView = gV_InstallmentGarantor;
             gC_InstallmentGarantor.MenuManager = ribbonControl1;
             gC_InstallmentGarantor.Name = "gC_InstallmentGarantor";
             gC_InstallmentGarantor.RepositoryItems.AddRange(new RepositoryItem[] { repoBtnEdit_InstallmentGarantorDelete });
-            gC_InstallmentGarantor.Size = new Size(437, 92);
+            gC_InstallmentGarantor.Size = new Size(428, 92);
             gC_InstallmentGarantor.TabIndex = 11;
             gC_InstallmentGarantor.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InstallmentGarantor });
             // 
@@ -397,13 +389,13 @@ namespace Foxoft
             // 
             // colInstallmentGarantorId
             // 
-            colInstallmentGarantorId.Caption = "gridColumn1";
+            colInstallmentGarantorId.Caption = Resources.Entity_InstallmentGuarantor_Id;
             colInstallmentGarantorId.FieldName = "InstallmentGarantorId";
             colInstallmentGarantorId.Name = "colInstallmentGarantorId";
             // 
             // ColCurrAccCode
             // 
-            ColCurrAccCode.Caption = "Cari Hesab Kodu";
+            ColCurrAccCode.Caption = Resources.FormInvoice_InstallmentGuarantor_CurrAccCode;
             ColCurrAccCode.FieldName = "CurrAccCode";
             ColCurrAccCode.Name = "ColCurrAccCode";
             ColCurrAccCode.Visible = true;
@@ -412,7 +404,7 @@ namespace Foxoft
             // 
             // CurrAccDesc
             // 
-            CurrAccDesc.Caption = "Cari Hesab Açıqlaması";
+            CurrAccDesc.Caption = Resources.Entity_CurrAcc_CurrAccDesc;
             CurrAccDesc.FieldName = "CurrAccDesc";
             CurrAccDesc.Name = "CurrAccDesc";
             CurrAccDesc.UnboundDataType = typeof(string);
@@ -422,7 +414,7 @@ namespace Foxoft
             // 
             // colInstallmentGarantorDelete
             // 
-            colInstallmentGarantorDelete.Caption = "Sil";
+            colInstallmentGarantorDelete.Caption = Resources.Common_Delete;
             colInstallmentGarantorDelete.ColumnEdit = repoBtnEdit_InstallmentGarantorDelete;
             colInstallmentGarantorDelete.FieldName = "colInstallmentGarantorDelete";
             colInstallmentGarantorDelete.MaxWidth = 20;
@@ -455,7 +447,7 @@ namespace Foxoft
             // bBI_Save
             // 
             bBI_Save.ButtonStyle = BarButtonStyle.DropDown;
-            bBI_Save.Caption = "Yadda Saxla";
+            bBI_Save.Caption = Resources.FormInvoice_Save;
             bBI_Save.DropDownControl = popupMenu1;
             bBI_Save.Id = 1;
             bBI_Save.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Save.ImageOptions.SvgImage");
@@ -471,7 +463,7 @@ namespace Foxoft
             // 
             // bBI_SaveAndNew
             // 
-            bBI_SaveAndNew.Caption = "Yadda Saxla Yeni";
+            bBI_SaveAndNew.Caption = Resources.FormInvoice_SaveAndNew;
             bBI_SaveAndNew.Id = 2;
             bBI_SaveAndNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SaveAndNew.ImageOptions.SvgImage");
             bBI_SaveAndNew.Name = "bBI_SaveAndNew";
@@ -479,7 +471,7 @@ namespace Foxoft
             // 
             // bBI_SaveAndQuit
             // 
-            bBI_SaveAndQuit.Caption = "Yadda Saxla Bağla";
+            bBI_SaveAndQuit.Caption = Resources.FormInvoice_SaveAndQuit;
             bBI_SaveAndQuit.Id = 13;
             bBI_SaveAndQuit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SaveAndQuit.ImageOptions.SvgImage");
             bBI_SaveAndQuit.ItemShortcut = new BarShortcut(Keys.F12);
@@ -488,7 +480,7 @@ namespace Foxoft
             // 
             // bBI_Payment
             // 
-            bBI_Payment.Caption = "Ödəmə";
+            bBI_Payment.Caption = Resources.FormInvoice_Payment;
             bBI_Payment.Id = 5;
             bBI_Payment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Payment.ImageOptions.SvgImage");
             bBI_Payment.Name = "bBI_Payment";
@@ -496,7 +488,7 @@ namespace Foxoft
             // 
             // bBI_New
             // 
-            bBI_New.Caption = "Yeni";
+            bBI_New.Caption = Resources.FormInvoice_New;
             bBI_New.Id = 9;
             bBI_New.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_New.ImageOptions.SvgImage");
             bBI_New.ItemShortcut = new BarShortcut(Keys.Control | Keys.N);
@@ -505,7 +497,7 @@ namespace Foxoft
             // 
             // bBI_reportPreview
             // 
-            bBI_reportPreview.Caption = "Faktura Görünüş";
+            bBI_reportPreview.Caption = Resources.FormInvoice_ReportPreview;
             bBI_reportPreview.Id = 10;
             bBI_reportPreview.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_reportPreview.ImageOptions.SvgImage");
             bBI_reportPreview.Name = "bBI_reportPreview";
@@ -513,7 +505,7 @@ namespace Foxoft
             // 
             // bBI_DeleteInvoice
             // 
-            bBI_DeleteInvoice.Caption = "Fakturanı Sil";
+            bBI_DeleteInvoice.Caption = Resources.FormInvoice_DeleteInvoice;
             bBI_DeleteInvoice.Id = 11;
             bBI_DeleteInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_DeleteInvoice.ImageOptions.SvgImage");
             bBI_DeleteInvoice.Name = "bBI_DeleteInvoice";
@@ -521,7 +513,7 @@ namespace Foxoft
             // 
             // bBI_PaymentDelete
             // 
-            bBI_PaymentDelete.Caption = "Ödəməni Sil";
+            bBI_PaymentDelete.Caption = Resources.FormInvoice_PaymentDelete;
             bBI_PaymentDelete.Id = 12;
             bBI_PaymentDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_PaymentDelete.ImageOptions.SvgImage");
             bBI_PaymentDelete.Name = "bBI_PaymentDelete";
@@ -529,7 +521,7 @@ namespace Foxoft
             // 
             // bBI_CopyInvoice
             // 
-            bBI_CopyInvoice.Caption = "Kopyala";
+            bBI_CopyInvoice.Caption = Resources.FormInvoice_CopyInvoice;
             bBI_CopyInvoice.Id = 17;
             bBI_CopyInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CopyInvoice.ImageOptions.SvgImage");
             bBI_CopyInvoice.Name = "bBI_CopyInvoice";
@@ -537,7 +529,7 @@ namespace Foxoft
             // 
             // bBI_Whatsapp
             // 
-            bBI_Whatsapp.Caption = "Whatsappdan Göndər";
+            bBI_Whatsapp.Caption = Resources.FormInvoice_WhatsappSend;
             bBI_Whatsapp.Id = 18;
             bBI_Whatsapp.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Whatsapp.ImageOptions.SvgImage");
             bBI_Whatsapp.Name = "bBI_Whatsapp";
@@ -545,7 +537,7 @@ namespace Foxoft
             // 
             // BBI_EditInvoice
             // 
-            BBI_EditInvoice.Caption = "Dəyiş";
+            BBI_EditInvoice.Caption = Resources.FormInvoice_EditInvoice;
             BBI_EditInvoice.Id = 19;
             BBI_EditInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_EditInvoice.ImageOptions.SvgImage");
             BBI_EditInvoice.Name = "BBI_EditInvoice";
@@ -553,7 +545,7 @@ namespace Foxoft
             // 
             // BBI_exportXLSX
             // 
-            BBI_exportXLSX.Caption = "Excel'ə Göndər";
+            BBI_exportXLSX.Caption = Resources.FormInvoice_ExportToExcel;
             BBI_exportXLSX.Id = 22;
             BBI_exportXLSX.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_exportXLSX.ImageOptions.SvgImage");
             BBI_exportXLSX.Name = "BBI_exportXLSX";
@@ -561,7 +553,7 @@ namespace Foxoft
             // 
             // BBI_ImportExcel
             // 
-            BBI_ImportExcel.Caption = "Excel'dən Al";
+            BBI_ImportExcel.Caption = Resources.FormInvoice_ImportFromExcel;
             BBI_ImportExcel.Id = 23;
             BBI_ImportExcel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ImportExcel.ImageOptions.SvgImage");
             BBI_ImportExcel.Name = "BBI_ImportExcel";
@@ -570,7 +562,7 @@ namespace Foxoft
             // BBI_ReportPrintFast
             // 
             BBI_ReportPrintFast.ButtonStyle = BarButtonStyle.DropDown;
-            BBI_ReportPrintFast.Caption = "Sürətli Çap Et";
+            BBI_ReportPrintFast.Caption = Resources.FormInvoice_FastPrint;
             BBI_ReportPrintFast.DropDownControl = popupMenuPrinters;
             BBI_ReportPrintFast.Id = 30;
             BBI_ReportPrintFast.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportPrintFast.ImageOptions.SvgImage");
@@ -585,14 +577,14 @@ namespace Foxoft
             // 
             // BBI_PrintSettingSave
             // 
-            BBI_PrintSettingSave.Caption = "Save";
+            BBI_PrintSettingSave.Caption = Resources.FormInvoice_PrintSettingSave;
             BBI_PrintSettingSave.Id = 31;
             BBI_PrintSettingSave.Name = "BBI_PrintSettingSave";
             BBI_PrintSettingSave.ItemClick += BBI_PrintSettingSave_ItemClick;
             // 
             // BEI_PrinterName
             // 
-            BEI_PrinterName.Caption = "Printer";
+            BEI_PrinterName.Caption = Resources.Common_Printer;
             BEI_PrinterName.Edit = repoCBE_PrinterName;
             BEI_PrinterName.Id = 35;
             BEI_PrinterName.Name = "BEI_PrinterName";
@@ -606,14 +598,14 @@ namespace Foxoft
             // 
             // barButtonItem3
             // 
-            barButtonItem3.Caption = "test";
+            barButtonItem3.Caption = Resources.FormInvoice_Test1;
             barButtonItem3.Id = 36;
             barButtonItem3.Name = "barButtonItem3";
             barButtonItem3.ItemClick += barButtonItem3_ItemClick;
             // 
             // btn_info
             // 
-            btn_info.Caption = "info";
+            btn_info.Caption = Resources.FormInvoice_Info;
             btn_info.Id = 39;
             btn_info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_info.ImageOptions.SvgImage");
             btn_info.Name = "btn_info";
@@ -621,7 +613,7 @@ namespace Foxoft
             // 
             // BBI_picture
             // 
-            BBI_picture.Caption = "Şəkillər";
+            BBI_picture.Caption = Resources.FormInvoice_Pictures;
             BBI_picture.Id = 40;
             BBI_picture.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_picture.ImageOptions.SvgImage");
             BBI_picture.Name = "BBI_picture";
@@ -629,7 +621,7 @@ namespace Foxoft
             // 
             // barButtonItem2
             // 
-            barButtonItem2.Caption = "test";
+            barButtonItem2.Caption = Resources.FormInvoice_Test2;
             barButtonItem2.Id = 42;
             barButtonItem2.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem2.ImageOptions.SvgImage");
             barButtonItem2.Name = "barButtonItem2";
@@ -637,7 +629,7 @@ namespace Foxoft
             // 
             // BBI_InvoiceExpenses
             // 
-            BBI_InvoiceExpenses.Caption = "Xərclər";
+            BBI_InvoiceExpenses.Caption = Resources.FormInvoice_InvoiceExpenses;
             BBI_InvoiceExpenses.Id = 45;
             BBI_InvoiceExpenses.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_InvoiceExpenses.ImageOptions.SvgImage");
             BBI_InvoiceExpenses.Name = "BBI_InvoiceExpenses";
@@ -646,7 +638,7 @@ namespace Foxoft
             // 
             // BCI_ShowPicture
             // 
-            BCI_ShowPicture.Caption = "Rəsim Göstər";
+            BCI_ShowPicture.Caption = Resources.FormInvoice_ShowPicture;
             BCI_ShowPicture.CheckBoxVisibility = CheckBoxVisibility.BeforeText;
             BCI_ShowPicture.Id = 46;
             BCI_ShowPicture.Name = "BCI_ShowPicture";
@@ -654,7 +646,7 @@ namespace Foxoft
             // 
             // BCI_ShowPrint
             // 
-            BCI_ShowPrint.Caption = "Printer Göstər";
+            BCI_ShowPrint.Caption = Resources.FormInvoice_ShowPrint;
             BCI_ShowPrint.CheckBoxVisibility = CheckBoxVisibility.BeforeText;
             BCI_ShowPrint.Id = 47;
             BCI_ShowPrint.Name = "BCI_ShowPrint";
@@ -662,7 +654,7 @@ namespace Foxoft
             // 
             // BCI_ShowCopy
             // 
-            BCI_ShowCopy.Caption = "Kopya Göstər";
+            BCI_ShowCopy.Caption = Resources.FormInvoice_ShowCopy;
             BCI_ShowCopy.CheckBoxVisibility = CheckBoxVisibility.BeforeText;
             BCI_ShowCopy.Id = 49;
             BCI_ShowCopy.Name = "BCI_ShowCopy";
@@ -676,7 +668,7 @@ namespace Foxoft
             // 
             // BSI_Reports
             // 
-            BSI_Reports.Caption = "Hesabat";
+            BSI_Reports.Caption = Resources.ERP_BSI_Reports;
             BSI_Reports.Id = 58;
             BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
             BSI_Reports.Name = "BSI_Reports";
@@ -695,7 +687,7 @@ namespace Foxoft
             // 
             // BBI_InstallmentGuarantorAdd
             // 
-            BBI_InstallmentGuarantorAdd.Caption = "Zamin Əlavə Et";
+            BBI_InstallmentGuarantorAdd.Caption = Resources.FormInvoice_AddInstallmentGuarantor;
             BBI_InstallmentGuarantorAdd.Id = 62;
             BBI_InstallmentGuarantorAdd.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_InstallmentGuarantorAdd.ImageOptions.SvgImage");
             BBI_InstallmentGuarantorAdd.Name = "BBI_InstallmentGuarantorAdd";
@@ -703,7 +695,7 @@ namespace Foxoft
             // 
             // BBI_InvoiceDiscount
             // 
-            BBI_InvoiceDiscount.Caption = "Qaimə Endirimi";
+            BBI_InvoiceDiscount.Caption = Resources.FormInvoice_InvoiceDiscount;
             BBI_InvoiceDiscount.Id = 63;
             BBI_InvoiceDiscount.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_InvoiceDiscount.ImageOptions.SvgImage");
             BBI_InvoiceDiscount.Name = "BBI_InvoiceDiscount";
@@ -711,7 +703,7 @@ namespace Foxoft
             // 
             // BBI_Salesman
             // 
-            BBI_Salesman.Caption = "Satıcı";
+            BBI_Salesman.Caption = Resources.FormInvoice_Salesman;
             BBI_Salesman.Id = 64;
             BBI_Salesman.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Salesman.ImageOptions.SvgImage");
             BBI_Salesman.Name = "BBI_Salesman";
@@ -721,7 +713,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, RPG_Payment, RPG_Installment, ribbonPageGroup2, RPG_Control, ribbonPageGroup8, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Faktura";
+            ribbonPage1.Text = Resources.FormInvoice_RibbonPage_Invoice;
             // 
             // Faktura
             // 
@@ -729,21 +721,21 @@ namespace Foxoft
             Faktura.ItemLinks.Add(bBI_New);
             Faktura.ItemLinks.Add(bBI_DeleteInvoice);
             Faktura.Name = "Faktura";
-            Faktura.Text = "Əməliyat";
+            Faktura.Text = Resources.FormInvoice_RibbonGroup_InvoiceOperations;
             // 
             // RPG_Payment
             // 
             RPG_Payment.ItemLinks.Add(bBI_Payment);
             RPG_Payment.ItemLinks.Add(bBI_PaymentDelete);
             RPG_Payment.Name = "RPG_Payment";
-            RPG_Payment.Text = "Ödəmə";
+            RPG_Payment.Text = Resources.FormInvoice_RibbonGroup_Payment;
             RPG_Payment.Visible = false;
             // 
             // RPG_Installment
             // 
             RPG_Installment.ItemLinks.Add(BBI_InstallmentGuarantorAdd);
             RPG_Installment.Name = "RPG_Installment";
-            RPG_Installment.Text = "Kredit";
+            RPG_Installment.Text = Resources.FormInvoice_RibbonGroup_Installment;
             // 
             // ribbonPageGroup2
             // 
@@ -753,20 +745,20 @@ namespace Foxoft
             ribbonPageGroup2.ItemLinks.Add(bBI_Whatsapp);
             ribbonPageGroup2.ItemLinks.Add(BSI_Reports, true);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Print";
+            ribbonPageGroup2.Text = Resources.FormInvoice_RibbonGroup_Print;
             // 
             // RPG_Control
             // 
             RPG_Control.ItemLinks.Add(BBI_EditInvoice, true);
             RPG_Control.Name = "RPG_Control";
-            RPG_Control.Text = "Nəzarət";
+            RPG_Control.Text = Resources.FormInvoice_RibbonGroup_Control;
             // 
             // ribbonPageGroup8
             // 
             ribbonPageGroup8.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
             ribbonPageGroup8.ItemLinks.Add(btn_info);
             ribbonPageGroup8.Name = "ribbonPageGroup8";
-            ribbonPageGroup8.Text = "Məlumat";
+            ribbonPageGroup8.Text = Resources.FormInvoice_RibbonGroup_Info;
             // 
             // ribbonPageGroup3
             // 
@@ -775,33 +767,33 @@ namespace Foxoft
             ribbonPageGroup3.ItemLinks.Add(BBI_InvoiceExpenses);
             ribbonPageGroup3.ItemLinks.Add(BBI_Salesman);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Faktura";
+            ribbonPageGroup3.Text = Resources.FormInvoice_RibbonGroup_InvoiceExtra;
             // 
             // ribbonPage2
             // 
             ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RibbonPageGroup5, ribbonPageGroup6, ribbonPageGroup9, ribbonPageGroup1 });
             ribbonPage2.Name = "ribbonPage2";
-            ribbonPage2.Text = "Ayarlar";
+            ribbonPage2.Text = Resources.FormInvoice_RibbonPage_Settings;
             // 
             // RibbonPageGroup5
             // 
             RibbonPageGroup5.ItemLinks.Add(BBI_ImportExcel);
             RibbonPageGroup5.ItemLinks.Add(BBI_exportXLSX);
             RibbonPageGroup5.Name = "RibbonPageGroup5";
-            RibbonPageGroup5.Text = "Hesabat";
+            RibbonPageGroup5.Text = Resources.FormInvoice_RibbonGroup_Report; 
             // 
             // ribbonPageGroup6
             // 
             ribbonPageGroup6.ItemLinks.Add(BEI_PrinterName);
             ribbonPageGroup6.ItemLinks.Add(BBI_PrintSettingSave);
             ribbonPageGroup6.Name = "ribbonPageGroup6";
-            ribbonPageGroup6.Text = "Print";
+            ribbonPageGroup6.Text = Resources.FormInvoice_RibbonGroup_PrintSettings;
             // 
             // ribbonPageGroup9
             // 
             ribbonPageGroup9.ItemLinks.Add(barButtonItem2);
             ribbonPageGroup9.Name = "ribbonPageGroup9";
-            ribbonPageGroup9.Text = "Test";
+            ribbonPageGroup9.Text = Resources.FormInvoice_RibbonGroup_Test;
             // 
             // ribbonPageGroup1
             // 
@@ -809,7 +801,7 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(BCI_ShowPrint);
             ribbonPageGroup1.ItemLinks.Add(BCI_ShowCopy);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Show";
+            ribbonPageGroup1.Text = Resources.FormInvoice_RibbonGroup_Show;
             // 
             // repoTxtEdit_TwilioInstance
             // 
@@ -830,10 +822,10 @@ namespace Foxoft
             // txtEdit_Installment_Commission
             // 
             txtEdit_Installment_Commission.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "TrInstallment.Commission", true));
-            txtEdit_Installment_Commission.Location = new Point(134, 168);
+            txtEdit_Installment_Commission.Location = new Point(143, 168);
             txtEdit_Installment_Commission.MenuManager = ribbonControl1;
             txtEdit_Installment_Commission.Name = "txtEdit_Installment_Commission";
-            txtEdit_Installment_Commission.Size = new Size(437, 20);
+            txtEdit_Installment_Commission.Size = new Size(428, 20);
             txtEdit_Installment_Commission.StyleController = dataLayoutControl1;
             txtEdit_Installment_Commission.TabIndex = 13;
             // 
@@ -846,14 +838,15 @@ namespace Foxoft
             // LUE_InstallmentPlan
             // 
             LUE_InstallmentPlan.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "TrInstallment.InstallmentPlanCode", true));
-            LUE_InstallmentPlan.Location = new Point(134, 120);
+            LUE_InstallmentPlan.Location = new Point(143, 120);
             LUE_InstallmentPlan.MenuManager = ribbonControl1;
             LUE_InstallmentPlan.Name = "LUE_InstallmentPlan";
             LUE_InstallmentPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_InstallmentPlan.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcInstallmentPlan.InstallmentPlanCode)), new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcInstallmentPlan.InstallmentPlanDesc)), new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcInstallmentPlan.InterestRate)) });
             LUE_InstallmentPlan.Properties.DisplayMember = "InstallmentPlanDesc";
             LUE_InstallmentPlan.Properties.NullText = "";
             LUE_InstallmentPlan.Properties.ValueMember = "InstallmentPlanCode";
-            LUE_InstallmentPlan.Size = new Size(437, 20);
+            LUE_InstallmentPlan.Size = new Size(428, 20);
             LUE_InstallmentPlan.StyleController = dataLayoutControl1;
             LUE_InstallmentPlan.TabIndex = 10;
             LUE_InstallmentPlan.EditValueChanged += LUE_InstallmentPlan_EditValueChanged;
@@ -862,7 +855,7 @@ namespace Foxoft
             // 
             lbl_InvoicePaidCashlessSum.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InvoicePaidCashlessSum.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidCashlessSum.Location = new Point(848, 414);
+            lbl_InvoicePaidCashlessSum.Location = new Point(849, 414);
             lbl_InvoicePaidCashlessSum.Margin = new Padding(3, 2, 3, 2);
             lbl_InvoicePaidCashlessSum.Name = "lbl_InvoicePaidCashlessSum";
             lbl_InvoicePaidCashlessSum.Size = new Size(52, 16);
@@ -874,7 +867,7 @@ namespace Foxoft
             // 
             lbl_InvoicePaidCashSum.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InvoicePaidCashSum.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidCashSum.Location = new Point(848, 394);
+            lbl_InvoicePaidCashSum.Location = new Point(849, 394);
             lbl_InvoicePaidCashSum.Margin = new Padding(3, 2, 3, 2);
             lbl_InvoicePaidCashSum.Name = "lbl_InvoicePaidCashSum";
             lbl_InvoicePaidCashSum.Size = new Size(52, 16);
@@ -883,34 +876,34 @@ namespace Foxoft
             lbl_InvoicePaidCashSum.Text = "0.00 AZN";
             // 
             // lbl_InvoicePaidCashlessSumTxt
-            // 
+            //  
             lbl_InvoicePaidCashlessSumTxt.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InvoicePaidCashlessSumTxt.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidCashlessSumTxt.Location = new Point(791, 414);
+            lbl_InvoicePaidCashlessSumTxt.Location = new Point(792, 414);
             lbl_InvoicePaidCashlessSumTxt.Margin = new Padding(3, 2, 3, 2);
             lbl_InvoicePaidCashlessSumTxt.Name = "lbl_InvoicePaidCashlessSumTxt";
             lbl_InvoicePaidCashlessSumTxt.Size = new Size(53, 16);
             lbl_InvoicePaidCashlessSumTxt.StyleController = dataLayoutControl1;
             lbl_InvoicePaidCashlessSumTxt.TabIndex = 1;
-            lbl_InvoicePaidCashlessSumTxt.Text = "Nağdsız: ";
+            lbl_InvoicePaidCashlessSumTxt.Text = Resources.FormInvoice_PaidCashless;
             // 
             // lbl_InvoicePaidCashSumTxt
             // 
             lbl_InvoicePaidCashSumTxt.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InvoicePaidCashSumTxt.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidCashSumTxt.Location = new Point(806, 394);
+            lbl_InvoicePaidCashSumTxt.Location = new Point(807, 394);
             lbl_InvoicePaidCashSumTxt.Margin = new Padding(3, 2, 3, 2);
             lbl_InvoicePaidCashSumTxt.Name = "lbl_InvoicePaidCashSumTxt";
             lbl_InvoicePaidCashSumTxt.Size = new Size(38, 16);
             lbl_InvoicePaidCashSumTxt.StyleController = dataLayoutControl1;
             lbl_InvoicePaidCashSumTxt.TabIndex = 1;
-            lbl_InvoicePaidCashSumTxt.Text = "Nağd: ";
+            lbl_InvoicePaidCashSumTxt.Text = Resources.FormInvoice_PaidCash;
             // 
             // lbl_InvoicePaidTotalSum
             // 
             lbl_InvoicePaidTotalSum.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InvoicePaidTotalSum.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidTotalSum.Location = new Point(848, 434);
+            lbl_InvoicePaidTotalSum.Location = new Point(849, 434);
             lbl_InvoicePaidTotalSum.Name = "lbl_InvoicePaidTotalSum";
             lbl_InvoicePaidTotalSum.Size = new Size(52, 16);
             lbl_InvoicePaidTotalSum.StyleController = dataLayoutControl1;
@@ -921,7 +914,7 @@ namespace Foxoft
             // 
             lbl_InstallmentTotalSum.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InstallmentTotalSum.Appearance.Options.UseFont = true;
-            lbl_InstallmentTotalSum.Location = new Point(576, 434);
+            lbl_InstallmentTotalSum.Location = new Point(577, 434);
             lbl_InstallmentTotalSum.Name = "lbl_InstallmentTotalSum";
             lbl_InstallmentTotalSum.Size = new Size(52, 16);
             lbl_InstallmentTotalSum.StyleController = dataLayoutControl1;
@@ -932,7 +925,7 @@ namespace Foxoft
             // 
             lbl_InstallmentCommissionSum.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InstallmentCommissionSum.Appearance.Options.UseFont = true;
-            lbl_InstallmentCommissionSum.Location = new Point(576, 414);
+            lbl_InstallmentCommissionSum.Location = new Point(577, 414);
             lbl_InstallmentCommissionSum.Name = "lbl_InstallmentCommissionSum";
             lbl_InstallmentCommissionSum.Size = new Size(52, 16);
             lbl_InstallmentCommissionSum.StyleController = dataLayoutControl1;
@@ -943,7 +936,7 @@ namespace Foxoft
             // 
             lbl_InstallmentSum.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InstallmentSum.Appearance.Options.UseFont = true;
-            lbl_InstallmentSum.Location = new Point(576, 394);
+            lbl_InstallmentSum.Location = new Point(577, 394);
             lbl_InstallmentSum.Name = "lbl_InstallmentSum";
             lbl_InstallmentSum.Size = new Size(52, 16);
             lbl_InstallmentSum.StyleController = dataLayoutControl1;
@@ -954,31 +947,23 @@ namespace Foxoft
             // 
             lbl_InstallmentSumTxt.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InstallmentSumTxt.Appearance.Options.UseFont = true;
-            lbl_InstallmentSumTxt.Location = new Point(530, 394);
+            lbl_InstallmentSumTxt.Location = new Point(531, 394);
             lbl_InstallmentSumTxt.Name = "lbl_InstallmentSumTxt";
             lbl_InstallmentSumTxt.Size = new Size(42, 16);
             lbl_InstallmentSumTxt.StyleController = dataLayoutControl1;
             lbl_InstallmentSumTxt.TabIndex = 1;
-            lbl_InstallmentSumTxt.Text = "Kredit: ";
+            lbl_InstallmentSumTxt.Text = Resources.FormInvoice_InstallmentSum;
             // 
             // lbl_InstallmentCommissionSumTxt
             // 
             lbl_InstallmentCommissionSumTxt.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InstallmentCommissionSumTxt.Appearance.Options.UseFont = true;
-            lbl_InstallmentCommissionSumTxt.Location = new Point(507, 414);
+            lbl_InstallmentCommissionSumTxt.Location = new Point(508, 414);
             lbl_InstallmentCommissionSumTxt.Name = "lbl_InstallmentCommissionSumTxt";
             lbl_InstallmentCommissionSumTxt.Size = new Size(65, 16);
             lbl_InstallmentCommissionSumTxt.StyleController = dataLayoutControl1;
             lbl_InstallmentCommissionSumTxt.TabIndex = 1;
-            lbl_InstallmentCommissionSumTxt.Text = "Komissiya: ";
-            // 
-            // LBL_SalesPersonDesc
-            // 
-            LBL_SalesPersonDesc.Location = new Point(1014, 36);
-            LBL_SalesPersonDesc.Name = "LBL_SalesPersonDesc";
-            LBL_SalesPersonDesc.Size = new Size(120, 20);
-            LBL_SalesPersonDesc.StyleController = dataLayoutControl1;
-            LBL_SalesPersonDesc.TabIndex = 1;
+            lbl_InstallmentCommissionSumTxt.Text = Resources.FormInvoice_InstallmentCommissionSum;
             // 
             // lbl_CurrAccDesc
             // 
@@ -992,12 +977,12 @@ namespace Foxoft
             // 
             lbl_InstallmentTotalSumTxt.Appearance.Font = new Font("Tahoma", 10F);
             lbl_InstallmentTotalSumTxt.Appearance.Options.UseFont = true;
-            lbl_InstallmentTotalSumTxt.Location = new Point(483, 434);
+            lbl_InstallmentTotalSumTxt.Location = new Point(484, 434);
             lbl_InstallmentTotalSumTxt.Name = "lbl_InstallmentTotalSumTxt";
             lbl_InstallmentTotalSumTxt.Size = new Size(89, 16);
             lbl_InstallmentTotalSumTxt.StyleController = dataLayoutControl1;
             lbl_InstallmentTotalSumTxt.TabIndex = 1;
-            lbl_InstallmentTotalSumTxt.Text = "Toplam Kredit: ";
+            lbl_InstallmentTotalSumTxt.Text = Resources.FormInvoice_InstallmentTotalSum;
             // 
             // lbl_InvoicePaidTotalSumTxt
             // 
@@ -1006,12 +991,12 @@ namespace Foxoft
             lbl_InvoicePaidTotalSumTxt.Appearance.Options.UseTextOptions = true;
             lbl_InvoicePaidTotalSumTxt.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             lbl_InvoicePaidTotalSumTxt.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Bottom;
-            lbl_InvoicePaidTotalSumTxt.Location = new Point(789, 434);
+            lbl_InvoicePaidTotalSumTxt.Location = new Point(790, 434);
             lbl_InvoicePaidTotalSumTxt.Name = "lbl_InvoicePaidTotalSumTxt";
             lbl_InvoicePaidTotalSumTxt.Size = new Size(55, 16);
             lbl_InvoicePaidTotalSumTxt.StyleController = dataLayoutControl1;
             lbl_InvoicePaidTotalSumTxt.TabIndex = 1;
-            lbl_InvoicePaidTotalSumTxt.Text = "Ödənilib: ";
+            lbl_InvoicePaidTotalSumTxt.Text = Resources.FormInvoice_PaidTotal;
             // 
             // checkEdit_IsSent
             // 
@@ -1019,7 +1004,7 @@ namespace Foxoft
             checkEdit_IsSent.Enabled = false;
             checkEdit_IsSent.Location = new Point(124, 382);
             checkEdit_IsSent.Name = "checkEdit_IsSent";
-            checkEdit_IsSent.Properties.Caption = "Göndərilib";
+            checkEdit_IsSent.Properties.Caption = Resources.Entity_InvoiceHeader_IsSent;
             checkEdit_IsSent.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             checkEdit_IsSent.Size = new Size(108, 20);
             checkEdit_IsSent.StyleController = dataLayoutControl1;
@@ -1032,7 +1017,7 @@ namespace Foxoft
             checkEdit_IsReturn.Location = new Point(12, 382);
             checkEdit_IsReturn.Name = "checkEdit_IsReturn";
             checkEdit_IsReturn.Properties.Appearance.Options.UseForeColor = true;
-            checkEdit_IsReturn.Properties.Caption = "Geri Qaytarma";
+            checkEdit_IsReturn.Properties.Caption = Resources.Entity_InvoiceHeader_IsReturn;
             checkEdit_IsReturn.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             checkEdit_IsReturn.Size = new Size(108, 20);
             checkEdit_IsReturn.StyleController = dataLayoutControl1;
@@ -1042,12 +1027,12 @@ namespace Foxoft
             // 
             DocumentDateDateEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentDate", true));
             DocumentDateDateEdit.EditValue = null;
-            DocumentDateDateEdit.Location = new Point(122, 60);
+            DocumentDateDateEdit.Location = new Point(131, 60);
             DocumentDateDateEdit.Name = "DocumentDateDateEdit";
             DocumentDateDateEdit.Properties.AllowMouseWheel = false;
             DocumentDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DocumentDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            DocumentDateDateEdit.Size = new Size(255, 20);
+            DocumentDateDateEdit.Size = new Size(246, 20);
             DocumentDateDateEdit.StyleController = dataLayoutControl1;
             DocumentDateDateEdit.TabIndex = 5;
             DocumentDateDateEdit.KeyDown += dataLayoutControls_KeyDown;
@@ -1068,10 +1053,10 @@ namespace Foxoft
             // CustomsDocumentNumberTextEdit
             // 
             CustomsDocumentNumberTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "CustomsDocumentNumber", true));
-            CustomsDocumentNumberTextEdit.Location = new Point(122, 36);
+            CustomsDocumentNumberTextEdit.Location = new Point(131, 36);
             CustomsDocumentNumberTextEdit.Name = "CustomsDocumentNumberTextEdit";
             CustomsDocumentNumberTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            CustomsDocumentNumberTextEdit.Size = new Size(449, 20);
+            CustomsDocumentNumberTextEdit.Size = new Size(440, 20);
             CustomsDocumentNumberTextEdit.StyleController = dataLayoutControl1;
             CustomsDocumentNumberTextEdit.TabIndex = 3;
             CustomsDocumentNumberTextEdit.KeyDown += dataLayoutControls_KeyDown;
@@ -1079,11 +1064,11 @@ namespace Foxoft
             // btnEdit_DocNum
             // 
             btnEdit_DocNum.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentNumber", true));
-            btnEdit_DocNum.Location = new Point(122, 12);
+            btnEdit_DocNum.Location = new Point(131, 12);
             btnEdit_DocNum.Name = "btnEdit_DocNum";
             btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_DocNum.Size = new Size(449, 20);
+            btnEdit_DocNum.Size = new Size(440, 20);
             btnEdit_DocNum.StyleController = dataLayoutControl1;
             btnEdit_DocNum.TabIndex = 0;
             btnEdit_DocNum.ButtonPressed += btnEdit_DocNum_ButtonPressed;
@@ -1093,10 +1078,10 @@ namespace Foxoft
             // memoEdit_Desc
             // 
             memoEdit_Desc.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "Description", true));
-            memoEdit_Desc.Location = new Point(122, 84);
+            memoEdit_Desc.Location = new Point(131, 84);
             memoEdit_Desc.Name = "memoEdit_Desc";
             memoEdit_Desc.Properties.AllowMouseWheel = false;
-            memoEdit_Desc.Size = new Size(449, 20);
+            memoEdit_Desc.Size = new Size(440, 20);
             memoEdit_Desc.StyleController = dataLayoutControl1;
             memoEdit_Desc.TabIndex = 8;
             memoEdit_Desc.KeyDown += dataLayoutControls_KeyDown;
@@ -1104,10 +1089,10 @@ namespace Foxoft
             // btnEdit_CurrAccCode
             // 
             btnEdit_CurrAccCode.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "CurrAccCode", true));
-            btnEdit_CurrAccCode.Location = new Point(685, 12);
+            btnEdit_CurrAccCode.Location = new Point(694, 12);
             btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
             btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_CurrAccCode.Size = new Size(88, 20);
+            btnEdit_CurrAccCode.Size = new Size(79, 20);
             btnEdit_CurrAccCode.StyleController = dataLayoutControl1;
             btnEdit_CurrAccCode.TabIndex = 2;
             btnEdit_CurrAccCode.ButtonClick += btnEdit_CurrAccCode_ButtonClick;
@@ -1121,7 +1106,7 @@ namespace Foxoft
             // lUE_StoreCode
             // 
             lUE_StoreCode.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "StoreCode", true));
-            lUE_StoreCode.Location = new Point(685, 60);
+            lUE_StoreCode.Location = new Point(694, 60);
             lUE_StoreCode.Name = "lUE_StoreCode";
             lUE_StoreCode.Properties.AllowMouseWheel = false;
             lUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
@@ -1131,7 +1116,7 @@ namespace Foxoft
             lUE_StoreCode.Properties.NullText = "";
             lUE_StoreCode.Properties.ShowHeader = false;
             lUE_StoreCode.Properties.ValueMember = "CurrAccCode";
-            lUE_StoreCode.Size = new Size(449, 20);
+            lUE_StoreCode.Size = new Size(440, 20);
             lUE_StoreCode.StyleController = dataLayoutControl1;
             lUE_StoreCode.TabIndex = 7;
             lUE_StoreCode.PopupFilter += lUE_StoreCode_PopupFilter;
@@ -1141,7 +1126,7 @@ namespace Foxoft
             // lUE_WarehouseCode
             // 
             lUE_WarehouseCode.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "WarehouseCode", true));
-            lUE_WarehouseCode.Location = new Point(685, 84);
+            lUE_WarehouseCode.Location = new Point(694, 84);
             lUE_WarehouseCode.Name = "lUE_WarehouseCode";
             lUE_WarehouseCode.Properties.AllowMouseWheel = false;
             lUE_WarehouseCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
@@ -1151,7 +1136,7 @@ namespace Foxoft
             lUE_WarehouseCode.Properties.NullText = "";
             lUE_WarehouseCode.Properties.ShowHeader = false;
             lUE_WarehouseCode.Properties.ValueMember = "WarehouseCode";
-            lUE_WarehouseCode.Size = new Size(449, 20);
+            lUE_WarehouseCode.Size = new Size(440, 20);
             lUE_WarehouseCode.StyleController = dataLayoutControl1;
             lUE_WarehouseCode.TabIndex = 9;
             lUE_WarehouseCode.PopupFilter += lUE_WarehouseCode_PopupFilter;
@@ -1163,7 +1148,7 @@ namespace Foxoft
             // lUE_ToWarehouseCode
             // 
             lUE_ToWarehouseCode.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "ToWarehouseCode", true));
-            lUE_ToWarehouseCode.Location = new Point(685, 36);
+            lUE_ToWarehouseCode.Location = new Point(694, 36);
             lUE_ToWarehouseCode.MenuManager = ribbonControl1;
             lUE_ToWarehouseCode.Name = "lUE_ToWarehouseCode";
             lUE_ToWarehouseCode.Properties.AllowMouseWheel = false;
@@ -1172,7 +1157,7 @@ namespace Foxoft
             lUE_ToWarehouseCode.Properties.DisplayMember = "WarehouseDesc";
             lUE_ToWarehouseCode.Properties.NullText = "";
             lUE_ToWarehouseCode.Properties.ValueMember = "WarehouseCode";
-            lUE_ToWarehouseCode.Size = new Size(449, 20);
+            lUE_ToWarehouseCode.Size = new Size(440, 20);
             lUE_ToWarehouseCode.StyleController = dataLayoutControl1;
             lUE_ToWarehouseCode.TabIndex = 4;
             lUE_ToWarehouseCode.PopupFilter += lUE_ToWarehouseCode_PopupFilter;
@@ -1182,27 +1167,15 @@ namespace Foxoft
             // 
             txtEdit_PrintCount.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "PrintCount", true));
             txtEdit_PrintCount.Enabled = false;
-            txtEdit_PrintCount.Location = new Point(286, 382);
+            txtEdit_PrintCount.Location = new Point(295, 382);
             txtEdit_PrintCount.MenuManager = ribbonControl1;
             txtEdit_PrintCount.Name = "txtEdit_PrintCount";
             txtEdit_PrintCount.Properties.Appearance.Options.UseFont = true;
             txtEdit_PrintCount.Properties.Appearance.Options.UseTextOptions = true;
             txtEdit_PrintCount.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            txtEdit_PrintCount.Size = new Size(58, 20);
+            txtEdit_PrintCount.Size = new Size(50, 20);
             txtEdit_PrintCount.StyleController = dataLayoutControl1;
             txtEdit_PrintCount.TabIndex = 18;
-            // 
-            // btnEdit_SalesPerson
-            // 
-            btnEdit_SalesPerson.Location = new Point(667, 60);
-            btnEdit_SalesPerson.MenuManager = ribbonControl1;
-            btnEdit_SalesPerson.Name = "btnEdit_SalesPerson";
-            btnEdit_SalesPerson.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_SalesPerson.Size = new Size(450, 20);
-            btnEdit_SalesPerson.StyleController = dataLayoutControl1;
-            btnEdit_SalesPerson.TabIndex = 1;
-            btnEdit_SalesPerson.ButtonPressed += btnEdit_SalesPerson_ButtonPressed;
-            btnEdit_SalesPerson.EditValueChanged += btnEdit_SalesPerson_EditValueChanged;
             // 
             // gC_InvoiceLine
             // 
@@ -1554,13 +1527,13 @@ namespace Foxoft
             // 
             DateEdit_InstallmentDate.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "TrInstallment.InstallmentDate", true));
             DateEdit_InstallmentDate.EditValue = null;
-            DateEdit_InstallmentDate.Location = new Point(134, 144);
+            DateEdit_InstallmentDate.Location = new Point(143, 144);
             DateEdit_InstallmentDate.MenuManager = ribbonControl1;
             DateEdit_InstallmentDate.Name = "DateEdit_InstallmentDate";
             DateEdit_InstallmentDate.Properties.AllowMouseWheel = false;
             DateEdit_InstallmentDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DateEdit_InstallmentDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            DateEdit_InstallmentDate.Size = new Size(437, 20);
+            DateEdit_InstallmentDate.Size = new Size(428, 20);
             DateEdit_InstallmentDate.StyleController = dataLayoutControl1;
             DateEdit_InstallmentDate.TabIndex = 12;
             DateEdit_InstallmentDate.KeyDown += dataLayoutControls_KeyDown;
@@ -1568,48 +1541,29 @@ namespace Foxoft
             // TrInstallmentTextEdit
             // 
             TrInstallmentTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "TrInstallment.InstallmentId", true));
-            TrInstallmentTextEdit.Location = new Point(137, 120);
+            TrInstallmentTextEdit.Location = new Point(131, 228);
             TrInstallmentTextEdit.MenuManager = ribbonControl1;
             TrInstallmentTextEdit.Name = "TrInstallmentTextEdit";
-            TrInstallmentTextEdit.Size = new Size(432, 20);
+            TrInstallmentTextEdit.Size = new Size(1003, 20);
             TrInstallmentTextEdit.StyleController = dataLayoutControl1;
             TrInstallmentTextEdit.TabIndex = 1;
             // 
             // txtEdit_Installment_InterestRate
             // 
             txtEdit_Installment_InterestRate.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "TrInstallment.InterestRate", true));
-            txtEdit_Installment_InterestRate.Location = new Point(134, 192);
+            txtEdit_Installment_InterestRate.Location = new Point(143, 192);
             txtEdit_Installment_InterestRate.MenuManager = ribbonControl1;
             txtEdit_Installment_InterestRate.Name = "txtEdit_Installment_InterestRate";
-            txtEdit_Installment_InterestRate.Size = new Size(437, 20);
+            txtEdit_Installment_InterestRate.Size = new Size(428, 20);
             txtEdit_Installment_InterestRate.StyleController = dataLayoutControl1;
             txtEdit_Installment_InterestRate.TabIndex = 14;
-            // 
-            // LCI_SalesPerson
-            // 
-            LCI_SalesPerson.Control = btnEdit_SalesPerson;
-            LCI_SalesPerson.Location = new Point(545, 48);
-            LCI_SalesPerson.Name = "LCI_SalesPerson";
-            LCI_SalesPerson.Size = new Size(564, 24);
-            LCI_SalesPerson.Text = "Satıcı";
-            LCI_SalesPerson.TextSize = new Size(50, 20);
-            // 
-            // LCI_SalesPersonDesc
-            // 
-            LCI_SalesPersonDesc.Control = LBL_SalesPersonDesc;
-            LCI_SalesPersonDesc.Location = new Point(1002, 24);
-            LCI_SalesPersonDesc.MinSize = new Size(4, 17);
-            LCI_SalesPersonDesc.Name = "LCI_SalesPersonDesc";
-            LCI_SalesPersonDesc.Size = new Size(124, 24);
-            LCI_SalesPersonDesc.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            LCI_SalesPersonDesc.TextVisible = false;
             // 
             // ItemForTrInstallment
             // 
             ItemForTrInstallment.Control = TrInstallmentTextEdit;
-            ItemForTrInstallment.Location = new Point(0, 0);
+            ItemForTrInstallment.Location = new Point(0, 216);
             ItemForTrInstallment.Name = "item0";
-            ItemForTrInstallment.Size = new Size(549, 24);
+            ItemForTrInstallment.Size = new Size(1126, 24);
             ItemForTrInstallment.TextSize = new Size(98, 13);
             // 
             // Root
@@ -1644,8 +1598,7 @@ namespace Foxoft
             ItemForDocumentNumber.Location = new Point(0, 0);
             ItemForDocumentNumber.Name = "ItemForDocumentNumber";
             ItemForDocumentNumber.Size = new Size(563, 24);
-            ItemForDocumentNumber.Text = "Sənəd Nömrəsi";
-            ItemForDocumentNumber.TextSize = new Size(98, 13);
+            ItemForDocumentNumber.TextSize = new Size(107, 13);
             // 
             // ItemForCurrAccCode
             // 
@@ -1653,43 +1606,42 @@ namespace Foxoft
             ItemForCurrAccCode.Location = new Point(563, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
             ItemForCurrAccCode.Size = new Size(202, 24);
-            ItemForCurrAccCode.Text = "Cari Hesab";
-            ItemForCurrAccCode.TextSize = new Size(98, 13);
+            ItemForCurrAccCode.TextSize = new Size(107, 13);
             // 
             // splitterItem1
             // 
-            splitterItem1.Location = new Point(449, 370);
+            splitterItem1.Location = new Point(450, 370);
             splitterItem1.Name = "splitterItem1";
             splitterItem1.Size = new Size(10, 84);
             // 
             // splitterItem2
             // 
-            splitterItem2.Location = new Point(755, 370);
+            splitterItem2.Location = new Point(756, 370);
             splitterItem2.Name = "splitterItem2";
             splitterItem2.Size = new Size(10, 84);
             // 
             // emptySpaceItem3
             // 
-            emptySpaceItem3.Location = new Point(632, 370);
+            emptySpaceItem3.Location = new Point(633, 370);
             emptySpaceItem3.Name = "emptySpaceItem3";
             emptySpaceItem3.Size = new Size(123, 84);
             // 
             // emptySpaceItem4
             // 
-            emptySpaceItem4.Location = new Point(904, 370);
+            emptySpaceItem4.Location = new Point(905, 370);
             emptySpaceItem4.Name = "emptySpaceItem4";
-            emptySpaceItem4.Size = new Size(222, 84);
+            emptySpaceItem4.Size = new Size(221, 84);
             // 
             // LCG_InfoInstallment
             // 
             LCG_InfoInstallment.CustomizationFormText = "Kredit";
             LCG_InfoInstallment.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             LCG_InfoInstallment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_InstallmentSum, LCI_InstallmentCommissionSum, LCI_InstallmentTotalSum, LCI_InstallmentCommissionSumTxt, LCI_InstallmentSumTxt, LCI_InstallmentTotalSumTxt });
-            LCG_InfoInstallment.Location = new Point(459, 370);
+            LCG_InfoInstallment.Location = new Point(460, 370);
             LCG_InfoInstallment.Name = "LCG_InfoInstallment";
             LCG_InfoInstallment.OptionsItemText.TextToControlDistance = 0;
             LCG_InfoInstallment.Size = new Size(173, 84);
-            LCG_InfoInstallment.Text = "Kredit";
+            LCG_InfoInstallment.Text = Resources.FormInvoice_Group_InstallmentInfo;
             LCG_InfoInstallment.TextLocation = DevExpress.Utils.Locations.Left;
             LCG_InfoInstallment.TextVisible = false;
             // 
@@ -1751,10 +1703,10 @@ namespace Foxoft
             // 
             LCG_InfoPayment.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             LCG_InfoPayment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_InvoicePaidSum, LCI_InvoicePaidCashSum, LCI_InvoicePaidSumTxt, LCI_InvoicePaidCashlessSumTxt, LCI_InvoicePaidCashSumTxt, LCI_InvoicePaidCashlessSum });
-            LCG_InfoPayment.Location = new Point(765, 370);
+            LCG_InfoPayment.Location = new Point(766, 370);
             LCG_InfoPayment.Name = "LCG_InfoPayment";
             LCG_InfoPayment.Size = new Size(139, 84);
-            LCG_InfoPayment.Text = "Ödəniş";
+            LCG_InfoPayment.Text = Resources.FormInvoice_Group_PaymentInfo;
             LCG_InfoPayment.TextLocation = DevExpress.Utils.Locations.Left;
             LCG_InfoPayment.TextVisible = false;
             // 
@@ -1822,7 +1774,7 @@ namespace Foxoft
             LCI_CurrAccDesc.Name = "LCI_CurrAccDesc";
             LCI_CurrAccDesc.Size = new Size(361, 24);
             LCI_CurrAccDesc.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            LCI_CurrAccDesc.Text = "CurrAccDesc";
+            LCI_CurrAccDesc.Text = Resources.Entity_CurrAcc_CurrAccDesc;
             LCI_CurrAccDesc.TextVisible = false;
             // 
             // ItemForStoreCode
@@ -1831,8 +1783,7 @@ namespace Foxoft
             ItemForStoreCode.Location = new Point(563, 48);
             ItemForStoreCode.Name = "ItemForStoreCode";
             ItemForStoreCode.Size = new Size(563, 24);
-            ItemForStoreCode.Text = "Mağaza";
-            ItemForStoreCode.TextSize = new Size(98, 13);
+            ItemForStoreCode.TextSize = new Size(107, 13);
             // 
             // ItemForCustomsDocumentNumber
             // 
@@ -1840,8 +1791,7 @@ namespace Foxoft
             ItemForCustomsDocumentNumber.Location = new Point(0, 24);
             ItemForCustomsDocumentNumber.Name = "ItemForCustomsDocumentNumber";
             ItemForCustomsDocumentNumber.Size = new Size(563, 24);
-            ItemForCustomsDocumentNumber.Text = "Fərdi Sənəd Nömrəsi";
-            ItemForCustomsDocumentNumber.TextSize = new Size(98, 13);
+            ItemForCustomsDocumentNumber.TextSize = new Size(107, 13);
             // 
             // ItemForDocumentDate
             // 
@@ -1849,8 +1799,7 @@ namespace Foxoft
             ItemForDocumentDate.Location = new Point(0, 48);
             ItemForDocumentDate.Name = "ItemForDocumentDate";
             ItemForDocumentDate.Size = new Size(369, 24);
-            ItemForDocumentDate.Text = "Sənəd Tarixi";
-            ItemForDocumentDate.TextSize = new Size(98, 13);
+            ItemForDocumentDate.TextSize = new Size(107, 13);
             // 
             // ItemForDocumentTime
             // 
@@ -1858,7 +1807,6 @@ namespace Foxoft
             ItemForDocumentTime.Location = new Point(369, 48);
             ItemForDocumentTime.Name = "ItemForDocumentTime";
             ItemForDocumentTime.Size = new Size(194, 24);
-            ItemForDocumentTime.Text = "Sənəd Vaxtı";
             ItemForDocumentTime.TextVisible = false;
             // 
             // ItemForToWarehouseCode
@@ -1867,8 +1815,7 @@ namespace Foxoft
             ItemForToWarehouseCode.Location = new Point(563, 24);
             ItemForToWarehouseCode.Name = "ItemForToWarehouseCode";
             ItemForToWarehouseCode.Size = new Size(563, 24);
-            ItemForToWarehouseCode.Text = "Depoya";
-            ItemForToWarehouseCode.TextSize = new Size(98, 13);
+            ItemForToWarehouseCode.TextSize = new Size(107, 13);
             // 
             // ItemForWarehouseCode
             // 
@@ -1876,8 +1823,7 @@ namespace Foxoft
             ItemForWarehouseCode.Location = new Point(563, 72);
             ItemForWarehouseCode.Name = "ItemForWarehouseCode";
             ItemForWarehouseCode.Size = new Size(563, 24);
-            ItemForWarehouseCode.Text = "Depodan";
-            ItemForWarehouseCode.TextSize = new Size(98, 13);
+            ItemForWarehouseCode.TextSize = new Size(107, 13);
             // 
             // ItemForDescription
             // 
@@ -1885,8 +1831,7 @@ namespace Foxoft
             ItemForDescription.Location = new Point(0, 72);
             ItemForDescription.Name = "ItemForDescription";
             ItemForDescription.Size = new Size(563, 24);
-            ItemForDescription.Text = "Açıqlama";
-            ItemForDescription.TextSize = new Size(98, 13);
+            ItemForDescription.TextSize = new Size(107, 13);
             // 
             // ItemForIsReturn
             // 
@@ -1901,10 +1846,9 @@ namespace Foxoft
             lCI_printCount.Control = txtEdit_PrintCount;
             lCI_printCount.Location = new Point(224, 370);
             lCI_printCount.Name = "lCI_printCount";
-            lCI_printCount.Size = new Size(112, 84);
-            lCI_printCount.Text = "Print Sayı";
+            lCI_printCount.Size = new Size(113, 84);
             lCI_printCount.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-            lCI_printCount.TextSize = new Size(45, 13);
+            lCI_printCount.TextSize = new Size(54, 13);
             lCI_printCount.TextToControlDistance = 5;
             // 
             // lCI_IsSent
@@ -1917,18 +1861,18 @@ namespace Foxoft
             // 
             // emptySpaceItem2
             // 
-            emptySpaceItem2.Location = new Point(336, 370);
+            emptySpaceItem2.Location = new Point(337, 370);
             emptySpaceItem2.Name = "emptySpaceItem2";
             emptySpaceItem2.Size = new Size(113, 84);
             // 
             // LCG_Installment
             // 
             LCG_Installment.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            LCG_Installment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_PaymentPlan, LCI_InstallmentDate, LCI_InstallmentGarantors, LCI_InstallmentCommission, layoutControlItem1 });
+            LCG_Installment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_PaymentPlan, LCI_InstallmentDate, LCI_InstallmentGarantors, LCI_InstallmentCommission, LCI_InterestRate });
             LCG_Installment.Location = new Point(0, 96);
             LCG_Installment.Name = "LCG_Installment";
             LCG_Installment.Size = new Size(1126, 120);
-            LCG_Installment.Text = "Kredit";
+            LCG_Installment.Text = Resources.FormInvoice_Group_Installment;
             LCG_Installment.TextLocation = DevExpress.Utils.Locations.Left;
             LCG_Installment.TextVisible = false;
             // 
@@ -1938,8 +1882,8 @@ namespace Foxoft
             LCI_PaymentPlan.Location = new Point(0, 0);
             LCI_PaymentPlan.Name = "LCI_PaymentPlan";
             LCI_PaymentPlan.Size = new Size(551, 24);
-            LCI_PaymentPlan.Text = "Kredit Planı";
-            LCI_PaymentPlan.TextSize = new Size(98, 13);
+            LCI_PaymentPlan.Text = Resources.Entity_Installment_PlanCode;
+            LCI_PaymentPlan.TextSize = new Size(107, 13);
             // 
             // LCI_InstallmentDate
             // 
@@ -1947,8 +1891,8 @@ namespace Foxoft
             LCI_InstallmentDate.Location = new Point(0, 24);
             LCI_InstallmentDate.Name = "LCI_InstallmentDate";
             LCI_InstallmentDate.Size = new Size(551, 24);
-            LCI_InstallmentDate.Text = "Kredit Tarixi";
-            LCI_InstallmentDate.TextSize = new Size(98, 13);
+            LCI_InstallmentDate.Text = Resources.Entity_Installment_Date;
+            LCI_InstallmentDate.TextSize = new Size(107, 13);
             // 
             // LCI_InstallmentGarantors
             // 
@@ -1956,8 +1900,8 @@ namespace Foxoft
             LCI_InstallmentGarantors.Location = new Point(551, 0);
             LCI_InstallmentGarantors.Name = "LCI_InstallmentGarantors";
             LCI_InstallmentGarantors.Size = new Size(551, 96);
-            LCI_InstallmentGarantors.Text = "Zaminlər";
-            LCI_InstallmentGarantors.TextSize = new Size(98, 13);
+            LCI_InstallmentGarantors.Text = Resources.FormInvoice_InstallmentGuarantors;
+            LCI_InstallmentGarantors.TextSize = new Size(107, 13);
             // 
             // LCI_InstallmentCommission
             // 
@@ -1965,17 +1909,17 @@ namespace Foxoft
             LCI_InstallmentCommission.Location = new Point(0, 48);
             LCI_InstallmentCommission.Name = "LCI_InstallmentCommission";
             LCI_InstallmentCommission.Size = new Size(551, 24);
-            LCI_InstallmentCommission.Text = "Komissiya";
-            LCI_InstallmentCommission.TextSize = new Size(98, 13);
+            LCI_InstallmentCommission.Text = Resources.Entity_Installment_Commission;
+            LCI_InstallmentCommission.TextSize = new Size(107, 13);
             // 
-            // layoutControlItem1
+            // LCI_InterestRate
             // 
-            layoutControlItem1.Control = txtEdit_Installment_InterestRate;
-            layoutControlItem1.Location = new Point(0, 72);
-            layoutControlItem1.Name = "ItemForTrInstallment";
-            layoutControlItem1.Size = new Size(551, 24);
-            layoutControlItem1.Text = "Faiz Dərəcəsi (%)";
-            layoutControlItem1.TextSize = new Size(98, 13);
+            LCI_InterestRate.Control = txtEdit_Installment_InterestRate;
+            LCI_InterestRate.Location = new Point(0, 72);
+            LCI_InterestRate.Name = "ItemForTrInstallment";
+            LCI_InterestRate.Size = new Size(551, 24);
+            LCI_InterestRate.Text = Resources.Entity_Installment_InterestRate;
+            LCI_InterestRate.TextSize = new Size(107, 13);
             // 
             // svgImageCollection1
             // 
@@ -2046,7 +1990,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lUE_WarehouseCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)lUE_ToWarehouseCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_PrintCount.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)btnEdit_SalesPerson.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).EndInit();
@@ -2062,8 +2005,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)DateEdit_InstallmentDate.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)TrInstallmentTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Installment_InterestRate.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_SalesPerson).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_SalesPersonDesc).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTrInstallment).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCG_Invoice).EndInit();
@@ -2105,7 +2046,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentDate).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentGarantors).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentCommission).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_InterestRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
@@ -2229,9 +2170,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SerialNumberCode;
         private DevExpress.XtraGrid.Columns.GridColumn colSerialNumberCode;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_SalesPerson;
-        private DevExpress.XtraLayout.LayoutControlItem LCI_SalesPerson;
         private DevExpress.XtraEditors.LabelControl LBL_SalesPersonDesc;
-        private DevExpress.XtraLayout.LayoutControlItem LCI_SalesPersonDesc;
         private DevExpress.XtraBars.BarButtonItem barButtonItem6;
         private DevExpress.XtraBars.BarButtonItem BBI_Reports;
         private BarSubItem BSI_Reports;
@@ -2300,7 +2239,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit TrInstallmentTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForTrInstallment;
         private DevExpress.XtraEditors.TextEdit txtEdit_Installment_InterestRate;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_InterestRate;
         private BarButtonItem BBI_InvoiceDiscount;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private BarButtonItem BBI_Salesman;

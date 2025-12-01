@@ -293,7 +293,6 @@ namespace Foxoft
             this.lCI_CurrAccCode.Location = new System.Drawing.Point(0, 0);
             this.lCI_CurrAccCode.Name = "lCI_CurrAccCode";
             this.lCI_CurrAccCode.Size = new System.Drawing.Size(324, 24);
-            this.lCI_CurrAccCode.Text = "Müştəri Kodu";
             this.lCI_CurrAccCode.TextSize = new System.Drawing.Size(62, 13);
             // 
             // FormCustomer

@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraGrid.Views.Grid;
+using Foxoft.Properties;
 using System;
 using System.Windows.Forms;
 
@@ -29,11 +30,21 @@ namespace Foxoft
         private void AttachEventHandlers()
         {
             // Attach event handlers to apply changes immediately
-            chkReadOnly.CheckedChanged += (s, e) => gridView.OptionsBehavior.ReadOnly = chkReadOnly.Checked; // Read Only
-            chkAllowRowSizing.CheckedChanged += (s, e) => gridView.OptionsCustomization.AllowRowSizing = chkAllowRowSizing.Checked; // Allow Row Sizing
-            cmbGroupFooterShowMode.SelectedIndexChanged += (s, e) => gridView.OptionsView.GroupFooterShowMode = (GroupFooterShowMode)cmbGroupFooterShowMode.SelectedIndex; // Group Footer Show Mode
-            chkEditable.CheckedChanged += (s, e) => gridView.OptionsBehavior.Editable = chkEditable.Checked; // Editable
-            chkShowFooter.CheckedChanged += (s, e) => gridView.OptionsView.ShowFooter = chkShowFooter.Checked; // Show Footer
+            chkReadOnly.CheckedChanged += (s, e) =>
+                gridView.OptionsBehavior.ReadOnly = chkReadOnly.Checked; // Read Only
+
+            chkAllowRowSizing.CheckedChanged += (s, e) =>
+                gridView.OptionsCustomization.AllowRowSizing = chkAllowRowSizing.Checked; // Allow Row Sizing
+
+            cmbGroupFooterShowMode.SelectedIndexChanged += (s, e) =>
+                gridView.OptionsView.GroupFooterShowMode =
+                    (GroupFooterShowMode)cmbGroupFooterShowMode.SelectedIndex; // Group Footer Show Mode
+
+            chkEditable.CheckedChanged += (s, e) =>
+                gridView.OptionsBehavior.Editable = chkEditable.Checked; // Editable
+
+            chkShowFooter.CheckedChanged += (s, e) =>
+                gridView.OptionsView.ShowFooter = chkShowFooter.Checked; // Show Footer
         }
 
         private void btnClose_Click(object sender, EventArgs e)

@@ -1,7 +1,7 @@
-﻿
-using DevExpress.XtraBars;
+﻿using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.ToolbarForm;
+using Foxoft.Properties;
 using System.ComponentModel;
 
 namespace Foxoft
@@ -112,7 +112,7 @@ namespace Foxoft
             // bCI_invoice
             // 
             bCI_invoice.BindableChecked = true;
-            bCI_invoice.Caption = "Satış";
+            bCI_invoice.Caption = Resources.Form_POS_Button_Sale;
             bCI_invoice.Checked = true;
             bCI_invoice.Id = 20;
             bCI_invoice.Name = "bCI_invoice";
@@ -121,7 +121,7 @@ namespace Foxoft
             // 
             // bCI_return
             // 
-            bCI_return.Caption = "Geri Qaytarma";
+            bCI_return.Caption = Resources.Form_POS_Button_Return;
             bCI_return.Id = 22;
             bCI_return.Name = "bCI_return";
             bCI_return.CheckedChanged += bCI_CheckedChanged;
@@ -129,7 +129,7 @@ namespace Foxoft
             // 
             // bCI_expenses
             // 
-            bCI_expenses.Caption = "Xərclər";
+            bCI_expenses.Caption = Resources.Form_POS_Button_Expenses;
             bCI_expenses.Id = 24;
             bCI_expenses.Name = "bCI_expenses";
             bCI_expenses.CheckedChanged += bCI_CheckedChanged;
@@ -137,14 +137,14 @@ namespace Foxoft
             // 
             // navPage_Return
             // 
-            navPage_Return.Caption = "navPage_Return";
+            navPage_Return.Caption = Resources.Form_POS_Page_Return;
             navPage_Return.ControlName = "GeriQaytarma";
             navPage_Return.Name = "navPage_Return";
             navPage_Return.Size = new Size(1242, 618);
             // 
             // navPage_Sale
             // 
-            navPage_Sale.Caption = "navPage_Sale";
+            navPage_Sale.Caption = Resources.Form_POS_Page_Sale;
             navPage_Sale.ControlName = "Satış";
             navPage_Sale.Name = "navPage_Sale";
             navPage_Sale.Size = new Size(1242, 618);
@@ -166,7 +166,7 @@ namespace Foxoft
             // 
             // navPage_Expenses
             // 
-            navPage_Expenses.Caption = "navPage_Expenses";
+            navPage_Expenses.Caption = Resources.Form_POS_Page_Expenses;
             navPage_Expenses.Name = "navPage_Expenses";
             navPage_Expenses.Size = new Size(1242, 618);
             // 
@@ -183,6 +183,7 @@ namespace Foxoft
             Controls.Add(toolbarFormControl1);
             Name = "FormPOS";
             ToolbarFormControl = toolbarFormControl1;
+            Text = Resources.Form_POS_Caption;
             WindowState = FormWindowState.Maximized;
             Load += FormPOS_Load;
             ((ISupportInitialize)toolbarFormControl1).EndInit();

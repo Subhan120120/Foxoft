@@ -1,4 +1,6 @@
-﻿namespace Foxoft
+﻿using Foxoft.Properties;
+
+namespace Foxoft
 {
     partial class FormReportPreview
     {
@@ -272,7 +274,7 @@
             documentViewer1.IsMetric = true;
             documentViewer1.Location = new Point(0, 158);
             documentViewer1.Name = "documentViewer1";
-            documentViewer1.Size = new Size(1374, 292);
+            documentViewer1.Size = new Size(1525, 292);
             documentViewer1.TabIndex = 0;
             // 
             // documentViewerRibbonController1
@@ -291,7 +293,7 @@
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemProgressBar1, repositoryItemZoomTrackBar1 });
-            ribbonControl1.Size = new Size(1374, 158);
+            ribbonControl1.Size = new Size(1525, 158);
             ribbonControl1.StatusBar = ribbonStatusBar1;
             ribbonControl1.TransparentEditorsMode = DevExpress.Utils.DefaultBoolean.True;
             // 
@@ -1252,7 +1254,7 @@
             // 
             // BBI_EditDesign
             // 
-            BBI_EditDesign.Caption = "Dizayn";
+            BBI_EditDesign.Caption = Resources.Form_ReportPreview_EditDesign;
             BBI_EditDesign.Id = 52;
             BBI_EditDesign.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_EditDesign.ImageOptions.SvgImage");
             BBI_EditDesign.Name = "BBI_EditDesign";
@@ -1260,7 +1262,7 @@
             // 
             // BBI_CopyToClipboard
             // 
-            BBI_CopyToClipboard.Caption = "Kopyala";
+            BBI_CopyToClipboard.Caption = Resources.Form_ReportPreview_CopyToClipboard;
             BBI_CopyToClipboard.Id = 53;
             BBI_CopyToClipboard.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_CopyToClipboard.ImageOptions.SvgImage");
             BBI_CopyToClipboard.Name = "BBI_CopyToClipboard";
@@ -1401,20 +1403,20 @@
             ribbonStatusBar1.Location = new Point(0, 426);
             ribbonStatusBar1.Name = "ribbonStatusBar1";
             ribbonStatusBar1.Ribbon = ribbonControl1;
-            ribbonStatusBar1.Size = new Size(1374, 24);
+            ribbonStatusBar1.Size = new Size(1525, 24);
             // 
             // FormReportPreview
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1374, 450);
+            ClientSize = new Size(1525, 450);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(documentViewer1);
             Controls.Add(ribbonControl1);
             Name = "FormReportPreview";
             Ribbon = ribbonControl1;
             StatusBar = ribbonStatusBar1;
-            Text = "Form1";
+            Text = Resources.FormInvoice_ReportPreview;
             FormClosing += FormReportPreview_FormClosing;
             ((System.ComponentModel.ISupportInitialize)documentViewerRibbonController1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();

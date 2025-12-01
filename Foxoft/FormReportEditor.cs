@@ -10,6 +10,7 @@ using DevExpress.XtraLayout;
 using DevExpress.XtraTab;
 using DevExpress.XtraTab.ViewInfo;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -24,7 +25,6 @@ namespace Foxoft
         subContext dbContext = new();
         ReportClass reportClass = new();
         EfMethods efMethods = new();
-
 
         BindingSource relationColumnBindingSource = new();
 
@@ -55,22 +55,27 @@ namespace Foxoft
                 ClearControlsAddNew();
             else
             {
-                dbContext.DcReports.Include(x => x.DcReportVariables)
-                                   .Include(x => x.TrReportSubQueries).ThenInclude(x => x.TrReportSubQueryRelationColumns)
-                                   .Where(x => x.ReportId == dcReport.ReportId)
-                                   .Load();
+                dbContext.DcReports
+                         .Include(x => x.DcReportVariables)
+                         .Include(x => x.TrReportSubQueries)
+                             .ThenInclude(x => x.TrReportSubQueryRelationColumns)
+                         .Where(x => x.ReportId == dcReport.ReportId)
+                         .Load();
 
-                dcReportsBindingSource.DataSource = dbContext.DcReports.Local.ToBindingList();
+                dcReportsBindingSource.DataSource =
+                    dbContext.DcReports.Local.ToBindingList();
 
-                dbContext.DcReportVariables.Where(x => x.ReportId == dcReport.ReportId)
-                                   .Load();
+                dbContext.DcReportVariables
+                         .Where(x => x.ReportId == dcReport.ReportId)
+                         .Load();
 
-                dcReportVariableBindingSource.DataSource = dbContext.DcReportVariables.Local.ToBindingList();
+                dcReportVariableBindingSource.DataSource =
+                    dbContext.DcReportVariables.Local.ToBindingList();
             }
 
             List<TrReportSubQuery> subQueries = dbContext.DcReports.Local
-                         .SelectMany(r => r.TrReportSubQueries)
-                         .ToList();
+                                                        .SelectMany(r => r.TrReportSubQueries)
+                                                        .ToList();
 
             foreach (TrReportSubQuery? subQuery in subQueries)
             {
@@ -93,12 +98,15 @@ namespace Foxoft
 
                 colId.FieldName = nameof(TrReportSubQueryRelationColumn.Id);
                 colId.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.Id);
+
                 colParent.FieldName = nameof(TrReportSubQueryRelationColumn.ParentColumnName);
                 colParent.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.ParentColumnName);
                 colParent.Visible = true;
+
                 colSub.FieldName = nameof(TrReportSubQueryRelationColumn.SubColumnName);
                 colSub.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.SubColumnName);
                 colSub.Visible = true;
+
                 colSubQueryId.FieldName = nameof(TrReportSubQueryRelationColumn.SubQueryId);
                 colSubQueryId.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.SubQueryId);
                 //colSubQueryId.Visible = true;
@@ -108,10 +116,20 @@ namespace Foxoft
                 memoEdit.Dock = DockStyle.Fill;
                 memoEdit.Properties.WordWrap = false;
                 memoEdit.Properties.ScrollBars = ScrollBars.Both;
-                memoEdit.DataBindings.Add("EditValue", subQueryBindingSource, nameof(subQuery.SubQueryText), true, DataSourceUpdateMode.OnPropertyChanged);
+                memoEdit.DataBindings.Add(
+                    "EditValue",
+                    subQueryBindingSource,
+                    "SubQueryText",
+                    true,
+                    DataSourceUpdateMode.OnPropertyChanged);
                 memoEdit.StyleController = layoutControl1;
 
-                txtEdit.DataBindings.Add("EditValue", subQueryBindingSource, nameof(subQuery.SubQueryName), true, DataSourceUpdateMode.OnPropertyChanged);
+                txtEdit.DataBindings.Add(
+                    "EditValue",
+                    subQueryBindingSource,
+                    "SubQueryName",
+                    true,
+                    DataSourceUpdateMode.OnPropertyChanged);
                 txtEdit.EditValueChanged += (s, e) =>
                 {
                     xtraTabPage.Text = txtEdit.EditValue?.ToString();
@@ -133,15 +151,24 @@ namespace Foxoft
                 GV.OptionsView.NewItemRowPosition = NewItemRowPosition.Bottom;
                 GV.ActiveFilterString = $"[{nameof(TrReportSubQueryRelationColumn.SubQueryId)}] = {subQuery.SubQueryId}";
                 GV.OptionsView.ShowFilterPanelMode = ShowFilterPanelMode.Never;
+
                 GV.InitNewRow += (s, e) =>
                 {
                     GV.SetRowCellValue(e.RowHandle, colSubQueryId, subQuery.SubQueryId);
                 };
+
                 GV.KeyDown += (s, e) =>
                 {
                     if (e.KeyCode == Keys.Delete && GV != null && !GV.IsNewItemRow(GV.FocusedRowHandle))
-                        if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (MessageBox.Show(
+                                Resources.Form_ReportEditor_Message_DeleteRow,
+                                Resources.Common_Attention,
+                                MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
                             GV.DeleteSelectedRows();
+                        }
+                    }
                 };
 
                 LC.Controls.Add(memoEdit);
@@ -155,7 +182,7 @@ namespace Foxoft
                 LCI_GC.MaxSize = new Size(1000, 100);
 
                 LCI_TXTEDIT.Control = txtEdit;
-                LCI_TXTEDIT.Text = "Alt Sorğu Adı";
+                LCI_TXTEDIT.Text = Resources.Entity_ReportSubQuery_Name;
 
                 LCI_ME.Control = memoEdit;
                 LCI_ME.TextVisible = false;
@@ -200,27 +227,43 @@ namespace Foxoft
 
         void AddNewSubQueryTab()
         {
-            TrReportSubQuery newSubQuery = new() { SubQueryName = "New SubQuery", SubQueryText = "-- SQL here" };
+            TrReportSubQuery newSubQuery = new()
+            {
+                SubQueryName = Resources.Form_ReportEditor_SubQuery_DefaultName,
+                SubQueryText = Resources.Form_ReportEditor_SubQuery_DefaultText
+            };
 
             DcReport? currentReport = dcReportsBindingSource.Current as DcReport;
             currentReport?.TrReportSubQueries.Add(newSubQuery);
 
             BindingSource? subQueryBinding = new() { DataSource = newSubQuery };
 
-            MemoEdit? memoEdit = new() { Dock = DockStyle.Fill, EditValue = newSubQuery.SubQueryText };
-            memoEdit.DataBindings.Add("EditValue", subQueryBinding, nameof(newSubQuery.SubQueryText), true, DataSourceUpdateMode.OnPropertyChanged);
+            MemoEdit? memoEdit = new()
+            {
+                Dock = DockStyle.Fill,
+                EditValue = newSubQuery.SubQueryText
+            };
+            memoEdit.DataBindings.Add(
+                "EditValue",
+                subQueryBinding,
+                "SubQueryText",
+                true,
+                DataSourceUpdateMode.OnPropertyChanged);
 
-            XtraTabPage newPage = new() { Text = newSubQuery.SubQueryName, Tag = newSubQuery.SubQueryId };
+            XtraTabPage newPage = new()
+            {
+                Text = newSubQuery.SubQueryName,
+                Tag = newSubQuery.SubQueryId
+            };
             newPage.Controls.Add(memoEdit);
 
-            // Insert before "+" tab
+            // "+" tabından əvvəl insert
             xtraTabControl1.TabPages.Insert(xtraTabControl1.TabPages.Count - 1, newPage);
         }
 
         private void ClearControlsAddNew()
         {
             dcReport = dcReportsBindingSource.AddNew() as DcReport;
-
             dcReportsBindingSource.DataSource = dcReport;
         }
 
@@ -230,13 +273,13 @@ namespace Foxoft
 
             dcReport = dcReportsBindingSource.Current as DcReport;
 
-            if (!String.IsNullOrEmpty(dcReport?.ReportQuery))
+            if (!string.IsNullOrEmpty(dcReport?.ReportQuery))
             {
                 try
                 {
                     CheckQuery(dcReport);
 
-                    if (!efMethods.EntityExists<DcReport>(dcReport.ReportId)) //if doesnt exist
+                    if (!efMethods.EntityExists<DcReport>(dcReport.ReportId)) // if doesn't exist
                         efMethods.InsertEntity(dcReport);
                     else
                         dbContext.SaveChanges();
@@ -245,9 +288,10 @@ namespace Foxoft
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Foxoft Error Code: 1215451 ");
+                    MessageBox.Show(
+                        ex.Message,
+                        Resources.Form_ReportEditor_Message_CheckQueryErrorTitle);
                 }
-
             }
         }
 
@@ -258,38 +302,55 @@ namespace Foxoft
             DcReport? clonedEntity = CustomExtensions.Clone(dcReport);
 
             SqlParameter[] sqlParameters;
-            string query = reportClass.ApplyFilter(clonedEntity, clonedEntity.ReportQuery, null, out sqlParameters, 1);
+            string query = reportClass.ApplyFilter(
+                clonedEntity,
+                clonedEntity.ReportQuery,
+                null,
+                out sqlParameters,
+                1);
+
             DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // check query is correct 
 
             ICollection<TrReportSubQuery> subQueries = clonedEntity.TrReportSubQueries;
 
-            TrReportSubQueryRelationColumn[] entities = relationColumnBindingSource.List.OfType<TrReportSubQueryRelationColumn>().ToArray();
+            TrReportSubQueryRelationColumn[] entities =
+                relationColumnBindingSource.List
+                                           .OfType<TrReportSubQueryRelationColumn>()
+                                           .ToArray();
 
             foreach (TrReportSubQuery? subQuery in subQueries)
             {
                 SqlParameter[] sqlParameters1;
 
-                //subQuery.TrReportSubQueryRelationColumns.Clear();
-                subQuery.TrReportSubQueryRelationColumns = entities.Where(x => x.SubQueryId == subQuery.SubQueryId).ToList();
+                subQuery.TrReportSubQueryRelationColumns =
+                    entities.Where(x => x.SubQueryId == subQuery.SubQueryId).ToList();
 
-                subQuery.SubQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters1, 1);
+                subQuery.SubQueryText = reportClass.ApplyFilter(
+                    dcReport,
+                    subQuery.SubQueryText,
+                    null,
+                    out sqlParameters1,
+                    1);
 
                 subQuery.SubQueryText = this.reportClass.AddRelation(query, subQuery);
 
-                DataTable dt2 = adoMethods.SqlGetDt(subQuery.SubQueryText, sqlParameters1); // check query is correct 
+                DataTable dt2 = adoMethods.SqlGetDt(subQuery.SubQueryText, sqlParameters1); // check sub query
             }
         }
 
         private void xtraTabControl1_CloseButtonClick(object sender, EventArgs e)
         {
-            var args = e as DevExpress.XtraTab.ViewInfo.ClosePageButtonEventArgs;
+            var args = e as ClosePageButtonEventArgs;
             if (args == null) return;
 
             var tabToClose = args.Page as XtraTabPage;
             if (tabToClose?.Tag?.ToString() == "AddNew")
-                return; // Don't allow closing the "+" tab
+                return; // "+" tabını bağlamağa icazə vermə
 
-            if (MessageBox.Show($"Delete tab '{tabToClose.Text}'?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(
+                    string.Format(Resources.Form_ReportEditor_Message_DeleteTab, tabToClose.Text),
+                    Resources.Common_Attention,
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 var subQueryId = tabToClose.Tag;
 
@@ -305,7 +366,9 @@ namespace Foxoft
                             report.TrReportSubQueries.Remove(subQuery); // yaddaşdan sil
                         }
                         else
+                        {
                             report.TrReportSubQueries.Remove(subQuery); // yaddaşdan sil
+                        }
                     }
                 }
 
@@ -321,7 +384,7 @@ namespace Foxoft
             newRow.ReportId = dcReport.ReportId;
         }
 
-        private void gridView1_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        private void gridView1_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
         }
 
@@ -347,8 +410,6 @@ namespace Foxoft
                     if (!string.IsNullOrEmpty(variableProperty))
                         GV_ReportVariables.SetFocusedRowCellValue(colRepresentative, $"{{{variableProperty}}}");
                 }
-
-                //e.RepositoryItem = repoLUE_VariableOperator;
             }
 
             if (e.Column == colVariableValue)
@@ -374,7 +435,7 @@ namespace Foxoft
             if (typeId == 2 && (opValue == null || string.IsNullOrWhiteSpace(opValue.ToString())))
             {
                 e.Valid = false;
-                view.SetColumnError(colVariableOperator, "This field is required.");
+                view.SetColumnError(colVariableOperator, Resources.Validation_Required);
             }
             else
             {
@@ -388,8 +449,13 @@ namespace Foxoft
             {
                 if (e.KeyCode == Keys.Delete && GV_ReportVariables.ActiveEditor == null)
                 {
-                    if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show(
+                            Resources.Form_ReportEditor_Message_DeleteRow,
+                            Resources.Common_Attention,
+                            MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
                         GV_ReportVariables.DeleteSelectedRows();
+                    }
                 }
             }
         }

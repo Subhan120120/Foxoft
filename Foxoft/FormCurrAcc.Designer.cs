@@ -1,4 +1,5 @@
-﻿
+﻿using Foxoft.Properties;
+
 namespace Foxoft
 {
     partial class FormCurrAcc
@@ -186,7 +187,7 @@ namespace Foxoft
             btn_Cancel.Size = new Size(76, 39);
             btn_Cancel.StyleController = dataLayoutControl1;
             btn_Cancel.TabIndex = 19;
-            btn_Cancel.Text = "simpleButton2";
+            btn_Cancel.Text = Resources.Common_Cancel;
             // 
             // btn_Ok
             // 
@@ -197,7 +198,7 @@ namespace Foxoft
             btn_Ok.Size = new Size(77, 39);
             btn_Ok.StyleController = dataLayoutControl1;
             btn_Ok.TabIndex = 20;
-            btn_Ok.Text = "simpleButton1";
+            btn_Ok.Text = Resources.Common_Save;
             btn_Ok.Click += btn_Ok_Click;
             // 
             // CurrAccCodeTextEdit
@@ -212,7 +213,6 @@ namespace Foxoft
             // dcCurrAccsBindingSource
             // 
             dcCurrAccsBindingSource.DataSource = typeof(Models.DcCurrAcc);
-            dcCurrAccsBindingSource.AddingNew += dcCurrAccsBindingSource_AddingNew;
             // 
             // FirstNameTextEdit
             // 
@@ -283,7 +283,7 @@ namespace Foxoft
             IsVipCheckEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "IsVip", true));
             IsVipCheckEdit.Location = new Point(303, 282);
             IsVipCheckEdit.Name = "IsVipCheckEdit";
-            IsVipCheckEdit.Properties.Caption = "VIP";
+            IsVipCheckEdit.Properties.Caption = Resources.Entity_CurrAcc_IsVIP;
             IsVipCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             IsVipCheckEdit.Size = new Size(277, 20);
             IsVipCheckEdit.StyleController = dataLayoutControl1;
@@ -294,7 +294,7 @@ namespace Foxoft
             IsDisabledCheckEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "IsDisabled", true));
             IsDisabledCheckEdit.Location = new Point(24, 282);
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
-            IsDisabledCheckEdit.Properties.Caption = "Qeyri-Aktiv";
+            IsDisabledCheckEdit.Properties.Caption = Resources.Entity_CurrAcc_IsDisabled;
             IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             IsDisabledCheckEdit.Size = new Size(275, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
@@ -434,181 +434,150 @@ namespace Foxoft
             // 
             ItemForCurrAccCode.Control = CurrAccCodeTextEdit;
             ItemForCurrAccCode.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForCurrAccCode.CustomizationFormText = "Cari Hesab Kodu";
             ItemForCurrAccCode.Location = new Point(0, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
             ItemForCurrAccCode.Size = new Size(291, 24);
-            ItemForCurrAccCode.Text = "Cari Hesab Kodu";
             ItemForCurrAccCode.TextSize = new Size(98, 13);
             // 
             // layoutControlGroup3
             // 
-            layoutControlGroup3.CustomizationFormText = "Əlavə";
             layoutControlGroup3.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForIsVip, ItemForBonusCardNum, ItemForCreditLimit, ItemForIsDisabled });
             layoutControlGroup3.Location = new Point(0, 213);
             layoutControlGroup3.Name = "layoutControlGroup3";
             layoutControlGroup3.Size = new Size(584, 93);
-            layoutControlGroup3.Text = "Əlavə";
+            layoutControlGroup3.Text = Resources.Form_CurrAcc_Group_Extra;
             // 
             // ItemForIsVip
             // 
             ItemForIsVip.Control = IsVipCheckEdit;
             ItemForIsVip.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForIsVip.CustomizationFormText = "VIP";
             ItemForIsVip.Location = new Point(279, 24);
             ItemForIsVip.Name = "ItemForIsVip";
             ItemForIsVip.Size = new Size(281, 24);
-            ItemForIsVip.Text = "VIP";
             ItemForIsVip.TextVisible = false;
             // 
             // ItemForBonusCardNum
             // 
             ItemForBonusCardNum.Control = BonusCardNumTextEdit;
             ItemForBonusCardNum.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForBonusCardNum.CustomizationFormText = "Bonus Kartı";
             ItemForBonusCardNum.Location = new Point(0, 0);
             ItemForBonusCardNum.Name = "ItemForBonusCardNum";
             ItemForBonusCardNum.Size = new Size(279, 24);
-            ItemForBonusCardNum.Text = "Bonus Kartı";
             ItemForBonusCardNum.TextSize = new Size(98, 13);
             // 
             // ItemForCreditLimit
             // 
             ItemForCreditLimit.Control = CreditLimitTextEdit;
             ItemForCreditLimit.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForCreditLimit.CustomizationFormText = "Kredit Limiti";
             ItemForCreditLimit.Location = new Point(279, 0);
             ItemForCreditLimit.Name = "ItemForCreditLimit";
             ItemForCreditLimit.Size = new Size(281, 24);
-            ItemForCreditLimit.Text = "Kredit Limiti";
             ItemForCreditLimit.TextSize = new Size(98, 13);
             // 
             // ItemForIsDisabled
             // 
             ItemForIsDisabled.Control = IsDisabledCheckEdit;
             ItemForIsDisabled.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForIsDisabled.CustomizationFormText = "Qeyri-Aktiv";
             ItemForIsDisabled.Location = new Point(0, 24);
             ItemForIsDisabled.Name = "ItemForIsDisabled";
             ItemForIsDisabled.Size = new Size(279, 24);
-            ItemForIsDisabled.Text = "Qeyri-Aktiv";
             ItemForIsDisabled.TextVisible = false;
             // 
             // layoutControlGroup2
             // 
-            layoutControlGroup2.CustomizationFormText = "Şəxsi";
             layoutControlGroup2.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForAddress, ItemForFirstName, ItemForLastName, ItemForFatherName, ItemForPhoneNum, ItemForBirthDate, ItemForIdentityNum, ItemForTaxNum });
             layoutControlGroup2.Location = new Point(0, 72);
             layoutControlGroup2.Name = "layoutControlGroup2";
             layoutControlGroup2.Size = new Size(584, 141);
-            layoutControlGroup2.Text = "Şəxsi";
+            layoutControlGroup2.Text = Resources.Form_CurrAcc_Group_Personal;
             // 
             // ItemForAddress
             // 
             ItemForAddress.Control = AddressTextEdit;
             ItemForAddress.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForAddress.CustomizationFormText = "Adres";
             ItemForAddress.Location = new Point(279, 72);
             ItemForAddress.Name = "ItemForAddress";
             ItemForAddress.Size = new Size(281, 24);
-            ItemForAddress.Text = "Adres";
             ItemForAddress.TextSize = new Size(98, 13);
             // 
             // ItemForFirstName
             // 
             ItemForFirstName.Control = FirstNameTextEdit;
             ItemForFirstName.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForFirstName.CustomizationFormText = "Adı";
             ItemForFirstName.Location = new Point(0, 0);
             ItemForFirstName.Name = "ItemForFirstName";
             ItemForFirstName.Size = new Size(279, 24);
-            ItemForFirstName.Text = "Adı";
             ItemForFirstName.TextSize = new Size(98, 13);
             // 
             // ItemForLastName
             // 
             ItemForLastName.Control = LastNameTextEdit;
             ItemForLastName.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForLastName.CustomizationFormText = "Soyadı";
             ItemForLastName.Location = new Point(0, 24);
             ItemForLastName.Name = "ItemForLastName";
             ItemForLastName.Size = new Size(279, 24);
-            ItemForLastName.Text = "Soyadı";
             ItemForLastName.TextSize = new Size(98, 13);
             // 
             // ItemForFatherName
             // 
             ItemForFatherName.Control = FatherNameTextEdit;
             ItemForFatherName.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForFatherName.CustomizationFormText = "Ata Adı";
             ItemForFatherName.Location = new Point(0, 48);
             ItemForFatherName.Name = "ItemForFatherName";
             ItemForFatherName.Size = new Size(279, 24);
-            ItemForFatherName.Text = "Ata Adı";
             ItemForFatherName.TextSize = new Size(98, 13);
             // 
             // ItemForPhoneNum
             // 
             ItemForPhoneNum.Control = PhoneNumTextEdit;
             ItemForPhoneNum.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForPhoneNum.CustomizationFormText = "Telefon";
             ItemForPhoneNum.Location = new Point(0, 72);
             ItemForPhoneNum.Name = "ItemForPhoneNum";
             ItemForPhoneNum.Size = new Size(279, 24);
-            ItemForPhoneNum.Text = "Telefon";
             ItemForPhoneNum.TextSize = new Size(98, 13);
             // 
             // ItemForBirthDate
             // 
             ItemForBirthDate.Control = BirthDateDateEdit;
             ItemForBirthDate.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForBirthDate.CustomizationFormText = "Doğum Günü";
             ItemForBirthDate.Location = new Point(279, 0);
             ItemForBirthDate.Name = "ItemForBirthDate";
             ItemForBirthDate.Size = new Size(281, 24);
-            ItemForBirthDate.Text = "Doğum Günü";
             ItemForBirthDate.TextSize = new Size(98, 13);
             // 
             // ItemForIdentityNum
             // 
             ItemForIdentityNum.Control = IdentityNumTextEdit;
             ItemForIdentityNum.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForIdentityNum.CustomizationFormText = "Ş.V.Nömrəsi";
             ItemForIdentityNum.Location = new Point(279, 24);
             ItemForIdentityNum.Name = "ItemForIdentityNum";
             ItemForIdentityNum.Size = new Size(281, 24);
-            ItemForIdentityNum.Text = "Ş.V.Nömrəsi";
             ItemForIdentityNum.TextSize = new Size(98, 13);
             // 
             // ItemForTaxNum
             // 
             ItemForTaxNum.Control = TaxNumTextEdit;
             ItemForTaxNum.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForTaxNum.CustomizationFormText = "Vergi Nömrəsi";
             ItemForTaxNum.Location = new Point(279, 48);
             ItemForTaxNum.Name = "ItemForTaxNum";
             ItemForTaxNum.Size = new Size(281, 24);
-            ItemForTaxNum.Text = "Vergi Nömrəsi";
             ItemForTaxNum.TextSize = new Size(98, 13);
             // 
             // ItemForCurrAccTypeCode
             // 
             ItemForCurrAccTypeCode.Control = CurrAccTypeCodeLookUpEdit;
             ItemForCurrAccTypeCode.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForCurrAccTypeCode.CustomizationFormText = "Cari Hesab Tipi Kodu";
             ItemForCurrAccTypeCode.Location = new Point(0, 24);
             ItemForCurrAccTypeCode.Name = "ItemForCurrAccTypeCode";
             ItemForCurrAccTypeCode.Size = new Size(291, 24);
-            ItemForCurrAccTypeCode.Text = "Cari Hesab Tipi Kodu";
             ItemForCurrAccTypeCode.TextSize = new Size(98, 13);
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Ok;
             layoutControlItem1.ControlAlignment = ContentAlignment.TopLeft;
-            layoutControlItem1.CustomizationFormText = "layoutControlItem1";
             layoutControlItem1.Location = new Point(503, 306);
             layoutControlItem1.MinSize = new Size(78, 26);
             layoutControlItem1.Name = "layoutControlItem1";
@@ -620,7 +589,6 @@ namespace Foxoft
             // 
             layoutControlItem2.Control = btn_Cancel;
             layoutControlItem2.ControlAlignment = ContentAlignment.TopLeft;
-            layoutControlItem2.CustomizationFormText = "layoutControlItem2";
             layoutControlItem2.Location = new Point(423, 306);
             layoutControlItem2.MinSize = new Size(78, 26);
             layoutControlItem2.Name = "layoutControlItem2";
@@ -630,7 +598,6 @@ namespace Foxoft
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
             emptySpaceItem1.Location = new Point(0, 306);
             emptySpaceItem1.Name = "emptySpaceItem1";
             emptySpaceItem1.Size = new Size(423, 43);
@@ -641,7 +608,6 @@ namespace Foxoft
             ItemForCurrAccDesc.Location = new Point(0, 48);
             ItemForCurrAccDesc.Name = "ItemForCurrAccDesc";
             ItemForCurrAccDesc.Size = new Size(291, 24);
-            ItemForCurrAccDesc.Text = "Cari Hesab Adı";
             ItemForCurrAccDesc.TextSize = new Size(98, 13);
             // 
             // ItemForOfficeCode
@@ -650,7 +616,6 @@ namespace Foxoft
             ItemForOfficeCode.Location = new Point(291, 48);
             ItemForOfficeCode.Name = "ItemForOfficeCode";
             ItemForOfficeCode.Size = new Size(293, 24);
-            ItemForOfficeCode.Text = "Ofis";
             ItemForOfficeCode.TextSize = new Size(98, 13);
             // 
             // ItemForStoreCode
@@ -659,7 +624,6 @@ namespace Foxoft
             ItemForStoreCode.Location = new Point(291, 0);
             ItemForStoreCode.Name = "ItemForStoreCode";
             ItemForStoreCode.Size = new Size(293, 24);
-            ItemForStoreCode.Text = "Mağaza";
             ItemForStoreCode.TextSize = new Size(98, 13);
             // 
             // ItemForDataLanguageCode
@@ -668,7 +632,6 @@ namespace Foxoft
             ItemForDataLanguageCode.Location = new Point(291, 24);
             ItemForDataLanguageCode.Name = "ItemForDataLanguageCode";
             ItemForDataLanguageCode.Size = new Size(293, 24);
-            ItemForDataLanguageCode.Text = "İstifadəçi Dili";
             ItemForDataLanguageCode.TextSize = new Size(98, 13);
             // 
             // barManager1
@@ -697,7 +660,7 @@ namespace Foxoft
             // 
             // BBI_CurrAccFeatures
             // 
-            BBI_CurrAccFeatures.Caption = "Özəllik";
+            BBI_CurrAccFeatures.Caption = Resources.Form_CurrAcc_Bar_Features;
             BBI_CurrAccFeatures.Id = 0;
             BBI_CurrAccFeatures.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_CurrAccFeatures.ImageOptions.SvgImage");
             BBI_CurrAccFeatures.Name = "BBI_CurrAccFeatures";
@@ -706,7 +669,7 @@ namespace Foxoft
             // 
             // BBI_ContactDetail
             // 
-            BBI_ContactDetail.Caption = "Əlaqə";
+            BBI_ContactDetail.Caption = Resources.Form_CurrAcc_Bar_ContactDetail;
             BBI_ContactDetail.Id = 1;
             BBI_ContactDetail.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ContactDetail.ImageOptions.SvgImage");
             BBI_ContactDetail.Name = "BBI_ContactDetail";
@@ -781,7 +744,7 @@ namespace Foxoft
             Controls.Add(barDockControlBottom);
             Controls.Add(barDockControlTop);
             Name = "FormCurrAcc";
-            Text = "Cari Hesab";
+            Text = Resources.Entity_CurrAcc;
             Load += FormCurrAcc_Load;
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
@@ -888,21 +851,16 @@ namespace Foxoft
         private DevExpress.XtraEditors.LookUpEdit OfficeCodeLookUpEdit;
         private DevExpress.XtraEditors.LookUpEdit StoreCodeLookUpEdit;
         private System.Windows.Forms.BindingSource bindingSource1;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.BarAndDockingController barAndDockingController1;
         private DevExpress.XtraBars.BarManager barManager1;
         private DevExpress.XtraBars.Bar bar1;
-        private DevExpress.XtraBars.Bar bar2;
         private DevExpress.XtraBars.Bar bar3;
         private DevExpress.XtraBars.BarDockControl barDockControlTop;
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem BBI_CurrAccFeatures;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.BarButtonItem BBI_ContactDetail;
-        private DevExpress.XtraBars.BarButtonItem BBI_Contact;
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
     }
 }

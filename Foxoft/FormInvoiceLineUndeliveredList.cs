@@ -33,7 +33,6 @@ namespace Foxoft
             gV_InvoiceLineList.OptionsFind.FindMode = FindMode.Always;
         }
 
-
         public FormInvoiceLineUndeliveredList(string[] processCode)
             : this()
         {
@@ -41,7 +40,10 @@ namespace Foxoft
             LoadInvoiveHeaders();
 
             string storeCode = Authorization.StoreCode;
-            gV_InvoiceLineList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+
+            // Column adını string olaraq yazmaq əvəzinə nameof istifadə olunur
+            gV_InvoiceLineList.ActiveFilterString =
+                $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{storeCode}'";
 
             gV_InvoiceLineList.BestFitColumns();
         }
@@ -51,13 +53,16 @@ namespace Foxoft
             dbContext = new subContext();
 
             IQueryable<TrInvoiceLine> trInvoiceLines = dbContext.TrInvoiceLines;
-            IQueryable<TrInvoiceLine> filteredData = trInvoiceLines.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceLineList.ActiveFilterCriteria) as IQueryable<TrInvoiceLine>;
+            IQueryable<TrInvoiceLine> filteredData =
+                trInvoiceLines.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceLineList.ActiveFilterCriteria)
+                as IQueryable<TrInvoiceLine>;
 
-
-            var headerList = filteredData.Include(x => x.TrInvoiceHeader)
+            var headerList = filteredData
+                        .Include(x => x.TrInvoiceHeader)
                         .ThenInclude(x => x.DcCurrAcc)
                         .Where(x => processCode.Contains(x.TrInvoiceHeader.ProcessCode))
-                        .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate).ThenByDescending(x => x.TrInvoiceHeader.DocumentTime)
+                        .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
+                        .ThenByDescending(x => x.TrInvoiceHeader.DocumentTime)
                         .Select(x => new
                         {
                             x.InvoiceLineId,

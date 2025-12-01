@@ -35,7 +35,7 @@ namespace Foxoft
         public FormCommonList(string processCode, string fieldName_Id)
         {
             InitializeComponent();
-            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.GetName();
+            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.GetName() ?? Resources.Common_Data;
 
             BBI_New.ImageOptions.SvgImage = svgImageCollection1["add"];
             BBI_Edit.ImageOptions.SvgImage = svgImageCollection1["edit"];
@@ -58,7 +58,7 @@ namespace Foxoft
             this.SpecialColumnsHide = specialColumnsHide;
         }
 
-        public FormCommonList(string processCode, string fieldName_Id, object value_Id, string fieldName_2, object value_2, string[] specialColumnsHide = null) // 2 eded deyisen olanlar ucun
+        public FormCommonList(string processCode, string fieldName_Id, object value_Id, string fieldName_2, object value_2, string[] specialColumnsHide = null)
             : this(processCode, fieldName_Id, value_Id, specialColumnsHide)
         {
             this.Col_2.FieldName = fieldName_2;
@@ -72,7 +72,6 @@ namespace Foxoft
 
         private void FormCommonList_Activated(object sender, EventArgs e)
         {
-            //AutoFocus FindPanel
             if (gridView1 is not null)
             {
                 gridView1.FindPanelVisible = false;
@@ -116,11 +115,11 @@ namespace Foxoft
             }
 
             gridView1.Columns.ToList().ForEach(column =>
-           {
-               RemoveSomeColumns(column);
-               InvisibleSomeColumns(column);
-               AddUnboundColumns(column);
-           });
+            {
+                RemoveSomeColumns(column);
+                InvisibleSomeColumns(column);
+                AddUnboundColumns(column);
+            });
         }
 
         private void LoadData()
@@ -145,9 +144,8 @@ namespace Foxoft
             if (hiddenColumns.Contains(column.FieldName))
                 column.Visible = false;
 
-            if (SpecialColumnsHide is not null)
-                if (SpecialColumnsHide.Contains(column.FieldName))
-                    column.Visible = false;
+            if (SpecialColumnsHide is not null && SpecialColumnsHide.Contains(column.FieldName))
+                column.Visible = false;
         }
 
         private void AddUnboundColumns(GridColumn column)
@@ -243,7 +241,6 @@ namespace Foxoft
                         Clipboard.SetText(cellValue);
                     e.Handled = true;
                 }
-
             }
         }
 
@@ -294,45 +291,34 @@ namespace Foxoft
                     UpdateGridViewData();
             }
             else
-                MessageBox.Show("Sətir Seçilməyib");
+                MessageBox.Show(Resources.Message_NoRowSelected, Resources.Common_Attention);
         }
 
         private void BBI_Delete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
             var redicate = ConvertToPredicate(Col_Id.FieldName, Value_Id);
 
             if (dbContext.Set<T>().Any(redicate))
             {
-                if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + Value_Id, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (XtraMessageBox.Show(string.Format(Resources.Message_ConfirmDelete, Value_Id), Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     dbContext.Set<T>().Remove(Entity);
                     dbContext.SaveChanges();
-
                     UpdateGridViewData();
                 }
             }
             else
-                XtraMessageBox.Show("Sətir Seçilməyib");
+                XtraMessageBox.Show(Resources.Message_NoRowSelected, Resources.Common_Attention);
         }
 
         private void BBI_Refresh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             UpdateGridViewData();
         }
-
-        public static string AsString(object obj)
-        {
-            return obj?.ToString();
-        }
-
         private Func<T, bool> ConvertToPredicate(string propName, object value)
         {
             var param = Expression.Parameter(typeof(T), "x");
             MemberExpression member = Expression.Property(param, propName);
-            UnaryExpression memberAsObject = Expression.Convert(member, typeof(object));
-            //var convertedValue = Convert.ChangeType(value, member.Type);
-
             object convertedValue;
             if (string.IsNullOrEmpty(value?.ToString()))
             {
@@ -354,32 +340,6 @@ namespace Foxoft
         private void bBI_ExportExcel_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             CustomExtensions.ExportToExcel(this, Text, gridControl1);
-
-            //XtraSaveFileDialog sFD = new();
-            //sFD.Filter = "Excel Faylı|*.xlsx";
-            //sFD.Title = "Excel Faylı Yadda Saxla";
-            //sFD.FileName = $@"\{Text}.xlsx";
-            //sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //sFD.DefaultExt = "*.xlsx";
-
-            //var fileName = Invoke((Func<string>)(() =>
-            //{
-            //    if (sFD.ShowDialog() == DialogResult.OK)
-            //    {
-            //        gridView1.ExportToXlsx(sFD.FileName);
-
-            //        if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            //        {
-            //            Process p = new Process();
-            //            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-            //            p.Start();
-            //        }
-
-            //        return "Ok";
-            //    }
-            //    else
-            //        return "Fail";
-            //}));
         }
 
         private void gridView1_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)

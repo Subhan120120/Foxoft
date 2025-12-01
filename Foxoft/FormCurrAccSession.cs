@@ -1,33 +1,23 @@
 ﻿using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraGrid.Columns;
-using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Foxoft.AppCode;
 using Foxoft.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using Foxoft.Properties;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
     public partial class FormCurrAccSession : RibbonForm
     {
         EfMethods efMethods = new EfMethods();
+
         public FormCurrAccSession()
         {
             InitializeComponent();
 
             LoadUsers();
         }
-
         private void RibbonForm1_Load(object sender, EventArgs e)
         {
 
@@ -106,8 +96,12 @@ namespace Foxoft
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            if (DialogResult.OK == XtraMessageBox.Show(buttonEdit.EditValue + " Pəncərəni bağlamaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel))
+            if (DialogResult.OK == XtraMessageBox.Show(
+                    string.Format(Resources.Form_CurrAccSession_CloseWindowQuestion, buttonEdit.EditValue),
+                    Resources.Common_Attention, MessageBoxButtons.OKCancel))
+            {
                 WindowsAPI.CloseWindow((nint)gridView1.GetFocusedRowCellValue(colChildPID));
+            }
 
             LoadUsers();
         }
@@ -118,16 +112,20 @@ namespace Foxoft
             {
                 Process process = Process.GetProcessById(Convert.ToInt32(gridView1.GetFocusedRowCellValue(colPID)));
 
-                if (DialogResult.OK == XtraMessageBox.Show("İstifadəçini atmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel))
+                if (DialogResult.OK == XtraMessageBox.Show(
+                        Resources.Form_CurrAccSession_KickUserQuestion,
+                        Resources.Common_Attention, MessageBoxButtons.OKCancel))
+                {
                     process.Kill(true);
+                }
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
-                XtraMessageBox.Show("Proses tapılmadı.");
+                XtraMessageBox.Show(Resources.Common_ProcessNotFound);
             }
             catch (UnauthorizedAccessException ex)
             {
-                Console.WriteLine($"Cəhd əngəlləndi. Admin imtiyazlarınız olduğundan əmin olun.:" + ex.Message);
+                XtraMessageBox.Show(Resources.Common_AccessDenied + " " + ex.Message);
             }
             catch (Exception ex)
             {
@@ -137,7 +135,6 @@ namespace Foxoft
             LoadUsers();
         }
     }
-
     public class UserInfo
     {
         public int PID { get; set; }

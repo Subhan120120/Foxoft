@@ -1,6 +1,7 @@
 ﻿using DevExpress.Utils.Svg;
 using DevExpress.XtraEditors;
 using DevExpress.XtraLayout;
+using Foxoft.Properties;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -87,7 +88,7 @@ namespace Foxoft
             this.btn_Ok.Size = new System.Drawing.Size(428, 22);
             this.btn_Ok.StyleController = this.dataLayoutControl1;
             this.btn_Ok.TabIndex = 4;
-            this.btn_Ok.Text = "Yadda Saxla";
+            this.btn_Ok.Text = Resources.Common_Save;
             this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
             // 
             // LCI_Ok
@@ -107,7 +108,7 @@ namespace Foxoft
             this.btn_Cancel.Size = new System.Drawing.Size(428, 22);
             this.btn_Cancel.StyleController = this.dataLayoutControl1;
             this.btn_Cancel.TabIndex = 5;
-            this.btn_Cancel.Text = "Ləğv Et";
+            this.btn_Cancel.Text = Resources.Common_Cancel;
             // 
             // LCI_Cancel
             // 
@@ -127,7 +128,6 @@ namespace Foxoft
             this.ClientSize = new System.Drawing.Size(452, 78);
             this.Controls.Add(this.dataLayoutControl1);
             this.Name = "FormCommon";
-            this.Text = "FormCommon";
             this.Load += new System.EventHandler(this.FormCommon_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
@@ -137,7 +137,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.LCI_Cancel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

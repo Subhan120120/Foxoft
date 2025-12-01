@@ -2,6 +2,7 @@
 using System.Configuration;
 using Microsoft.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Foxoft.Models;
@@ -58,19 +59,19 @@ namespace Foxoft
             try
             {
                 dbContext.Database.OpenConnection();
-                lblConnectionTestResult.Text = "Connection successful!";
+                lblConnectionTestResult.Text = Resources.Form_Connection_Result_Success;
                 dbContext.Database.CloseConnection();
             }
             catch (Exception ex)
             {
-                lblConnectionTestResult.Text = $"Connection failed: {ex.Message}";
+                lblConnectionTestResult.Text = string.Format(Resources.Form_Connection_Result_Fail, ex.Message);
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveConnectionString();
-            MessageBox.Show("Connection string müvəffəqiyətlə yada saxlanıldı.");
+            MessageBox.Show(Resources.Form_Connection_Saved);
         }
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -83,7 +84,7 @@ namespace Foxoft
 
             config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = Settings.Default.SubConnString;
             config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
-            config.Save(ConfigurationSaveMode.Modified); // Save permenantly
+            config.Save(ConfigurationSaveMode.Modified); // Save permanently
         }
 
         private void btnCreateDatabase_Click(object sender, EventArgs e)
@@ -92,18 +93,18 @@ namespace Foxoft
             subContext subContext = new();
 
             if (subContext.Database.CanConnect())
-                XtraMessageBox.Show("Database Movcuddur.");
+                XtraMessageBox.Show(Resources.Form_Connection_DbExists);
             else
             {
                 subContext.Database.Migrate();
                 //subContext.Database.EnsureCreated();
 
-                List<DcCompany> comps = efMethods.SelectCompanies();
+                var comps = efMethods.SelectCompanies();
 
                 if (!comps.Any(x => x.CompanyCode == txtDatabase.Text))
                     efMethods.InsertEntity(new DcCompany() { CompanyCode = txtDatabase.Text, CompanyDesc = txtDatabase.Text });
 
-                XtraMessageBox.Show("Databaza müvəffəqiyətlə yaradıldı.");
+                XtraMessageBox.Show(Resources.Form_Connection_DbCreated);
             }
         }
     }

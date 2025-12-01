@@ -1,4 +1,5 @@
 ﻿
+using DevExpress.XtraBars;
 using DevExpress.XtraReports.Serialization;
 using DevExpress.XtraScheduler;
 using Foxoft.Properties;
@@ -34,25 +35,28 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
-            skinPaletteDropDownButtonItem = new DevExpress.XtraBars.SkinPaletteDropDownButtonItem();
-            bBI_MdiChildrenList = new DevExpress.XtraBars.BarMdiChildrenListItem();
-            bBI_CloseWindows = new DevExpress.XtraBars.BarButtonItem();
-            bBI_POS = new DevExpress.XtraBars.BarButtonItem();
-            bSI_UserName = new DevExpress.XtraBars.BarStaticItem();
-            BSI_StoreDesc = new DevExpress.XtraBars.BarStaticItem();
-            BBI_ChangeUser = new DevExpress.XtraBars.BarButtonItem();
-            barSubItem1 = new DevExpress.XtraBars.BarSubItem();
-            BBI_ModeMouse = new DevExpress.XtraBars.BarButtonItem();
-            BBI_ModeTouch = new DevExpress.XtraBars.BarButtonItem();
-            bSI_TerminalName = new DevExpress.XtraBars.BarStaticItem();
-            BSI_CompanyDesc = new DevExpress.XtraBars.BarStaticItem();
-            bBI_Session = new DevExpress.XtraBars.BarButtonItem();
-            BSI_Report = new DevExpress.XtraBars.BarSubItem();
-            BBI_FavoriteAdd = new DevExpress.XtraBars.BarButtonItem();
-            BBI_FavoriteRemove = new DevExpress.XtraBars.BarButtonItem();
+            skinRibbonGalleryBarItem = new SkinRibbonGalleryBarItem();
+            skinPaletteDropDownButtonItem = new SkinPaletteDropDownButtonItem();
+            bBI_MdiChildrenList = new BarMdiChildrenListItem();
+            bBI_CloseWindows = new BarButtonItem();
+            bBI_POS = new BarButtonItem();
+            bSI_UserName = new BarStaticItem();
+            BSI_StoreDesc = new BarStaticItem();
+            BBI_ChangeUser = new BarButtonItem();
+            barSubItem1 = new BarSubItem();
+            BBI_ModeMouse = new BarButtonItem();
+            BBI_ModeTouch = new BarButtonItem();
+            bSI_TerminalName = new BarStaticItem();
+            BSI_CompanyDesc = new BarStaticItem();
+            bBI_Session = new BarButtonItem();
+            BSI_Report = new BarSubItem();
+            BBI_FavoriteAdd = new BarButtonItem();
+            BBI_FavoriteRemove = new BarButtonItem();
+            BEI_Language = new BarEditItem();
+            repositoryItemLookUpEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -60,7 +64,7 @@ namespace Foxoft
             repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            popupMenuAccordian = new DevExpress.XtraBars.PopupMenu(components);
+            popupMenuAccordian = new PopupMenu(components);
             aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
             ACG_Favorites = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -115,6 +119,7 @@ namespace Foxoft
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_AppSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
@@ -125,16 +130,17 @@ namespace Foxoft
             // parentRibbonControl
             // 
             parentRibbonControl.ExpandCollapseItem.Id = 0;
-            parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch, bSI_TerminalName, BSI_CompanyDesc, bBI_Session, BSI_Report, BBI_FavoriteAdd, BBI_FavoriteRemove });
+            parentRibbonControl.Items.AddRange(new BarItem[] { parentRibbonControl.ExpandCollapseItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch, bSI_TerminalName, BSI_CompanyDesc, bBI_Session, BSI_Report, BBI_FavoriteAdd, BBI_FavoriteRemove, BEI_Language });
             parentRibbonControl.Location = new Point(0, 0);
-            parentRibbonControl.MaxItemId = 40;
+            parentRibbonControl.MaxItemId = 47;
             parentRibbonControl.Name = "parentRibbonControl";
             parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage_Home });
             parentRibbonControl.QuickToolbarItemLinks.Add(skinRibbonGalleryBarItem);
             parentRibbonControl.QuickToolbarItemLinks.Add(skinPaletteDropDownButtonItem);
             parentRibbonControl.QuickToolbarItemLinks.Add(bBI_POS);
             parentRibbonControl.QuickToolbarItemLinks.Add(barSubItem1);
-            parentRibbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemImageComboBox1, repositoryItemComboBox1 });
+            parentRibbonControl.QuickToolbarItemLinks.Add(BEI_Language);
+            parentRibbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemImageComboBox1, repositoryItemComboBox1, repositoryItemLookUpEdit1 });
             parentRibbonControl.Size = new Size(1023, 158);
             parentRibbonControl.StatusBar = ribbonStatusBar;
             // 
@@ -147,7 +153,7 @@ namespace Foxoft
             // skinPaletteDropDownButtonItem
             // 
             skinPaletteDropDownButtonItem.ActAsDropDown = true;
-            skinPaletteDropDownButtonItem.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            skinPaletteDropDownButtonItem.ButtonStyle = BarButtonStyle.DropDown;
             skinPaletteDropDownButtonItem.Id = 3;
             skinPaletteDropDownButtonItem.Name = "skinPaletteDropDownButtonItem";
             // 
@@ -176,14 +182,14 @@ namespace Foxoft
             // 
             // bSI_UserName
             // 
-            bSI_UserName.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            bSI_UserName.Alignment = BarItemLinkAlignment.Right;
             bSI_UserName.Caption = "| User Name";
             bSI_UserName.Id = 13;
             bSI_UserName.Name = "bSI_UserName";
             // 
             // BSI_StoreDesc
             // 
-            BSI_StoreDesc.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            BSI_StoreDesc.Alignment = BarItemLinkAlignment.Right;
             BSI_StoreDesc.Caption = "| Store Description";
             BSI_StoreDesc.Id = 18;
             BSI_StoreDesc.Name = "BSI_StoreDesc";
@@ -201,8 +207,8 @@ namespace Foxoft
             barSubItem1.Id = 23;
             barSubItem1.ImageOptions.Image = (Image)resources.GetObject("barSubItem1.ImageOptions.Image");
             barSubItem1.ImageOptions.LargeImage = (Image)resources.GetObject("barSubItem1.ImageOptions.LargeImage");
-            barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_ModeMouse, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_ModeTouch, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph) });
-            barSubItem1.MenuDrawMode = DevExpress.XtraBars.MenuDrawMode.LargeImagesText;
+            barSubItem1.LinksPersistInfo.AddRange(new LinkPersistInfo[] { new LinkPersistInfo(BarLinkUserDefines.PaintStyle, BBI_ModeMouse, BarItemPaintStyle.CaptionGlyph), new LinkPersistInfo(BarLinkUserDefines.PaintStyle, BBI_ModeTouch, BarItemPaintStyle.CaptionGlyph) });
+            barSubItem1.MenuDrawMode = MenuDrawMode.LargeImagesText;
             barSubItem1.Name = "barSubItem1";
             // 
             // BBI_ModeMouse
@@ -223,14 +229,14 @@ namespace Foxoft
             // 
             // bSI_TerminalName
             // 
-            bSI_TerminalName.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            bSI_TerminalName.Alignment = BarItemLinkAlignment.Right;
             bSI_TerminalName.Caption = " | Terminal Name";
             bSI_TerminalName.Id = 28;
             bSI_TerminalName.Name = "bSI_TerminalName";
             // 
             // BSI_CompanyDesc
             // 
-            BSI_CompanyDesc.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            BSI_CompanyDesc.Alignment = BarItemLinkAlignment.Right;
             BSI_CompanyDesc.Caption = "| Company Description";
             BSI_CompanyDesc.Id = 29;
             BSI_CompanyDesc.Name = "BSI_CompanyDesc";
@@ -262,6 +268,18 @@ namespace Foxoft
             BBI_FavoriteRemove.Id = 39;
             BBI_FavoriteRemove.Name = "BBI_FavoriteRemove";
             BBI_FavoriteRemove.ItemClick += BBI_FavoriteRemove_ItemClick;
+            // 
+            // BEI_Language
+            // 
+            BEI_Language.Edit = repositoryItemLookUpEdit1;
+            BEI_Language.Id = 46;
+            BEI_Language.Name = "BEI_Language";
+            // 
+            // repositoryItemLookUpEdit1
+            // 
+            repositoryItemLookUpEdit1.AutoHeight = false;
+            repositoryItemLookUpEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemLookUpEdit1.Name = "repositoryItemLookUpEdit1";
             // 
             // ribbonPage_Home
             // 
@@ -600,14 +618,14 @@ namespace Foxoft
             aCE_ProductsDisabled.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_ProductsDisabled.ImageOptions.SvgImage");
             aCE_ProductsDisabled.Name = "aCE_ProductsDisabled";
             aCE_ProductsDisabled.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            aCE_ProductsDisabled.Text = "Disabled Product";
+            aCE_ProductsDisabled.Text = Resources.ERP_ACE_ProductsDisabled;
             // 
             // aCE_CurrAccsDisabled
             // 
             aCE_CurrAccsDisabled.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccsDisabled.ImageOptions.SvgImage");
             aCE_CurrAccsDisabled.Name = "aCE_CurrAccsDisabled";
             aCE_CurrAccsDisabled.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            aCE_CurrAccsDisabled.Text = "Disabled Current Account";
+            aCE_CurrAccsDisabled.Text = Resources.ERP_ACE_CurrAccsDisabled;
             // 
             // accordionControlSeparator8
             // 
@@ -691,6 +709,7 @@ namespace Foxoft
             FormClosing += FormERP_FormClosing;
             MdiChildActivate += FormERP_MdiChildActivate;
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
@@ -787,5 +806,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_FavoriteRemove;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_ProductsDisabled;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CurrAccsDisabled;
+        private BarEditItem BEI_Language;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit1;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Foxoft
 {
-    partial class FormTest
+    partial class Test
     {
         /// <summary>
         /// Required designer variable.

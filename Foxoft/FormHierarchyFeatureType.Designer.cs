@@ -39,7 +39,7 @@
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             myGridControl1 = new MyGridControl();
-            bindingSource1 = new BindingSource(components);
+            bindingSource1 = new System.Windows.Forms.BindingSource(components);
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             colFeatureTypeId = new DevExpress.XtraGrid.Columns.GridColumn();
             colFeatureTypeName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -64,17 +64,22 @@
             // ribbon
             // 
             ribbon.ExpandCollapseItem.Id = 0;
-            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, BBI_Add, BBI_Update, BBI_Delete });
-            ribbon.Location = new Point(0, 0);
+            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+                ribbon.ExpandCollapseItem,
+                BBI_Add,
+                BBI_Update,
+                BBI_Delete
+            });
+            ribbon.Location = new System.Drawing.Point(0, 0);
             ribbon.MaxItemId = 4;
             ribbon.Name = "ribbon";
             ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
-            ribbon.Size = new Size(1236, 158);
+            ribbon.Size = new System.Drawing.Size(1236, 158);
             ribbon.StatusBar = ribbonStatusBar;
             // 
             // BBI_Add
             // 
-            BBI_Add.Caption = "Əlavə Et";
+            BBI_Add.Caption = Foxoft.Properties.Resources.Common_New;
             BBI_Add.Id = 1;
             BBI_Add.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Add.ImageOptions.SvgImage");
             BBI_Add.Name = "BBI_Add";
@@ -82,7 +87,7 @@
             // 
             // BBI_Update
             // 
-            BBI_Update.Caption = "Yenilə";
+            BBI_Update.Caption = Foxoft.Properties.Resources.Common_Refresh;
             BBI_Update.Id = 2;
             BBI_Update.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Update.ImageOptions.SvgImage");
             BBI_Update.Name = "BBI_Update";
@@ -90,7 +95,7 @@
             // 
             // BBI_Delete
             // 
-            BBI_Delete.Caption = "Sil";
+            BBI_Delete.Caption = Foxoft.Properties.Resources.Common_Delete;
             BBI_Delete.Id = 3;
             BBI_Delete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Delete.ImageOptions.SvgImage");
             BBI_Delete.Name = "BBI_Delete";
@@ -100,7 +105,7 @@
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Əməliyatlar });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Özəllik";
+            ribbonPage1.Text = Foxoft.Properties.Resources.Form_HierarchyFeatureType_Caption;
             // 
             // Əməliyatlar
             // 
@@ -108,36 +113,37 @@
             Əməliyatlar.ItemLinks.Add(BBI_Update);
             Əməliyatlar.ItemLinks.Add(BBI_Delete);
             Əməliyatlar.Name = "Əməliyatlar";
-            Əməliyatlar.Text = "Əməliyatlar";
+            Əməliyatlar.Text = Foxoft.Properties.Resources.Common_Operations;
             // 
             // ribbonStatusBar
             // 
-            ribbonStatusBar.Location = new Point(0, 586);
+            ribbonStatusBar.Location = new System.Drawing.Point(0, 586);
             ribbonStatusBar.Name = "ribbonStatusBar";
             ribbonStatusBar.Ribbon = ribbon;
-            ribbonStatusBar.Size = new Size(1236, 24);
+            ribbonStatusBar.Size = new System.Drawing.Size(1236, 24);
             // 
             // layoutControl1
             // 
             layoutControl1.Controls.Add(myGridControl1);
             layoutControl1.Controls.Add(btn_Hierarchy);
-            layoutControl1.Dock = DockStyle.Fill;
-            layoutControl1.Location = new Point(0, 158);
+            layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            layoutControl1.Location = new System.Drawing.Point(0, 158);
             layoutControl1.Name = "layoutControl1";
-            layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(1270, 295, 650, 400);
+            layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize =
+                new System.Drawing.Rectangle(1270, 295, 650, 400);
             layoutControl1.Root = Root;
-            layoutControl1.Size = new Size(1236, 428);
+            layoutControl1.Size = new System.Drawing.Size(1236, 428);
             layoutControl1.TabIndex = 2;
             layoutControl1.Text = "layoutControl1";
             // 
             // myGridControl1
             // 
             myGridControl1.DataSource = bindingSource1;
-            myGridControl1.Location = new Point(12, 36);
+            myGridControl1.Location = new System.Drawing.Point(12, 36);
             myGridControl1.MainView = gridView1;
             myGridControl1.MenuManager = ribbon;
             myGridControl1.Name = "myGridControl1";
-            myGridControl1.Size = new Size(1212, 380);
+            myGridControl1.Size = new System.Drawing.Size(1212, 380);
             myGridControl1.TabIndex = 5;
             myGridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
@@ -147,7 +153,12 @@
             // 
             // gridView1
             // 
-            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colFeatureTypeId, colFeatureTypeName, colHierarchyCode, colHierarchyDesc });
+            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+                colFeatureTypeId,
+                colFeatureTypeName,
+                colHierarchyCode,
+                colHierarchyDesc
+            });
             gridView1.GridControl = myGridControl1;
             gridView1.Name = "gridView1";
             gridView1.CustomUnboundColumnData += gV_PriceListLine_CustomUnboundColumnData;
@@ -185,11 +196,13 @@
             // btn_Hierarchy
             // 
             btn_Hierarchy.EditValue = "";
-            btn_Hierarchy.Location = new Point(74, 12);
+            btn_Hierarchy.Location = new System.Drawing.Point(74, 12);
             btn_Hierarchy.MenuManager = ribbon;
             btn_Hierarchy.Name = "btn_Hierarchy";
-            btn_Hierarchy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btn_Hierarchy.Size = new Size(1150, 20);
+            btn_Hierarchy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton()
+            });
+            btn_Hierarchy.Size = new System.Drawing.Size(1150, 20);
             btn_Hierarchy.StyleController = layoutControl1;
             btn_Hierarchy.TabIndex = 3;
             btn_Hierarchy.ButtonPressed += btn_Hierarchy_ButtonPressed;
@@ -199,41 +212,44 @@
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             Root.GroupBordersVisible = false;
-            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_Hierarchy, layoutControlItem1 });
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+                LCI_Hierarchy,
+                layoutControlItem1
+            });
             Root.Name = "Root";
-            Root.Size = new Size(1236, 428);
+            Root.Size = new System.Drawing.Size(1236, 428);
             Root.TextVisible = false;
             // 
             // LCI_Hierarchy
             // 
             LCI_Hierarchy.Control = btn_Hierarchy;
-            LCI_Hierarchy.Location = new Point(0, 0);
+            LCI_Hierarchy.Location = new System.Drawing.Point(0, 0);
             LCI_Hierarchy.Name = "LCI_Hierarchy";
-            LCI_Hierarchy.Size = new Size(1216, 24);
-            LCI_Hierarchy.Text = "İyerarxiya";
-            LCI_Hierarchy.TextSize = new Size(50, 13);
+            LCI_Hierarchy.Size = new System.Drawing.Size(1216, 24);
+            LCI_Hierarchy.Text = Foxoft.Properties.Resources.Entity_Hierarchy;
+            LCI_Hierarchy.TextSize = new System.Drawing.Size(50, 13);
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = myGridControl1;
-            layoutControlItem1.Location = new Point(0, 24);
+            layoutControlItem1.Location = new System.Drawing.Point(0, 24);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(1216, 384);
-            layoutControlItem1.TextSize = new Size(0, 0);
+            layoutControlItem1.Size = new System.Drawing.Size(1216, 384);
+            layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
             // FormHierarchyFeatureType
             // 
-            AutoScaleDimensions = new SizeF(6F, 13F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1236, 610);
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1236, 610);
             Controls.Add(layoutControl1);
             Controls.Add(ribbonStatusBar);
             Controls.Add(ribbon);
             Name = "FormHierarchyFeatureType";
             Ribbon = ribbon;
             StatusBar = ribbonStatusBar;
-            Text = "FormHierarchyFeature";
+            Text = Foxoft.Properties.Resources.Form_HierarchyFeatureType_Caption;
             ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
             layoutControl1.ResumeLayout(false);
