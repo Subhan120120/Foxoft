@@ -1,26 +1,18 @@
 ﻿using DevExpress.DataAccess.Sql;
-using DevExpress.Utils.Diagnostics;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Alerter;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraMap.Drawing.DirectD3D9;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing.Printing;
 using System.IO;
-using System.Windows.Forms;
-using System.Xml;
 
 namespace Foxoft
 {
@@ -202,8 +194,8 @@ namespace Foxoft
 
 
         public async IAsyncEnumerable<DeliveryVM.Line> StreamInvoiceLinesForDeliveryAsync(
-    Guid? invoiceHeader = null,
-    [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+            Guid? invoiceHeader = null,
+            [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             await using var db = new subContext();
 
@@ -215,6 +207,7 @@ namespace Foxoft
                             && !x.TrInvoiceHeader.IsReturn)
                 .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
                 .ThenByDescending(x => x.TrInvoiceHeader.DocumentTime)
+                .ThenByDescending(x => x.CreatedDate)
                 .AsAsyncEnumerable()
                 .WithCancellation(cancellationToken);
 
@@ -256,18 +249,18 @@ namespace Foxoft
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
-{
-    if (DialogResult.OK == XtraMessageBox.Show(
-            Resources.Form_HandOver_OpenInvoiceQuestion,
-            Resources.Common_Attention,
-            MessageBoxButtons.OKCancel))
-    {
-        OpenFormInvoice(deliveryInvoHeader.DocumentNumber);
-    }
+        {
+            if (DialogResult.OK == XtraMessageBox.Show(
+                    Resources.Form_HandOver_OpenInvoiceQuestion,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OKCancel))
+            {
+                OpenFormInvoice(deliveryInvoHeader.DocumentNumber);
+            }
 
-    ClearControls();
-    LoadDataStreamedAsync();
-}
+            ClearControls();
+            LoadDataStreamedAsync();
+        }
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
