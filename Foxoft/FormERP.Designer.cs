@@ -35,7 +35,6 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new SkinRibbonGalleryBarItem();
@@ -274,12 +273,16 @@ namespace Foxoft
             BEI_Language.Edit = repositoryItemLookUpEdit1;
             BEI_Language.Id = 46;
             BEI_Language.Name = "BEI_Language";
+            BEI_Language.EditValueChanged += BEI_Language_EditValueChanged;
             // 
             // repositoryItemLookUpEdit1
             // 
             repositoryItemLookUpEdit1.AutoHeight = false;
             repositoryItemLookUpEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemLookUpEdit1.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("LanguageCode", Resources.Entity_UILanguage_Code), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("LanguageDesc", Resources.Entity_UILanguage_Desc) });
+            repositoryItemLookUpEdit1.DisplayMember = "LanguageCode";
             repositoryItemLookUpEdit1.Name = "repositoryItemLookUpEdit1";
+            repositoryItemLookUpEdit1.ValueMember = "LanguageCode";
             // 
             // ribbonPage_Home
             // 

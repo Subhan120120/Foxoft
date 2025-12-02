@@ -35,20 +35,7 @@ namespace Foxoft
 
             repositoryItemLookUpEdit1.DataSource = efMethods.SelectEntities<DcUILanguage>();
 
-            BEI_Language.EditValueChanged += (s, e) =>
-            {
-                var key = BEI_Language.EditValue as DcUILanguage;
-
-                if (key is not null)
-                {
-                    CultureInfo culture = CultureInfo.CreateSpecificCulture(key.LanguageCode);
-                    Thread.CurrentThread.CurrentUICulture = culture;
-                    Thread.CurrentThread.CurrentCulture = culture;
-                    CultureInfo.DefaultThreadCurrentCulture = culture;
-                    CultureInfo.DefaultThreadCurrentUICulture = culture;
-                }
-            };
-
+            BEI_Language.EditValue = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
             reportClass.AddReports(BSI_Report, "ERP", null, null, activeFilterStr);
@@ -432,6 +419,20 @@ namespace Foxoft
             bool isFavorite = Settings.Default.FavoritesMenus.Contains(aCE_Active.Name);
             BBI_FavoriteRemove.Enabled = isFavorite;
             BBI_FavoriteAdd.Enabled = !isFavorite;
+        }
+
+        private void BEI_Language_EditValueChanged(object sender, EventArgs e)
+        {
+            DcUILanguage UILanguage = efMethods.SelectEntityById<DcUILanguage>(BEI_Language.EditValue?.ToString());
+
+            if (UILanguage is not null)
+            {
+                CultureInfo culture = CultureInfo.CreateSpecificCulture(UILanguage.LanguageCode);
+                Thread.CurrentThread.CurrentUICulture = culture;
+                Thread.CurrentThread.CurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+            }
         }
 
         private void ShowNewForm<T>(params object[] args) where T : Form
