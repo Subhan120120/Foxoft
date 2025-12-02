@@ -207,7 +207,7 @@ namespace Foxoft
                             && !x.TrInvoiceHeader.IsReturn)
                 .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
                 .ThenByDescending(x => x.TrInvoiceHeader.DocumentTime)
-                .ThenByDescending(x => x.CreatedDate)
+                .ThenBy(x => x.CreatedDate)
                 .AsAsyncEnumerable()
                 .WithCancellation(cancellationToken);
 
