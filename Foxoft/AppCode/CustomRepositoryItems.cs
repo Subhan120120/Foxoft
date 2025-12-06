@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Repository;
+using Foxoft.Models;
 using System;
 using System.Windows.Forms;
 
@@ -28,19 +29,25 @@ namespace Foxoft
         }
         private static RepositoryItem MyRepositoryItem(string PropName)
         {
-            if (PropName == "ProductCode" || PropName.Contains(".ProductCode"))
+            if (PropName == nameof(DcProduct.ProductCode) || PropName.Contains("." + nameof(DcProduct.ProductCode)))
                 return MyProductCode();
-            if (PropName == "CurrAccCode" || PropName.Contains(".CurrAccCode"))
+
+            if (PropName == nameof(DcCurrAcc.CurrAccCode) || PropName.Contains("." + nameof(DcCurrAcc.CurrAccCode)))
                 return MyCurrAccCode();
-            if (PropName == "StoreCode" || PropName.Contains(".StoreCode"))
+
+            if (PropName == nameof(DcCurrAcc.StoreCode) || PropName.Contains("." + nameof(DcCurrAcc.StoreCode)))
                 return MyStoreCode();
-            if (PropName == "CashRegisterCode" || PropName.Contains(".CashRegisterCode"))
+
+            if (PropName == nameof(TrPaymentLine.CashRegisterCode) || PropName.Contains("." + nameof(TrPaymentLine.CashRegisterCode)))
                 return MyCashRegisterCode();
-            if (PropName == "WarehouseCode" || PropName.Contains(".WarehouseCode"))
+
+            if (PropName == nameof(TrInvoiceHeader.WarehouseCode) || PropName.Contains("." + nameof(TrInvoiceHeader.WarehouseCode)))
                 return MyWarehouseCode();
-            if (PropName == "HierarchyCode" || PropName.Contains(".HierarchyCode"))
+
+            if (PropName == nameof(DcProduct.HierarchyCode) || PropName.Contains("." + nameof(DcProduct.HierarchyCode)))
                 return MyHierarchyCode();
-            if (PropName == "SalesPersonCode" || PropName.Contains(".SalesPersonCode"))
+
+            if (PropName == nameof(TrInvoiceLine.SalesPersonCode) || PropName.Contains("." + nameof(TrInvoiceLine.SalesPersonCode)))
                 return MySalesPersonCode();
 
             return null;

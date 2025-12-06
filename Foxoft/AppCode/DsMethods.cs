@@ -16,7 +16,7 @@ namespace Foxoft
             DcReport report = efMethods.SelectReportByName("Report_Embedded_InvoiceReport");
 
             QueryParameter queryParameter1 = new();
-            queryParameter1.Name = "InvoiceHeaderId";
+            queryParameter1.Name = nameof(TrInvoiceHeader.InvoiceHeaderId);
             queryParameter1.Type = typeof(Guid);
             queryParameter1.ValueInfo = invoiceHeader.ToString();
 
@@ -213,9 +213,9 @@ namespace Foxoft
                 }
             }
 
-            QueryParameter queryParameter = new("ProductCode", typeof(string), ProductCode);
+            QueryParameter queryParameter = new(nameof(DcProduct.ProductCode), typeof(string), ProductCode);
 
-            CustomSqlQuery sqlQuerySale = new("Product", qry);
+            CustomSqlQuery sqlQuerySale = new(nameof(DcProduct), qry);
             sqlQuerySale.Parameters.Add(queryParameter);
 
             return sqlQuerySale;

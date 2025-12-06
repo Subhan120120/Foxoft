@@ -5,6 +5,7 @@ using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
+using Foxoft.Models;
 using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
