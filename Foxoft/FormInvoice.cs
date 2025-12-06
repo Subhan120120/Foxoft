@@ -1,6 +1,5 @@
 ﻿
 #region Using
-using DevExpress.CodeParser;
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
@@ -8,7 +7,6 @@ using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
-using DevExpress.XtraBars.Customization;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -25,13 +23,11 @@ using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
-using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.ComponentModel;
@@ -44,7 +40,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
 #endregion
@@ -407,10 +402,10 @@ namespace Foxoft
 
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (form.dcCurrAcc.CreditLimit > Math.Abs(form.dcCurrAcc.Balance) || form.dcCurrAcc.CreditLimit == 0)
-                        btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-                    else
-                        XtraMessageBox.Show(Resources.Form_Invoice_CreditLimitExceeded, Resources.Common_Attention);
+                    //if (form.dcCurrAcc.CreditLimit > Math.Abs(form.dcCurrAcc.Balance) || form.dcCurrAcc.CreditLimit == 0)
+                    btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
+                    //else
+                    //    XtraMessageBox.Show(Resources.Form_Invoice_CreditLimitExceeded, Resources.Common_Attention);
                 }
             }
         }
@@ -738,7 +733,7 @@ namespace Foxoft
                         || (trInvoiceHeader.IsReturn && (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))))
                 {
                     DcCurrAcc dc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
-                    decimal currAccBalance = CalcCurrAccCreditBalance(Convert.ToInt32(e.Value), view, trInvoiceHeader.CurrAccCode);
+                    decimal currAccBalance = CalcCurrAccCreditBalance(Convert.ToInt32(e.Value));
 
                     if (Math.Abs(currAccBalance) > dc.CreditLimit && dc.CreditLimit != 0 && Convert.ToInt32(e.Value) != 0)
                     {
@@ -776,14 +771,13 @@ namespace Foxoft
             e.WindowCaption = Resources.Common_Attention;
         }
 
-        private decimal CalcCurrAccCreditBalance(int eValue, GridView view, string currAccCode)
+        private decimal CalcCurrAccCreditBalance(int eValue)
         {
-            object objPriceLoc = view.GetFocusedRowCellValue(colPriceLoc);
-            decimal newValue = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
-            decimal oldValue = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc));
+            object objPriceLoc = gV_InvoiceLine.GetFocusedRowCellValue(colPriceLoc);
+            decimal newNetAmountLoc = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
+            decimal oldNetAmountLoc = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc));
 
-            //decimal oldSummaryValue = CalcNetAmountSummmaryValue();
-            decimal newSummaryValue = newValue - oldValue; // + oldSummaryValue;
+            decimal newSummaryValue = newNetAmountLoc - oldNetAmountLoc; // + oldSummaryValue;
 
             decimal balanceAfter = CurrAccBalanceBefore - newSummaryValue;
 
@@ -1627,49 +1621,101 @@ namespace Foxoft
             return null;
         }
 
+        private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
+        {
+
+        }
+
+        private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
+        {
+            DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(btnEdit_CurrAccCode.EditValue?.ToString());
+            if (trInvoiceHeader is null || curr is null)
+                return;
+
+            trInvoiceHeader.CurrAccCode = curr?.CurrAccCode;
+            lbl_CurrAccDesc.Text = curr?.CurrAccDesc + " " + curr?.FirstName + " " + curr?.LastName;
+
+            CurrAccBalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode, trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime)), 2);
+
+            if (Settings.Default.AppSetting.AutoSave)
+                efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr?.CurrAccCode);
+
+            List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
+            lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
+
+            if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
+                trInvoiceHeader.ToWarehouseCode = null;
+
+            if (dcWarehouses is not null)
+            {
+                DcWarehouse dcWarehouse = dcWarehouses.FirstOrDefault(x => x.IsDefault == true);
+
+                if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
+                    lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+            }
+        }
 
         private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
         {
-            ButtonEdit editor = sender as ButtonEdit;
-            string eValue = editor.Text?.Trim();
-
-            if (eValue is null)
+            if (sender is not ButtonEdit editor)
                 return;
 
-            DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(eValue.ToString());
+            dxErrorProvider1.SetError(editor, string.Empty);
+
+            string value = editor.Text?.Trim();
+
+            if (string.IsNullOrEmpty(value))
+                return;
+
+            DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(value);
 
             if (curr is null)
             {
-                dxErrorProvider1.SetError(editor, Resources.Form_Invoice_NoSuchCurrAcc, ErrorType.Critical);
-                e.Cancel = true;
+                SetValidationError(editor, e, Resources.Form_Invoice_NoSuchCurrAcc);
+                return;
+            }
+
+            decimal netAmountLocSum = CalcNetAmountSummmaryValue();
+            decimal currAccBalance = CurrAccBalanceBefore - netAmountLocSum;
+
+            if (curr.CreditLimit > 0 && Math.Abs(currAccBalance) > curr.CreditLimit)
+            {
+                SetValidationError(editor, e, Resources.Form_Invoice_CreditLimitExceeded);
                 return;
             }
 
             if (trInvoiceHeader.RelatedInvoiceId is not null)
             {
-                string curr1 = efMethods.SelectInvoiceLineByReturnHeader(trInvoiceHeader.RelatedInvoiceId, trInvoiceHeader.ProcessCode)
-                                         .FirstOrDefault().CurrAccCode;
+                var returnLine = efMethods
+                    .SelectInvoiceLineByReturnHeader(trInvoiceHeader.RelatedInvoiceId, trInvoiceHeader.ProcessCode)
+                    .FirstOrDefault();
 
-                if (curr.CurrAccCode != curr1)
+                if (returnLine is not null && curr.CurrAccCode != returnLine.CurrAccCode)
                 {
-                    dxErrorProvider1.SetError(editor, Resources.Form_Invoice_ReturnInvoiceExists_CurrAccCannotChange, ErrorType.Critical);
-                    e.Cancel = true;
+                    SetValidationError(editor, e, Resources.Form_Invoice_ReturnInvoiceExists_CurrAccCannotChange);
                     return;
                 }
 
-                string curr2 = efMethods.SelectInvoiceLinesByHeaderId(trInvoiceHeader.RelatedInvoiceId)
-                                         .FirstOrDefault().CurrAccCode;
+                var handoverLine = efMethods
+                    .SelectInvoiceLinesByHeaderId(trInvoiceHeader.RelatedInvoiceId)
+                    .FirstOrDefault();
 
-                if (curr.CurrAccCode != curr2)
+                if (handoverLine is not null && curr.CurrAccCode != handoverLine.CurrAccCode)
                 {
-                    dxErrorProvider1.SetError(editor, Resources.Form_Invoice_HandOverInvoiceExists_CurrAccCannotChange, ErrorType.Critical);
-                    e.Cancel = true;
+                    SetValidationError(editor, e, Resources.Form_Invoice_HandOverInvoiceExists_CurrAccCannotChange);
                     return;
                 }
             }
 
-            dxErrorProvider1.ClearErrors();
+            dxErrorProvider1.SetError(editor, string.Empty);
         }
+
+        private void SetValidationError(BaseEdit editor, CancelEventArgs e, string message)
+        {
+            dxErrorProvider1.SetError(editor, message, ErrorType.Critical);
+            e.Cancel = true;
+        }
+
 
         private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
@@ -1873,9 +1919,9 @@ namespace Foxoft
 
 
             if (!colNetAmountLoc.Summary.Any(x => x.SummaryType == SummaryItemType.Sum))
-                colNetAmountLoc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Sum, "NetAmountLoc", "{0:n2}") });
+                colNetAmountLoc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Sum, nameof(TrInvoiceLine.NetAmountLoc), "{0:n2}") });
             if (!colAmountLoc.Summary.Any(x => x.SummaryType == SummaryItemType.Sum))
-                colAmountLoc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Sum, "AmountLoc", "{0:n2}") });
+                colAmountLoc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Sum, nameof(TrInvoiceLine.AmountLoc), "{0:n2}") });
         }
 
         private void SaveLayout()
@@ -2158,35 +2204,6 @@ namespace Foxoft
                     lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
                     //trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
                 }
-            }
-        }
-
-        private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
-        {
-            DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(btnEdit_CurrAccCode.EditValue?.ToString());
-            if (trInvoiceHeader is null || curr is null)
-                return;
-
-            trInvoiceHeader.CurrAccCode = curr?.CurrAccCode;
-            lbl_CurrAccDesc.Text = curr?.CurrAccDesc + " " + curr?.FirstName + " " + curr?.LastName;
-
-            CurrAccBalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode, trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime)), 2);
-
-            if (Settings.Default.AppSetting.AutoSave)
-                efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr?.CurrAccCode);
-
-            List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
-            lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
-
-            if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
-                trInvoiceHeader.ToWarehouseCode = null;
-
-            if (dcWarehouses is not null)
-            {
-                DcWarehouse dcWarehouse = dcWarehouses.FirstOrDefault(x => x.IsDefault == true);
-
-                if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
-                    lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
             }
         }
 
@@ -2521,11 +2538,6 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
         {
-        }
-
-        private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
-        {
-
         }
 
         private void repoBtnEdit_InstallmentGarantorDelete_ButtonClick(object sender, ButtonPressedEventArgs e)

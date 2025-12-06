@@ -161,7 +161,7 @@ namespace Foxoft
             }
         }
 
-        private void LoadData()
+        private void    LoadData()
         {
             DataTable dt = adoMethods.SqlGetDt(ReportQuery, sqlParameters);
             gC_Report.DataSource = dt;

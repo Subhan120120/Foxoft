@@ -60,7 +60,15 @@ namespace Foxoft
             using SqlConnection con = new(subConnString);
             using SqlDataAdapter da = new(query, con);
 
-            da.SelectCommand.Parameters.AddRange(sqlParameters);
+            if (sqlParameters != null && sqlParameters.Length > 0)
+            {
+                var clonedParams = sqlParameters
+                    .Select(p => (SqlParameter)((ICloneable)p).Clone())
+                    .ToArray();
+
+                da.SelectCommand.Parameters.AddRange(clonedParams);
+            }
+
             DataTable dt = new();
             da.Fill(dt);
 
