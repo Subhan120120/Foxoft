@@ -112,7 +112,7 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Entity_InvoiceLine_CurrencyCode), ResourceType = typeof(Resources))]
         [ForeignKey(nameof(DcCurrency))]
-        public string CurrencyCode { get; set; } = Properties.Settings.Default.AppSetting.LocalCurrencyCode;
+        public string CurrencyCode { get; set; } = Settings.Default.AppSetting.LocalCurrencyCode;
 
         [DefaultValue("1")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_ExchangeRate), ResourceType = typeof(Resources))]

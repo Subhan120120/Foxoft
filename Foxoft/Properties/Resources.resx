@@ -2346,8 +2346,8 @@
   <data name="FormInvoice_RibbonGroup_Info" xml:space="preserve">
     <value>Info</value>
   </data>
-  <data name="FormInvoice_RibbonGroup_InvoiceExtra" xml:space="preserve">
-    <value>Invoice</value>
+  <data name="FormInvoice_RibbonGroup_Tools" xml:space="preserve">
+    <value>Tools</value>
   </data>
   <data name="FormInvoice_RibbonPage_Settings" xml:space="preserve">
     <value>Settings</value>
@@ -3481,5 +3481,8 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Form_Return_Col_Payment_Type" xml:space="preserve">
     <value>Payment Type</value>
+  </data>
+  <data name="Form_Invoice_SumSameProducts" xml:space="preserve">
+    <value>Sum Same Products</value>
   </data>
 </root>

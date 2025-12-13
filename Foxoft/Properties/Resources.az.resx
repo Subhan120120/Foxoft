@@ -2346,8 +2346,8 @@
   <data name="FormInvoice_RibbonGroup_Info" xml:space="preserve">
     <value>Məlumat</value>
   </data>
-  <data name="FormInvoice_RibbonGroup_InvoiceExtra" xml:space="preserve">
-    <value>Faktura</value>
+  <data name="FormInvoice_RibbonGroup_Tools" xml:space="preserve">
+    <value>Alətlər</value>
   </data>
   <data name="FormInvoice_RibbonPage_Settings" xml:space="preserve">
     <value>Ayarlar</value>
@@ -3481,5 +3481,8 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Form_Return_Col_Payment_Type" xml:space="preserve">
     <value>Ödəmə Tipi</value>
+  </data>
+  <data name="Form_Invoice_SumSameProducts" xml:space="preserve">
+    <value>Eyni Məhsulları Birləşdir</value>
   </data>
 </root>

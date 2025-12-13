@@ -23,6 +23,7 @@ using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
@@ -428,9 +429,7 @@ namespace Foxoft
                 gv.SetRowCellValue(e.RowHandle, colExchangeRate, currency.ExchangeRate);
             }
 
-            if (btnEdit_SalesPerson.EditValue != null)
-                gv.SetRowCellValue(e.RowHandle, col_SalesPersonCode, btnEdit_SalesPerson.EditValue);
-            else if (settingStore.SalesmanContinuity)
+            if (settingStore.SalesmanContinuity)
             {
                 int lastRowHandle = gv.GetRowHandle(gv.DataRowCount - 1);
                 if (lastRowHandle >= 0)
@@ -656,6 +655,29 @@ namespace Foxoft
                         return;
                     }
                 }
+
+                if (new[] { "RP", "WP", "RS", "WS", "IS", "IT" }.Contains(trInvoiceHeader.ProcessCode)
+                    && ((!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
+                        || (trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))))
+                {
+                    var prodType = efMethods.SelectEntityById<DcProduct>(product.ProductCode)?.ProductTypeCode;
+                    if (prodType == 3) // is service
+                        return;
+
+                    string wareHouse = lUE_WarehouseCode.EditValue?.ToString();
+                    if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
+                        wareHouse = lUE_ToWarehouseCode.EditValue?.ToString();
+
+                    bool permitNegativeStock = Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
+                    decimal balance = CalcProductBalance(tr, product.ProductCode, wareHouse, 0);
+
+                    if (permitNegativeStock && tr.Qty > balance)
+                    {
+                        e.Valid = false;
+                        e.ErrorText = Resources.Form_Invoice_NoStockQuantity;
+                        return;
+                    }
+                }
             }
             else if (column == colQty)
             {
@@ -664,21 +686,21 @@ namespace Foxoft
                         || (trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))))
                 {
                     var prodType = efMethods.SelectEntityById<DcProduct>(tr?.ProductCode)?.ProductTypeCode;
-                    if (prodType != 3) // not a service
+                    if (prodType == 3) // is service
+                        return;
+
+                    string wareHouse = lUE_WarehouseCode.EditValue?.ToString();
+                    if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
+                        wareHouse = lUE_ToWarehouseCode.EditValue?.ToString();
+
+                    bool permitNegativeStock = Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
+                    decimal balance = CalcProductBalance(tr, tr.ProductCode, wareHouse, tr.Qty);
+
+                    if (permitNegativeStock && Convert.ToDecimal(e.Value) > balance)
                     {
-                        string wareHouse = lUE_WarehouseCode.EditValue?.ToString();
-                        if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
-                            wareHouse = lUE_ToWarehouseCode.EditValue?.ToString();
-
-                        bool permitNegativeStock = Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
-                        decimal balance = CalcProductBalance(tr, wareHouse);
-
-                        if (permitNegativeStock && Convert.ToDecimal(e.Value) > balance)
-                        {
-                            e.Valid = false;
-                            e.ErrorText = Resources.Form_Invoice_NoStockQuantity;
-                            return;
-                        }
+                        e.Valid = false;
+                        e.ErrorText = Resources.Form_Invoice_NoStockQuantity;
+                        return;
                     }
                 }
 
@@ -816,14 +838,14 @@ namespace Foxoft
             //return (decimal)colAmountLoc.SummaryItem.SummaryValue
         }
 
-        private decimal CalcProductBalance(TrInvoiceLine trInvoiceLine, string wareHouse)
+        private decimal CalcProductBalance(TrInvoiceLine trInvoiceLine, string productCode, string wareHouse, decimal presentQty)
         {
-            if (trInvoiceLine is not null && !String.IsNullOrEmpty(trInvoiceLine.ProductCode))
+            if (trInvoiceLine is not null && !String.IsNullOrEmpty(productCode))
             {
                 if (!String.IsNullOrEmpty(trInvoiceLine.SerialNumberCode))
-                    return efMethods.SelectProductBalanceSerialNumber(trInvoiceLine.ProductCode, wareHouse, trInvoiceLine.SerialNumberCode) + trInvoiceLine.Qty;
+                    return efMethods.SelectProductBalanceSerialNumber(productCode, wareHouse, trInvoiceLine.SerialNumberCode) + presentQty;
                 else
-                    return efMethods.SelectProductBalance(trInvoiceLine.ProductCode, wareHouse) + trInvoiceLine.Qty;
+                    return efMethods.SelectProductBalance(productCode, wareHouse) + presentQty;
             }
             else return 0;
         }
@@ -1678,7 +1700,7 @@ namespace Foxoft
             decimal netAmountLocSum = CalcNetAmountSummmaryValue();
             decimal currAccBalance = CurrAccBalanceBefore - netAmountLocSum;
 
-            if (curr.CreditLimit > 0 && Math.Abs(currAccBalance) > curr.CreditLimit)
+            if (!(bool)CustomExtensions.DirectionIsIn(dcProcess.ProcessCode) && curr.CreditLimit > 0 && Math.Abs(currAccBalance) > curr.CreditLimit)
             {
                 SetValidationError(editor, e, Resources.Form_Invoice_CreditLimitExceeded);
                 return;
@@ -1715,7 +1737,6 @@ namespace Foxoft
             dxErrorProvider1.SetError(editor, message, ErrorType.Critical);
             e.Cancel = true;
         }
-
 
         private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
@@ -2419,7 +2440,7 @@ namespace Foxoft
                 var trInvoiceLine = gV_InvoiceLine.GetRow(i) as TrInvoiceLine;
                 if (trInvoiceLine != null)
                 {
-                    decimal productBalance = CalcProductBalance(trInvoiceLine, warehouse.EditValue?.ToString());
+                    decimal productBalance = CalcProductBalance(trInvoiceLine, trInvoiceLine.ProductCode, warehouse.EditValue?.ToString(), trInvoiceLine.Qty);
 
                     if (productBalance < trInvoiceLine.Qty)
                     {
@@ -2434,33 +2455,6 @@ namespace Foxoft
         {
             //e.ExceptionMode = ExceptionMode.DisplayError;
             //e.ErrorText = "Qaimədə məhsulların bəzisi anbarda yoxdu";
-        }
-
-        private void btnEdit_SalesPerson_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            FormCurrAccList form = new(new byte[] { 3 }, false, trInvoiceHeader.CurrAccCode, new byte[] { 1 });
-
-            if (form.ShowDialog(this) == DialogResult.OK)
-                btnEdit_SalesPerson.EditValue = form.dcCurrAcc.CurrAccCode;
-        }
-
-        private void btnEdit_SalesPerson_EditValueChanged(object sender, EventArgs e)
-        {
-            DcCurrAcc salesMan = efMethods.SelectSalesPerson(btnEdit_SalesPerson.EditValue?.ToString());
-            if (salesMan is not null)
-            {
-                LBL_SalesPersonDesc.Text = salesMan.CurrAccDesc + " " + salesMan.FirstName + " " + salesMan.LastName;
-
-                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                    gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, btnEdit_SalesPerson.EditValue);
-            }
-            else
-            {
-                LBL_SalesPersonDesc.Text = string.Empty;
-
-                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                    gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, null);
-            }
         }
 
         private void popupMenuPrinters_BeforePopup(object sender, CancelEventArgs e)
@@ -2681,5 +2675,58 @@ namespace Foxoft
                 }
             }
         }
+
+        private void BBI_SumSameProducts_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            // Əvvəlcə formdakı dəyişiklikləri bağlayaq
+            this.Validate();
+            trInvoiceLinesBindingSource.EndEdit();
+
+            // Yalnız bu fakturaya aid sətrləri götürək (əgər header filterin budursa)
+            var lines = dbContext.TrInvoiceLines.Local
+                .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                .ToList();
+
+            // Burada "eyni" sayılan sahələri yazırsan (Qty/Quantity-dən başqa hamısı)
+            var groups = lines.GroupBy(x => new
+            {
+                x.ProductCode,
+                x.Price,
+                x.SerialNumberCode,
+                x.PosDiscount,
+                x.DiscountCampaign,
+                x.VatRate,
+                x.CurrencyCode,
+                x.ExchangeRate,
+                x.SalesPersonCode,
+                x.UnitOfMeasureId
+            });
+
+            foreach (var group in groups)
+            {
+                var list = group.ToList();
+                if (list.Count <= 1)
+                    continue; // tək sətirdirsə, birləşməyə ehtiyac yoxdur
+
+                // Saxlayacağımız əsas sətir
+                var first = list[0];
+
+                // Qty / Quantity property adı nədirsə onu istifadə et
+                first.Qty = list.Sum(l => l.Qty);
+
+                // Qalan sətrləri dbContext-dən silirik
+                foreach (TrInvoiceLine extra in list.Skip(1))
+                {
+                    dbContext.TrInvoiceLines.Remove(extra);
+                }
+            }
+
+            // Dəyişiklikləri DB-yə yaz (əgər dərhal saxlamaq istəyirsənsə)
+            dbContext.SaveChanges();
+
+            // BindingSource-u yenilə ki, grid yenilənsin
+            trInvoiceLinesBindingSource.ResetBindings(false);
+        }
+
     }
 }

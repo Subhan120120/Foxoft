@@ -786,6 +786,26 @@
         YXNzPSJSZWQiIC8+DQogICAgICA8L2c+DQogICAgPC9nPg0KICA8L2c+DQo8L3N2Zz4L
 </value>
   </data>
+  <data name="BBI_SumSameProduct.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjIsIFZlcnNpb249MjQuMi43
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAN4CAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
+        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3Bh
+        Y2U9InByZXNlcnZlIiBpZD0iU3VidG90YWwiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAw
+        IDMyIDMyIj4NCiAgPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5CbGFja3tmaWxsOiM3MjcyNzI7fQoJ
+        LlllbGxvd3tmaWxsOiNGRkIxMTU7fQoJLnN0MHtvcGFjaXR5OjAuNTt9Cjwvc3R5bGU+DQogIDxnIGNs
+        YXNzPSJzdDAiPg0KICAgIDxwYXRoIGQ9Ik0xNiwwaDE2djZIMTZWMHogTTE2LDE0aDE2VjhIMTZWMTR6
+        IE0xNiwyMmgxNnYtNkgxNlYyMnogTTE2LDMwaDE2di02SDE2VjMweiIgY2xhc3M9IkJsYWNrIiAvPg0K
+        ICA8L2c+DQogIDxwYXRoIGQ9Ik0xNCwwdjJIOHY0SDZWMEgxNHogTTgsMjRINnY2aDh2LTJIOFYyNHoi
+        IGNsYXNzPSJCbGFjayIgLz4NCiAgPHBhdGggZD0iTTEzLDhIMUMwLjQsOCwwLDguNCwwLDl2MTJjMCww
+        LjYsMC40LDEsMSwxaDEyYzAuNiwwLDEtMC40LDEtMVY5QzE0LDguNCwxMy42LDgsMTMsOHogTTEyLDEy
+        SDQuOGwzLDNsLTMsMyAgSDEydjJIMnYtMmwzLTNsLTMtM3YtMmgxMFYxMnoiIGNsYXNzPSJZZWxsb3ci
+        IC8+DQo8L3N2Zz4L
+</value>
+  </data>
   <metadata name="trInvoiceHeadersBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>692, 9</value>
   </metadata>

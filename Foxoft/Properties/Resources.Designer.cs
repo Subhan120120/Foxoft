@@ -6814,6 +6814,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sum Same Products.
+        /// </summary>
+        public static string Form_Invoice_SumSameProducts {
+            get {
+                return ResourceManager.GetString("Form_Invoice_SumSameProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to open link: {0}.
         /// </summary>
         public static string Form_Invoice_Whatsapp_FailedToOpenLink {
@@ -9811,15 +9820,6 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invoice.
-        /// </summary>
-        public static string FormInvoice_RibbonGroup_InvoiceExtra {
-            get {
-                return ResourceManager.GetString("FormInvoice_RibbonGroup_InvoiceExtra", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Operations.
         /// </summary>
         public static string FormInvoice_RibbonGroup_InvoiceOperations {
@@ -9879,6 +9879,15 @@ namespace Foxoft.Properties {
         public static string FormInvoice_RibbonGroup_Test {
             get {
                 return ResourceManager.GetString("FormInvoice_RibbonGroup_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string FormInvoice_RibbonGroup_Tools {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Tools", resourceCulture);
             }
         }
         
