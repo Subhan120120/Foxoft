@@ -106,6 +106,7 @@ namespace Foxoft
             {
                 try { Directory.CreateDirectory(settingStore?.ImageFolder); }
                 catch (UnauthorizedAccessException) { }
+                catch (DirectoryNotFoundException) { }
             }
 
             productFolder = Path.Combine(settingStore.ImageFolder, "Products", dcProduct.ProductCode);

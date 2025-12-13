@@ -95,11 +95,6 @@ namespace Foxoft
             }
         }
 
-        private void BBI_Report_ItemClick(AccordionControlElement el)
-        {
-
-        }
-
         private void UIMode(bool toucUIMode)
         {
             int TerminalId = Settings.Default.TerminalId;
