@@ -35,6 +35,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new SkinRibbonGalleryBarItem();
@@ -117,6 +118,7 @@ namespace Foxoft
             ACE_StoreList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_AppSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_WarehouseList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -664,7 +666,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, accordionControlSeparator2, ACE_AppSettings });
+            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, accordionControlSeparator2, ACE_AppSettings });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -694,6 +696,13 @@ namespace Foxoft
             ACE_AppSettings.Name = "ACE_AppSettings";
             ACE_AppSettings.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_AppSettings.Text = Resources.ERP_ACE_AppSettings;
+            // 
+            // ACE_Warehouselist
+            // 
+            ACE_WarehouseList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement1.ImageOptions.SvgImage");
+            ACE_WarehouseList.Name = "ACE_Warehouselist";
+            ACE_WarehouseList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WarehouseList.Text = Resources.Form_WarehouseList_Caption;
             // 
             // FormERP
             // 
@@ -811,5 +820,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CurrAccsDisabled;
         private BarEditItem BEI_Language;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit1;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WarehouseList;
     }
 }

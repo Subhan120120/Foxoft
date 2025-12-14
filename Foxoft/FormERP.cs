@@ -174,6 +174,7 @@ namespace Foxoft
                 case "CurrAccClaim": ShowExistForm<FormCurrAccProfile>(); break;
                 case "Parameters": ShowExistForm<FormAppSetting>(); break;
                 case "StoreList": ShowExistForm<FormStoreList>(); break;
+                case "WarehouseList": ShowExistForm<FormWarehouseList>(); break;
 
                 default: break;
             }
@@ -252,6 +253,7 @@ namespace Foxoft
             this.bBI_Session.Name = "Session";
             this.ACE_InstallmentSales.Name = "InstallmentSales";
             this.ACE_StoreList.Name = "StoreList";
+            this.ACE_WarehouseList.Name = "WarehouseList";
         }
 
         private void InitializeReports()

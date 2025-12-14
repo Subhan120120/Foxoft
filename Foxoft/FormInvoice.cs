@@ -671,7 +671,7 @@ namespace Foxoft
                     bool permitNegativeStock = Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
                     decimal balance = CalcProductBalance(tr, product.ProductCode, wareHouse, 0);
 
-                    if (permitNegativeStock && tr.Qty > balance)
+                    if (!permitNegativeStock && tr.Qty > balance)
                     {
                         e.Valid = false;
                         e.ErrorText = Resources.Form_Invoice_NoStockQuantity;
@@ -696,7 +696,7 @@ namespace Foxoft
                     bool permitNegativeStock = Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
                     decimal balance = CalcProductBalance(tr, tr.ProductCode, wareHouse, tr.Qty);
 
-                    if (permitNegativeStock && Convert.ToDecimal(e.Value) > balance)
+                    if (!permitNegativeStock && Convert.ToDecimal(e.Value) > balance)
                     {
                         e.Valid = false;
                         e.ErrorText = Resources.Form_Invoice_NoStockQuantity;

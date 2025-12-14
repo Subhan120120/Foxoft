@@ -39,7 +39,7 @@ namespace Foxoft
                 ItemForCreditLimit.Visibility = LayoutVisibility.Never;
         }
 
-        public FormCurrAcc(string currAccCode) 
+        public FormCurrAcc(string currAccCode)
             : this()
         {
             dcCurrAcc.CurrAccCode = currAccCode;
@@ -47,19 +47,19 @@ namespace Foxoft
             CurrAccCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
         }
 
-        public FormCurrAcc(string currAccCode, bool isCustomer) 
+        public FormCurrAcc(string currAccCode, bool isCustomer)
             : this(currAccCode)
         {
             this.isCustomer = isCustomer;
         }
 
-        public FormCurrAcc(byte currAccTypeCode) 
+        public FormCurrAcc(byte currAccTypeCode)
             : this()
         {
             dcCurrAcc.CurrAccTypeCode = currAccTypeCode;
         }
 
-        public FormCurrAcc(byte currAccTypeCode, bool isCustomer) 
+        public FormCurrAcc(byte currAccTypeCode, bool isCustomer)
             : this(currAccTypeCode)
         {
             this.isCustomer = isCustomer;
@@ -129,7 +129,7 @@ namespace Foxoft
             {
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
 
-                if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode))
+                if (!efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode))
                     efMethods.InsertEntity(dcCurrAcc);
                 else
                     dbContext.SaveChanges();

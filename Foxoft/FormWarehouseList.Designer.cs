@@ -33,6 +33,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWarehouseList));
             gC_WarehouseList = new DevExpress.XtraGrid.GridControl();
             dcWarehousesBindingSource = new BindingSource(components);
             gV_WarehouseList = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -133,6 +134,7 @@ namespace Foxoft
             // 
             bBI_WarehouseNew.Caption = Resources.Common_New;
             bBI_WarehouseNew.Id = 1;
+            bBI_WarehouseNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_WarehouseNew.ImageOptions.SvgImage");
             bBI_WarehouseNew.Name = "bBI_WarehouseNew";
             bBI_WarehouseNew.ItemClick += bBI_WarehouseNew_ItemClick;
             // 
@@ -140,6 +142,7 @@ namespace Foxoft
             // 
             bBI_CurAccEdit.Caption = Resources.Common_Edit;
             bBI_CurAccEdit.Id = 2;
+            bBI_CurAccEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccEdit.ImageOptions.SvgImage");
             bBI_CurAccEdit.Name = "bBI_CurAccEdit";
             bBI_CurAccEdit.ItemClick += bBI_WarehouseEdit_ItemClick;
             // 
@@ -147,6 +150,7 @@ namespace Foxoft
             // 
             bBI_ExportXlsx.Caption = Resources.Common_ExportToExcel;
             bBI_ExportXlsx.Id = 6;
+            bBI_ExportXlsx.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage");
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
             bBI_ExportXlsx.ItemClick += bBI_ExportXlsx_ItemClick;
             // 
@@ -154,6 +158,7 @@ namespace Foxoft
             // 
             bBI_WarehouseDelete.Caption = Resources.Common_Delete;
             bBI_WarehouseDelete.Id = 7;
+            bBI_WarehouseDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_WarehouseDelete.ImageOptions.SvgImage");
             bBI_WarehouseDelete.Name = "bBI_WarehouseDelete";
             bBI_WarehouseDelete.ItemClick += bBI_WarehouseDelete_ItemClick;
             // 
@@ -161,6 +166,7 @@ namespace Foxoft
             // 
             bBI_CurAccRefresh.Caption = Resources.Common_Refresh;
             bBI_CurAccRefresh.Id = 8;
+            bBI_CurAccRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccRefresh.ImageOptions.SvgImage");
             bBI_CurAccRefresh.Name = "bBI_CurAccRefresh";
             bBI_CurAccRefresh.ItemClick += bBI_WarehouseRefresh_ItemClick;
             // 
@@ -210,7 +216,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = Resources.Form_WarehouseList_Caption;
+            Text = "Warehouses";
             KeyDown += FormWarehouseList_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_WarehouseList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcWarehousesBindingSource).EndInit();

@@ -87,7 +87,7 @@ namespace Foxoft
         {
             if (dcWarehouse is not null)
             {
-                FormCurrAcc form = new(dcWarehouse.WarehouseCode);
+                FormWarehouse form = new(dcWarehouse.WarehouseCode);
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     UpdateGridViewData();

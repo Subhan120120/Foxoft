@@ -253,7 +253,7 @@ namespace Foxoft
 
                         decimal balance = CalcProductBalance(formProductList.dcProduct, wareHouseCode);
 
-                        if (permitNegativeStock)
+                        if (!permitNegativeStock)
                             if (Convert.ToDecimal(1) > balance)
                             {
                                 XtraMessageBox.Show(
