@@ -86,6 +86,7 @@ namespace Foxoft
                 "CI" => true,
                 "WI" => true,
                 "RPO" => true,
+                "CN" => false,
                 "IT" => false,
                 "RS" => false,
                 "WS" => false,
@@ -111,6 +112,7 @@ namespace Foxoft
             return processCode switch
             {
                 "IT" => "InventoryTransfer",
+                "CN" => "Count",
                 "CI" => "CountIn",
                 "CO" => "CountOut",
                 "WI" => "WaybillIn",
@@ -132,6 +134,7 @@ namespace Foxoft
             return processCode switch
             {
                 "IT" => new byte[] { 1 },
+                "CN" => new byte[] { 1 },
                 "CI" => new byte[] { 1 },
                 "CO" => new byte[] { 1 },
                 "WI" => new byte[] { 1 },

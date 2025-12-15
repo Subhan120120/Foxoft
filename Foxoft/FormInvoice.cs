@@ -23,7 +23,6 @@ using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
-using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
@@ -40,7 +39,6 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
 #endregion
@@ -715,9 +713,14 @@ namespace Foxoft
                     return;
                 }
 
-                decimal invoiceSum = Math.Abs(efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader?.ProcessCode)
-                                                      .Sum(x => x.QtyIn - x.QtyOut));
-                if (trInvoiceHeader.IsReturn && Convert.ToDecimal(e.Value) > invoiceSum)
+                var invoiceLines = efMethods.SelectInvoiceLineByReturnLine(
+                                       tr.RelatedLineId,
+                                       tr.TrInvoiceHeader?.ProcessCode
+                                   );
+
+                decimal invoiceSum = Math.Abs(invoiceLines.Sum(x => x.QtyIn - x.QtyOut));
+
+                if (trInvoiceHeader.IsReturn && invoiceLines.Any() && Convert.ToDecimal(e.Value) > invoiceSum)
                 {
                     e.Valid = false;
                     e.ErrorText = string.Format(
@@ -725,6 +728,7 @@ namespace Foxoft
                         invoiceSum);
                     return;
                 }
+
 
                 decimal waybillSum = Math.Abs(efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
                                                      .Sum(x => x.QtyIn - x.QtyOut));
@@ -1471,7 +1475,6 @@ namespace Foxoft
                 {
                     Close();
                 }
-                ;
             }
             else
             {
@@ -1825,7 +1828,7 @@ namespace Foxoft
         private void LoadLayout()
         {
             //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
-            if (new string[] { "EX", "EI", "IT" }.Contains(dcProcess.ProcessCode))
+            if (new string[] { "EX", "EI", "IT", "CN" }.Contains(dcProcess.ProcessCode))
             {
                 BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
                 RPG_Payment.Visible = false;
@@ -1842,7 +1845,7 @@ namespace Foxoft
             LCG_Installment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             RPG_Installment.Visible = false;
 
-            if (new string[] { "EX", "EI", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
+            if (new string[] { "EX", "EI", "CN", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
             {
                 btnEdit_CurrAccCode.Enabled = false;
                 colBalance.Visible = false;
@@ -1856,7 +1859,7 @@ namespace Foxoft
                     colQty.OptionsColumn.ReadOnly = true;
                 }
 
-                if (new string[] { "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
+                if (new string[] { "CI", "CO", "IT", "CN" }.Contains(dcProcess.ProcessCode))
                 {
                     LCG_InfoPayment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 

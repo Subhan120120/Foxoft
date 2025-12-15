@@ -104,6 +104,7 @@ namespace Foxoft
             ACE_Waybill = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_WaybillIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_WaybillOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            aCE_Count = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Operation = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_PriceList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_ProductsDisabled = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -116,9 +117,9 @@ namespace Foxoft
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_StoreList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_WarehouseList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_AppSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_WarehouseList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -540,7 +541,7 @@ namespace Foxoft
             // 
             // ACE_InventoryCount
             // 
-            ACE_InventoryCount.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CountIn, aCE_CountOut, accordionControlSeparator9, ACE_RetailPurchaseOrder, ACE_RetailSaleOrder, accordionControlSeparator4, ACE_Waybill, ACE_WaybillIn, ACE_WaybillOut });
+            ACE_InventoryCount.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Count, aCE_CountIn, aCE_CountOut, accordionControlSeparator9, ACE_RetailPurchaseOrder, ACE_RetailSaleOrder, accordionControlSeparator4, ACE_Waybill, ACE_WaybillIn, ACE_WaybillOut });
             ACE_InventoryCount.Expanded = true;
             ACE_InventoryCount.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_InventoryCount.ImageOptions.SvgImage");
             ACE_InventoryCount.Name = "ACE_InventoryCount";
@@ -602,6 +603,13 @@ namespace Foxoft
             ACE_WaybillOut.Name = "ACE_WaybillOut";
             ACE_WaybillOut.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_WaybillOut.Text = Resources.ERP_ACE_WaybillOut;
+            // 
+            // aCE_Count
+            // 
+            aCE_Count.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement1.ImageOptions.SvgImage");
+            aCE_Count.Name = "aCE_Count";
+            aCE_Count.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_Count.Text = "Count";
             // 
             // aCE_Operation
             // 
@@ -686,6 +694,13 @@ namespace Foxoft
             ACE_StoreList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_StoreList.Text = Resources.ERP_ACE_StoreList;
             // 
+            // ACE_WarehouseList
+            // 
+            ACE_WarehouseList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WarehouseList.ImageOptions.SvgImage");
+            ACE_WarehouseList.Name = "ACE_WarehouseList";
+            ACE_WarehouseList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WarehouseList.Text = Resources.Form_WarehouseList_Caption;
+            // 
             // accordionControlSeparator2
             // 
             accordionControlSeparator2.Name = "accordionControlSeparator2";
@@ -696,13 +711,6 @@ namespace Foxoft
             ACE_AppSettings.Name = "ACE_AppSettings";
             ACE_AppSettings.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_AppSettings.Text = Resources.ERP_ACE_AppSettings;
-            // 
-            // ACE_Warehouselist
-            // 
-            ACE_WarehouseList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement1.ImageOptions.SvgImage");
-            ACE_WarehouseList.Name = "ACE_Warehouselist";
-            ACE_WarehouseList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_WarehouseList.Text = Resources.Form_WarehouseList_Caption;
             // 
             // FormERP
             // 
@@ -821,5 +829,6 @@ namespace Foxoft
         private BarEditItem BEI_Language;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit1;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WarehouseList;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Count;
     }
 }

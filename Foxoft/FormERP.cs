@@ -143,6 +143,9 @@ namespace Foxoft
                 case "WholesaleInvoice": ShowNewForm<FormInvoice>("WS", false, new byte[] { 1, 3 }, null); break;
                 case "InstallmentSaleInvoice": ShowNewForm<FormInvoice>("IS", false, new byte[] { 1, 3 }, null); break;
                 case "Expense": ShowNewForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null); break;
+
+
+                case "Count": ShowNewForm<FormInvoice>("CN", false, new byte[] { 1 }, null); break;
                 case "CountIn": ShowNewForm<FormInvoice>("CI", false, new byte[] { 1 }, null); break;
                 case "CountOut": ShowNewForm<FormInvoice>("CO", false, new byte[] { 1 }, null); break;
                 case "InventoryTransfer": ShowNewForm<FormInvoice>("IT", false, new byte[] { 1 }, null); break;
@@ -232,6 +235,7 @@ namespace Foxoft
             this.ACE_WaybillIn.Name = "WaybillIn";
             this.ACE_WaybillOut.Name = "WaybillOut";
 
+            this.aCE_Count.Name = "Count";
             this.aCE_CountIn.Name = "CountIn";
             this.aCE_CountOut.Name = "CountOut";
 

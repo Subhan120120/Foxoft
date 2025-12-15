@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20251214185236_asd")]
+    partial class asd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -487,14 +490,6 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            ClaimCode = "DeleteInvoiceCN",
-                            CategoryId = 10,
-                            ClaimDesc = "Sayım Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
-                        },
-                        new
-                        {
                             ClaimCode = "DeleteInvoiceCI",
                             CategoryId = 10,
                             ClaimDesc = "Sayım Artırma Fakturası Silmə",
@@ -618,14 +613,6 @@ namespace Foxoft.Migrations
                             ClaimCode = "DeleteLineEX",
                             CategoryId = 9,
                             ClaimDesc = "Xərc Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
-                        },
-                        new
-                        {
-                            ClaimCode = "DeleteLineCN",
-                            CategoryId = 10,
-                            ClaimDesc = "Sayım Sətiri Silmə",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         },
@@ -954,14 +941,6 @@ namespace Foxoft.Migrations
                             ClaimCode = "ChangePriceEX",
                             CategoryId = 9,
                             ClaimDesc = "Xərc Qiymət Dəyişmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
-                        },
-                        new
-                        {
-                            ClaimCode = "ChangePriceCN",
-                            CategoryId = 10,
-                            ClaimDesc = "Sayım Qiymət Dəyişmə",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         },
@@ -2446,12 +2425,6 @@ namespace Foxoft.Migrations
                             ProcessCode = "WSO",
                             ProcessDesc = "Toptan Satış Sifarişi",
                             ProcessDir = (byte)2
-                        },
-                        new
-                        {
-                            ProcessCode = "CN",
-                            ProcessDesc = "Sayım",
-                            ProcessDir = (byte)0
                         },
                         new
                         {
@@ -5805,14 +5778,6 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 60,
                             ClaimCode = "ChangePriceCO",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleCode = "Admin"
-                        },
-                        new
-                        {
-                            RoleClaimId = 61,
-                            ClaimCode = "Count",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

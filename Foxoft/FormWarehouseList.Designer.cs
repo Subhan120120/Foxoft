@@ -43,6 +43,9 @@ namespace Foxoft
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             col_WarehouseCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_WarehouseDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            colIsDefault = new DevExpress.XtraGrid.Columns.GridColumn();
+            colIsDisabled = new DevExpress.XtraGrid.Columns.GridColumn();
+            colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_WarehouseNew = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -54,6 +57,7 @@ namespace Foxoft
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            colPermitNegativeStock = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)gC_WarehouseList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcWarehousesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_WarehouseList).BeginInit();
@@ -73,9 +77,13 @@ namespace Foxoft
             gC_WarehouseList.Paint += gC_WarehouseList_Paint;
             gC_WarehouseList.ProcessGridKey += gC_WarehouseList_ProcessGridKey;
             // 
+            // dcWarehousesBindingSource
+            // 
+            dcWarehousesBindingSource.DataSource = typeof(DcWarehouse);
+            // 
             // gV_WarehouseList
             // 
-            gV_WarehouseList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, col_WarehouseCode, col_WarehouseDesc });
+            gV_WarehouseList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, col_WarehouseCode, col_WarehouseDesc, colIsDefault, colIsDisabled, colStoreCode, colPermitNegativeStock });
             gV_WarehouseList.CustomizationFormBounds = new Rectangle(760, 248, 264, 272);
             gV_WarehouseList.GridControl = gC_WarehouseList;
             gV_WarehouseList.Name = "gV_WarehouseList";
@@ -118,6 +126,25 @@ namespace Foxoft
             col_WarehouseDesc.Name = "col_WarehouseDesc";
             col_WarehouseDesc.Visible = true;
             col_WarehouseDesc.VisibleIndex = 1;
+            // 
+            // colIsDefault
+            // 
+            colIsDefault.FieldName = "IsDefault";
+            colIsDefault.Name = "colIsDefault";
+            colIsDefault.Visible = true;
+            colIsDefault.VisibleIndex = 2;
+            // 
+            // colIsDisabled
+            // 
+            colIsDisabled.FieldName = "IsDisabled";
+            colIsDisabled.Name = "colIsDisabled";
+            // 
+            // colStoreCode
+            // 
+            colStoreCode.FieldName = "StoreCode";
+            colStoreCode.Name = "colStoreCode";
+            colStoreCode.Visible = true;
+            colStoreCode.VisibleIndex = 4;
             // 
             // ribbonControl1
             // 
@@ -203,6 +230,13 @@ namespace Foxoft
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = "ribbonPage2";
             // 
+            // colPermitNegativeStock
+            // 
+            colPermitNegativeStock.FieldName = "PermitNegativeStock";
+            colPermitNegativeStock.Name = "colPermitNegativeStock";
+            colPermitNegativeStock.Visible = true;
+            colPermitNegativeStock.VisibleIndex = 3;
+            // 
             // FormWarehouseList
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -248,5 +282,9 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_CurAccRefresh;
         private DevExpress.XtraGrid.Columns.GridColumn col_WarehouseCode;
         private DevExpress.XtraGrid.Columns.GridColumn col_WarehouseDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn colIsDefault;
+        private DevExpress.XtraGrid.Columns.GridColumn colIsDisabled;
+        private DevExpress.XtraGrid.Columns.GridColumn colStoreCode;
+        private DevExpress.XtraGrid.Columns.GridColumn colPermitNegativeStock;
     }
 }

@@ -274,11 +274,9 @@ namespace Foxoft.Models
                         .WithOne(e => e.DcFeature)
                         .HasForeignKey(e => new { e.FeatureCode, e.FeatureTypeId });
 
+            modelBuilder.Entity<TrProductFeature>(entity => { entity.ToTable(tb => tb.UseSqlOutputClause(false)); }); // triggere gore xeta vermesin deye
 
-            modelBuilder.Entity<TrProductFeature>(entity =>
-            {
-                entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta vermesin deye
-            });
+            modelBuilder.Entity<DcWarehouse>(entity => { entity.ToTable(tb => tb.UseSqlOutputClause(false)); });// triggere gore xeta vermesin deye
 
             modelBuilder.Entity<TrProductFeature>()
                         .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId, bc.FeatureCode });
@@ -588,8 +586,8 @@ namespace Foxoft.Models
                 new DcClaimCategory { CategoryId = 7,/*dəyişmə olmaz*/ CategoryDesc = "Kredit Alış", CategoryLevel = 1, CategoryParentId = 2 },
                 new DcClaimCategory { CategoryId = 8,/*dəyişmə olmaz*/ CategoryDesc = "Kredit Satış", CategoryLevel = 1, CategoryParentId = 2 },
                 new DcClaimCategory { CategoryId = 9,/*dəyişmə olmaz*/ CategoryDesc = "Xərc", CategoryLevel = 1, CategoryParentId = 2 },
-                new DcClaimCategory { CategoryId = 10,/*dəyişmə olmaz*/ CategoryDesc = "Sayım Artırma", CategoryLevel = 1, CategoryParentId = 2 },
-                new DcClaimCategory { CategoryId = 11,/*dəyişmə olmaz*/ CategoryDesc = "Sayım Azaltma", CategoryLevel = 1, CategoryParentId = 2 },
+                new DcClaimCategory { CategoryId = 10,/*dəyişmə olmaz*/ CategoryDesc = "Sayım", CategoryLevel = 1, CategoryParentId = 2 },
+                //new DcClaimCategory { CategoryId = 11,/*dəyişmə olmaz*/ CategoryDesc = "Sayım", CategoryLevel = 1, CategoryParentId = 2 },
                 new DcClaimCategory { CategoryId = 12,/*dəyişmə olmaz*/ CategoryDesc = "Təhvil Alma", CategoryLevel = 1, CategoryParentId = 2 },
                 new DcClaimCategory { CategoryId = 13,/*dəyişmə olmaz*/ CategoryDesc = "Təhvil Vermə", CategoryLevel = 1, CategoryParentId = 2 },
                 new DcClaimCategory { CategoryId = 14,/*dəyişmə olmaz*/ CategoryDesc = "Məhsul Transferi", CategoryLevel = 1, CategoryParentId = 2 },
@@ -617,8 +615,9 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "WholesaleInvoice", ClaimDesc = "Topdan Satış Fakturası", ClaimTypeId = 1, CategoryId = 6 },
                 new DcClaim { ClaimCode = "InstallmentPurchaseInvoice", ClaimDesc = "Kredit Alışı", ClaimTypeId = 1, CategoryId = 7 },
                 new DcClaim { ClaimCode = "InstallmentSaleInvoice", ClaimDesc = "Kredit Satışı", ClaimTypeId = 1, CategoryId = 8 },
+                new DcClaim { ClaimCode = "Count", ClaimDesc = "Sayım", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "CountIn", ClaimDesc = "Sayım Artırma", ClaimTypeId = 1, CategoryId = 10 },
-                new DcClaim { ClaimCode = "CountOut", ClaimDesc = "Sayım Azaltma", ClaimTypeId = 1, CategoryId = 11 },
+                new DcClaim { ClaimCode = "CountOut", ClaimDesc = "Sayım Azaltma", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "WaybillIn", ClaimDesc = "Təhvil Alma", ClaimTypeId = 1, CategoryId = 12 },
                 new DcClaim { ClaimCode = "WaybillOut", ClaimDesc = "Təhvil Vermə", ClaimTypeId = 1, CategoryId = 13 },
                 new DcClaim { ClaimCode = "RetailPurchaseOrder", ClaimDesc = "Pərakəndə Alış Sifarişi", ClaimTypeId = 1, CategoryId = 3 },
@@ -640,8 +639,9 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "DeleteInvoiceIP", ClaimDesc = "Kredit Alış Fakturası Silmə", ClaimTypeId = 1, CategoryId = 7 },
                 new DcClaim { ClaimCode = "DeleteInvoiceIS", ClaimDesc = "Kredit Satış Fakturası Silmə", ClaimTypeId = 1, CategoryId = 8 },
                 new DcClaim { ClaimCode = "DeleteInvoiceEX", ClaimDesc = "Xərc Fakturası Silmə", ClaimTypeId = 1, CategoryId = 9 },
+                new DcClaim { ClaimCode = "DeleteInvoiceCN", ClaimDesc = "Sayım Fakturası Silmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "DeleteInvoiceCI", ClaimDesc = "Sayım Artırma Fakturası Silmə", ClaimTypeId = 1, CategoryId = 10 },
-                new DcClaim { ClaimCode = "DeleteInvoiceCO", ClaimDesc = "Sayım Azaltma Fakturası Silmə", ClaimTypeId = 1, CategoryId = 11 },
+                new DcClaim { ClaimCode = "DeleteInvoiceCO", ClaimDesc = "Sayım Azaltma Fakturası Silmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "DeleteInvoiceIT", ClaimDesc = "Transfer Fakturası Silmə", ClaimTypeId = 1, CategoryId = 14 },
                 new DcClaim { ClaimCode = "DeleteInvoiceRPO", ClaimDesc = "Pərakəndə Alış Sifarişi Silmə", ClaimTypeId = 1, CategoryId = 3 },
                 new DcClaim { ClaimCode = "DeleteInvoiceWPO", ClaimDesc = "Topdan Alış Sifarişi Silmə", ClaimTypeId = 1, CategoryId = 4 },
@@ -656,8 +656,9 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "DeleteLineIP", ClaimDesc = "Kredit Alış Sətiri Silmə", ClaimTypeId = 1, CategoryId = 7 },
                 new DcClaim { ClaimCode = "DeleteLineIS", ClaimDesc = "Kredit Satış Sətiri Silmə", ClaimTypeId = 1, CategoryId = 8 },
                 new DcClaim { ClaimCode = "DeleteLineEX", ClaimDesc = "Xərc Sətiri Silmə", ClaimTypeId = 1, CategoryId = 9 },
+                new DcClaim { ClaimCode = "DeleteLineCN", ClaimDesc = "Sayım Sətiri Silmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "DeleteLineCI", ClaimDesc = "Sayım Artırma Sətiri Silmə", ClaimTypeId = 1, CategoryId = 10 },
-                new DcClaim { ClaimCode = "DeleteLineCO", ClaimDesc = "Sayım Azaltma Sətiri Silmə", ClaimTypeId = 1, CategoryId = 11 },
+                new DcClaim { ClaimCode = "DeleteLineCO", ClaimDesc = "Sayım Azaltma Sətiri Silmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "DeleteLineIT", ClaimDesc = "Məhsul Transfer Sətiri Silmə", ClaimTypeId = 1, CategoryId = 14 },
                 new DcClaim { ClaimCode = "DeleteLineRPO", ClaimDesc = "Pərakəndə Alış Sifarişi Sətiri Silmə", ClaimTypeId = 1, CategoryId = 3 },
                 new DcClaim { ClaimCode = "DeleteLineWPO", ClaimDesc = "Topdan Alış Sifarişi Sətiri Silmə", ClaimTypeId = 1, CategoryId = 4 },
@@ -697,8 +698,9 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ChangePriceIP", ClaimDesc = "Kredit Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 7 },
                 new DcClaim { ClaimCode = "ChangePriceIS", ClaimDesc = "Kredit Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 8 },
                 new DcClaim { ClaimCode = "ChangePriceEX", ClaimDesc = "Xərc Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 9 },
+                new DcClaim { ClaimCode = "ChangePriceCN", ClaimDesc = "Sayım Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "ChangePriceCI", ClaimDesc = "Sayım Artırma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
-                new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 11 }
+                new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -774,7 +776,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 57, RoleCode = "Admin", ClaimCode = "ChangePriceIP" },
                 new TrRoleClaim { RoleClaimId = 58, RoleCode = "Admin", ClaimCode = "ChangePriceIS" },
                 new TrRoleClaim { RoleClaimId = 59, RoleCode = "Admin", ClaimCode = "ChangePriceCI" },
-                new TrRoleClaim { RoleClaimId = 60, RoleCode = "Admin", ClaimCode = "ChangePriceCO" }
+                new TrRoleClaim { RoleClaimId = 60, RoleCode = "Admin", ClaimCode = "ChangePriceCO" },
+                new TrRoleClaim { RoleClaimId = 61, RoleCode = "Admin", ClaimCode = "Count" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
@@ -886,6 +889,7 @@ namespace Foxoft.Models
                 new DcProcess { ProcessCode = "WS", ProcessDesc = "Toptan Satış", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "SBO", ProcessDesc = "Toptan Alış Sifarişi", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "WSO", ProcessDesc = "Toptan Satış Sifarişi", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "CN", ProcessDesc = "Sayım", ProcessDir = 0 },
                 new DcProcess { ProcessCode = "CI", ProcessDesc = "Sayım Artırma", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "CO", ProcessDesc = "Sayım Azaltma", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "WI", ProcessDesc = "Təhvil Alma", ProcessDir = 1 },
@@ -948,6 +952,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcVariable>().HasData(
                 new DcVariable { VariableCode = "20", VariableDesc = "Barkod" },
                 new DcVariable { VariableCode = "C", VariableDesc = "Cari" },
+                new DcVariable { VariableCode = "CN", VariableDesc = "Sayım" },
                 new DcVariable { VariableCode = "CI", VariableDesc = "Sayım Artırma" },
                 new DcVariable { VariableCode = "CO", VariableDesc = "Sayım Azaltma" },
                 new DcVariable { VariableCode = "WI", VariableDesc = "Təhvil Alma" },
