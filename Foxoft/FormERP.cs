@@ -154,6 +154,7 @@ namespace Foxoft
                 case "RetailsaleReturnCustom": ShowNewForm<FormInvoice>("RS", true, new byte[] { 1, 3 }, null); break;
                 case "WholesaleReturnCustom": ShowNewForm<FormInvoice>("WS", true, new byte[] { 1, 3 }, null); break;
                 case "InstallmentSaleReturnCustom": ShowNewForm<FormInvoice>("IS", true, new byte[] { 1, 3 }, null); break;
+                case "InventoryTransferReturnCustom": ShowNewForm<FormInvoice>("IT", true, new byte[] { 1, 3 }, null); break;
 
                 case "RetailPurchaseReturn": ShowExistForm<FormReturn>("RP"); break;
                 case "RetailSaleReturn": ShowExistForm<FormReturn>("RS"); break;
@@ -230,6 +231,7 @@ namespace Foxoft
             this.ACE_RetailsaleReturnCustom.Name = "RetailsaleReturnCustom";
             this.ACE_WholesaleReturnCustom.Name = "WholesaleReturnCustom";
             this.ACE_InstallmentSaleReturnCustom.Name = "InstallmentSaleReturnCustom";
+            this.ACE_InventoryTransferReturnCustom.Name = "InventoryTransferReturnCustom";
 
             this.ACE_Waybill.Name = "Waybill";
             this.ACE_WaybillIn.Name = "WaybillIn";
@@ -245,7 +247,7 @@ namespace Foxoft
             this.ACE_CashTransfer.Name = "CashTransfer";
             this.aCE_Expense.Name = "Expense";
             this.aCE_PaymentDetail.Name = "PaymentDetail";
-            this.ACE_InventoryCount.Name = "Acounting";
+            this.ACE_Group_InventoryCount.Name = "Acounting";
             this.aCE_Reports.Name = "Reports";
             this.aCE_Setting.Name = "Setting";
             this.ACE_AppSettings.Name = "Parameters";

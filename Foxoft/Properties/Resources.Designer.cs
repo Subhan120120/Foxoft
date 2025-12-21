@@ -6172,6 +6172,33 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory Transfer Return Custom.
+        /// </summary>
+        public static string Form_ERP_ACE_InventoryTransferReturnCustom {
+            get {
+                return ResourceManager.GetString("Form_ERP_ACE_InventoryTransferReturnCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Count.
+        /// </summary>
+        public static string Form_ERP_ACE_InvertoryCount {
+            get {
+                return ResourceManager.GetString("Form_ERP_ACE_InvertoryCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Count.
+        /// </summary>
+        public static string Form_ERP_Count {
+            get {
+                return ResourceManager.GetString("Form_ERP_Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No such product..
         /// </summary>
         public static string Form_Expense_ProductNotFound {

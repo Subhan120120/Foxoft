@@ -3485,4 +3485,13 @@ To delete, cancel the receipt!</value>
   <data name="Form_Invoice_SumSameProducts" xml:space="preserve">
     <value>Sum Same Products</value>
   </data>
+  <data name="Form_ERP_ACE_InventoryTransferReturnCustom" xml:space="preserve">
+    <value>Inventory Transfer Return Custom</value>
+  </data>
+  <data name="Form_ERP_Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="Form_ERP_ACE_InvertoryCount" xml:space="preserve">
+    <value>Inventory Count</value>
+  </data>
 </root>

@@ -3485,4 +3485,13 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_Invoice_SumSameProducts" xml:space="preserve">
     <value>Eyni Məhsulları Birləşdir</value>
   </data>
+  <data name="Form_ERP_ACE_InventoryTransferReturnCustom" xml:space="preserve">
+    <value>Anbarlar Arası Transfer Qaytarılması</value>
+  </data>
+  <data name="Form_ERP_Count" xml:space="preserve">
+    <value>Sayım</value>
+  </data>
+  <data name="Form_ERP_ACE_InvertoryCount" xml:space="preserve">
+    <value>Məhsul Sayımı</value>
+  </data>
 </root>
