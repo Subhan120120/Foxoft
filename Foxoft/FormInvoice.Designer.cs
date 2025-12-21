@@ -85,6 +85,7 @@ namespace Foxoft
             BBI_InvoiceDiscount = new BarButtonItem();
             BBI_Salesman = new BarButtonItem();
             BBI_SumSameProducts = new BarButtonItem();
+            BBI_CountingStock = new BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -219,7 +220,6 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
-            barButtonItem1 = new BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -437,7 +437,7 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, barButtonItem1 });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 68;
             ribbonControl1.Name = "ribbonControl1";
@@ -719,6 +719,15 @@ namespace Foxoft
             BBI_SumSameProducts.Name = "BBI_SumSameProducts";
             BBI_SumSameProducts.ItemClick += BBI_SumSameProducts_ItemClick;
             // 
+            // BBI_CountingStock
+            // 
+            BBI_CountingStock.Caption = Resources.Form_Invoice_BBI_ApplyCountingStock;
+            BBI_CountingStock.Id = 67;
+            BBI_CountingStock.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_CountingStock.ImageOptions.SvgImage");
+            BBI_CountingStock.Name = "BBI_CountingStock";
+            BBI_CountingStock.Visibility = BarItemVisibility.Never;
+            BBI_CountingStock.ItemClick += BBI_CountingStock_ItemClick;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, RPG_Payment, RPG_Installment, ribbonPageGroup2, RPG_Control, ribbonPageGroup8, ribbonPageGroup3 });
@@ -777,7 +786,7 @@ namespace Foxoft
             ribbonPageGroup3.ItemLinks.Add(BBI_InvoiceExpenses);
             ribbonPageGroup3.ItemLinks.Add(BBI_Salesman);
             ribbonPageGroup3.ItemLinks.Add(BBI_SumSameProducts);
-            ribbonPageGroup3.ItemLinks.Add(barButtonItem1);
+            ribbonPageGroup3.ItemLinks.Add(BBI_CountingStock);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = Resources.FormInvoice_RibbonGroup_Tools;
             // 
@@ -1955,13 +1964,6 @@ namespace Foxoft
             // 
             dxErrorProvider1.ContainerControl = this;
             // 
-            // barButtonItem1
-            // 
-            barButtonItem1.Caption = "barButtonItem1";
-            barButtonItem1.Id = 67;
-            barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
-            barButtonItem1.Name = "barButtonItem1";
-            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -2262,6 +2264,6 @@ namespace Foxoft
         private BarButtonItem BBI_Salesman;
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
         private BarButtonItem BBI_SumSameProducts;
-        private BarButtonItem barButtonItem1;
+        private BarButtonItem BBI_CountingStock;
     }
 }

@@ -3494,4 +3494,19 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_ERP_ACE_InvertoryCount" xml:space="preserve">
     <value>Məhsul Sayımı</value>
   </data>
+  <data name="Form_Counting_CheckEdit_ResetUncountedProductBalance" xml:space="preserve">
+    <value>Sayılmayan məhsulların qalığını sıfırla</value>
+  </data>
+  <data name="Form_Invoice_BBI_ApplyCountingStock" xml:space="preserve">
+    <value>Stok Sayım Tətbiq Et</value>
+  </data>
+  <data name="Form_Counting_LUE_Warehouse_NullText" xml:space="preserve">
+    <value>Anbar Seç</value>
+  </data>
+  <data name="Form_Counting_LUE_Store_NullText" xml:space="preserve">
+    <value>Mağaza Seç</value>
+  </data>
+  <data name="Entity_CountingVM_Difference" xml:space="preserve">
+    <value>Fərq</value>
+  </data>
 </root>

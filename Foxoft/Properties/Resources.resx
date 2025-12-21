@@ -3494,4 +3494,19 @@ To delete, cancel the receipt!</value>
   <data name="Form_ERP_ACE_InvertoryCount" xml:space="preserve">
     <value>Inventory Count</value>
   </data>
+  <data name="Form_Counting_CheckEdit_ResetUncountedProductBalance" xml:space="preserve">
+    <value>Reset stock balance of uncounted products</value>
+  </data>
+  <data name="Form_Invoice_BBI_ApplyCountingStock" xml:space="preserve">
+    <value>Apply Counting Stock</value>
+  </data>
+  <data name="Form_Counting_LUE_Warehouse_NullText" xml:space="preserve">
+    <value>Select Warehouse</value>
+  </data>
+  <data name="Form_Counting_LUE_Store_NullText" xml:space="preserve">
+    <value>Select Store</value>
+  </data>
+  <data name="Entity_CountingVM_Difference" xml:space="preserve">
+    <value>Diference</value>
+  </data>
 </root>

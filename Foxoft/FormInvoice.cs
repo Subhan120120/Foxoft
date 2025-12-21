@@ -1870,6 +1870,11 @@ namespace Foxoft
                         colCurrencyCode.Visible = false;
                         col_NetAmount.Visible = false;
                     }
+
+                    if (dcProcess.ProcessCode == "CN")
+                    {
+                        BBI_CountingStock.Visibility = BarItemVisibility.Always;
+                    }
                 }
             }
             if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
@@ -1879,16 +1884,12 @@ namespace Foxoft
                 RPG_Installment.Visible = true;
             }
 
-            //string layoutHeaderPath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "InvoiceHeader" + dcProcess.ProcessCode + "Layout.xml");
-
             string layoutHeaderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", "InvoiceHeader" + dcProcess.ProcessCode + "Layout.xml");
 
             if (File.Exists(layoutHeaderPath))
                 dataLayoutControl1.RestoreLayoutFromXml(layoutHeaderPath);
 
-            //string layoutLineFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml");
             string layoutLineFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml");
-
 
             if (File.Exists(layoutLineFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutLineFilePath);
@@ -1951,7 +1952,6 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml";
-            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
             string layoutFileDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
 
             if (!Directory.Exists(layoutFileDir))
@@ -2731,5 +2731,13 @@ namespace Foxoft
             trInvoiceLinesBindingSource.ResetBindings(false);
         }
 
+        private void BBI_CountingStock_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var bindingList = trInvoiceLinesBindingSource.DataSource as BindingList<TrInvoiceLine>;
+            List<TrInvoiceLine> invoiceLines = bindingList?.ToList();
+
+            FormCounting wizardForm1 = new(invoiceLines, trInvoiceHeader.InvoiceHeaderId);
+            wizardForm1.ShowDialog();
+        }
     }
 }

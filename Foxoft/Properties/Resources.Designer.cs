@@ -1231,6 +1231,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Diference.
+        /// </summary>
+        public static string Entity_CountingVM_Difference {
+            get {
+                return ResourceManager.GetString("Entity_CountingVM_Difference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Account.
         /// </summary>
         public static string Entity_CurrAcc {
@@ -5965,6 +5974,33 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset stock balance of uncounted products.
+        /// </summary>
+        public static string Form_Counting_CheckEdit_ResetUncountedProductBalance {
+            get {
+                return ResourceManager.GetString("Form_Counting_CheckEdit_ResetUncountedProductBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Store.
+        /// </summary>
+        public static string Form_Counting_LUE_Store_NullText {
+            get {
+                return ResourceManager.GetString("Form_Counting_LUE_Store_NullText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Warehouse.
+        /// </summary>
+        public static string Form_Counting_LUE_Warehouse_NullText {
+            get {
+                return ResourceManager.GetString("Form_Counting_LUE_Warehouse_NullText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact.
         /// </summary>
         public static string Form_CurrAcc_Bar_ContactDetail {
@@ -6529,6 +6565,15 @@ namespace Foxoft.Properties {
         public static string Form_InstallmentSale_RibbonPage_Settings {
             get {
                 return ResourceManager.GetString("Form_InstallmentSale_RibbonPage_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply Counting Stock.
+        /// </summary>
+        public static string Form_Invoice_BBI_ApplyCountingStock {
+            get {
+                return ResourceManager.GetString("Form_Invoice_BBI_ApplyCountingStock", resourceCulture);
             }
         }
         
