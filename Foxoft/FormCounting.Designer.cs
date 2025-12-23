@@ -36,11 +36,11 @@ namespace Foxoft
             DevExpress.XtraEditors.FormatConditionRuleValue formatConditionRuleValue1 = new DevExpress.XtraEditors.FormatConditionRuleValue();
             DevExpress.XtraGrid.GridFormatRule gridFormatRule2 = new DevExpress.XtraGrid.GridFormatRule();
             DevExpress.XtraEditors.FormatConditionRuleValue formatConditionRuleValue2 = new DevExpress.XtraEditors.FormatConditionRuleValue();
+            colDifference = new DevExpress.XtraGrid.Columns.GridColumn();
             wizardControl1 = new DevExpress.XtraWizard.WizardControl();
             welcomeWizardPage1 = new DevExpress.XtraWizard.WelcomeWizardPage();
             LUE_StoreCode = new DevExpress.XtraEditors.LookUpEdit();
             LUE_WarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
-            wizardPage1 = new DevExpress.XtraWizard.WizardPage();
             checkEdit_ResetUncountedProductBalance = new DevExpress.XtraEditors.CheckEdit();
             completionWizardPage1 = new DevExpress.XtraWizard.CompletionWizardPage();
             wizardPage2 = new DevExpress.XtraWizard.WizardPage();
@@ -68,13 +68,12 @@ namespace Foxoft
             colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
             colPosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
-            colDifference = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)wizardControl1).BeginInit();
             wizardControl1.SuspendLayout();
             welcomeWizardPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LUE_StoreCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LUE_WarehouseCode.Properties).BeginInit();
-            wizardPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)checkEdit_ResetUncountedProductBalance.Properties).BeginInit();
             wizardPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
@@ -82,10 +81,16 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             SuspendLayout();
             // 
+            // colDifference
+            // 
+            colDifference.FieldName = "Difference";
+            colDifference.Name = "colDifference";
+            colDifference.Visible = true;
+            colDifference.VisibleIndex = 11;
+            // 
             // wizardControl1
             // 
             wizardControl1.Controls.Add(welcomeWizardPage1);
-            wizardControl1.Controls.Add(wizardPage1);
             wizardControl1.Controls.Add(completionWizardPage1);
             wizardControl1.Controls.Add(wizardPage2);
             wizardControl1.Dock = DockStyle.Fill;
@@ -93,15 +98,16 @@ namespace Foxoft
             wizardControl1.Margin = new Padding(4, 3, 4, 3);
             wizardControl1.MinimumSize = new Size(117, 115);
             wizardControl1.Name = "wizardControl1";
-            wizardControl1.Pages.AddRange(new DevExpress.XtraWizard.BaseWizardPage[] { welcomeWizardPage1, wizardPage2, wizardPage1, completionWizardPage1 });
+            wizardControl1.Pages.AddRange(new DevExpress.XtraWizard.BaseWizardPage[] { welcomeWizardPage1, wizardPage2, completionWizardPage1 });
             wizardControl1.Size = new Size(1015, 528);
-            wizardControl1.NextClick += WizardControl1_NextClick;
             wizardControl1.FinishClick += WizardControl1_FinishClick;
+            wizardControl1.NextClick += WizardControl1_NextClick;
             // 
             // welcomeWizardPage1
             // 
             welcomeWizardPage1.Controls.Add(LUE_StoreCode);
             welcomeWizardPage1.Controls.Add(LUE_WarehouseCode);
+            welcomeWizardPage1.Controls.Add(checkEdit_ResetUncountedProductBalance);
             welcomeWizardPage1.Margin = new Padding(4, 3, 4, 3);
             welcomeWizardPage1.Name = "welcomeWizardPage1";
             welcomeWizardPage1.Size = new Size(767, 396);
@@ -115,7 +121,7 @@ namespace Foxoft
             LUE_StoreCode.Properties.DisplayMember = "CurrAccDesc";
             LUE_StoreCode.Properties.NullText = Resources.Form_Counting_LUE_Store_NullText;
             LUE_StoreCode.Properties.ValueMember = "CurrAccCode";
-            LUE_StoreCode.Size = new Size(190, 20);
+            LUE_StoreCode.Size = new Size(255, 20);
             LUE_StoreCode.TabIndex = 1;
             LUE_StoreCode.EditValueChanged += LUE_StoreCode_EditValueChanged;
             // 
@@ -128,22 +134,15 @@ namespace Foxoft
             LUE_WarehouseCode.Properties.DisplayMember = "WarehouseDesc";
             LUE_WarehouseCode.Properties.NullText = Resources.Form_Counting_LUE_Warehouse_NullText;
             LUE_WarehouseCode.Properties.ValueMember = "WarehouseCode";
-            LUE_WarehouseCode.Size = new Size(190, 20);
+            LUE_WarehouseCode.Size = new Size(255, 20);
             LUE_WarehouseCode.TabIndex = 1;
-            // 
-            // wizardPage1
-            // 
-            wizardPage1.Controls.Add(checkEdit_ResetUncountedProductBalance);
-            wizardPage1.Margin = new Padding(4, 3, 4, 3);
-            wizardPage1.Name = "wizardPage1";
-            wizardPage1.Size = new Size(983, 385);
             // 
             // checkEdit_ResetUncountedProductBalance
             // 
-            checkEdit_ResetUncountedProductBalance.Location = new Point(3, 3);
+            checkEdit_ResetUncountedProductBalance.Location = new Point(3, 98);
             checkEdit_ResetUncountedProductBalance.Name = "checkEdit_ResetUncountedProductBalance";
             checkEdit_ResetUncountedProductBalance.Properties.Caption = Resources.Form_Counting_CheckEdit_ResetUncountedProductBalance;
-            checkEdit_ResetUncountedProductBalance.Size = new Size(563, 20);
+            checkEdit_ResetUncountedProductBalance.Size = new Size(255, 20);
             checkEdit_ResetUncountedProductBalance.TabIndex = 1;
             // 
             // completionWizardPage1
@@ -176,7 +175,7 @@ namespace Foxoft
             // 
             // gridView1
             // 
-            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colRelatedLineId, colProductCode, colQty, colQtyIn, colQtyOut, colUnitOfMeasureId, colPrice, colPriceLoc, colAmount, colAmountLoc, colNetAmount, colNetAmountLoc, colDiscountCampaign, colLineDescription, colSerialNumberCode, colBalance, colCurrencyCode, colExchangeRate, colPosDiscount, colDifference });
+            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colRelatedLineId, colProductCode, colQty, colQtyIn, colQtyOut, colUnitOfMeasureId, colPrice, colPriceLoc, colAmount, colAmountLoc, colNetAmount, colNetAmountLoc, colDiscountCampaign, colLineDescription, colSerialNumberCode, colBalance, colCurrencyCode, colExchangeRate, colPosDiscount, colDifference, col_ProductDesc });
             gridFormatRule1.Column = colDifference;
             gridFormatRule1.Name = "ruleNegative";
             formatConditionRuleValue1.Appearance.ForeColor = Color.Red;
@@ -198,6 +197,7 @@ namespace Foxoft
             gridView1.OptionsView.ShowAutoFilterRow = true;
             gridView1.OptionsView.ShowFooter = true;
             gridView1.OptionsView.ShowGroupPanel = false;
+            gridView1.CustomUnboundColumnData += gridView1_CustomUnboundColumnData;
             // 
             // colInvoiceLineId
             // 
@@ -226,7 +226,7 @@ namespace Foxoft
             colQty.FieldName = "Qty";
             colQty.Name = "colQty";
             colQty.Visible = true;
-            colQty.VisibleIndex = 2;
+            colQty.VisibleIndex = 3;
             // 
             // colQtyIn
             // 
@@ -243,14 +243,14 @@ namespace Foxoft
             colUnitOfMeasureId.FieldName = "UnitOfMeasureId";
             colUnitOfMeasureId.Name = "colUnitOfMeasureId";
             colUnitOfMeasureId.Visible = true;
-            colUnitOfMeasureId.VisibleIndex = 3;
+            colUnitOfMeasureId.VisibleIndex = 4;
             // 
             // colPrice
             // 
             colPrice.FieldName = "Price";
             colPrice.Name = "colPrice";
             colPrice.Visible = true;
-            colPrice.VisibleIndex = 4;
+            colPrice.VisibleIndex = 5;
             // 
             // colPriceLoc
             // 
@@ -272,7 +272,7 @@ namespace Foxoft
             colNetAmount.FieldName = "NetAmount";
             colNetAmount.Name = "colNetAmount";
             colNetAmount.Visible = true;
-            colNetAmount.VisibleIndex = 7;
+            colNetAmount.VisibleIndex = 8;
             // 
             // colNetAmountLoc
             // 
@@ -289,7 +289,7 @@ namespace Foxoft
             colLineDescription.FieldName = "LineDescription";
             colLineDescription.Name = "colLineDescription";
             colLineDescription.Visible = true;
-            colLineDescription.VisibleIndex = 8;
+            colLineDescription.VisibleIndex = 9;
             // 
             // colSerialNumberCode
             // 
@@ -303,14 +303,14 @@ namespace Foxoft
             colBalance.FieldName = "Balance";
             colBalance.Name = "colBalance";
             colBalance.Visible = true;
-            colBalance.VisibleIndex = 9;
+            colBalance.VisibleIndex = 10;
             // 
             // colCurrencyCode
             // 
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
-            colCurrencyCode.VisibleIndex = 5;
+            colCurrencyCode.VisibleIndex = 6;
             // 
             // colExchangeRate
             // 
@@ -323,14 +323,17 @@ namespace Foxoft
             colPosDiscount.Name = "colPosDiscount";
             colPosDiscount.OptionsFilter.AllowFilter = false;
             colPosDiscount.Visible = true;
-            colPosDiscount.VisibleIndex = 6;
+            colPosDiscount.VisibleIndex = 7;
             // 
-            // colDifference
+            // col_ProductDesc
             // 
-            colDifference.FieldName = "Difference";
-            colDifference.Name = "colDifference";
-            colDifference.Visible = true;
-            colDifference.VisibleIndex = 10;
+            col_ProductDesc.Caption = Resources.Entity_Product_Desc;
+            col_ProductDesc.FieldName = "DcProduct.ProductDesc";
+            col_ProductDesc.Name = "col_ProductDesc";
+            col_ProductDesc.OptionsFilter.AllowFilter = false;
+            col_ProductDesc.UnboundDataType = typeof(string);
+            col_ProductDesc.Visible = true;
+            col_ProductDesc.VisibleIndex = 2;
             // 
             // FormCounting
             // 
@@ -350,7 +353,6 @@ namespace Foxoft
             welcomeWizardPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)LUE_StoreCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)LUE_WarehouseCode.Properties).EndInit();
-            wizardPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)checkEdit_ResetUncountedProductBalance.Properties).EndInit();
             wizardPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
@@ -401,5 +403,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.GridFormatRule rulePositive;
         private DevExpress.XtraEditors.FormatConditionRuleValue conditionNegative;
         private DevExpress.XtraEditors.FormatConditionRuleValue conditionPositive;
+        private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
     }
 }

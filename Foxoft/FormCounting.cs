@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraWizard;
+﻿using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraWizard;
 using Foxoft.Migrations;
 using Foxoft.Models;
 using Foxoft.Models.ViewModel;
@@ -49,7 +50,7 @@ namespace Foxoft
             }
         }
 
-        private void WizardControl1_FinishClick(object sender, System.ComponentModel.CancelEventArgs e)
+        private void WizardControl1_FinishClick(object sender, CancelEventArgs e)
         {
             if (countingVM.Where(x => x.Difference > 0).Any())
             {
@@ -167,6 +168,20 @@ namespace Foxoft
             string storeCode = LUE_StoreCode.EditValue.ToString();
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
             LUE_WarehouseCode.Properties.DataSource = dcWarehouses;
+        }
+
+        private void gridView1_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
+        {
+            if (e.Column.FieldName == $"{nameof(DcProduct)}.{nameof(DcProduct.ProductDesc)}" && e.IsGetData)
+            {
+                GridView view = sender as GridView;
+                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+                string productCode = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
+
+                DcProduct dcProduct = efMethods.SelectProduct(productCode, new byte[] { 1 });
+
+                e.Value = dcProduct?.ProductDesc;
+            }
         }
     }
 }
