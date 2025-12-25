@@ -1,55 +1,33 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Foxoft.Properties;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Foxoft.Properties;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Foxoft.Models
+namespace Foxoft.Models.ViewModel
 {
-    [Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
-    [Display(Name = nameof(Resources.Entity_InvoiceLine), ResourceType = typeof(Resources))]
-    public partial class TrInvoiceLine : BaseEntity
+    public class CountingLineVM
     {
-        private decimal ConvertToBasicUOM(decimal qty)
+        public CountingLineVM()
         {
-            decimal multiplier = 1;
-            DcUnitOfMeasure currentUOM = this.DcUnitOfMeasure;
 
-            while (currentUOM != null && !currentUOM.IsBasic)
-            {
-                multiplier *= currentUOM.ConversionRate;
-                currentUOM = currentUOM.ParentUnitOfMeasure;
-            }
-
-            return qty * multiplier;
         }
-
-        private decimal ConvertFromBasicUOM(decimal qtyIn)
+        public CountingLineVM(List<TrInvoiceLine> TrInvoiceLines)
         {
-            decimal divider = 1;
-            DcUnitOfMeasure currentUOM = this.DcUnitOfMeasure;
-
-            while (currentUOM != null && !currentUOM.IsBasic)
-            {
-                divider *= currentUOM.ConversionRate;
-                currentUOM = currentUOM.ParentUnitOfMeasure;
-            }
-
-            return divider == 0 ? qtyIn : qtyIn / divider;
         }
 
         [Key]
         public Guid InvoiceLineId { get; set; }
 
-        [ForeignKey(nameof(TrInvoiceHeader))]
         public Guid InvoiceHeaderId { get; set; }
 
-        [ForeignKey(nameof(RelatedLine))]
         public Guid? RelatedLineId { get; set; }
 
         [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductCode), ResourceType = typeof(Resources))]
-        [ForeignKey(nameof(DcProduct))]
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         [StringLength(30, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string ProductCode { get; set; }
@@ -58,38 +36,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceLine_Qty), ResourceType = typeof(Resources))]
         [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
-        public decimal Qty
-        {
-            get
-            {
-                if (TrInvoiceHeader == null)
-                    return 0;
-
-                bool isIn = (bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode);
-                bool isReturn = TrInvoiceHeader.IsReturn;
-
-                decimal qty = isIn
-                    ? (isReturn ? -QtyIn : QtyIn)
-                    : (isReturn ? -QtyOut : QtyOut);
-
-                return ConvertFromBasicUOM(qty);
-            }
-            set
-            {
-                if (TrInvoiceHeader == null)
-                    return;
-
-                bool isIn = (bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode);
-                bool isReturn = TrInvoiceHeader.IsReturn;
-
-                decimal basicUOMQty = ConvertToBasicUOM(value);
-
-                if (isIn)
-                    QtyIn = isReturn ? -basicUOMQty : basicUOMQty;
-                else
-                    QtyOut = isReturn ? -basicUOMQty : basicUOMQty;
-            }
-        }
+        public decimal Qty { get; set; }
 
         [DefaultValue("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_QtyIn), ResourceType = typeof(Resources))]
@@ -102,7 +49,6 @@ namespace Foxoft.Models
         public decimal QtyOut { get; set; }
 
         [Display(Name = nameof(Resources.Entity_InvoiceLine_UnitOfMeasureId), ResourceType = typeof(Resources))]
-        [ForeignKey(nameof(DcUnitOfMeasure))]
         public int? UnitOfMeasureId { get; set; }
 
         [Column(TypeName = "money")]
@@ -112,7 +58,6 @@ namespace Foxoft.Models
         public decimal Price { get; set; }
 
         [Display(Name = nameof(Resources.Entity_InvoiceLine_CurrencyCode), ResourceType = typeof(Resources))]
-        [ForeignKey(nameof(DcCurrency))]
         public string CurrencyCode { get; set; } = Settings.Default.AppSetting.LocalCurrencyCode;
 
         [DefaultValue("1")]
@@ -164,56 +109,19 @@ namespace Foxoft.Models
         [StringLength(100, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? LineDescription { get; set; }
 
-        [ForeignKey(nameof(DcSerialNumber))]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_SerialNumberCode), ResourceType = typeof(Resources))]
         [StringLength(150, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? SerialNumberCode { get; set; }
 
-        [Display(Name = nameof(Resources.Entity_InvoiceLine_SalesPersonCode), ResourceType = typeof(Resources))]
-        [ForeignKey(nameof(DcCurrAcc))]
-        public string? SalesPersonCode { get; set; }
-
         [Display(Name = nameof(Resources.Entity_InvoiceLine_WorkerCode), ResourceType = typeof(Resources))]
         public string? WorkerCode { get; set; }
-
-        [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductCost), ResourceType = typeof(Resources))]
-        public decimal? ProductCost { get; set; }
-
-        [Display(Name = nameof(Resources.Entity_InvoiceLine_Benefit), ResourceType = typeof(Resources))]
-        public decimal? Benefit => PriceLoc * (1 - PosDiscount / 100) - ProductCost;
-
-        [Display(Name = nameof(Resources.Entity_InvoiceLine_TotalBenefit), ResourceType = typeof(Resources))]
-        public decimal? TotalBenefit => NetAmountLoc - ((QtyIn + QtyOut) * ProductCost);
 
         [NotMapped]
         [Display(Name = nameof(Resources.Common_Balance), ResourceType = typeof(Resources))]
         public decimal Balance { get; set; }
 
-        [NotMapped]
-        [Display(Name = nameof(Resources.Entity_InvoiceLine_ReturnQty), ResourceType = typeof(Resources))]
-        public decimal ReturnQty { get; set; }
+        [Display(Name = nameof(Resources.Entity_CountingVM_Difference), ResourceType = typeof(Resources))]
+        public decimal Difference { get; set; }
 
-        [NotMapped]
-        [Display(Name = nameof(Resources.Entity_InvoiceLine_RemainingQty), ResourceType = typeof(Resources))]
-        public decimal RemainingQty { get; set; }
-
-        [NotMapped]
-        [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductDesc), ResourceType = typeof(Resources))]
-        public string ProductDesc { get; set; }
-
-        [NotMapped]
-        [Display(Name = nameof(Resources.Entity_ProductBarcode_Barcode), ResourceType = typeof(Resources))]
-        public string Barcode { get; set; }
-
-        public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
-        public virtual DcProduct DcProduct { get; set; }
-        public virtual DcSerialNumber DcSerialNumber { get; set; }
-        public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
-        public virtual DcCurrency DcCurrency { get; set; }
-        public virtual DcCurrAcc DcCurrAcc { get; set; }
-        public virtual trInvoiceLineExt TrInvoiceLineExt { get; set; }
-
-        public virtual TrInvoiceLine RelatedLine { get; set; } // Navigation property to the related line
-        public virtual ICollection<TrInvoiceLine> InverseRelatedLines { get; set; } // Navigation property for the inverse relationship
     }
 }

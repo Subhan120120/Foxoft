@@ -3509,4 +3509,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_CountingVM_Difference" xml:space="preserve">
     <value>Fərq</value>
   </data>
+  <data name="Entity_ReturnLineVM_DeliveredQty" xml:space="preserve">
+    <value>Tehvil Verilen Miqdar</value>
+  </data>
 </root>

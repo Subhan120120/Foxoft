@@ -171,7 +171,7 @@ namespace Foxoft
             // 
             // trInvoiceLineBindingSource
             // 
-            trInvoiceLineBindingSource.DataSource = typeof(CountingVM);
+            trInvoiceLineBindingSource.DataSource = typeof(CountingLineVM);
             // 
             // gridView1
             // 

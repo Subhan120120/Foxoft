@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Foxoft.Models.ViewModel
 {
-    public class CountingVM
+    public class ReturnLineVM
     {
-        public CountingVM()
+        public ReturnLineVM()
         {
 
         }
-        public CountingVM(List<TrInvoiceLine> TrInvoiceLines)
+        public ReturnLineVM(List<TrInvoiceLine> TrInvoiceLines)
         {
         }
 
@@ -52,6 +52,7 @@ namespace Foxoft.Models.ViewModel
         public int? UnitOfMeasureId { get; set; }
 
         [Column(TypeName = "money")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_Price), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public decimal Price { get; set; }
@@ -65,15 +66,18 @@ namespace Foxoft.Models.ViewModel
         public float ExchangeRate { get; set; } = 1;
 
         [Column(TypeName = "money")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_PriceLoc), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public decimal PriceLoc { get { return Math.Round(Price / (decimal)ExchangeRate, 4); } set { } }
 
         [Column(TypeName = "money")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_Amount), ResourceType = typeof(Resources))]
         public decimal Amount { get { return (QtyIn + QtyOut) * Price; } set { } }
 
         [Column(TypeName = "money")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_AmountLoc), ResourceType = typeof(Resources))]
         public decimal AmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
@@ -82,15 +86,18 @@ namespace Foxoft.Models.ViewModel
         public decimal PosDiscount { get; set; }
 
         [Column(TypeName = "money")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_NetAmount), ResourceType = typeof(Resources))]
         public decimal NetAmount { get { return (QtyIn + QtyOut) * Price * (1 - PosDiscount / 100); } set { } }
 
         [Column(TypeName = "money")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_NetAmountLoc), ResourceType = typeof(Resources))]
         public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * PriceLoc * (1 - PosDiscount / 100); } set { } }
 
         [DefaultValue("0")]
         [Column(TypeName = "money")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_DiscountCampaign), ResourceType = typeof(Resources))]
         public decimal DiscountCampaign { get; set; }
 
@@ -109,12 +116,23 @@ namespace Foxoft.Models.ViewModel
         [Display(Name = nameof(Resources.Entity_InvoiceLine_WorkerCode), ResourceType = typeof(Resources))]
         public string? WorkerCode { get; set; }
 
-        [NotMapped]
-        [Display(Name = nameof(Resources.Common_Balance), ResourceType = typeof(Resources))]
-        public decimal Balance { get; set; }
 
-        [Display(Name = nameof(Resources.Entity_CountingVM_Difference), ResourceType = typeof(Resources))]
-        public decimal Difference { get; set; }
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductDesc), ResourceType = typeof(Resources))]
+        public string ProductDesc { get; set; }
+
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_ReturnQty), ResourceType = typeof(Resources))]
+        public decimal ReturnQty { get; set; }
+
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_RemainingQty), ResourceType = typeof(Resources))]
+        public decimal RemainingQty { get; set; }
+
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_ReturnLineVM_DeliveredQty), ResourceType = typeof(Resources))]
+        public decimal DeliveredQty { get; set; }
+
 
     }
 }

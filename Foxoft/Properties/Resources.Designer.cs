@@ -4660,6 +4660,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delivered Quantity.
+        /// </summary>
+        public static string Entity_ReturnLineVM_DeliveredQty {
+            get {
+                return ResourceManager.GetString("Entity_ReturnLineVM_DeliveredQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Role.
         /// </summary>
         public static string Entity_Role {

@@ -7,6 +7,7 @@ using DevExpress.Spreadsheet;
 using DevExpress.XtraSpreadsheet.Model;
 using Foxoft.Models;
 using Foxoft.Models.Entity;
+using Foxoft.Models.ViewModel;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -125,6 +126,60 @@ namespace Foxoft
                 return InvoiceLines;
             }
         }
+
+        public List<ReturnLineVM> SelectReturnLineVMs(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+
+            var lines = db.TrInvoiceLines
+                .Include(x => x.DcProduct)
+                .Include(x => x.TrInvoiceHeader)
+                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                .OrderBy(x => x.CreatedDate)
+                .ToList();
+
+            var returnedByRelatedId = db.TrInvoiceLines
+                .Include(y => y.TrInvoiceHeader)
+                .Where(y => y.TrInvoiceHeader.IsReturn)
+                .Where(y => y.RelatedLineId != null)
+                .GroupBy(y => y.RelatedLineId!.Value)
+                .Select(g => new
+                {
+                    RelatedLineId = g.Key,
+                    ReturnQty = g.Sum(s => Math.Abs(s.QtyIn - s.QtyOut))
+                })
+                .ToDictionary(x => x.RelatedLineId, x => x.ReturnQty);
+
+
+            var deliveredByRelatedId = db.TrInvoiceLines
+                .Include(y => y.TrInvoiceHeader)
+                .Where(y => y.TrInvoiceHeader.ProcessCode == "WO")
+                .Where(y => y.RelatedLineId != null)
+                .GroupBy(y => y.RelatedLineId!.Value)
+                .Select(g => new
+                {
+                    RelatedLineId = g.Key,
+                    ReturnQty = g.Sum(s => Math.Abs(s.QtyIn - s.QtyOut))
+                })
+                .ToDictionary(x => x.RelatedLineId, x => x.ReturnQty);
+
+            var vms = AutoMapper<TrInvoiceLine, ReturnLineVM>.MapList(
+                lines,
+                afterMap: (src, dest) =>
+                {
+                    var returnedQty = returnedByRelatedId.TryGetValue(src.InvoiceLineId, out var rq) ? rq : 0m;
+                    var deliveredQty = deliveredByRelatedId.TryGetValue(src.InvoiceLineId, out var dq) ? dq : 0m;
+
+                    dest.ProductDesc = src.DcProduct.ProductDesc;
+                    dest.ReturnQty = returnedQty;
+                    dest.RemainingQty = Math.Abs(src.QtyIn - src.QtyOut) - returnedQty;
+                    dest.DeliveredQty = deliveredQty;
+                });
+
+            return vms;
+        }
+
+
 
         public List<TrInvoiceHeader> SelectMasterForDelivery(Guid? invoiceHeader = null)
         {

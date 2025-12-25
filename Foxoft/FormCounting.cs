@@ -18,7 +18,7 @@ namespace Foxoft
 {
     public partial class FormCounting : Form
     {
-        List<CountingVM> countingVM;
+        List<CountingLineVM> countingVM;
         EfMethods efMethods = new EfMethods();
         Guid relatedInvoiceId;
         public FormCounting(List<TrInvoiceLine> invoiceLines, Guid relatedInvoiceId)
@@ -26,7 +26,7 @@ namespace Foxoft
             InitializeComponent();
 
             this.relatedInvoiceId = relatedInvoiceId;
-            this.countingVM = AutoMapper<TrInvoiceLine, CountingVM>.MapList(invoiceLines);
+            this.countingVM = AutoMapper<TrInvoiceLine, CountingLineVM>.MapList(invoiceLines);
             LUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
         }
 

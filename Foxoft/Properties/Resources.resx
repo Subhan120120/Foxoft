@@ -3509,4 +3509,7 @@ To delete, cancel the receipt!</value>
   <data name="Entity_CountingVM_Difference" xml:space="preserve">
     <value>Diference</value>
   </data>
+  <data name="Entity_ReturnLineVM_DeliveredQty" xml:space="preserve">
+    <value>Delivered Quantity</value>
+  </data>
 </root>

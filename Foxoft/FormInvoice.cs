@@ -2186,7 +2186,7 @@ namespace Foxoft
                 gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                gV_InvoiceLine.SetRowCellValue(rowHandle, colQty, 1);
+                gV_InvoiceLine.SetRowCellValue(rowHandle, colQtyOut, 1);
         }
 
         public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)

@@ -72,7 +72,7 @@ namespace Foxoft
 
         private void LoadInvoice(TrInvoiceHeader invoiceHeader)
         {
-            gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeader.InvoiceHeaderId);
+            gC_InvoiceLine.DataSource = efMethods.SelectReturnLineVMs(invoiceHeader.InvoiceHeaderId);
             gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeader.InvoiceHeaderId);
 
             if (invoiceHeader.DcCurrAcc is not null)

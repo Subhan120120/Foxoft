@@ -10,9 +10,11 @@ using System.Reflection;
 namespace Foxoft
 {
     public static class AutoMapper<TSource, TTarget>
-    where TTarget : new()
+        where TTarget : new()
     {
-        public static TTarget Map(TSource source)
+        public static TTarget Map(
+            TSource source,
+            Action<TSource, TTarget> afterMap = null)
         {
             if (source == null) return default;
 
@@ -34,18 +36,24 @@ namespace Foxoft
                 }
             }
 
+            // 🔥 AFTER MAP
+            afterMap?.Invoke(source, target);
+
             return target;
         }
 
-        public static List<TTarget> MapList(IEnumerable<TSource> sourceList)
+        public static List<TTarget> MapList(
+            IEnumerable<TSource> sourceList,
+            Action<TSource, TTarget> afterMap = null)
         {
             if (sourceList == null) return new List<TTarget>();
 
             return sourceList
                 .Where(x => x != null)
-                .Select(Map)
+                .Select(x => Map(x, afterMap))
                 .ToList();
         }
     }
+
 
 }
