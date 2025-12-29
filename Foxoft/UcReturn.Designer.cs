@@ -1,4 +1,5 @@
-﻿using Foxoft.Properties;
+﻿using Foxoft.Models.ViewModel;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -249,7 +250,6 @@ namespace Foxoft
             // 
             // col_RCurrencyCode
             // 
-            col_RCurrencyCode.Caption = "gridColumn1";
             col_RCurrencyCode.MinWidth = 23;
             col_RCurrencyCode.Name = "col_RCurrencyCode";
             col_RCurrencyCode.Width = 87;
@@ -324,6 +324,7 @@ namespace Foxoft
             // 
             // gC_InvoiceLine
             // 
+            gC_InvoiceLine.DataSource = typeof(ReturnLineVM);
             gC_InvoiceLine.EmbeddedNavigator.Margin = new Padding(4, 3, 4, 3);
             gC_InvoiceLine.Location = new Point(395, 150);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
@@ -689,7 +690,6 @@ namespace Foxoft
             // 
             // col_DeliveredQty
             // 
-            col_DeliveredQty.Caption = "gridColumn1";
             col_DeliveredQty.FieldName = "DeliveredQty";
             col_DeliveredQty.Name = "col_DeliveredQty";
             col_DeliveredQty.Visible = true;

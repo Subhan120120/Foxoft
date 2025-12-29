@@ -190,14 +190,6 @@ namespace Foxoft.Models
         public decimal Balance { get; set; }
 
         [NotMapped]
-        [Display(Name = nameof(Resources.Entity_InvoiceLine_ReturnQty), ResourceType = typeof(Resources))]
-        public decimal ReturnQty { get; set; }
-
-        [NotMapped]
-        [Display(Name = nameof(Resources.Entity_InvoiceLine_RemainingQty), ResourceType = typeof(Resources))]
-        public decimal RemainingQty { get; set; }
-
-        [NotMapped]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductDesc), ResourceType = typeof(Resources))]
         public string ProductDesc { get; set; }
 

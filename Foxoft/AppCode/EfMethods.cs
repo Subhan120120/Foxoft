@@ -113,14 +113,6 @@ namespace Foxoft
                 InvoiceLines.ForEach(x =>
                 {
                     x.ProductDesc = x.DcProduct.ProductDesc;
-                    x.ReturnQty = db.TrInvoiceLines.Include(y => y.TrInvoiceHeader)
-                                                   .Where(y => y.TrInvoiceHeader.IsReturn)
-                                                   .Where(y => y.RelatedLineId == x.InvoiceLineId)
-                                                   .Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
-                    x.RemainingQty = Math.Abs(x.QtyIn - x.QtyOut) - db.TrInvoiceLines.Include(y => y.TrInvoiceHeader)
-                                                                                     .Where(y => y.TrInvoiceHeader.IsReturn)
-                                                                                     .Where(y => y.RelatedLineId == x.InvoiceLineId)
-                                                                                     .Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
                 });
 
                 return InvoiceLines;
