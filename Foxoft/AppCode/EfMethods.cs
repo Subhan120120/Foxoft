@@ -1623,7 +1623,7 @@ namespace Foxoft
                 .Where(char.IsDigit).ToArray());
 
             // compare against DB after stripping common symbols (translated to SQL REPLACE)
-            return  db.DcCurrAccs
+            return db.DcCurrAccs
                 .Where(x => x.CurrAccCode != currAccCode)
                 .Any(x =>
                     (x.PhoneNum ?? "")
@@ -1735,6 +1735,7 @@ namespace Foxoft
             using subContext db = new();
             return db.DcReports.Include(x => x.DcReportVariables)
                                 .Include(x => x.TrReportSubQueries)
+                                .ThenInclude(x => x.TrReportSubQueryRelationColumns)
                                 .FirstOrDefault(x => x.ReportName == name);
         }
 

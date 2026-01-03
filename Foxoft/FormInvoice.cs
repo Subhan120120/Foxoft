@@ -1559,15 +1559,15 @@ namespace Foxoft
             Clipboard.SetImage(Image.FromStream(memoryStream));
             string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
-            SendWhatsApp(phoneNum, "");
+            //SendWhatsApp(phoneNum, "");
 
-            //var TOKEN = "EAAWMnYx6BxYBPeWngemw2HEm4OwcVVRIQ1lfCgzhuxh8pouWH9pkztl3rbP4HlFa5rt1fky50yTxKM3wHfqZCC6UCKLZABNpZAkY9SKTSCFuWLZBmLBPZAcfn2JdfzhV0ZCZB3Cy5Wj3saTiItSgkLn1sytUWjvZARgGKZCSWiXDClpZC9CZBQkY6aN2kh4NfNlZCtT6x5fCsLQODnfWIDBNbza5NodxBWUYPTGOvmvPl1bLHSTtK3tsHHFQbpPEwa2UiQZDZD";
-            //var PHONEID = "792567567267494";
+            var TOKEN = "EAAWMnYx6BxYBQTElL3PyIaa6m1Yh7ULhwtemKf8dGpZCqhpVzgngluG0Frg0PEz1gdMDdbmI4xyJ7meyOvTCteS5FVKEemCsW0RFc6gUHaZCpqGYpOGZB4RgiPyAS2mxbkgA6NHeuER9n6HFbF79vskZBZBXUrxYZBWQQwk1zqBkKzUGuBdnkFFsy8HcueVGtZAtAr1i09zpeZBHigTbHt2IPaMwNmce7u9uO0mZArnLVsfyZBmZAfY7pmVFVBEcgQhc9ntnJZCsBZCnG3KeAqOtcTpL43b7ZAy5wasSeTDK3MRgZDZD";
+            var PHONEID = "792567567267494";
 
-            //using var wa = new WhatsAppClient(TOKEN, PHONEID);
+            using var wa = new WhatsAppClient(TOKEN, PHONEID);
 
-            //var messageId = await wa.UploadAndSendImageAsync(phoneNum, memoryStream, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
-            //Console.WriteLine($"Sent: {messageId}");
+            var messageId = await wa.UploadAndSendImageAsync(phoneNum, memoryStream, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
+            XtraMessageBox.Show($"Sent: {messageId}");
         }
 
         private void SendWhatsApp(string number, string message)
@@ -1622,7 +1622,6 @@ namespace Foxoft
                 MessageBox.Show(string.Format(Resources.Form_Invoice_Whatsapp_FailedToOpenLink, ex.Message));
             }
         }
-
 
         private string GetChromeProfileCodeByName(string profileName)
         {
@@ -2186,7 +2185,7 @@ namespace Foxoft
                 gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                gV_InvoiceLine.SetRowCellValue(rowHandle, colQtyOut, 1);
+                gV_InvoiceLine.SetRowCellValue(rowHandle, colQtyIn, 1);
         }
 
         public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)
