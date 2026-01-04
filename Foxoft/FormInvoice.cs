@@ -694,7 +694,7 @@ namespace Foxoft
                     bool permitNegativeStock = Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
                     decimal balance = CalcProductBalance(tr, tr.ProductCode, wareHouse, tr.Qty);
 
-                    if (!permitNegativeStock && Convert.ToDecimal(e.Value) > balance)
+                    if (!permitNegativeStock && Convert.ToDecimal(e.Value) > balance && !trInvoiceHeader.IsReturn)
                     {
                         e.Valid = false;
                         e.ErrorText = Resources.Form_Invoice_NoStockQuantity;
@@ -728,7 +728,6 @@ namespace Foxoft
                         invoiceSum);
                     return;
                 }
-
 
                 decimal waybillSum = Math.Abs(efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
                                                      .Sum(x => x.QtyIn - x.QtyOut));
