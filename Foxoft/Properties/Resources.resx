@@ -3515,4 +3515,7 @@ To delete, cancel the receipt!</value>
   <data name="Form_RetailSale_LCG_Payment" xml:space="preserve">
     <value>Payment</value>
   </data>
+  <data name="UC_Return_Col_Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
 </root>

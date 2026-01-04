@@ -673,7 +673,7 @@ namespace Foxoft
             // 
             // BBI_GalleryPaste
             // 
-            BBI_GalleryPaste.Caption = Resources.Common_Delete;
+            BBI_GalleryPaste.Caption = Resources.Common_Paste;
             BBI_GalleryPaste.Id = 6;
             BBI_GalleryPaste.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GalleryPaste.ImageOptions.SvgImage");
             BBI_GalleryPaste.Name = "BBI_GalleryPaste";

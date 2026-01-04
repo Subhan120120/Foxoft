@@ -10158,6 +10158,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        public static string UC_Return_Col_Return {
+            get {
+                return ResourceManager.GetString("UC_Return_Col_Return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Passwords do not match.
         /// </summary>
         public static string Validation_Compare_Mismatch {

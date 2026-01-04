@@ -76,6 +76,7 @@ namespace Foxoft
             col_Return = new DevExpress.XtraGrid.Columns.GridColumn();
             repoBtn_ReturnLine = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             col_SerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_DeliveredQty = new DevExpress.XtraGrid.Columns.GridColumn();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btnEdit_InvoiceHeader = new DevExpress.XtraEditors.ButtonEdit();
@@ -95,7 +96,6 @@ namespace Foxoft
             lCI_Payment = new DevExpress.XtraLayout.LayoutControlItem();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             splitterItem2 = new DevExpress.XtraLayout.SplitterItem();
-            col_DeliveredQty = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_ReturnInvoiceLine).BeginInit();
@@ -490,6 +490,7 @@ namespace Foxoft
             // 
             // col_Return
             // 
+            col_Return.Caption = Resources.UC_Return_Col_Return;
             col_Return.ColumnEdit = repoBtn_ReturnLine;
             col_Return.FieldName = "Return";
             col_Return.MinWidth = 23;
@@ -515,6 +516,13 @@ namespace Foxoft
             col_SerialNumberCode.Visible = true;
             col_SerialNumberCode.VisibleIndex = 8;
             col_SerialNumberCode.Width = 100;
+            // 
+            // col_DeliveredQty
+            // 
+            col_DeliveredQty.FieldName = "DeliveredQty";
+            col_DeliveredQty.Name = "col_DeliveredQty";
+            col_DeliveredQty.Visible = true;
+            col_DeliveredQty.VisibleIndex = 9;
             // 
             // btn_Ok
             // 
@@ -688,13 +696,6 @@ namespace Foxoft
             splitterItem2.Name = "splitterItem2";
             splitterItem2.Size = new Size(361, 10);
             // 
-            // col_DeliveredQty
-            // 
-            col_DeliveredQty.FieldName = "DeliveredQty";
-            col_DeliveredQty.Name = "col_DeliveredQty";
-            col_DeliveredQty.Visible = true;
-            col_DeliveredQty.VisibleIndex = 9;
-            // 
             // UcReturn
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -794,5 +795,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_RProductDesc;
         private DevExpress.XtraGrid.Columns.GridColumn col_SerialNumberCode;
         private DevExpress.XtraGrid.Columns.GridColumn col_DeliveredQty;
+        private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
     }
 }
