@@ -1,5 +1,8 @@
 ﻿using DevExpress.DataAccess.Sql;
+using DevExpress.Mvvm.Native;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGauges.Core;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
@@ -7,6 +10,7 @@ using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Specialized;
 using System.Drawing.Printing;
 using System.IO;
 
@@ -46,6 +50,21 @@ namespace Foxoft
             {
                 string defaultCustomer = efMethods.SelectDefaultCustomerByStore(Authorization.StoreCode);
                 trInvoiceHeader.CurrAccCode = defaultCustomer;
+            }
+
+            var sc = Settings.Default.POSFindProduct;
+            if (sc == null)
+            {
+                sc = new StringCollection();
+                Settings.Default.POSFindProduct = sc;
+                Settings.Default.Save();
+            }
+
+            foreach (CheckedListBoxItem item in checkedComboBoxEdit1.Properties.Items)
+            {
+                item.CheckState = sc.Contains(item.Value.ToString())
+                    ? CheckState.Checked
+                    : CheckState.Unchecked;
             }
         }
 
@@ -759,10 +778,30 @@ namespace Foxoft
                 return;
 
             string input = txtEdit_Barcode.EditValue.ToString().Trim();
-            DcProduct dcProductByBarcode = efMethods.SelectProductByBarcode(input);
+
+            var items = checkedComboBoxEdit1.Properties.Items;
+
+            bool useBarCode = items["Barcode"].CheckState == CheckState.Checked;
+            bool useProductCode = items["ProductCode"].CheckState == CheckState.Checked;
+
+            DcProduct dcProductByProductCode = null;
+            DcProduct dcProductByBarcode = null;
+            DcProduct dcProductByScale = null;
 
             decimal qty = 0;
-            DcProduct dcProductByScale = null;
+
+            if (useBarCode)
+            {
+                dcProductByBarcode = efMethods.SelectProductByBarcode(input);
+            }
+
+            if (useProductCode)
+            {
+                dcProductByProductCode = efMethods.SelectEntityById<DcProduct>(input);
+
+                if (dcProductByProductCode is null)
+                    dcProductByProductCode = efMethods.SelectEntityById<DcProduct>("P-" + input);
+            }
 
             if (Settings.Default.AppSetting.UseScales && input.Length == 13 && input.All(char.IsDigit))
             {
@@ -780,6 +819,11 @@ namespace Foxoft
             {
                 selectedProduct = dcProductByScale;
                 qty = int.Parse(input.Substring(7, 6)) / 10000m; // 2 000003 02.0000
+            }
+            else if (dcProductByProductCode != null)
+            {
+                selectedProduct = dcProductByProductCode;
+                qty = 1;
             }
 
             if (dcProductByBarcode != null && dcProductByScale != null)
@@ -927,5 +971,20 @@ namespace Foxoft
             gV_InvoiceLine.RefreshData();
             gV_InvoiceLine.MoveLast();
         }
+
+        private void checkedComboBoxEdit1_EditValueChanged(object sender, EventArgs e)
+        {
+            var sc = new StringCollection();
+
+            foreach (CheckedListBoxItem item in checkedComboBoxEdit1.Properties.Items)
+            {
+                if (item.CheckState == CheckState.Checked)
+                    sc.Add(item.Value.ToString());
+            }
+
+            Settings.Default.POSFindProduct = sc;
+            Settings.Default.Save();
+        }
+
     }
 }

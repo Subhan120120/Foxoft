@@ -3512,4 +3512,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_ReturnLineVM_DeliveredQty" xml:space="preserve">
     <value>Tehvil Verilen Miqdar</value>
   </data>
+  <data name="Form_RetailSale_LCG_Payment" xml:space="preserve">
+    <value>Ödəmə</value>
+  </data>
 </root>

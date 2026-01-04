@@ -282,5 +282,20 @@ namespace Foxoft.Properties
                 this["FavoritesMenus"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public global::System.Collections.Specialized.StringCollection POSFindProduct
+        {
+            get
+            {
+                return ((global::System.Collections.Specialized.StringCollection)(this["POSFindProduct"]));
+            }
+            set
+            {
+                this["POSFindProduct"] = value;
+            }
+        }
     }
 }

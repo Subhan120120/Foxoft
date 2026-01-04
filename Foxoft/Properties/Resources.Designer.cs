@@ -8982,7 +8982,7 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incomplete invoices.
+        ///   Looks up a localized string similar to Incomplete Invoices.
         /// </summary>
         public static string Form_RetailSale_Button_IncompletedInvoices {
             get {
@@ -9195,6 +9195,15 @@ namespace Foxoft.Properties {
         public static string Form_RetailSale_Label_PrintCount {
             get {
                 return ResourceManager.GetString("Form_RetailSale_Label_PrintCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_RetailSale_LCG_Payment {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_LCG_Payment", resourceCulture);
             }
         }
         

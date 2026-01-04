@@ -3405,7 +3405,7 @@ To delete, cancel the receipt!</value>
     <value>New</value>
   </data>
   <data name="Form_RetailSale_Button_IncompletedInvoices" xml:space="preserve">
-    <value>Incomplete invoices</value>
+    <value>Incomplete Invoices</value>
   </data>
   <data name="Form_RetailSale_Button_InvoiceDiscount" xml:space="preserve">
     <value>Invoice Discount</value>
@@ -3511,5 +3511,8 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Entity_ReturnLineVM_DeliveredQty" xml:space="preserve">
     <value>Delivered Quantity</value>
+  </data>
+  <data name="Form_RetailSale_LCG_Payment" xml:space="preserve">
+    <value>Payment</value>
   </data>
 </root>
