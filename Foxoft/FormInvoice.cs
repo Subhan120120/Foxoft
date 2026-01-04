@@ -1558,15 +1558,15 @@ namespace Foxoft
             Clipboard.SetImage(Image.FromStream(memoryStream));
             string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
-            //SendWhatsApp(phoneNum, "");
+            SendWhatsApp(phoneNum, "");
 
-            var TOKEN = "EAAWMnYx6BxYBQTElL3PyIaa6m1Yh7ULhwtemKf8dGpZCqhpVzgngluG0Frg0PEz1gdMDdbmI4xyJ7meyOvTCteS5FVKEemCsW0RFc6gUHaZCpqGYpOGZB4RgiPyAS2mxbkgA6NHeuER9n6HFbF79vskZBZBXUrxYZBWQQwk1zqBkKzUGuBdnkFFsy8HcueVGtZAtAr1i09zpeZBHigTbHt2IPaMwNmce7u9uO0mZArnLVsfyZBmZAfY7pmVFVBEcgQhc9ntnJZCsBZCnG3KeAqOtcTpL43b7ZAy5wasSeTDK3MRgZDZD";
-            var PHONEID = "792567567267494";
+            //var TOKEN = "EAAWMnYx6BxYBQcbO6PYlNa7QL9yC19ctbj4SbYwfUdZBWILi0sC28WJrEGgBsE7n1kiWzFFzt9nZBlexQUgVh9mwng15ofi6FlwrN9UZA9X6uABj9RZCc9Opb0mnBg4uMXgJGuvCTWAooR2DbMZBnxeLEMvbU2RJpLphqR4EAGPXtTW0LyBtO697rU33pNipXOejoq9ZAhpyTNPlbQCB39v3J1lfEDxQB3oIvgMfo6TC53ft48iB1d0DzYeBsNgVmQAsEDTy56qF3AgWHr7JgSLdouaCiMkD4ZC82UvKgZDZD";
+            //var PHONEID = "758761373995375";
 
-            using var wa = new WhatsAppClient(TOKEN, PHONEID);
+            //using var wa = new WhatsAppClient(TOKEN, PHONEID);
 
-            var messageId = await wa.UploadAndSendImageAsync(phoneNum, memoryStream, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
-            XtraMessageBox.Show($"Sent: {messageId}");
+            //var messageId = await wa.UploadAndSendImageAsync(phoneNum, memoryStream, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
+            //XtraMessageBox.Show($"Sent: {messageId}");
         }
 
         private void SendWhatsApp(string number, string message)
