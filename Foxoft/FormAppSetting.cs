@@ -34,12 +34,18 @@ namespace Foxoft
             dbContext.AppSettings.Where(x => x.Id == 1)
             .LoadAsync()
             .ContinueWith(loadTask => appSettingBindingSource.DataSource = dbContext.AppSettings.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+
+            CheckEdit_POSShowQtyDialog.EditValue = Settings.Default.POSShowQuantityDialog;
         }
 
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
             dbContext.SaveChanges();
+
+
+            Settings.Default.POSShowQuantityDialog = CheckEdit_POSShowQtyDialog.Checked;
+            Settings.Default.Save();
         }
 
 

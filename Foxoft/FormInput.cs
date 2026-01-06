@@ -22,16 +22,11 @@ namespace Foxoft
             CancelButton = btn_Cancel;
         }
 
-        public FormInput(decimal defaultValue)
+        public FormInput(decimal defaultValue, decimal? maxInput = null)
             : this()
         {
             this.defaultValue = defaultValue;
-        }
-
-        public FormInput(decimal defaultValue, decimal maxInput)
-            : this(defaultValue)
-        {
-            this.maxInput = maxInput;
+            this.maxInput = maxInput ?? decimal.MaxValue;
         }
 
         private void FormInput_Load(object sender, EventArgs e)
@@ -85,7 +80,7 @@ namespace Foxoft
             decimal val = Convert.ToDecimal(textEdit.EditValue);
             if (val <= 0)
                 e.Cancel = true;
-            else if (val > maxInput && maxInput != 0)
+            else if (val > maxInput)
                 e.Cancel = true;
             else
                 label_Message.Text = "";

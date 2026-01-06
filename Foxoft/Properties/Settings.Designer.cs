@@ -301,15 +301,15 @@ namespace Foxoft.Properties
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowQuantityDialog
+        public bool POSShowQuantityDialog
         {
             get
             {
-                return ((bool)(this["ShowQuantityDialog"]));
+                return ((bool)(this["POSShowQuantityDialog"]));
             }
             set
             {
-                this["ShowQuantityDialog"] = value;
+                this["POSShowQuantityDialog"] = value;
             }
         }
     }

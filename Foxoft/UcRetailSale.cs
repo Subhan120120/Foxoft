@@ -263,29 +263,42 @@ namespace Foxoft
                         return;
                     }
 
-                    if (formProductList.dcProduct?.ProductTypeCode != 3) // product is not service product
-                    {
-                        string wareHouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+                    if (formProductList.dcProduct?.ProductTypeCode == 3) // product is not service product
+                        return;
 
-                        bool permitNegativeStock = efMethods
-                            .SelectEntityById<DcWarehouse>(wareHouseCode)
-                            .PermitNegativeStock;
+                    string wareHouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
-                        decimal balance = CalcProductBalance(formProductList.dcProduct, wareHouseCode);
+                    bool permitNegativeStock = efMethods
+                        .SelectEntityById<DcWarehouse>(wareHouseCode)
+                        .PermitNegativeStock;
 
-                        if (!permitNegativeStock)
-                            if (Convert.ToDecimal(1) > balance)
-                            {
-                                XtraMessageBox.Show(
-                                    Resources.Form_RetailSale_NoStock,
-                                    Resources.Common_Attention,
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Warning);
+                    decimal? balance = CalcProductBalance(formProductList.dcProduct, wareHouseCode);
+
+                    decimal qty = 1;
+
+                    if (permitNegativeStock)
+                        balance = null;
+
+                    if (Settings.Default.POSShowQuantityDialog)
+                        using (FormInput formQty = new(qty, balance))
+                        {
+                            if (formQty.ShowDialog(this) == DialogResult.OK)
+                                qty = formQty.input;
+                            else
                                 return;
-                            }
-                    }
+                        }
+                    else if (!permitNegativeStock)
+                        if (balance <= 0m)
+                        {
+                            XtraMessageBox.Show(
+                                Resources.Form_RetailSale_NoStock,
+                                Resources.Common_Attention,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                            return;
+                        }
 
-                    AddNewRow(formProductList.dcProduct, 1);
+                    AddNewRow(formProductList.dcProduct, qty);
 
                     SaveInvoice();
                 }
@@ -845,15 +858,41 @@ namespace Foxoft
                 }
             }
 
-            if (Settings.Default.ShowQuantityDialog)
-                using (FormInput formQty = new(1))
-                {
-                    if (formQty.ShowDialog(this) == DialogResult.OK)
-                        qty = formQty.input;
-                }
-
             if (selectedProduct != null)
             {
+                if (selectedProduct?.ProductTypeCode == 3) // product is not service product
+                    return;
+
+                string wareHouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+
+                bool permitNegativeStock = efMethods
+                    .SelectEntityById<DcWarehouse>(wareHouseCode)
+                    .PermitNegativeStock;
+
+                decimal? balance = CalcProductBalance(selectedProduct, wareHouseCode);
+
+                if (permitNegativeStock)
+                    balance = null;
+
+                if (Settings.Default.POSShowQuantityDialog && dcProductByScale == null)
+                    using (FormInput formQty = new(qty, balance))
+                    {
+                        if (formQty.ShowDialog(this) == DialogResult.OK)
+                            qty = formQty.input;
+                        else
+                            return;
+                    }
+                else if (!permitNegativeStock)
+                    if (balance <= 0m)
+                    {
+                        XtraMessageBox.Show(
+                            Resources.Form_RetailSale_NoStock,
+                            Resources.Common_Attention,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                        return;
+                    }
+
                 AddNewRow(selectedProduct, qty);
                 SaveInvoice();
                 txtEdit_Barcode.EditValue = string.Empty;
@@ -868,6 +907,16 @@ namespace Foxoft
             }
 
             ActiveControl = txtEdit_Barcode;
+        }
+
+        private decimal ShowQtyDialog(decimal qty, decimal? maxQty = null)
+        {
+            using (FormInput formQty = new(qty, maxQty))
+            {
+                if (formQty.ShowDialog(this) == DialogResult.OK)
+                    qty = formQty.input;
+            }
+            return qty;
         }
 
         private void GV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
