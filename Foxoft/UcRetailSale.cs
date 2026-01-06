@@ -10,6 +10,7 @@ using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System.Collections.Specialized;
 using System.Drawing.Printing;
 using System.IO;
@@ -843,6 +844,13 @@ namespace Foxoft
                         qty = int.Parse(input.Substring(7, 6)) / 10000m; // 2 000003 02.0000
                 }
             }
+
+            if (Settings.Default.ShowQuantityDialog)
+                using (FormInput formQty = new(1))
+                {
+                    if (formQty.ShowDialog(this) == DialogResult.OK)
+                        qty = formQty.input;
+                }
 
             if (selectedProduct != null)
             {

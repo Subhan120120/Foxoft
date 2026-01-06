@@ -10,6 +10,7 @@ namespace Foxoft
 {
     public partial class FormInput : XtraForm
     {
+        public decimal defaultValue { get; set; }
         public decimal maxInput { get; set; }
         public decimal input { get; set; }
 
@@ -21,15 +22,21 @@ namespace Foxoft
             CancelButton = btn_Cancel;
         }
 
-        public FormInput(decimal maxInput)
+        public FormInput(decimal defaultValue)
             : this()
+        {
+            this.defaultValue = defaultValue;
+        }
+
+        public FormInput(decimal defaultValue, decimal maxInput)
+            : this(defaultValue)
         {
             this.maxInput = maxInput;
         }
 
         private void FormInput_Load(object sender, EventArgs e)
         {
-            txtEdit_Input.EditValue = maxInput;
+            txtEdit_Input.EditValue = defaultValue;
         }
 
         private void textEditInput_EditValueChanged(object sender, EventArgs e)

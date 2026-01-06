@@ -96,7 +96,7 @@ namespace Foxoft
 
             if (maxReturn > 0)
             {
-                using (FormInput formQty = new(maxReturn))
+                using (FormInput formQty = new(maxReturn, maxReturn))
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {

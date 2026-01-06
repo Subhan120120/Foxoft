@@ -297,5 +297,20 @@ namespace Foxoft.Properties
                 this["POSFindProduct"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowQuantityDialog
+        {
+            get
+            {
+                return ((bool)(this["ShowQuantityDialog"]));
+            }
+            set
+            {
+                this["ShowQuantityDialog"] = value;
+            }
+        }
     }
 }
