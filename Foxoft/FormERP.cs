@@ -260,6 +260,7 @@ namespace Foxoft
             this.ACE_InstallmentSales.Name = "InstallmentSales";
             this.ACE_StoreList.Name = "StoreList";
             this.ACE_WarehouseList.Name = "WarehouseList";
+            this.ACE_BarcodeOperations.Name = "BarcodeOperations";
         }
 
         private void InitializeReports()
@@ -305,10 +306,12 @@ namespace Foxoft
                     shortcut.ImageOptions.SvgImage = element.ImageOptions.SvgImage;
 
                     ACG_Favorites.Visible = true;
-                    ACG_Favorites.Elements.Add(shortcut);
+
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, shortcut.Name);
+                    if (currAccHasClaims)
+                        ACG_Favorites.Elements.Add(shortcut);
                 }
             }
-
         }
 
         private void UserLookAndFeel_StyleChanged(object sender, EventArgs e)
@@ -436,6 +439,11 @@ namespace Foxoft
                 CultureInfo.DefaultThreadCurrentCulture = culture;
                 CultureInfo.DefaultThreadCurrentUICulture = culture;
             }
+        }
+
+        private void ACE_BarcodeOperations_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void ShowNewForm<T>(params object[] args) where T : Form

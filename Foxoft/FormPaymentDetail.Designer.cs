@@ -53,8 +53,6 @@ namespace Foxoft
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
             trPaymentHeadersBindingSource = new BindingSource(components);
-            lbl_CurrAccBalansBefore = new DevExpress.XtraEditors.LabelControl();
-            lbl_CurrAccBalansAfter = new DevExpress.XtraEditors.LabelControl();
             lbl_CurrAccDesc = new DevExpress.XtraEditors.LabelControl();
             gC_PaymentLine = new DevExpress.XtraGrid.GridControl();
             trPaymentLinesBindingSource = new BindingSource(components);
@@ -97,8 +95,6 @@ namespace Foxoft
             ItemForOperationDate = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForStoreCode = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
@@ -132,8 +128,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForOperationDate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForStoreCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
@@ -271,8 +265,6 @@ namespace Foxoft
             // dataLayoutControl1
             // 
             dataLayoutControl1.Controls.Add(checkEdit_IsSent);
-            dataLayoutControl1.Controls.Add(lbl_CurrAccBalansBefore);
-            dataLayoutControl1.Controls.Add(lbl_CurrAccBalansAfter);
             dataLayoutControl1.Controls.Add(lbl_CurrAccDesc);
             dataLayoutControl1.Controls.Add(gC_PaymentLine);
             dataLayoutControl1.Controls.Add(OperationDateDateEdit);
@@ -295,11 +287,11 @@ namespace Foxoft
             // 
             checkEdit_IsSent.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "IsSent", true));
             checkEdit_IsSent.Enabled = false;
-            checkEdit_IsSent.Location = new Point(367, 364);
+            checkEdit_IsSent.Location = new Point(12, 364);
             checkEdit_IsSent.Name = "checkEdit_IsSent";
             checkEdit_IsSent.Properties.Caption = Resources.Entity_PaymentHeader_IsSent;
             checkEdit_IsSent.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            checkEdit_IsSent.Size = new Size(106, 20);
+            checkEdit_IsSent.Size = new Size(875, 20);
             checkEdit_IsSent.StyleController = dataLayoutControl1;
             checkEdit_IsSent.TabIndex = 6;
             // 
@@ -308,29 +300,11 @@ namespace Foxoft
             trPaymentHeadersBindingSource.AddingNew += trPaymentHeadersBindingSource_AddingNew;
             trPaymentHeadersBindingSource.CurrentItemChanged += trPaymentHeadersBindingSource_CurrentItemChanged;
             // 
-            // lbl_CurrAccBalansBefore
-            // 
-            lbl_CurrAccBalansBefore.Location = new Point(12, 364);
-            lbl_CurrAccBalansBefore.Name = "lbl_CurrAccBalansBefore";
-            lbl_CurrAccBalansBefore.Size = new Size(351, 20);
-            lbl_CurrAccBalansBefore.StyleController = dataLayoutControl1;
-            lbl_CurrAccBalansBefore.TabIndex = 1;
-            lbl_CurrAccBalansBefore.Text = Resources.Form_PaymentDetail_Label_CurrAccBalanceBefore;
-            // 
-            // lbl_CurrAccBalansAfter
-            // 
-            lbl_CurrAccBalansAfter.Location = new Point(477, 364);
-            lbl_CurrAccBalansAfter.Name = "lbl_CurrAccBalansAfter";
-            lbl_CurrAccBalansAfter.Size = new Size(410, 20);
-            lbl_CurrAccBalansAfter.StyleController = dataLayoutControl1;
-            lbl_CurrAccBalansAfter.TabIndex = 1;
-            lbl_CurrAccBalansAfter.Text = Resources.Form_PaymentDetail_Label_CurrAccBalanceAfter;
-            // 
             // lbl_CurrAccDesc
             // 
-            lbl_CurrAccDesc.Location = new Point(615, 12);
+            lbl_CurrAccDesc.Location = new Point(640, 12);
             lbl_CurrAccDesc.Name = "lbl_CurrAccDesc";
-            lbl_CurrAccDesc.Size = new Size(272, 20);
+            lbl_CurrAccDesc.Size = new Size(247, 20);
             lbl_CurrAccDesc.StyleController = dataLayoutControl1;
             lbl_CurrAccDesc.TabIndex = 1;
             // 
@@ -391,11 +365,6 @@ namespace Foxoft
             repoLUE_PaymentTypeCode.AutoHeight = false;
             repoLUE_PaymentTypeCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
             repoLUE_PaymentTypeCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_PaymentTypeCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
-            {
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentType.PaymentTypeCode), ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentType.PaymentTypeDesc), "")
-            });
             repoLUE_PaymentTypeCode.DisplayMember = "PaymentTypeDesc";
             repoLUE_PaymentTypeCode.Name = "repoLUE_PaymentTypeCode";
             repoLUE_PaymentTypeCode.NullText = "";
@@ -460,11 +429,6 @@ namespace Foxoft
             repoLUE_CurrencyCode.AutoHeight = false;
             repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
             repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
-            {
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyCode), ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyDesc), "")
-            });
             repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
             repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
             repoLUE_CurrencyCode.NullText = "";
@@ -552,13 +516,13 @@ namespace Foxoft
             // 
             OperationDateDateEdit.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "OperationDate", true));
             OperationDateDateEdit.EditValue = null;
-            OperationDateDateEdit.Location = new Point(98, 36);
+            OperationDateDateEdit.Location = new Point(147, 36);
             OperationDateDateEdit.MenuManager = ribbonControl1;
             OperationDateDateEdit.Name = "OperationDateDateEdit";
             OperationDateDateEdit.Properties.AllowMouseWheel = false;
             OperationDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             OperationDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            OperationDateDateEdit.Size = new Size(349, 20);
+            OperationDateDateEdit.Size = new Size(300, 20);
             OperationDateDateEdit.StyleController = dataLayoutControl1;
             OperationDateDateEdit.TabIndex = 3;
             OperationDateDateEdit.KeyDown += dataLayout_KeyDown;
@@ -567,12 +531,12 @@ namespace Foxoft
             // 
             OperationTimeTimeSpanEdit.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "OperationTime", true));
             OperationTimeTimeSpanEdit.EditValue = TimeSpan.Parse("00:00:00");
-            OperationTimeTimeSpanEdit.Location = new Point(98, 60);
+            OperationTimeTimeSpanEdit.Location = new Point(147, 60);
             OperationTimeTimeSpanEdit.MenuManager = ribbonControl1;
             OperationTimeTimeSpanEdit.Name = "OperationTimeTimeSpanEdit";
             OperationTimeTimeSpanEdit.Properties.AllowMouseWheel = false;
             OperationTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            OperationTimeTimeSpanEdit.Size = new Size(349, 20);
+            OperationTimeTimeSpanEdit.Size = new Size(300, 20);
             OperationTimeTimeSpanEdit.StyleController = dataLayoutControl1;
             OperationTimeTimeSpanEdit.TabIndex = 5;
             OperationTimeTimeSpanEdit.KeyDown += dataLayout_KeyDown;
@@ -580,11 +544,11 @@ namespace Foxoft
             // DescriptionTextEdit
             // 
             DescriptionTextEdit.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "Description", true));
-            DescriptionTextEdit.Location = new Point(537, 60);
+            DescriptionTextEdit.Location = new Point(586, 60);
             DescriptionTextEdit.MenuManager = ribbonControl1;
             DescriptionTextEdit.Name = "DescriptionTextEdit";
             DescriptionTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            DescriptionTextEdit.Size = new Size(350, 20);
+            DescriptionTextEdit.Size = new Size(301, 20);
             DescriptionTextEdit.StyleController = dataLayoutControl1;
             DescriptionTextEdit.TabIndex = 4;
             DescriptionTextEdit.KeyDown += dataLayout_KeyDown;
@@ -592,21 +556,16 @@ namespace Foxoft
             // LUE_StoreCode
             // 
             LUE_StoreCode.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "StoreCode", true));
-            LUE_StoreCode.Location = new Point(537, 36);
+            LUE_StoreCode.Location = new Point(586, 36);
             LUE_StoreCode.MenuManager = ribbonControl1;
             LUE_StoreCode.Name = "LUE_StoreCode";
             LUE_StoreCode.Properties.AllowMouseWheel = false;
             LUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             LUE_StoreCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            LUE_StoreCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
-            {
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrAcc.CurrAccCode), "Mağaza Kodu"),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrAcc.CurrAccDesc), "Mağaza Adı")
-            });
             LUE_StoreCode.Properties.DisplayMember = "CurrAccDesc";
             LUE_StoreCode.Properties.NullText = "";
             LUE_StoreCode.Properties.ValueMember = "CurrAccCode";
-            LUE_StoreCode.Size = new Size(350, 20);
+            LUE_StoreCode.Size = new Size(301, 20);
             LUE_StoreCode.StyleController = dataLayoutControl1;
             LUE_StoreCode.TabIndex = 7;
             LUE_StoreCode.PopupFilter += LUE_StoreCode_PopupFilter;
@@ -615,11 +574,11 @@ namespace Foxoft
             // btnEdit_CurrAccCode
             // 
             btnEdit_CurrAccCode.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "CurrAccCode", true));
-            btnEdit_CurrAccCode.Location = new Point(537, 12);
+            btnEdit_CurrAccCode.Location = new Point(586, 12);
             btnEdit_CurrAccCode.MenuManager = ribbonControl1;
             btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
             btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_CurrAccCode.Size = new Size(74, 20);
+            btnEdit_CurrAccCode.Size = new Size(50, 20);
             btnEdit_CurrAccCode.StyleController = dataLayoutControl1;
             btnEdit_CurrAccCode.TabIndex = 2;
             btnEdit_CurrAccCode.ButtonClick += CurrAccCodeButtonEdit_ButtonClick;
@@ -631,12 +590,12 @@ namespace Foxoft
             // btnEdit_DocNum
             // 
             btnEdit_DocNum.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "DocumentNumber", true));
-            btnEdit_DocNum.Location = new Point(98, 12);
+            btnEdit_DocNum.Location = new Point(147, 12);
             btnEdit_DocNum.MenuManager = ribbonControl1;
             btnEdit_DocNum.Name = "btnEdit_DocNum";
             btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_DocNum.Size = new Size(349, 20);
+            btnEdit_DocNum.Size = new Size(300, 20);
             btnEdit_DocNum.StyleController = dataLayoutControl1;
             btnEdit_DocNum.TabIndex = 0;
             btnEdit_DocNum.ButtonPressed += btnEdit_DocNum_ButtonPressed;
@@ -655,7 +614,7 @@ namespace Foxoft
             // 
             LCG_Payment.AllowDrawBackground = false;
             LCG_Payment.GroupBordersVisible = false;
-            LCG_Payment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForOperationTime, ItemForCurrAccCode, layoutControlItem1, ItemForDescription, ItemForOperationDate, ItemForDocumentNumber, layoutControlItem3, layoutControlItem4, layoutControlItem5, ItemForStoreCode, layoutControlItem6 });
+            LCG_Payment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForOperationTime, ItemForCurrAccCode, layoutControlItem1, ItemForDescription, ItemForOperationDate, ItemForDocumentNumber, layoutControlItem3, ItemForStoreCode, layoutControlItem6 });
             LCG_Payment.Location = new Point(0, 0);
             LCG_Payment.Name = "LCG_Payment";
             LCG_Payment.Size = new Size(879, 376);
@@ -666,15 +625,15 @@ namespace Foxoft
             ItemForOperationTime.Location = new Point(0, 48);
             ItemForOperationTime.Name = "ItemForOperationTime";
             ItemForOperationTime.Size = new Size(439, 24);
-            ItemForOperationTime.TextSize = new Size(74, 13);
+            ItemForOperationTime.TextSize = new Size(123, 13);
             // 
             // ItemForCurrAccCode
             // 
             ItemForCurrAccCode.Control = btnEdit_CurrAccCode;
             ItemForCurrAccCode.Location = new Point(439, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            ItemForCurrAccCode.Size = new Size(164, 24);
-            ItemForCurrAccCode.TextSize = new Size(74, 13);
+            ItemForCurrAccCode.Size = new Size(189, 24);
+            ItemForCurrAccCode.TextSize = new Size(123, 13);
             // 
             // layoutControlItem1
             // 
@@ -690,7 +649,7 @@ namespace Foxoft
             ItemForDescription.Location = new Point(439, 48);
             ItemForDescription.Name = "ItemForDescription";
             ItemForDescription.Size = new Size(440, 24);
-            ItemForDescription.TextSize = new Size(74, 13);
+            ItemForDescription.TextSize = new Size(123, 13);
             // 
             // ItemForOperationDate
             // 
@@ -698,7 +657,7 @@ namespace Foxoft
             ItemForOperationDate.Location = new Point(0, 24);
             ItemForOperationDate.Name = "ItemForOperationDate";
             ItemForOperationDate.Size = new Size(439, 24);
-            ItemForOperationDate.TextSize = new Size(74, 13);
+            ItemForOperationDate.TextSize = new Size(123, 13);
             // 
             // ItemForDocumentNumber
             // 
@@ -706,52 +665,32 @@ namespace Foxoft
             ItemForDocumentNumber.Location = new Point(0, 0);
             ItemForDocumentNumber.Name = "ItemForDocumentNumber";
             ItemForDocumentNumber.Size = new Size(439, 24);
-            ItemForDocumentNumber.TextSize = new Size(74, 13);
+            ItemForDocumentNumber.TextSize = new Size(123, 13);
             // 
             // layoutControlItem3
             // 
             layoutControlItem3.Control = lbl_CurrAccDesc;
-            layoutControlItem3.Location = new Point(603, 0);
+            layoutControlItem3.Location = new Point(628, 0);
             layoutControlItem3.MinSize = new Size(67, 17);
             layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new Size(276, 24);
+            layoutControlItem3.Size = new Size(251, 24);
             layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem3.TextVisible = false;
             // 
-            // layoutControlItem4
-            // 
-            layoutControlItem4.Control = lbl_CurrAccBalansAfter;
-            layoutControlItem4.Location = new Point(465, 352);
-            layoutControlItem4.MinSize = new Size(125, 17);
-            layoutControlItem4.Name = "layoutControlItem4";
-            layoutControlItem4.Size = new Size(414, 24);
-            layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem4.TextVisible = false;
-            // 
-            // layoutControlItem5
-            // 
-            layoutControlItem5.Control = lbl_CurrAccBalansBefore;
-            layoutControlItem5.Location = new Point(0, 352);
-            layoutControlItem5.MinSize = new Size(125, 17);
-            layoutControlItem5.Name = "layoutControlItem5";
-            layoutControlItem5.Size = new Size(355, 24);
-            layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem5.TextVisible = false;
-            // 
-            // layoutControlItem2
+            // ItemForStoreCode
             // 
             ItemForStoreCode.Control = LUE_StoreCode;
             ItemForStoreCode.Location = new Point(439, 24);
             ItemForStoreCode.Name = "ItemForStoreCode";
             ItemForStoreCode.Size = new Size(440, 24);
-            ItemForStoreCode.TextSize = new Size(74, 13);
+            ItemForStoreCode.TextSize = new Size(123, 13);
             // 
             // layoutControlItem6
             // 
             layoutControlItem6.Control = checkEdit_IsSent;
-            layoutControlItem6.Location = new Point(355, 352);
+            layoutControlItem6.Location = new Point(0, 352);
             layoutControlItem6.Name = "layoutControlItem6";
-            layoutControlItem6.Size = new Size(110, 24);
+            layoutControlItem6.Size = new Size(879, 24);
             layoutControlItem6.TextVisible = false;
             // 
             // svgImageCollection1
@@ -771,7 +710,7 @@ namespace Foxoft
             Name = "FormPaymentDetail";
             Ribbon = ribbonControl1;
             StatusBar = ribbonStatusBar;
-            Text = Resources.Form_PaymentDetail_Caption;
+            Text = "Payment";
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuReports).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
@@ -802,8 +741,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForOperationDate).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForStoreCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
@@ -861,10 +798,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_MakePayment;
         private DevExpress.XtraEditors.LabelControl lbl_CurrAccDesc;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-        private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansBefore;
-        private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansAfter;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.XtraBars.BarButtonItem bBI_SendWhatsapp;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.BarButtonItem bBI_NewPayment;
@@ -882,5 +815,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
         private DevExpress.XtraBars.BarButtonItem BBI_EditPayment;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
+        private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansBefore;
+        private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansAfter;
     }
 }

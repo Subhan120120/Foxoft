@@ -305,7 +305,7 @@ namespace Foxoft
             lbl_InvoicePaidTotalSumTxt.Size = new Size(36, 19);
             lbl_InvoicePaidTotalSumTxt.StyleController = lC_InvoiceLine;
             lbl_InvoicePaidTotalSumTxt.TabIndex = 1;
-            lbl_InvoicePaidTotalSumTxt.Text = Resources.Form_RetailSale_Label_PaidTotal;
+            lbl_InvoicePaidTotalSumTxt.Text = "Paid:";
             // 
             // lbl_InvoicePaidCashlessSum
             // 
@@ -327,7 +327,7 @@ namespace Foxoft
             lbl_InvoicePaidCashlessSumTxt.Size = new Size(66, 19);
             lbl_InvoicePaidCashlessSumTxt.StyleController = lC_InvoiceLine;
             lbl_InvoicePaidCashlessSumTxt.TabIndex = 1;
-            lbl_InvoicePaidCashlessSumTxt.Text = Resources.Form_RetailSale_Label_PaidCashless;
+            lbl_InvoicePaidCashlessSumTxt.Text = "Cashless:";
             // 
             // labelControl2
             // 
@@ -349,7 +349,7 @@ namespace Foxoft
             lbl_InvoicePaidCashSumTxt.Size = new Size(40, 19);
             lbl_InvoicePaidCashSumTxt.StyleController = lC_InvoiceLine;
             lbl_InvoicePaidCashSumTxt.TabIndex = 1;
-            lbl_InvoicePaidCashSumTxt.Text = Resources.Form_RetailSale_Label_PaidCash;
+            lbl_InvoicePaidCashSumTxt.Text = "Cash:";
             // 
             // txt_PrintCount
             // 
@@ -688,6 +688,9 @@ namespace Foxoft
             // 
             colProductCode.FieldName = "ProductCode";
             colProductCode.Name = "colProductCode";
+            colProductCode.Visible = true;
+            colProductCode.VisibleIndex = 0;
+            colProductCode.Width = 84;
             // 
             // col_ProductDesc
             // 
@@ -696,7 +699,8 @@ namespace Foxoft
             col_ProductDesc.Name = "col_ProductDesc";
             col_ProductDesc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Custom, "ProductDes", "Toplam:") });
             col_ProductDesc.Visible = true;
-            col_ProductDesc.VisibleIndex = 0;
+            col_ProductDesc.VisibleIndex = 1;
+            col_ProductDesc.Width = 114;
             // 
             // col_Qty
             // 
@@ -704,8 +708,8 @@ namespace Foxoft
             col_Qty.FieldName = "Qty";
             col_Qty.Name = "col_Qty";
             col_Qty.Visible = true;
-            col_Qty.VisibleIndex = 1;
-            col_Qty.Width = 39;
+            col_Qty.VisibleIndex = 2;
+            col_Qty.Width = 58;
             // 
             // col_Price
             // 
@@ -713,8 +717,8 @@ namespace Foxoft
             col_Price.FieldName = "Price";
             col_Price.Name = "col_Price";
             col_Price.Visible = true;
-            col_Price.VisibleIndex = 2;
-            col_Price.Width = 43;
+            col_Price.VisibleIndex = 3;
+            col_Price.Width = 65;
             // 
             // col_NetAmount
             // 
@@ -725,8 +729,8 @@ namespace Foxoft
             col_NetAmount.Name = "col_NetAmount";
             col_NetAmount.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Sum, "NetAmount", "{0:0.##}") });
             col_NetAmount.Visible = true;
-            col_NetAmount.VisibleIndex = 3;
-            col_NetAmount.Width = 70;
+            col_NetAmount.VisibleIndex = 4;
+            col_NetAmount.Width = 112;
             // 
             // col_Barcode
             // 
@@ -801,7 +805,7 @@ namespace Foxoft
             btn_ProductSearch.Size = new Size(76, 63);
             btn_ProductSearch.StyleController = lC_InvoiceLine;
             btn_ProductSearch.TabIndex = 1;
-            btn_ProductSearch.Text = Resources.Form_RetailSale_Button_Product;
+            btn_ProductSearch.Text = "Product";
             btn_ProductSearch.Click += btn_ProductSearch_Click;
             // 
             // btn_LineDiscount
@@ -817,7 +821,7 @@ namespace Foxoft
             btn_LineDiscount.Size = new Size(76, 63);
             btn_LineDiscount.StyleController = lC_InvoiceLine;
             btn_LineDiscount.TabIndex = 1;
-            btn_LineDiscount.Text = Resources.Form_RetailSale_Button_LineDiscount;
+            btn_LineDiscount.Text = "Line Discount";
             btn_LineDiscount.Click += btn_LineDiscount_Click;
             // 
             // btn_CancelInvoice
@@ -833,7 +837,7 @@ namespace Foxoft
             btn_CancelInvoice.Size = new Size(76, 63);
             btn_CancelInvoice.StyleController = lC_InvoiceLine;
             btn_CancelInvoice.TabIndex = 1;
-            btn_CancelInvoice.Text = Resources.Form_RetailSale_Button_CancelInvoice;
+            btn_CancelInvoice.Text = "Cancel Receipt";
             btn_CancelInvoice.Click += btn_CancelInvoice_Click;
             // 
             // btn_DeleteLine
@@ -849,7 +853,7 @@ namespace Foxoft
             btn_DeleteLine.Size = new Size(76, 63);
             btn_DeleteLine.StyleController = lC_InvoiceLine;
             btn_DeleteLine.TabIndex = 1;
-            btn_DeleteLine.Text = Resources.Form_RetailSale_Button_DeleteLine;
+            btn_DeleteLine.Text = "Delete Line";
             btn_DeleteLine.Click += btn_DeleteLine_Click;
             // 
             // btn_SalesPerson
@@ -864,7 +868,7 @@ namespace Foxoft
             btn_SalesPerson.Size = new Size(76, 63);
             btn_SalesPerson.StyleController = lC_InvoiceLine;
             btn_SalesPerson.TabIndex = 1;
-            btn_SalesPerson.Text = Resources.Form_RetailSale_Button_SalesPerson;
+            btn_SalesPerson.Text = "Salesperson";
             btn_SalesPerson.Click += btn_SalesPerson_Click;
             // 
             // btn_Cash
@@ -880,7 +884,7 @@ namespace Foxoft
             btn_Cash.Size = new Size(76, 72);
             btn_Cash.StyleController = lC_InvoiceLine;
             btn_Cash.TabIndex = 1;
-            btn_Cash.Text = Resources.Form_RetailSale_Button_PaymentCash;
+            btn_Cash.Text = "Cash";
             btn_Cash.Click += btn_Payment_Click;
             // 
             // btn_Cashless
@@ -894,7 +898,7 @@ namespace Foxoft
             btn_Cashless.Size = new Size(76, 72);
             btn_Cashless.StyleController = lC_InvoiceLine;
             btn_Cashless.TabIndex = 1;
-            btn_Cashless.Text = Resources.Form_RetailSale_Button_PaymentCashless;
+            btn_Cashless.Text = "Cashless";
             btn_Cashless.Click += btn_Payment_Click;
             // 
             // btn_CustomerBonus
@@ -908,7 +912,7 @@ namespace Foxoft
             btn_CustomerBonus.Size = new Size(76, 72);
             btn_CustomerBonus.StyleController = lC_InvoiceLine;
             btn_CustomerBonus.TabIndex = 1;
-            btn_CustomerBonus.Text = Resources.Form_RetailSale_Button_PaymentBonus;
+            btn_CustomerBonus.Text = "Bonus";
             btn_CustomerBonus.Click += btn_Payment_Click;
             // 
             // btn_Print
@@ -921,7 +925,7 @@ namespace Foxoft
             btn_Print.Size = new Size(76, 63);
             btn_Print.StyleController = lC_InvoiceLine;
             btn_Print.TabIndex = 1;
-            btn_Print.Text = Resources.Form_RetailSale_Button_Print;
+            btn_Print.Text = "Print";
             btn_Print.Click += btn_Print_Click;
             // 
             // btn_PrintPreview
@@ -934,7 +938,7 @@ namespace Foxoft
             btn_PrintPreview.Size = new Size(76, 63);
             btn_PrintPreview.StyleController = lC_InvoiceLine;
             btn_PrintPreview.TabIndex = 1;
-            btn_PrintPreview.Text = Resources.Form_RetailSale_Button_PrintPreview;
+            btn_PrintPreview.Text = "Print Preview";
             btn_PrintPreview.Click += btn_PrintPrevieww_Click;
             // 
             // btn_ReportZ
@@ -947,7 +951,7 @@ namespace Foxoft
             btn_ReportZ.Size = new Size(76, 63);
             btn_ReportZ.StyleController = lC_InvoiceLine;
             btn_ReportZ.TabIndex = 1;
-            btn_ReportZ.Text = Resources.Form_RetailSale_Button_ReportZ;
+            btn_ReportZ.Text = "End of Day";
             btn_ReportZ.Click += btn_ReportZ_Click;
             // 
             // btn_NewInvoice
@@ -960,20 +964,20 @@ namespace Foxoft
             btn_NewInvoice.Size = new Size(76, 63);
             btn_NewInvoice.StyleController = lC_InvoiceLine;
             btn_NewInvoice.TabIndex = 1;
-            btn_NewInvoice.Text = Resources.Form_RetailSale_Button_New;
+            btn_NewInvoice.Text = "New";
             btn_NewInvoice.Click += Btn_NewInvoice_Click;
             // 
             // btn_IncomplatedInvoices
             // 
-            btn_IncomplatedInvoices.ImageOptions.Location = ImageLocation.TopCenter;
             btn_IncomplatedInvoices.AllowFocus = false;
             btn_IncomplatedInvoices.ImageOptions.Image = (Image)resources.GetObject("btn_IncomplatedInvoices.ImageOptions.Image");
+            btn_IncomplatedInvoices.ImageOptions.Location = ImageLocation.TopCenter;
             btn_IncomplatedInvoices.Location = new Point(735, 307);
             btn_IncomplatedInvoices.Name = "btn_IncomplatedInvoices";
             btn_IncomplatedInvoices.Size = new Size(76, 63);
             btn_IncomplatedInvoices.StyleController = lC_InvoiceLine;
             btn_IncomplatedInvoices.TabIndex = 6;
-            btn_IncomplatedInvoices.Text = Resources.Form_RetailSale_Button_IncompletedInvoices;
+            btn_IncomplatedInvoices.Text = "Incomplete Invoices";
             btn_IncomplatedInvoices.Click += btn_IncomplatedInvoices_Click;
             // 
             // btn_InvoiceDiscount
@@ -988,7 +992,7 @@ namespace Foxoft
             btn_InvoiceDiscount.Size = new Size(76, 63);
             btn_InvoiceDiscount.StyleController = lC_InvoiceLine;
             btn_InvoiceDiscount.TabIndex = 7;
-            btn_InvoiceDiscount.Text = Resources.Form_RetailSale_Button_InvoiceDiscount;
+            btn_InvoiceDiscount.Text = "Invoice Discount";
             btn_InvoiceDiscount.Click += btn_InvoiceDiscount_Click;
             // 
             // lCG_Root

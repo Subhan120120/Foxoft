@@ -173,8 +173,6 @@ namespace Foxoft
                                     {
                                         LocalView<TrPaymentLine> lV_paymentLine = dbContext.TrPaymentLines.Local;
                                         trPaymentLinesBindingSource.DataSource = lV_paymentLine.ToBindingList();
-
-                                        CalcCurrAccBalance();
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
@@ -279,15 +277,6 @@ namespace Foxoft
             //CalcRowLocNetAmount(e);
         }
 
-        private void CalcCurrAccBalance()
-        {
-            decimal summaryValue = CalcSummmaryValue();
-            decimal balanceAfter = BalanceBefore + summaryValue;
-
-            lbl_CurrAccBalansAfter.Text = Resources.Form_PaymentDetail_Label_CurrAccBalanceAfter + " " + Math.Round(balanceAfter, 2).ToString();
-            lbl_CurrAccBalansBefore.Text = Resources.Form_PaymentDetail_Label_CurrAccBalanceBefore + " " + Math.Round(BalanceBefore, 2).ToString();
-        }
-
         private decimal CalcSummmaryValue()
         {
             decimal sum = 0;
@@ -314,8 +303,6 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
-
-            CalcCurrAccBalance();
         }
 
         private void gV_PaymentLine_RowDeleted(object sender, RowDeletedEventArgs e)
@@ -556,8 +543,6 @@ namespace Foxoft
                     lbl_CurrAccDesc.Text = $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}";
                     BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
                 }
-
-                CalcCurrAccBalance();
             }
         }
 
