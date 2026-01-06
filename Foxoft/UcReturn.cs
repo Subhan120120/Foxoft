@@ -121,6 +121,7 @@ namespace Foxoft
                             returnInvoHeader.CreatedUserName = Authorization.CurrAccCode;
                             returnInvoHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
                             returnInvoHeader.IsMainTF = true;
+                            returnInvoHeader.IsCompleted = true;
 
                             efMethods.InsertEntity(returnInvoHeader);
                         }
