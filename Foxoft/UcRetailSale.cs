@@ -41,6 +41,29 @@ namespace Foxoft
             reportClass = new ReportClass(settingStore.DesignFileFolder);
 
             ClearControlsAddNew();
+
+            InitializeResourseName();
+        }
+
+        private void InitializeResourseName()
+        {
+            lbl_InvoicePaidTotalSumTxt.Text = Resources.Form_RetailSale_Label_PaidTotal;
+            lbl_InvoicePaidCashlessSumTxt.Text = Resources.Form_RetailSale_Label_PaidCashless;
+            lbl_InvoicePaidCashSumTxt.Text = Resources.Form_RetailSale_Label_PaidCash;
+            btn_ProductSearch.Text = Resources.Form_RetailSale_SelectProduct;
+            btn_LineDiscount.Text = Resources.Form_RetailSale_Button_LineDiscount;
+            btn_CancelInvoice.Text = Resources.Form_RetailSale_Button_CancelInvoice;
+            btn_DeleteLine.Text = Resources.Form_RetailSale_Button_DeleteLine;
+            btn_SalesPerson.Text = Resources.Form_RetailSale_Button_SalesPerson;
+            btn_Cash.Text = Resources.Form_RetailSale_Button_PaymentCash;
+            btn_Cashless.Text = Resources.Form_RetailSale_Button_PaymentCashless;
+            btn_CustomerBonus.Text = Resources.Form_RetailSale_Button_PaymentBonus;
+            btn_Print.Text = Resources.Form_RetailSale_Button_Print;
+            btn_PrintPreview.Text = Resources.Form_RetailSale_Button_PrintPreview;
+            btn_ReportZ.Text = Resources.Form_RetailSale_Button_ReportZ;
+            btn_NewInvoice.Text = Resources.Form_RetailSale_Button_New;
+            btn_IncomplatedInvoices.Text = Resources.Form_RetailSale_Button_IncompletedInvoices;
+            btn_InvoiceDiscount.Text = Resources.Form_RetailSale_Button_InvoiceDiscount;
         }
 
         private void UcRetailSale_Load(object sender, EventArgs e)
