@@ -10,8 +10,8 @@ namespace Foxoft
 {
     public partial class FormInput : XtraForm
     {
-        public decimal defaultValue { get; set; }
-        public decimal maxInput { get; set; }
+        public decimal defaultValue { get; set; } = 0;
+        public decimal maxInput { get; set; } = decimal.MaxValue;
         public decimal input { get; set; }
 
         public FormInput()
