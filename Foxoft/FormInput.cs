@@ -11,7 +11,7 @@ namespace Foxoft
     public partial class FormInput : XtraForm
     {
         public decimal defaultValue { get; set; } = 0;
-        public decimal maxInput { get; set; } = decimal.MaxValue;
+        public decimal maxInput { get; set; } = 999999999;
         public decimal input { get; set; }
 
         public FormInput()
@@ -26,8 +26,9 @@ namespace Foxoft
             : this()
         {
             this.defaultValue = defaultValue;
-            this.maxInput = maxInput ?? decimal.MaxValue;
+            this.maxInput = maxInput ?? 999999999;
         }
+
 
         private void FormInput_Load(object sender, EventArgs e)
         {

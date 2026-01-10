@@ -74,10 +74,29 @@ namespace Foxoft
             {
                 if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
                 {
-                    FormPOS formPos = new();
-                    Hide();
-                    formPos.ShowDialog();
-                    Close();
+                    SessionSave(
+                        txtEdit_UserName.Text,
+                        txtEdit_Password.Text,
+                        checkEdit_RemindMe.Checked,
+                        Convert.ToInt32(LUE_Terminal.EditValue),
+                        LUE_Company.EditValue?.ToString(),
+                        LUE_Language.EditValue?.ToString());
+
+                    CultureInfo culture = CultureInfo.CreateSpecificCulture(LUE_Language.EditValue?.ToString());
+                    Thread.CurrentThread.CurrentUICulture = culture;
+                    Thread.CurrentThread.CurrentCulture = culture;
+                    CultureInfo.DefaultThreadCurrentCulture = culture;
+                    CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+                    if (Convert.ToInt32(LUE_Terminal.EditValue) != 0)
+                    {
+                        FormPOS formPos = new();
+                        Hide();
+                        formPos.ShowDialog();
+                        Close();
+                    }
+                    else
+                        XtraMessageBox.Show(Resources.Form_Login_TerminalRequired);
                 }
             }
             else

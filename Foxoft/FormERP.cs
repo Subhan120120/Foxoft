@@ -34,7 +34,6 @@ namespace Foxoft
             InitComponentName();
 
             repositoryItemLookUpEdit1.DataSource = efMethods.SelectEntities<DcUILanguage>();
-
             BEI_Language.EditValue = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
