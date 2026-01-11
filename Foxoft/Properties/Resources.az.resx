@@ -3518,4 +3518,10 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="UC_Return_Col_Return" xml:space="preserve">
     <value>Qaytar</value>
   </data>
+  <data name="Entity_BarcodeOperationHeader_Name" xml:space="preserve">
+    <value>Ad</value>
+  </data>
+  <data name="Entity_BarcodeOperationHeader_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
 </root>

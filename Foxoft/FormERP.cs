@@ -178,6 +178,7 @@ namespace Foxoft
                 case "Parameters": ShowExistForm<FormAppSetting>(); break;
                 case "StoreList": ShowExistForm<FormStoreList>(); break;
                 case "WarehouseList": ShowExistForm<FormWarehouseList>(); break;
+                case "BarcodeOperations": ShowNewForm<FormBarcodeOperations>(); break;
 
                 default: break;
             }

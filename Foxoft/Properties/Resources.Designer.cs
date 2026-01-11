@@ -898,6 +898,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Barcode OperationHeader Id.
+        /// </summary>
+        public static string Entity_BarcodeOperationHeader_Id {
+            get {
+                return ResourceManager.GetString("Entity_BarcodeOperationHeader_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Entity_BarcodeOperationHeader_Name {
+            get {
+                return ResourceManager.GetString("Entity_BarcodeOperationHeader_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Barcode Type.
         /// </summary>
         public static string Entity_BarcodeType {

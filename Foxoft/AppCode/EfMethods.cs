@@ -1108,6 +1108,13 @@ namespace Foxoft
                            .ToList();
         }
 
+        public List<TrBarcodeOperationLine> SelectBarcodeOperationLinesByHeaderId(int id)
+        {
+            using subContext db = new();
+            return db.TrBarcodeOperationLines.Include(x => x.BarcodeOperationHeaderId == id)
+                           .ToList();
+        }
+
         public List<TrPaymentLine> SelectPaymentLinesByInvoice(Guid invoiceHeaderId)
         {
             using subContext db = new();

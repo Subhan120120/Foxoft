@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260110111613_TrBarcodeOperation")]
+    partial class TrBarcodeOperation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3981,106 +3984,6 @@ namespace Foxoft.Migrations
                     b.ToTable("SiteProducts");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrBarcodeOperationHeader", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("CreatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<DateTime>("LastUpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("LastUpdatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TrBarcodeOperationHeaders");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrBarcodeOperationLine", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Barcode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BarcodeOperationHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BarcodeTypeCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("CreatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<DateTime>("LastUpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("LastUpdatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<string>("ProductCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<decimal>("Qty")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
-                        .HasDefaultValueSql("1");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BarcodeOperationHeaderId");
-
-                    b.HasIndex("BarcodeTypeCode");
-
-                    b.HasIndex("ProductCode");
-
-                    b.ToTable("TrBarcodeOperationLines");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrClaimReport", b =>
                 {
                     b.Property<int>("ClaimReportId")
@@ -6339,33 +6242,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrBarcodeOperationLine", b =>
-                {
-                    b.HasOne("Foxoft.Models.TrBarcodeOperationHeader", "TrBarcodeOperationHeader")
-                        .WithMany("TrBarcodeOperationLines")
-                        .HasForeignKey("BarcodeOperationHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Foxoft.Models.DcBarcodeType", "DcBarcodeType")
-                        .WithMany()
-                        .HasForeignKey("BarcodeTypeCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
-                        .WithMany()
-                        .HasForeignKey("ProductCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcBarcodeType");
-
-                    b.Navigation("DcProduct");
-
-                    b.Navigation("TrBarcodeOperationHeader");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrClaimReport", b =>
                 {
                     b.HasOne("Foxoft.Models.DcClaim", "DcClaim")
@@ -7155,11 +7031,6 @@ namespace Foxoft.Migrations
                     b.Navigation("SettingStores");
 
                     b.Navigation("TrInvoiceLines");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrBarcodeOperationHeader", b =>
-                {
-                    b.Navigation("TrBarcodeOperationLines");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInstallment", b =>

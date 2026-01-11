@@ -39,6 +39,8 @@ namespace Foxoft.Models
         public DbSet<DcProduct> DcProducts { get; set; }
         public DbSet<SiteProduct> SiteProducts { get; set; }
         public DbSet<TrProductBarcode> TrProductBarcodes { get; set; }
+        public DbSet<TrBarcodeOperationLine> TrBarcodeOperationLines { get; set; }
+        public DbSet<TrBarcodeOperationHeader> TrBarcodeOperationHeaders { get; set; }
         public DbSet<DcBarcodeType> DcBarcodeTypes { get; set; }
         public DbSet<DcSerialNumber> DcSerialNumbers { get; set; }
         public DbSet<DcUnitOfMeasure> DcUnitOfMeasures { get; set; }
@@ -506,6 +508,13 @@ namespace Foxoft.Models
             {
                 entity.HasOne(x => x.DcCurrAcc)
                     .WithMany(x => x.TrReportCustomizations)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrBarcodeOperationLine>(entity =>
+            {
+                entity.HasOne(x => x.TrBarcodeOperationHeader)
+                    .WithMany(x => x.TrBarcodeOperationLines)
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }
