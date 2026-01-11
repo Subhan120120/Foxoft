@@ -383,6 +383,20 @@ namespace Foxoft
             }
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter && gV_ProductList.IsFindPanelVisible)
+            {
+                if (gC_ProductList.ContainsFocus)// Optional: ensure Find Panel has focus
+                {
+                    DialogResult = DialogResult.OK;
+                    return true; // prevent GridView default behavior
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void gC_ProductList_ProcessGridKey(object sender, KeyEventArgs e)
         {
             ColumnView view = (sender as GridControl).FocusedView as ColumnView;
