@@ -8,6 +8,10 @@ namespace Foxoft.Models
     [Display(Name = nameof(Resources.Entity_ProductBarcode), ResourceType = typeof(Resources))]
     public partial class TrBarcodeOperationHeader : BaseEntity
     {
+        public TrBarcodeOperationHeader()
+        {
+            TrBarcodeOperationLines = new BindingList<TrBarcodeOperationLine>();
+        }
         [Key]
         [Display(Name = nameof(Resources.Entity_BarcodeOperationHeader_Id), ResourceType = typeof(Resources))]
         public int Id { get; set; }

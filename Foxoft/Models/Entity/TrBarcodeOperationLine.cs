@@ -38,6 +38,7 @@ namespace Foxoft.Models
 
         [ForeignKey(nameof(ProductCode))]
         public virtual DcProduct DcProduct { get; set; }
+
         [ForeignKey(nameof(BarcodeOperationHeaderId))]
         public virtual TrBarcodeOperationHeader TrBarcodeOperationHeader { get; set; }
     }

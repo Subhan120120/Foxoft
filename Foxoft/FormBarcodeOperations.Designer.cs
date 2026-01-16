@@ -36,10 +36,12 @@ namespace Foxoft
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             BBI_New = new DevExpress.XtraBars.BarButtonItem();
             BBI_Save = new DevExpress.XtraBars.BarButtonItem();
+            BBI_Delete = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             trBarcodeOperationLinesBindingSource = new BindingSource(components);
+            trBarcodeOperationHeaderBindingSource = new BindingSource(components);
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             colId = new DevExpress.XtraGrid.Columns.GridColumn();
             colBarcodeOperationHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -53,26 +55,26 @@ namespace Foxoft
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             NameTextEdit = new TextEdit();
-            trBarcodeOperationHeaderBindingSource = new BindingSource(components);
             IdButtonEdit = new ButtonEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             ItemForId = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForName = new DevExpress.XtraLayout.LayoutControlItem();
-            BBI_Delete = new DevExpress.XtraBars.BarButtonItem();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trBarcodeOperationLinesBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trBarcodeOperationHeaderBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NameTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)trBarcodeOperationHeaderBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IdButtonEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForId).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForName).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             SuspendLayout();
             // 
             // ribbonControl1
@@ -97,8 +99,16 @@ namespace Foxoft
             // 
             BBI_Save.Caption = "Save";
             BBI_Save.Id = 2;
-            BBI_Save.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem2.ImageOptions.SvgImage");
+            BBI_Save.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Save.ImageOptions.SvgImage");
             BBI_Save.Name = "BBI_Save";
+            // 
+            // BBI_Delete
+            // 
+            BBI_Delete.Caption = "Delete";
+            BBI_Delete.Id = 3;
+            BBI_Delete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Delete.ImageOptions.SvgImage");
+            BBI_Delete.Name = "BBI_Delete";
+            BBI_Delete.ItemClick += BBI_Delete_ItemClick;
             // 
             // ribbonPage1
             // 
@@ -117,18 +127,23 @@ namespace Foxoft
             // gridControl1
             // 
             gridControl1.DataSource = trBarcodeOperationLinesBindingSource;
-            gridControl1.Dock = DockStyle.Bottom;
-            gridControl1.Location = new Point(0, 211);
+            gridControl1.Location = new Point(12, 36);
             gridControl1.MainView = gridView1;
             gridControl1.MenuManager = ribbonControl1;
             gridControl1.Name = "gridControl1";
-            gridControl1.Size = new Size(1120, 347);
+            gridControl1.Size = new Size(1096, 352);
             gridControl1.TabIndex = 1;
             gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
             // trBarcodeOperationLinesBindingSource
             // 
-            trBarcodeOperationLinesBindingSource.DataSource = typeof(TrBarcodeOperationLine);
+            trBarcodeOperationLinesBindingSource.DataSource = trBarcodeOperationHeaderBindingSource;
+            // 
+            // trBarcodeOperationHeaderBindingSource
+            // 
+            trBarcodeOperationHeaderBindingSource.DataSource = typeof(TrBarcodeOperationHeader);
+            trBarcodeOperationHeaderBindingSource.AddingNew += TrBarcodeOperationHeaderBindingSource_AddingNew;
+            trBarcodeOperationHeaderBindingSource.CurrentItemChanged += TrBarcodeOperationHeaderBindingSource_CurrentItemChanged;
             // 
             // gridView1
             // 
@@ -136,6 +151,7 @@ namespace Foxoft
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
             gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            gridView1.OptionsView.ShowGroupPanel = false;
             gridView1.InitNewRow += gridView1_InitNewRow;
             gridView1.RowUpdated += GridView1_RowUpdated;
             // 
@@ -203,6 +219,7 @@ namespace Foxoft
             // 
             // dataLayoutControl1
             // 
+            dataLayoutControl1.Controls.Add(gridControl1);
             dataLayoutControl1.Controls.Add(NameTextEdit);
             dataLayoutControl1.Controls.Add(IdButtonEdit);
             dataLayoutControl1.DataSource = trBarcodeOperationHeaderBindingSource;
@@ -210,7 +227,7 @@ namespace Foxoft
             dataLayoutControl1.Location = new Point(0, 158);
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new Size(1120, 53);
+            dataLayoutControl1.Size = new Size(1120, 400);
             dataLayoutControl1.TabIndex = 2;
             dataLayoutControl1.Text = "dataLayoutControl1";
             // 
@@ -224,12 +241,6 @@ namespace Foxoft
             NameTextEdit.Size = new Size(396, 20);
             NameTextEdit.StyleController = dataLayoutControl1;
             NameTextEdit.TabIndex = 5;
-            // 
-            // trBarcodeOperationHeaderBindingSource
-            // 
-            trBarcodeOperationHeaderBindingSource.DataSource = typeof(TrBarcodeOperationHeader);
-            trBarcodeOperationHeaderBindingSource.AddingNew += TrBarcodeOperationHeaderBindingSource_AddingNew;
-            trBarcodeOperationHeaderBindingSource.CurrentItemChanged += TrBarcodeOperationHeaderBindingSource_CurrentItemChanged;
             // 
             // IdButtonEdit
             // 
@@ -254,24 +265,24 @@ namespace Foxoft
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
             Root.Name = "Root";
-            Root.Size = new Size(1120, 53);
+            Root.Size = new Size(1120, 400);
             Root.TextVisible = false;
             // 
             // layoutControlGroup1
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForId, ItemForName });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForId, ItemForName, layoutControlItem1 });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new Size(1100, 33);
+            layoutControlGroup1.Size = new Size(1100, 380);
             // 
             // ItemForId
             // 
             ItemForId.Control = IdButtonEdit;
             ItemForId.Location = new Point(0, 0);
             ItemForId.Name = "ItemForId";
-            ItemForId.Size = new Size(550, 33);
+            ItemForId.Size = new Size(550, 24);
             ItemForId.TextSize = new Size(138, 13);
             // 
             // ItemForName
@@ -279,16 +290,16 @@ namespace Foxoft
             ItemForName.Control = NameTextEdit;
             ItemForName.Location = new Point(550, 0);
             ItemForName.Name = "ItemForName";
-            ItemForName.Size = new Size(550, 33);
+            ItemForName.Size = new Size(550, 24);
             ItemForName.TextSize = new Size(138, 13);
             // 
-            // BBI_Delete
+            // layoutControlItem1
             // 
-            BBI_Delete.Caption = "Delete";
-            BBI_Delete.Id = 3;
-            BBI_Delete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
-            BBI_Delete.Name = "BBI_Delete";
-            BBI_Delete.ItemClick += BBI_Delete_ItemClick;
+            layoutControlItem1.Control = gridControl1;
+            layoutControlItem1.Location = new Point(0, 24);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new Size(1100, 356);
+            layoutControlItem1.TextVisible = false;
             // 
             // FormBarcodeOperations
             // 
@@ -296,7 +307,6 @@ namespace Foxoft
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1120, 558);
             Controls.Add(dataLayoutControl1);
-            Controls.Add(gridControl1);
             Controls.Add(ribbonControl1);
             Name = "FormBarcodeOperations";
             Ribbon = ribbonControl1;
@@ -305,16 +315,17 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trBarcodeOperationLinesBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trBarcodeOperationHeaderBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)NameTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)trBarcodeOperationHeaderBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)IdButtonEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForId).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForName).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -352,5 +363,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_New;
         private DevExpress.XtraBars.BarButtonItem BBI_Save;
         private DevExpress.XtraBars.BarButtonItem BBI_Delete;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
     }
 }
