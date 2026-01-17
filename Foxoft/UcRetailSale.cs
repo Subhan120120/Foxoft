@@ -320,6 +320,7 @@ namespace Foxoft
                     decimal? balance = CalcProductBalance(formProductList.dcProduct, wareHouseCode);
 
                     decimal qty = 1;
+                    string salesman = "";
 
                     if (permitNegativeStock)
                         balance = null;
@@ -345,21 +346,21 @@ namespace Foxoft
 
                     if (Settings.Default.AppSetting.POSShowSalesmanCodeDialog)
                     {
-                        string value = Interaction.InputBox(
+                        string input = Interaction.InputBox(
                             "Please enter a value:",
                             "Input",
                             ""
                         );
 
-                        if (!string.IsNullOrEmpty(value))
+                        if (!string.IsNullOrEmpty(input))
                         {
-                            DcCurrAcc salesman = efMethods.SelectSalesPerson(value);
-                            if (salesman is not null)
+                            if (efMethods.SalesManExist(input))
                             {
-                                gV_InvoiceLine.SetRowCellValue(
-                                    rowIndx,
-                                    nameof(TrInvoiceLine.SalesPersonCode),
-                                    value);
+                                salesman = input;
+                            }
+                            else if (efMethods.SalesManExist("C-" + input))
+                            {
+                                salesman = "C-" + input;
                             }
                             else
                             {
@@ -373,22 +374,22 @@ namespace Foxoft
                         }
                     }
 
-                    AddNewRow(formProductList.dcProduct, qty);
+                    AddNewRow(formProductList.dcProduct, qty, salesman);
 
                     SaveInvoice();
                 }
             }
         }
 
-        private void AddNewRow(DcProduct dcProduct, decimal qty)
+        private void AddNewRow(DcProduct dcProduct, decimal qty, string salesman)
         {
             gV_InvoiceLine.AddNewRow();
-            int newRowHandle = gV_InvoiceLine.FocusedRowHandle; // get the handle of the new row
 
-            gV_InvoiceLine.SetRowCellValue(newRowHandle, colProductCode, dcProduct.ProductCode);
-            gV_InvoiceLine.SetRowCellValue(newRowHandle, col_Price, dcProduct.RetailPrice);
-            gV_InvoiceLine.SetRowCellValue(newRowHandle, colQtyOut, qty);
-            gV_InvoiceLine.SetRowCellValue(newRowHandle, colProductCost, dcProduct.ProductCost);
+            gV_InvoiceLine.SetFocusedRowCellValue(colProductCode, dcProduct.ProductCode);
+            gV_InvoiceLine.SetFocusedRowCellValue(col_Price, dcProduct.RetailPrice);
+            gV_InvoiceLine.SetFocusedRowCellValue(colQtyOut, qty);
+            gV_InvoiceLine.SetFocusedRowCellValue(colProductCost, dcProduct.ProductCost);
+            gV_InvoiceLine.SetFocusedRowCellValue(col_SalesPersonCode, salesman);
 
             gV_InvoiceLine.UpdateCurrentRow(); // finalize changes
         }
@@ -868,10 +869,8 @@ namespace Foxoft
 
             string input = txtEdit_Barcode.EditValue.ToString().Trim();
 
-            var items = POSFindProductByCheckedComboBoxEdit.Properties.Items;
-
-            bool useBarCode = items["Barcode"].CheckState == CheckState.Checked;
-            bool useProductCode = items["ProductCode"].CheckState == CheckState.Checked;
+            bool useProductCode = POSFindProductByContainsId(1);
+            bool useBarCode = POSFindProductByContainsId(2);
 
             DcProduct dcProductByProductCode = null;
             DcProduct dcProductByBarcode = null;
@@ -945,6 +944,7 @@ namespace Foxoft
                     .PermitNegativeStock;
 
                 decimal? balance = CalcProductBalance(selectedProduct, wareHouseCode);
+                string salesman = "";
 
                 if (permitNegativeStock)
                     balance = null;
@@ -968,7 +968,37 @@ namespace Foxoft
                         return;
                     }
 
-                AddNewRow(selectedProduct, qty);
+                if (Settings.Default.AppSetting.POSShowSalesmanCodeDialog)
+                {
+                    string inputBox = Interaction.InputBox(
+                        "Please enter a value:",
+                        "Input",
+                        ""
+                    );
+
+                    if (!string.IsNullOrEmpty(inputBox))
+                    {
+                        if (efMethods.SalesManExist(inputBox))
+                        {
+                            salesman = inputBox;
+                        }
+                        else if (efMethods.SalesManExist("C-" + inputBox))
+                        {
+                            salesman = "C-" + inputBox;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show(
+                                Resources.Form_RetailSale_SalesPersonNotExists,
+                                Resources.Common_Attention,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                }
+
+                AddNewRow(selectedProduct, qty, salesman);
                 SaveInvoice();
                 txtEdit_Barcode.EditValue = string.Empty;
             }
@@ -982,6 +1012,16 @@ namespace Foxoft
             }
 
             ActiveControl = txtEdit_Barcode;
+        }
+
+        private bool POSFindProductByContainsId(int id)
+        {
+            var text = POSFindProductByCheckedComboBoxEdit.EditValue?.ToString() ?? "";
+            var set = text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                          .Select(x => x.Trim())
+                          .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            return set.Contains(id.ToString());
         }
 
         private void GV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)

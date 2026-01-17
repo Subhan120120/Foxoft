@@ -303,7 +303,7 @@ namespace Foxoft
             POSShowQuantityDialogCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSShowQuantityDialog", true));
             POSShowQuantityDialogCheckEdit.Location = new Point(12, 252);
             POSShowQuantityDialogCheckEdit.Name = "POSShowQuantityDialogCheckEdit";
-            POSShowQuantityDialogCheckEdit.Properties.Caption = "Show Quantity Dialog on POS";
+            POSShowQuantityDialogCheckEdit.Properties.Caption = Resources.Entity_AppSetting_POSShowQuantityDialog;
             POSShowQuantityDialogCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             POSShowQuantityDialogCheckEdit.Size = new Size(482, 20);
             POSShowQuantityDialogCheckEdit.StyleController = dataLayoutControl1;
@@ -314,7 +314,7 @@ namespace Foxoft
             POSShowSalesmanCodeDialogCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSShowSalesmanCodeDialog", true));
             POSShowSalesmanCodeDialogCheckEdit.Location = new Point(12, 276);
             POSShowSalesmanCodeDialogCheckEdit.Name = "POSShowSalesmanCodeDialogCheckEdit";
-            POSShowSalesmanCodeDialogCheckEdit.Properties.Caption = "Show Salesman Dialog on POS";
+            POSShowSalesmanCodeDialogCheckEdit.Properties.Caption = Resources.Entity_AppSetting_POSShowSalesmanDialog;
             POSShowSalesmanCodeDialogCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             POSShowSalesmanCodeDialogCheckEdit.Size = new Size(482, 20);
             POSShowSalesmanCodeDialogCheckEdit.StyleController = dataLayoutControl1;

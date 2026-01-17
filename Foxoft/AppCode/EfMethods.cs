@@ -1587,6 +1587,14 @@ namespace Foxoft
                                 .Any(x => x.CurrAccCode == CurrAccCode);
         }
 
+        public bool SalesManExist(string salesman)
+        {
+            using subContext db = new();
+            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                                .Where(x => x.PersonalTypeCode == 1)
+                                .Any(x => x.CurrAccCode == salesman);
+        }
+
         public bool ProductExist(string productCode)
         {
             using subContext db = new();
