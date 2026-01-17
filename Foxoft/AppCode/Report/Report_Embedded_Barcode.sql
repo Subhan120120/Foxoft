@@ -4,6 +4,7 @@
 SELECT   t2.number + 1 RepeatNumber
 	, DcProducts.ProductDesc
 	, DcProducts.WholesalePrice
+	, DcProducts.RetailPrice
 	, pb.*
 FROM    TrProductBarcodes pb
 JOIN DcProducts on DcProducts.ProductCode = pb.ProductCode

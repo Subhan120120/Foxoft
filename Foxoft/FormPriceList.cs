@@ -364,7 +364,6 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
-
         }
 
         private void ImportFromExcel(string fileName)

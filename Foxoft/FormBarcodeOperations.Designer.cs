@@ -37,8 +37,13 @@ namespace Foxoft
             BBI_New = new DevExpress.XtraBars.BarButtonItem();
             BBI_Save = new DevExpress.XtraBars.BarButtonItem();
             BBI_Delete = new DevExpress.XtraBars.BarButtonItem();
+            BBI_BarcodePreview = new DevExpress.XtraBars.BarButtonItem();
+            BBI_ImportFromXLSX = new DevExpress.XtraBars.BarButtonItem();
+            BBI_ExportToXLSX = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             trBarcodeOperationLinesBindingSource = new BindingSource(components);
             trBarcodeOperationHeaderBindingSource = new BindingSource(components);
@@ -80,9 +85,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_New, BBI_Save, BBI_Delete });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_New, BBI_Save, BBI_Delete, BBI_BarcodePreview, BBI_ImportFromXLSX, BBI_ExportToXLSX });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 4;
+            ribbonControl1.MaxItemId = 7;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(1120, 158);
@@ -110,9 +115,33 @@ namespace Foxoft
             BBI_Delete.Name = "BBI_Delete";
             BBI_Delete.ItemClick += BBI_Delete_ItemClick;
             // 
+            // BBI_BarcodePreview
+            // 
+            BBI_BarcodePreview.Caption = "Barcode Preview";
+            BBI_BarcodePreview.Id = 4;
+            BBI_BarcodePreview.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_BarcodePreview.ImageOptions.SvgImage");
+            BBI_BarcodePreview.Name = "BBI_BarcodePreview";
+            BBI_BarcodePreview.ItemClick += BBI_BarcodePreview_ItemClick;
+            // 
+            // BBI_ImportFromXLSX
+            // 
+            BBI_ImportFromXLSX.Caption = "Import From XLSX";
+            BBI_ImportFromXLSX.Id = 5;
+            BBI_ImportFromXLSX.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ImportFromXLSX.ImageOptions.SvgImage");
+            BBI_ImportFromXLSX.Name = "BBI_ImportFromXLSX";
+            BBI_ImportFromXLSX.ItemClick += BBI_ImportFromXLSX_ItemClick;
+            // 
+            // BBI_ExportToXLSX
+            // 
+            BBI_ExportToXLSX.Caption = "Export To XLSX";
+            BBI_ExportToXLSX.Id = 6;
+            BBI_ExportToXLSX.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ExportToXLSX.ImageOptions.SvgImage");
+            BBI_ExportToXLSX.Name = "BBI_ExportToXLSX";
+            BBI_ExportToXLSX.ItemClick += BBI_ExportToXLSX_ItemClick;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3, ribbonPageGroup2 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = "ribbonPage1";
             // 
@@ -123,6 +152,19 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(BBI_Delete);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Operations";
+            // 
+            // ribbonPageGroup3
+            // 
+            ribbonPageGroup3.ItemLinks.Add(BBI_BarcodePreview);
+            ribbonPageGroup3.Name = "ribbonPageGroup3";
+            ribbonPageGroup3.Text = "Barcode";
+            // 
+            // ribbonPageGroup2
+            // 
+            ribbonPageGroup2.ItemLinks.Add(BBI_ImportFromXLSX);
+            ribbonPageGroup2.ItemLinks.Add(BBI_ExportToXLSX);
+            ribbonPageGroup2.Name = "ribbonPageGroup2";
+            ribbonPageGroup2.Text = "Tools";
             // 
             // gridControl1
             // 
@@ -363,5 +405,10 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_Save;
         private DevExpress.XtraBars.BarButtonItem BBI_Delete;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraBars.BarButtonItem BBI_BarcodePreview;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+        private DevExpress.XtraBars.BarButtonItem BBI_ImportFromXLSX;
+        private DevExpress.XtraBars.BarButtonItem BBI_ExportToXLSX;
     }
 }
