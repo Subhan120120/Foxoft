@@ -33,48 +33,12 @@ namespace Foxoft
 
             gridControl1.DataSource = trBarcodeOperationLinesBindingSource;
 
-            LoadData(null); // yeni header yaratsın
+            LoadData(null);
         }
-
 
         private void FormBarcodeOperations_Load(object sender, EventArgs e)
         {
 
-        }
-
-        private void TrBarcodeOperationHeaderBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
-        {
-            //var header = new TrBarcodeOperationHeader
-            //{
-            //    Name = "TrBarcodeOperationHeaders"
-            //};
-
-            //dbContext.TrBarcodeOperationHeaders.Add(header);
-
-            //e.NewObject = header;
-        }
-
-
-        private void ClearControlsAddNew()
-        {
-            dbContext = new subContext();
-
-            // Local list-i bağla
-            trBarcodeOperationHeaderBindingSource.DataSource =
-                dbContext.TrBarcodeOperationHeaders.Local.ToBindingList();
-
-            // Yeni header yarat (AddingNew işə düşəcək və context-ə add edəcək)
-            trBarcodeOperationHeader = (TrBarcodeOperationHeader)trBarcodeOperationHeaderBindingSource.AddNew();
-
-            // Header-i dərhal yaz ki, real Id alsın
-            dbContext.SaveChanges();
-
-            // İndi header.Id artıq 0 deyil
-            trBarcodeOperationLinesBindingSource.DataSource =
-                dbContext.TrBarcodeOperationLines.Local.ToBindingList();
-
-            dataLayoutControl1.IsValid(out List<string> errorList);
-            gridView1.Focus();
         }
 
         private void LoadData(int? headerId)
@@ -94,6 +58,7 @@ namespace Foxoft
                 {
                     trBarcodeOperationHeader = new TrBarcodeOperationHeader
                     {
+                        Name = "New",
                         TrBarcodeOperationLines = new BindingList<TrBarcodeOperationLine>()
                     };
 
@@ -108,17 +73,10 @@ namespace Foxoft
             }
         }
 
-
-
         private void GridView1_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
             if (_isLoading) return;
             SaveAll(); // saves header + lines
-        }
-
-        private void SaveData()
-        {
-            
         }
 
         private void IdButtonEdit_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
@@ -142,14 +100,15 @@ namespace Foxoft
 
             if (line.Qty == 0) line.Qty = 1;
 
-            // ƏN VACİB HİSSƏ: FK set etmə, navigation set et
+            // Header context-də deyilsə, ilk line zamanı add et
+            if (dbContext.Entry(trBarcodeOperationHeader).State == EntityState.Detached)
+                dbContext.TrBarcodeOperationHeaders.Add(trBarcodeOperationHeader);
+
             line.TrBarcodeOperationHeader = trBarcodeOperationHeader;
 
-            // tracking
             if (dbContext.Entry(line).State == EntityState.Detached)
                 dbContext.TrBarcodeOperationLines.Add(line);
         }
-
 
         private void BBI_New_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -157,19 +116,7 @@ namespace Foxoft
 
             // Əgər əvvəlki header-də line var idisə, saxla
             if (HasAnyLine())
-            {
-                var result = XtraMessageBox.Show(
-                    "Save current document?",
-                    "Confirm",
-                    MessageBoxButtons.YesNoCancel,
-                    MessageBoxIcon.Question);
-
-                if (result == DialogResult.Cancel)
-                    return;
-
-                if (result == DialogResult.Yes)
-                    SaveAll();
-            }
+                SaveAll();
 
             CreateNewHeader();
         }
@@ -180,7 +127,6 @@ namespace Foxoft
 
             try
             {
-                // köhnə context-i tam təmizlə
                 dbContext?.Dispose();
                 dbContext = new subContext();
 
@@ -190,12 +136,8 @@ namespace Foxoft
                     TrBarcodeOperationLines = new BindingList<TrBarcodeOperationLine>()
                 };
 
-                // Header tracking-ə alınır, AMMA save edilmir
-                dbContext.TrBarcodeOperationHeaders.Add(trBarcodeOperationHeader);
-
                 trBarcodeOperationHeaderBindingSource.DataSource = trBarcodeOperationHeader;
-                trBarcodeOperationLinesBindingSource.DataSource =
-                    trBarcodeOperationHeader.TrBarcodeOperationLines;
+                trBarcodeOperationLinesBindingSource.DataSource = trBarcodeOperationHeader.TrBarcodeOperationLines;
 
                 gridView1.Focus();
             }
@@ -204,6 +146,7 @@ namespace Foxoft
                 _isLoading = false;
             }
         }
+
 
         private bool HasAnyLine()
         {
@@ -285,41 +228,14 @@ namespace Foxoft
             }
         }
 
-
-        private void EnsureHeaderSaved()
-        {
-            if (trBarcodeOperationHeader == null) return;
-
-            // new header not saved?
-            if (trBarcodeOperationHeader.Id == 0)
-            {
-                dbContext.TrBarcodeOperationHeaders.Add(trBarcodeOperationHeader);
-                dbContext.SaveChanges();
-            }
-        }
-
         private void SaveHeader()
         {
             if (_isLoading || _isSaving) return;
 
-            try
-            {
-                _isSaving = true;
-
-                trBarcodeOperationHeaderBindingSource.EndEdit();
-                EnsureHeaderSaved();
-
-                dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                XtraMessageBox.Show(ex.Message, "Save Header Error");
-            }
-            finally
-            {
-                _isSaving = false;
-            }
+            // Sadəcə UI edit bitirsin, DB save eləməsin
+            trBarcodeOperationHeaderBindingSource.EndEdit();
         }
+
 
         private void SaveAll()
         {
@@ -334,14 +250,14 @@ namespace Foxoft
                 trBarcodeOperationLinesBindingSource.EndEdit();
                 trBarcodeOperationHeaderBindingSource.EndEdit();
 
-                // ən azı 1 line yoxdursa DB-yə yazma
                 var hasAnyLine = trBarcodeOperationHeader?.TrBarcodeOperationLines?
                     .Any(l => dbContext.Entry(l).State != EntityState.Deleted) == true;
 
                 if (!hasAnyLine)
-                    return;
+                    return; // line yoxdursa DB-yə heç nə yazma
 
-                dbContext.SaveChanges(); // burada EF: əvvəl Header insert, sonra Lines insert
+                // header yeni idisə, burada insert olacaq
+                dbContext.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -352,6 +268,7 @@ namespace Foxoft
                 _isSaving = false;
             }
         }
+
 
     }
 }

@@ -142,7 +142,6 @@ namespace Foxoft
             // trBarcodeOperationHeaderBindingSource
             // 
             trBarcodeOperationHeaderBindingSource.DataSource = typeof(TrBarcodeOperationHeader);
-            trBarcodeOperationHeaderBindingSource.AddingNew += TrBarcodeOperationHeaderBindingSource_AddingNew;
             trBarcodeOperationHeaderBindingSource.CurrentItemChanged += TrBarcodeOperationHeaderBindingSource_CurrentItemChanged;
             // 
             // gridView1
