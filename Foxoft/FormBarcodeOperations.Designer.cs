@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using Foxoft.Models;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -351,7 +352,7 @@ namespace Foxoft
             Controls.Add(ribbonControl1);
             Name = "FormBarcodeOperations";
             Ribbon = ribbonControl1;
-            Text = "FormBarcodeOperations";
+            Text = Resources.Form_BarcodeOperations_Title;
             Load += FormBarcodeOperations_Load;
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();

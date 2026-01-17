@@ -3524,4 +3524,47 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_BarcodeOperationHeader_Id" xml:space="preserve">
     <value>Id</value>
   </data>
+  <data name="Entity_AppSetting_POSShowQuantityDialog" xml:space="preserve">
+    <value>POSda Say Pəncərəsini Göstər</value>
+  </data>
+  <data name="Entity_AppSetting_POSShowSalesmanDialog" xml:space="preserve">
+    <value>POSda Satıcı Pəncərəsini Göstər</value>
+  </data>
+  <data name="Entity_AppSetting_POSFindProductBy" xml:space="preserve">
+    <value>POSda məhsulu nəyə görə axtar</value>
+  </data>
+<data name="Form_BarcodeOperations_Title" xml:space="preserve">
+  <value>Barkod Əməliyyatları</value>
+</data>
+<data name="Form_BarcodeOperations_NewDocumentName" xml:space="preserve">
+  <value>Yeni</value>
+</data>
+<data name="Form_BarcodeOperations_DeleteConfirm_NotSaved" xml:space="preserve">
+  <value>Bu sənəd hələ saxlanmayıb. Ləğv edilsin?</value>
+</data>
+<data name="Form_BarcodeOperations_DeleteConfirm_Title" xml:space="preserve">
+  <value>Təsdiq</value>
+</data>
+<data name="Form_BarcodeOperations_DeleteConfirm_Delete" xml:space="preserve">
+  <value>{0} nömrəli sənəd silinsin?\nBütün sətirlər silinəcək.</value>
+</data>
+<data name="Form_BarcodeOperations_DeleteError" xml:space="preserve">
+  <value>Silmə xətası</value>
+</data>
+<data name="Form_BarcodeOperations_SaveError" xml:space="preserve">
+  <value>Saxlama xətası</value>
+</data>
+<data name="Form_BarcodeOperations_ReportNotFound" xml:space="preserve">
+  <value>Hesabat sorğusu bazada tapılmadı</value>
+</data>
+<data name="Form_BarcodeOperations_ExportFileName" xml:space="preserve">
+  <value>Barkod Əməliyyatları</value>
+</data>
+<data name="Form_BarcodeOperations_Import_ProductNotFound" xml:space="preserve">
+  <value>Bu kodda məhsul tapılmadı</value>
+</data>
+<data name="Form_RetailSale_SalesPersonNotExists" xml:space="preserve">
+  <value>Satış təmsilçisi mövcud deyil.</value>
+</data>
+
 </root>

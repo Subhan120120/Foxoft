@@ -14,6 +14,7 @@ using Microsoft.VisualBasic;
 using System.Collections.Specialized;
 using System.Drawing.Printing;
 using System.IO;
+using static Foxoft.FormAppSetting;
 
 namespace Foxoft
 {
@@ -27,10 +28,13 @@ namespace Foxoft
         ReportClass reportClass;
         subContext dbContext = new();
         readonly SettingStore settingStore;
+        readonly AppSetting appSetting;
 
         public UcRetailSale()
         {
             InitializeComponent();
+
+            BindCheckedCombo();
 
             MouseWheelHelper.DisableMouseWheelForType<LookUpEdit>(this);
             MouseWheelHelper.DisableMouseWheelForType<DateEdit>(this);
@@ -66,6 +70,23 @@ namespace Foxoft
             btn_InvoiceDiscount.Text = Resources.Form_RetailSale_Button_InvoiceDiscount;
         }
 
+        private void BindCheckedCombo()
+        {
+            List<SearchType> list = new()
+            {
+                new() { Id = 1, Name = "ProductCode" },
+                new() { Id = 2, Name = "Barcode" },
+                new() { Id = 3, Name = "SerialNumber" }
+            };
+
+            POSFindProductByCheckedComboBoxEdit.Properties.DataSource = list;
+            POSFindProductByCheckedComboBoxEdit.Properties.ValueMember = nameof(SearchType.Id);
+            POSFindProductByCheckedComboBoxEdit.Properties.DisplayMember = nameof(SearchType.Name);
+
+            // Important for correct "value-based" operations
+            POSFindProductByCheckedComboBoxEdit.Properties.SeparatorChar = ',';
+        }
+
         private void UcRetailSale_Load(object sender, EventArgs e)
         {
             this.ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing); // set Parent Form Closing event
@@ -76,20 +97,7 @@ namespace Foxoft
                 trInvoiceHeader.CurrAccCode = defaultCustomer;
             }
 
-            var sc = Settings.Default.POSFindProduct;
-            if (sc == null)
-            {
-                sc = new StringCollection();
-                Settings.Default.POSFindProduct = sc;
-                Settings.Default.Save();
-            }
-
-            foreach (CheckedListBoxItem item in checkedComboBoxEdit1.Properties.Items)
-            {
-                item.CheckState = sc.Contains(item.Value.ToString())
-                    ? CheckState.Checked
-                    : CheckState.Unchecked;
-            }
+            SetSelectedIdsManual(Settings.Default.AppSetting.POSFindProductBy);
         }
 
         private void trInvoiceHeadersBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
@@ -200,11 +208,25 @@ namespace Foxoft
                                     .ContinueWith(loadTask =>
                                     {
                                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             SplashScreenManager.CloseForm(false);
         }
 
+        private void SetSelectedIdsManual(string selectedIds)
+        {
+            POSFindProductByCheckedComboBoxEdit.Properties.Items.BeginUpdate();
+            try
+            {
+                // Ən rahat: saved string-i birbaşa EditValue-ya ver
+                POSFindProductByCheckedComboBoxEdit.EditValue =
+                    Settings.Default.AppSetting.POSFindProductBy?.Trim() ?? "";
+            }
+            finally
+            {
+            }
+        }
         private void LoadCurrAcc()
         {
             using (var newContext = new subContext())
@@ -302,7 +324,7 @@ namespace Foxoft
                     if (permitNegativeStock)
                         balance = null;
 
-                    if (Settings.Default.POSShowQuantityDialog)
+                    if (Settings.Default.AppSetting.POSShowQuantityDialog)
                         using (FormInput formQty = new(qty, balance))
                         {
                             if (formQty.ShowDialog(this) == DialogResult.OK)
@@ -320,6 +342,36 @@ namespace Foxoft
                                 MessageBoxIcon.Warning);
                             return;
                         }
+
+                    if (Settings.Default.AppSetting.POSShowSalesmanCodeDialog)
+                    {
+                        string value = Interaction.InputBox(
+                            "Please enter a value:",
+                            "Input",
+                            ""
+                        );
+
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            DcCurrAcc salesman = efMethods.SelectSalesPerson(value);
+                            if (salesman is not null)
+                            {
+                                gV_InvoiceLine.SetRowCellValue(
+                                    rowIndx,
+                                    nameof(TrInvoiceLine.SalesPersonCode),
+                                    value);
+                            }
+                            else
+                            {
+                                XtraMessageBox.Show(
+                                    Resources.Form_RetailSale_SalesPersonNotExists,
+                                    Resources.Common_Attention,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
+                    }
 
                     AddNewRow(formProductList.dcProduct, qty);
 
@@ -816,7 +868,7 @@ namespace Foxoft
 
             string input = txtEdit_Barcode.EditValue.ToString().Trim();
 
-            var items = checkedComboBoxEdit1.Properties.Items;
+            var items = POSFindProductByCheckedComboBoxEdit.Properties.Items;
 
             bool useBarCode = items["Barcode"].CheckState == CheckState.Checked;
             bool useProductCode = items["ProductCode"].CheckState == CheckState.Checked;
@@ -897,7 +949,7 @@ namespace Foxoft
                 if (permitNegativeStock)
                     balance = null;
 
-                if (Settings.Default.POSShowQuantityDialog && dcProductByScale == null)
+                if (Settings.Default.AppSetting.POSShowQuantityDialog && dcProductByScale == null)
                     using (FormInput formQty = new(qty, balance))
                     {
                         if (formQty.ShowDialog(this) == DialogResult.OK)
@@ -930,16 +982,6 @@ namespace Foxoft
             }
 
             ActiveControl = txtEdit_Barcode;
-        }
-
-        private decimal ShowQtyDialog(decimal qty, decimal? maxQty = null)
-        {
-            using (FormInput formQty = new(qty, maxQty))
-            {
-                if (formQty.ShowDialog(this) == DialogResult.OK)
-                    qty = formQty.input;
-            }
-            return qty;
         }
 
         private void GV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
@@ -1052,18 +1094,11 @@ namespace Foxoft
             gV_InvoiceLine.MoveLast();
         }
 
-        private void checkedComboBoxEdit1_EditValueChanged(object sender, EventArgs e)
+        private void POSFindProductByCheckedComboBoxEdit_EditValueChanged(object sender, EventArgs e)
         {
-            var sc = new StringCollection();
+            //Settings.Default.AppSetting.POSFindProductBy = POSFindProductByCheckedComboBoxEdit.EditValue?.ToString()?.Trim() ?? "";
 
-            foreach (CheckedListBoxItem item in checkedComboBoxEdit1.Properties.Items)
-            {
-                if (item.CheckState == CheckState.Checked)
-                    sc.Add(item.Value.ToString());
-            }
-
-            Settings.Default.POSFindProduct = sc;
-            Settings.Default.Save();
+            //efMethods.UpdateAppSettingPOSFindProductBy(Settings.Default.AppSetting.POSFindProductBy);
         }
 
     }

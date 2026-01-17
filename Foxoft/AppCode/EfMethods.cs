@@ -1866,6 +1866,14 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int UpdateAppSettingPOSFindProductBy(string value)
+        {
+            using subContext db = new();
+            AppSetting appSetting = new() { Id = 1, POSFindProductBy = value };
+            db.Entry(appSetting).Property(x => x.POSFindProductBy).IsModified = true;
+            return db.SaveChanges();
+        }
+
         public int UpdateTerminalTouchUIMode(int terminalId, bool touchUIMode)
         {
             using subContext db = new();

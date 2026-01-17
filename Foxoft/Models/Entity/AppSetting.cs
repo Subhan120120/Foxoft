@@ -66,6 +66,15 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_UseBarcode), ResourceType = typeof(Resources))]
         public bool UseBarcode { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_AppSetting_POSShowQuantityDialog), ResourceType = typeof(Resources))]
+        public bool POSShowQuantityDialog { get; set; }
+
+        [Display(Name = nameof(Resources.Entity_AppSetting_POSShowSalesmanDialog), ResourceType = typeof(Resources))]
+        public bool POSShowSalesmanCodeDialog { get; set; }
+
+        [Display(Name = nameof(Resources.Entity_AppSetting_POSFindProductBy), ResourceType = typeof(Resources))]
+        public string? POSFindProductBy { get; set; }
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }

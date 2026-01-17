@@ -3524,4 +3524,47 @@ To delete, cancel the receipt!</value>
   <data name="Entity_BarcodeOperationHeader_Id" xml:space="preserve">
     <value>Barcode OperationHeader Id</value>
   </data>
+  <data name="Entity_AppSetting_POSShowQuantityDialog" xml:space="preserve">
+    <value>Show Quantity Dialog on POS</value>
+  </data>
+  <data name="Entity_AppSetting_POSShowSalesmanDialog" xml:space="preserve">
+    <value>Show Salesman Dialog on POS</value>
+  </data>
+  <data name="Entity_AppSetting_POSFindProductBy" xml:space="preserve">
+    <value>Find Product By on POS</value>
+  </data>
+<data name="Form_BarcodeOperations_Title" xml:space="preserve">
+  <value>Barcode Operations</value>
+</data>
+<data name="Form_BarcodeOperations_NewDocumentName" xml:space="preserve">
+  <value>New</value>
+</data>
+<data name="Form_BarcodeOperations_DeleteConfirm_NotSaved" xml:space="preserve">
+  <value>This document is not saved yet. Discard it?</value>
+</data>
+<data name="Form_BarcodeOperations_DeleteConfirm_Title" xml:space="preserve">
+  <value>Confirm</value>
+</data>
+<data name="Form_BarcodeOperations_DeleteConfirm_Delete" xml:space="preserve">
+  <value>Delete document #{0} ?\nAll lines will be deleted too.</value>
+</data>
+<data name="Form_BarcodeOperations_DeleteError" xml:space="preserve">
+  <value>Delete Error</value>
+</data>
+<data name="Form_BarcodeOperations_SaveError" xml:space="preserve">
+  <value>Save Error</value>
+</data>
+<data name="Form_BarcodeOperations_ReportNotFound" xml:space="preserve">
+  <value>Report query not found in database</value>
+</data>
+<data name="Form_BarcodeOperations_ExportFileName" xml:space="preserve">
+  <value>Barcode Operations</value>
+</data>
+<data name="Form_BarcodeOperations_Import_ProductNotFound" xml:space="preserve">
+  <value>Product not found for this code</value>
+</data>
+<data name="Form_RetailSale_SalesPersonNotExists" xml:space="preserve">
+  <value>Sales person does not exist.</value>
+</data>
+
 </root>

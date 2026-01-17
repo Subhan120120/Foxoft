@@ -62,7 +62,7 @@ namespace Foxoft
             ColumnDefinition columnDefinition8 = new ColumnDefinition();
             RowDefinition rowDefinition5 = new RowDefinition();
             lC_InvoiceLine = new LayoutControl();
-            checkedComboBoxEdit1 = new CheckedComboBoxEdit();
+            POSFindProductByCheckedComboBoxEdit = new CheckedComboBoxEdit();
             lbl_InvoicePaidTotalSum = new LabelControl();
             lbl_InvoicePaidTotalSumTxt = new LabelControl();
             lbl_InvoicePaidCashlessSum = new LabelControl();
@@ -167,7 +167,7 @@ namespace Foxoft
             trInvoiceHeadersBindingSource = new BindingSource(components);
             ((ISupportInitialize)lC_InvoiceLine).BeginInit();
             lC_InvoiceLine.SuspendLayout();
-            ((ISupportInitialize)checkedComboBoxEdit1.Properties).BeginInit();
+            ((ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).BeginInit();
             ((ISupportInitialize)txt_PrintCount.Properties).BeginInit();
             ((ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
@@ -232,7 +232,7 @@ namespace Foxoft
             // 
             // lC_InvoiceLine
             // 
-            lC_InvoiceLine.Controls.Add(checkedComboBoxEdit1);
+            lC_InvoiceLine.Controls.Add(POSFindProductByCheckedComboBoxEdit);
             lC_InvoiceLine.Controls.Add(lbl_InvoicePaidTotalSum);
             lC_InvoiceLine.Controls.Add(lbl_InvoicePaidTotalSumTxt);
             lC_InvoiceLine.Controls.Add(lbl_InvoicePaidCashlessSum);
@@ -267,23 +267,21 @@ namespace Foxoft
             lC_InvoiceLine.TabIndex = 0;
             lC_InvoiceLine.Text = "layoutControl1";
             // 
-            // checkedComboBoxEdit1
+            // POSFindProductByCheckedComboBoxEdit
             // 
-            checkedComboBoxEdit1.EditValue = "";
-            checkedComboBoxEdit1.Location = new Point(487, 47);
-            checkedComboBoxEdit1.Name = "checkedComboBoxEdit1";
-            checkedComboBoxEdit1.Properties.AllowFocused = false;
-            checkedComboBoxEdit1.Properties.Appearance.Font = new Font("Tahoma", 17F);
-            checkedComboBoxEdit1.Properties.Appearance.Options.UseFont = true;
-            checkedComboBoxEdit1.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
-            checkedComboBoxEdit1.Properties.DisplayFormat.FormatType = FormatType.Custom;
-            checkedComboBoxEdit1.Properties.ItemAutoHeight = true;
-            checkedComboBoxEdit1.Properties.Items.AddRange(new CheckedListBoxItem[] { new CheckedListBoxItem("ProductCode"), new CheckedListBoxItem("Barcode"), new CheckedListBoxItem("SerialNumber") });
-            checkedComboBoxEdit1.Properties.TextEditStyle = TextEditStyles.HideTextEditor;
-            checkedComboBoxEdit1.Size = new Size(50, 34);
-            checkedComboBoxEdit1.StyleController = lC_InvoiceLine;
-            checkedComboBoxEdit1.TabIndex = 1;
-            checkedComboBoxEdit1.EditValueChanged += checkedComboBoxEdit1_EditValueChanged;
+            POSFindProductByCheckedComboBoxEdit.Location = new Point(487, 47);
+            POSFindProductByCheckedComboBoxEdit.Name = "POSFindProductByCheckedComboBoxEdit";
+            POSFindProductByCheckedComboBoxEdit.Properties.AllowFocused = false;
+            POSFindProductByCheckedComboBoxEdit.Properties.Appearance.Font = new Font("Tahoma", 17F);
+            POSFindProductByCheckedComboBoxEdit.Properties.Appearance.Options.UseFont = true;
+            POSFindProductByCheckedComboBoxEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            POSFindProductByCheckedComboBoxEdit.Properties.DisplayFormat.FormatType = FormatType.Custom;
+            POSFindProductByCheckedComboBoxEdit.Properties.ItemAutoHeight = true;
+            POSFindProductByCheckedComboBoxEdit.Properties.TextEditStyle = TextEditStyles.HideTextEditor;
+            POSFindProductByCheckedComboBoxEdit.Size = new Size(50, 34);
+            POSFindProductByCheckedComboBoxEdit.StyleController = lC_InvoiceLine;
+            POSFindProductByCheckedComboBoxEdit.TabIndex = 1;
+            POSFindProductByCheckedComboBoxEdit.EditValueChanged += POSFindProductByCheckedComboBoxEdit_EditValueChanged;
             // 
             // lbl_InvoicePaidTotalSum
             // 
@@ -1041,7 +1039,7 @@ namespace Foxoft
             // 
             layoutControlItem14.ContentHorzAlignment = HorzAlignment.Center;
             layoutControlItem14.ContentVertAlignment = VertAlignment.Center;
-            layoutControlItem14.Control = checkedComboBoxEdit1;
+            layoutControlItem14.Control = POSFindProductByCheckedComboBoxEdit;
             layoutControlItem14.ControlAlignment = ContentAlignment.TopLeft;
             layoutControlItem14.Location = new Point(0, 0);
             layoutControlItem14.MinSize = new Size(54, 24);
@@ -1419,7 +1417,7 @@ namespace Foxoft
             Load += UcRetailSale_Load;
             ((ISupportInitialize)lC_InvoiceLine).EndInit();
             lC_InvoiceLine.ResumeLayout(false);
-            ((ISupportInitialize)checkedComboBoxEdit1.Properties).EndInit();
+            ((ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).EndInit();
             ((ISupportInitialize)txt_PrintCount.Properties).EndInit();
             ((ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
@@ -1618,6 +1616,7 @@ namespace Foxoft
         private LayoutControlItem layoutControlItem9;
         private CheckedComboBoxEdit checkedComboBoxEdit1;
         private LayoutControlItem layoutControlItem14;
+        private CheckedComboBoxEdit POSFindProductByCheckedComboBoxEdit;
     }
 }
 

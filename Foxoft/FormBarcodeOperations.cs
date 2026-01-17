@@ -64,7 +64,7 @@ namespace Foxoft
                 {
                     trBarcodeOperationHeader = new TrBarcodeOperationHeader
                     {
-                        Name = "New",
+                        Name = Resources.Form_BarcodeOperations_NewDocumentName,
                         TrBarcodeOperationLines = new BindingList<TrBarcodeOperationLine>()
                     };
 
@@ -186,10 +186,10 @@ namespace Foxoft
             if (trBarcodeOperationHeader.Id == 0)
             {
                 var r0 = XtraMessageBox.Show(
-                    "This document is not saved yet. Discard it?",
-                    "Confirm",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+                Resources.Form_BarcodeOperations_DeleteConfirm_NotSaved,
+                Resources.Form_BarcodeOperations_DeleteConfirm_Title,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
                 if (r0 != DialogResult.Yes) return;
 
@@ -199,8 +199,10 @@ namespace Foxoft
 
             // DB-də var -> sil
             var r = XtraMessageBox.Show(
-                $"Delete document #{trBarcodeOperationHeader.Id} ?\nAll lines will be deleted too.",
-                "Confirm delete",
+                string.Format(
+                    Resources.Form_BarcodeOperations_DeleteConfirm_Delete,
+                    trBarcodeOperationHeader.Id),
+                Resources.Form_BarcodeOperations_DeleteConfirm_Title,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -272,7 +274,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(ex.Message, "Save Error");
+                XtraMessageBox.Show(ex.Message, Resources.Form_BarcodeOperations_SaveError);
             }
             finally
             {
@@ -286,7 +288,9 @@ namespace Foxoft
 
             if (dcReport == null)
             {
-                MessageBox.Show("Report_Embedded_BarcodeOperation query is not found on databasa");
+                XtraMessageBox.Show(
+                    Resources.Form_BarcodeOperations_ReportNotFound,
+                    Resources.Common_ErrorTitle);
                 return;
             }
 
@@ -364,9 +368,15 @@ namespace Foxoft
                 DcProduct product = efMethods.SelectProduct(productCode, new byte[] { 1 });
                 if (product is null)
                 {
-                    errorCodes += captionProductCode + ": " + row[captionProductCode].ToString() + "Bu Kodda Məhsul Tapılmadı" + "\n";
+                    errorCodes +=
+                        captionProductCode + ": " +
+                        row[captionProductCode] +
+                        " " +
+                        Resources.Form_BarcodeOperations_Import_ProductNotFound +
+                        Environment.NewLine;
                     continue;
                 }
+
 
                 object objInvoiceHeadId = gridView1.GetRowCellValue(GridControl.NewItemRowHandle, colId);
                 if (objInvoiceHeadId is null) // Check InitNewRow

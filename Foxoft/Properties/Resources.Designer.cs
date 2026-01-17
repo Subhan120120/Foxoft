@@ -835,6 +835,33 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find Product By on POS.
+        /// </summary>
+        public static string Entity_AppSetting_POSFindProductBy {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_POSFindProductBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Quantity Dialog on POS.
+        /// </summary>
+        public static string Entity_AppSetting_POSShowQuantityDialog {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_POSShowQuantityDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Salesman Dialog on POS.
+        /// </summary>
+        public static string Entity_AppSetting_POSShowSalesmanDialog {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_POSShowSalesmanDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Print Count.
         /// </summary>
         public static string Entity_AppSetting_PrintCount {
@@ -5749,6 +5776,96 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete document #{0} ?\nAll lines will be deleted too..
+        /// </summary>
+        public static string Form_BarcodeOperations_DeleteConfirm_Delete {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_DeleteConfirm_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This document is not saved yet. Discard it?.
+        /// </summary>
+        public static string Form_BarcodeOperations_DeleteConfirm_NotSaved {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_DeleteConfirm_NotSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Form_BarcodeOperations_DeleteConfirm_Title {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_DeleteConfirm_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Error.
+        /// </summary>
+        public static string Form_BarcodeOperations_DeleteError {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_DeleteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode Operations.
+        /// </summary>
+        public static string Form_BarcodeOperations_ExportFileName {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_ExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product not found for this code.
+        /// </summary>
+        public static string Form_BarcodeOperations_Import_ProductNotFound {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_Import_ProductNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string Form_BarcodeOperations_NewDocumentName {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_NewDocumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report query not found in database.
+        /// </summary>
+        public static string Form_BarcodeOperations_ReportNotFound {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_ReportNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Error.
+        /// </summary>
+        public static string Form_BarcodeOperations_SaveError {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode Operations.
+        /// </summary>
+        public static string Form_BarcodeOperations_Title {
+            get {
+                return ResourceManager.GetString("Form_BarcodeOperations_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cash Register.
         /// </summary>
         public static string Form_CashRegister_Caption {
@@ -9276,6 +9393,15 @@ namespace Foxoft.Properties {
         public static string Form_RetailSale_ProductAddFailed {
             get {
                 return ResourceManager.GetString("Form_RetailSale_ProductAddFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales person does not exist..
+        /// </summary>
+        public static string Form_RetailSale_SalesPersonNotExists {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_SalesPersonNotExists", resourceCulture);
             }
         }
         

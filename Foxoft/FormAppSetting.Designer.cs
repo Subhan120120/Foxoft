@@ -45,6 +45,8 @@ namespace Foxoft
             InvoiceEditGraceDaysSpinEdit = new DevExpress.XtraEditors.SpinEdit();
             PaymentEditGraceDaysSpinEdit = new DevExpress.XtraEditors.SpinEdit();
             btn_ClearMemory = new DevExpress.XtraEditors.SimpleButton();
+            POSShowQuantityDialogCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            POSShowSalesmanCodeDialogCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             ItemForGetPrint = new DevExpress.XtraLayout.LayoutControlItem();
@@ -62,8 +64,10 @@ namespace Foxoft
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForGridViewLayout = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_ClearMemory = new DevExpress.XtraLayout.LayoutControlItem();
-            CheckEdit_POSShowQtyDialog = new DevExpress.XtraEditors.CheckEdit();
-            layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPOSShowQuantityDialog = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPOSShowSalesmanCodeDialog = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPOSFindProductBy = new DevExpress.XtraLayout.LayoutControlItem();
+            POSFindProductByCheckedComboBoxEdit = new DevExpress.XtraEditors.CheckedComboBoxEdit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)GridViewLayoutTextEdit.Properties).BeginInit();
@@ -78,6 +82,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)AutoSaveCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)InvoiceEditGraceDaysSpinEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PaymentEditGraceDaysSpinEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)POSShowQuantityDialogCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)POSShowSalesmanCodeDialogCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGetPrint).BeginInit();
@@ -95,13 +101,14 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGridViewLayout).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_ClearMemory).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)CheckEdit_POSShowQtyDialog.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPOSShowQuantityDialog).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPOSShowSalesmanCodeDialog).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPOSFindProductBy).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
             // 
-            dataLayoutControl1.Controls.Add(CheckEdit_POSShowQtyDialog);
             dataLayoutControl1.Controls.Add(btn_OptimizeDatabaseIndexes);
             dataLayoutControl1.Controls.Add(btn_Save);
             dataLayoutControl1.Controls.Add(GridViewLayoutTextEdit);
@@ -116,18 +123,21 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(InvoiceEditGraceDaysSpinEdit);
             dataLayoutControl1.Controls.Add(PaymentEditGraceDaysSpinEdit);
             dataLayoutControl1.Controls.Add(btn_ClearMemory);
+            dataLayoutControl1.Controls.Add(POSShowQuantityDialogCheckEdit);
+            dataLayoutControl1.Controls.Add(POSShowSalesmanCodeDialogCheckEdit);
+            dataLayoutControl1.Controls.Add(POSFindProductByCheckedComboBoxEdit);
             dataLayoutControl1.DataSource = appSettingBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.Location = new Point(0, 0);
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new Size(506, 403);
+            dataLayoutControl1.Size = new Size(506, 495);
             dataLayoutControl1.TabIndex = 0;
             dataLayoutControl1.Text = "dataLayoutControl1";
             // 
             // btn_OptimizeDatabaseIndexes
             // 
-            btn_OptimizeDatabaseIndexes.Location = new Point(12, 300);
+            btn_OptimizeDatabaseIndexes.Location = new Point(12, 348);
             btn_OptimizeDatabaseIndexes.Name = "btn_OptimizeDatabaseIndexes";
             btn_OptimizeDatabaseIndexes.Size = new Size(482, 22);
             btn_OptimizeDatabaseIndexes.StyleController = dataLayoutControl1;
@@ -139,9 +149,9 @@ namespace Foxoft
             // 
             btn_Save.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Save.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Save.ImageOptions.SvgImage");
-            btn_Save.Location = new Point(255, 352);
+            btn_Save.Location = new Point(255, 400);
             btn_Save.Name = "btn_Save";
-            btn_Save.Size = new Size(239, 39);
+            btn_Save.Size = new Size(239, 83);
             btn_Save.StyleController = dataLayoutControl1;
             btn_Save.TabIndex = 2;
             btn_Save.Text = "Save";
@@ -150,7 +160,7 @@ namespace Foxoft
             // GridViewLayoutTextEdit
             // 
             GridViewLayoutTextEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "GridViewLayout", true));
-            GridViewLayoutTextEdit.Location = new Point(176, 252);
+            GridViewLayoutTextEdit.Location = new Point(176, 324);
             GridViewLayoutTextEdit.Name = "GridViewLayoutTextEdit";
             GridViewLayoutTextEdit.Size = new Size(318, 20);
             GridViewLayoutTextEdit.StyleController = dataLayoutControl1;
@@ -280,7 +290,7 @@ namespace Foxoft
             // 
             // btn_ClearMemory
             // 
-            btn_ClearMemory.Location = new Point(12, 326);
+            btn_ClearMemory.Location = new Point(12, 374);
             btn_ClearMemory.Name = "btn_ClearMemory";
             btn_ClearMemory.Size = new Size(482, 22);
             btn_ClearMemory.StyleController = dataLayoutControl1;
@@ -288,23 +298,45 @@ namespace Foxoft
             btn_ClearMemory.Text = "Clear RAM";
             btn_ClearMemory.Click += Btn_ClearMemory_Click;
             // 
+            // POSShowQuantityDialogCheckEdit
+            // 
+            POSShowQuantityDialogCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSShowQuantityDialog", true));
+            POSShowQuantityDialogCheckEdit.Location = new Point(12, 252);
+            POSShowQuantityDialogCheckEdit.Name = "POSShowQuantityDialogCheckEdit";
+            POSShowQuantityDialogCheckEdit.Properties.Caption = "Show Quantity Dialog on POS";
+            POSShowQuantityDialogCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            POSShowQuantityDialogCheckEdit.Size = new Size(482, 20);
+            POSShowQuantityDialogCheckEdit.StyleController = dataLayoutControl1;
+            POSShowQuantityDialogCheckEdit.TabIndex = 15;
+            // 
+            // POSShowSalesmanCodeDialogCheckEdit
+            // 
+            POSShowSalesmanCodeDialogCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSShowSalesmanCodeDialog", true));
+            POSShowSalesmanCodeDialogCheckEdit.Location = new Point(12, 276);
+            POSShowSalesmanCodeDialogCheckEdit.Name = "POSShowSalesmanCodeDialogCheckEdit";
+            POSShowSalesmanCodeDialogCheckEdit.Properties.Caption = "Show Salesman Dialog on POS";
+            POSShowSalesmanCodeDialogCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            POSShowSalesmanCodeDialogCheckEdit.Size = new Size(482, 20);
+            POSShowSalesmanCodeDialogCheckEdit.StyleController = dataLayoutControl1;
+            POSShowSalesmanCodeDialogCheckEdit.TabIndex = 16;
+            // 
             // Root
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
             Root.Name = "Root";
-            Root.Size = new Size(506, 403);
+            Root.Size = new Size(506, 495);
             Root.TextVisible = false;
             // 
             // layoutControlGroup1
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrinterName, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForWhatsappChromeProfileName, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, layoutControlItem3 });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrinterName, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForWhatsappChromeProfileName, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSFindProductBy });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new Size(486, 383);
+            layoutControlGroup1.Size = new Size(486, 475);
             // 
             // ItemForGetPrint
             // 
@@ -395,24 +427,24 @@ namespace Foxoft
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.Location = new Point(0, 340);
+            emptySpaceItem1.Location = new Point(0, 388);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(243, 43);
+            emptySpaceItem1.Size = new Size(243, 87);
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Save;
-            layoutControlItem1.Location = new Point(243, 340);
+            layoutControlItem1.Location = new Point(243, 388);
             layoutControlItem1.MinSize = new Size(70, 26);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(243, 43);
+            layoutControlItem1.Size = new Size(243, 87);
             layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem2
             // 
             layoutControlItem2.Control = btn_OptimizeDatabaseIndexes;
-            layoutControlItem2.Location = new Point(0, 288);
+            layoutControlItem2.Location = new Point(0, 336);
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(486, 26);
             layoutControlItem2.TextVisible = false;
@@ -420,7 +452,7 @@ namespace Foxoft
             // ItemForGridViewLayout
             // 
             ItemForGridViewLayout.Control = GridViewLayoutTextEdit;
-            ItemForGridViewLayout.Location = new Point(0, 240);
+            ItemForGridViewLayout.Location = new Point(0, 312);
             ItemForGridViewLayout.Name = "ItemForGridViewLayout";
             ItemForGridViewLayout.Size = new Size(486, 24);
             ItemForGridViewLayout.Text = Resources.Entity_AppSetting_GridViewLayout;
@@ -429,33 +461,50 @@ namespace Foxoft
             // LCI_ClearMemory
             // 
             LCI_ClearMemory.Control = btn_ClearMemory;
-            LCI_ClearMemory.Location = new Point(0, 314);
+            LCI_ClearMemory.Location = new Point(0, 362);
             LCI_ClearMemory.Name = "LCI_ClearMemory";
             LCI_ClearMemory.Size = new Size(486, 26);
             LCI_ClearMemory.TextVisible = false;
             // 
-            // CheckEdit_POSShowQtyDialog
+            // ItemForPOSShowQuantityDialog
             // 
-            CheckEdit_POSShowQtyDialog.Location = new Point(12, 276);
-            CheckEdit_POSShowQtyDialog.Name = "CheckEdit_POSShowQtyDialog";
-            CheckEdit_POSShowQtyDialog.Properties.Caption = "POS Show Qty Dialog";
-            CheckEdit_POSShowQtyDialog.Size = new Size(482, 20);
-            CheckEdit_POSShowQtyDialog.StyleController = dataLayoutControl1;
-            CheckEdit_POSShowQtyDialog.TabIndex = 1;
+            ItemForPOSShowQuantityDialog.Control = POSShowQuantityDialogCheckEdit;
+            ItemForPOSShowQuantityDialog.Location = new Point(0, 240);
+            ItemForPOSShowQuantityDialog.Name = "ItemForPOSShowQuantityDialog";
+            ItemForPOSShowQuantityDialog.Size = new Size(486, 24);
+            ItemForPOSShowQuantityDialog.TextVisible = false;
             // 
-            // layoutControlItem3
+            // ItemForPOSShowSalesmanCodeDialog
             // 
-            layoutControlItem3.Control = CheckEdit_POSShowQtyDialog;
-            layoutControlItem3.Location = new Point(0, 264);
-            layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new Size(486, 24);
-            layoutControlItem3.TextVisible = false;
+            ItemForPOSShowSalesmanCodeDialog.Control = POSShowSalesmanCodeDialogCheckEdit;
+            ItemForPOSShowSalesmanCodeDialog.Location = new Point(0, 264);
+            ItemForPOSShowSalesmanCodeDialog.Name = "ItemForPOSShowSalesmanCodeDialog";
+            ItemForPOSShowSalesmanCodeDialog.Size = new Size(486, 24);
+            ItemForPOSShowSalesmanCodeDialog.TextVisible = false;
+            // 
+            // ItemForPOSFindProductBy
+            // 
+            ItemForPOSFindProductBy.Control = POSFindProductByCheckedComboBoxEdit;
+            ItemForPOSFindProductBy.Location = new Point(0, 288);
+            ItemForPOSFindProductBy.Name = "ItemForPOSFindProductBy";
+            ItemForPOSFindProductBy.Size = new Size(486, 24);
+            ItemForPOSFindProductBy.TextVisible = false;
+            // 
+            // POSFindProductByCheckedComboBoxEdit
+            // 
+            POSFindProductByCheckedComboBoxEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSFindProductBy", true));
+            POSFindProductByCheckedComboBoxEdit.Location = new Point(12, 300);
+            POSFindProductByCheckedComboBoxEdit.Name = "POSFindProductByCheckedComboBoxEdit";
+            POSFindProductByCheckedComboBoxEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            POSFindProductByCheckedComboBoxEdit.Size = new Size(482, 20);
+            POSFindProductByCheckedComboBoxEdit.StyleController = dataLayoutControl1;
+            POSFindProductByCheckedComboBoxEdit.TabIndex = 19;
             // 
             // FormAppSetting
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(506, 403);
+            ClientSize = new Size(506, 495);
             Controls.Add(dataLayoutControl1);
             Name = "FormAppSetting";
             Text = "Application Settings";
@@ -474,6 +523,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)AutoSaveCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)InvoiceEditGraceDaysSpinEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PaymentEditGraceDaysSpinEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)POSShowQuantityDialogCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)POSShowSalesmanCodeDialogCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGetPrint).EndInit();
@@ -491,8 +542,10 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGridViewLayout).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_ClearMemory).EndInit();
-            ((System.ComponentModel.ISupportInitialize)CheckEdit_POSShowQtyDialog.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPOSShowQuantityDialog).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPOSShowSalesmanCodeDialog).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPOSFindProductBy).EndInit();
+            ((System.ComponentModel.ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).EndInit();
             ResumeLayout(false);
         }
 
@@ -532,7 +585,14 @@ namespace Foxoft
         private DevExpress.XtraEditors.SimpleButton btn_ClearMemory;
         private DevExpress.XtraLayout.LayoutControlItem LCI_ClearMemory;
         private DevExpress.XtraEditors.CheckEdit checkEdit1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraEditors.CheckEdit CheckEdit_POSShowQtyDialog;
+        private DevExpress.XtraEditors.CheckEdit POSShowQuantityDialogCheckEdit;
+        private DevExpress.XtraEditors.CheckEdit POSShowSalesmanCodeDialogCheckEdit;
+        private DevExpress.XtraEditors.CheckEdit POSFindProductByCheckEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForPOSShowQuantityDialog;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForPOSShowSalesmanCodeDialog;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForPOSFindProductBy;
+        private DevExpress.XtraEditors.LookUpEdit POSFindProductByLookUpEdit;
+        private DevExpress.XtraEditors.CheckedComboBoxEdit POSFindProductByCheckedComboBoxEdit;
     }
 }
