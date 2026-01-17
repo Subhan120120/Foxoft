@@ -320,7 +320,7 @@ namespace Foxoft
                     decimal? balance = CalcProductBalance(formProductList.dcProduct, wareHouseCode);
 
                     decimal qty = 1;
-                    string salesman = "";
+                    string? salesman = null;
 
                     if (permitNegativeStock)
                         balance = null;
@@ -381,7 +381,7 @@ namespace Foxoft
             }
         }
 
-        private void AddNewRow(DcProduct dcProduct, decimal qty, string salesman)
+        private void AddNewRow(DcProduct dcProduct, decimal qty, string? salesman)
         {
             gV_InvoiceLine.AddNewRow();
 
@@ -944,7 +944,7 @@ namespace Foxoft
                     .PermitNegativeStock;
 
                 decimal? balance = CalcProductBalance(selectedProduct, wareHouseCode);
-                string salesman = "";
+                string? salesman = null;
 
                 if (permitNegativeStock)
                     balance = null;
