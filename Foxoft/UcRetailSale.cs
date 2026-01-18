@@ -1049,6 +1049,7 @@ namespace Foxoft
 
         private void Btn_NewInvoice_Click(object sender, EventArgs e)
         {
+            efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
             ClearControlsAddNew();
         }
 
