@@ -31,6 +31,8 @@ namespace Foxoft
             CurrAccTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcCurrAccType>();
             OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
+            PersonalTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcPersonalType>();
+
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
 
@@ -70,6 +72,7 @@ namespace Foxoft
             LoadCurrAcc();
             LoadLayout();
             dataLayoutControl1.IsValid(out List<string> errorList);
+            CurrAccTypeCodeLookUpEdit_EditValueChanged(CurrAccTypeCodeLookUpEdit, EventArgs.Empty);
         }
 
         private void LoadCurrAcc()
@@ -173,6 +176,26 @@ namespace Foxoft
 
         private void PhoneNumTextEdit_EditValueChanged(object sender, EventArgs e)
         {
+        }
+
+        private void CurrAccTypeCodeLookUpEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            // treat null/empty as "not 3"
+            var isType3 = false;
+
+            var val = CurrAccTypeCodeLookUpEdit.EditValue;
+            if (val != null && val != DBNull.Value)
+            {
+                // DevExpress LookUpEdit value is often string/int; handle both safely
+                if (val is int i) isType3 = (i == 3);
+                else if (int.TryParse(val.ToString(), out var parsed)) isType3 = (parsed == 3);
+            }
+
+            PersonalTypeCodeLookUpEdit.Enabled = isType3;
+
+            // optional: clear value when disabled
+            if (!isType3)
+                PersonalTypeCodeLookUpEdit.EditValue = null;
         }
     }
 }
