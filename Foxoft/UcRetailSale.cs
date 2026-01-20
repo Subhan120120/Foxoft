@@ -28,7 +28,6 @@ namespace Foxoft
         ReportClass reportClass;
         subContext dbContext = new();
         readonly SettingStore settingStore;
-        readonly AppSetting appSetting;
 
         public UcRetailSale()
         {
@@ -65,9 +64,10 @@ namespace Foxoft
             btn_Print.Text = Resources.Form_RetailSale_Button_Print;
             btn_PrintPreview.Text = Resources.Form_RetailSale_Button_PrintPreview;
             btn_ReportZ.Text = Resources.Form_RetailSale_Button_ReportZ;
-            btn_NewInvoice.Text = Resources.Form_RetailSale_Button_New;
+            btn_AddBacket.Text = Resources.Form_RetailSale_Button_AddBasket;
             btn_IncomplatedInvoices.Text = Resources.Form_RetailSale_Button_IncompletedInvoices;
             btn_InvoiceDiscount.Text = Resources.Form_RetailSale_Button_InvoiceDiscount;
+            btn_NewInvoice.Text = Resources.Form_RetailSale_Button_New;
         }
 
         private void BindCheckedCombo()
@@ -219,14 +219,15 @@ namespace Foxoft
             POSFindProductByCheckedComboBoxEdit.Properties.Items.BeginUpdate();
             try
             {
-                // Ən rahat: saved string-i birbaşa EditValue-ya ver
                 POSFindProductByCheckedComboBoxEdit.EditValue =
                     Settings.Default.AppSetting.POSFindProductBy?.Trim() ?? "";
             }
             finally
             {
+                POSFindProductByCheckedComboBoxEdit.Properties.Items.EndUpdate(); // ✅ mütləq
             }
         }
+
         private void LoadCurrAcc()
         {
             using (var newContext = new subContext())
@@ -249,6 +250,53 @@ namespace Foxoft
         {
             if (efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
                 efMethods.UpdateInvoiceIsSuspended(trInvoiceHeader.InvoiceHeaderId, true); // delete incomplete invoice
+        }
+
+        private bool TryMergeSameProduct(DcProduct dcProduct, decimal qty, string? salesman)
+        {
+            if (dcProduct == null) return false;
+
+            if (!Settings.Default.AppSetting.POSMergeSameProducts) return false;
+
+            if (gV_InvoiceLine.DataRowCount <= 0) return false;
+
+            // Şərtlər: ProductCode + Price + Salesman + PosDiscount + VatRate (istəsən azaldarıq)
+            // NOTE: serial/lot kimi sahələr varsa, buraya əlavə et.
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            {
+                string productCode = gV_InvoiceLine.GetRowCellValue(i, nameof(TrInvoiceLine.ProductCode))?.ToString();
+                if (!string.Equals(productCode, dcProduct.ProductCode, StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                decimal price = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, nameof(TrInvoiceLine.Price)) ?? 0m);
+                decimal rowDiscount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, nameof(TrInvoiceLine.PosDiscount)) ?? 0m);
+                string rowSalesman = gV_InvoiceLine.GetRowCellValue(i, nameof(TrInvoiceLine.SalesPersonCode))?.ToString();
+
+                // yeni sətr üçün gözlənilən dəyərlər (səndə AddNewRow bunları yazır)
+                string newSalesman = salesman ?? "";
+
+                // Əgər qiymət/satıcı fərqlidirsə -> merge etmə
+                if (price != dcProduct.RetailPrice) continue;
+                if (!string.Equals(rowSalesman ?? "", newSalesman, StringComparison.OrdinalIgnoreCase)) continue;
+
+                // discount fərqlidirsə merge etməsin (istəsən bunu də deaktiv edərik)
+                if (rowDiscount != 0m) continue;
+
+                // ✅ uyğun sətr tapıldı -> qty artır
+                decimal oldQty = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, nameof(TrInvoiceLine.QtyOut)) ?? 0m);
+                decimal newQty = oldQty + qty;
+
+                gV_InvoiceLine.SetRowCellValue(i, nameof(TrInvoiceLine.QtyOut), newQty);
+
+                // Əgər Amount/NetAmount manual hesablanırsa, RefreshData kifayət edir.
+                gV_InvoiceLine.RefreshData();
+                gV_InvoiceLine.FocusedRowHandle = i;
+                gV_InvoiceLine.MoveLast();
+
+                return true;
+            }
+
+            return false;
         }
 
         private void gV_InvoiceLine_CalcPreviewText(object sender, CalcPreviewTextEventArgs e)
@@ -374,7 +422,10 @@ namespace Foxoft
                         }
                     }
 
-                    AddNewRow(formProductList.dcProduct, qty, salesman);
+                    if (!TryMergeSameProduct(formProductList.dcProduct, qty, salesman))
+                    {
+                        AddNewRow(formProductList.dcProduct, qty, salesman);
+                    }
 
                     SaveInvoice();
                 }
@@ -998,9 +1049,14 @@ namespace Foxoft
                     }
                 }
 
-                AddNewRow(selectedProduct, qty, salesman);
+                if (!TryMergeSameProduct(selectedProduct, qty, salesman))
+                {
+                    AddNewRow(selectedProduct, qty, salesman);
+                }
+
                 SaveInvoice();
                 txtEdit_Barcode.EditValue = string.Empty;
+
             }
             else
             {
@@ -1050,6 +1106,11 @@ namespace Foxoft
         private void Btn_NewInvoice_Click(object sender, EventArgs e)
         {
             efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+            ClearControlsAddNew();
+        }
+
+        private void Btn_AddBasket_Click(object sender, EventArgs e)
+        {
             ClearControlsAddNew();
         }
 

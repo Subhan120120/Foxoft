@@ -844,6 +844,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge Same Products on POS.
+        /// </summary>
+        public static string Entity_AppSetting_POSMergeSameProducts {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_POSMergeSameProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Quantity Dialog on POS.
         /// </summary>
         public static string Entity_AppSetting_POSShowQuantityDialog {
@@ -9095,6 +9104,15 @@ namespace Foxoft.Properties {
         public static string Form_RetailSale_BarcodeNotFound {
             get {
                 return ResourceManager.GetString("Form_RetailSale_BarcodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Basket.
+        /// </summary>
+        public static string Form_RetailSale_Button_AddBasket {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_AddBasket", resourceCulture);
             }
         }
         

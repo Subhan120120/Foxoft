@@ -75,6 +75,9 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_POSFindProductBy), ResourceType = typeof(Resources))]
         public string? POSFindProductBy { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_AppSetting_POSMergeSameProducts), ResourceType = typeof(Resources))]
+        public bool POSMergeSameProducts { get; set; }
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }
