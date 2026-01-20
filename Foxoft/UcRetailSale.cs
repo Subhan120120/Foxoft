@@ -64,7 +64,7 @@ namespace Foxoft
             btn_Print.Text = Resources.Form_RetailSale_Button_Print;
             btn_PrintPreview.Text = Resources.Form_RetailSale_Button_PrintPreview;
             btn_ReportZ.Text = Resources.Form_RetailSale_Button_ReportZ;
-            btn_AddBacket.Text = Resources.Form_RetailSale_Button_AddBasket;
+            btn_AddBasket.Text = Resources.Form_RetailSale_Button_AddBasket;
             btn_IncomplatedInvoices.Text = Resources.Form_RetailSale_Button_IncompletedInvoices;
             btn_InvoiceDiscount.Text = Resources.Form_RetailSale_Button_InvoiceDiscount;
             btn_NewInvoice.Text = Resources.Form_RetailSale_Button_New;
@@ -1203,5 +1203,16 @@ namespace Foxoft
             //efMethods.UpdateAppSettingPOSFindProductBy(Settings.Default.AppSetting.POSFindProductBy);
         }
 
+        private void GV_InvoiceLine_CustomDrawRowIndicator(object sender, RowIndicatorCustomDrawEventArgs e)
+        {
+            if (!e.Info.IsRowIndicator) return;
+
+            // data rows only (group rows are < 0)
+            if (e.RowHandle >= 0)
+                e.Info.DisplayText = (e.RowHandle + 1).ToString();
+
+            // optional: header indicator text
+            // else e.Info.DisplayText = "#";
+        }
     }
 }
