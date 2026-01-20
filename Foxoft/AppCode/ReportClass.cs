@@ -6,7 +6,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
-using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.IO;

@@ -26,6 +26,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using Foxoft.Models.Entity.Report;
 
 namespace Foxoft
 {

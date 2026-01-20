@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Foxoft.Properties;
 
-namespace Foxoft.Models
+namespace Foxoft.Models.Entity.RoleClaim
 {
     [Display(Name = nameof(Resources.Entity_ClaimType), ResourceType = typeof(Resources))]
     public partial class DcClaimType

@@ -6,6 +6,7 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;

@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+﻿using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Properties; // Resources
 
 namespace Foxoft

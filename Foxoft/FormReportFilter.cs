@@ -8,6 +8,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Filtering;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.VisualBasic;

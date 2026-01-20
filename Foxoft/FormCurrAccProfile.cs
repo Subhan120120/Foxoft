@@ -5,6 +5,8 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraTreeList.Nodes;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
+using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Properties; // Resources
 using System.Data;
 

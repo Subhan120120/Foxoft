@@ -1,5 +1,7 @@
 ﻿using Foxoft.AppCode;
 using Foxoft.Models.Entity;
+using Foxoft.Models.Entity.Report;
+using Foxoft.Models.Entity.RoleClaim;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.ComponentModel;

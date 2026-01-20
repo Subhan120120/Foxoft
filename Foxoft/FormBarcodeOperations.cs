@@ -6,6 +6,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraReports;
 using Foxoft.Migrations;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;

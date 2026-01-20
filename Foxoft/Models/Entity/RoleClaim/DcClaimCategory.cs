@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
 
-namespace Foxoft.Models
+namespace Foxoft.Models.Entity.RoleClaim
 {
     [Display(Name = nameof(Resources.Entity_ClaimCategory), ResourceType = typeof(Resources))]
     public partial class DcClaimCategory : BaseEntity

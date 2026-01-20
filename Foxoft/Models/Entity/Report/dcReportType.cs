@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Foxoft.Properties;
 
-namespace Foxoft.Models
+namespace Foxoft.Models.Entity.Report
 {
     [Display(Name = nameof(Resources.Entity_ReportType), ResourceType = typeof(Resources))]
     public partial class DcReportType

@@ -4,6 +4,7 @@ using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Columns;
 using DevExpress.XtraTreeList.Nodes;
 using Foxoft.Models;
+using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Properties;
 
 namespace Foxoft

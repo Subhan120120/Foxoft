@@ -3,6 +3,7 @@ using DevExpress.Xpo;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
+using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;

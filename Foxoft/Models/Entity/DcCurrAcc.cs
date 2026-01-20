@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Foxoft.Models.Entity.Report;
+using Foxoft.Models.Entity.RoleClaim;
 
 namespace Foxoft.Models
 {

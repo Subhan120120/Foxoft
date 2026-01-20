@@ -24,6 +24,7 @@ using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

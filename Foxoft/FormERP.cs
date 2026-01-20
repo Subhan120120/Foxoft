@@ -6,6 +6,7 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using System.Collections;
 using System.Collections.Specialized;

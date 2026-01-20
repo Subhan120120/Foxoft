@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 
 namespace Foxoft.Models

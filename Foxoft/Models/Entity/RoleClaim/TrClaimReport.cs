@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 
-namespace Foxoft.Models
+namespace Foxoft.Models.Entity.RoleClaim
 {
     [Display(Name = nameof(Resources.Entity_ClaimReport), ResourceType = typeof(Resources))]
     public partial class TrClaimReport : BaseEntity

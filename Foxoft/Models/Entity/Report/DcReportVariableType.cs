@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Foxoft.Properties;
 
-namespace Foxoft.Models
+namespace Foxoft.Models.Entity.Report
 {
     [Display(Name = nameof(Resources.Entity_ReportVariableType), ResourceType = typeof(Resources))]
     public partial class DcReportVariableType

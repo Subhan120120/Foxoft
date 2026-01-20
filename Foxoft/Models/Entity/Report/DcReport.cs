@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Properties;
 
-namespace Foxoft.Models
+namespace Foxoft.Models.Entity.Report
 {
     [Display(Name = nameof(Resources.Entity_Report), ResourceType = typeof(Resources))]
     public partial class DcReport : BaseEntity

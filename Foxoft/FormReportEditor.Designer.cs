@@ -1,5 +1,5 @@
 ﻿using DevExpress.XtraGrid.Views.Grid;
-using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 
 namespace Foxoft

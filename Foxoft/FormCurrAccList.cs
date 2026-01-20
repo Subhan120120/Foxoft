@@ -12,6 +12,7 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties; // Resources üçün
 using Microsoft.Data.SqlClient;
 using System.ComponentModel;

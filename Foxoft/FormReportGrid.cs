@@ -37,6 +37,7 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.Identity.Client;
 using Microsoft.VisualBasic;
+using Foxoft.Models.Entity.Report;
 #endregion
 
 namespace Foxoft

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 
 namespace Foxoft.Properties
 {

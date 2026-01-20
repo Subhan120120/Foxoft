@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
 
-namespace Foxoft.Models
+namespace Foxoft.Models.Entity.RoleClaim
 {
     [Display(Name = nameof(Resources.Entity_CurrAccRole), ResourceType = typeof(Resources))]
     public partial class TrCurrAccRole : BaseEntity

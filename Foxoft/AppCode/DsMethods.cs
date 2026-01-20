@@ -1,5 +1,6 @@
 ﻿using DevExpress.DataAccess.Sql;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using System;
 using System.IO;
 using System.Reflection;

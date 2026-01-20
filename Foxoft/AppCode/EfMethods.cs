@@ -7,6 +7,8 @@ using DevExpress.Spreadsheet;
 using DevExpress.XtraSpreadsheet.Model;
 using Foxoft.Models;
 using Foxoft.Models.Entity;
+using Foxoft.Models.Entity.Report;
+using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Models.ViewModel;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

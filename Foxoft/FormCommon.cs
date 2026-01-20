@@ -7,6 +7,8 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
+using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
