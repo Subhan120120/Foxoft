@@ -1,9 +1,6 @@
-﻿using DevExpress.Data.Mask;
-using DevExpress.Utils;
-using DevExpress.XtraDataLayout;
+﻿using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
-using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -12,8 +9,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Foxoft
 {

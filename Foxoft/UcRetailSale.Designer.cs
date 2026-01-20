@@ -273,6 +273,7 @@ namespace Foxoft
             // 
             // POSFindProductByCheckedComboBoxEdit
             // 
+            POSFindProductByCheckedComboBoxEdit.EditValue = "";
             POSFindProductByCheckedComboBoxEdit.Location = new Point(556, 47);
             POSFindProductByCheckedComboBoxEdit.Name = "POSFindProductByCheckedComboBoxEdit";
             POSFindProductByCheckedComboBoxEdit.Properties.AllowFocused = false;
@@ -281,6 +282,7 @@ namespace Foxoft
             POSFindProductByCheckedComboBoxEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
             POSFindProductByCheckedComboBoxEdit.Properties.DisplayFormat.FormatType = FormatType.Custom;
             POSFindProductByCheckedComboBoxEdit.Properties.ItemAutoHeight = true;
+            POSFindProductByCheckedComboBoxEdit.Properties.SeparatorChar = ',';
             POSFindProductByCheckedComboBoxEdit.Properties.TextEditStyle = TextEditStyles.HideTextEditor;
             POSFindProductByCheckedComboBoxEdit.Size = new Size(54, 34);
             POSFindProductByCheckedComboBoxEdit.StyleController = lC_InvoiceLine;

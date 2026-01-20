@@ -180,6 +180,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Common_Balance), ResourceType = typeof(Resources))]
         public decimal Balance { get; set; }
 
+        public virtual DcEmployee DcEmployee { get; set; }
         public virtual DcCurrAccType DcCurrAccType { get; set; }
         public virtual DcUILanguage DcUILanguage { get; set; }
         public virtual DcPersonalType DcPersonalType { get; set; }

@@ -1,16 +1,14 @@
-﻿// File: Models/HumanResource/Enums.cs
-using System;
-
-namespace Foxoft.Models.Entity.HumanResource
+﻿// File: Models/HrEnums.cs
+namespace Foxoft.Models
 {
-    public enum HrGender : byte
+    public enum Gender : byte
     {
         Unknown = 0,
         Male = 1,
         Female = 2
     }
 
-    public enum HrMaritalStatus : byte
+    public enum MaritalStatus : byte
     {
         Unknown = 0,
         Single = 1,
@@ -19,7 +17,7 @@ namespace Foxoft.Models.Entity.HumanResource
         Widowed = 4
     }
 
-    public enum HrLeaveStatus : byte
+    public enum LeaveStatus : byte
     {
         Draft = 0,
         Submitted = 1,
@@ -28,14 +26,14 @@ namespace Foxoft.Models.Entity.HumanResource
         Cancelled = 4
     }
 
-    public enum HrPayrollItemType : byte
+    public enum PayrollItemType : byte
     {
         Salary = 1,
         Bonus = 2,
-        Allowance = 3,
-        Overtime = 4,
-        Tax = 5,
-        Insurance = 6,
-        Deduction = 7
+        Overtime = 3,
+        Tax = 4,
+        Insurance = 5,
+        Deduction = 6,
+        Other = 99
     }
 }

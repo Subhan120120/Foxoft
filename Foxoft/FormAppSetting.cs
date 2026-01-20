@@ -12,7 +12,7 @@ namespace Foxoft
         subContext dbContext = new();
         AppSetting AppSetting;
         AdoMethods adoMethods = new();
-        public class SearchType
+        public class FindBy
         {
             public int Id { get; set; }
             public string Name { get; set; }
@@ -31,7 +31,7 @@ namespace Foxoft
 
         private void BindCheckedCombo()
         {
-            List<SearchType> list = new()
+            List<FindBy> list = new()
             {
                 new() { Id = 1, Name = "ProductCode" },
                 new() { Id = 2, Name = "Barcode" },
@@ -39,8 +39,8 @@ namespace Foxoft
             };
 
             POSFindProductByCheckedComboBoxEdit.Properties.DataSource = list;
-            POSFindProductByCheckedComboBoxEdit.Properties.ValueMember = nameof(SearchType.Id);
-            POSFindProductByCheckedComboBoxEdit.Properties.DisplayMember = nameof(SearchType.Name);
+            POSFindProductByCheckedComboBoxEdit.Properties.ValueMember = nameof(FindBy.Id);
+            POSFindProductByCheckedComboBoxEdit.Properties.DisplayMember = nameof(FindBy.Name);
 
             // Important for correct "value-based" operations
             POSFindProductByCheckedComboBoxEdit.Properties.SeparatorChar = ',';

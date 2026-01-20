@@ -73,7 +73,7 @@ namespace Foxoft
 
         private void BindCheckedCombo()
         {
-            List<SearchType> list = new()
+            List<FindBy> list = new()
             {
                 new() { Id = 1, Name = "ProductCode" },
                 new() { Id = 2, Name = "Barcode" },
@@ -81,11 +81,8 @@ namespace Foxoft
             };
 
             POSFindProductByCheckedComboBoxEdit.Properties.DataSource = list;
-            POSFindProductByCheckedComboBoxEdit.Properties.ValueMember = nameof(SearchType.Id);
-            POSFindProductByCheckedComboBoxEdit.Properties.DisplayMember = nameof(SearchType.Name);
-
-            // Important for correct "value-based" operations
-            POSFindProductByCheckedComboBoxEdit.Properties.SeparatorChar = ',';
+            POSFindProductByCheckedComboBoxEdit.Properties.ValueMember = nameof(FindBy.Id);
+            POSFindProductByCheckedComboBoxEdit.Properties.DisplayMember = nameof(FindBy.Name);
         }
 
         private void UcRetailSale_Load(object sender, EventArgs e)
@@ -98,7 +95,7 @@ namespace Foxoft
                 trInvoiceHeader.CurrAccCode = defaultCustomer;
             }
 
-            SetSelectedIdsManual(Settings.Default.AppSetting.POSFindProductBy);
+            POSFindProductByCheckedComboBoxEdit.EditValue = Settings.Default.AppSetting.POSFindProductBy?.Trim() ?? "";
         }
 
         private void trInvoiceHeadersBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
@@ -213,20 +210,6 @@ namespace Foxoft
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             SplashScreenManager.CloseForm(false);
-        }
-
-        private void SetSelectedIdsManual(string selectedIds)
-        {
-            POSFindProductByCheckedComboBoxEdit.Properties.Items.BeginUpdate();
-            try
-            {
-                POSFindProductByCheckedComboBoxEdit.EditValue =
-                    Settings.Default.AppSetting.POSFindProductBy?.Trim() ?? "";
-            }
-            finally
-            {
-                POSFindProductByCheckedComboBoxEdit.Properties.Items.EndUpdate(); // ✅ mütləq
-            }
         }
 
         private void LoadCurrAcc()

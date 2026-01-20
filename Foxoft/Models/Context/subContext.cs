@@ -91,6 +91,21 @@ namespace Foxoft.Models
         public DbSet<TrProcessPriceType> TrProcessPriceTypes { get; set; }
         public DbSet<TrPriceListHeader> TrPriceListHeaders { get; set; }
         public DbSet<TrPriceListLine> TrPriceListLines { get; set; }
+        public DbSet<DcEmployee> DcEmployees { get; set; }
+        public DbSet<DcDepartment> DcDepartments { get; set; }
+        public DbSet<DcPosition> DcPositions { get; set; }
+        public DbSet<DcEmploymentType> DcEmploymentTypes { get; set; }
+        public DbSet<TrEmployeePosition> TrEmployeePositions { get; set; }
+        public DbSet<TrEmployeeContract> TrEmployeeContracts { get; set; }
+        public DbSet<TrAttendance> TrAttendances { get; set; }
+        public DbSet<DcLeaveType> DcLeaveTypes { get; set; }
+        public DbSet<TrLeave> TrLeaves { get; set; }
+        public DbSet<DcPayrollPeriod> DcPayrollPeriods { get; set; }
+        public DbSet<TrPayrollHeader> TrPayrollHeaders { get; set; }
+        public DbSet<TrPayrollLine> TrPayrollLines { get; set; }
+        public DbSet<TrEmployeeEducation> TrEmployeeEducations { get; set; }
+
+
         public DbSet<RetailSale> RetailSales { get; set; } // view
         public DbSet<ProductBalance> ProductBalances { get; set; } // view
         public virtual DbSet<SlugifyResult> Slugify { get; set; } // function
@@ -440,6 +455,13 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<DcEmployee>(entity =>
+            {
+                entity.HasOne(x => x.DcCurrAcc)
+                    .WithOne(x => x.DcEmployee)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
             modelBuilder.Entity<SettingStore>(entity =>
             {
                 entity.HasOne(x => x.DcStore)
@@ -519,6 +541,24 @@ namespace Foxoft.Models
                     .WithMany(x => x.TrBarcodeOperationLines)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+
+            modelBuilder.Entity<TrLeave>()
+                .HasOne(x => x.Employee)
+                .WithMany(x => x.Leaves)
+                .HasForeignKey(x => x.CurrAccCode)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<TrLeave>()
+                .HasOne(x => x.ApprovedByEmployee)
+                .WithMany(x => x.ApprovedLeaves)
+                .HasForeignKey(x => x.ApprovedByCurrAccCode)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<DcDepartment>()
+                .HasOne(x => x.ParentDepartment)
+                .WithMany(x => x.ChildDepartments)
+                .HasForeignKey(x => x.ParentDepartmentId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         private static void InitializeHasData(ModelBuilder modelBuilder)

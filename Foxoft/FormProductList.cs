@@ -93,7 +93,6 @@ namespace Foxoft
             gV_ProductList.PopulateColumns();
             LoadLayout();
             gV_ProductList.Columns.Add(colImage);
-            gV_ProductList.BestFitColumns();
         }
 
         public FormProductList(byte[] productTypeArr, bool? isDisabled, string focusedProductCode)
@@ -318,7 +317,6 @@ namespace Foxoft
             else
                 dcProduct = null;
 
-            gV_ProductList.BestFitColumns();
             gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
         }
 
