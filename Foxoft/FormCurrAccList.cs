@@ -78,6 +78,16 @@ namespace Foxoft
 
         private void FormCurrAccList_Load(object sender, EventArgs e)
         {
+            LoadCurrAccs(currAccTypeArr);
+            LoadLayout();
+
+            //Focus Special Row
+            int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
+            if (rowHandle != GridControl.InvalidRowHandle)
+            {
+                gV_CurrAccList.FocusedRowHandle = rowHandle;
+                gV_CurrAccList.MakeRowVisible(rowHandle);
+            }
         }
 
         private void FormCurrAccList_Activated(object sender, EventArgs e)
@@ -90,16 +100,6 @@ namespace Foxoft
                     gC_CurrAccList.BeginInvoke(new Action(gV_CurrAccList.ShowFindPanel));
             }
 
-            LoadCurrAccs(currAccTypeArr);
-            LoadLayout();
-
-            //Focus Special Row
-            int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
-            if (rowHandle != GridControl.InvalidRowHandle)
-            {
-                gV_CurrAccList.FocusedRowHandle = rowHandle;
-                gV_CurrAccList.MakeRowVisible(rowHandle);
-            }
         }
 
         private void LoadCurrAccs(byte[] currAccTypeArr)
@@ -148,7 +148,6 @@ namespace Foxoft
             else
                 dcCurrAcc = null;
 
-            gV_CurrAccList.BestFitColumns();
             gV_CurrAccList.MakeRowVisible(gV_CurrAccList.FocusedRowHandle);
         }
 

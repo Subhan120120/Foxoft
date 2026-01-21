@@ -317,6 +317,9 @@ namespace Foxoft
             else
                 dcProduct = null;
 
+            gC_ProductList.ForceInitialize(); // forces DataController init
+
+            //gV_ProductList.BestFitColumns();
             gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
         }
 
