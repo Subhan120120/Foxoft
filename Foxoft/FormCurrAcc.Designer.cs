@@ -93,6 +93,7 @@ namespace Foxoft
             ItemForCurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
             bindingSource1 = new BindingSource(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
+            BBI_HumanResources = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CurrAccCodeTextEdit.Properties).BeginInit();
@@ -444,8 +445,8 @@ namespace Foxoft
             barManager1.DockControls.Add(barDockControlLeft);
             barManager1.DockControls.Add(barDockControlRight);
             barManager1.Form = this;
-            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_CurrAccFeatures, BBI_ContactDetail });
-            barManager1.MaxItemId = 2;
+            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_CurrAccFeatures, BBI_ContactDetail, BBI_HumanResources });
+            barManager1.MaxItemId = 3;
             barManager1.StatusBar = bar3;
             // 
             // bar1
@@ -455,7 +456,7 @@ namespace Foxoft
             bar1.DockRow = 1;
             bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
             bar1.FloatLocation = new Point(80, 531);
-            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_CurrAccFeatures), new DevExpress.XtraBars.LinkPersistInfo(BBI_ContactDetail) });
+            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_CurrAccFeatures), new DevExpress.XtraBars.LinkPersistInfo(BBI_ContactDetail), new DevExpress.XtraBars.LinkPersistInfo(BBI_HumanResources) });
             bar1.Offset = 11;
             bar1.Text = "Tools";
             // 
@@ -765,6 +766,15 @@ namespace Foxoft
             // 
             dxErrorProvider1.ContainerControl = this;
             // 
+            // BBI_HumanResources
+            // 
+            BBI_HumanResources.Caption = "Human Resources";
+            BBI_HumanResources.Id = 2;
+            BBI_HumanResources.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
+            BBI_HumanResources.Name = "BBI_HumanResources";
+            BBI_HumanResources.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            BBI_HumanResources.ItemClick += BBI_HumanResources_ItemClick;
+            // 
             // FormCurrAcc
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -899,5 +909,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
         private DevExpress.XtraEditors.LookUpEdit PersonalTypeCodeLookUpEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPersonalTypeCode;
+        private DevExpress.XtraBars.BarButtonItem BBI_HumanResources;
     }
 }

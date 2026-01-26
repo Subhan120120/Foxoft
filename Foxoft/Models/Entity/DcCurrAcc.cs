@@ -23,7 +23,11 @@ namespace Foxoft.Models
             TrReportCustomizations = new HashSet<TrReportCustomization>();
             TrCurrAccFeatures = new HashSet<TrCurrAccFeature>();
             DcCurrAccContactDetails = new HashSet<DcCurrAccContactDetail>();
-            TrInstallmentGuarantors = new HashSet<TrInstallmentGuarantor>();
+            TrInstallmentGuarantors = new HashSet<TrInstallmentGuarantor>(); 
+            TrEmployeePositions = new HashSet<TrEmployeePosition>();
+            TrEmployeeContracts = new HashSet<TrEmployeeContract>();
+            TrAttendances = new HashSet<TrAttendance>();
+            TrPayrollHeaders = new HashSet<TrPayrollHeader>();
         }
 
         [Key]
@@ -180,7 +184,18 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Common_Balance), ResourceType = typeof(Resources))]
         public decimal Balance { get; set; }
 
-        public virtual DcEmployee DcEmployee { get; set; }
+        [Required]
+        public Gender Gender { get; set; } = Gender.Unknown;
+
+        [Required]
+        public MaritalStatus MaritalStatus { get; set; } = MaritalStatus.Unknown;
+
+
+        public virtual ICollection<TrEmployeePosition> TrEmployeePositions { get; set; }
+        public virtual ICollection<TrEmployeeContract> TrEmployeeContracts { get; set; }
+        public virtual ICollection<TrAttendance> TrAttendances { get; set; }
+
+        public virtual ICollection<TrPayrollHeader> TrPayrollHeaders { get; set; }
         public virtual DcCurrAccType DcCurrAccType { get; set; }
         public virtual DcUILanguage DcUILanguage { get; set; }
         public virtual DcPersonalType DcPersonalType { get; set; }

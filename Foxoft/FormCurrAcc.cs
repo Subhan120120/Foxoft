@@ -4,6 +4,7 @@ using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Google.Apis.PeopleService.v1.Data;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Data;
@@ -191,6 +192,11 @@ namespace Foxoft
             // optional: clear value when disabled
             if (!isType3)
                 PersonalTypeCodeLookUpEdit.EditValue = null;
+        }
+
+        private void BBI_HumanResources_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+           
         }
     }
 }

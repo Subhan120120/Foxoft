@@ -91,19 +91,15 @@ namespace Foxoft.Models
         public DbSet<TrProcessPriceType> TrProcessPriceTypes { get; set; }
         public DbSet<TrPriceListHeader> TrPriceListHeaders { get; set; }
         public DbSet<TrPriceListLine> TrPriceListLines { get; set; }
-        public DbSet<DcEmployee> DcEmployees { get; set; }
         public DbSet<DcDepartment> DcDepartments { get; set; }
         public DbSet<DcPosition> DcPositions { get; set; }
         public DbSet<DcEmploymentType> DcEmploymentTypes { get; set; }
         public DbSet<TrEmployeePosition> TrEmployeePositions { get; set; }
         public DbSet<TrEmployeeContract> TrEmployeeContracts { get; set; }
         public DbSet<TrAttendance> TrAttendances { get; set; }
-        public DbSet<DcLeaveType> DcLeaveTypes { get; set; }
-        public DbSet<TrLeave> TrLeaves { get; set; }
         public DbSet<DcPayrollPeriod> DcPayrollPeriods { get; set; }
         public DbSet<TrPayrollHeader> TrPayrollHeaders { get; set; }
         public DbSet<TrPayrollLine> TrPayrollLines { get; set; }
-        public DbSet<TrEmployeeEducation> TrEmployeeEducations { get; set; }
 
 
         public DbSet<RetailSale> RetailSales { get; set; } // view
@@ -455,12 +451,12 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<DcEmployee>(entity =>
-            {
-                entity.HasOne(x => x.DcCurrAcc)
-                    .WithOne(x => x.DcEmployee)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
+            //modelBuilder.Entity<DcEmployee>(entity =>
+            //{
+            //    entity.HasOne(x => x.DcCurrAcc)
+            //        .WithOne(x => x.DcEmployee)
+            //        .OnDelete(DeleteBehavior.Cascade);
+            //});
 
             modelBuilder.Entity<SettingStore>(entity =>
             {
@@ -542,17 +538,6 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<TrLeave>()
-                .HasOne(x => x.Employee)
-                .WithMany(x => x.Leaves)
-                .HasForeignKey(x => x.CurrAccCode)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<TrLeave>()
-                .HasOne(x => x.ApprovedByEmployee)
-                .WithMany(x => x.ApprovedLeaves)
-                .HasForeignKey(x => x.ApprovedByCurrAccCode)
-                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<DcDepartment>()
                 .HasOne(x => x.ParentDepartment)
@@ -752,7 +737,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ChangePriceEX", ClaimDesc = "Xərc Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 9 },
                 new DcClaim { ClaimCode = "ChangePriceCN", ClaimDesc = "Sayım Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "ChangePriceCI", ClaimDesc = "Sayım Artırma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
-                new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 }
+                new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
+                new DcClaim { ClaimCode = "PayrollList", ClaimDesc = "Əməkhaqqı Siyahısı", ClaimTypeId = 1, CategoryId = 9 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(

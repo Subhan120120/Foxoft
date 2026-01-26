@@ -1,4 +1,4 @@
-﻿// File: Forms/Hr/FormEmployeeList.cs
+﻿// File: Forms/Hr/FormEmploymentTypeList.cs
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -12,33 +12,21 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public class FormEmployeeList : RibbonForm
+    public class FormEmploymentTypeList : RibbonForm
     {
         private readonly subContext db = new();
+        RibbonControl ribbon;
+        BarButtonItem btnNew, btnEdit, btnDelete, btnRefresh, btnClose;
+        GridControl grid;
+        GridView view;
 
-        private RibbonControl ribbon = null!;
-        private BarButtonItem btnNew = null!;
-        private BarButtonItem btnEdit = null!;
-        private BarButtonItem btnDelete = null!;
-        private BarButtonItem btnRefresh = null!;
-        private BarButtonItem btnClose = null!;
-
-        private GridControl grid = null!;
-        private GridView view = null!;
-
-        public FormEmployeeList()
+        public FormEmploymentTypeList()
         {
-            Text = "Employees";
-            Width = 1200;
-            Height = 750;
+            Text = "HR - Employment Types";
+            Width = 900;
+            Height = 650;
             StartPosition = FormStartPosition.CenterScreen;
 
-            BuildUi();
-            Load += (_, __) => LoadData();
-        }
-
-        private void BuildUi()
-        {
             ribbon = new RibbonControl { Dock = DockStyle.Top };
             btnNew = new BarButtonItem(ribbon.Manager, "New");
             btnEdit = new BarButtonItem(ribbon.Manager, "Edit");
@@ -53,7 +41,7 @@ namespace Foxoft
             btnClose.ItemClick += (_, __) => Close();
 
             var page = new RibbonPage("HR");
-            var group = new RibbonPageGroup("Employees");
+            var group = new RibbonPageGroup("Employment Types");
             group.ItemLinks.Add(btnNew);
             group.ItemLinks.Add(btnEdit);
             group.ItemLinks.Add(btnDelete);
@@ -69,7 +57,6 @@ namespace Foxoft
             view.OptionsBehavior.Editable = false;
             view.OptionsView.ShowAutoFilterRow = true;
             view.OptionsView.ColumnAutoWidth = false;
-            view.OptionsSelection.MultiSelect = false;
             view.DoubleClick += (_, __) => EditItem();
             view.CustomDrawRowIndicator += (s, e) =>
             {
@@ -79,22 +66,15 @@ namespace Foxoft
 
             Controls.Add(grid);
             Controls.Add(ribbon);
+
+            Load += (_, __) => LoadData();
         }
 
         private void LoadData()
         {
-            var list = db.DcEmployees.AsNoTracking()
-                .OrderBy(x => x.CurrAccCode)
-                .Select(x => new
-                {
-                    x.CurrAccCode,
-                    x.FirstName,
-                    x.LastName,
-                    x.FatherName,
-                    x.HireDate,
-                    x.TerminationDate,
-                    x.IsActive
-                })
+            var list = db.DcEmploymentTypes.AsNoTracking()
+                .OrderBy(x => x.TypeCode)
+                .Select(x => new { x.Id, x.TypeCode, x.TypeName, x.IsActive })
                 .ToList();
 
             grid.DataSource = list;
@@ -105,18 +85,14 @@ namespace Foxoft
         {
             var row = view.GetFocusedRow();
             if (row == null) return null;
-
-            var prop = row.GetType().GetProperty("Id");
-            if (prop == null) return null;
-
-            return (Guid?)prop.GetValue(row);
+            var p = row.GetType().GetProperty("Id");
+            return p == null ? null : (Guid?)p.GetValue(row);
         }
 
         private void NewItem()
         {
-            using var f = new FormEmployeeEdit(null);
-            if (f.ShowDialog(this) == DialogResult.OK)
-                LoadData();
+            using var f = new FormEmploymentTypeEdit(null);
+            if (f.ShowDialog(this) == DialogResult.OK) LoadData();
         }
 
         private void EditItem()
@@ -124,9 +100,8 @@ namespace Foxoft
             var id = FocusedId();
             if (id == null) return;
 
-            using var f = new FormEmployeeEdit(id.Value);
-            if (f.ShowDialog(this) == DialogResult.OK)
-                LoadData();
+            using var f = new FormEmploymentTypeEdit(id.Value);
+            if (f.ShowDialog(this) == DialogResult.OK) LoadData();
         }
 
         private void DeleteItem()
@@ -134,17 +109,24 @@ namespace Foxoft
             var id = FocusedId();
             if (id == null) return;
 
-            if (XtraMessageBox.Show(this, "Delete selected employee?", "Confirm",
+            if (XtraMessageBox.Show(this, "Delete selected employment type?", "Confirm",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            var entity = db.DcEmployees.FirstOrDefault(x => x.Id == id.Value);
+            var entity = db.DcEmploymentTypes.FirstOrDefault(x => x.Id == id.Value);
             if (entity == null) return;
 
-            db.DcEmployees.Remove(entity);
-            db.SaveChanges();
-
-            LoadData();
+            try
+            {
+                db.DcEmploymentTypes.Remove(entity);
+                db.SaveChanges();
+                LoadData();
+            }
+            catch (DbUpdateException ex)
+            {
+                XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, "Delete error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Foxoft.Models
         public string CurrAccCode { get; set; }
 
         [ForeignKey(nameof(CurrAccCode))]
-        public DcEmployee Employee { get; set; } = null!;
+        public DcCurrAcc DcCurrAcc { get; set; } = null!;
 
         [Required]
         public DateTime WorkDate { get; set; } // store date (time ignored)
