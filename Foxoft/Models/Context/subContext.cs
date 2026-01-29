@@ -947,8 +947,8 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcProduct>().HasData(
                 new DcProduct { ProductTypeCode = 1, ProductCode = "test01", DefaultUnitOfMeasureId = 1, ProductDesc = "Test Məhsul 01", RetailPrice = 4.5m, CreatedDate = new DateTime(1901, 01, 01) },
                 new DcProduct { ProductTypeCode = 1, ProductCode = "test02", DefaultUnitOfMeasureId = 1, ProductDesc = "Test Məhsul 01", RetailPrice = 2.5m, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", DefaultUnitOfMeasureId = 1, ProductDesc = "Yol Xərci", CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", DefaultUnitOfMeasureId = 1, ProductDesc = "İşıq Pulu", CreatedDate = new DateTime(1901, 01, 01) }
+                new DcProduct { ProductTypeCode = 2, ProductCode = "01", DefaultUnitOfMeasureId = 1, ProductDesc = "Ümumi Xərc", CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "02", DefaultUnitOfMeasureId = 1, ProductDesc = "Yer Pulu", CreatedDate = new DateTime(1901, 01, 01) }
             );
 
             modelBuilder.Entity<DcUnitOfMeasure>().HasData(

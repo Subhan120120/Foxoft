@@ -735,6 +735,34 @@ namespace Foxoft
                                     .FirstOrDefault(x => x.InvoiceLineId == invoiceLineId);
         }
 
+        public object SelectPayrolList()
+        {
+            using subContext db = new();
+
+            return db.TrPayrollHeaders.AsNoTracking()
+                .Include(x => x.DcCurrAcc)
+                .Include(x => x.PayrollPeriod)
+                .OrderByDescending(x => x.PayrollPeriod.PeriodYear)
+                .ThenByDescending(x => x.PayrollPeriod.PeriodMonth)
+                .Select(x => new
+                {
+                    x.Id,
+                    Period = x.PayrollPeriod.PeriodYear.ToString() + "-" + x.PayrollPeriod.PeriodMonth.ToString("00"),
+                    Employee = x.DcCurrAcc.CurrAccCode + " - " + x.DcCurrAcc.CurrAccDesc + " - " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName,
+                    x.GrossSalary,
+                    x.NetSalary
+                })
+                .ToList();
+        }
+
+        public TrPayrollHeader SelectEntityByIdWithLine(Guid? id)
+        {
+            using subContext db = new();
+            return db.TrPayrollHeaders
+                .Include(x => x.Lines)
+                .FirstOrDefault(x => x.Id == id.Value);
+        }
+
         public bool ReturnExistByInvoiceLine(Guid relatedLineId)
         {
             using subContext db = new();

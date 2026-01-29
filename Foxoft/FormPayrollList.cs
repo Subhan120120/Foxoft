@@ -1,90 +1,28 @@
-﻿ // File: Forms/Hr/FormPayrollList.cs
-using DevExpress.XtraBars;
-using DevExpress.XtraBars.Ribbon;
+﻿using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Windows.Forms;
+using System.Data;
 
 namespace Foxoft
 {
-    public class FormPayrollList : RibbonForm
+    public partial class FormPayrollList : RibbonForm
     {
-        private readonly subContext db = new();
-
-        RibbonControl ribbon;
-        BarButtonItem btnNew, btnEdit, btnDelete, btnRefresh, btnClose;
-        GridControl grid;
-        GridView view;
-
+        EfMethods efMethods = new();
         public FormPayrollList()
         {
-            Text = "HR - Payroll";
-            Width = 1400;
-            Height = 720;
-            StartPosition = FormStartPosition.CenterScreen;
+            InitializeComponent();
+        }
 
-            ribbon = new RibbonControl { Dock = DockStyle.Top };
-            btnNew = new BarButtonItem(ribbon.Manager, "New");
-            btnEdit = new BarButtonItem(ribbon.Manager, "Edit");
-            btnDelete = new BarButtonItem(ribbon.Manager, "Delete");
-            btnRefresh = new BarButtonItem(ribbon.Manager, "Refresh");
-            btnClose = new BarButtonItem(ribbon.Manager, "Close");
-
-            btnNew.ItemClick += (_, __) => NewItem();
-            btnEdit.ItemClick += (_, __) => EditItem();
-            btnDelete.ItemClick += (_, __) => DeleteItem();
-            btnRefresh.ItemClick += (_, __) => LoadData();
-            btnClose.ItemClick += (_, __) => Close();
-
-            var page = new RibbonPage("HR");
-            var group = new RibbonPageGroup("Payroll");
-            group.ItemLinks.Add(btnNew);
-            group.ItemLinks.Add(btnEdit);
-            group.ItemLinks.Add(btnDelete);
-            group.ItemLinks.Add(btnRefresh);
-            group.ItemLinks.Add(btnClose);
-            page.Groups.Add(group);
-            ribbon.Pages.Add(page);
-
-            grid = new GridControl { Dock = DockStyle.Fill };
-            view = new GridView(grid);
-            grid.MainView = view;
-            view.OptionsBehavior.Editable = false;
-            view.OptionsView.ShowAutoFilterRow = true;
-            view.OptionsView.ColumnAutoWidth = false;
-            view.DoubleClick += (_, __) => EditItem();
-            view.CustomDrawRowIndicator += (s, e) =>
-            {
-                if (e.Info.IsRowIndicator && e.RowHandle >= 0) e.Info.DisplayText = (e.RowHandle + 1).ToString();
-            };
-
-            Controls.Add(grid);
-            Controls.Add(ribbon);
-
-            Load += (_, __) => LoadData();
+        private void View_CustomDrawRowIndicator(object sender, DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventArgs e)
+        {
+            if (e.Info.IsRowIndicator && e.RowHandle >= 0)
+                e.Info.DisplayText = (e.RowHandle + 1).ToString();
         }
 
         private void LoadData()
         {
-            var list = db.TrPayrollHeaders.AsNoTracking()
-                .Include(x => x.DcCurrAcc)
-                .Include(x => x.PayrollPeriod)
-                .OrderByDescending(x => x.PayrollPeriod.PeriodYear)
-                .ThenByDescending(x => x.PayrollPeriod.PeriodMonth)
-                .Select(x => new
-                {
-                    x.Id,
-                    Period = x.PayrollPeriod.PeriodYear.ToString() + "-" + x.PayrollPeriod.PeriodMonth.ToString("00"),
-                    Employee = x.DcCurrAcc.CurrAccCode + " - " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName,
-                    x.GrossSalary,
-                    x.NetSalary
-                })
-                .ToList();
+            object list = efMethods.SelectPayrolList();
 
             grid.DataSource = list;
             view.BestFitColumns();
@@ -98,22 +36,23 @@ namespace Foxoft
             return p == null ? null : (Guid?)p.GetValue(row);
         }
 
-        private void NewItem()
+        private void FormPayrollList_Load(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        private void BtnNew_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             using var f = new FormPayrollEdit(null);
             if (f.ShowDialog(this) == DialogResult.OK) LoadData();
         }
 
-        private void EditItem()
+        private void BtnRefresh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            var id = FocusedId();
-            if (id == null) return;
-
-            using var f = new FormPayrollEdit(id.Value);
-            if (f.ShowDialog(this) == DialogResult.OK) LoadData();
+            LoadData();
         }
 
-        private void DeleteItem()
+        private void BtnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             var id = FocusedId();
             if (id == null) return;
@@ -121,16 +60,13 @@ namespace Foxoft
             if (XtraMessageBox.Show(this, "Delete selected payroll?", "Confirm",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
-            var entity = db.TrPayrollHeaders
-                .Include(x => x.Lines)
-                .FirstOrDefault(x => x.Id == id.Value);
+            TrPayrollHeader entity = efMethods.SelectEntityByIdWithLine(id);
 
             if (entity == null) return;
 
             try
             {
-                db.TrPayrollHeaders.Remove(entity);
-                db.SaveChanges();
+                efMethods.DeleteEntity(entity);
                 LoadData();
             }
             catch (DbUpdateException ex)
@@ -138,6 +74,15 @@ namespace Foxoft
                 XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, "Delete error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void BtnEdit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            var id = FocusedId();
+            if (id == null) return;
+
+            using var f = new FormPayrollEdit(id.Value);
+            if (f.ShowDialog(this) == DialogResult.OK) LoadData();
         }
     }
 }

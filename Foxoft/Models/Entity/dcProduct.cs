@@ -113,7 +113,7 @@ namespace Foxoft.Models
         public int DefaultUnitOfMeasureId { get; set; }
 
         [Display(Name = nameof(Resources.Entity_Product_BalanceWarningLevel), ResourceType = typeof(Resources))]
-        public decimal BalanceWarningLevel { get; set; }
+        public decimal? BalanceWarningLevel { get; set; }
 
         [NotMapped]
         [Display(Name = nameof(Resources.Common_Balance), ResourceType = typeof(Resources))]

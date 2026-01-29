@@ -13,6 +13,7 @@ using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -172,14 +173,43 @@ namespace Foxoft
         {
             var param = Expression.Parameter(typeof(T), "x");
             MemberExpression member = Expression.Property(param, propName);
-            UnaryExpression memberAsObject = Expression.Convert(member, typeof(object));
-            var convertedValue = Convert.ChangeType(value, member.Type);
-            ConstantExpression constant = Expression.Constant(convertedValue, member.Type);
-            var expression = Expression.Equal(member, constant);
-            var lambda = Expression.Lambda<Func<T, bool>>(expression, param);
-            var predicate = lambda.Compile();
-            return predicate;
+
+            var targetType = Nullable.GetUnderlyingType(member.Type) ?? member.Type;
+
+            object convertedValue;
+
+            if (value == null || value == DBNull.Value)
+            {
+                convertedValue = null;
+            }
+            else if (targetType == typeof(Guid))
+            {
+                if (value is Guid g) convertedValue = g;
+                else if (value is string s && Guid.TryParse(s, out var guid)) convertedValue = guid;
+                else convertedValue = Guid.Parse(value.ToString()!);
+            }
+            else if (targetType.IsEnum)
+            {
+                if (value is string es) convertedValue = Enum.Parse(targetType, es, ignoreCase: true);
+                else convertedValue = Enum.ToObject(targetType, value);
+            }
+            else
+            {
+                convertedValue = Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
+            }
+
+            // Build constant with the *member's* type (handles nullable)
+            Expression constant = convertedValue == null
+                ? Expression.Constant(null, member.Type)
+                : Expression.Constant(convertedValue, targetType);
+
+            if (member.Type != targetType && convertedValue != null) // nullable property
+                constant = Expression.Convert(constant, member.Type);
+
+            var body = Expression.Equal(member, constant);
+            return Expression.Lambda<Func<T, bool>>(body, param).Compile();
         }
+
 
         private void ClearControlsAddNew()
         {

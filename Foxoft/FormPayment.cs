@@ -21,7 +21,6 @@ namespace Foxoft
         private TrPaymentLine trPaymentLineCashless = new();
         private TrPaymentLine trPaymentLineCommission = new();
         private DcPaymentMethod dcPaymentMethod = new();
-        //private TrInstallment trInstallment = new();
         private EfMethods efMethods = new();
 
         private bool isNegativ = false;
@@ -44,17 +43,6 @@ namespace Foxoft
                 new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
                 new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
             });
-
-            //LUE_InstallmentPlan.Properties.DataSource = efMethods.SelectPaymentPlans(2);
-            //LUE_InstallmentPlan.Properties.ValueMember = nameof(DcPaymentPlan.PaymentPlanCode);
-            //LUE_InstallmentPlan.Properties.DisplayMember = nameof(DcPaymentPlan.PaymentPlanDesc);
-            //LUE_InstallmentPlan.Properties.Columns.AddRange(new LookUpColumnInfo[]
-            //{
-            //    new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
-            //    new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
-            //    new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
-            //    new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
-            //});
 
             List<DcCurrency> currencies = efMethods.SelectEntities<DcCurrency>();
             //LUE_InstallmentCurrency.Properties.DataSource = currencies;
@@ -362,45 +350,11 @@ namespace Foxoft
             trPaymentLineCommission.Payment = (-1) * (decimal)txt_CashlessCommission.EditValue;
         }
 
-        //private void txt_InstallmentCommission_EditValueChanged(object sender, EventArgs e)
-        //{
-        //    trInstallment.Commission = Convert.ToDecimal(txt_InstallmentCommission.EditValue);
-        //}
-
         private void textEditBonus_EditValueChanged(object sender, EventArgs e) { }
 
         private void textEditBonus_Validating(object sender, CancelEventArgs e) { }
 
         private void textEditBonus_InvalidValue(object sender, InvalidValueExceptionEventArgs e) { }
-
-        //private void TxtEdit_Installment_EditValueChanged(object sender, EventArgs e)
-        //{
-        //    //trInstallment.Amount = Convert.ToDecimal(TxtEdit_Installment.EditValue);
-        //    //TxtEdit_Installment.DoValidate();
-        //}
-
-        //private void LUE_InstallmentCurrency_EditValueChanged(object sender, EventArgs e)
-        //{
-        //    //trInstallment.CurrencyCode = LUE_InstallmentCurrency.EditValue.ToString();
-
-        //    //if (LUE_InstallmentCurrency.Visible)
-        //    //    trInstallment.ExchangeRate = (float)LUE_InstallmentCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
-        //}
-
-        //private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
-        //{
-        //    if (efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "InstallmentCommissionChange"))
-        //        txt_InstallmentCommission.Enabled = true;
-
-        //    //object row = LUE_InstallmentPlan.Properties.GetDataSourceRowByKeyValue(LUE_InstallmentPlan.EditValue);
-        //    //trInstallment.InstallmentPlanCode = ((DcPaymentPlan)row).PaymentPlanCode;
-
-        //    //if (row is not null)
-        //    //{
-        //    //    float commisionRate = ((DcPaymentPlan)row).CommissionRate;
-        //    //    txt_InstallmentCommission.EditValue = trInstallment.AmountLoc * (decimal)commisionRate / 100;
-        //    //}
-        //}
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {
@@ -428,35 +382,6 @@ namespace Foxoft
                     }
                 }
             }
-
-            //if (trInstallment.Amount > 0)// lUE_PaymentMethod Validation
-            //{
-            //    if (LUE_InstallmentPlan.EditValue == null)
-            //    {
-            //        dxErrorProvider1.SetError(LUE_InstallmentPlan, Resources.Validation_Required);
-            //        return;
-            //    }
-
-            //    DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
-
-            //    if (dcCurrAcc is null)
-            //    {
-            //        XtraMessageBox.Show(Resources.Form_Payment_CurrAccNotSelected);
-            //        return;
-            //    }
-
-            //    if (String.IsNullOrEmpty(dcCurrAcc.IdentityNum))
-            //    {
-            //        XtraMessageBox.Show(Resources.Form_Payment_CurrAccIdentityMissing);
-            //        return;
-            //    }
-
-            //    if (String.IsNullOrEmpty(dcCurrAcc.PhoneNum))
-            //    {
-            //        XtraMessageBox.Show(Resources.Form_Payment_CurrAccPhoneMissing);
-            //        return;
-            //    }
-            //}
 
             if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
             {
@@ -535,16 +460,6 @@ namespace Foxoft
                     }
                 }
             }
-
-            //if (trInstallment.Amount > 0)
-            //{
-            //    if (!string.IsNullOrEmpty(trInstallment.InstallmentPlanCode))
-            //    {
-            //        trInstallment.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
-            //        trInstallment.DocumentDate = Convert.ToDateTime(dateEdit_Date.EditValue);
-            //        efMethods.InsertEntity(trInstallment);
-            //    }
-            //}
 
             DialogResult = DialogResult.OK;
         }
