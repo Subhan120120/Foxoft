@@ -1,14 +1,9 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
-using DevExpress.XtraReports;
-using DevExpress.XtraSpreadsheet.Model;
 using Foxoft.Models;
 using Foxoft.Properties;
-using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
-using System.Linq;
-using System.Windows;
 
 namespace Foxoft
 {

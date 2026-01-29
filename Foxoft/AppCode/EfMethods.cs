@@ -1617,12 +1617,12 @@ namespace Foxoft
                                 .Any(x => x.CurrAccCode == CurrAccCode);
         }
 
-        public bool SalesManExist(string salesman)
+        public DcCurrAcc SelectSalesManByBonusCard(string salesman)
         {
             using subContext db = new();
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
                                 .Where(x => x.PersonalTypeCode == 1)
-                                .Any(x => x.CurrAccCode == salesman);
+                                .FirstOrDefault(x => x.BonusCardNum == salesman);
         }
 
         public bool ProductExist(string productCode)

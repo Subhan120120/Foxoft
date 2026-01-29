@@ -78,6 +78,9 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_POSMergeSameProducts), ResourceType = typeof(Resources))]
         public bool POSMergeSameProducts { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_AppSetting_OverpaymentMode), ResourceType = typeof(Resources))]
+        public OverpaymentMode OverpaymentMode { get; set; } = OverpaymentMode.AskEachTime;
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }

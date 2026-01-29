@@ -352,7 +352,7 @@ namespace Foxoft
                     decimal? balance = CalcProductBalance(formProductList.dcProduct, wareHouseCode);
 
                     decimal qty = 1;
-                    string? salesman = null;
+                    string? salesmanCode = null;
 
                     if (permitNegativeStock)
                         balance = null;
@@ -378,43 +378,20 @@ namespace Foxoft
 
                     if (Settings.Default.AppSetting.POSShowSalesmanCodeDialog)
                     {
-                        string input = Interaction.InputBox(
-                            "Please enter a value:",
-                            "Input",
-                            ""
-                        );
-
-                        if (!string.IsNullOrEmpty(input))
-                        {
-                            if (efMethods.SalesManExist(input))
-                            {
-                                salesman = input;
-                            }
-                            else if (efMethods.SalesManExist("C-" + input))
-                            {
-                                salesman = "C-" + input;
-                            }
-                            else
-                            {
-                                XtraMessageBox.Show(
-                                    Resources.Form_RetailSale_SalesPersonNotExists,
-                                    Resources.Common_Attention,
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Warning);
-                                return;
-                            }
-                        }
+                        salesmanCode = InputSalesMan();
                     }
 
-                    if (!TryMergeSameProduct(formProductList.dcProduct, qty, salesman))
+                    if (!TryMergeSameProduct(formProductList.dcProduct, qty, salesmanCode))
                     {
-                        AddNewRow(formProductList.dcProduct, qty, salesman);
+                        AddNewRow(formProductList.dcProduct, qty, salesmanCode);
                     }
 
                     SaveInvoice();
                 }
             }
         }
+
+
 
         private void AddNewRow(DcProduct dcProduct, decimal qty, string? salesman)
         {
@@ -979,7 +956,7 @@ namespace Foxoft
                     .PermitNegativeStock;
 
                 decimal? balance = CalcProductBalance(selectedProduct, wareHouseCode);
-                string? salesman = null;
+                string? salesmanCode = null;
 
                 if (permitNegativeStock)
                     balance = null;
@@ -1004,38 +981,11 @@ namespace Foxoft
                     }
 
                 if (Settings.Default.AppSetting.POSShowSalesmanCodeDialog)
-                {
-                    string inputBox = Interaction.InputBox(
-                        "Please enter a value:",
-                        "Input",
-                        ""
-                    );
+                    salesmanCode = InputSalesMan();
 
-                    if (!string.IsNullOrEmpty(inputBox))
-                    {
-                        if (efMethods.SalesManExist(inputBox))
-                        {
-                            salesman = inputBox;
-                        }
-                        else if (efMethods.SalesManExist("C-" + inputBox))
-                        {
-                            salesman = "C-" + inputBox;
-                        }
-                        else
-                        {
-                            XtraMessageBox.Show(
-                                Resources.Form_RetailSale_SalesPersonNotExists,
-                                Resources.Common_Attention,
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
-                }
-
-                if (!TryMergeSameProduct(selectedProduct, qty, salesman))
+                if (!TryMergeSameProduct(selectedProduct, qty, salesmanCode))
                 {
-                    AddNewRow(selectedProduct, qty, salesman);
+                    AddNewRow(selectedProduct, qty, salesmanCode);
                 }
 
                 SaveInvoice();
@@ -1054,6 +1004,30 @@ namespace Foxoft
             ActiveControl = txtEdit_Barcode;
         }
 
+        private string? InputSalesMan()
+        {
+            string bonusCardNum = Interaction.InputBox(
+                "Satıcı Kodu Daxil Edin:",
+                "Satıcı",
+                ""
+            );
+
+            if (string.IsNullOrEmpty(bonusCardNum))
+                return null;
+
+            DcCurrAcc dcCurrAcc = efMethods.SelectSalesManByBonusCard(bonusCardNum);
+            if (dcCurrAcc is not null)
+                return dcCurrAcc.CurrAccCode;
+            else
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_SalesPersonNotExists,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return null;
+            }
+        }
         private bool POSFindProductByContainsId(int id)
         {
             var text = POSFindProductByCheckedComboBoxEdit.EditValue?.ToString() ?? "";

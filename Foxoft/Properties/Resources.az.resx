@@ -3572,4 +3572,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_RetailSale_Button_AddBasket" xml:space="preserve">
     <value>Səbətə At</value>
   </data>
+  <data name="Entity_AppSetting_OverpaymentMode" xml:space="preserve">
+    <value>Artıq Ödəniş Modu</value>
+  </data>
 </root>

@@ -174,6 +174,7 @@ namespace Foxoft.Models
         [DefaultValue("'1901-01-01'")]
         public DateTime? BirthDate { get; set; }
 
+        [DefaultValue("0")]
         [Display(Name = nameof(Resources.Entity_CurrAcc_IsDefault), ResourceType = typeof(Resources))]
         public bool IsDefault { get; set; }
 

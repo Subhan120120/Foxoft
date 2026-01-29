@@ -826,6 +826,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overpayment Mode.
+        /// </summary>
+        public static string Entity_AppSetting_OverpaymentMode {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_OverpaymentMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment Edit Grace Days.
         /// </summary>
         public static string Entity_AppSetting_PaymentEditGraceDays {

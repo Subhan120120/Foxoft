@@ -3572,4 +3572,7 @@ To delete, cancel the receipt!</value>
   <data name="Form_RetailSale_Button_AddBasket" xml:space="preserve">
     <value>Add Basket</value>
   </data>
+  <data name="Entity_AppSetting_OverpaymentMode" xml:space="preserve">
+    <value>Overpayment Mode</value>
+  </data>
 </root>
