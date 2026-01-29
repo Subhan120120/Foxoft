@@ -1,8 +1,6 @@
 ﻿using DevExpress.DataAccess.Sql;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraGauges.Core;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
@@ -12,7 +10,6 @@ using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
-using System.Collections.Specialized;
 using System.Drawing.Printing;
 using System.IO;
 using static Foxoft.FormAppSetting;
