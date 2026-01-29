@@ -361,7 +361,7 @@ namespace Foxoft
             if (trPaymentLineCash.PaymentLoc <= 0 && trPaymentLineCashless.PaymentLoc <= 0)
                 return;
 
-            if (trPaymentLineCashless.PaymentLoc > 0)// lUE_PaymentMethod Validation
+            if (trPaymentLineCashless.PaymentLoc > 0) // lUE_PaymentMethod Validation
             {
                 if (lUE_PaymentMethod.EditValue == null)
                 {
@@ -377,6 +377,14 @@ namespace Foxoft
                     }
                 }
             }
+
+            // ✅ OverpaymentMode tətbiqi (insertlərdən ƏVVƏL)
+            if (!ApplyOverpaymentMode(autoPayment))
+                return;
+
+            // Capping-dən sonra 0 ola bilər
+            if (trPaymentLineCash.PaymentLoc <= 0 && trPaymentLineCashless.PaymentLoc <= 0)
+                return;
 
             if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
             {
@@ -457,6 +465,115 @@ namespace Foxoft
             }
 
             DialogResult = DialogResult.OK;
+        }
+
+        private bool ApplyOverpaymentMode(bool autoPayment)
+        {
+            // Invoice yoxdursa – overpayment qaydası tətbiq edilmir
+            if (trInvoiceHeader == null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return true;
+
+            decimal dueLoc = efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId);
+            if (dueLoc <= 0)
+                return true;
+
+            decimal paidLoc = (trPaymentLineCash.PaymentLoc + trPaymentLineCashless.PaymentLoc);
+            if (paidLoc <= dueLoc)
+                return true;
+
+            decimal overLoc = paidLoc - dueLoc;
+
+            var mode = (OverpaymentMode)Settings.Default.AppSetting.OverpaymentMode;
+
+            // AskEachTime + manual => soruş
+            if (mode == OverpaymentMode.AskEachTime && !autoPayment)
+            {
+                var dr = XtraMessageBox.Show(
+                    this,
+                    $"Ödənilən məbləğ borcdan {overLoc:n2} çoxdur.\r\n\r\n" +
+                    $"YES  = Üst pulu qaytar\r\n" +
+                    $"NO   = Avans kimi saxla\r\n" +
+                    $"CANCEL = Ləğv",
+                    Resources.Common_Attention,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question
+                );
+
+                if (dr == DialogResult.Yes) mode = OverpaymentMode.AcceptExactAndReturnChange;
+                else if (dr == DialogResult.No) mode = OverpaymentMode.AcceptAllAsAdvance;
+                else return false; // Cancel
+            }
+            else if (mode == OverpaymentMode.AskEachTime && autoPayment)
+            {
+                mode = OverpaymentMode.AcceptExactAndReturnChange; // auto-da soruşmuruq
+            }
+
+            if (mode == OverpaymentMode.AcceptExactAndReturnChange)
+            {
+                CapPaymentsToDue(dueLoc);
+
+                if (!autoPayment)
+                {
+                    XtraMessageBox.Show(
+                        this,
+                        $"Qaytarılan məbləğ: {overLoc:n2}.",
+                        Resources.Common_Attention
+                    );
+                }
+            }
+            // AcceptAllAsAdvance => heç nə etmirik (mövcud sistem sonradan avans kimi işləyə bilər)
+            return true;
+        }
+
+        private void CapPaymentsToDue(decimal dueLoc)
+        {
+            decimal cashLoc = trPaymentLineCash.PaymentLoc;
+            decimal cashlessLoc = trPaymentLineCashless.PaymentLoc;
+
+            decimal total = cashLoc + cashlessLoc;
+            decimal over = total - dueLoc;
+            if (over <= 0) return;
+
+            decimal newCashLoc = cashLoc;
+            decimal newCashlessLoc = cashlessLoc;
+
+            // əvvəl cash-dən azaldırıq (üst pul qaytarma klassik olaraq cash)
+            if (newCashLoc > 0)
+            {
+                decimal reduce = Math.Min(over, newCashLoc);
+                newCashLoc -= reduce;
+                over -= reduce;
+            }
+            // qalıbsa cashless-dən azaldırıq
+            if (over > 0 && newCashlessLoc > 0)
+            {
+                decimal reduce = Math.Min(over, newCashlessLoc);
+                newCashlessLoc -= reduce;
+                over -= reduce;
+            }
+
+            SetPaymentLoc(trPaymentLineCash, newCashLoc);
+            SetPaymentLoc(trPaymentLineCashless, newCashlessLoc);
+
+            // UI və komissiya yenilə
+            txtEdit_Cash.EditValue = trPaymentLineCash.PaymentLoc;
+            txtEdit_Cashless.EditValue = trPaymentLineCashless.PaymentLoc;
+            RecalcCashlessCommission();
+        }
+
+        private static void SetPaymentLoc(TrPaymentLine line, decimal desiredLoc)
+        {
+            decimal rate = (decimal)(line.ExchangeRate == 0 ? 1 : line.ExchangeRate);
+            line.Payment = Math.Round(desiredLoc / rate, 4);
+        }
+
+        private void RecalcCashlessCommission()
+        {
+            object row = LUE_PaymentPlan.Properties.GetDataSourceRowByKeyValue(LUE_PaymentPlan.EditValue);
+            if (row is DcPaymentPlan plan)
+                txt_CashlessCommission.EditValue = trPaymentLineCashless.PaymentLoc * (decimal)plan.CommissionRate / 100m;
+            else
+                txt_CashlessCommission.EditValue = 0m;
         }
     }
 }

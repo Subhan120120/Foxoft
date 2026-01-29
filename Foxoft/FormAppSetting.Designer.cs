@@ -1,4 +1,5 @@
 ﻿
+using DevExpress.XtraEditors.Controls;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -48,6 +49,7 @@ namespace Foxoft
             POSShowQuantityDialogCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             POSShowSalesmanCodeDialogCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             POSFindProductByCheckedComboBoxEdit = new DevExpress.XtraEditors.CheckedComboBoxEdit();
+            POSMergeSameProductsCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             ItemForGetPrint = new DevExpress.XtraLayout.LayoutControlItem();
@@ -68,8 +70,9 @@ namespace Foxoft
             ItemForPOSShowQuantityDialog = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPOSShowSalesmanCodeDialog = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPOSFindProductBy = new DevExpress.XtraLayout.LayoutControlItem();
-            POSMergeSameProductsCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             ItemForPOSMergeSameProducts = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForOverpaymentMode = new DevExpress.XtraLayout.LayoutControlItem();
+            OverpaymentModeImageComboBoxEdit = new DevExpress.XtraEditors.ImageComboBoxEdit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)GridViewLayoutTextEdit.Properties).BeginInit();
@@ -87,6 +90,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)POSShowQuantityDialogCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)POSShowSalesmanCodeDialogCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)POSMergeSameProductsCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGetPrint).BeginInit();
@@ -107,8 +111,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowQuantityDialog).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowSalesmanCodeDialog).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSFindProductBy).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)POSMergeSameProductsCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSMergeSameProducts).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForOverpaymentMode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)OverpaymentModeImageComboBoxEdit.Properties).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
@@ -131,6 +136,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(POSShowSalesmanCodeDialogCheckEdit);
             dataLayoutControl1.Controls.Add(POSFindProductByCheckedComboBoxEdit);
             dataLayoutControl1.Controls.Add(POSMergeSameProductsCheckEdit);
+            dataLayoutControl1.Controls.Add(OverpaymentModeImageComboBoxEdit);
             dataLayoutControl1.DataSource = appSettingBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.Location = new Point(0, 0);
@@ -142,7 +148,7 @@ namespace Foxoft
             // 
             // btn_OptimizeDatabaseIndexes
             // 
-            btn_OptimizeDatabaseIndexes.Location = new Point(12, 372);
+            btn_OptimizeDatabaseIndexes.Location = new Point(12, 396);
             btn_OptimizeDatabaseIndexes.Name = "btn_OptimizeDatabaseIndexes";
             btn_OptimizeDatabaseIndexes.Size = new Size(482, 22);
             btn_OptimizeDatabaseIndexes.StyleController = dataLayoutControl1;
@@ -154,9 +160,9 @@ namespace Foxoft
             // 
             btn_Save.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Save.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Save.ImageOptions.SvgImage");
-            btn_Save.Location = new Point(255, 424);
+            btn_Save.Location = new Point(255, 448);
             btn_Save.Name = "btn_Save";
-            btn_Save.Size = new Size(239, 59);
+            btn_Save.Size = new Size(239, 35);
             btn_Save.StyleController = dataLayoutControl1;
             btn_Save.TabIndex = 2;
             btn_Save.Text = "Save";
@@ -295,7 +301,7 @@ namespace Foxoft
             // 
             // btn_ClearMemory
             // 
-            btn_ClearMemory.Location = new Point(12, 398);
+            btn_ClearMemory.Location = new Point(12, 422);
             btn_ClearMemory.Name = "btn_ClearMemory";
             btn_ClearMemory.Size = new Size(482, 22);
             btn_ClearMemory.StyleController = dataLayoutControl1;
@@ -335,6 +341,17 @@ namespace Foxoft
             POSFindProductByCheckedComboBoxEdit.StyleController = dataLayoutControl1;
             POSFindProductByCheckedComboBoxEdit.TabIndex = 19;
             // 
+            // POSMergeSameProductsCheckEdit
+            // 
+            POSMergeSameProductsCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSMergeSameProducts", true));
+            POSMergeSameProductsCheckEdit.Location = new Point(12, 300);
+            POSMergeSameProductsCheckEdit.Name = "POSMergeSameProductsCheckEdit";
+            POSMergeSameProductsCheckEdit.Properties.Caption = "Merge Same Products on POS";
+            POSMergeSameProductsCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            POSMergeSameProductsCheckEdit.Size = new Size(482, 20);
+            POSMergeSameProductsCheckEdit.StyleController = dataLayoutControl1;
+            POSMergeSameProductsCheckEdit.TabIndex = 20;
+            // 
             // Root
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -348,7 +365,7 @@ namespace Foxoft
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrinterName, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForWhatsappChromeProfileName, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSFindProductBy, ItemForPOSMergeSameProducts });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrinterName, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForWhatsappChromeProfileName, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSFindProductBy, ItemForPOSMergeSameProducts, ItemForOverpaymentMode });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
             layoutControlGroup1.Size = new Size(486, 475);
@@ -442,24 +459,24 @@ namespace Foxoft
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.Location = new Point(0, 412);
+            emptySpaceItem1.Location = new Point(0, 436);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(243, 63);
+            emptySpaceItem1.Size = new Size(243, 39);
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Save;
-            layoutControlItem1.Location = new Point(243, 412);
+            layoutControlItem1.Location = new Point(243, 436);
             layoutControlItem1.MinSize = new Size(70, 26);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(243, 63);
+            layoutControlItem1.Size = new Size(243, 39);
             layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem2
             // 
             layoutControlItem2.Control = btn_OptimizeDatabaseIndexes;
-            layoutControlItem2.Location = new Point(0, 360);
+            layoutControlItem2.Location = new Point(0, 384);
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(486, 26);
             layoutControlItem2.TextVisible = false;
@@ -476,7 +493,7 @@ namespace Foxoft
             // LCI_ClearMemory
             // 
             LCI_ClearMemory.Control = btn_ClearMemory;
-            LCI_ClearMemory.Location = new Point(0, 386);
+            LCI_ClearMemory.Location = new Point(0, 410);
             LCI_ClearMemory.Name = "LCI_ClearMemory";
             LCI_ClearMemory.Size = new Size(486, 26);
             LCI_ClearMemory.TextVisible = false;
@@ -505,17 +522,6 @@ namespace Foxoft
             ItemForPOSFindProductBy.Size = new Size(486, 24);
             ItemForPOSFindProductBy.TextSize = new Size(152, 13);
             // 
-            // POSMergeSameProductsCheckEdit
-            // 
-            POSMergeSameProductsCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSMergeSameProducts", true));
-            POSMergeSameProductsCheckEdit.Location = new Point(12, 300);
-            POSMergeSameProductsCheckEdit.Name = "POSMergeSameProductsCheckEdit";
-            POSMergeSameProductsCheckEdit.Properties.Caption = "Merge Same Products on POS";
-            POSMergeSameProductsCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            POSMergeSameProductsCheckEdit.Size = new Size(482, 20);
-            POSMergeSameProductsCheckEdit.StyleController = dataLayoutControl1;
-            POSMergeSameProductsCheckEdit.TabIndex = 20;
-            // 
             // ItemForPOSMergeSameProducts
             // 
             ItemForPOSMergeSameProducts.Control = POSMergeSameProductsCheckEdit;
@@ -523,6 +529,33 @@ namespace Foxoft
             ItemForPOSMergeSameProducts.Name = "ItemForPOSMergeSameProducts";
             ItemForPOSMergeSameProducts.Size = new Size(486, 24);
             ItemForPOSMergeSameProducts.TextVisible = false;
+            // 
+            // ItemForOverpaymentMode
+            // 
+            ItemForOverpaymentMode.Control = OverpaymentModeImageComboBoxEdit;
+            ItemForOverpaymentMode.Location = new Point(0, 360);
+            ItemForOverpaymentMode.Name = "ItemForOverpaymentMode";
+            ItemForOverpaymentMode.Size = new Size(486, 24);
+            ItemForOverpaymentMode.TextSize = new Size(152, 13);
+            // 
+            // ımageComboBoxEdit1
+            // 
+            OverpaymentModeImageComboBoxEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "OverpaymentMode", true));
+            OverpaymentModeImageComboBoxEdit.Location = new Point(176, 372);
+            OverpaymentModeImageComboBoxEdit.Name = "ımageComboBoxEdit1";
+            OverpaymentModeImageComboBoxEdit.Properties.Appearance.Options.UseTextOptions = true;
+            OverpaymentModeImageComboBoxEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            OverpaymentModeImageComboBoxEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            OverpaymentModeImageComboBoxEdit.Properties.UseCtrlScroll = true;
+            OverpaymentModeImageComboBoxEdit.Size = new Size(318, 20);
+            OverpaymentModeImageComboBoxEdit.StyleController = dataLayoutControl1;
+            OverpaymentModeImageComboBoxEdit.TabIndex = 24;
+            OverpaymentModeImageComboBoxEdit.Properties.Items.Clear();
+            OverpaymentModeImageComboBoxEdit.Properties.Items.AddRange(new ImageComboBoxItem[] {
+                new ImageComboBoxItem("Hər dəfə soruş", Models.OverpaymentMode.AskEachTime),
+                new ImageComboBoxItem("Dəqiq məbləği qəbul et və qalığı qaytar", Models.OverpaymentMode.AcceptExactAndReturnChange),
+                new ImageComboBoxItem("Hamısını avans kimi qəbul et", Models.OverpaymentMode.AcceptAllAsAdvance),
+            });
             // 
             // FormAppSetting
             // 
@@ -550,6 +583,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)POSShowQuantityDialogCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)POSShowSalesmanCodeDialogCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)POSMergeSameProductsCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGetPrint).EndInit();
@@ -570,8 +604,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowQuantityDialog).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowSalesmanCodeDialog).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSFindProductBy).EndInit();
-            ((System.ComponentModel.ISupportInitialize)POSMergeSameProductsCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSMergeSameProducts).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForOverpaymentMode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)OverpaymentModeImageComboBoxEdit.Properties).EndInit();
             ResumeLayout(false);
         }
 
@@ -622,5 +657,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.CheckedComboBoxEdit POSFindProductByCheckedComboBoxEdit;
         private DevExpress.XtraEditors.CheckEdit POSMergeSameProductsCheckEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPOSMergeSameProducts;
+        private DevExpress.XtraEditors.ComboBoxEdit OverpaymentModeComboBoxEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForOverpaymentMode;
+        private DevExpress.XtraEditors.ImageComboBoxEdit OverpaymentModeImageComboBoxEdit;
     }
 }
