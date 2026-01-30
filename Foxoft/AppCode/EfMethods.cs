@@ -4,6 +4,7 @@ using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
 using DevExpress.Mvvm.Native;
 using DevExpress.Spreadsheet;
+using DevExpress.XtraSplashScreen;
 using DevExpress.XtraSpreadsheet.Model;
 using Foxoft.Models;
 using Foxoft.Models.Entity;
@@ -1184,7 +1185,7 @@ namespace Foxoft
             return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
                                     .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
                                     .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
-                                    .Where(x => x.PaymentTypeCode == 1)
+                                    .Where(x => x.PaymentTypeCode == PaymentType.Cash)
                                     .Sum(s => s.PaymentLoc);
         }
 
@@ -1195,9 +1196,33 @@ namespace Foxoft
             return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
                                     .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
                                     .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
-                                    .Where(x => x.PaymentTypeCode == 2)
+                                    .Where(x => x.PaymentTypeCode == PaymentType.Cashless)
                                     .Sum(s => s.PaymentLoc);
         }
+
+        public decimal SelectPaymentLinesBonusSumByInvoice(Guid invoiceHeaderId, string currAccCode)
+        {
+            using subContext db = new();
+
+            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                    .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
+                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
+                                    .Where(x => x.PaymentTypeCode == PaymentType.Bonus)
+                                    .Sum(s => s.PaymentLoc);
+        }
+
+        public decimal SelectCustomerBonusBalance(string currAccCode)
+        {
+            using var db = new subContext();
+
+            DateTime today = DateTime.Today;
+
+            return db.Set<TrLoyaltyTxn>()
+                .Where(x => x.CurrAccCode == currAccCode
+                            && (x.ExpireAt == null || x.ExpireAt >= today))
+                .Sum(x => (decimal?)x.Amount) ?? 0m;
+        }
+
 
         //public decimal SelectInstallmentsSumByInvoice(Guid invoiceHeaderId)
         //{
@@ -1450,7 +1475,7 @@ namespace Foxoft
             return db.DcClaims.FirstOrDefault(x => x.Id == Id);
         }
 
-        public List<DcPaymentMethod> SelectPaymentMethodsByPaymentTypes(byte[] paymentTypes)
+        public List<DcPaymentMethod> SelectPaymentMethodsByPaymentTypes(PaymentType[] paymentTypes)
         {
             using subContext db = new();
             return db.DcPaymentMethods.Where(x => paymentTypes.Contains(x.PaymentTypeCode)).ToList();

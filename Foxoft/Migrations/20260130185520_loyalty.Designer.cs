@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260130185520_loyalty")]
+    partial class loyalty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1215,6 +1218,15 @@ namespace Foxoft.Migrations
                             PaymentMethodId = 2,
                             IsDefault = false,
                             IsDisabled = false,
+                            IsRedirected = false,
+                            PaymentMethodDesc = "Daxili Kredit",
+                            PaymentTypeCode = (byte)3
+                        },
+                        new
+                        {
+                            PaymentMethodId = 3,
+                            IsDefault = false,
+                            IsDisabled = false,
                             IsRedirected = true,
                             PaymentMethodDesc = "Bir Kart",
                             PaymentTypeCode = (byte)2,
@@ -1222,7 +1234,7 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            PaymentMethodId = 3,
+                            PaymentMethodId = 4,
                             IsDefault = false,
                             IsDisabled = false,
                             IsRedirected = false,
@@ -1231,7 +1243,7 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            PaymentMethodId = 4,
+                            PaymentMethodId = 5,
                             IsDefault = false,
                             IsDisabled = false,
                             IsRedirected = false,

@@ -23,7 +23,7 @@ namespace Foxoft.Models
             TrReportCustomizations = new HashSet<TrReportCustomization>();
             TrCurrAccFeatures = new HashSet<TrCurrAccFeature>();
             DcCurrAccContactDetails = new HashSet<DcCurrAccContactDetail>();
-            TrInstallmentGuarantors = new HashSet<TrInstallmentGuarantor>(); 
+            TrInstallmentGuarantors = new HashSet<TrInstallmentGuarantor>();
             TrEmployeePositions = new HashSet<TrEmployeePosition>();
             TrEmployeeContracts = new HashSet<TrEmployeeContract>();
             TrAttendances = new HashSet<TrAttendance>();
@@ -137,7 +137,7 @@ namespace Foxoft.Models
         public byte? PersonalTypeCode { get; set; }
 
         [Display(Name = nameof(Resources.Entity_CurrAcc_CashRegPaymentType), ResourceType = typeof(Resources))]
-        public byte? CashRegPaymentTypeCode { get; set; }
+        public PaymentType? CashRegPaymentTypeCode { get; set; }
 
         [DefaultValue("0")]
         [Display(Name = nameof(Resources.Entity_CurrAcc_CustomerPosDiscountRate), ResourceType = typeof(Resources))]

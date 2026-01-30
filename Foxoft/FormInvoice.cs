@@ -1219,7 +1219,7 @@ namespace Foxoft
         private TrPaymentLine PaymentLineDefaults()
         {
             TrPaymentLine trPaymentLine = new();
-            trPaymentLine.PaymentTypeCode = 1;
+            trPaymentLine.PaymentTypeCode = PaymentType.Cash;
             trPaymentLine.PaymentMethodId = 1;
             trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trPaymentLine.ExchangeRate = 1f;
@@ -1268,8 +1268,7 @@ namespace Foxoft
             decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
             decimal pay = Math.Max(Math.Round(Math.Abs(summaryInvoice) - Math.Abs(prePaid), 4), 0);
 
-            byte[] paymentTypes = dcProcess.ProcessCode == "IS" ? new byte[] { 1, 2, 3, 4 } : new byte[] { 1, 2 };
-            using FormPayment formPayment = new(1, pay, trInvoiceHeader, paymentTypes);
+            using FormPayment formPayment = new(1, pay, trInvoiceHeader, new byte[] { 1, 2, 3, 4 });
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {

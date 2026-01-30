@@ -3575,4 +3575,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_AppSetting_OverpaymentMode" xml:space="preserve">
     <value>Artıq Ödəniş Modu</value>
   </data>
+  <data name="Validation_Range_Max" xml:space="preserve">
+    <value>{0} {1}dan kiçik olmalıdır</value>
+  </data>
 </root>

@@ -16,7 +16,7 @@ namespace Foxoft.Models
 
         [Key]
         [Display(Name = nameof(Resources.Entity_PaymentType_Code), ResourceType = typeof(Resources))]
-        public byte PaymentTypeCode { get; set; }
+        public PaymentType PaymentTypeCode { get; set; }
 
         [Display(Name = nameof(Resources.Entity_PaymentType_Desc), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources),

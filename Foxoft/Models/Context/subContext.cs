@@ -100,6 +100,9 @@ namespace Foxoft.Models
         public DbSet<DcPayrollPeriod> DcPayrollPeriods { get; set; }
         public DbSet<TrPayrollHeader> TrPayrollHeaders { get; set; }
         public DbSet<TrPayrollLine> TrPayrollLines { get; set; }
+        public DbSet<DcLoyaltyCard> DcLoyaltyCards { get; set; }
+        public DbSet<DcLoyaltyProgram> DcLoyaltyPrograms { get; set; }
+        public DbSet<TrLoyaltyTxn> TrLoyaltyTxns { get; set; }
 
 
         public DbSet<RetailSale> RetailSales { get; set; } // view
@@ -853,7 +856,9 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 16, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Son Gələn Mallar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_RecentGoods.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 17, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Depoların Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_WarehouseBalance.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 18, ReportTypeId = 2, ReportCategoryId = 3, ReportName = "Məhsul Kartı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 19, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Məhsul Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductBalanceSerialNumber.sql"), ReportLayout = "" }
+                new DcReport { ReportId = 19, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Məhsul Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductBalanceSerialNumber.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 20, ReportTypeId = 1, ReportCategoryId = 1, ReportName = "Alacaqlar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Receivables.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 21, ReportTypeId = 1, ReportCategoryId = 2, ReportName = "Verəcəklər", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Payables.sql"), ReportLayout = "" }
                // reportlarin layoutlarin FormLogin de duzelt
                );
 
@@ -890,18 +895,17 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcPaymentType>().HasData(
-                new DcPaymentType { PaymentTypeCode = 1, PaymentTypeDesc = "Nağd" },
-                new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Nağdsız" },
-                new DcPaymentType { PaymentTypeCode = 3, PaymentTypeDesc = "Bonus" },
-                new DcPaymentType { PaymentTypeCode = 4, PaymentTypeDesc = "Komissiya" }
+                new DcPaymentType { PaymentTypeCode = PaymentType.Cash, PaymentTypeDesc = "Nağd" },
+                new DcPaymentType { PaymentTypeCode = PaymentType.Cashless, PaymentTypeDesc = "Nağdsız" },
+                new DcPaymentType { PaymentTypeCode = PaymentType.Bonus, PaymentTypeDesc = "Bonus" },
+                new DcPaymentType { PaymentTypeCode = PaymentType.Commission, PaymentTypeDesc = "Komissiya" }
                 );
 
             modelBuilder.Entity<DcPaymentMethod>().HasData(
-                new DcPaymentMethod { PaymentMethodId = 1, PaymentTypeCode = 1, PaymentMethodDesc = "Nağd" },
-                new DcPaymentMethod { PaymentMethodId = 2, PaymentTypeCode = 3, PaymentMethodDesc = "Daxili Kredit" },// Internal Credit
-                new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = 2, PaymentMethodDesc = "Bir Kart", IsRedirected = true, RedirectedCurrAccCode = "C-000006" },
-                new DcPaymentMethod { PaymentMethodId = 4, PaymentTypeCode = 1, PaymentMethodDesc = "Çatdırılma zamanı nağd ödə" },
-                new DcPaymentMethod { PaymentMethodId = 5, PaymentTypeCode = 2, PaymentMethodDesc = "Saytda nağd ödə" }
+                new DcPaymentMethod { PaymentMethodId = 1, PaymentTypeCode = PaymentType.Cash, PaymentMethodDesc = "Nağd" },
+                new DcPaymentMethod { PaymentMethodId = 2, PaymentTypeCode = PaymentType.Cashless, PaymentMethodDesc = "Bir Kart", IsRedirected = true, RedirectedCurrAccCode = "C-000006" },
+                new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = PaymentType.Cash, PaymentMethodDesc = "Çatdırılma zamanı nağd ödə" },
+                new DcPaymentMethod { PaymentMethodId = 4, PaymentTypeCode = PaymentType.Cashless, PaymentMethodDesc = "Saytda nağd ödə" }
                 );
 
             modelBuilder.Entity<DcPaymentPlan>().HasData(

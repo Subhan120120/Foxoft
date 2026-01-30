@@ -14,6 +14,7 @@ namespace Foxoft
         private TrInvoiceHeader trInvoiceHeader { get; set; }
         private TrPaymentLine trPaymentLineCash = new();
         private TrPaymentLine trPaymentLineCashless = new();
+        private TrPaymentLine trPaymentLineBonus = new();
         private TrPaymentLine trPaymentLineCommission = new();
         private DcPaymentMethod dcPaymentMethod = new();
         private EfMethods efMethods = new();
@@ -40,10 +41,9 @@ namespace Foxoft
             });
 
             List<DcCurrency> currencies = efMethods.SelectEntities<DcCurrency>();
-            //LUE_InstallmentCurrency.Properties.DataSource = currencies;
             lUE_cashCurrency.Properties.DataSource = currencies;
             lUE_CashlessCurrency.Properties.DataSource = currencies;
-            lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 });
+            lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless });
         }
 
         public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader)
@@ -53,7 +53,9 @@ namespace Foxoft
 
             PaymentDefaults(paymentType, trInvoiceHeader);
 
-            lUE_PaymentMethod.EditValue = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 }).FirstOrDefault(x => x.IsDefault == true)?.PaymentMethodId;
+            lUE_PaymentMethod.EditValue = efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless })
+                                                    .FirstOrDefault(x => x.IsDefault == true)?
+                                                    .PaymentMethodId;
 
             if ((bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode, trInvoiceHeader.IsReturn))
                 isNegativ = true;
@@ -66,30 +68,24 @@ namespace Foxoft
                 case 2:
                     trPaymentLineCashless.Payment = Math.Abs(pay);
                     break;
+                case 3:
+                    trPaymentLineBonus.Payment = Math.Abs(pay);
+                    break;
                 default:
                     break;
             }
         }
 
-        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, bool autoMakePayment)
-           : this(paymentType, pay, trInvoiceHeader)
-        {
-            if (trPaymentLineCash.Payment > 0)
-                if (autoMakePayment)
-                    SavePayment(autoMakePayment);
-        }
-
         public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes)
            : this(paymentType, pay, trInvoiceHeader)
         {
-            lCG_Cash.Visibility = paymentTypes.Contains((byte)1) ? LayoutVisibility.Always : LayoutVisibility.Never;
-            lCG_Cashless.Visibility = paymentTypes.Contains((byte)2) ? LayoutVisibility.Always : LayoutVisibility.Never;
-            //LCG_Installment.Visibility = paymentTypes.Contains((byte)3) ? LayoutVisibility.Always : LayoutVisibility.Never;
-            //lCG_CustomerBonus.Enabled = paymentTypes.Contains((byte)4) ? true : false;
+            lCG_Cash.Visibility = paymentTypes.Contains((byte)PaymentType.Cash) ? LayoutVisibility.Always : LayoutVisibility.Never;
+            lCG_Cashless.Visibility = paymentTypes.Contains((byte)PaymentType.Cashless) ? LayoutVisibility.Always : LayoutVisibility.Never;
+            lCG_CustomerBonus.Visibility = paymentTypes.Contains((byte)PaymentType.Bonus) ? LayoutVisibility.Always : LayoutVisibility.Never;
         }
 
         public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes, bool isInstallmentPayment)
-           : this(paymentType, pay, trInvoiceHeader, new byte[] { 1, 2 })
+           : this(paymentType, pay, trInvoiceHeader, paymentTypes)
         {
             if (isInstallmentPayment)
                 trPaymentHeader.PaymentKindId = 3;
@@ -122,22 +118,29 @@ namespace Foxoft
             trPaymentHeader.IsMainTF = true;
 
             trPaymentLineCash.PaymentHeaderId = PaymentHeaderId;
-            trPaymentLineCash.PaymentTypeCode = 1;
+            trPaymentLineCash.PaymentTypeCode = PaymentType.Cash;
             trPaymentLineCash.PaymentMethodId = 1;
             trPaymentLineCash.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trPaymentLineCash.ExchangeRate = 1;
             trPaymentLineCash.CreatedUserName = Authorization.CurrAccCode;
 
             trPaymentLineCashless.PaymentHeaderId = PaymentHeaderId;
-            trPaymentLineCashless.PaymentTypeCode = 2;
+            trPaymentLineCashless.PaymentTypeCode = PaymentType.Cashless;
             trPaymentLineCashless.PaymentMethodId = 3;
             trPaymentLineCashless.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trPaymentLineCashless.ExchangeRate = 1;
             trPaymentLineCashless.CreatedUserName = Authorization.CurrAccCode;
 
+            trPaymentLineBonus.PaymentHeaderId = PaymentHeaderId;
+            trPaymentLineBonus.PaymentTypeCode = PaymentType.Bonus;
+            trPaymentLineBonus.PaymentMethodId = 1;
+            trPaymentLineBonus.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+            trPaymentLineBonus.ExchangeRate = 1;
+            trPaymentLineBonus.CreatedUserName = Authorization.CurrAccCode;
+
             trPaymentLineCommission.PaymentHeaderId = PaymentHeaderId;
             trPaymentLineCommission.PaymentLineId = Guid.NewGuid();
-            trPaymentLineCommission.PaymentTypeCode = 5;
+            trPaymentLineCommission.PaymentTypeCode = PaymentType.Commission;
             trPaymentLineCommission.PaymentMethodId = 3;
             trPaymentLineCommission.CreatedUserName = Authorization.CurrAccCode;
 
@@ -167,6 +170,7 @@ namespace Foxoft
 
             txtEdit_Cashless.EditValue = trPaymentLineCashless.PaymentLoc;
             lUE_CashlessCurrency.EditValue = trPaymentLineCashless.CurrencyCode;
+            txtEdit_Bonus.EditValue = trPaymentLineBonus.PaymentLoc;
 
             //TxtEdit_Installment.EditValue = trInstallment.Amount;
             //LUE_InstallmentCurrency.EditValue = trInstallment.CurrencyCode;
@@ -240,21 +244,20 @@ namespace Foxoft
 
         private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            SelectCashRegister(sender, 1);
+            SelectCashRegister(sender, PaymentType.Cash);
         }
 
-        private void SelectCashRegister(object sender, byte paymentTypeCode)
+        private void SelectCashRegister(object sender, PaymentType paymentType)
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormCashRegisterList form = new(trInvoiceHeader.CurrAccCode, paymentTypeCode))
+            using (FormCashRegisterList form = new(trInvoiceHeader.CurrAccCode, (byte)paymentType))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                {
                     buttonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
-                }
             }
         }
+
 
         private void btnEdit_CashRegister_EditValueChanged(object sender, EventArgs e)
         {
@@ -318,8 +321,8 @@ namespace Foxoft
             object row = lUE_PaymentMethod.Properties.GetDataSourceRowByKeyValue(lUE_PaymentMethod.EditValue);
             if (row is not null)
             {
-                byte paymentTypeCode = ((DcPaymentMethod)row).PaymentTypeCode;
-                SelectCashRegister(sender, paymentTypeCode);
+                PaymentType code = ((DcPaymentMethod)row).PaymentTypeCode;
+                SelectCashRegister(sender, code);
             }
         }
 
@@ -345,48 +348,97 @@ namespace Foxoft
             trPaymentLineCommission.Payment = (-1) * (decimal)txt_CashlessCommission.EditValue;
         }
 
-        private void textEditBonus_EditValueChanged(object sender, EventArgs e) { }
+        private void textEditBonus_EditValueChanged(object sender, EventArgs e)
+        {
+            trPaymentLineBonus.Payment = Convert.ToDecimal(txtEdit_Bonus.EditValue);
+            txtEdit_Bonus.DoValidate();
+        }
 
-        private void textEditBonus_Validating(object sender, CancelEventArgs e) { }
+        private void textEditBonus_Validating(object sender, CancelEventArgs e)
+        {
+            if (trPaymentLineBonus.Payment < 0)
+            {
+                e.Cancel = true;
+                return;
+            }
 
-        private void textEditBonus_InvalidValue(object sender, InvalidValueExceptionEventArgs e) { }
+            // Return / refund halında (isNegativ=true) bonus balans limiti yoxlanmamalıdır
+            if (isNegativ)
+                return;
+
+            if (trInvoiceHeader == null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            decimal availableBonus = efMethods.SelectPaymentLinesBonusSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
+
+            if (trPaymentLineBonus.Payment > availableBonus)
+                e.Cancel = true;
+        }
+
+        private void textEditBonus_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        {
+        }
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {
-            SavePayment(false);
+            SavePayment();
         }
 
-        private void SavePayment(bool autoPayment)
+        private void SavePayment()
         {
-            if (trPaymentLineCash.PaymentLoc <= 0 && trPaymentLineCashless.PaymentLoc <= 0)
+            // ✅ bonusu da nəzərə al
+            if (trPaymentLineCash.PaymentLoc <= 0 &&
+                trPaymentLineCashless.PaymentLoc <= 0 &&
+                trPaymentLineBonus.PaymentLoc <= 0)
                 return;
 
-            if (trPaymentLineCashless.PaymentLoc > 0) // lUE_PaymentMethod Validation
+            // Bonus yalnız invoice-a bağlı məntiqlidir (istəsən bu qaydanı götürə bilərsən)
+            if (trPaymentLineBonus.PaymentLoc > 0 &&
+                (trInvoiceHeader == null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty))
+                return;
+
+            // Cashless varsa PaymentMethod/PPlan validation
+            if (trPaymentLineCashless.PaymentLoc > 0)
             {
                 if (lUE_PaymentMethod.EditValue == null)
                 {
                     dxErrorProvider1.SetError(lUE_PaymentMethod, Resources.Validation_Required);
                     return;
                 }
-                else
+
+                if (((List<DcPaymentPlan>)LUE_PaymentPlan.Properties.DataSource)?.Count > 0 && LUE_PaymentPlan.EditValue == null)
                 {
-                    if (((List<DcPaymentPlan>)LUE_PaymentPlan.Properties.DataSource)?.Count > 0 && LUE_PaymentPlan.EditValue == null)
-                    {
-                        dxErrorProvider1.SetError(LUE_PaymentPlan, Resources.Validation_Required);
-                        return;
-                    }
+                    dxErrorProvider1.SetError(LUE_PaymentPlan, Resources.Validation_Required);
+                    return;
+                }
+            }
+
+            // ✅ Bonus balansını server tərəfdə də yoxla (UI bypass olmasın)
+            if (!isNegativ && trPaymentLineBonus.PaymentLoc > 0 &&
+                trInvoiceHeader != null && trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
+            {
+                decimal availableBonus = efMethods.SelectCustomerBonusBalance(trInvoiceHeader.CurrAccCode);
+                if (trPaymentLineBonus.PaymentLoc > availableBonus)
+                {
+                    dxErrorProvider1.SetError(txtEdit_Bonus, Resources.Validation_Range_Max);
+                    return;
                 }
             }
 
             // ✅ OverpaymentMode tətbiqi (insertlərdən ƏVVƏL)
-            if (!ApplyOverpaymentMode(autoPayment))
+            if (!ApplyOverpaymentMode())
                 return;
 
             // Capping-dən sonra 0 ola bilər
-            if (trPaymentLineCash.PaymentLoc <= 0 && trPaymentLineCashless.PaymentLoc <= 0)
+            if (trPaymentLineCash.PaymentLoc <= 0 &&
+                trPaymentLineCashless.PaymentLoc <= 0 &&
+                trPaymentLineBonus.PaymentLoc <= 0)
                 return;
 
-            if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
+            // ✅ bonusu da daxil et
+            if (trPaymentLineCash.PaymentLoc > 0 ||
+                trPaymentLineCashless.PaymentLoc > 0 ||
+                trPaymentLineBonus.PaymentLoc > 0)
             {
                 string NewDocNum = efMethods.GetNextDocNum(true, "PA", nameof(TrPaymentHeader.DocumentNumber), "TrPaymentHeaders", 6);
                 trPaymentHeader.DocumentNumber = NewDocNum;
@@ -394,6 +446,7 @@ namespace Foxoft
 
                 efMethods.InsertEntity(trPaymentHeader);
 
+                // CASH
                 if (trPaymentLineCash.PaymentLoc > 0)
                 {
                     trPaymentLineCash.PaymentLineId = Guid.NewGuid();
@@ -401,6 +454,7 @@ namespace Foxoft
                     efMethods.InsertEntity(trPaymentLineCash);
                 }
 
+                // CASHLESS
                 if (trPaymentLineCashless.PaymentLoc > 0)
                 {
                     trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
@@ -443,7 +497,7 @@ namespace Foxoft
                             PaymentLineId = Guid.NewGuid(),
                             PaymentMethodId = dcPaymentMethod.PaymentMethodId,
                             PaymentHeaderId = redirectedHeader.PaymentHeaderId,
-                            PaymentTypeCode = 2,
+                            PaymentTypeCode = PaymentType.Cashless,
                             CurrencyCode = trPaymentLineCashless.CurrencyCode,
                             ExchangeRate = trPaymentLineCashless.ExchangeRate,
                             CreatedDate = DateTime.Now,
@@ -462,12 +516,46 @@ namespace Foxoft
                         }
                     }
                 }
+
+                // ✅ BONUS (yeni)
+                if (trPaymentLineBonus.PaymentLoc > 0)
+                {
+                    InsertBonusRedeemToLoyaltyTxn();
+                }
+
             }
 
             DialogResult = DialogResult.OK;
         }
 
-        private bool ApplyOverpaymentMode(bool autoPayment)
+        private void InsertBonusRedeemToLoyaltyTxn()
+        {
+            decimal bonusLoc = trPaymentLineBonus.PaymentLoc;
+            if (bonusLoc <= 0) return;
+
+            var txn = new TrLoyaltyTxn
+            {
+                LoyaltyTxnId = Guid.NewGuid(),
+                CurrAccCode = trPaymentHeader.CurrAccCode,
+                InvoiceHeaderId = trPaymentHeader.InvoiceHeaderId,
+                PaymentHeaderId = trPaymentHeader.PaymentHeaderId,
+
+                // satışda bonus xərclənir -> mənfi
+                // return/refund-da geri qaytarılır -> müsbət (Reverse)
+                TxnType = isNegativ ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Redeem,
+                Amount = isNegativ ? bonusLoc : -bonusLoc,
+                DocumentDate = trPaymentHeader.DocumentDate,
+
+                CreatedUserName = trPaymentHeader.CreatedUserName,
+
+                Note = TxtEdit_Description.EditValue?.ToString()
+            };
+
+            efMethods.InsertEntity(txn);
+        }
+
+
+        private bool ApplyOverpaymentMode()
         {
             // Invoice yoxdursa – overpayment qaydası tətbiq edilmir
             if (trInvoiceHeader == null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
@@ -477,7 +565,8 @@ namespace Foxoft
             if (dueLoc <= 0)
                 return true;
 
-            decimal paidLoc = (trPaymentLineCash.PaymentLoc + trPaymentLineCashless.PaymentLoc);
+            decimal paidLoc = (trPaymentLineCash.PaymentLoc + trPaymentLineCashless.PaymentLoc + trPaymentLineBonus.PaymentLoc);
+
             if (paidLoc <= dueLoc)
                 return true;
 
@@ -486,7 +575,7 @@ namespace Foxoft
             var mode = (OverpaymentMode)Settings.Default.AppSetting.OverpaymentMode;
 
             // AskEachTime + manual => soruş
-            if (mode == OverpaymentMode.AskEachTime && !autoPayment)
+            if (mode == OverpaymentMode.AskEachTime)
             {
                 var dr = XtraMessageBox.Show(
                     this,
@@ -503,23 +592,16 @@ namespace Foxoft
                 else if (dr == DialogResult.No) mode = OverpaymentMode.AcceptAllAsAdvance;
                 else return false; // Cancel
             }
-            else if (mode == OverpaymentMode.AskEachTime && autoPayment)
-            {
-                mode = OverpaymentMode.AcceptExactAndReturnChange; // auto-da soruşmuruq
-            }
 
             if (mode == OverpaymentMode.AcceptExactAndReturnChange)
             {
                 CapPaymentsToDue(dueLoc);
 
-                if (!autoPayment)
-                {
-                    XtraMessageBox.Show(
-                        this,
-                        $"Qaytarılan məbləğ: {overLoc:n2}.",
-                        Resources.Common_Attention
-                    );
-                }
+                XtraMessageBox.Show(
+                    this,
+                    $"Qaytarılan məbləğ: {overLoc:n2}.",
+                    Resources.Common_Attention
+                );
             }
             // AcceptAllAsAdvance => heç nə etmirik (mövcud sistem sonradan avans kimi işləyə bilər)
             return true;
@@ -529,22 +611,25 @@ namespace Foxoft
         {
             decimal cashLoc = trPaymentLineCash.PaymentLoc;
             decimal cashlessLoc = trPaymentLineCashless.PaymentLoc;
+            decimal bonusLoc = trPaymentLineBonus.PaymentLoc;
 
-            decimal total = cashLoc + cashlessLoc;
+            decimal total = cashLoc + cashlessLoc + bonusLoc;
             decimal over = total - dueLoc;
             if (over <= 0) return;
 
             decimal newCashLoc = cashLoc;
             decimal newCashlessLoc = cashlessLoc;
+            decimal newBonusLoc = bonusLoc;
 
-            // əvvəl cash-dən azaldırıq (üst pul qaytarma klassik olaraq cash)
+            // əvvəl cash-dən azaldırıq (üst pulu qaytarma klassik)
             if (newCashLoc > 0)
             {
                 decimal reduce = Math.Min(over, newCashLoc);
                 newCashLoc -= reduce;
                 over -= reduce;
             }
-            // qalıbsa cashless-dən azaldırıq
+
+            // sonra cashless
             if (over > 0 && newCashlessLoc > 0)
             {
                 decimal reduce = Math.Min(over, newCashlessLoc);
@@ -552,14 +637,25 @@ namespace Foxoft
                 over -= reduce;
             }
 
+            // sonda bonus (cash/cashless yoxdursa məcbur cap olunur)
+            if (over > 0 && newBonusLoc > 0)
+            {
+                decimal reduce = Math.Min(over, newBonusLoc);
+                newBonusLoc -= reduce;
+                over -= reduce;
+            }
+
             SetPaymentLoc(trPaymentLineCash, newCashLoc);
             SetPaymentLoc(trPaymentLineCashless, newCashlessLoc);
+            SetPaymentLoc(trPaymentLineBonus, newBonusLoc);
 
-            // UI və komissiya yenilə
             txtEdit_Cash.EditValue = trPaymentLineCash.PaymentLoc;
             txtEdit_Cashless.EditValue = trPaymentLineCashless.PaymentLoc;
+            txtEdit_Bonus.EditValue = trPaymentLineBonus.PaymentLoc;
+
             RecalcCashlessCommission();
         }
+
 
         private static void SetPaymentLoc(TrPaymentLine line, decimal desiredLoc)
         {

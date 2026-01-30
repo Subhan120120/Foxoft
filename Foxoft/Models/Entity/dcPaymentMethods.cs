@@ -22,7 +22,7 @@ namespace Foxoft.Models
 
         [ForeignKey(nameof(DcPaymentType))]
         [Display(Name = nameof(Resources.Entity_PaymentMethod_TypeCode), ResourceType = typeof(Resources))]
-        public byte PaymentTypeCode { get; set; }
+        public PaymentType PaymentTypeCode { get; set; }
 
         [Display(Name = nameof(Resources.Entity_PaymentMethod_Desc), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources),

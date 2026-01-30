@@ -17,7 +17,7 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Entity_PaymentLine_PaymentTypeCode), ResourceType = typeof(Resources))]
         [ForeignKey(nameof(DcPaymentType))]
-        public byte PaymentTypeCode { get; set; }
+        public PaymentType PaymentTypeCode { get; set; }
 
         [Display(Name = nameof(Resources.Entity_PaymentLine_Payment), ResourceType = typeof(Resources))]
         [Column(TypeName = "money")]

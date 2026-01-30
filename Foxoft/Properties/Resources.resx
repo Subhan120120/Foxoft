@@ -3575,4 +3575,7 @@ To delete, cancel the receipt!</value>
   <data name="Entity_AppSetting_OverpaymentMode" xml:space="preserve">
     <value>Overpayment Mode</value>
   </data>
+  <data name="Validation_Range_Max" xml:space="preserve">
+    <value>{0} must be less than {1}</value>
+  </data>
 </root>

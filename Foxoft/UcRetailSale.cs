@@ -561,14 +561,12 @@ namespace Foxoft
 
                         if (Settings.Default.AppSetting.AutoPrint == true)
                         {
-                            string designPath = Settings.Default.AppSetting.PrintDesignPath;
-                            if (!File.Exists(designPath))
-                                designPath = reportClass.SelectDesign();
+                            string fileName = "Report_Embedded_InvoiceReport.repx";
 
                             ReportPrintTool printTool = new(
                                 reportClass.CreateReport(
                                     efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId),
-                                    designPath));
+                                    fileName));
                             printTool.Print();
                         }
 

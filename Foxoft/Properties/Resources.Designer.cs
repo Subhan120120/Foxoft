@@ -10374,6 +10374,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} must be less than {1}.
+        /// </summary>
+        public static string Validation_Range_Max {
+            get {
+                return ResourceManager.GetString("Validation_Range_Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} must be greater than {1}.
         /// </summary>
         public static string Validation_Range_Min {
