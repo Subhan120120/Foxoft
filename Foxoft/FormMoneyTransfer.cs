@@ -278,7 +278,7 @@ namespace Foxoft
         {
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentHeaderId, trPaymentHeader.PaymentHeaderId);
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLineId, Guid.NewGuid());
-            gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentTypeCode, 1);
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentTypeCode, PaymentType.Cash);
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentMethodId, 1);
 
             string cashReg = trPaymentHeader.ToCashRegCode;
