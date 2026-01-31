@@ -128,6 +128,7 @@ namespace Foxoft
             btn_IncomplatedInvoices = new SimpleButton();
             btn_InvoiceDiscount = new SimpleButton();
             btn_NewInvoice = new SimpleButton();
+            btn_LoyaltyCard = new SimpleButton();
             lCG_Root = new LayoutControlGroup();
             lCG_Barcode = new LayoutControlGroup();
             LCI_Barcode = new LayoutControlItem();
@@ -147,6 +148,7 @@ namespace Foxoft
             layoutControlItem8 = new LayoutControlItem();
             lCI_Discount = new LayoutControlItem();
             layoutControlItem9 = new LayoutControlItem();
+            lCI_LoyaltyCard = new LayoutControlItem();
             lCG_Payment = new LayoutControlGroup();
             lCI_Cash = new LayoutControlItem();
             lCI_Cashless = new LayoutControlItem();
@@ -212,6 +214,7 @@ namespace Foxoft
             ((ISupportInitialize)layoutControlItem8).BeginInit();
             ((ISupportInitialize)lCI_Discount).BeginInit();
             ((ISupportInitialize)layoutControlItem9).BeginInit();
+            ((ISupportInitialize)lCI_LoyaltyCard).BeginInit();
             ((ISupportInitialize)lCG_Payment).BeginInit();
             ((ISupportInitialize)lCI_Cash).BeginInit();
             ((ISupportInitialize)lCI_Cashless).BeginInit();
@@ -262,6 +265,7 @@ namespace Foxoft
             lC_InvoiceLine.Controls.Add(btn_IncomplatedInvoices);
             lC_InvoiceLine.Controls.Add(btn_InvoiceDiscount);
             lC_InvoiceLine.Controls.Add(btn_NewInvoice);
+            lC_InvoiceLine.Controls.Add(btn_LoyaltyCard);
             lC_InvoiceLine.Dock = DockStyle.Fill;
             lC_InvoiceLine.Location = new Point(0, 0);
             lC_InvoiceLine.Name = "lC_InvoiceLine";
@@ -282,7 +286,6 @@ namespace Foxoft
             POSFindProductByCheckedComboBoxEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
             POSFindProductByCheckedComboBoxEdit.Properties.DisplayFormat.FormatType = FormatType.Custom;
             POSFindProductByCheckedComboBoxEdit.Properties.ItemAutoHeight = true;
-            POSFindProductByCheckedComboBoxEdit.Properties.SeparatorChar = ',';
             POSFindProductByCheckedComboBoxEdit.Properties.TextEditStyle = TextEditStyles.HideTextEditor;
             POSFindProductByCheckedComboBoxEdit.Size = new Size(54, 34);
             POSFindProductByCheckedComboBoxEdit.StyleController = lC_InvoiceLine;
@@ -1015,6 +1018,22 @@ namespace Foxoft
             btn_NewInvoice.TabIndex = 9;
             btn_NewInvoice.Click += Btn_NewInvoice_Click;
             // 
+            // btn_LoyaltyCard
+            // 
+            btn_LoyaltyCard.AllowFocus = false;
+            btn_LoyaltyCard.Appearance.BackColor = Color.Transparent;
+            btn_LoyaltyCard.Appearance.Options.UseBackColor = true;
+            btn_LoyaltyCard.ImageOptions.Location = ImageLocation.TopCenter;
+            btn_LoyaltyCard.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_LoyaltyCard.ImageOptions.SvgImage");
+            btn_LoyaltyCard.Location = new Point(1044, 374);
+            btn_LoyaltyCard.Name = "btn_LoyaltyCard";
+            btn_LoyaltyCard.ShowFocusRectangle = DefaultBoolean.False;
+            btn_LoyaltyCard.Size = new Size(76, 63);
+            btn_LoyaltyCard.StyleController = lC_InvoiceLine;
+            btn_LoyaltyCard.TabIndex = 10;
+            btn_LoyaltyCard.Text = "BonusCard";
+            btn_LoyaltyCard.Click += Btn_LoyaltyCard_Click;
+            // 
             // lCG_Root
             // 
             lCG_Root.EnableIndentsWithoutBorders = DefaultBoolean.True;
@@ -1092,7 +1111,7 @@ namespace Foxoft
             // lCG_Function
             // 
             lCG_Function.CustomizationFormText = Resources.Form_RetailSale_Group_Function;
-            lCG_Function.Items.AddRange(new BaseLayoutItem[] { lCI_ProductSearch, lCI_CancelInvoice, lCI_Print, lCI_PrintDesign, lCI_ReportZ, lCI_DeleteLine, LCI_AddBasket, lCI_SalesPerson, layoutControlItem8, lCI_Discount, layoutControlItem9 });
+            lCG_Function.Items.AddRange(new BaseLayoutItem[] { lCI_ProductSearch, lCI_CancelInvoice, lCI_Print, lCI_PrintDesign, lCI_ReportZ, lCI_DeleteLine, LCI_AddBasket, lCI_SalesPerson, layoutControlItem8, lCI_Discount, layoutControlItem9, lCI_LoyaltyCard });
             lCG_Function.LayoutMode = LayoutMode.Table;
             lCG_Function.Location = new Point(780, 195);
             lCG_Function.Name = "lCG_Function";
@@ -1251,6 +1270,19 @@ namespace Foxoft
             layoutControlItem9.Size = new Size(80, 67);
             layoutControlItem9.SizeConstraintsType = SizeConstraintsType.Custom;
             layoutControlItem9.TextVisible = false;
+            // 
+            // lCI_LoyaltyCard
+            // 
+            lCI_LoyaltyCard.Control = btn_LoyaltyCard;
+            lCI_LoyaltyCard.ControlAlignment = ContentAlignment.TopLeft;
+            lCI_LoyaltyCard.Location = new Point(240, 134);
+            lCI_LoyaltyCard.MinSize = new Size(50, 25);
+            lCI_LoyaltyCard.Name = "layoutControlItem15";
+            lCI_LoyaltyCard.OptionsTableLayoutItem.ColumnIndex = 3;
+            lCI_LoyaltyCard.OptionsTableLayoutItem.RowIndex = 2;
+            lCI_LoyaltyCard.Size = new Size(80, 67);
+            lCI_LoyaltyCard.SizeConstraintsType = SizeConstraintsType.Custom;
+            lCI_LoyaltyCard.TextVisible = false;
             // 
             // lCG_Payment
             // 
@@ -1493,6 +1525,7 @@ namespace Foxoft
             ((ISupportInitialize)layoutControlItem8).EndInit();
             ((ISupportInitialize)lCI_Discount).EndInit();
             ((ISupportInitialize)layoutControlItem9).EndInit();
+            ((ISupportInitialize)lCI_LoyaltyCard).EndInit();
             ((ISupportInitialize)lCG_Payment).EndInit();
             ((ISupportInitialize)lCI_Cash).EndInit();
             ((ISupportInitialize)lCI_Cashless).EndInit();
@@ -1514,6 +1547,7 @@ namespace Foxoft
             ((ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ResumeLayout(false);
         }
+
 
 
         #endregion
@@ -1653,6 +1687,10 @@ namespace Foxoft
         private LayoutControlItem LCI_NewInvoice;
         private SimpleButton btn_AddBasket;
         private SimpleButton btn_NewInvoice;
+        private SimpleButton simpleButton2;
+        private LayoutControlItem lCI_LoyaltyCard;
+        private SimpleButton btn_BonusCard;
+        private SimpleButton btn_LoyaltyCard;
     }
 }
 

@@ -14,19 +14,20 @@ using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports;
 using DevExpress.XtraRichEdit.Fields;
+using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
 using Foxoft.Migrations;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Drawing;
-using Foxoft.Models.Entity.Report;
 
 namespace Foxoft
 {
@@ -357,7 +358,7 @@ namespace Foxoft
 
         private void MakePayment(decimal pay, TrInvoiceHeader trInvoiceHeader)
         {
-            using FormPayment formPayment = new(1, Math.Round(pay, 2), trInvoiceHeader, new byte[] { 1, 2 }, true);
+            using FormPayment formPayment = new(PaymentType.Cash, Math.Round(pay, 2), trInvoiceHeader, new[] { PaymentType.Cash, PaymentType.Cashless }, new DcLoyaltyCard() { }, true);
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {

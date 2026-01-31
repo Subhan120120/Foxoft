@@ -496,7 +496,6 @@ namespace Foxoft
             // 
             // lCG_CustomerBonus
             // 
-            lCG_CustomerBonus.Enabled = false;
             lCG_CustomerBonus.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             lCG_CustomerBonus.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_CustomerBonus, lCI_CusBonus });
             lCG_CustomerBonus.Location = new Point(0, 284);

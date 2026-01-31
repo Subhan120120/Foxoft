@@ -225,7 +225,7 @@ namespace Foxoft
                 {
                     TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
 
-                    using (FormPayment formPayment = new(1, 0, trInvoiceHeader, new byte[] { 1, 2, 3, 4 }))
+                    using (FormPayment formPayment = new(PaymentType.Cash, 0, trInvoiceHeader, new[] { PaymentType.Cash, PaymentType.Cashless, PaymentType.Bonus, PaymentType.Commission }, new DcLoyaltyCard() { }))
                     {
                         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
                         if (!currAccHasClaims)
@@ -254,7 +254,7 @@ namespace Foxoft
                 {
                     TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
 
-                    using (FormPayment formPayment = new(1, -1, trInvoiceHeader, new byte[] { 1, 2, 3, 4 }))
+                    using (FormPayment formPayment = new(PaymentType.Cash, -1, trInvoiceHeader, new[] { PaymentType.Cash, PaymentType.Cashless, PaymentType.Bonus, PaymentType.Commission }, new DcLoyaltyCard() { }))
                     {
                         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
                         if (!currAccHasClaims)

@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System.Drawing.Printing;
 using System.IO;
+using System.Windows.Forms;
 using static Foxoft.FormAppSetting;
 
 namespace Foxoft
@@ -26,6 +27,7 @@ namespace Foxoft
         ReportClass reportClass;
         subContext dbContext = new();
         readonly SettingStore settingStore;
+        DcLoyaltyCard loyaltyCard;
 
         public UcRetailSale()
         {
@@ -535,25 +537,25 @@ namespace Foxoft
 
             if (summaryNetAmount > 0)
             {
-                byte paymentType = 0;
+                PaymentType paymentType = 0;
 
                 SimpleButton simpleButton = sender as SimpleButton;
                 switch (simpleButton.Name)
                 {
                     case "btn_Cash":
-                        paymentType = 1;
+                        paymentType = PaymentType.Cash;
                         break;
                     case "btn_Cashless":
-                        paymentType = 2;
+                        paymentType = PaymentType.Cashless;
                         break;
                     case "btn_CustomerBonus":
-                        paymentType = 3;
+                        paymentType = PaymentType.Bonus;
                         break;
                     default:
                         break;
                 }
 
-                using (FormPayment formPayment = new(paymentType, summaryNetAmount, trInvoiceHeader, new byte[] { 1, 2, 3, 4 }))
+                using (FormPayment formPayment = new(paymentType, summaryNetAmount, trInvoiceHeader, new[] { PaymentType.Cash, PaymentType.Cashless, PaymentType.Bonus, PaymentType.Commission }, loyaltyCard))
                 {
                     if (formPayment.ShowDialog(this) == DialogResult.OK)
                     {
@@ -1001,16 +1003,16 @@ namespace Foxoft
 
         private string? InputSalesMan()
         {
-            string bonusCardNum = Interaction.InputBox(
+            string identityCardNum = Interaction.InputBox(
                 "Satıcı Kodu Daxil Edin:",
                 "Satıcı",
                 ""
             );
 
-            if (string.IsNullOrEmpty(bonusCardNum))
+            if (string.IsNullOrEmpty(identityCardNum))
                 return null;
 
-            DcCurrAcc dcCurrAcc = efMethods.SelectSalesManByBonusCard(bonusCardNum);
+            DcCurrAcc dcCurrAcc = efMethods.SelectSalesManByIdentityCard(identityCardNum);
             if (dcCurrAcc is not null)
                 return dcCurrAcc.CurrAccCode;
             else
@@ -1053,8 +1055,91 @@ namespace Foxoft
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
+            // ✅ Bonus qazanma ledger-i (Earn) yaradılır / update olunur / silinir
+            SyncLoyaltyEarn(trInvoiceHeader);
+
+            dbContext.SaveChanges(Authorization.CurrAccCode);
+
             Tag = trInvoiceHeader.DocumentNumber;
         }
+
+        private void SyncLoyaltyEarn(TrInvoiceHeader inv)
+        {
+            if (inv == null || inv.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            if (loyaltyCard is null)
+                return;
+
+            // Bonus yalnız müştəri olan satışlarda
+            if (string.IsNullOrWhiteSpace(inv.CurrAccCode))
+            {
+                RemoveEarnTxn(inv.InvoiceHeaderId);
+                return;
+            }
+
+            // ✅ Burada öz qaydanı qoy:
+            // məsələn yalnız satış (return deyil) üçün qazanılsın.
+            // Return invoice-larda adətən bonus qazanılmır, əksinə əvvəl qazanılan geri alınır.
+            bool isReturn = inv.IsReturn == true;
+
+            decimal earnPercent = loyaltyCard.LoyaltyProgram.EarnPercent;
+            if (earnPercent <= 0)
+            {
+                RemoveEarnTxn(inv.InvoiceHeaderId);
+                return;
+            }
+
+            decimal summaryNetAmount = Convert.ToDecimal(
+                gV_InvoiceLine.Columns[nameof(TrInvoiceLine.NetAmount)].SummaryItem.SummaryValue);
+
+            decimal baseLoc = Math.Abs(summaryNetAmount);
+            decimal earnLoc = Math.Round(baseLoc * earnPercent / 100m, 2);
+            if (earnLoc <= 0)
+            {
+                RemoveEarnTxn(inv.InvoiceHeaderId);
+                return;
+            }
+
+            // Return-dursa: əvvəl qazanılan bonusu geri al (mənfi yaz)
+            LoyaltyTxnType txnType = isReturn ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Earn;
+
+            // ✅ Eyni invoice üçün Earn/Reverse təkrar yazılmasın deyə "sync" edirik
+            var txn = dbContext.Set<TrLoyaltyTxn>()
+                .FirstOrDefault(x => x.InvoiceHeaderId == inv.InvoiceHeaderId
+                                     && (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
+
+            if (txn == null)
+            {
+                txn = new TrLoyaltyTxn
+                {
+                    LoyaltyTxnId = Guid.NewGuid(),
+                    InvoiceHeaderId = inv.InvoiceHeaderId,
+                    CurrAccCode = inv.CurrAccCode,
+                    LoyaltyCardId = loyaltyCard.LoyaltyCardId,
+                    CreatedUserName = Authorization.CurrAccCode,
+                    DocumentDate = inv.DocumentDate,
+                };
+                dbContext.Set<TrLoyaltyTxn>().Add(txn);
+            }
+
+            txn.TxnType = txnType;
+            txn.Note = $"Invoice: {inv.DocumentNumber}";
+
+            // İstəsən expireni də burada qoy:
+            // txn.ExpireAt = DateTime.Today.AddDays(Settings.Default.AppSetting.BonusExpireDays);
+        }
+
+        private void RemoveEarnTxn(Guid invoiceHeaderId)
+        {
+            var txn = dbContext.Set<TrLoyaltyTxn>()
+                .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId
+                                     && (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
+
+            if (txn != null)
+                dbContext.Set<TrLoyaltyTxn>().Remove(txn);
+        }
+
 
         private void Btn_NewInvoice_Click(object sender, EventArgs e)
         {
@@ -1166,6 +1251,34 @@ namespace Foxoft
 
             // optional: header indicator text
             // else e.Info.DisplayText = "#";
+        }
+
+
+        private void Btn_LoyaltyCard_Click(object sender, EventArgs e)
+        {
+            string bonusCardNum = Interaction.InputBox(
+                "Bonus Kart Daxil Edin:",
+                "Bonus Kart",
+                ""
+            );
+
+            if (string.IsNullOrEmpty(bonusCardNum))
+                return;
+
+            loyaltyCard = efMethods.SelectLoyalityCard(bonusCardNum);
+
+            if (loyaltyCard is null)
+            {
+                XtraMessageBox.Show("Bonus Kartı tapılmadı!");
+                return;
+            }
+
+            trInvoiceHeader.CurrAccCode = loyaltyCard.CurrAccCode;
+
+            SaveInvoice();
+
+            LoadCurrAcc();
+
         }
     }
 }

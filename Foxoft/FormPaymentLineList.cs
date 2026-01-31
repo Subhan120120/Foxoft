@@ -1,30 +1,19 @@
-﻿using DevExpress.Utils;
+﻿using DevExpress.Data.Linq;
+using DevExpress.Data.Linq.Helpers;
+using DevExpress.Utils;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Foxoft.Models;
 using Foxoft.Properties;
-using System;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using DevExpress.XtraGrid.Views.Base;
-using DevExpress.XtraGrid;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using DevExpress.Utils.Extensions;
-using DevExpress.XtraEditors.Controls;
-using System.ComponentModel;
-using DevExpress.XtraGrid.Columns;
-using DevExpress.Data.Filtering;
-using DevExpress.Data.Linq;
-using DevExpress.Data.Linq.Helpers;
-using System.Collections.Generic;
-using System.Net;
-using System.Diagnostics;
-using System.Security;
 
 namespace Foxoft
 {
@@ -216,7 +205,7 @@ namespace Foxoft
                 {
                     TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
 
-                    using (FormPayment formPayment = new(1, 0, trInvoiceHeader, new byte[] { 1, 2, 3, 4 }))
+                    using (FormPayment formPayment = new(PaymentType.Cash, 0, trInvoiceHeader, new[] { PaymentType.Cash, PaymentType.Cashless, PaymentType.Bonus, PaymentType.Commission }, new DcLoyaltyCard() { }))
                     {
                         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
                         if (!currAccHasClaims)
@@ -244,7 +233,7 @@ namespace Foxoft
                 {
                     TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
 
-                    using (FormPayment formPayment = new(1, -1, trInvoiceHeader, new byte[] { 1, 2, 3, 4 }))
+                    using (FormPayment formPayment = new(PaymentType.Cash, -1, trInvoiceHeader, new[] { PaymentType.Cash, PaymentType.Cashless, PaymentType.Bonus, PaymentType.Commission }, new DcLoyaltyCard() { }))
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {

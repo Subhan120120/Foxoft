@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
+using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace Foxoft
         private TrPaymentLine trPaymentLineCommission = new();
         private DcPaymentMethod dcPaymentMethod = new();
         private EfMethods efMethods = new();
+        private DcLoyaltyCard dcLoyaltyCard = new();
 
         private bool isNegativ = false;
 
@@ -46,7 +48,7 @@ namespace Foxoft
             lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless });
         }
 
-        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader)
+        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader)
            : this()
         {
             this.trInvoiceHeader = trInvoiceHeader;
@@ -62,13 +64,13 @@ namespace Foxoft
 
             switch (paymentType)
             {
-                case 1:
+                case PaymentType.Cash:
                     trPaymentLineCash.Payment = Math.Abs(pay);
                     break;
-                case 2:
+                case PaymentType.Cashless:
                     trPaymentLineCashless.Payment = Math.Abs(pay);
                     break;
-                case 3:
+                case PaymentType.Bonus:
                     trPaymentLineBonus.Payment = Math.Abs(pay);
                     break;
                 default:
@@ -76,22 +78,24 @@ namespace Foxoft
             }
         }
 
-        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes)
+        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, PaymentType[] paymentTypes, DcLoyaltyCard loyaltyCard)
            : this(paymentType, pay, trInvoiceHeader)
         {
-            lCG_Cash.Visibility = paymentTypes.Contains((byte)PaymentType.Cash) ? LayoutVisibility.Always : LayoutVisibility.Never;
-            lCG_Cashless.Visibility = paymentTypes.Contains((byte)PaymentType.Cashless) ? LayoutVisibility.Always : LayoutVisibility.Never;
-            lCG_CustomerBonus.Visibility = paymentTypes.Contains((byte)PaymentType.Bonus) ? LayoutVisibility.Always : LayoutVisibility.Never;
+            lCG_Cash.Visibility = paymentTypes.Contains(PaymentType.Cash) ? LayoutVisibility.Always : LayoutVisibility.Never;
+            lCG_Cashless.Visibility = paymentTypes.Contains(PaymentType.Cashless) ? LayoutVisibility.Always : LayoutVisibility.Never;
+            lCG_CustomerBonus.Visibility = paymentTypes.Contains(PaymentType.Bonus) ? LayoutVisibility.Always : LayoutVisibility.Never;
+
+            dcLoyaltyCard = loyaltyCard;
         }
 
-        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes, bool isInstallmentPayment)
-           : this(paymentType, pay, trInvoiceHeader, paymentTypes)
+        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, PaymentType[] paymentTypes, DcLoyaltyCard loyaltyCard, bool isInstallmentPayment)
+           : this(paymentType, pay, trInvoiceHeader, paymentTypes, loyaltyCard)
         {
             if (isInstallmentPayment)
                 trPaymentHeader.PaymentKindId = 3;
         }
 
-        private void PaymentDefaults(byte paymentType, TrInvoiceHeader trInvoiceHeader)
+        private void PaymentDefaults(PaymentType paymentType, TrInvoiceHeader trInvoiceHeader)
         {
             PaymentHeaderId = Guid.NewGuid();
 
@@ -356,6 +360,12 @@ namespace Foxoft
 
         private void textEditBonus_Validating(object sender, CancelEventArgs e)
         {
+            if (dcLoyaltyCard is null)
+            {
+                e.Cancel = true;
+                return;
+            }
+
             if (trPaymentLineBonus.Payment < 0)
             {
                 e.Cancel = true;
@@ -369,7 +379,7 @@ namespace Foxoft
             if (trInvoiceHeader == null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
                 return;
 
-            decimal availableBonus = efMethods.SelectPaymentLinesBonusSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
+            decimal availableBonus = efMethods.SelectPaymentLinesBonusSumByInvoice(dcLoyaltyCard);
 
             if (trPaymentLineBonus.Payment > availableBonus)
                 e.Cancel = true;
@@ -414,16 +424,16 @@ namespace Foxoft
             }
 
             // ✅ Bonus balansını server tərəfdə də yoxla (UI bypass olmasın)
-            if (!isNegativ && trPaymentLineBonus.PaymentLoc > 0 &&
-                trInvoiceHeader != null && trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
-            {
-                decimal availableBonus = efMethods.SelectCustomerBonusBalance(trInvoiceHeader.CurrAccCode);
-                if (trPaymentLineBonus.PaymentLoc > availableBonus)
-                {
-                    dxErrorProvider1.SetError(txtEdit_Bonus, Resources.Validation_Range_Max);
-                    return;
-                }
-            }
+            //if (!isNegativ && trPaymentLineBonus.PaymentLoc > 0 &&
+            //    trInvoiceHeader != null && trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
+            //{
+            //    decimal availableBonus = efMethods.SelectCustomerBonusBalance(trInvoiceHeader.CurrAccCode);
+            //    if (trPaymentLineBonus.PaymentLoc > availableBonus)
+            //    {
+            //        dxErrorProvider1.SetError(txtEdit_Bonus, Resources.Validation_Range_Max);
+            //        return;
+            //    }
+            //}
 
             // ✅ OverpaymentMode tətbiqi (insertlərdən ƏVVƏL)
             if (!ApplyOverpaymentMode())
@@ -539,11 +549,11 @@ namespace Foxoft
                 CurrAccCode = trPaymentHeader.CurrAccCode,
                 InvoiceHeaderId = trPaymentHeader.InvoiceHeaderId,
                 PaymentHeaderId = trPaymentHeader.PaymentHeaderId,
-
+                LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId,
                 // satışda bonus xərclənir -> mənfi
                 // return/refund-da geri qaytarılır -> müsbət (Reverse)
                 TxnType = isNegativ ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Redeem,
-                Amount = isNegativ ? bonusLoc : -bonusLoc,
+                //Amount = isNegativ ? bonusLoc : -bonusLoc,
                 DocumentDate = trPaymentHeader.DocumentDate,
 
                 CreatedUserName = trPaymentHeader.CreatedUserName,
@@ -552,6 +562,7 @@ namespace Foxoft
             };
 
             efMethods.InsertEntity(txn);
+            efMethods.InsertEntity(trPaymentLineBonus);
         }
 
 

@@ -1200,15 +1200,31 @@ namespace Foxoft
                                     .Sum(s => s.PaymentLoc);
         }
 
-        public decimal SelectPaymentLinesBonusSumByInvoice(Guid invoiceHeaderId, string currAccCode)
+        public decimal SelectPaymentLinesBonusSumByInvoice(DcLoyaltyCard dcLoyaltyCard)
         {
             using subContext db = new();
 
-            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                    .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
-                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
-                                    .Where(x => x.PaymentTypeCode == PaymentType.Bonus)
-                                    .Sum(s => s.PaymentLoc);
+            decimal invoiceSum =
+                (from il in db.TrInvoiceLines.AsNoTracking()
+                 where db.TrLoyaltyTxns.AsNoTracking()
+                     .Where(lt => lt.LoyaltyCardId == dcLoyaltyCard.LoyaltyCardId)
+                     .Select(lt => lt.InvoiceHeaderId)
+                     .Distinct()
+                     .Contains(il.InvoiceHeaderId)
+                 select (decimal?)il.NetAmountLoc
+                ).Sum() ?? 0m;
+
+            decimal paymentSum =
+                (from pl in db.TrPaymentLines.AsNoTracking()
+                 where db.TrLoyaltyTxns.AsNoTracking()
+                     .Where(lt => lt.LoyaltyCardId == dcLoyaltyCard.LoyaltyCardId)
+                     .Select(lt => lt.PaymentHeaderId)
+                     .Distinct()
+                     .Contains(pl.PaymentHeaderId)
+                 select (decimal?)pl.PaymentLoc
+                ).Sum() ?? 0m;
+
+            return invoiceSum - paymentSum;
         }
 
         public decimal SelectCustomerBonusBalance(string currAccCode)
@@ -1642,7 +1658,7 @@ namespace Foxoft
                                 .Any(x => x.CurrAccCode == CurrAccCode);
         }
 
-        public DcCurrAcc SelectSalesManByBonusCard(string salesman)
+        public DcCurrAcc SelectSalesManByIdentityCard(string salesman)
         {
             using subContext db = new();
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
@@ -2010,6 +2026,14 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.SettingStores.FirstOrDefault(x => x.StoreCode == StoreCode);
+        }
+
+        public DcLoyaltyCard SelectLoyalityCard(string loaltyCardNumb)
+        {
+            using subContext db = new();
+            return db.DcLoyaltyCards
+                                .Include(x => x.LoyaltyProgram)
+                                .FirstOrDefault(x => x.CardNumber == loaltyCardNumb);
         }
     }
 }
