@@ -177,7 +177,7 @@ namespace Foxoft
                         List<TrInvoiceLine> returnLines = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
                         gC_ReturnInvoiceLine.DataSource = returnLines;
 
-                        gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+                        gC_InvoiceLine.DataSource = efMethods.SelectReturnLineVMs(trInvoiceHeader.InvoiceHeaderId);
                     }
                 }
             }

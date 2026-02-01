@@ -127,7 +127,8 @@ namespace Foxoft
             var cts = _cts;                    // capture for this run
             var mySeq = Interlocked.Increment(ref _loadSeq);
 
-            ResetAll();
+            _index.Clear();
+            _master.Clear();
 
             try
             {
@@ -153,22 +154,8 @@ namespace Foxoft
             }
             finally
             {
-                // only touch UI if this run is still current
-                if (ReferenceEquals(cts, _cts) && gvMaster.RowCount > 0)
-                {
-                    gvMaster.FocusedRowHandle = 0;
-                    gvMaster.SetMasterRowExpanded(0, true);
-                }
             }
         }
-
-
-        private void ResetAll()
-        {
-            _index.Clear();
-            _master.Clear();
-        }
-
 
         private void AddRowToUI(DeliveryVM.Line line)
         {
