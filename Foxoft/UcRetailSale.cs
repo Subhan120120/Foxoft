@@ -530,63 +530,61 @@ namespace Foxoft
             txtEdit_Barcode.Focus();
         }
 
-        private void btn_Payment_Click(object sender, EventArgs e)
+        private async void btn_Payment_Click(object sender, EventArgs e)
         {
-            decimal summaryNetAmount = Convert.ToDecimal(
-                gV_InvoiceLine.Columns[nameof(TrInvoiceLine.NetAmount)].SummaryItem.SummaryValue);
+            var summaryValue = gV_InvoiceLine.Columns[nameof(TrInvoiceLine.NetAmount)]
+                .SummaryItem?.SummaryValue;
 
-            if (summaryNetAmount > 0)
-            {
-                PaymentType paymentType = 0;
+            decimal summaryNetAmount = summaryValue == null
+                ? 0m
+                : Convert.ToDecimal(summaryValue);
 
-                SimpleButton simpleButton = sender as SimpleButton;
-                switch (simpleButton.Name)
-                {
-                    case "btn_Cash":
-                        paymentType = PaymentType.Cash;
-                        break;
-                    case "btn_Cashless":
-                        paymentType = PaymentType.Cashless;
-                        break;
-                    case "btn_CustomerBonus":
-                        paymentType = PaymentType.Bonus;
-                        break;
-                    default:
-                        break;
-                }
-
-                using (FormPayment formPayment = new(paymentType, summaryNetAmount, trInvoiceHeader, new[] { PaymentType.Cash, PaymentType.Cashless, PaymentType.Bonus, PaymentType.Commission }, loyaltyCard))
-                {
-                    if (formPayment.ShowDialog(this) == DialogResult.OK)
-                    {
-                        efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-
-                        if (Settings.Default.AppSetting.AutoPrint == true)
-                        {
-                            string fileName = "Report_Embedded_InvoiceReport.repx";
-
-                            ReportPrintTool printTool = new(
-                                reportClass.CreateReport(
-                                    efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId),
-                                    fileName));
-                            printTool.Print();
-                        }
-
-                        CalcPaidAmount();
-
-                        ClearControlsAddNew();
-                    }
-                }
-            }
-            else
+            if (summaryNetAmount <= 0)
             {
                 XtraMessageBox.Show(
                     Resources.Form_RetailSale_PaymentZero,
                     Resources.Common_Attention,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+                return;
             }
+
+            if (sender is not SimpleButton simpleButton)
+                return;
+
+            var paymentType = simpleButton.Name switch
+            {
+                "btn_Cash" => PaymentType.Cash,
+                "btn_Cashless" => PaymentType.Cashless,
+                "btn_CustomerBonus" => PaymentType.Bonus,
+                _ => default(PaymentType)     // or: _ => (PaymentType)0
+            };
+
+            using var formPayment = new FormPayment(
+                paymentType,
+                summaryNetAmount,
+                trInvoiceHeader,
+                new[] { PaymentType.Cash, PaymentType.Cashless, PaymentType.Bonus, PaymentType.Commission },
+                loyaltyCard);
+
+            if (formPayment.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+
+            if (Settings.Default.AppSetting.AutoPrint)
+            {
+                string printerName = string.IsNullOrWhiteSpace(settingStore.PrinterName)
+                    ? new PrinterSettings().PrinterName
+                    : settingStore.PrinterName;
+
+                await PrintFast(printerName);
+            }
+
+            CalcPaidAmount();
+            ClearControlsAddNew();
         }
+
 
         private void btn_CustomerAdd_Click(object sender, EventArgs e)
         {
@@ -799,23 +797,6 @@ namespace Foxoft
             }
 
             reportClass.ShowReport(dcReport, "");
-        }
-
-        private void ShowReportForm(DcReport dcReport, string filter, string activeFilterStr)
-        {
-            if (dcReport.ReportTypeId == 1)
-            {
-                FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
-                formGrid.Show();
-            }
-            else if (dcReport.ReportTypeId == 2)
-            {
-                FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport)
-                {
-                    WindowState = FormWindowState.Maximized
-                };
-                form.Show();
-            }
         }
 
         private void btn_ReportZ_Click(object sender, EventArgs e)

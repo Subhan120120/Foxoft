@@ -658,24 +658,15 @@ namespace Foxoft
 
         private void ProductDescTextEdit_Validating(object sender, CancelEventArgs e)
         {
-            e.Cancel = false; // <-- important: keep it valid (do not block)
+            //if (string.IsNullOrEmpty(ProductDescTextEdit.Text)) return;
 
-            var name = ProductDescTextEdit.Text?.Trim();
-
-            // clear only THIS control (ClearErrors clears all controls)
-            dxErrorProvider1.SetError(ProductDescTextEdit, string.Empty);
-
-            if (string.IsNullOrWhiteSpace(name)) return;
-
-            if (efMethods.ProductExistByNameExceptProduct(name, dcProduct.ProductCode))
-            {
-                // notify only
-                dxErrorProvider1.SetError(
-                    ProductDescTextEdit,
-                    Resources.Form_Product_Validation_ProductNameExists,
-                    ErrorType.Information); // or ErrorType.Warning
-            }
+            //if (efMethods.ProductExistByNameExceptProduct(ProductDescTextEdit.Text, dcProduct.ProductCode))
+            //    dxErrorProvider1.(
+            //        ProductDescTextEdit,
+            //        Resources.Form_Product_Validation_ProductNameExists,
+            //        ErrorType.Information);
+            //else
+            //    dxErrorProvider1.ClearErrors();
         }
-
     }
 }

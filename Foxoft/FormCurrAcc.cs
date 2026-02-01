@@ -156,18 +156,18 @@ namespace Foxoft
 
         private void PhoneNumTextEdit_Validating(object sender, CancelEventArgs e)
         {
-            var te = (TextEdit)sender;
-            var before = te.Text;
-            var after = PhoneNumberFormat.FormatIntlPhone(before);
-            te.Text = after;
+            //var te = (TextEdit)sender;
+            //var before = te.Text;
+            //var after = PhoneNumberFormat.FormatIntlPhone(before);
+            //te.Text = after;
 
-            if (!string.IsNullOrEmpty(te.Text))
-            {
-                if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(te.Text, dcCurrAcc.CurrAccCode))
-                    dxErrorProvider1.SetError(PhoneNumTextEdit, Resources.Validation_Phone_ExistsInAnotherCurrAcc, ErrorType.Information);
-                else
-                    dxErrorProvider1.ClearErrors();
-            }
+            //if (!string.IsNullOrEmpty(te.Text))
+            //{
+            //    if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(te.Text, dcCurrAcc.CurrAccCode))
+            //        dxErrorProvider1.SetError(PhoneNumTextEdit, Resources.Validation_Phone_ExistsInAnotherCurrAcc, ErrorType.Information);
+            //    else
+            //        dxErrorProvider1.ClearErrors();
+            //}
         }
 
         private void PhoneNumTextEdit_EditValueChanged(object sender, EventArgs e)
