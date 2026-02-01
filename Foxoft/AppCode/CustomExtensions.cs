@@ -26,10 +26,6 @@ namespace Foxoft
                 BaseEdit baseEdit = ctrl as BaseEdit;
                 if (baseEdit != null)
                 {
-                    //baseEdit.IsModified = true;
-
-                    //baseEdit.DoValidate(); 
-
                     string error = baseEdit.ErrorText;
 
                     if (error != string.Empty)
