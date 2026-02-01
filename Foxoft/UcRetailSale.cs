@@ -54,6 +54,11 @@ namespace Foxoft
                 btn_Payment_Click(btn_Cash, EventArgs.Empty);
                 return true; // shortcut handled
             }
+            if (keyData == Keys.F3)
+            {
+                btn_Payment_Click(btn_Cashless, EventArgs.Empty);
+                return true; // shortcut handled
+            }
 
             // istəyirsənsə digər payment-lər də:
             // if (keyData == Keys.F3) { btn_Cashless.PerformClick(); return true; }
