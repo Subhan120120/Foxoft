@@ -150,7 +150,7 @@ namespace Foxoft
                 case "CountOut": ShowNewForm<FormInvoice>("CO", false, new byte[] { 1 }, null); break;
                 case "InventoryTransfer": ShowNewForm<FormInvoice>("IT", false, new byte[] { 1 }, null); break;
 
-                case "PurchaseReturnCustom": ShowNewForm<FormInvoice>("RP", true, new byte[] { 1, 3 }, null); break;
+                case "RetailPurchaseReturnCustom": ShowNewForm<FormInvoice>("RP", true, new byte[] { 1, 3 }, null); break;
                 case "RetailsaleReturnCustom": ShowNewForm<FormInvoice>("RS", true, new byte[] { 1, 3 }, null); break;
                 case "WholesaleReturnCustom": ShowNewForm<FormInvoice>("WS", true, new byte[] { 1, 3 }, null); break;
                 case "InstallmentSaleReturnCustom": ShowNewForm<FormInvoice>("IS", true, new byte[] { 1, 3 }, null); break;
@@ -229,7 +229,7 @@ namespace Foxoft
             this.aCE_WholesaleReturn.Name = "WholesaleReturn";
             this.ACE_InstallmentSaleReturn.Name = "InstallmentSaleReturn";
 
-            this.ACE_RetailPurchaseReturnCustom.Name = "PurchaseReturnCustom";
+            this.ACE_RetailPurchaseReturnCustom.Name = "RetailPurchaseReturnCustom";
             this.ACE_RetailsaleReturnCustom.Name = "RetailsaleReturnCustom";
             this.ACE_WholesaleReturnCustom.Name = "WholesaleReturnCustom";
             this.ACE_InstallmentSaleReturnCustom.Name = "InstallmentSaleReturnCustom";

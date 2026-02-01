@@ -47,6 +47,20 @@ namespace Foxoft
 
             InitializeResourseName();
         }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.F2)
+            {
+                btn_Payment_Click(btn_Cash, EventArgs.Empty);
+                return true; // shortcut handled
+            }
+
+            // istəyirsənsə digər payment-lər də:
+            // if (keyData == Keys.F3) { btn_Cashless.PerformClick(); return true; }
+            // if (keyData == Keys.F4) { btn_CustomerBonus.PerformClick(); return true; }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         private void InitializeResourseName()
         {

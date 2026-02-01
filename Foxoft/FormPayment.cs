@@ -217,7 +217,6 @@ namespace Foxoft
             dcPaymentMethod = efMethods.SelectEntityById<DcPaymentMethod>(Convert.ToInt32(lUE_PaymentMethod.EditValue));
             trPaymentLineCashless.PaymentMethodId = dcPaymentMethod.PaymentMethodId;
 
-            btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
 
             bool isRedirected = dcPaymentMethod.IsRedirected;
 
@@ -229,11 +228,11 @@ namespace Foxoft
             }
             else
             {
-                string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
-                if (!String.IsNullOrEmpty(cashReg))
-                {
-                    btnEdit_BankAccout.EditValue = cashReg;
-                }
+                string cashReg = dcPaymentMethod.DefaultCashRegCode;
+                if (String.IsNullOrEmpty(cashReg))
+                    cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
+
+                btnEdit_BankAccout.EditValue = cashReg;
             }
 
             var paymentPlans = efMethods.SelectPaymentPlans(dcPaymentMethod.PaymentMethodId);

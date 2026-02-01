@@ -181,9 +181,10 @@ namespace Foxoft
             Controls.Add(barDockControlBottom);
             Controls.Add(barDockControlTop);
             Controls.Add(toolbarFormControl1);
+            KeyPreview = true;
             Name = "FormPOS";
-            ToolbarFormControl = toolbarFormControl1;
             Text = Resources.Form_POS_Caption;
+            ToolbarFormControl = toolbarFormControl1;
             WindowState = FormWindowState.Maximized;
             Load += FormPOS_Load;
             ((ISupportInitialize)toolbarFormControl1).EndInit();
