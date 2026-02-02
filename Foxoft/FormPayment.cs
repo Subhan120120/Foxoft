@@ -4,6 +4,7 @@ using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
 namespace Foxoft
@@ -357,7 +358,7 @@ namespace Foxoft
             txtEdit_Bonus.DoValidate();
         }
 
-        private void textEditBonus_Validating(object sender, CancelEventArgs e)
+        private async void textEditBonus_Validating(object sender, CancelEventArgs e)
         {
             if (dcLoyaltyCard is null)
             {
@@ -378,7 +379,9 @@ namespace Foxoft
             if (trInvoiceHeader == null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
                 return;
 
-            decimal availableBonus = efMethods.SelectPaymentLinesBonusSumByInvoice(dcLoyaltyCard);
+            //decimal availableBonus = efMethods.SelectPaymentLinesBonusSumByInvoice(dcLoyaltyCard);
+
+            decimal availableBonus = await efMethods.GetLoyaltyBalanceAsync(dcLoyaltyCard.LoyaltyCardId);
 
             if (trPaymentLineBonus.Payment > availableBonus)
                 e.Cancel = true;
@@ -529,7 +532,7 @@ namespace Foxoft
                 // ✅ BONUS (yeni)
                 if (trPaymentLineBonus.PaymentLoc > 0)
                 {
-                    InsertBonusRedeemToLoyaltyTxn();
+                    SyncLoyaltySpend(trPaymentHeader.PaymentHeaderId);
                 }
 
             }
@@ -562,6 +565,39 @@ namespace Foxoft
 
             efMethods.InsertEntity(txn);
             efMethods.InsertEntity(trPaymentLineBonus);
+        }
+
+        private void SyncLoyaltySpend(Guid paymentHeaderId)
+        {
+            subContext db = new subContext();
+
+            if (paymentHeaderId == Guid.Empty) return;
+            if (dcLoyaltyCard == null) return;
+
+            var txn = db.TrLoyaltyTxns
+                .FirstOrDefault(x =>
+                    x.PaymentHeaderId == paymentHeaderId &&
+                    x.LoyaltyCardId == dcLoyaltyCard.LoyaltyCardId &&
+                    x.TxnType == LoyaltyTxnType.Redeem);
+
+            if (txn == null)
+            {
+                txn = new TrLoyaltyTxn
+                {
+                    LoyaltyTxnId = Guid.NewGuid(),
+                    LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId,
+                    CurrAccCode = trInvoiceHeader.CurrAccCode,
+                    PaymentHeaderId = paymentHeaderId,
+                    InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId, // istəsən saxla
+                    CreatedUserName = Authorization.CurrAccCode,
+                    DocumentDate = DateTime.Now,
+                    TxnType = isNegativ ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Redeem,
+                    Note = $"Payment (Bonus) for Invoice: {trInvoiceHeader.DocumentNumber}"
+                };
+
+                efMethods.InsertEntity(txn);
+                efMethods.InsertEntity(trPaymentLineBonus);
+            }
         }
 
 

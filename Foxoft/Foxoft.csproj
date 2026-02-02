@@ -290,6 +290,7 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
+		<EmbeddedResource Include="AppCode\Report\Report_Grid_LoyaltyLedger.sql" />
 		<EmbeddedResource Include="AppCode\Report\Report_Detail_ProductCard.sql" />
 		<EmbeddedResource Include="AppCode\Report\Report_Embedded_BarcodeOperation.sql" />
 		<EmbeddedResource Include="AppCode\Report\Report_Embedded_Barcode.sql" />

@@ -15,6 +15,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -1226,6 +1227,44 @@ namespace Foxoft
 
             return invoiceSum - paymentSum;
         }
+
+        public async Task<decimal> GetLoyaltyBalanceAsync(Guid loyaltyCardId, CancellationToken ct = default)
+        {
+            using subContext db = new();
+            var result = await (
+                from lc in db.DcLoyaltyCards.AsNoTracking()
+                where lc.LoyaltyCardId == loyaltyCardId
+                let earnPercent = (decimal?)(lc.LoyaltyProgram.EarnPercent) ?? 0m
+
+                // SUM(il.NetAmountLoc)
+                let invoiceNetSum =
+                    (
+                        from lt in db.TrLoyaltyTxns.AsNoTracking()
+                        where lt.LoyaltyCardId == lc.LoyaltyCardId && lt.InvoiceHeaderId != null
+                        join il in db.TrInvoiceLines.AsNoTracking()
+                            on lt.InvoiceHeaderId equals il.InvoiceHeaderId
+                        select (decimal?)il.NetAmountLoc
+                    ).Sum() ?? 0m
+
+                // SUM(ISNULL(pl.PaymentLoc,0)) with pl.PaymentTypeCode = 3
+                let bonusPaymentSum =
+                    (
+                        from lt in db.TrLoyaltyTxns.AsNoTracking()
+                        where lt.LoyaltyCardId == lc.LoyaltyCardId && lt.PaymentHeaderId != null
+                        join pl in db.TrPaymentLines.AsNoTracking().Where(x => x.PaymentTypeCode == PaymentType.Bonus)
+                            on lt.PaymentHeaderId equals pl.PaymentHeaderId
+                        select (decimal?)pl.PaymentLoc
+                    ).Sum() ?? 0m
+
+                select (invoiceNetSum * earnPercent / 100m) - bonusPaymentSum
+            ).SingleOrDefaultAsync(ct);
+
+            return result; // kart tapılmazsa 0 qaytarır
+        }
+
+
+
+
 
         public decimal SelectCustomerBonusBalance(string currAccCode)
         {

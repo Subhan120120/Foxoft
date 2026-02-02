@@ -196,6 +196,8 @@ namespace Foxoft
                                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
+            loyaltyCard = null;
+
             LoadCurrAcc();
 
             CalcPaidAmount();
@@ -227,7 +229,18 @@ namespace Foxoft
 
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
+            GetLoyaltyCard(InvoiceHeaderId);
+
+            SyncLoyaltyEarn(trInvoiceHeader);
+
             SplashScreenManager.CloseForm(false);
+        }
+
+        private void GetLoyaltyCard(Guid InvoiceHeaderId)
+        {
+            var loyaltyCard = dbContext.TrLoyaltyTxns
+                .Include(x => x.DcLoyaltyCard)
+                .FirstOrDefault(x => x.InvoiceHeaderId == InvoiceHeaderId && x.LoyaltyCardId != null).DcLoyaltyCard;
         }
 
         private void LoadCurrAcc()
@@ -589,7 +602,10 @@ namespace Foxoft
             if (formPayment.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+            trInvoiceHeader.IsCompleted = true;
+
+            SyncLoyaltyEarn(trInvoiceHeader);
+
 
             if (Settings.Default.AppSetting.AutoPrint)
             {
@@ -649,6 +665,13 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
+                    if (loyaltyCard != null && !string.Equals(loyaltyCard.CurrAccCode, form.dcCurrAcc.CurrAccCode, StringComparison.OrdinalIgnoreCase))
+                    {
+                        loyaltyCard = null;
+                        RemoveLoyaltyLinksAll(trInvoiceHeader.InvoiceHeaderId);
+                        XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
+                    }
+
                     trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
 
                     SaveInvoice();
@@ -656,6 +679,16 @@ namespace Foxoft
                     LoadCurrAcc();
                 }
             }
+        }
+
+        private void RemoveLoyaltyLinksAll(Guid invoiceHeaderId)
+        {
+            var txns = dbContext.TrLoyaltyTxns
+                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                .ToList();
+
+            if (txns.Count > 0)
+                dbContext.RemoveRange(txns);
         }
 
         private void gC_Sale_DoubleClick(object sender, EventArgs e)
@@ -1052,62 +1085,57 @@ namespace Foxoft
         private void SaveInvoice()
         {
             dbContext.SaveChanges(Authorization.CurrAccCode);
-
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-
-            // ✅ Bonus qazanma ledger-i (Earn) yaradılır / update olunur / silinir
-            SyncLoyaltyEarn(trInvoiceHeader);
-
-            dbContext.SaveChanges(Authorization.CurrAccCode);
-
             Tag = trInvoiceHeader.DocumentNumber;
         }
+
 
         private void SyncLoyaltyEarn(TrInvoiceHeader inv)
         {
             if (inv == null || inv.InvoiceHeaderId == Guid.Empty)
                 return;
 
-            if (loyaltyCard is null)
-                return;
-
-            // Bonus yalnız müştəri olan satışlarda
-            if (string.IsNullOrWhiteSpace(inv.CurrAccCode))
+            if (loyaltyCard == null)
             {
                 RemoveEarnTxn(inv.InvoiceHeaderId);
                 return;
             }
 
-            // ✅ Burada öz qaydanı qoy:
-            // məsələn yalnız satış (return deyil) üçün qazanılsın.
-            // Return invoice-larda adətən bonus qazanılmır, əksinə əvvəl qazanılan geri alınır.
+            // Invoice tamamlanmayıbsa bonus da yazılmasın
+            if (inv.IsCompleted != true || inv.IsSuspended == true)
+            {
+                RemoveEarnTxn(inv.InvoiceHeaderId);
+                return;
+            }
+
+            var program = loyaltyCard.LoyaltyProgram;
+            var earnPercent = program?.EarnPercent ?? 0m;
+
+            if (earnPercent <= 0m)
+            {
+                RemoveEarnTxn(inv.InvoiceHeaderId);
+                return;
+            }
+
+            // NetAmountLoc-u grid-dən yox, context-dən götürmək daha sağlamdır
+            decimal netLoc = dbContext.TrInvoiceLines.Local
+                .Where(x => x.InvoiceHeaderId == inv.InvoiceHeaderId)
+                .Sum(x => (decimal?)x.NetAmountLoc) ?? 0m;
+
+            if (netLoc == 0m)
+            {
+                RemoveEarnTxn(inv.InvoiceHeaderId);
+                return;
+            }
+
             bool isReturn = inv.IsReturn == true;
+            var txnType = isReturn ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Earn;
 
-            decimal earnPercent = loyaltyCard.LoyaltyProgram.EarnPercent;
-            if (earnPercent <= 0)
-            {
-                RemoveEarnTxn(inv.InvoiceHeaderId);
-                return;
-            }
-
-            decimal summaryNetAmount = Convert.ToDecimal(
-                gV_InvoiceLine.Columns[nameof(TrInvoiceLine.NetAmount)].SummaryItem.SummaryValue);
-
-            decimal baseLoc = Math.Abs(summaryNetAmount);
-            decimal earnLoc = Math.Round(baseLoc * earnPercent / 100m, 2);
-            if (earnLoc <= 0)
-            {
-                RemoveEarnTxn(inv.InvoiceHeaderId);
-                return;
-            }
-
-            // Return-dursa: əvvəl qazanılan bonusu geri al (mənfi yaz)
-            LoyaltyTxnType txnType = isReturn ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Earn;
-
-            // ✅ Eyni invoice üçün Earn/Reverse təkrar yazılmasın deyə "sync" edirik
             var txn = dbContext.Set<TrLoyaltyTxn>()
-                .FirstOrDefault(x => x.InvoiceHeaderId == inv.InvoiceHeaderId
-                                     && (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
+                .FirstOrDefault(x =>
+                    x.InvoiceHeaderId == inv.InvoiceHeaderId &&
+                    x.LoyaltyCardId == loyaltyCard.LoyaltyCardId &&
+                    (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
 
             if (txn == null)
             {
@@ -1115,31 +1143,30 @@ namespace Foxoft
                 {
                     LoyaltyTxnId = Guid.NewGuid(),
                     InvoiceHeaderId = inv.InvoiceHeaderId,
-                    CurrAccCode = inv.CurrAccCode,
                     LoyaltyCardId = loyaltyCard.LoyaltyCardId,
+                    CurrAccCode = inv.CurrAccCode,
                     CreatedUserName = Authorization.CurrAccCode,
                     DocumentDate = inv.DocumentDate,
+                    TxnType = txnType,
+                    Note = $"Invoice: {inv.DocumentNumber}"
                 };
                 dbContext.Set<TrLoyaltyTxn>().Add(txn);
             }
-
-            txn.TxnType = txnType;
-            txn.Note = $"Invoice: {inv.DocumentNumber}";
-
-            // İstəsən expireni də burada qoy:
-            // txn.ExpireAt = DateTime.Today.AddDays(Settings.Default.AppSetting.BonusExpireDays);
         }
 
         private void RemoveEarnTxn(Guid invoiceHeaderId)
         {
+            if (loyaltyCard == null) return;
+
             var txn = dbContext.Set<TrLoyaltyTxn>()
-                .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId
-                                     && (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
+                .FirstOrDefault(x =>
+                    x.InvoiceHeaderId == invoiceHeaderId &&
+                    x.LoyaltyCardId == loyaltyCard.LoyaltyCardId &&
+                    (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
 
             if (txn != null)
                 dbContext.Set<TrLoyaltyTxn>().Remove(txn);
         }
-
 
         private void Btn_NewInvoice_Click(object sender, EventArgs e)
         {
@@ -1161,6 +1188,8 @@ namespace Foxoft
                 trInvoiceHeader = form.trInvoiceHeader;
 
                 LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+
+                LoadCurrAcc();
             }
         }
 

@@ -858,7 +858,8 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 18, ReportTypeId = 2, ReportCategoryId = 3, ReportName = "Məhsul Kartı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 19, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Məhsul Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductBalanceSerialNumber.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 20, ReportTypeId = 1, ReportCategoryId = 1, ReportName = "Alacaqlar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Receivables.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 21, ReportTypeId = 1, ReportCategoryId = 2, ReportName = "Verəcəklər", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Payables.sql"), ReportLayout = "" }
+                new DcReport { ReportId = 21, ReportTypeId = 1, ReportCategoryId = 2, ReportName = "Verəcəklər", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Payables.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 22, ReportTypeId = 1, ReportCategoryId = 2, ReportName = "Bonus Jurnalı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_LoyaltyLedger.sql"), ReportLayout = "" }
                // reportlarin layoutlarin FormLogin de duzelt
                );
 
