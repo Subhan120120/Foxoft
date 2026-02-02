@@ -51,12 +51,12 @@ namespace Foxoft
         {
             if (keyData == Keys.F2)
             {
-                btn_Payment_Click(btn_Cash, EventArgs.Empty);
+                btn_ProductSearch_Click(btn_ProductSearch, EventArgs.Empty);
                 return true; // shortcut handled
             }
             if (keyData == Keys.F3)
             {
-                btn_Payment_Click(btn_Cashless, EventArgs.Empty);
+                btn_Payment_Click(btn_Cash, EventArgs.Empty);
                 return true; // shortcut handled
             }
 
