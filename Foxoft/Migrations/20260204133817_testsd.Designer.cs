@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260204133817_testsd")]
+    partial class testsd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2680,7 +2683,7 @@ namespace Foxoft.Migrations
                             ReportCategoryId = 2,
                             ReportLayout = "",
                             ReportName = "Bonus Jurnalı",
-                            ReportQuery = "SELECT\r\n      lt.LoyaltyTxnId\r\n    , lt.TxnType\r\n    , ih.DocumentNumber AS InvoiceDocumentNumber\r\n    , ph.DocumentNumber AS PaymentDocumentNumber\r\n    , Faiz       = ISNULL(inv.NetAmountLoc, 0) * lp.EarnPercent / 100\r\n    , NetAmountLoc= ISNULL(inv.NetAmountLoc, 0)\r\n    , Balance    = (ISNULL(inv.NetAmountLoc, 0) * lp.EarnPercent / 100) - ISNULL(pay.PaymentLoc, 0)\r\n    , PaymentLoc = ISNULL(pay.PaymentLoc, 0)\r\n    , lt.Note\r\n    , lt.InvoiceHeaderId\r\n    , lt.PaymentHeaderId\r\nFROM TrLoyaltyTxns lt\r\nJOIN DcLoyaltyCards lc\r\n    ON lc.LoyaltyCardId = lt.LoyaltyCardId\r\nJOIN DcLoyaltyPrograms lp\r\n    ON lp.LoyaltyProgramId = lc.LoyaltyProgramId\r\nLEFT JOIN TrInvoiceHeaders ih\r\n    ON ih.InvoiceHeaderId = lt.InvoiceHeaderId\r\nLEFT JOIN TrPaymentHeaders ph\r\n    ON ph.PaymentHeaderId = lt.PaymentHeaderId\r\n\r\nOUTER APPLY\r\n(\r\n    SELECT SUM(il.NetAmountLoc) AS NetAmountLoc\r\n    FROM TrInvoiceLines il\r\n    WHERE il.InvoiceHeaderId = lt.InvoiceHeaderId\r\n) inv\r\n\r\nOUTER APPLY\r\n(\r\n    SELECT SUM(pl.PaymentLoc) AS PaymentLoc\r\n    FROM TrPaymentLines pl\r\n    WHERE pl.PaymentHeaderId = lt.PaymentHeaderId\r\n    -- Əgər yalnız Bonus ödənişi toplamalıdırsa, aşağıdakı sətri aç:\r\n    -- AND pl.PaymentTypeCode = 3\r\n) pay;\r\n",
+                            ReportQuery = "\r\n\r\n\r\nselect  lt.LoyaltyTxnId\r\n, TxnType\r\n, PaymentTypeCode\r\n, ih.DocumentNumber\r\n, ph.DocumentNumber\r\n, Faiz = NetAmountLoc * EarnPercent / 100\r\n, NetAmountLoc\r\n, Balance = (NetAmountLoc * EarnPercent / 100) - ISNULL(PaymentLoc, 0)\r\n, PaymentLoc\r\n\r\nfrom TrLoyaltyTxns lt\r\njoin DcLoyaltyCards lc on lc.LoyaltyCardId = lt.LoyaltyCardId\r\njoin DcLoyaltyPrograms lp on lp.LoyaltyProgramId = lc.LoyaltyProgramId\r\nleft join TrInvoiceHeaders ih on ih.InvoiceHeaderId = lt.InvoiceHeaderId\r\nleft join TrInvoiceLines il on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\nleft join TrPaymentHeaders ph on ph.PaymentHeaderId = lt.PaymentHeaderId\r\nleft join TrPaymentLines pl on pl.PaymentHeaderId = ph.PaymentHeaderId",
                             ReportTypeId = (byte)1
                         });
                 });
@@ -3929,14 +3932,6 @@ namespace Foxoft.Migrations
                             ClaimCode = "PayrollList",
                             CategoryId = 9,
                             ClaimDesc = "Əməkhaqqı Siyahısı",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
-                        },
-                        new
-                        {
-                            ClaimCode = "LoyaltyCards",
-                            CategoryId = 9,
-                            ClaimDesc = "Bonus Kartlar",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         });
@@ -5857,7 +5852,9 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("CurrAccCode");
 
-                    b.HasIndex("InvoiceHeaderId");
+                    b.HasIndex("InvoiceHeaderId")
+                        .IsUnique()
+                        .HasFilter("[InvoiceHeaderId] IS NOT NULL");
 
                     b.HasIndex("PaymentHeaderId");
 
@@ -7279,8 +7276,8 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
-                        .WithMany("TrLoyaltyTxns")
-                        .HasForeignKey("InvoiceHeaderId")
+                        .WithOne("TrLoyaltyTxn")
+                        .HasForeignKey("Foxoft.Models.TrLoyaltyTxn", "InvoiceHeaderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Foxoft.Models.DcLoyaltyCard", "DcLoyaltyCard")
@@ -7914,7 +7911,8 @@ namespace Foxoft.Migrations
 
                     b.Navigation("TrInvoiceLines");
 
-                    b.Navigation("TrLoyaltyTxns");
+                    b.Navigation("TrLoyaltyTxn")
+                        .IsRequired();
 
                     b.Navigation("TrPaymentHeaders");
                 });

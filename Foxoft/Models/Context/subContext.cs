@@ -541,6 +541,12 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<TrLoyaltyTxn>(entity =>
+            {
+                entity.HasOne(x => x.TrInvoiceHeader)
+                    .WithMany(x => x.TrLoyaltyTxns)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity<DcDepartment>()
                 .HasOne(x => x.ParentDepartment)
@@ -741,7 +747,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ChangePriceCN", ClaimDesc = "Sayım Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "ChangePriceCI", ClaimDesc = "Sayım Artırma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
-                new DcClaim { ClaimCode = "PayrollList", ClaimDesc = "Əməkhaqqı Siyahısı", ClaimTypeId = 1, CategoryId = 9 }
+                new DcClaim { ClaimCode = "PayrollList", ClaimDesc = "Əməkhaqqı Siyahısı", ClaimTypeId = 1, CategoryId = 9 },
+                new DcClaim { ClaimCode = "LoyaltyCards", ClaimDesc = "Bonus Kartlar", ClaimTypeId = 1, CategoryId = 19 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(

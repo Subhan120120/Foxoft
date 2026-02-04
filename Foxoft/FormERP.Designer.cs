@@ -116,6 +116,7 @@ namespace Foxoft
             ACE_ProductDiscounts = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_ProductFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CurrAccFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_PayrollList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -123,7 +124,7 @@ namespace Foxoft
             ACE_WarehouseList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_AppSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_PayrollList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_LoyaltyCards = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -636,7 +637,7 @@ namespace Foxoft
             // 
             // aCE_Operation
             // 
-            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_PayrollList });
+            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_PayrollList, ACE_LoyaltyCards });
             aCE_Operation.Expanded = true;
             aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
             aCE_Operation.Name = "aCE_Operation";
@@ -688,6 +689,13 @@ namespace Foxoft
             ACE_CurrAccFeatureType.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_CurrAccFeatureType.Text = Resources.ERP_ACE_CurrAccFeatureType;
             // 
+            // ACE_PayrollList
+            // 
+            ACE_PayrollList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollList.ImageOptions.SvgImage");
+            ACE_PayrollList.Name = "ACE_PayrollList";
+            ACE_PayrollList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PayrollList.Text = "PayrollList";
+            // 
             // aCE_Reports
             // 
             aCE_Reports.Expanded = true;
@@ -735,12 +743,12 @@ namespace Foxoft
             ACE_AppSettings.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_AppSettings.Text = Resources.ERP_ACE_AppSettings;
             // 
-            // ACE_PayrollList
+            // ACE_LoyaltyCards
             // 
-            ACE_PayrollList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement1.ImageOptions.SvgImage");
-            ACE_PayrollList.Name = "ACE_PayrollList";
-            ACE_PayrollList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_PayrollList.Text = "Element1";
+            ACE_LoyaltyCards.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement1.ImageOptions.SvgImage");
+            ACE_LoyaltyCards.Name = "ACE_LoyaltyCards";
+            ACE_LoyaltyCards.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_LoyaltyCards.Text = "Bonus Kartlar";
             // 
             // FormERP
             // 
@@ -864,5 +872,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_BarcodeOperations;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator11;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PayrollList;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_LoyaltyCards;
     }
 }

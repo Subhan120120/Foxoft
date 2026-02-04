@@ -88,8 +88,10 @@ namespace Foxoft
             lCG_CustomerBonus.Visibility = paymentTypes.Contains(PaymentType.Bonus) ? LayoutVisibility.Always : LayoutVisibility.Never;
 
             dcLoyaltyCard = loyaltyCard;
-            if (dcLoyaltyCard != null  && dcLoyaltyCard.LoyaltyCardId != Guid.Empty)
-                availableBonus = efMethods.GetLoyaltyBalanceAsync(dcLoyaltyCard.LoyaltyCardId);
+
+            if (dcLoyaltyCard != null)
+                availableBonus = efMethods.SelectLoyaltyBonusBalance(dcLoyaltyCard.LoyaltyCardId, trInvoiceHeader.InvoiceHeaderId);
+
             txtEdit_LoyaltyBalance.EditValue = availableBonus;
         }
 
@@ -379,15 +381,14 @@ namespace Foxoft
             if (trInvoiceHeader == null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
                 return;
 
-            //decimal availableBonus = efMethods.SelectPaymentLinesBonusSumByInvoice(dcLoyaltyCard);
-
-
             if (trPaymentLineBonus.Payment > availableBonus)
                 e.Cancel = true;
         }
 
         private void textEditBonus_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
+            e.ErrorText = "Bonus Balansı Kifayət Deyil.";
+            e.ExceptionMode = ExceptionMode.DisplayError;
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
@@ -539,33 +540,6 @@ namespace Foxoft
             DialogResult = DialogResult.OK;
         }
 
-        private void InsertBonusRedeemToLoyaltyTxn()
-        {
-            decimal bonusLoc = trPaymentLineBonus.PaymentLoc;
-            if (bonusLoc <= 0) return;
-
-            var txn = new TrLoyaltyTxn
-            {
-                LoyaltyTxnId = Guid.NewGuid(),
-                CurrAccCode = trPaymentHeader.CurrAccCode,
-                InvoiceHeaderId = trPaymentHeader.InvoiceHeaderId,
-                PaymentHeaderId = trPaymentHeader.PaymentHeaderId,
-                LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId,
-                // satışda bonus xərclənir -> mənfi
-                // return/refund-da geri qaytarılır -> müsbət (Reverse)
-                TxnType = isNegativ ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Redeem,
-                //Amount = isNegativ ? bonusLoc : -bonusLoc,
-                DocumentDate = trPaymentHeader.DocumentDate,
-
-                CreatedUserName = trPaymentHeader.CreatedUserName,
-
-                Note = TxtEdit_Description.EditValue?.ToString()
-            };
-
-            efMethods.InsertEntity(txn);
-            efMethods.InsertEntity(trPaymentLineBonus);
-        }
-
         private void SyncLoyaltySpend(Guid paymentHeaderId)
         {
             subContext db = new subContext();
@@ -589,7 +563,7 @@ namespace Foxoft
                     PaymentHeaderId = paymentHeaderId,
                     InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId, // istəsən saxla
                     CreatedUserName = Authorization.CurrAccCode,
-                    Amount = isNegativ ? -trPaymentLineBonus.PaymentLoc : trPaymentLineBonus.PaymentLoc,
+                    Amount = isNegativ ? trPaymentLineBonus.PaymentLoc : -trPaymentLineBonus.PaymentLoc,
                     DocumentDate = DateTime.Now,
                     TxnType = isNegativ ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Redeem,
                     Note = $"Payment (Bonus) for Invoice: {trInvoiceHeader.DocumentNumber}"

@@ -30,6 +30,6 @@ namespace Foxoft.Models
         [StringLength(200)]
         public string Note { get; set; }
 
-        public virtual ICollection<DcLoyaltyCard> Cards { get; set; } = new HashSet<DcLoyaltyCard>();
+        public virtual ICollection<DcLoyaltyCard> DcLoyaltyCards { get; set; } = new HashSet<DcLoyaltyCard>();
     }
 }

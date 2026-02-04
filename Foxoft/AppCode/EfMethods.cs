@@ -1233,19 +1233,19 @@ namespace Foxoft
             using subContext db = new();
 
             return db.TrLoyaltyTxns
-                .Include(x => x.DcLoyaltyCard).ThenInclude(x => x.LoyaltyProgram)
+                .Include(x => x.DcLoyaltyCard).ThenInclude(x => x.DcLoyaltyProgram)
                 .FirstOrDefault(x => x.InvoiceHeaderId == InvoiceHeaderId && x.LoyaltyCardId != null)
                 ?.DcLoyaltyCard;
 
         }
 
-        public decimal GetLoyaltyBalanceAsync(Guid? loyaltyCardId )
+        public decimal GetLoyaltyBalanceAsync(Guid? loyaltyCardId)
         {
             using subContext db = new();
-            var result =  (
+            var result = (
                 from lc in db.DcLoyaltyCards.AsNoTracking()
                 where lc.LoyaltyCardId == loyaltyCardId
-                let earnPercent = (decimal?)(lc.LoyaltyProgram.EarnPercent) ?? 0m
+                let earnPercent = (decimal?)(lc.DcLoyaltyProgram.EarnPercent) ?? 0m
 
                 // SUM(il.NetAmountLoc)
                 let invoiceNetSum =
@@ -1273,18 +1273,15 @@ namespace Foxoft
             return result; // kart tapılmazsa 0 qaytarır
         }
 
-
-
-
-
-        public decimal SelectCustomerBonusBalance(string currAccCode)
+        public decimal SelectLoyaltyBonusBalance(Guid? loyaltyCardId, Guid? invoiceHeaderId)
         {
             using var db = new subContext();
 
             DateTime today = DateTime.Today;
 
             return db.Set<TrLoyaltyTxn>()
-                .Where(x => x.CurrAccCode == currAccCode
+                .Where(x => x.LoyaltyCardId == loyaltyCardId
+                            && x.InvoiceHeaderId != invoiceHeaderId
                             && (x.ExpireAt == null || x.ExpireAt >= today))
                 .Sum(x => (decimal?)x.Amount) ?? 0m;
         }
@@ -2082,7 +2079,7 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcLoyaltyCards
-                                .Include(x => x.LoyaltyProgram)
+                                .Include(x => x.DcLoyaltyProgram)
                                 .FirstOrDefault(x => x.CardNumber == loaltyCardNumb);
         }
 
@@ -2090,6 +2087,7 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.TrLoyaltyTxns
+                                .Where(x=>x.TxnType == LoyaltyTxnType.Earn)
                                 .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                 .Sum(x => x.Amount);
         }

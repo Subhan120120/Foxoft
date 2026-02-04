@@ -33,11 +33,11 @@ namespace Foxoft.Models
 
 
         [ForeignKey(nameof(LoyaltyProgramId))]
-        public virtual DcLoyaltyProgram LoyaltyProgram { get; set; }
+        public virtual DcLoyaltyProgram DcLoyaltyProgram { get; set; }
 
         [ForeignKey(nameof(CurrAccCode))]
         public virtual DcCurrAcc DcCurrAcc { get; set; }
 
-        public virtual ICollection<TrLoyaltyTxn> LoyaltyTxns { get; set; } = new HashSet<TrLoyaltyTxn>();
+        public virtual ICollection<TrLoyaltyTxn> TrLoyaltyTxns { get; set; } = new HashSet<TrLoyaltyTxn>();
     }
 }

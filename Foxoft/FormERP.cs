@@ -181,6 +181,7 @@ namespace Foxoft
                 case "WarehouseList": ShowExistForm<FormWarehouseList>(); break;
                 case "BarcodeOperations": ShowNewForm<FormBarcodeOperations>(); break;
                 case "PayrollList": ShowNewForm<FormPayrollList>(); break;
+                case "LoyaltyCards": ShowNewForm<FormLoyaltyCards>(); break;
 
                 default: break;
             }
@@ -264,6 +265,7 @@ namespace Foxoft
             this.ACE_WarehouseList.Name = "WarehouseList";
             this.ACE_BarcodeOperations.Name = "BarcodeOperations";
             this.ACE_PayrollList.Name = "PayrollList";
+            this.ACE_LoyaltyCards.Name = "LoyaltyCards";
         }
 
         private void InitializeReports()

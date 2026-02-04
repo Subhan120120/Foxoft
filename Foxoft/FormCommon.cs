@@ -259,20 +259,6 @@ namespace Foxoft
             }
         }
 
-        private readonly Dictionary<string, Type> buttonEditFields = new()
-        {
-            { nameof(DcCurrAcc.CurrAccCode), typeof(DcCurrAcc) },
-            { nameof(DcDiscount.DiscountId), typeof(DcDiscount) },
-            { nameof(DcReport.ReportId), typeof(DcReport) },
-            { nameof(DcRole.RoleCode), typeof(DcRole) },
-            { nameof(DcForm.FormCode), typeof(DcForm) },
-            { nameof(DcHierarchy.HierarchyCode), typeof(DcHierarchy) },
-            { nameof(DcFeatureType.FeatureTypeId), typeof(DcFeatureType) },
-            { nameof(DcClaim.ClaimCode), typeof(DcClaim) },
-            { nameof(DcClaimCategory.CategoryId), typeof(DcClaimCategory) },
-            { nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId), typeof(DcCurrAccFeatureType) },
-        };
-
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
         {
             var entityType = dbContext.Model.FindEntityType(typeof(T));
@@ -300,6 +286,7 @@ namespace Foxoft
             else if (e.FieldName == nameof(DcClaim.ClaimCode)) e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == nameof(DcClaimCategory.CategoryId)) e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcLoyaltyProgram.LoyaltyProgramId)) e.EditorType = typeof(ButtonEdit);
 
             e.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             e.Handled = true;
@@ -372,6 +359,12 @@ namespace Foxoft
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_CurrAccFeatureTypeId_ButtonPressed);
+            }
+            if (e.FieldName == nameof(DcLoyaltyProgram.LoyaltyProgramId))
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_LoyaltyProgramId_ButtonPressed);
             }
         }
 
@@ -550,6 +543,23 @@ namespace Foxoft
             string value = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCommonList<DcCurrAccFeatureType> form = new("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId), value);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void repoBtnEdit_LoyaltyProgramId_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
+
+            using FormCommonList<DcLoyaltyProgram> form = new("", nameof(DcLoyaltyProgram.LoyaltyProgramId), value);
 
             try
             {

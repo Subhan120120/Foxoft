@@ -48,6 +48,7 @@ namespace Foxoft
 
             InitializeResourseName();
         }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.F2)
@@ -1135,7 +1136,7 @@ namespace Foxoft
                 return;
             }
 
-            var earnPercent = loyaltyCard.LoyaltyProgram?.EarnPercent ?? 0m;
+            var earnPercent = loyaltyCard.DcLoyaltyProgram?.EarnPercent ?? 0m;
 
             if (earnPercent <= 0m)
             {
@@ -1154,13 +1155,9 @@ namespace Foxoft
                 return;
             }
 
-            bool isReturn = inv.IsReturn == true;
-            var txnType = isReturn ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Earn;
-
             var txn = dbContext.Set<TrLoyaltyTxn>()
                 .FirstOrDefault(x =>
                     x.InvoiceHeaderId == inv.InvoiceHeaderId &&
-                    x.LoyaltyCardId == loyaltyCard.LoyaltyCardId &&
                     (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
 
             if (txn == null)
@@ -1170,18 +1167,25 @@ namespace Foxoft
                     LoyaltyTxnId = Guid.NewGuid(),
                     InvoiceHeaderId = inv.InvoiceHeaderId,
                     LoyaltyCardId = loyaltyCard.LoyaltyCardId,
-                    Amount = netLoc * loyaltyCard.LoyaltyProgram.EarnPercent / 100,
+                    Amount = netLoc * loyaltyCard.DcLoyaltyProgram.EarnPercent / 100,
                     CurrAccCode = inv.CurrAccCode,
                     CreatedUserName = Authorization.CurrAccCode,
                     DocumentDate = inv.DocumentDate,
-                    TxnType = txnType,
+                    TxnType = inv.IsReturn ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Earn,
                     Note = $"Invoice: {inv.DocumentNumber}"
                 };
                 dbContext.Set<TrLoyaltyTxn>().Add(txn);
+                dbContext.SaveChanges();
             }
             else
             {
-                txn.Amount = netLoc * loyaltyCard.LoyaltyProgram.EarnPercent / 100;
+                if (txn.LoyaltyCardId != loyaltyCard.LoyaltyCardId)
+                {
+                    txn.LoyaltyCardId = loyaltyCard.LoyaltyCardId;
+                    dbContext.Entry(txn).Property(x => x.LoyaltyCardId).IsModified = true;
+                }
+
+                txn.Amount = netLoc * loyaltyCard.DcLoyaltyProgram.EarnPercent / 100;
                 dbContext.Entry(txn).Property(x => x.Amount).IsModified = true;
                 dbContext.SaveChanges();
             }
