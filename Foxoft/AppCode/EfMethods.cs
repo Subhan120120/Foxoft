@@ -1239,7 +1239,7 @@ namespace Foxoft
 
         }
 
-        public decimal GetLoyaltyBalanceAsync(Guid loyaltyCardId )
+        public decimal GetLoyaltyBalanceAsync(Guid? loyaltyCardId )
         {
             using subContext db = new();
             var result =  (

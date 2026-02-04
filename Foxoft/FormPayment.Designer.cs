@@ -500,7 +500,7 @@ namespace Foxoft
             lCI_LoyaltyBalance.Location = new Point(0, 36);
             lCI_LoyaltyBalance.Name = "lCI_LoyaltyBalance";
             lCI_LoyaltyBalance.Size = new Size(326, 36);
-            lCI_LoyaltyBalance.Text = Resources.Form_Payment_Puan;
+            lCI_LoyaltyBalance.Text = "Bonus Balans";
             lCI_LoyaltyBalance.TextSize = new Size(109, 13);
             // 
             // lCI_Cancel

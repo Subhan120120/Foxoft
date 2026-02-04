@@ -88,7 +88,8 @@ namespace Foxoft
             lCG_CustomerBonus.Visibility = paymentTypes.Contains(PaymentType.Bonus) ? LayoutVisibility.Always : LayoutVisibility.Never;
 
             dcLoyaltyCard = loyaltyCard;
-            availableBonus = efMethods.GetLoyaltyBalanceAsync(dcLoyaltyCard.LoyaltyCardId);
+            if (dcLoyaltyCard != null  && dcLoyaltyCard.LoyaltyCardId != Guid.Empty)
+                availableBonus = efMethods.GetLoyaltyBalanceAsync(dcLoyaltyCard.LoyaltyCardId);
             txtEdit_LoyaltyBalance.EditValue = availableBonus;
         }
 
