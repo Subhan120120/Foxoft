@@ -6,6 +6,7 @@ select DcCurrAccs.CurrAccCode
 , PhoneNum
 , IsVIP
 , CurrAccTypeCode
+, PersonalTypeCode
 , IsDisabled
 from 
 DcCurrAccs 
@@ -39,4 +40,5 @@ group by DcCurrAccs.CurrAccCode
 , IsVIP
 , CurrAccTypeCode
 , IsDisabled
+, PersonalTypeCode
 order by CurrAccDesc

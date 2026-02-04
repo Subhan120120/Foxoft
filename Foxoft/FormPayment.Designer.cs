@@ -44,7 +44,7 @@ namespace Foxoft
             txtEdit_Cash = new DevExpress.XtraEditors.TextEdit();
             txtEdit_Cashless = new DevExpress.XtraEditors.TextEdit();
             txtEdit_Bonus = new DevExpress.XtraEditors.TextEdit();
-            txtEdit_CustomerBonus = new DevExpress.XtraEditors.TextEdit();
+            txtEdit_LoyaltyBalance = new DevExpress.XtraEditors.TextEdit();
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             lUE_cashCurrency = new DevExpress.XtraEditors.LookUpEdit();
@@ -64,7 +64,7 @@ namespace Foxoft
             LCI_CashlessCommission = new DevExpress.XtraLayout.LayoutControlItem();
             lCG_CustomerBonus = new DevExpress.XtraLayout.LayoutControlGroup();
             lCI_CustomerBonus = new DevExpress.XtraLayout.LayoutControlItem();
-            lCI_CusBonus = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_LoyaltyBalance = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_Cancel = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_Ok = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -86,7 +86,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)txtEdit_Cash.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Cashless.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Bonus.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtEdit_CustomerBonus.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_LoyaltyBalance.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lUE_cashCurrency.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lUE_PaymentMethod.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TxtEdit_Description.Properties).BeginInit();
@@ -104,7 +104,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)LCI_CashlessCommission).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCG_CustomerBonus).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_CustomerBonus).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)lCI_CusBonus).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_LoyaltyBalance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cancel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Ok).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
@@ -128,7 +128,7 @@ namespace Foxoft
             lC_Root.Controls.Add(txtEdit_Cash);
             lC_Root.Controls.Add(txtEdit_Cashless);
             lC_Root.Controls.Add(txtEdit_Bonus);
-            lC_Root.Controls.Add(txtEdit_CustomerBonus);
+            lC_Root.Controls.Add(txtEdit_LoyaltyBalance);
             lC_Root.Controls.Add(btn_Cancel);
             lC_Root.Controls.Add(btn_Ok);
             lC_Root.Controls.Add(lUE_cashCurrency);
@@ -152,21 +152,21 @@ namespace Foxoft
             // 
             // txt_CashlessCommission
             // 
-            txt_CashlessCommission.Location = new Point(110, 260);
+            txt_CashlessCommission.Location = new Point(145, 260);
             txt_CashlessCommission.Name = "txt_CashlessCommission";
-            txt_CashlessCommission.Size = new Size(236, 20);
+            txt_CashlessCommission.Size = new Size(201, 20);
             txt_CashlessCommission.StyleController = lC_Root;
             txt_CashlessCommission.TabIndex = 11;
             txt_CashlessCommission.EditValueChanged += txt_CashlessCommission_EditValueChanged;
             // 
             // LUE_PaymentPlan
             // 
-            LUE_PaymentPlan.Location = new Point(110, 236);
+            LUE_PaymentPlan.Location = new Point(145, 236);
             LUE_PaymentPlan.Name = "LUE_PaymentPlan";
             LUE_PaymentPlan.Properties.AllowMouseWheel = false;
             LUE_PaymentPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             LUE_PaymentPlan.Properties.NullText = "";
-            LUE_PaymentPlan.Size = new Size(236, 20);
+            LUE_PaymentPlan.Size = new Size(201, 20);
             LUE_PaymentPlan.StyleController = lC_Root;
             LUE_PaymentPlan.TabIndex = 10;
             LUE_PaymentPlan.EditValueChanged += LUE_PaymentPlan_EditValueChanged;
@@ -179,12 +179,6 @@ namespace Foxoft
             lUE_CashlessCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_CashlessCurrency.Properties.Appearance.Options.UseFont = true;
             lUE_CashlessCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            lUE_CashlessCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
-            {
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyCode), ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyDesc), ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.ExchangeRate), "")
-            });
             lUE_CashlessCurrency.Properties.DisplayMember = "CurrencyDesc";
             lUE_CashlessCurrency.Properties.NullText = "";
             lUE_CashlessCurrency.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
@@ -197,10 +191,10 @@ namespace Foxoft
             // 
             // btnEdit_BankAccout
             // 
-            btnEdit_BankAccout.Location = new Point(110, 212);
+            btnEdit_BankAccout.Location = new Point(145, 212);
             btnEdit_BankAccout.Name = "btnEdit_BankAccout";
             btnEdit_BankAccout.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_BankAccout.Size = new Size(236, 20);
+            btnEdit_BankAccout.Size = new Size(201, 20);
             btnEdit_BankAccout.StyleController = lC_Root;
             btnEdit_BankAccout.TabIndex = 9;
             btnEdit_BankAccout.ButtonClick += btnEdit_BankAccout_ButtonClick;
@@ -210,10 +204,10 @@ namespace Foxoft
             // 
             // btnEdit_CashRegister
             // 
-            btnEdit_CashRegister.Location = new Point(110, 81);
+            btnEdit_CashRegister.Location = new Point(145, 81);
             btnEdit_CashRegister.Name = "btnEdit_CashRegister";
             btnEdit_CashRegister.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_CashRegister.Size = new Size(236, 20);
+            btnEdit_CashRegister.Size = new Size(201, 20);
             btnEdit_CashRegister.StyleController = lC_Root;
             btnEdit_CashRegister.TabIndex = 5;
             btnEdit_CashRegister.ButtonClick += btnEdit_CashRegister_ButtonClick;
@@ -224,7 +218,7 @@ namespace Foxoft
             // dateEdit_Date
             // 
             dateEdit_Date.EditValue = null;
-            dateEdit_Date.Location = new Point(448, 12);
+            dateEdit_Date.Location = new Point(483, 12);
             dateEdit_Date.Name = "dateEdit_Date";
             dateEdit_Date.Properties.AllowMouseWheel = false;
             dateEdit_Date.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -234,14 +228,14 @@ namespace Foxoft
             dateEdit_Date.Properties.EditFormat.FormatString = "";
             dateEdit_Date.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             dateEdit_Date.Properties.MaskSettings.Set("mask", "");
-            dateEdit_Date.Size = new Size(301, 20);
+            dateEdit_Date.Size = new Size(266, 20);
             dateEdit_Date.StyleController = lC_Root;
             dateEdit_Date.TabIndex = 0;
             dateEdit_Date.EditValueChanged += dateEdit_Date_EditValueChanged;
             // 
             // txtEdit_Cash
             // 
-            txtEdit_Cash.Location = new Point(110, 45);
+            txtEdit_Cash.Location = new Point(145, 45);
             txtEdit_Cash.Name = "txtEdit_Cash";
             txtEdit_Cash.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_Cash.Properties.Appearance.Options.UseFont = true;
@@ -249,7 +243,7 @@ namespace Foxoft
             txtEdit_Cash.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             txtEdit_Cash.Properties.Mask.UseMaskAsDisplayFormat = true;
             txtEdit_Cash.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            txtEdit_Cash.Size = new Size(112, 32);
+            txtEdit_Cash.Size = new Size(77, 32);
             txtEdit_Cash.StyleController = lC_Root;
             txtEdit_Cash.TabIndex = 3;
             txtEdit_Cash.InvalidValue += textEditCash_InvalidValue;
@@ -258,7 +252,7 @@ namespace Foxoft
             // 
             // txtEdit_Cashless
             // 
-            txtEdit_Cashless.Location = new Point(110, 150);
+            txtEdit_Cashless.Location = new Point(145, 150);
             txtEdit_Cashless.Name = "txtEdit_Cashless";
             txtEdit_Cashless.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_Cashless.Properties.Appearance.Options.UseFont = true;
@@ -266,7 +260,7 @@ namespace Foxoft
             txtEdit_Cashless.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             txtEdit_Cashless.Properties.Mask.UseMaskAsDisplayFormat = true;
             txtEdit_Cashless.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            txtEdit_Cashless.Size = new Size(112, 32);
+            txtEdit_Cashless.Size = new Size(77, 32);
             txtEdit_Cashless.StyleController = lC_Root;
             txtEdit_Cashless.TabIndex = 6;
             txtEdit_Cashless.InvalidValue += textEditCashless_InvalidValue;
@@ -275,7 +269,7 @@ namespace Foxoft
             // 
             // txtEdit_Bonus
             // 
-            txtEdit_Bonus.Location = new Point(110, 329);
+            txtEdit_Bonus.Location = new Point(145, 329);
             txtEdit_Bonus.Name = "txtEdit_Bonus";
             txtEdit_Bonus.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_Bonus.Properties.Appearance.Options.UseFont = true;
@@ -283,23 +277,23 @@ namespace Foxoft
             txtEdit_Bonus.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             txtEdit_Bonus.Properties.Mask.UseMaskAsDisplayFormat = true;
             txtEdit_Bonus.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            txtEdit_Bonus.Size = new Size(236, 32);
+            txtEdit_Bonus.Size = new Size(201, 32);
             txtEdit_Bonus.StyleController = lC_Root;
             txtEdit_Bonus.TabIndex = 12;
             txtEdit_Bonus.InvalidValue += textEditBonus_InvalidValue;
             txtEdit_Bonus.EditValueChanged += textEditBonus_EditValueChanged;
             txtEdit_Bonus.Validating += textEditBonus_Validating;
             // 
-            // txtEdit_CustomerBonus
+            // txtEdit_LoyaltyBalance
             // 
-            txtEdit_CustomerBonus.Location = new Point(110, 365);
-            txtEdit_CustomerBonus.Name = "txtEdit_CustomerBonus";
-            txtEdit_CustomerBonus.Properties.Appearance.Font = new Font("Tahoma", 16F);
-            txtEdit_CustomerBonus.Properties.Appearance.Options.UseFont = true;
-            txtEdit_CustomerBonus.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            txtEdit_CustomerBonus.Size = new Size(236, 32);
-            txtEdit_CustomerBonus.StyleController = lC_Root;
-            txtEdit_CustomerBonus.TabIndex = 13;
+            txtEdit_LoyaltyBalance.Location = new Point(145, 365);
+            txtEdit_LoyaltyBalance.Name = "txtEdit_LoyaltyBalance";
+            txtEdit_LoyaltyBalance.Properties.Appearance.Font = new Font("Tahoma", 16F);
+            txtEdit_LoyaltyBalance.Properties.Appearance.Options.UseFont = true;
+            txtEdit_LoyaltyBalance.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
+            txtEdit_LoyaltyBalance.Size = new Size(201, 32);
+            txtEdit_LoyaltyBalance.StyleController = lC_Root;
+            txtEdit_LoyaltyBalance.TabIndex = 13;
             // 
             // btn_Cancel
             // 
@@ -310,7 +304,7 @@ namespace Foxoft
             btn_Cancel.Size = new Size(98, 77);
             btn_Cancel.StyleController = lC_Root;
             btn_Cancel.TabIndex = 18;
-            btn_Cancel.Text = Resources.Common_Cancel;
+            btn_Cancel.Text = "Cancel";
             // 
             // btn_Ok
             // 
@@ -321,7 +315,7 @@ namespace Foxoft
             btn_Ok.Size = new Size(97, 77);
             btn_Ok.StyleController = lC_Root;
             btn_Ok.TabIndex = 17;
-            btn_Ok.Text = Resources.Form_Payment_Button_Ok;
+            btn_Ok.Text = "Pay";
             btn_Ok.Click += btn_Ok_Click;
             // 
             // lUE_cashCurrency
@@ -332,12 +326,6 @@ namespace Foxoft
             lUE_cashCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_cashCurrency.Properties.Appearance.Options.UseFont = true;
             lUE_cashCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            lUE_cashCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
-            {
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyCode), ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.CurrencyDesc), ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcCurrency.ExchangeRate), "")
-            });
             lUE_cashCurrency.Properties.DisplayMember = "CurrencyDesc";
             lUE_cashCurrency.Properties.Name = "lUE_cashCurrency";
             lUE_cashCurrency.Properties.NullText = "";
@@ -351,34 +339,27 @@ namespace Foxoft
             // 
             // lUE_PaymentMethod
             // 
-            lUE_PaymentMethod.Location = new Point(110, 186);
+            lUE_PaymentMethod.Location = new Point(145, 186);
             lUE_PaymentMethod.Name = "lUE_PaymentMethod";
             lUE_PaymentMethod.Properties.AllowMouseWheel = false;
             lUE_PaymentMethod.Properties.Appearance.Font = new Font("Tahoma", 10F);
             lUE_PaymentMethod.Properties.Appearance.Options.UseFont = true;
             lUE_PaymentMethod.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            lUE_PaymentMethod.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[]
-            {
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentMethod.PaymentMethodId), ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentMethod.PaymentMethodDesc), ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentMethod.PaymentTypeCode), ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo(nameof(DcPaymentMethod.DefaultCashRegCode), "")
-            });
             lUE_PaymentMethod.Properties.DisplayMember = "PaymentMethodDesc";
             lUE_PaymentMethod.Properties.NullText = "";
             lUE_PaymentMethod.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
             lUE_PaymentMethod.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
             lUE_PaymentMethod.Properties.ValueMember = "PaymentMethodId";
-            lUE_PaymentMethod.Size = new Size(236, 22);
+            lUE_PaymentMethod.Size = new Size(201, 22);
             lUE_PaymentMethod.StyleController = lC_Root;
             lUE_PaymentMethod.TabIndex = 8;
             lUE_PaymentMethod.EditValueChanged += lUE_PaymentMethod_EditValueChanged;
             // 
             // TxtEdit_Description
             // 
-            TxtEdit_Description.Location = new Point(448, 36);
+            TxtEdit_Description.Location = new Point(483, 36);
             TxtEdit_Description.Name = "TxtEdit_Description";
-            TxtEdit_Description.Size = new Size(301, 20);
+            TxtEdit_Description.Size = new Size(266, 20);
             TxtEdit_Description.StyleController = lC_Root;
             TxtEdit_Description.TabIndex = 20;
             // 
@@ -408,7 +389,7 @@ namespace Foxoft
             lCI_Cash.Name = "layoutControlItemCash";
             lCI_Cash.Size = new Size(202, 36);
             lCI_Cash.Text = Resources.Form_Payment_Label_Cash;
-            lCI_Cash.TextSize = new Size(74, 32);
+            lCI_Cash.TextSize = new Size(109, 32);
             // 
             // lCI_CashRegister
             // 
@@ -417,7 +398,7 @@ namespace Foxoft
             lCI_CashRegister.Name = "lCI_CashRegister";
             lCI_CashRegister.Size = new Size(326, 24);
             lCI_CashRegister.Text = Resources.Form_Payment_CashRegister;
-            lCI_CashRegister.TextSize = new Size(74, 13);
+            lCI_CashRegister.TextSize = new Size(109, 13);
             // 
             // lCI_CashCurrency
             // 
@@ -445,7 +426,7 @@ namespace Foxoft
             lCI_Cashless.Name = "layoutControlItemCashless";
             lCI_Cashless.Size = new Size(202, 36);
             lCI_Cashless.Text = Resources.Form_Payment_Group_Cashless;
-            lCI_Cashless.TextSize = new Size(74, 32);
+            lCI_Cashless.TextSize = new Size(109, 32);
             // 
             // lCI_BankCurrAcc
             // 
@@ -454,7 +435,7 @@ namespace Foxoft
             lCI_BankCurrAcc.Name = "lCI_BankCurrAcc";
             lCI_BankCurrAcc.Size = new Size(326, 24);
             lCI_BankCurrAcc.Text = Resources.Form_Payment_BankAccount;
-            lCI_BankCurrAcc.TextSize = new Size(74, 13);
+            lCI_BankCurrAcc.TextSize = new Size(109, 13);
             // 
             // lCI_CashlessCurrency
             // 
@@ -472,7 +453,7 @@ namespace Foxoft
             lCI_PaymentMethod.Name = "lCI_PaymentMethod";
             lCI_PaymentMethod.Size = new Size(326, 26);
             lCI_PaymentMethod.Text = Resources.Form_Payment_PaymentMethod;
-            lCI_PaymentMethod.TextSize = new Size(74, 13);
+            lCI_PaymentMethod.TextSize = new Size(109, 13);
             // 
             // LCI_PaymentPlan
             // 
@@ -481,7 +462,7 @@ namespace Foxoft
             LCI_PaymentPlan.Name = "LCI_PaymentPlan";
             LCI_PaymentPlan.Size = new Size(326, 24);
             LCI_PaymentPlan.Text = Resources.Form_Payment_PaymentPlan;
-            LCI_PaymentPlan.TextSize = new Size(74, 13);
+            LCI_PaymentPlan.TextSize = new Size(109, 13);
             LCI_PaymentPlan.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             // 
             // LCI_CashlessCommission
@@ -491,13 +472,13 @@ namespace Foxoft
             LCI_CashlessCommission.Name = "LCI_CashlessCommission";
             LCI_CashlessCommission.Size = new Size(326, 24);
             LCI_CashlessCommission.Text = Resources.Form_Payment_Commission;
-            LCI_CashlessCommission.TextSize = new Size(74, 13);
+            LCI_CashlessCommission.TextSize = new Size(109, 13);
             LCI_CashlessCommission.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             // 
             // lCG_CustomerBonus
             // 
             lCG_CustomerBonus.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            lCG_CustomerBonus.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_CustomerBonus, lCI_CusBonus });
+            lCG_CustomerBonus.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_CustomerBonus, lCI_LoyaltyBalance });
             lCG_CustomerBonus.Location = new Point(0, 284);
             lCG_CustomerBonus.Name = "layoutControlGroupCustomerBonus";
             lCG_CustomerBonus.Size = new Size(350, 117);
@@ -511,16 +492,16 @@ namespace Foxoft
             lCI_CustomerBonus.Name = "layoutControlItemCustomerBonus";
             lCI_CustomerBonus.Size = new Size(326, 36);
             lCI_CustomerBonus.Text = Resources.Form_Payment_Bonus;
-            lCI_CustomerBonus.TextSize = new Size(74, 32);
+            lCI_CustomerBonus.TextSize = new Size(109, 32);
             // 
-            // lCI_CusBonus
+            // lCI_LoyaltyBalance
             // 
-            lCI_CusBonus.Control = txtEdit_CustomerBonus;
-            lCI_CusBonus.Location = new Point(0, 36);
-            lCI_CusBonus.Name = "lCI_CusBonus";
-            lCI_CusBonus.Size = new Size(326, 36);
-            lCI_CusBonus.Text = Resources.Form_Payment_Puan;
-            lCI_CusBonus.TextSize = new Size(74, 13);
+            lCI_LoyaltyBalance.Control = txtEdit_LoyaltyBalance;
+            lCI_LoyaltyBalance.Location = new Point(0, 36);
+            lCI_LoyaltyBalance.Name = "lCI_LoyaltyBalance";
+            lCI_LoyaltyBalance.Size = new Size(326, 36);
+            lCI_LoyaltyBalance.Text = Resources.Form_Payment_Puan;
+            lCI_LoyaltyBalance.TextSize = new Size(109, 13);
             // 
             // lCI_Cancel
             // 
@@ -572,7 +553,7 @@ namespace Foxoft
             lCI_Date.Name = "lCI_Date";
             lCI_Date.Size = new Size(391, 24);
             lCI_Date.Text = Resources.Form_Payment_Date;
-            lCI_Date.TextSize = new Size(74, 13);
+            lCI_Date.TextSize = new Size(109, 13);
             // 
             // LCI_LineDescription
             // 
@@ -581,7 +562,7 @@ namespace Foxoft
             LCI_LineDescription.Name = "LCI_LineDescription";
             LCI_LineDescription.Size = new Size(391, 24);
             LCI_LineDescription.Text = Resources.Entity_PaymentHeader_Description;
-            LCI_LineDescription.TextSize = new Size(74, 13);
+            LCI_LineDescription.TextSize = new Size(109, 13);
             // 
             // emptySpaceItem2
             // 
@@ -601,7 +582,7 @@ namespace Foxoft
             Controls.Add(lC_Root);
             Name = "FormPayment";
             StartPosition = FormStartPosition.CenterParent;
-            Text = Resources.Form_Payment_Caption;
+            Text = "Payment";
             Load += FormPayment_Load;
             ((System.ComponentModel.ISupportInitialize)lC_Root).EndInit();
             lC_Root.ResumeLayout(false);
@@ -615,7 +596,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)txtEdit_Cash.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Cashless.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Bonus.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtEdit_CustomerBonus.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_LoyaltyBalance.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)lUE_cashCurrency.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)lUE_PaymentMethod.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)TxtEdit_Description.Properties).EndInit();
@@ -633,7 +614,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)LCI_CashlessCommission).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCG_CustomerBonus).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_CustomerBonus).EndInit();
-            ((System.ComponentModel.ISupportInitialize)lCI_CusBonus).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_LoyaltyBalance).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cancel).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Ok).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
@@ -658,7 +639,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem lCI_CustomerBonus;
         private DevExpress.XtraEditors.TextEdit txtEdit_CustomerBonus;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
-        private DevExpress.XtraLayout.LayoutControlItem lCI_CusBonus;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_LoyaltyBalance;
         private DevExpress.XtraEditors.SimpleButton btn_Cancel;
         private DevExpress.XtraEditors.SimpleButton btn_Ok;
         private DevExpress.XtraLayout.LayoutControlItem lCI_Cancel;
@@ -689,5 +670,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit TxtEdit_Description;
         private DevExpress.XtraLayout.LayoutControlItem LCI_LineDescription;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
+        private DevExpress.XtraEditors.TextEdit txtEdit_LoyaltyBalance;
     }
 }

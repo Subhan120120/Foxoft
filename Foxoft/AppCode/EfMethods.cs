@@ -1228,10 +1228,21 @@ namespace Foxoft
             return invoiceSum - paymentSum;
         }
 
-        public async Task<decimal> GetLoyaltyBalanceAsync(Guid loyaltyCardId, CancellationToken ct = default)
+        public DcLoyaltyCard GetLoyaltyCard(Guid InvoiceHeaderId)
         {
             using subContext db = new();
-            var result = await (
+
+            return db.TrLoyaltyTxns
+                .Include(x => x.DcLoyaltyCard).ThenInclude(x => x.LoyaltyProgram)
+                .FirstOrDefault(x => x.InvoiceHeaderId == InvoiceHeaderId && x.LoyaltyCardId != null)
+                ?.DcLoyaltyCard;
+
+        }
+
+        public decimal GetLoyaltyBalanceAsync(Guid loyaltyCardId )
+        {
+            using subContext db = new();
+            var result =  (
                 from lc in db.DcLoyaltyCards.AsNoTracking()
                 where lc.LoyaltyCardId == loyaltyCardId
                 let earnPercent = (decimal?)(lc.LoyaltyProgram.EarnPercent) ?? 0m
@@ -1257,7 +1268,7 @@ namespace Foxoft
                     ).Sum() ?? 0m
 
                 select (invoiceNetSum * earnPercent / 100m) - bonusPaymentSum
-            ).SingleOrDefaultAsync(ct);
+            ).SingleOrDefault();
 
             return result; // kart tapılmazsa 0 qaytarır
         }
@@ -2073,6 +2084,14 @@ namespace Foxoft
             return db.DcLoyaltyCards
                                 .Include(x => x.LoyaltyProgram)
                                 .FirstOrDefault(x => x.CardNumber == loaltyCardNumb);
+        }
+
+        public decimal SelectLoyalityTxnAmount(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+            return db.TrLoyaltyTxns
+                                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                .Sum(x => x.Amount);
         }
     }
 }

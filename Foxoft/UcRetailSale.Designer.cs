@@ -125,7 +125,7 @@ namespace Foxoft
             btn_PrintPreview = new SimpleButton();
             btn_ReportZ = new SimpleButton();
             btn_AddBasket = new SimpleButton();
-            btn_IncomplatedInvoices = new SimpleButton();
+            btn_UncomplatedInvoices = new SimpleButton();
             btn_InvoiceDiscount = new SimpleButton();
             btn_NewInvoice = new SimpleButton();
             btn_LoyaltyCard = new SimpleButton();
@@ -169,6 +169,8 @@ namespace Foxoft
             layoutControlItem2 = new LayoutControlItem();
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             trInvoiceHeadersBindingSource = new BindingSource(components);
+            txt_LoyaltyEarned = new TextEdit();
+            LCI_LoyaltyEarn = new LayoutControlItem();
             ((ISupportInitialize)lC_InvoiceLine).BeginInit();
             lC_InvoiceLine.SuspendLayout();
             ((ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).BeginInit();
@@ -234,6 +236,8 @@ namespace Foxoft
             ((ISupportInitialize)layoutControlGroup2).BeginInit();
             ((ISupportInitialize)layoutControlItem2).BeginInit();
             ((ISupportInitialize)trInvoiceHeadersBindingSource).BeginInit();
+            ((ISupportInitialize)txt_LoyaltyEarned.Properties).BeginInit();
+            ((ISupportInitialize)LCI_LoyaltyEarn).BeginInit();
             SuspendLayout();
             // 
             // lC_InvoiceLine
@@ -262,10 +266,11 @@ namespace Foxoft
             lC_InvoiceLine.Controls.Add(btn_PrintPreview);
             lC_InvoiceLine.Controls.Add(btn_ReportZ);
             lC_InvoiceLine.Controls.Add(btn_AddBasket);
-            lC_InvoiceLine.Controls.Add(btn_IncomplatedInvoices);
+            lC_InvoiceLine.Controls.Add(btn_UncomplatedInvoices);
             lC_InvoiceLine.Controls.Add(btn_InvoiceDiscount);
             lC_InvoiceLine.Controls.Add(btn_NewInvoice);
             lC_InvoiceLine.Controls.Add(btn_LoyaltyCard);
+            lC_InvoiceLine.Controls.Add(txt_LoyaltyEarned);
             lC_InvoiceLine.Dock = DockStyle.Fill;
             lC_InvoiceLine.Location = new Point(0, 0);
             lC_InvoiceLine.Name = "lC_InvoiceLine";
@@ -289,7 +294,7 @@ namespace Foxoft
             POSFindProductByCheckedComboBoxEdit.Properties.TextEditStyle = TextEditStyles.HideTextEditor;
             POSFindProductByCheckedComboBoxEdit.Size = new Size(54, 34);
             POSFindProductByCheckedComboBoxEdit.StyleController = lC_InvoiceLine;
-            POSFindProductByCheckedComboBoxEdit.TabIndex = 1;
+            POSFindProductByCheckedComboBoxEdit.TabIndex = 2;
             POSFindProductByCheckedComboBoxEdit.EditValueChanged += POSFindProductByCheckedComboBoxEdit_EditValueChanged;
             // 
             // lbl_InvoicePaidTotalSum
@@ -360,11 +365,11 @@ namespace Foxoft
             // 
             // txt_PrintCount
             // 
-            txt_PrintCount.Location = new Point(620, 414);
+            txt_PrintCount.Location = new Point(647, 414);
             txt_PrintCount.Name = "txt_PrintCount";
-            txt_PrintCount.Size = new Size(156, 20);
+            txt_PrintCount.Size = new Size(129, 20);
             txt_PrintCount.StyleController = lC_InvoiceLine;
-            txt_PrintCount.TabIndex = 8;
+            txt_PrintCount.TabIndex = 6;
             // 
             // dataLayoutControl1
             // 
@@ -977,16 +982,16 @@ namespace Foxoft
             // 
             // btn_IncomplatedInvoices
             // 
-            btn_IncomplatedInvoices.AllowFocus = false;
-            btn_IncomplatedInvoices.ImageOptions.Location = ImageLocation.TopCenter;
-            btn_IncomplatedInvoices.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_IncomplatedInvoices.ImageOptions.SvgImage");
-            btn_IncomplatedInvoices.Location = new Point(804, 307);
-            btn_IncomplatedInvoices.Name = "btn_IncomplatedInvoices";
-            btn_IncomplatedInvoices.Size = new Size(76, 63);
-            btn_IncomplatedInvoices.StyleController = lC_InvoiceLine;
-            btn_IncomplatedInvoices.TabIndex = 6;
-            btn_IncomplatedInvoices.Text = "Incomplete Invoices";
-            btn_IncomplatedInvoices.Click += btn_IncomplatedInvoices_Click;
+            btn_UncomplatedInvoices.AllowFocus = false;
+            btn_UncomplatedInvoices.ImageOptions.Location = ImageLocation.TopCenter;
+            btn_UncomplatedInvoices.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_IncomplatedInvoices.ImageOptions.SvgImage");
+            btn_UncomplatedInvoices.Location = new Point(804, 307);
+            btn_UncomplatedInvoices.Name = "btn_IncomplatedInvoices";
+            btn_UncomplatedInvoices.Size = new Size(76, 63);
+            btn_UncomplatedInvoices.StyleController = lC_InvoiceLine;
+            btn_UncomplatedInvoices.TabIndex = 1;
+            btn_UncomplatedInvoices.Text = "Incomplete Invoices";
+            btn_UncomplatedInvoices.Click += btn_UncomplatedInvoices_Click;
             // 
             // btn_InvoiceDiscount
             // 
@@ -999,7 +1004,7 @@ namespace Foxoft
             btn_InvoiceDiscount.Name = "btn_InvoiceDiscount";
             btn_InvoiceDiscount.Size = new Size(76, 63);
             btn_InvoiceDiscount.StyleController = lC_InvoiceLine;
-            btn_InvoiceDiscount.TabIndex = 7;
+            btn_InvoiceDiscount.TabIndex = 1;
             btn_InvoiceDiscount.Text = "Invoice Discount";
             btn_InvoiceDiscount.Click += btn_InvoiceDiscount_Click;
             // 
@@ -1015,7 +1020,7 @@ namespace Foxoft
             btn_NewInvoice.ShowFocusRectangle = DefaultBoolean.False;
             btn_NewInvoice.Size = new Size(76, 72);
             btn_NewInvoice.StyleController = lC_InvoiceLine;
-            btn_NewInvoice.TabIndex = 9;
+            btn_NewInvoice.TabIndex = 1;
             btn_NewInvoice.Click += Btn_NewInvoice_Click;
             // 
             // btn_LoyaltyCard
@@ -1030,7 +1035,7 @@ namespace Foxoft
             btn_LoyaltyCard.ShowFocusRectangle = DefaultBoolean.False;
             btn_LoyaltyCard.Size = new Size(76, 63);
             btn_LoyaltyCard.StyleController = lC_InvoiceLine;
-            btn_LoyaltyCard.TabIndex = 10;
+            btn_LoyaltyCard.TabIndex = 1;
             btn_LoyaltyCard.Text = "BonusCard";
             btn_LoyaltyCard.Click += Btn_LoyaltyCard_Click;
             // 
@@ -1236,7 +1241,7 @@ namespace Foxoft
             // 
             // layoutControlItem8
             // 
-            layoutControlItem8.Control = btn_IncomplatedInvoices;
+            layoutControlItem8.Control = btn_UncomplatedInvoices;
             layoutControlItem8.Location = new Point(0, 67);
             layoutControlItem8.MinSize = new Size(60, 40);
             layoutControlItem8.Name = "layoutControlItem8";
@@ -1358,7 +1363,7 @@ namespace Foxoft
             // LCG_Total
             // 
             LCG_Total.CustomizationFormText = "layoutControlGroup1";
-            LCG_Total.Items.AddRange(new BaseLayoutItem[] { layoutControlItem6, layoutControlGroup3, emptySpaceItem2 });
+            LCG_Total.Items.AddRange(new BaseLayoutItem[] { layoutControlItem6, layoutControlGroup3, emptySpaceItem2, LCI_LoyaltyEarn });
             LCG_Total.Location = new Point(532, 369);
             LCG_Total.Name = "LCG_Total";
             LCG_Total.Size = new Size(248, 261);
@@ -1371,7 +1376,7 @@ namespace Foxoft
             layoutControlItem6.Name = "layoutControlItem6";
             layoutControlItem6.Size = new Size(224, 24);
             layoutControlItem6.Text = Resources.Form_RetailSale_Label_PrintCount;
-            layoutControlItem6.TextSize = new Size(52, 13);
+            layoutControlItem6.TextSize = new Size(79, 13);
             // 
             // layoutControlGroup3
             // 
@@ -1444,9 +1449,9 @@ namespace Foxoft
             // 
             // emptySpaceItem2
             // 
-            emptySpaceItem2.Location = new Point(0, 24);
+            emptySpaceItem2.Location = new Point(0, 48);
             emptySpaceItem2.Name = "emptySpaceItem2";
-            emptySpaceItem2.Size = new Size(224, 99);
+            emptySpaceItem2.Size = new Size(224, 75);
             // 
             // layoutControlGroup2
             // 
@@ -1471,6 +1476,23 @@ namespace Foxoft
             // 
             trInvoiceHeadersBindingSource.DataSource = typeof(TrInvoiceHeader);
             trInvoiceHeadersBindingSource.AddingNew += trInvoiceHeadersBindingSource_AddingNew;
+            // 
+            // txt_LoyaltyEarn
+            // 
+            txt_LoyaltyEarned.Location = new Point(647, 438);
+            txt_LoyaltyEarned.Name = "txt_LoyaltyEarn";
+            txt_LoyaltyEarned.Size = new Size(129, 20);
+            txt_LoyaltyEarned.StyleController = lC_InvoiceLine;
+            txt_LoyaltyEarned.TabIndex = 7;
+            // 
+            // LCI_LoyaltyEarn
+            // 
+            LCI_LoyaltyEarn.Control = txt_LoyaltyEarned;
+            LCI_LoyaltyEarn.Location = new Point(0, 24);
+            LCI_LoyaltyEarn.Name = "LCI_LoyaltyEarn";
+            LCI_LoyaltyEarn.Size = new Size(224, 24);
+            LCI_LoyaltyEarn.Text = "Qazanılan Bonus";
+            LCI_LoyaltyEarn.TextSize = new Size(79, 13);
             // 
             // UcRetailSale
             // 
@@ -1545,6 +1567,8 @@ namespace Foxoft
             ((ISupportInitialize)layoutControlGroup2).EndInit();
             ((ISupportInitialize)layoutControlItem2).EndInit();
             ((ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
+            ((ISupportInitialize)txt_LoyaltyEarned.Properties).EndInit();
+            ((ISupportInitialize)LCI_LoyaltyEarn).EndInit();
             ResumeLayout(false);
         }
 
@@ -1662,7 +1686,7 @@ namespace Foxoft
         private GridColumn colProductCost;
         private GridColumn colQtyOut;
         private LayoutControlItem LCI_AddBasket;
-        private SimpleButton btn_IncomplatedInvoices;
+        private SimpleButton btn_UncomplatedInvoices;
         private LayoutControlItem layoutControlItem8;
         private LabelControl lbl_InvoicePaidTotalSum;
         private LabelControl lbl_InvoicePaidTotalSumTxt;
@@ -1691,6 +1715,9 @@ namespace Foxoft
         private LayoutControlItem lCI_LoyaltyCard;
         private SimpleButton btn_BonusCard;
         private SimpleButton btn_LoyaltyCard;
+        private TextEdit textEdit2;
+        private LayoutControlItem LCI_LoyaltyEarn;
+        private TextEdit txt_LoyaltyEarned;
     }
 }
 

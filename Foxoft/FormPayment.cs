@@ -21,6 +21,7 @@ namespace Foxoft
         private DcPaymentMethod dcPaymentMethod = new();
         private EfMethods efMethods = new();
         private DcLoyaltyCard dcLoyaltyCard = new();
+        private decimal availableBonus;
 
         private bool isNegativ = false;
 
@@ -87,6 +88,8 @@ namespace Foxoft
             lCG_CustomerBonus.Visibility = paymentTypes.Contains(PaymentType.Bonus) ? LayoutVisibility.Always : LayoutVisibility.Never;
 
             dcLoyaltyCard = loyaltyCard;
+            availableBonus = efMethods.GetLoyaltyBalanceAsync(dcLoyaltyCard.LoyaltyCardId);
+            txtEdit_LoyaltyBalance.EditValue = availableBonus;
         }
 
         public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, PaymentType[] paymentTypes, DcLoyaltyCard loyaltyCard, bool isInstallmentPayment)
@@ -176,10 +179,6 @@ namespace Foxoft
             txtEdit_Cashless.EditValue = trPaymentLineCashless.PaymentLoc;
             lUE_CashlessCurrency.EditValue = trPaymentLineCashless.CurrencyCode;
             txtEdit_Bonus.EditValue = trPaymentLineBonus.PaymentLoc;
-
-            //TxtEdit_Installment.EditValue = trInstallment.Amount;
-            //LUE_InstallmentCurrency.EditValue = trInstallment.CurrencyCode;
-            //LUE_InstallmentPlan.EditValue = trInstallment.InstallmentPlanCode;
         }
 
         private void dateEdit_Date_EditValueChanged(object sender, EventArgs e)
@@ -381,7 +380,6 @@ namespace Foxoft
 
             //decimal availableBonus = efMethods.SelectPaymentLinesBonusSumByInvoice(dcLoyaltyCard);
 
-            decimal availableBonus = await efMethods.GetLoyaltyBalanceAsync(dcLoyaltyCard.LoyaltyCardId);
 
             if (trPaymentLineBonus.Payment > availableBonus)
                 e.Cancel = true;
@@ -590,6 +588,7 @@ namespace Foxoft
                     PaymentHeaderId = paymentHeaderId,
                     InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId, // istəsən saxla
                     CreatedUserName = Authorization.CurrAccCode,
+                    Amount = isNegativ ? -trPaymentLineBonus.PaymentLoc : trPaymentLineBonus.PaymentLoc,
                     DocumentDate = DateTime.Now,
                     TxnType = isNegativ ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Redeem,
                     Note = $"Payment (Bonus) for Invoice: {trInvoiceHeader.DocumentNumber}"

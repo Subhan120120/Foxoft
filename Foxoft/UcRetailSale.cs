@@ -8,6 +8,7 @@ using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
+using Google.Apis.Drive.v3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System.Drawing.Printing;
@@ -84,7 +85,7 @@ namespace Foxoft
             btn_PrintPreview.Text = Resources.Form_RetailSale_Button_PrintPreview;
             btn_ReportZ.Text = Resources.Form_RetailSale_Button_ReportZ;
             btn_AddBasket.Text = Resources.Form_RetailSale_Button_AddBasket;
-            btn_IncomplatedInvoices.Text = Resources.Form_RetailSale_Button_IncompletedInvoices;
+            btn_UncomplatedInvoices.Text = Resources.Form_RetailSale_Button_IncompletedInvoices;
             btn_InvoiceDiscount.Text = Resources.Form_RetailSale_Button_InvoiceDiscount;
             btn_NewInvoice.Text = Resources.Form_RetailSale_Button_New;
         }
@@ -229,18 +230,10 @@ namespace Foxoft
 
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
-            GetLoyaltyCard(InvoiceHeaderId);
-
-            SyncLoyaltyEarn(trInvoiceHeader);
+            loyaltyCard = efMethods.GetLoyaltyCard(InvoiceHeaderId);
+            txt_LoyaltyEarned.EditValue = efMethods.SelectLoyalityTxnAmount(InvoiceHeaderId);
 
             SplashScreenManager.CloseForm(false);
-        }
-
-        private void GetLoyaltyCard(Guid InvoiceHeaderId)
-        {
-            var loyaltyCard = dbContext.TrLoyaltyTxns
-                .Include(x => x.DcLoyaltyCard)
-                .FirstOrDefault(x => x.InvoiceHeaderId == InvoiceHeaderId && x.LoyaltyCardId != null).DcLoyaltyCard;
         }
 
         private void LoadCurrAcc()
@@ -509,6 +502,49 @@ namespace Foxoft
             }
         }
 
+        private void btn_InvoiceDiscount_Click(object sender, EventArgs e)
+        {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(
+                Authorization.CurrAccCode,
+                nameof(TrInvoiceLine.PosDiscount));
+
+            if (!currAccHasClaims)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_NoPermission,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            decimal amount = efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId);
+
+            if (gV_InvoiceLine.DataRowCount <= 0)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_NoProduct,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            using (FormPosDiscount formPosDiscount = new(0, amount))
+            {
+                if (formPosDiscount.ShowDialog(this) == DialogResult.OK)
+                {
+                    for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                    {
+                        gV_InvoiceLine.SetRowCellValue(i, nameof(TrInvoiceLine.PosDiscount), formPosDiscount.DiscountPercent);
+
+                        gV_InvoiceLine.RefreshData();
+                        SaveInvoice();
+                    }
+                }
+            }
+
+        }
         private void btn_LineDiscount_Click(object sender, EventArgs e)
         {
             bool currAccHasClaims = efMethods.CurrAccHasClaims(
@@ -543,7 +579,7 @@ namespace Foxoft
                             formPosDiscount.DiscountPercent);
 
                         gV_InvoiceLine.RefreshData(); // footer yenilensin deye
-                        gV_InvoiceLine.MoveLast();
+                        SaveInvoice();
                     }
                 }
             }
@@ -603,9 +639,6 @@ namespace Foxoft
                 return;
 
             trInvoiceHeader.IsCompleted = true;
-
-            SyncLoyaltyEarn(trInvoiceHeader);
-
 
             if (Settings.Default.AppSetting.AutoPrint)
             {
@@ -979,6 +1012,11 @@ namespace Foxoft
                 if (selectedProduct?.ProductTypeCode == 3) // product is not service product
                     return;
 
+                string? salesmanCode = null;
+
+                if (Settings.Default.AppSetting.POSShowSalesmanCodeDialog)
+                    salesmanCode = InputSalesMan();
+
                 string wareHouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
                 bool permitNegativeStock = efMethods
@@ -986,7 +1024,6 @@ namespace Foxoft
                     .PermitNegativeStock;
 
                 decimal? balance = CalcProductBalance(selectedProduct, wareHouseCode);
-                string? salesmanCode = null;
 
                 if (permitNegativeStock)
                     balance = null;
@@ -1010,9 +1047,6 @@ namespace Foxoft
                         return;
                     }
 
-                if (Settings.Default.AppSetting.POSShowSalesmanCodeDialog)
-                    salesmanCode = InputSalesMan();
-
                 if (!TryMergeSameProduct(selectedProduct, qty, salesmanCode))
                 {
                     AddNewRow(selectedProduct, qty, salesmanCode);
@@ -1020,7 +1054,6 @@ namespace Foxoft
 
                 SaveInvoice();
                 txtEdit_Barcode.EditValue = string.Empty;
-
             }
             else
             {
@@ -1087,8 +1120,9 @@ namespace Foxoft
             dbContext.SaveChanges(Authorization.CurrAccCode);
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
             Tag = trInvoiceHeader.DocumentNumber;
-        }
 
+            SyncLoyaltyEarn(trInvoiceHeader);
+        }
 
         private void SyncLoyaltyEarn(TrInvoiceHeader inv)
         {
@@ -1101,15 +1135,7 @@ namespace Foxoft
                 return;
             }
 
-            // Invoice tamamlanmayıbsa bonus da yazılmasın
-            if (inv.IsCompleted != true || inv.IsSuspended == true)
-            {
-                RemoveEarnTxn(inv.InvoiceHeaderId);
-                return;
-            }
-
-            var program = loyaltyCard.LoyaltyProgram;
-            var earnPercent = program?.EarnPercent ?? 0m;
+            var earnPercent = loyaltyCard.LoyaltyProgram?.EarnPercent ?? 0m;
 
             if (earnPercent <= 0m)
             {
@@ -1144,6 +1170,7 @@ namespace Foxoft
                     LoyaltyTxnId = Guid.NewGuid(),
                     InvoiceHeaderId = inv.InvoiceHeaderId,
                     LoyaltyCardId = loyaltyCard.LoyaltyCardId,
+                    Amount = netLoc * loyaltyCard.LoyaltyProgram.EarnPercent / 100,
                     CurrAccCode = inv.CurrAccCode,
                     CreatedUserName = Authorization.CurrAccCode,
                     DocumentDate = inv.DocumentDate,
@@ -1152,6 +1179,14 @@ namespace Foxoft
                 };
                 dbContext.Set<TrLoyaltyTxn>().Add(txn);
             }
+            else
+            {
+                txn.Amount = netLoc * loyaltyCard.LoyaltyProgram.EarnPercent / 100;
+                dbContext.Entry(txn).Property(x => x.Amount).IsModified = true;
+                dbContext.SaveChanges();
+            }
+
+            txt_LoyaltyEarned.EditValue = txn.Amount;
         }
 
         private void RemoveEarnTxn(Guid invoiceHeaderId)
@@ -1179,7 +1214,7 @@ namespace Foxoft
             ClearControlsAddNew();
         }
 
-        private void btn_IncomplatedInvoices_Click(object sender, EventArgs e)
+        private void btn_UncomplatedInvoices_Click(object sender, EventArgs e)
         {
             using FormInvoiceHeaderList form = new("RS", false);
 
@@ -1217,51 +1252,6 @@ namespace Foxoft
                 Math.Round(totalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
         }
 
-        private void btn_InvoiceDiscount_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(
-                Authorization.CurrAccCode,
-                nameof(TrInvoiceLine.PosDiscount));
-
-            if (!currAccHasClaims)
-            {
-                XtraMessageBox.Show(
-                    Resources.Form_RetailSale_NoPermission,
-                    Resources.Common_Attention,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                return;
-            }
-
-            decimal amount = efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId);
-
-            if (gV_InvoiceLine.DataRowCount <= 0)
-            {
-                XtraMessageBox.Show(
-                    Resources.Form_RetailSale_NoProduct,
-                    Resources.Common_Attention,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                return;
-            }
-
-            using (FormPosDiscount formPosDiscount = new(0, amount))
-            {
-                if (formPosDiscount.ShowDialog(this) == DialogResult.OK)
-                {
-                    for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                    {
-                        gV_InvoiceLine.SetRowCellValue(
-                            i,
-                            nameof(TrInvoiceLine.PosDiscount),
-                            formPosDiscount.DiscountPercent);
-                    }
-                }
-            }
-
-            gV_InvoiceLine.RefreshData();
-            gV_InvoiceLine.MoveLast();
-        }
 
         private void POSFindProductByCheckedComboBoxEdit_EditValueChanged(object sender, EventArgs e)
         {
