@@ -1225,6 +1225,8 @@ namespace Foxoft
                 LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
 
                 LoadCurrAcc();
+
+                CalcPaidAmount();
             }
         }
 
