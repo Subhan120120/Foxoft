@@ -639,7 +639,9 @@ namespace Foxoft
             if (formPayment.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+            trInvoiceHeader.IsCompleted = true;
+
+            dbContext.SaveChanges();
 
             if (Settings.Default.AppSetting.AutoPrint)
             {
