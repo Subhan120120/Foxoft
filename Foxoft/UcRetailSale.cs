@@ -23,7 +23,7 @@ namespace Foxoft
         public Guid invoiceHeaderId;
         public TrInvoiceHeader trInvoiceHeader = new();
         DcCurrAcc dcCurrAcc = new();
-        public int rowIndx = (-1); // setting by "FocusedRowChanged" event
+        public int rowIndx = (-1); // setting by "FocusedRowChanged" eventunc
         EfMethods efMethods = new();
         ReportClass reportClass;
         subContext dbContext = new();
@@ -639,7 +639,7 @@ namespace Foxoft
             if (formPayment.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            trInvoiceHeader.IsCompleted = true;
+            efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
             if (Settings.Default.AppSetting.AutoPrint)
             {
