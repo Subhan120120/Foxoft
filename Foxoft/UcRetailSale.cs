@@ -62,10 +62,6 @@ namespace Foxoft
                 return true; // shortcut handled
             }
 
-            // istəyirsənsə digər payment-lər də:
-            // if (keyData == Keys.F3) { btn_Cashless.PerformClick(); return true; }
-            // if (keyData == Keys.F4) { btn_CustomerBonus.PerformClick(); return true; }
-
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -456,6 +452,8 @@ namespace Foxoft
                     if (result >= 0)
                     {
                         ClearControlsAddNew();
+
+                        txt_LoyaltyEarned.EditValue = 0;
                     }
                 }
             }
@@ -963,10 +961,10 @@ namespace Foxoft
 
             if (useProductCode)
             {
-                dcProductByProductCode = efMethods.SelectEntityById<DcProduct>(input);
+                dcProductByProductCode = efMethods.SelectProduct(input, new byte[] { 1 });
 
                 if (dcProductByProductCode is null)
-                    dcProductByProductCode = efMethods.SelectEntityById<DcProduct>("P-" + input);
+                    dcProductByProductCode = efMethods.SelectProduct("P-" + input, new byte[] { 1 });
             }
 
             if (Settings.Default.AppSetting.UseScales && input.Length == 13 && input.All(char.IsDigit))
@@ -1094,6 +1092,7 @@ namespace Foxoft
                 return null;
             }
         }
+
         private bool POSFindProductByContainsId(int id)
         {
             var text = POSFindProductByCheckedComboBoxEdit.EditValue?.ToString() ?? "";
