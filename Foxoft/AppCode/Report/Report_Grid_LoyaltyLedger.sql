@@ -1,37 +1,42 @@
-﻿SELECT
+﻿
+
+
+--delete from TrLoyaltyTxns
+
+select * from TrLoyaltyTxns
+
+
+SELECT
       lt.LoyaltyTxnId
     , lt.TxnType
-    , ih.DocumentNumber AS InvoiceDocumentNumber
-    , ph.DocumentNumber AS PaymentDocumentNumber
-    , Faiz       = ISNULL(inv.NetAmountLoc, 0) * lp.EarnPercent / 100
-    , NetAmountLoc= ISNULL(inv.NetAmountLoc, 0)
-    , Balance    = (ISNULL(inv.NetAmountLoc, 0) * lp.EarnPercent / 100) - ISNULL(pay.PaymentLoc, 0)
-    , PaymentLoc = ISNULL(pay.PaymentLoc, 0)
+    , InvoiceDocumentNumber = ISNULL(ih.DocumentNumber, ph.DocumentNumber)
+    , NetAmountLoc= inv.NetAmountLoc
+    , EarnAmount       = inv.NetAmountLoc * lp.EarnPercent / 100
+    , PaymentLoc = PaymentLoc
+    , Balance    = (ISNULL(inv.NetAmountLoc, 0) * lp.EarnPercent / 100) - ISNULL(PaymentLoc, 0)
     , lt.Note
     , lt.InvoiceHeaderId
-    , lt.PaymentHeaderId
+    , lt.PaymentLineId
+    , lt.LoyaltyCardId
+    , lp.LoyaltyProgramId
+    , lp.EarnPercent
+
 FROM TrLoyaltyTxns lt
 JOIN DcLoyaltyCards lc
     ON lc.LoyaltyCardId = lt.LoyaltyCardId
 JOIN DcLoyaltyPrograms lp
     ON lp.LoyaltyProgramId = lc.LoyaltyProgramId
 LEFT JOIN TrInvoiceHeaders ih
-    ON ih.InvoiceHeaderId = lt.InvoiceHeaderId
+    ON ih.InvoiceHeaderId = lt.InvoiceHeaderId AND TxnType IN (1, 2)
+LEFT JOIN TrPaymentLines pl
+    ON pl.PaymentLineId = lt.PaymentLineId --and TxnType = 2
 LEFT JOIN TrPaymentHeaders ph
-    ON ph.PaymentHeaderId = lt.PaymentHeaderId
+    ON ph.PaymentHeaderId = pl.PaymentHeaderId
 
 OUTER APPLY
 (
     SELECT SUM(il.NetAmountLoc) AS NetAmountLoc
     FROM TrInvoiceLines il
-    WHERE il.InvoiceHeaderId = lt.InvoiceHeaderId
+    WHERE il.InvoiceHeaderId = lt.InvoiceHeaderId AND TxnType IN (1, 2)
 ) inv
 
-OUTER APPLY
-(
-    SELECT SUM(pl.PaymentLoc) AS PaymentLoc
-    FROM TrPaymentLines pl
-    WHERE pl.PaymentHeaderId = lt.PaymentHeaderId
-    -- Əgər yalnız Bonus ödənişi toplamalıdırsa, aşağıdakı sətri aç:
-    -- AND pl.PaymentTypeCode = 3
-) pay;

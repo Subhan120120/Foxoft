@@ -8,7 +8,7 @@ namespace Foxoft.Models
 {
     [Index(nameof(LoyaltyCardId), nameof(DocumentDate))]
     [Index(nameof(InvoiceHeaderId))]
-    [Index(nameof(PaymentHeaderId))]
+    [Index(nameof(PaymentLineId))]
     public class TrLoyaltyTxn : BaseEntity
     {
         [Key]
@@ -35,7 +35,7 @@ namespace Foxoft.Models
         // Mənbə sənədlər (səndə bu entity-lər var deyə yalnız FK saxlayırıq)
         public Guid? InvoiceHeaderId { get; set; }
 
-        public Guid? PaymentHeaderId { get; set; }
+        public Guid? PaymentLineId { get; set; }
 
         // Reverse əməliyyatlar üçün əlaqə (məs: hansı txn-i geri çevirdi)
         public Guid? RelatedLoyaltyTxnId { get; set; }
@@ -53,8 +53,8 @@ namespace Foxoft.Models
         [ForeignKey(nameof(RelatedLoyaltyTxnId))]
         public virtual TrLoyaltyTxn RelatedLoyaltyTxn { get; set; }
 
-        [ForeignKey(nameof(PaymentHeaderId))]
-        public virtual TrPaymentHeader TrPaymentHeader { get; set; }
+        [ForeignKey(nameof(PaymentLineId))]
+        public virtual TrPaymentLine TrPaymentLine { get; set; }
 
         [ForeignKey(nameof(InvoiceHeaderId))]
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }

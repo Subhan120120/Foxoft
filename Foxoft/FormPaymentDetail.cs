@@ -196,6 +196,8 @@ namespace Foxoft
                 {
                     efMethods.DeleteEntityById<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId);
 
+                    //efMethods.DeletePaymentLinesByPaymentHeader
+
                     ClearControlsAddNew();
                 }
             }

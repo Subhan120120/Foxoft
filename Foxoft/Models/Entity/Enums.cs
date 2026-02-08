@@ -11,10 +11,11 @@ namespace Foxoft.Models
     public enum LoyaltyTxnType : byte
     {
         Earn = 1,     // bonus qazanıldı (+)
-        Redeem = 2,   // bonus xərcləndi (-)
-        Reverse = 3,  // geri çevirmə (qazanılanı silmək və ya xərclənəni qaytarmaq)
-        Adjust = 4,   // manual düzəliş (+/-)
-        Expire = 5    // müddəti bitdi (-)
+        Reverse = 2,  // qazanılanı silmək (-)
+        Redeem = 3,   // bonus xərcləndi (-)
+        Refund = 4,   // xərclənəni qaytarmaq (+)
+        Adjust = 5,   // manual düzəliş (+/-)
+        Expire = 6    // müddəti bitdi (-)
     }
 
     public enum PaymentType : byte

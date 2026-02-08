@@ -548,6 +548,13 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<TrLoyaltyTxn>(entity =>
+            {
+                entity.HasOne(x => x.TrPaymentLine)
+                    .WithOne(x => x.TrLoyaltyTxn)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
             modelBuilder.Entity<DcDepartment>()
                 .HasOne(x => x.ParentDepartment)
                 .WithMany(x => x.ChildDepartments)

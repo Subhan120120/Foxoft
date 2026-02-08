@@ -97,5 +97,6 @@ namespace Foxoft.Models
         public virtual DcPaymentMethod DcPaymentMethod { get; set; }
         public virtual DcCurrAcc DcCashRegister { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
+        public virtual TrLoyaltyTxn TrLoyaltyTxn { get; set; }
     }
 }

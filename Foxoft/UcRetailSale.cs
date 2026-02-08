@@ -199,6 +199,8 @@ namespace Foxoft
             LoadCurrAcc();
 
             CalcPaidAmount();
+
+            txt_LoyaltyEarned.EditValue = 0;
         }
 
         private void LoadInvoice(Guid InvoiceHeaderId)
@@ -224,7 +226,6 @@ namespace Foxoft
                                     .ContinueWith(loadTask =>
                                     {
                                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
-
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             loyaltyCard = efMethods.GetLoyaltyCard(InvoiceHeaderId);
@@ -452,8 +453,6 @@ namespace Foxoft
                     if (result >= 0)
                     {
                         ClearControlsAddNew();
-
-                        txt_LoyaltyEarned.EditValue = 0;
                     }
                 }
             }
@@ -1175,6 +1174,7 @@ namespace Foxoft
                     TxnType = inv.IsReturn ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Earn,
                     Note = $"Invoice: {inv.DocumentNumber}"
                 };
+
                 dbContext.Set<TrLoyaltyTxn>().Add(txn);
                 dbContext.SaveChanges();
             }

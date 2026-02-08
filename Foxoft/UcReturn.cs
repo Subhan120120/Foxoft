@@ -3,6 +3,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -16,6 +17,9 @@ namespace Foxoft
         public TrInvoiceHeader returnInvoHeader;
         public Guid invoiceLineID;
         public string processCode;
+        DcLoyaltyCard loyaltyCard;
+
+        subContext dbContext = new();
 
         EfMethods efMethods = new();
 
@@ -174,6 +178,9 @@ namespace Foxoft
                             efMethods.UpdateEntity(trInvoiceLine);
                         }
 
+                        SyncLoyaltyEarn(trInvoiceHeader);
+
+
                         List<TrInvoiceLine> returnLines = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
                         gC_ReturnInvoiceLine.DataSource = returnLines;
 
@@ -253,22 +260,6 @@ namespace Foxoft
             }
         }
 
-        //private void MakePayment(decimal summaryInvoice, bool autoPayment)
-        //{
-        //    using FormPayment formPayment = new(1, summaryInvoice, returnInvoHeader, autoPayment);
-
-        //    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
-        //    if (!currAccHasClaims)
-        //    {
-        //        MessageBox.Show(Resources.Common_AccessDenied);
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        if (formPayment.ShowDialog(this) == DialogResult.OK) { }
-        //    }
-        //}
-
         private void gV_ReturnInvoiceLine_CalcPreviewText(object sender, CalcPreviewTextEventArgs e)
         {
             GridView view = sender as GridView;
@@ -315,5 +306,76 @@ namespace Foxoft
                 }
             }
         }
+
+        private void SyncLoyaltyEarn(TrInvoiceHeader inv)
+        {
+            if (inv == null || inv.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            loyaltyCard = dbContext.Set<TrLoyaltyTxn>()
+                .AsNoTracking()
+                .Include(x => x.DcLoyaltyCard)
+                    .ThenInclude(c => c.DcLoyaltyProgram)
+                .Where(x => x.InvoiceHeaderId == inv.InvoiceHeaderId
+                         && x.TxnType == LoyaltyTxnType.Earn)
+                .Select(x => x.DcLoyaltyCard)
+                .FirstOrDefault();
+
+            if (loyaltyCard == null)
+            {
+                //RemoveEarnTxn(inv.InvoiceHeaderId);
+                return;
+            }
+
+            var earnPercent = loyaltyCard.DcLoyaltyProgram?.EarnPercent ?? 0m;
+
+            if (earnPercent <= 0m)
+            {
+                //RemoveEarnTxn(inv.InvoiceHeaderId);
+                return;
+            }
+
+            // NetAmountLoc-u grid-dən yox, context-dən götürmək daha sağlamdır
+            decimal netLoc = dbContext.TrInvoiceLines
+                .AsNoTracking()
+                .Where(x => x.InvoiceHeaderId == returnInvoHeader.InvoiceHeaderId)
+                .Sum(x => (decimal?)x.NetAmountLoc) ?? 0m;
+
+            if (netLoc == 0m)
+            {
+                //RemoveEarnTxn(inv.InvoiceHeaderId);
+                return;
+            }
+
+            TrLoyaltyTxn txn = new TrLoyaltyTxn
+            {
+                LoyaltyTxnId = Guid.NewGuid(),
+                InvoiceHeaderId = returnInvoHeader.InvoiceHeaderId,
+                LoyaltyCardId = loyaltyCard.LoyaltyCardId,
+                Amount = netLoc * loyaltyCard.DcLoyaltyProgram.EarnPercent / 100,
+                CurrAccCode = inv.CurrAccCode,
+                CreatedUserName = Authorization.CurrAccCode,
+                DocumentDate = inv.DocumentDate,
+                TxnType = LoyaltyTxnType.Reverse,
+                Note = $"Invoice: {inv.DocumentNumber}"
+            };
+            dbContext.Set<TrLoyaltyTxn>().Add(txn);
+            dbContext.SaveChanges();
+        }
+
+        private void RemoveEarnTxn(Guid invoiceHeaderId)
+        {
+            if (loyaltyCard == null) return;
+
+            var txn = dbContext.Set<TrLoyaltyTxn>()
+                .FirstOrDefault(x =>
+                    x.InvoiceHeaderId == invoiceHeaderId &&
+                    x.LoyaltyCardId == loyaltyCard.LoyaltyCardId &&
+                    (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
+
+            if (txn != null)
+                dbContext.Set<TrLoyaltyTxn>().Remove(txn);
+        }
+
     }
 }

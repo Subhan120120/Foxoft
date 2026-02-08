@@ -991,6 +991,17 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int DeleteLoyaltyByPaymentHeader(Guid paymentHeader)
+        {
+            using subContext db = new();
+            List<TrLoyaltyTxn> trLoyaltyTxns = db.TrLoyaltyTxns.Where(x => x.PaymentLineId == paymentHeader)
+                                                               .ToList();
+            if (trLoyaltyTxns is not null)
+                db.TrLoyaltyTxns.RemoveRange(trLoyaltyTxns);
+
+            return db.SaveChanges();
+        }
+
         public int UpdateInvoiceIsCompleted(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -1219,7 +1230,7 @@ namespace Foxoft
                 (from pl in db.TrPaymentLines.AsNoTracking()
                  where db.TrLoyaltyTxns.AsNoTracking()
                      .Where(lt => lt.LoyaltyCardId == dcLoyaltyCard.LoyaltyCardId)
-                     .Select(lt => lt.PaymentHeaderId)
+                     .Select(lt => lt.PaymentLineId)
                      .Distinct()
                      .Contains(pl.PaymentHeaderId)
                  select (decimal?)pl.PaymentLoc
@@ -1261,9 +1272,9 @@ namespace Foxoft
                 let bonusPaymentSum =
                     (
                         from lt in db.TrLoyaltyTxns.AsNoTracking()
-                        where lt.LoyaltyCardId == lc.LoyaltyCardId && lt.PaymentHeaderId != null
+                        where lt.LoyaltyCardId == lc.LoyaltyCardId && lt.PaymentLineId != null
                         join pl in db.TrPaymentLines.AsNoTracking().Where(x => x.PaymentTypeCode == PaymentType.Bonus)
-                            on lt.PaymentHeaderId equals pl.PaymentHeaderId
+                            on lt.PaymentLineId equals pl.PaymentHeaderId
                         select (decimal?)pl.PaymentLoc
                     ).Sum() ?? 0m
 

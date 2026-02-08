@@ -2195,10 +2195,10 @@ namespace Foxoft
                 ? efMethods.SelectPriceByProcess(dcProcess.ProcessCode, product.ProductCode)
                 : dcProcess.ProcessCode switch
                 {
-                    "RP" => product.PurchasePrice,
+                    "RP" or "CI" or "CO" => product.PurchasePrice,
                     "RS" => product.RetailPrice,
                     "WS" => product.WholesalePrice,
-                    _ => 0
+                    _ => 0m
                 };
 
             decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price));

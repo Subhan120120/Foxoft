@@ -549,9 +549,9 @@ namespace Foxoft
 
             var txn = db.TrLoyaltyTxns
                 .FirstOrDefault(x =>
-                    x.PaymentHeaderId == paymentHeaderId &&
+                    x.PaymentLineId == trPaymentLineBonus.PaymentLineId &&
                     x.LoyaltyCardId == dcLoyaltyCard.LoyaltyCardId &&
-                    x.TxnType == LoyaltyTxnType.Redeem);
+                    (x.TxnType == LoyaltyTxnType.Redeem || x.TxnType == LoyaltyTxnType.Refund));
 
             if (txn == null)
             {
@@ -560,17 +560,19 @@ namespace Foxoft
                     LoyaltyTxnId = Guid.NewGuid(),
                     LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId,
                     CurrAccCode = trInvoiceHeader.CurrAccCode,
-                    PaymentHeaderId = paymentHeaderId,
                     InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId, // istəsən saxla
                     CreatedUserName = Authorization.CurrAccCode,
                     Amount = isNegativ ? trPaymentLineBonus.PaymentLoc : -trPaymentLineBonus.PaymentLoc,
                     DocumentDate = DateTime.Now,
-                    TxnType = isNegativ ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Redeem,
+                    TxnType = isNegativ ? LoyaltyTxnType.Refund : LoyaltyTxnType.Redeem,
                     Note = $"Payment (Bonus) for Invoice: {trInvoiceHeader.DocumentNumber}"
                 };
 
-                efMethods.InsertEntity(txn);
-                efMethods.InsertEntity(trPaymentLineBonus);
+                txn.TrPaymentLine = trPaymentLineBonus;
+
+                db.Add(trPaymentLineBonus);
+                db.Add(txn);
+                db.SaveChanges();
             }
         }
 
