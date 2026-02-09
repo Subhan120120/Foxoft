@@ -1136,7 +1136,7 @@ namespace Foxoft
                 return;
             }
 
-            var earnPercent = loyaltyCard.DcLoyaltyProgram?.EarnPercent ?? 0m;
+            var earnPercent = loyaltyCard.DcLoyaltyProgram.EarnPercent;
 
             if (earnPercent <= 0m)
             {
@@ -1145,7 +1145,7 @@ namespace Foxoft
             }
 
             // NetAmountLoc-u grid-dən yox, context-dən götürmək daha sağlamdır
-            decimal netLoc = dbContext.TrInvoiceLines.Local
+            decimal netLoc = dbContext.TrInvoiceLines
                 .Where(x => x.InvoiceHeaderId == inv.InvoiceHeaderId)
                 .Sum(x => (decimal?)x.NetAmountLoc) ?? 0m;
 
@@ -1158,7 +1158,7 @@ namespace Foxoft
             var txn = dbContext.Set<TrLoyaltyTxn>()
                 .FirstOrDefault(x =>
                     x.InvoiceHeaderId == inv.InvoiceHeaderId &&
-                    (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
+                    x.TxnType == LoyaltyTxnType.Earn);
 
             if (txn == null)
             {
@@ -1171,7 +1171,7 @@ namespace Foxoft
                     CurrAccCode = inv.CurrAccCode,
                     CreatedUserName = Authorization.CurrAccCode,
                     DocumentDate = inv.DocumentDate,
-                    TxnType = inv.IsReturn ? LoyaltyTxnType.Reverse : LoyaltyTxnType.Earn,
+                    TxnType = LoyaltyTxnType.Earn,
                     Note = $"Invoice: {inv.DocumentNumber}"
                 };
 
@@ -1196,13 +1196,11 @@ namespace Foxoft
 
         private void RemoveEarnTxn(Guid invoiceHeaderId)
         {
-            if (loyaltyCard == null) return;
-
             var txn = dbContext.Set<TrLoyaltyTxn>()
                 .FirstOrDefault(x =>
                     x.InvoiceHeaderId == invoiceHeaderId &&
                     x.LoyaltyCardId == loyaltyCard.LoyaltyCardId &&
-                    (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
+                    x.TxnType == LoyaltyTxnType.Earn);
 
             if (txn != null)
                 dbContext.Set<TrLoyaltyTxn>().Remove(txn);

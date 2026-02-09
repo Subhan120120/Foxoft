@@ -2090,7 +2090,7 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcLoyaltyCards
-                                .Include(x => x.DcLoyaltyProgram)
+                                .Include(x => x.DcLoyaltyProgram) // mutleq include etmek lazimdir yoxsa EarnPercent 0 olacaq, loyaltytx silinecek. risklidi.
                                 .FirstOrDefault(x => x.CardNumber == loaltyCardNumb);
         }
 
