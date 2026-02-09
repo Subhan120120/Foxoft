@@ -1118,92 +1118,95 @@ namespace Foxoft
 
         private void SaveInvoice()
         {
+            // 1) əvvəl invoice/lines state otursun
             dbContext.SaveChanges(Authorization.CurrAccCode);
-            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-            Tag = trInvoiceHeader.DocumentNumber;
 
+            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+            Tag = trInvoiceHeader?.DocumentNumber;
+
+            // 2) loyalty entity-lərini hazırla (burada SaveChanges YOX)
             SyncLoyaltyEarn(trInvoiceHeader);
+
+            // 3) dəyişiklik varsa, 1 dəfə save
+            dbContext.SaveChanges(Authorization.CurrAccCode);
+
+            // UI göstərici
+            txt_LoyaltyEarned.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
         }
+
 
         private void SyncLoyaltyEarn(TrInvoiceHeader inv)
         {
             if (inv == null || inv.InvoiceHeaderId == Guid.Empty)
                 return;
 
+            // invoice-a bağlı bütün Earn txn-ləri tap (card dəyişsə də)
+            var earnTxn = dbContext.TrLoyaltyTxns
+                .FirstOrDefault(x => x.InvoiceHeaderId == inv.InvoiceHeaderId && x.TxnType == LoyaltyTxnType.Earn);
+
+            // loyaltyCard yoxdursa -> Earn txn sil
             if (loyaltyCard == null)
             {
-                RemoveEarnTxn(inv.InvoiceHeaderId);
+                if (earnTxn != null)
+                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
+
                 return;
             }
 
-            var earnPercent = loyaltyCard.DcLoyaltyProgram.EarnPercent;
+            // EarnPercent-i DB-dən təhlükəsiz götür (navigation-a güvənmə)
+            var earnPercent = dbContext.DcLoyaltyPrograms
+                .Where(p => p.LoyaltyProgramId == loyaltyCard.LoyaltyProgramId)
+                .Select(p => (decimal?)p.EarnPercent)
+                .FirstOrDefault() ?? 0m;
 
             if (earnPercent <= 0m)
             {
-                RemoveEarnTxn(inv.InvoiceHeaderId);
+                if (earnTxn != null)
+                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
                 return;
             }
 
-            // NetAmountLoc-u grid-dən yox, context-dən götürmək daha sağlamdır
+            // NetAmountLoc cəmi
             decimal netLoc = dbContext.TrInvoiceLines
                 .Where(x => x.InvoiceHeaderId == inv.InvoiceHeaderId)
                 .Sum(x => (decimal?)x.NetAmountLoc) ?? 0m;
 
-            if (netLoc == 0m)
+            if (netLoc <= 0m)
             {
-                RemoveEarnTxn(inv.InvoiceHeaderId);
+                if (earnTxn != null)
+                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
                 return;
             }
 
-            var txn = dbContext.Set<TrLoyaltyTxn>()
-                .FirstOrDefault(x =>
-                    x.InvoiceHeaderId == inv.InvoiceHeaderId &&
-                    x.TxnType == LoyaltyTxnType.Earn);
+            decimal amount = Math.Round(netLoc * earnPercent / 100m, 2);
 
-            if (txn == null)
+            if (earnTxn == null)
             {
-                txn = new TrLoyaltyTxn
+                earnTxn = new TrLoyaltyTxn
                 {
                     LoyaltyTxnId = Guid.NewGuid(),
                     InvoiceHeaderId = inv.InvoiceHeaderId,
                     LoyaltyCardId = loyaltyCard.LoyaltyCardId,
-                    Amount = netLoc * loyaltyCard.DcLoyaltyProgram.EarnPercent / 100,
                     CurrAccCode = inv.CurrAccCode,
-                    CreatedUserName = Authorization.CurrAccCode,
                     DocumentDate = inv.DocumentDate,
                     TxnType = LoyaltyTxnType.Earn,
+                    Amount = amount,
+                    CreatedUserName = Authorization.CurrAccCode,
                     Note = $"Invoice: {inv.DocumentNumber}"
                 };
-
-                dbContext.Set<TrLoyaltyTxn>().Add(txn);
-                dbContext.SaveChanges();
+                dbContext.TrLoyaltyTxns.Add(earnTxn);
             }
             else
             {
-                if (txn.LoyaltyCardId != loyaltyCard.LoyaltyCardId)
-                {
-                    txn.LoyaltyCardId = loyaltyCard.LoyaltyCardId;
-                    dbContext.Entry(txn).Property(x => x.LoyaltyCardId).IsModified = true;
-                }
+                // Upsert update
+                earnTxn.LoyaltyCardId = loyaltyCard.LoyaltyCardId;
+                earnTxn.CurrAccCode = inv.CurrAccCode;
+                earnTxn.DocumentDate = inv.DocumentDate;
+                earnTxn.Amount = amount;
+                earnTxn.Note = $"Invoice: {inv.DocumentNumber}";
 
-                txn.Amount = netLoc * loyaltyCard.DcLoyaltyProgram.EarnPercent / 100;
-                dbContext.Entry(txn).Property(x => x.Amount).IsModified = true;
-                dbContext.SaveChanges();
+                // tracked entitydirsə Entry.IsModified-ə ehtiyac yoxdur
             }
-
-            txt_LoyaltyEarned.EditValue = txn.Amount;
-        }
-
-        private void RemoveEarnTxn(Guid invoiceHeaderId)
-        {
-            var txn = dbContext.Set<TrLoyaltyTxn>()
-                .FirstOrDefault(x =>
-                    x.InvoiceHeaderId == invoiceHeaderId &&
-                    x.LoyaltyCardId == loyaltyCard.LoyaltyCardId &&
-                    x.TxnType == LoyaltyTxnType.Earn);
-
-            if (txn != null)
-                dbContext.Set<TrLoyaltyTxn>().Remove(txn);
         }
 
         private void Btn_NewInvoice_Click(object sender, EventArgs e)
