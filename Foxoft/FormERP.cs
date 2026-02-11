@@ -455,8 +455,8 @@ namespace Foxoft
         {
             T form = null;
 
-            try
-            {
+            //try
+            //{
                 var constructors = typeof(T).GetConstructors();
                 var constructor = constructors.FirstOrDefault(c =>
                 {
@@ -489,17 +489,17 @@ namespace Foxoft
                 form.WindowState = FormWindowState.Maximized;
                 if (parentRibbonControl.MergedPages.Count > 0)
                     parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
-            catch (Exception ex)
-            {
-                string formName = form != null ? form.Text : typeof(T).Name;
-                MessageBox.Show(
-                    string.Format(Resources.ERP_OpenFormError, formName, ex.Message),
-                    string.Format(Resources.Common_ErrorTitle, 7321246),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+            //}
+            //catch (Exception ex)
+            //{
+            //    string formName = form != null ? form.Text : typeof(T).Name;
+            //    MessageBox.Show(
+            //        string.Format(Resources.ERP_OpenFormError, formName, ex.Message),
+            //        string.Format(Resources.Common_ErrorTitle, 7321246),
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Error);
 
-            }
+            //}
         }
 
         private void ShowExistForm<T>(params object[] args) where T : Form

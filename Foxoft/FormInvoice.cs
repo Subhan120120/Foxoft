@@ -156,6 +156,7 @@ namespace Foxoft
         {
             colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
             col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
+            LCI_CashRegCode.Text = ReflectionExt.GetDisplayName<TrPaymentLine>(x => x.CashRegisterCode);
         }
 
         private void ClearControlsAddNew()
@@ -349,6 +350,11 @@ namespace Foxoft
             CalcPaidAmount();
             //CalcInstallmentAmount();
 
+            if (new string[] { "EX" }.Contains(dcProcess.ProcessCode))
+            {
+                btn_CashRegCode.EditValue = efMethods.CashRegFromExpeence(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.StoreCode);
+            }
+
             Tag = btnEdit_DocNum.EditValue;
 
             if (!trInvoiceHeader.IsLocked)
@@ -363,6 +369,8 @@ namespace Foxoft
 
             SplashScreenManager.CloseForm(false);
         }
+
+
 
         private void CalcPaidAmount()
         {
@@ -1176,6 +1184,7 @@ namespace Foxoft
                     trPaymentLine.Payment = isNegativ ? il.NetAmount * (-1) : il.NetAmount;
                     trPaymentLine.CurrencyCode = il.CurrencyCode;
                     trPaymentLine.ExchangeRate = il.ExchangeRate;
+                    trPaymentLine.CashRegisterCode = btn_CashRegCode.EditValue?.ToString();
                     trPaymentLine.LineDescription = il.LineDescription;
                     trPaymentLine.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
                     efMethods.InsertEntity(trPaymentLine);
@@ -1761,20 +1770,34 @@ namespace Foxoft
         {
             foreach (BaseLayoutItem item in group.Items)
             {
-                if (item is LayoutControlItem layoutControlItem)
-                {
-                    if (layoutControlItem.Control is GridControl gridControl)
-                        gridControl.Enabled = !isReadOnly;
-                    else if (layoutControlItem.Control is BaseEdit baseEdit)
-                    {
-                        baseEdit.Properties.ReadOnly = isReadOnly;
+                if (item is not LayoutControlItem lci)
+                    continue;
 
-                        if (baseEdit is ButtonEdit buttonEdit && baseEdit.DataBindings[0].BindingMemberInfo.BindingField != nameof(TrInvoiceHeader.DocumentNumber))
-                            buttonEdit.Properties.Buttons[0].Enabled = !isReadOnly;
+                if (lci.Control is GridControl gridControl)
+                {
+                    gridControl.Enabled = !isReadOnly;
+                    continue;
+                }
+
+                if (lci.Control is not BaseEdit baseEdit)
+                    continue;
+
+                baseEdit.Properties.ReadOnly = isReadOnly;
+
+                if (baseEdit is ButtonEdit buttonEdit)
+                {
+                    // Binding yoxdursa, sadəcə çıx (və ya default davranış seç)
+                    if (baseEdit.DataBindings == null || baseEdit.DataBindings.Count == 0)
+                        continue;
+
+                    if (baseEdit.DataBindings[0].BindingMemberInfo.BindingField != nameof(TrInvoiceHeader.DocumentNumber))
+                    {
+                        buttonEdit.Properties.Buttons[0].Enabled = !isReadOnly;
                     }
                 }
             }
         }
+
 
         private void gC_InvoiceLine_EditorKeyPress(object sender, KeyPressEventArgs e)
         {
@@ -1827,24 +1850,6 @@ namespace Foxoft
 
         private void LoadLayout()
         {
-            //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
-            if (new string[] { "EX", "EI", "IT", "CN" }.Contains(dcProcess.ProcessCode))
-            {
-                BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
-                RPG_Payment.Visible = false;
-                RPG_Installment.Visible = false;
-            }
-            else
-            {
-                BBI_InvoiceExpenses.Visibility = BarItemVisibility.Always;
-                RPG_Payment.Visible = true;
-                RPG_Installment.Visible = true;
-            }
-
-            LCG_InfoInstallment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
-            LCG_Installment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
-            RPG_Installment.Visible = false;
-
             if (new string[] { "EX", "EI", "CN", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
             {
                 btnEdit_CurrAccCode.Enabled = false;
@@ -1853,10 +1858,16 @@ namespace Foxoft
                 colProductCost.Visible = false;
                 colBenefit.Visible = false;
 
+                BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
+                RPG_Payment.Visible = false;
+                RPG_Installment.Visible = false;
+
                 if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                 {
                     colQty.Visible = false;
                     colQty.OptionsColumn.ReadOnly = true;
+                    ItemForWarehouseCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                    LCI_CashRegCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
                 }
 
                 if (new string[] { "CI", "CO", "IT", "CN" }.Contains(dcProcess.ProcessCode))
@@ -1870,14 +1881,13 @@ namespace Foxoft
                         colCurrencyCode.Visible = false;
                         col_NetAmount.Visible = false;
                     }
-
-                    if (dcProcess.ProcessCode == "CN")
+                    else if (dcProcess.ProcessCode == "CN")
                     {
                         BBI_CountingStock.Visibility = BarItemVisibility.Always;
                     }
                 }
             }
-            if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
+            else if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
             {
                 LCG_InfoInstallment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
                 LCG_Installment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
@@ -2758,6 +2768,58 @@ namespace Foxoft
 
             FormCounting wizardForm1 = new(invoiceLines, trInvoiceHeader.InvoiceHeaderId);
             wizardForm1.ShowDialog();
+        }
+
+        private void Btn_CashRegCode_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+
+            using (FormCashRegisterList form = new(editor.EditValue?.ToString()))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    editor.EditValue = form.dcCurrAcc.CurrAccCode;
+                }
+            }
+        }
+
+        private void Btn_CashRegCode_EditValueChanged(object sender, EventArgs e)
+        {
+            DcCurrAcc curr = efMethods.SelectCashRegById(btnEdit_CurrAccCode.EditValue?.ToString());
+            if (trInvoiceHeader is null || curr is null)
+                return;
+
+            if (dbContext != null && dataLayoutControl1.IsValid(out _))
+                if (gV_InvoiceLine.DataRowCount > 0)
+                    SavePayment();
+        }
+
+        private void Btn_CashRegCode_Validating(object sender, CancelEventArgs e)
+        {
+            if (sender is not ButtonEdit editor)
+                return;
+
+            dxErrorProvider1.SetError(editor, string.Empty);
+
+            string value = editor.Text?.Trim();
+
+            if (string.IsNullOrEmpty(value))
+                return;
+
+            DcCurrAcc curr = efMethods.SelectCashRegById(value);
+
+            if (curr is null)
+            {
+                SetValidationError(editor, e, Resources.Form_Invoice_NoCashReg);
+                return;
+            }
+
+            dxErrorProvider1.SetError(editor, string.Empty);
+        }
+
+        private void Btn_CashRegCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ExceptionMode = ExceptionMode.DisplayError;
         }
     }
 }

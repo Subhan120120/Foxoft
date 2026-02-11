@@ -3578,4 +3578,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Validation_Range_Max" xml:space="preserve">
     <value>{0} {1}dan kiçik olmalıdır</value>
   </data>
+  <data name="Form_Invoice_NoCashReg" xml:space="preserve">
+    <value>Belə bir kassa yoxdur.</value>
+  </data>
 </root>

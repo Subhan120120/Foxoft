@@ -3578,4 +3578,7 @@ To delete, cancel the receipt!</value>
   <data name="Validation_Range_Max" xml:space="preserve">
     <value>{0} must be less than {1}</value>
   </data>
+  <data name="Form_Invoice_NoCashReg" xml:space="preserve">
+    <value>There is no cash register</value>
+  </data>
 </root>

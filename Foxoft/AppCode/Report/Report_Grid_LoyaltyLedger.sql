@@ -1,19 +1,15 @@
 ﻿
 
 
---delete from TrLoyaltyTxns
-
-select * from TrLoyaltyTxns
-
 
 SELECT
       lt.LoyaltyTxnId
     , lt.TxnType
     , InvoiceDocumentNumber = ISNULL(ih.DocumentNumber, ph.DocumentNumber)
-    , NetAmountLoc= inv.NetAmountLoc
+    , NetAmountLoc = inv.NetAmountLoc
+    , PaymentLoc
     , EarnAmount       = inv.NetAmountLoc * lp.EarnPercent / 100
-    , PaymentLoc = PaymentLoc
-    , Balance    = (ISNULL(inv.NetAmountLoc, 0) * lp.EarnPercent / 100) - ISNULL(PaymentLoc, 0)
+    , Amount
     , lt.Note
     , lt.InvoiceHeaderId
     , lt.PaymentLineId
@@ -39,4 +35,5 @@ OUTER APPLY
     FROM TrInvoiceLines il
     WHERE il.InvoiceHeaderId = lt.InvoiceHeaderId AND TxnType IN (1, 2)
 ) inv
+
 

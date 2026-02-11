@@ -6857,6 +6857,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no cash register.
+        /// </summary>
+        public static string Form_Invoice_NoCashReg {
+            get {
+                return ResourceManager.GetString("Form_Invoice_NoCashReg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is no invoice to delete..
         /// </summary>
         public static string Form_Invoice_NoInvoiceToDelete {

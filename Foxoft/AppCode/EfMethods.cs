@@ -1,4 +1,5 @@
-﻿using DevExpress.Data.Filtering;
+﻿using DevExpress.CodeParser;
+using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
@@ -1026,6 +1027,16 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public string CashRegFromExpeence(Guid invoiceHeaderId, string storeCode)
+        {
+            using subContext db = new();
+            return db.TrPaymentHeaders  //xerce bagli her hansi odenisin kassasi
+                .Where(ph => ph.InvoiceHeaderId == invoiceHeaderId)
+                .SelectMany(ph => ph.TrPaymentLines)
+                .Select(pl => pl.CashRegisterCode)
+                .FirstOrDefault() ?? SelectCashRegByStore(storeCode);
+        }
+
         public int UpdatePaymentIsLocked(Guid paymentHeaderId, bool isLocked)
         {
             using subContext db = new();
@@ -1655,6 +1666,14 @@ namespace Foxoft
             return wareCode;
         }
 
+        public DcCurrAcc? SelectCashRegById(string currAccCode)
+        {
+            using subContext db = new();
+
+            return db.DcCurrAccs.Where(x => x.IsDisabled == false && x.CurrAccTypeCode == 5)
+                                  .FirstOrDefault(x => x.CurrAccCode == currAccCode);
+        }
+
         public string? SelectCashRegByStore(string storeCode)
         {
             using subContext db = new();
@@ -2098,7 +2117,7 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.TrLoyaltyTxns
-                                .Where(x=>x.TxnType == LoyaltyTxnType.Earn)
+                                .Where(x => x.TxnType == LoyaltyTxnType.Earn)
                                 .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                 .Sum(x => x.Amount);
         }
