@@ -179,6 +179,7 @@ namespace Foxoft
             lUE_CashlessCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_CashlessCurrency.Properties.Appearance.Options.UseFont = true;
             lUE_CashlessCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            lUE_CashlessCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", "CurrencyCode"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "CurrencyDesc") });
             lUE_CashlessCurrency.Properties.DisplayMember = "CurrencyDesc";
             lUE_CashlessCurrency.Properties.NullText = "";
             lUE_CashlessCurrency.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
@@ -326,6 +327,7 @@ namespace Foxoft
             lUE_cashCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_cashCurrency.Properties.Appearance.Options.UseFont = true;
             lUE_cashCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            lUE_cashCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", "CurrencyCode"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "CurrencyDesc") });
             lUE_cashCurrency.Properties.DisplayMember = "CurrencyDesc";
             lUE_cashCurrency.Properties.Name = "lUE_cashCurrency";
             lUE_cashCurrency.Properties.NullText = "";
@@ -345,6 +347,7 @@ namespace Foxoft
             lUE_PaymentMethod.Properties.Appearance.Font = new Font("Tahoma", 10F);
             lUE_PaymentMethod.Properties.Appearance.Options.UseFont = true;
             lUE_PaymentMethod.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            lUE_PaymentMethod.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentMethodId", "PaymentMethodId"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentMethodDesc", "PaymentMethodDesc") });
             lUE_PaymentMethod.Properties.DisplayMember = "PaymentMethodDesc";
             lUE_PaymentMethod.Properties.NullText = "";
             lUE_PaymentMethod.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;

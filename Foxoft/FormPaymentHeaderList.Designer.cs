@@ -205,7 +205,7 @@ namespace Foxoft
             // 
             // colPosterminalId
             // 
-            colPosterminalId.Caption = Resources.Entity_PaymentHeader_PosterminalId;
+            colPosterminalId.Caption = Resources.Entity_PaymentHeader_TerminalId;
             colPosterminalId.FieldName = "PosterminalId";
             colPosterminalId.Name = "colPosterminalId";
             // 

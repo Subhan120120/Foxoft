@@ -224,7 +224,7 @@ namespace Foxoft
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentTypeCode, PaymentType.Cash);
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentMethodId, 1);
 
-            string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
+            string cashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
 
             if (!String.IsNullOrEmpty(cashReg))
                 gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, cashReg);

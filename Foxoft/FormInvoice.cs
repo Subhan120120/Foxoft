@@ -352,7 +352,7 @@ namespace Foxoft
 
             if (new string[] { "EX" }.Contains(dcProcess.ProcessCode))
             {
-                btn_CashRegCode.EditValue = efMethods.CashRegFromExpeence(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.StoreCode);
+                btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
             }
 
             Tag = btnEdit_DocNum.EditValue;
@@ -1234,7 +1234,7 @@ namespace Foxoft
             trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trPaymentLine.ExchangeRate = 1f;
             string storeCode = trInvoiceHeader.StoreCode;
-            trPaymentLine.CashRegisterCode = efMethods.SelectCashRegByStore(storeCode);
+            trPaymentLine.CashRegisterCode = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
             trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
 
             return trPaymentLine;
@@ -1278,7 +1278,7 @@ namespace Foxoft
             decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
             decimal pay = Math.Max(Math.Round(Math.Abs(summaryInvoice) - Math.Abs(prePaid), 4), 0);
 
-            using FormPayment formPayment = new(PaymentType.Cash, pay, trInvoiceHeader, new[] { PaymentType.Cash, PaymentType.Cashless, PaymentType.Bonus, PaymentType.Commission }, dcLoyaltyCard);
+            using FormPayment formPayment = new(PaymentType.Cash, pay, trInvoiceHeader, dcLoyaltyCard);
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {
@@ -1850,6 +1850,8 @@ namespace Foxoft
 
         private void LoadLayout()
         {
+            // RP, WP, EX, EI, SB, CI, WI, CN, IT, RS, WS, IS, CO, WO, RPO, RSO
+
             if (new string[] { "EX", "EI", "CN", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
             {
                 btnEdit_CurrAccCode.Enabled = false;

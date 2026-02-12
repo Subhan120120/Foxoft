@@ -90,8 +90,8 @@ namespace Foxoft.Models
         [StringLength(30, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string StoreCode { get; set; }
 
-        [Display(Name = nameof(Resources.Entity_PaymentHeader_PosterminalId), ResourceType = typeof(Resources))]
-        public short PosterminalId { get; set; }
+        [Display(Name = nameof(Resources.Entity_PaymentHeader_TerminalId), ResourceType = typeof(Resources))]
+        public int? TerminalId { get; set; }
 
         [DefaultValue("0")]
         [Display(Name = nameof(Resources.Entity_PaymentHeader_IsCompleted), ResourceType = typeof(Resources))]

@@ -1,10 +1,8 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
-using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Properties;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
 namespace Foxoft
@@ -21,7 +19,7 @@ namespace Foxoft
         private DcPaymentMethod dcPaymentMethod = new();
         private EfMethods efMethods = new();
         private DcLoyaltyCard dcLoyaltyCard = new();
-        private decimal availableBonus;
+        private decimal availableBonus = 0;
 
         private bool isNegativ = false;
 
@@ -50,18 +48,24 @@ namespace Foxoft
             lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless });
         }
 
-        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader)
+        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader, DcLoyaltyCard loyaltyCard = null)
            : this()
         {
-            this.trInvoiceHeader = trInvoiceHeader;
+            trInvoiceHeader = invoiceHeader;
+            dcLoyaltyCard = loyaltyCard;
 
-            PaymentDefaults(paymentType, trInvoiceHeader);
+            if (dcLoyaltyCard != null)
+                availableBonus = efMethods.SelectLoyaltyBonusBalance(dcLoyaltyCard.LoyaltyCardId, trInvoiceHeader.InvoiceHeaderId);
+
+            txtEdit_LoyaltyBalance.EditValue = availableBonus;
+
+            PaymentDefaults(paymentType, invoiceHeader);
 
             lUE_PaymentMethod.EditValue = efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless })
                                                     .FirstOrDefault(x => x.IsDefault == true)?
                                                     .PaymentMethodId;
 
-            if ((bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode, trInvoiceHeader.IsReturn))
+            if ((bool)CustomExtensions.DirectionIsIn(invoiceHeader.ProcessCode, invoiceHeader.IsReturn))
                 isNegativ = true;
 
             switch (paymentType)
@@ -69,34 +73,29 @@ namespace Foxoft
                 case PaymentType.Cash:
                     trPaymentLineCash.Payment = Math.Abs(pay);
                     break;
+
                 case PaymentType.Cashless:
                     trPaymentLineCashless.Payment = Math.Abs(pay);
                     break;
+
                 case PaymentType.Bonus:
-                    trPaymentLineBonus.Payment = Math.Abs(pay);
+
+                    decimal bonusToUse = Math.Min(Math.Abs(pay), availableBonus);
+                    decimal remainingAmount = Math.Abs(pay) - bonusToUse;
+
+                    trPaymentLineBonus.Payment = bonusToUse;
+                    trPaymentLineCash.Payment = remainingAmount;
+
                     break;
+
                 default:
                     break;
             }
+
         }
 
-        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, PaymentType[] paymentTypes, DcLoyaltyCard loyaltyCard)
-           : this(paymentType, pay, trInvoiceHeader)
-        {
-            lCG_Cash.Visibility = paymentTypes.Contains(PaymentType.Cash) ? LayoutVisibility.Always : LayoutVisibility.Never;
-            lCG_Cashless.Visibility = paymentTypes.Contains(PaymentType.Cashless) ? LayoutVisibility.Always : LayoutVisibility.Never;
-            lCG_CustomerBonus.Visibility = paymentTypes.Contains(PaymentType.Bonus) ? LayoutVisibility.Always : LayoutVisibility.Never;
-
-            dcLoyaltyCard = loyaltyCard;
-
-            if (dcLoyaltyCard != null)
-                availableBonus = efMethods.SelectLoyaltyBonusBalance(dcLoyaltyCard.LoyaltyCardId, trInvoiceHeader.InvoiceHeaderId);
-
-            txtEdit_LoyaltyBalance.EditValue = availableBonus;
-        }
-
-        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, PaymentType[] paymentTypes, DcLoyaltyCard loyaltyCard, bool isInstallmentPayment)
-           : this(paymentType, pay, trInvoiceHeader, paymentTypes, loyaltyCard)
+        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader, bool isInstallmentPayment, DcLoyaltyCard loyaltyCard = null)
+           : this(paymentType, pay, invoiceHeader, loyaltyCard)
         {
             if (isInstallmentPayment)
                 trPaymentHeader.PaymentKindId = 3;
@@ -116,6 +115,7 @@ namespace Foxoft
             trPaymentHeader.ProcessCode = "PA";
             trPaymentHeader.DocumentDate = trInvoiceHeader.DocumentDate;
             trPaymentHeader.DocumentTime = trInvoiceHeader.DocumentTime;
+            trPaymentHeader.TerminalId = Settings.Default.TerminalId;
 
             if (invoiceExist)
             {
@@ -155,11 +155,8 @@ namespace Foxoft
             trPaymentLineCommission.PaymentMethodId = 3;
             trPaymentLineCommission.CreatedUserName = Authorization.CurrAccCode;
 
-            //trInstallment.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
-            //trInstallment.ExchangeRate = 1;
-
-            string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
-            if (!String.IsNullOrEmpty(cashReg))
+            string cashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
+            if (cashReg is not null)
             {
                 trPaymentLineCash.CashRegisterCode = cashReg;
                 trPaymentLineCashless.CashRegisterCode = cashReg;
@@ -233,7 +230,7 @@ namespace Foxoft
             {
                 string cashReg = dcPaymentMethod.DefaultCashRegCode;
                 if (String.IsNullOrEmpty(cashReg))
-                    cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
+                    cashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
 
                 btnEdit_BankAccout.EditValue = cashReg;
             }
@@ -677,7 +674,6 @@ namespace Foxoft
 
             RecalcCashlessCommission();
         }
-
 
         private static void SetPaymentLoc(TrPaymentLine line, decimal desiredLoc)
         {

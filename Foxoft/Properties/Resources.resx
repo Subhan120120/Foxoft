@@ -1263,8 +1263,8 @@
   <data name="Entity_PaymentHeader_StoreCode" xml:space="preserve">
     <value>Store Code</value>
   </data>
-  <data name="Entity_PaymentHeader_PosterminalId" xml:space="preserve">
-    <value>POS Terminal</value>
+  <data name="Entity_PaymentHeader_TerminalId" xml:space="preserve">
+    <value>Terminal</value>
   </data>
   <data name="Entity_PaymentHeader_IsCompleted" xml:space="preserve">
     <value>Completed</value>
@@ -3580,5 +3580,8 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Form_Invoice_NoCashReg" xml:space="preserve">
     <value>There is no cash register</value>
+  </data>
+  <data name="Entity_Terminal_CashRegisterCode" xml:space="preserve">
+    <value>Cash Register Code</value>
   </data>
 </root>

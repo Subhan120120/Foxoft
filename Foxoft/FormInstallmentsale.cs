@@ -358,7 +358,7 @@ namespace Foxoft
 
         private void MakePayment(decimal pay, TrInvoiceHeader trInvoiceHeader)
         {
-            using FormPayment formPayment = new(PaymentType.Cash, Math.Round(pay, 2), trInvoiceHeader, new[] { PaymentType.Cash, PaymentType.Cashless }, new DcLoyaltyCard() { }, true);
+            using FormPayment formPayment = new(PaymentType.Cash, Math.Round(pay, 2), trInvoiceHeader, true);
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {

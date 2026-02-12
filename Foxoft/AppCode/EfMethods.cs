@@ -1027,14 +1027,14 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public string CashRegFromExpeence(Guid invoiceHeaderId, string storeCode)
+        public string CashRegFromExpense(Guid invoiceHeaderId, int terminalId)
         {
             using subContext db = new();
             return db.TrPaymentHeaders  //xerce bagli her hansi odenisin kassasi
                 .Where(ph => ph.InvoiceHeaderId == invoiceHeaderId)
                 .SelectMany(ph => ph.TrPaymentLines)
                 .Select(pl => pl.CashRegisterCode)
-                .FirstOrDefault() ?? SelectCashRegByStore(storeCode);
+                .FirstOrDefault() ?? SelectCashRegisterByTerminal(terminalId);
         }
 
         public int UpdatePaymentIsLocked(Guid paymentHeaderId, bool isLocked)
@@ -1698,6 +1698,19 @@ namespace Foxoft
                 cashRegCode = dcCurrAcc.CurrAccCode;
 
             return cashRegCode;
+        }
+
+        public string? SelectCashRegisterByTerminal(int terminaId)
+        {
+            using subContext db = new();
+
+            DcCurrAcc dcCashReg = db.DcTerminals.Where(x => x.TerminalId == terminaId)
+                                  .Select(x => x.DcCashRegister)
+                                  .FirstOrDefault();
+
+            if (dcCashReg is not null)
+                return dcCashReg.CurrAccCode;
+            else return null;
         }
 
         public string SelectDefaultCustomerByStore(string storeCode)

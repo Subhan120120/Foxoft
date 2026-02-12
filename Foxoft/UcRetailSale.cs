@@ -630,7 +630,6 @@ namespace Foxoft
                 paymentType,
                 summaryNetAmount,
                 trInvoiceHeader,
-                new[] { PaymentType.Cash, PaymentType.Cashless, PaymentType.Bonus, PaymentType.Commission },
                 loyaltyCard);
 
             if (formPayment.ShowDialog(this) != DialogResult.OK)

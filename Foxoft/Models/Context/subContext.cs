@@ -585,8 +585,8 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcTerminal>().HasData(
-                new DcTerminal { TerminalId = 1, TerminalDesc = "Notebook", TouchUIMode = false, TouchScaleFactor = 1 },
-                new DcTerminal { TerminalId = 2, TerminalDesc = "Telefon", TouchUIMode = true, TouchScaleFactor = 2 }
+                new DcTerminal { TerminalId = 1, TerminalDesc = "Notebook",  CashRegisterCode = "kassa01", TouchUIMode = false, TouchScaleFactor = 1 },
+                new DcTerminal { TerminalId = 2, TerminalDesc = "Telefon", CashRegisterCode = "kassa01", TouchUIMode = true, TouchScaleFactor = 2 }
                 );
 
             modelBuilder.Entity<DcCurrAcc>().HasData(

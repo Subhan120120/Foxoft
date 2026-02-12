@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Foxoft.Properties;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Foxoft.Properties;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
@@ -26,10 +27,17 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Common_RowGuid), ResourceType = typeof(Resources))]
         public Guid? RowGuid { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [Display(Name = nameof(Resources.Entity_Terminal_CashRegisterCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcCashRegister))]
+        public string CashRegisterCode { get; set; }
+
         [Display(Name = nameof(Resources.Entity_Terminal_TouchUIMode), ResourceType = typeof(Resources))]
         public bool TouchUIMode { get; set; }
 
         [Display(Name = nameof(Resources.Entity_Terminal_TouchScaleFactor), ResourceType = typeof(Resources))]
         public int TouchScaleFactor { get; set; }
+        public virtual DcCurrAcc DcCashRegister { get; set; }
     }
 }

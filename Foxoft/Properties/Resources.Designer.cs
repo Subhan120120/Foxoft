@@ -3031,15 +3031,6 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to POS Terminal.
-        /// </summary>
-        public static string Entity_PaymentHeader_PosterminalId {
-            get {
-                return ResourceManager.GetString("Entity_PaymentHeader_PosterminalId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Process.
         /// </summary>
         public static string Entity_PaymentHeader_ProcessCode {
@@ -3054,6 +3045,15 @@ namespace Foxoft.Properties {
         public static string Entity_PaymentHeader_StoreCode {
             get {
                 return ResourceManager.GetString("Entity_PaymentHeader_StoreCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminal.
+        /// </summary>
+        public static string Entity_PaymentHeader_TerminalId {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_TerminalId", resourceCulture);
             }
         }
         
@@ -5034,6 +5034,15 @@ namespace Foxoft.Properties {
         public static string Entity_Terminal {
             get {
                 return ResourceManager.GetString("Entity_Terminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Register Code.
+        /// </summary>
+        public static string Entity_Terminal_CashRegisterCode {
+            get {
+                return ResourceManager.GetString("Entity_Terminal_CashRegisterCode", resourceCulture);
             }
         }
         

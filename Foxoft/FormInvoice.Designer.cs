@@ -753,7 +753,6 @@ namespace Foxoft
             RPG_Payment.ItemLinks.Add(bBI_PaymentDelete);
             RPG_Payment.Name = "RPG_Payment";
             RPG_Payment.Text = Resources.FormInvoice_RibbonGroup_Payment;
-            RPG_Payment.Visible = false;
             // 
             // RPG_Installment
             // 
@@ -1594,9 +1593,9 @@ namespace Foxoft
             btn_CashRegCode.StyleController = dataLayoutControl1;
             btn_CashRegCode.TabIndex = 19;
             btn_CashRegCode.ButtonClick += Btn_CashRegCode_ButtonClick;
+            btn_CashRegCode.InvalidValue += Btn_CashRegCode_InvalidValue;
             btn_CashRegCode.EditValueChanged += Btn_CashRegCode_EditValueChanged;
             btn_CashRegCode.Validating += Btn_CashRegCode_Validating;
-            btn_CashRegCode.InvalidValue += Btn_CashRegCode_InvalidValue; ;
             // 
             // ItemForTrInstallment
             // 
