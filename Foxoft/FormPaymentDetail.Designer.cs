@@ -68,7 +68,6 @@ namespace Foxoft
             colPayment = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentLoc = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoLUE_CurrencyCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
             colCashRegisterCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -110,7 +109,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoLUE_PaymentTypeCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_ReceivePayment).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_MakePayment).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_CashregisterCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
@@ -315,7 +313,7 @@ namespace Foxoft
             gC_PaymentLine.MainView = gV_PaymentLine;
             gC_PaymentLine.MenuManager = ribbonControl1;
             gC_PaymentLine.Name = "gC_PaymentLine";
-            gC_PaymentLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoLUE_CurrencyCode, repoCalcEdit_ReceivePayment, repoCalcEdit_MakePayment, repoBtnEdit_CashregisterCode, repoLUE_PaymentTypeCode });
+            gC_PaymentLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {  repoCalcEdit_ReceivePayment, repoCalcEdit_MakePayment, repoBtnEdit_CashregisterCode, repoLUE_PaymentTypeCode });
             gC_PaymentLine.Size = new Size(875, 276);
             gC_PaymentLine.TabIndex = 6;
             gC_PaymentLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_PaymentLine });
@@ -417,25 +415,11 @@ namespace Foxoft
             // 
             // colCurrencyCode
             // 
-            colCurrencyCode.ColumnEdit = repoLUE_CurrencyCode;
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
             colCurrencyCode.VisibleIndex = 3;
             colCurrencyCode.Width = 155;
-            // 
-            // repoLUE_CurrencyCode
-            // 
-            repoLUE_CurrencyCode.AutoHeight = false;
-            repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
-            repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
-            repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
-            repoLUE_CurrencyCode.NullText = "";
-            repoLUE_CurrencyCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
-            repoLUE_CurrencyCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
-            repoLUE_CurrencyCode.ValueMember = "CurrencyCode";
-            repoLUE_CurrencyCode.EditValueChanged += repoLUE_CurrencyCode_EditValueChanged;
             // 
             // colLineDescription
             // 
@@ -723,7 +707,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoLUE_PaymentTypeCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_ReceivePayment).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_MakePayment).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_CashregisterCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties.CalendarTimeProperties).EndInit();
             ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties).EndInit();
@@ -787,7 +770,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentLoc;
         private DevExpress.XtraGrid.Columns.GridColumn colCashRegisterCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_PaymentTypeCode;
-        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_CurrencyCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_CashregisterCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentNumber;
         private DevExpress.XtraBars.BarButtonItem bBI_SaveAndClose;

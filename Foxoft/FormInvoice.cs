@@ -370,8 +370,6 @@ namespace Foxoft
             SplashScreenManager.CloseForm(false);
         }
 
-
-
         private void CalcPaidAmount()
         {
             decimal cashSum = efMethods.SelectPaymentLinesCashSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);

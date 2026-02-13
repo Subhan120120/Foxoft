@@ -8,6 +8,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraVerticalGrid;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -39,9 +40,10 @@ namespace Foxoft
             reportClass.AddReports(BSI_Reports, "PaymentDetails", nameof(trPaymentHeader.PaymentHeaderId), gV_PaymentLine, activeFilterStr);
 
             LUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
-            repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectEntities<DcPaymentType>();
             repoLUE_PaymentTypeCode.ReadOnly = true;
+
+            colCurrencyCode.ColumnEdit = gC_PaymentLine.AddCurrencyLookUpEdit();
 
             ClearControlsAddNew();
         }
@@ -318,13 +320,6 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
-        }
-
-        private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
-        {
-            LookUpEdit textEditor = (LookUpEdit)sender;
-            float exRate = efMethods.SelectEntityById<DcCurrency>(textEditor.EditValue.ToString()).ExchangeRate;
-            gV_PaymentLine.SetFocusedRowCellValue(colExchangeRate, exRate);
         }
 
         private void bBI_SaveAndClose_ItemClick(object sender, ItemClickEventArgs e)

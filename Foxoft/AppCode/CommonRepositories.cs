@@ -12,6 +12,7 @@ namespace Foxoft
 {
     public static class GridRepositoryExtensions
     {
+        static EfMethods efMethods = new EfMethods();
         public static RepositoryItemButtonEdit AddProductCodeButtonEdit(
             this GridControl grid,
             EventHandler<ButtonPressedEventArgs>? externalClick = null)
@@ -77,6 +78,56 @@ namespace Foxoft
                 }
 
                 externalClick?.Invoke(s, e);
+            };
+
+            grid.RepositoryItems.Add(repo);
+            return repo;
+        }
+
+        public static RepositoryItemLookUpEdit AddCurrencyLookUpEdit(
+            this GridControl grid,
+            EventHandler<EventArgs>? externalClick = null)
+        {
+            var gridview = grid.MainView;
+
+            var repo = new RepositoryItemLookUpEdit();
+            repo.DataSource = efMethods.SelectEntities<DcCurrency>();
+            repo.Buttons.Clear();
+            repo.AutoHeight = false;
+            repo.BestFitMode = BestFitMode.BestFitResizePopup;
+            repo.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            repo.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo(nameof(DcCurrency.CurrencyCode), ""), new LookUpColumnInfo(nameof(DcCurrency.CurrencyDesc), "") });
+            repo.DisplayMember = nameof(DcCurrency.CurrencyDesc);
+            repo.NullText = "";
+            repo.PopupFilterMode = PopupFilterMode.Contains;
+            repo.SearchMode = SearchMode.AutoComplete;
+            repo.ShowFooter = false;
+            repo.ShowHeader = false;
+            repo.ValueMember = nameof(DcCurrency.CurrencyCode);
+
+            repo.EditValueChanged += (s, e) =>
+            {
+                LookUpEdit editor = (LookUpEdit)s;
+                if (editor == null) return;
+
+                var grid = editor.Parent as GridControl;                  // grid that hosts the editor
+                var view = grid?.FocusedView as GridView; // current view
+                if (view == null) return;
+
+                try
+                {
+                    float exRate = efMethods
+                        .SelectEntityById<DcCurrency>(editor.EditValue?.ToString())
+                        .ExchangeRate;
+
+                    view.SetFocusedRowCellValue(nameof(DcCurrency.ExchangeRate), exRate);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), Resources.Common_ErrorTitle);
+                }
+
+                externalClick?.Invoke(editor, e);
             };
 
             grid.RepositoryItems.Add(repo);
