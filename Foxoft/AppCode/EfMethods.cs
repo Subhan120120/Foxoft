@@ -5,6 +5,7 @@ using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
 using DevExpress.Mvvm.Native;
 using DevExpress.Spreadsheet;
+using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using DevExpress.XtraSpreadsheet.Model;
 using Foxoft.Models;

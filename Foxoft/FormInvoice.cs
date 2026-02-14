@@ -303,6 +303,9 @@ namespace Foxoft
         {
             SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
 
+            if (new string[] { "EX" }.Contains(dcProcess.ProcessCode))
+                btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
+
             dbContext = new subContext();
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
@@ -349,11 +352,6 @@ namespace Foxoft
             dataLayoutControl1.IsValid(out List<string> errorList);
             CalcPaidAmount();
             //CalcInstallmentAmount();
-
-            if (new string[] { "EX" }.Contains(dcProcess.ProcessCode))
-            {
-                btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
-            }
 
             Tag = btnEdit_DocNum.EditValue;
 
@@ -2785,7 +2783,7 @@ namespace Foxoft
 
         private void Btn_CashRegCode_EditValueChanged(object sender, EventArgs e)
         {
-            DcCurrAcc curr = efMethods.SelectCashRegById(btnEdit_CurrAccCode.EditValue?.ToString());
+            DcCurrAcc curr = efMethods.SelectCashRegById(btn_CashRegCode.EditValue?.ToString());
             if (trInvoiceHeader is null || curr is null)
                 return;
 
