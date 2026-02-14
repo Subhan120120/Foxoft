@@ -6,6 +6,7 @@
 	, PhoneNum
 	, IsVIP
 	, CurrAccTypeCode
+	, StoreCode
 	from 
 	DcCurrAccs 
 	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1
@@ -18,4 +19,5 @@
 	, IsVIP
 	, CurrAccTypeCode
 	, CashRegisterCode 
+	, StoreCode
 	order by CurrAccDesc

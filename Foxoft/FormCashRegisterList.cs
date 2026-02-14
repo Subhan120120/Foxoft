@@ -29,8 +29,8 @@ namespace Foxoft
         AdoMethods adoMethods = new();
         ReportClass reportClass = new();
         public DcCurrAcc dcCurrAcc { get; set; }
-        public byte cashRegPaymentTypeCode;
         public string cashRegCode;
+        public string storeCode;
 
         public FormCashRegisterList()
         {
@@ -40,10 +40,6 @@ namespace Foxoft
 
             // Reports group name from resources
             reportClass.AddReports(BSI_Reports, "CashRegisters", nameof(TrPaymentLine.CashRegisterCode), gV_CashRegList);
-
-            UpdateGridViewData();
-            gV_CashRegList.PopulateColumns();
-            LoadLayout();
         }
 
         public FormCashRegisterList(string cashRegCode)
@@ -52,14 +48,17 @@ namespace Foxoft
             this.cashRegCode = cashRegCode; // Focus Selected currAccCode
         }
 
-        public FormCashRegisterList(string currAccCode, byte cashRegPaymentTypeCode)
-            : this(currAccCode)
+        public FormCashRegisterList(string cashRegCode, string storeCode)
+            : this(cashRegCode)
         {
-            this.cashRegPaymentTypeCode = cashRegPaymentTypeCode;
+            this.storeCode = storeCode;
         }
 
         private void FormCashRegisterList_Load(object sender, EventArgs e)
         {
+            UpdateGridViewData();
+            gV_CashRegList.PopulateColumns();
+            LoadLayout();
         }
 
         private void FormCashRegisterList_Activated(object sender, EventArgs e)
@@ -72,7 +71,7 @@ namespace Foxoft
                     gC_CashRegList.BeginInvoke(new Action(gV_CashRegList.ShowFindPanel));
             }
 
-            LoadCurrAccs();
+            LoadData();
 
             //Focus Special Row
             int rowHandle = gV_CashRegList.LocateByValue(0, colCurrAccCode, cashRegCode);
@@ -83,7 +82,7 @@ namespace Foxoft
             }
         }
 
-        private void LoadCurrAccs()
+        private void LoadData()
         {
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
 
@@ -92,7 +91,10 @@ namespace Foxoft
                 if (!string.IsNullOrEmpty(dcReport.ReportQuery))
                 {
                     SqlParameter[] sqlParameters;
-                    string qryMaster = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters);
+                    string clause = "";
+                    if (!string.IsNullOrEmpty(storeCode))
+                        clause = $" StoreCode = '{storeCode}'";
+                    string qryMaster = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, clause, out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
@@ -200,7 +202,7 @@ namespace Foxoft
         {
             int fr = gV_CashRegList.FocusedRowHandle;
 
-            LoadCurrAccs();
+            LoadData();
 
             if (fr > 0)
                 gV_CashRegList.FocusedRowHandle = fr;
@@ -271,7 +273,7 @@ namespace Foxoft
                     if (XtraMessageBox.Show(string.Format(Resources.Message_DeleteConfirm, dcCurrAcc.CurrAccDesc), Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         efMethods.DeleteEntity(dcCurrAcc);
-                        LoadCurrAccs();
+                        LoadData();
                     }
                 }
                 else

@@ -163,6 +163,7 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
+
             invoiceHeaderId = Guid.NewGuid();
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
@@ -191,6 +192,9 @@ namespace Foxoft
                                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync()
                                     .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+
+            if (new string[] { "EX" }.Contains(dcProcess.ProcessCode))
+                btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
 
             if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
                 ClearInstallmentGarantorsAddNew();
@@ -2771,8 +2775,9 @@ namespace Foxoft
         private void Btn_CashRegCode_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             ButtonEdit editor = (ButtonEdit)sender;
+            string storeCode = lUE_StoreCode.EditValue?.ToString();
 
-            using (FormCashRegisterList form = new(editor.EditValue?.ToString()))
+            using (FormCashRegisterList form = new(editor.EditValue?.ToString(), storeCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {

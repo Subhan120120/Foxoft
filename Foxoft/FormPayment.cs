@@ -247,14 +247,14 @@ namespace Foxoft
 
         private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            SelectCashRegister(sender, PaymentType.Cash);
+            SelectCashRegister(sender);
         }
 
-        private void SelectCashRegister(object sender, PaymentType paymentType)
+        private void SelectCashRegister(object sender)
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormCashRegisterList form = new(trInvoiceHeader.CurrAccCode, (byte)paymentType))
+            using (FormCashRegisterList form = new(trInvoiceHeader.CurrAccCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                     buttonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
@@ -324,8 +324,7 @@ namespace Foxoft
             object row = lUE_PaymentMethod.Properties.GetDataSourceRowByKeyValue(lUE_PaymentMethod.EditValue);
             if (row is not null)
             {
-                PaymentType code = ((DcPaymentMethod)row).PaymentTypeCode;
-                SelectCashRegister(sender, code);
+                SelectCashRegister(sender);
             }
         }
 
