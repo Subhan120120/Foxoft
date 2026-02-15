@@ -55,7 +55,7 @@ namespace Foxoft
         {
             bool currAccHasClaims = efMethods.CurrAccHasClaims(
                 Authorization.CurrAccCode,
-                nameof(TrInvoiceLine.PosDiscount));
+                "PosNewInvoice");
 
             if (currAccHasClaims)
                 btn_NewInvoice.Visible = true;
