@@ -1368,6 +1368,7 @@ namespace Foxoft
             LCI_NewInvoice.Size = new Size(80, 76);
             LCI_NewInvoice.SizeConstraintsType = SizeConstraintsType.Custom;
             LCI_NewInvoice.TextVisible = false;
+            LCI_NewInvoice.Visibility = LayoutVisibility.Never;
             // 
             // LCG_Total
             // 

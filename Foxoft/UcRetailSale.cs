@@ -58,7 +58,7 @@ namespace Foxoft
                 "PosNewInvoice");
 
             if (currAccHasClaims)
-                btn_NewInvoice.Visible = true;
+                LCI_NewInvoice.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

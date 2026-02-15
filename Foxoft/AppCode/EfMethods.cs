@@ -1007,9 +1007,14 @@ namespace Foxoft
         public int UpdateInvoiceIsCompleted(Guid invoiceHeaderId)
         {
             using subContext db = new();
-            TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, IsCompleted = true };
-            db.Entry(trInvoiceHeader).Property(x => x.IsCompleted).IsModified = true;
-            return db.SaveChanges();
+
+            if (EntityExists<TrInvoiceHeader>(invoiceHeaderId))
+            {
+                TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, IsCompleted = true };
+                db.Entry(trInvoiceHeader).Property(x => x.IsCompleted).IsModified = true;
+                return db.SaveChanges();
+            }
+            else return 0;
         }
 
         public int UpdateInvoiceIsSuspended(Guid invoiceHeaderId, bool isSuspended)
