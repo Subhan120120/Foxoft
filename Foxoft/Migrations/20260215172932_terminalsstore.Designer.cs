@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20260129083955_overpay")]
-    partial class overpay
+    [Migration("20260215172932_terminalsstore")]
+    partial class terminalsstore
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -462,7 +462,7 @@ namespace Foxoft.Migrations
                             MaritalStatus = (byte)0,
                             NewPassword = "123",
                             OfficeCode = "ofs01",
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         },
                         new
                         {
@@ -480,11 +480,11 @@ namespace Foxoft.Migrations
                             MaritalStatus = (byte)0,
                             NewPassword = "",
                             OfficeCode = "ofs01",
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         },
                         new
                         {
-                            CurrAccCode = "mgz01",
+                            CurrAccCode = "MGZ01",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreditLimit = 0m,
                             CurrAccDesc = "Merkez Mağaza",
@@ -499,11 +499,11 @@ namespace Foxoft.Migrations
                             NewPassword = "456",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         },
                         new
                         {
-                            CurrAccCode = "kassa01",
+                            CurrAccCode = "KASSA01",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreditLimit = 0m,
                             CurrAccDesc = "Nağd Kassa",
@@ -517,7 +517,7 @@ namespace Foxoft.Migrations
                             MaritalStatus = (byte)0,
                             NewPassword = "456",
                             OfficeCode = "ofs01",
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         });
                 });
 
@@ -962,6 +962,108 @@ namespace Foxoft.Migrations
                     b.ToTable("DcInstallmentPlan");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcLoyaltyCard", b =>
+                {
+                    b.Property<Guid>("LoyaltyCardId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<Guid?>("LoyaltyProgramId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("LoyaltyCardId");
+
+                    b.HasIndex("CardNumber")
+                        .IsUnique();
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.HasIndex("LoyaltyProgramId");
+
+                    b.ToTable("DcLoyaltyCards");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcLoyaltyProgram", b =>
+                {
+                    b.Property<Guid>("LoyaltyProgramId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("EarnPercent")
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<int?>("ExpireDays")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal?>("MaxRedeemPercent")
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("LoyaltyProgramId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("DcLoyaltyPrograms");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcOffice", b =>
                 {
                     b.Property<string>("OfficeCode")
@@ -1116,15 +1218,6 @@ namespace Foxoft.Migrations
                             PaymentMethodId = 2,
                             IsDefault = false,
                             IsDisabled = false,
-                            IsRedirected = false,
-                            PaymentMethodDesc = "Daxili Kredit",
-                            PaymentTypeCode = (byte)3
-                        },
-                        new
-                        {
-                            PaymentMethodId = 3,
-                            IsDefault = false,
-                            IsDisabled = false,
                             IsRedirected = true,
                             PaymentMethodDesc = "Bir Kart",
                             PaymentTypeCode = (byte)2,
@@ -1132,7 +1225,7 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            PaymentMethodId = 4,
+                            PaymentMethodId = 3,
                             IsDefault = false,
                             IsDisabled = false,
                             IsRedirected = false,
@@ -1141,7 +1234,7 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            PaymentMethodId = 5,
+                            PaymentMethodId = 4,
                             IsDefault = false,
                             IsDisabled = false,
                             IsRedirected = false,
@@ -1923,6 +2016,10 @@ namespace Foxoft.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TerminalId"));
 
+                    b.Property<string>("CashRegisterCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -1953,6 +2050,10 @@ namespace Foxoft.Migrations
                     b.Property<Guid?>("RowGuid")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("StoreCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<string>("TerminalDesc")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -1966,15 +2067,21 @@ namespace Foxoft.Migrations
 
                     b.HasKey("TerminalId");
 
+                    b.HasIndex("CashRegisterCode");
+
+                    b.HasIndex("StoreCode");
+
                     b.ToTable("DcTerminals");
 
                     b.HasData(
                         new
                         {
                             TerminalId = 1,
+                            CashRegisterCode = "KASSA01",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StoreCode = "MGZ01",
                             TerminalDesc = "Notebook",
                             TouchScaleFactor = 1,
                             TouchUIMode = false
@@ -1982,9 +2089,11 @@ namespace Foxoft.Migrations
                         new
                         {
                             TerminalId = 2,
+                            CashRegisterCode = "KASSA01",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StoreCode = "MGZ01",
                             TerminalDesc = "Telefon",
                             TouchScaleFactor = 2,
                             TouchUIMode = true
@@ -2316,7 +2425,7 @@ namespace Foxoft.Migrations
                             OfficeCode = "ofs01",
                             PermitNegativeStock = false,
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
+                            StoreCode = "MGZ01",
                             WarehouseDesc = "Mərkəz deposu",
                             WarehouseTypeCode = (byte)0,
                             WarnNegativeStock = false,
@@ -2398,7 +2507,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CurrAccList",
-                            ReportQuery = "\r\n\r\nselect DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, Balance =ISNULL(SUM(CAST(Amount as money)),0)\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\n, IsDisabled\r\nfrom \r\nDcCurrAccs \r\nleft join \r\n(\r\n	select CurrAccCode\r\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )\r\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL \r\n	\r\n	select CurrAccCode\r\n	, Amount = PaymentLoc -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	\r\n	where 1=1 AND pl.PaymentTypeCode != 4\r\n	--and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\r\nwhere 1 = 1 \r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\n, IsDisabled\r\norder by CurrAccDesc",
+                            ReportQuery = "\r\n\r\nselect DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, Balance =ISNULL(SUM(CAST(Amount as money)),0)\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\n, PersonalTypeCode\r\n, IsDisabled\r\nfrom \r\nDcCurrAccs \r\nleft join \r\n(\r\n	select CurrAccCode\r\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )\r\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL \r\n	\r\n	select CurrAccCode\r\n	, Amount = PaymentLoc -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	\r\n	where 1=1 AND pl.PaymentTypeCode != 4\r\n	--and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\r\nwhere 1 = 1 \r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\n, IsDisabled\r\n, PersonalTypeCode\r\norder by CurrAccDesc",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -2408,7 +2517,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CashRegList",
-                            ReportQuery = "\r\n\r\n	select CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	from \r\n	DcCurrAccs \r\n	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1\r\n	where CurrAccTypeCode = 5 and IsDisabled = 0\r\n		--and DcCurrAccs.IsVIP = 1 \r\n		--and balance.CurrAccCode = '1403'\r\n	group by DcCurrAccs.CurrAccCode\r\n	, CurrAccDesc\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegisterCode \r\n	order by CurrAccDesc",
+                            ReportQuery = "\r\n\r\n	select CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, StoreCode\r\n	from \r\n	DcCurrAccs \r\n	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1\r\n	where CurrAccTypeCode = 5 and IsDisabled = 0\r\n		--and DcCurrAccs.IsVIP = 1 \r\n		--and balance.CurrAccCode = '1403'\r\n	group by DcCurrAccs.CurrAccCode\r\n	, CurrAccDesc\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegisterCode \r\n	, StoreCode\r\n	order by CurrAccDesc",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -2558,6 +2667,39 @@ namespace Foxoft.Migrations
                             ReportLayout = "",
                             ReportName = "Məhsul Qalığı",
                             ReportQuery = "\r\n\r\nselect * From ProductBalanceSerialNumber\r\n\r\n",
+                            ReportTypeId = (byte)1
+                        },
+                        new
+                        {
+                            ReportId = 20,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 1,
+                            ReportLayout = "",
+                            ReportName = "Alacaqlar",
+                            ReportQuery = "\r\n\r\n\r\n\r\n--declare @EndDate date = dateadd(DAY, 1, getdate())\r\n--declare @EndTime time =  '00:00:00.000'\r\n\r\nselect DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, Amount = sum(isnull(Amount,0))\r\n, DcCurrAccs.CurrAccTypeCode\r\n, CurrAccTypeDesc\r\n	from \r\nDcCurrAccs \r\nleft join \r\n(\r\n	select CurrAccCode\r\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n\r\n--	where 1=1\r\n--	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL \r\n	\r\n	select CurrAccCode\r\n	, Amount = PaymentLoc -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n	\r\n--	where 1=1 \r\n--	and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\r\njoin DcCurrAccTypes on DcCurrAccTypes.CurrAccTypeCode = DcCurrAccs.CurrAccTypeCode\r\nwhere 1 = 1 \r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, DcCurrAccs.CurrAccTypeCode\r\n, CurrAccTypeDesc\r\n\r\nhaving   sum(Amount) < 0\r\norder by CurrAccDesc\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+                            ReportTypeId = (byte)1
+                        },
+                        new
+                        {
+                            ReportId = 21,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 2,
+                            ReportLayout = "",
+                            ReportName = "Verəcəklər",
+                            ReportQuery = "\r\n\r\n\r\n--declare @EndDate date = dateadd(DAY, 1, getdate())\r\n--declare @EndTime time =  '00:00:00.000'\r\n\r\nselect DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, Amount = sum(Amount)\r\nfrom \r\nDcCurrAccs \r\nleft join \r\n(\r\n	select CurrAccCode\r\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n\r\n--	where 1=1\r\n--	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL \r\n	\r\n	select CurrAccCode\r\n	, Amount = PaymentLoc -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n	\r\n--	where 1=1 \r\n--	and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\r\nwhere 1 = 1 \r\nand CurrAccTypeCode in (1,2,3)\r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n\r\nhaving   sum(Amount) > 0\r\n",
+                            ReportTypeId = (byte)1
+                        },
+                        new
+                        {
+                            ReportId = 22,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 2,
+                            ReportLayout = "",
+                            ReportName = "Bonus Jurnalı",
+                            ReportQuery = "\r\n\r\n\r\n\r\nSELECT\r\n      lt.LoyaltyTxnId\r\n    , lt.TxnType\r\n    , InvoiceDocumentNumber = ISNULL(ih.DocumentNumber, ph.DocumentNumber)\r\n    , NetAmountLoc = inv.NetAmountLoc\r\n    , PaymentLoc\r\n    , EarnAmount       = inv.NetAmountLoc * lp.EarnPercent / 100\r\n    , Amount\r\n    , lt.Note\r\n    , lt.InvoiceHeaderId\r\n    , lt.PaymentLineId\r\n    , lt.LoyaltyCardId\r\n    , lp.LoyaltyProgramId\r\n    , lp.EarnPercent\r\n\r\nFROM TrLoyaltyTxns lt\r\nJOIN DcLoyaltyCards lc\r\n    ON lc.LoyaltyCardId = lt.LoyaltyCardId\r\nJOIN DcLoyaltyPrograms lp\r\n    ON lp.LoyaltyProgramId = lc.LoyaltyProgramId\r\nLEFT JOIN TrInvoiceHeaders ih\r\n    ON ih.InvoiceHeaderId = lt.InvoiceHeaderId AND TxnType IN (1, 2)\r\nLEFT JOIN TrPaymentLines pl\r\n    ON pl.PaymentLineId = lt.PaymentLineId --and TxnType = 2\r\nLEFT JOIN TrPaymentHeaders ph\r\n    ON ph.PaymentHeaderId = pl.PaymentHeaderId\r\n\r\nOUTER APPLY\r\n(\r\n    SELECT SUM(il.NetAmountLoc) AS NetAmountLoc\r\n    FROM TrInvoiceLines il\r\n    WHERE il.InvoiceHeaderId = lt.InvoiceHeaderId AND TxnType IN (1, 2)\r\n) inv\r\n\r\n\r\n",
                             ReportTypeId = (byte)1
                         });
                 });
@@ -3723,6 +3865,14 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
+                            ClaimCode = "TerminalList",
+                            CategoryId = 22,
+                            ClaimDesc = "Terminal Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
                             ClaimCode = "ChangePriceRP",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alış Qiymət Dəyişmə",
@@ -3806,6 +3956,14 @@ namespace Foxoft.Migrations
                             ClaimCode = "PayrollList",
                             CategoryId = 9,
                             ClaimDesc = "Əməkhaqqı Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "LoyaltyCards",
+                            CategoryId = 19,
+                            ClaimDesc = "Bonus Kartlar",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         });
@@ -4981,7 +5139,7 @@ namespace Foxoft.Migrations
                             DesignFileFolder = "C:\\Foxoft\\Foxoft Design Files",
                             ImageFolder = "C:\\Foxoft\\Foxoft Images",
                             SalesmanContinuity = false,
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         });
                 });
 
@@ -5656,6 +5814,89 @@ namespace Foxoft.Migrations
                     b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrLoyaltyTxn", b =>
+                {
+                    b.Property<Guid>("LoyaltyTxnId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("DocumentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ExpireAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("InvoiceHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<Guid>("LoyaltyCardId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<Guid?>("PaymentLineId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("RelatedLoyaltyTxnId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<byte>("TxnType")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("LoyaltyTxnId");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.HasIndex("InvoiceHeaderId");
+
+                    b.HasIndex("PaymentLineId")
+                        .IsUnique()
+                        .HasFilter("[PaymentLineId] IS NOT NULL");
+
+                    b.HasIndex("RelatedLoyaltyTxnId");
+
+                    b.HasIndex("LoyaltyCardId", "DocumentDate");
+
+                    b.ToTable("TrLoyaltyTxns");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
                 {
                     b.Property<Guid>("PaymentHeaderId")
@@ -5758,9 +5999,6 @@ namespace Foxoft.Migrations
                     b.Property<byte?>("PaymentKindId")
                         .HasColumnType("tinyint");
 
-                    b.Property<short>("PosterminalId")
-                        .HasColumnType("smallint");
-
                     b.Property<string>("ProcessCode")
                         .IsRequired()
                         .HasMaxLength(5)
@@ -5770,6 +6008,9 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("TerminalId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ToCashRegCode")
                         .HasMaxLength(30)
@@ -6452,6 +6693,24 @@ namespace Foxoft.Migrations
                     b.Navigation("DcFeatureType");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcLoyaltyCard", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany()
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcLoyaltyProgram", "DcLoyaltyProgram")
+                        .WithMany("DcLoyaltyCards")
+                        .HasForeignKey("LoyaltyProgramId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("DcLoyaltyProgram");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcPaymentMethod", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCashReg")
@@ -6574,6 +6833,25 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.Navigation("DcProduct");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcTerminal", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCashRegister")
+                        .WithMany("DcCashRegDcTerminals")
+                        .HasForeignKey("CashRegisterCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
+                        .WithMany("DcStoreDcTerminals")
+                        .HasForeignKey("StoreCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCashRegister");
+
+                    b.Navigation("DcStore");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcUnitOfMeasure", b =>
@@ -7040,6 +7318,46 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceHeader");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrLoyaltyTxn", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany()
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
+                        .WithMany("TrLoyaltyTxns")
+                        .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Foxoft.Models.DcLoyaltyCard", "DcLoyaltyCard")
+                        .WithMany("TrLoyaltyTxns")
+                        .HasForeignKey("LoyaltyCardId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.TrPaymentLine", "TrPaymentLine")
+                        .WithOne("TrLoyaltyTxn")
+                        .HasForeignKey("Foxoft.Models.TrLoyaltyTxn", "PaymentLineId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Foxoft.Models.TrLoyaltyTxn", "RelatedLoyaltyTxn")
+                        .WithMany()
+                        .HasForeignKey("RelatedLoyaltyTxnId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("DcLoyaltyCard");
+
+                    b.Navigation("RelatedLoyaltyTxn");
+
+                    b.Navigation("TrInvoiceHeader");
+
+                    b.Navigation("TrPaymentLine");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
@@ -7337,7 +7655,11 @@ namespace Foxoft.Migrations
 
                     b.Navigation("CurrAccDcPaymentMethods");
 
+                    b.Navigation("DcCashRegDcTerminals");
+
                     b.Navigation("DcCurrAccContactDetails");
+
+                    b.Navigation("DcStoreDcTerminals");
 
                     b.Navigation("DcStoreTrPaymentHeaders");
 
@@ -7449,6 +7771,16 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcInstallmentPlan", b =>
                 {
                     b.Navigation("TrInstallments");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcLoyaltyCard", b =>
+                {
+                    b.Navigation("TrLoyaltyTxns");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcLoyaltyProgram", b =>
+                {
+                    b.Navigation("DcLoyaltyCards");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcPaymentKind", b =>
@@ -7634,6 +7966,8 @@ namespace Foxoft.Migrations
 
                     b.Navigation("TrInvoiceLines");
 
+                    b.Navigation("TrLoyaltyTxns");
+
                     b.Navigation("TrPaymentHeaders");
                 });
 
@@ -7648,6 +7982,12 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
                 {
                     b.Navigation("TrPaymentLines");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrPaymentLine", b =>
+                {
+                    b.Navigation("TrLoyaltyTxn")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPayrollHeader", b =>

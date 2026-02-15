@@ -47,6 +47,18 @@ namespace Foxoft
             ClearControlsAddNew();
 
             InitializeResourseName();
+
+            LoadLayout();
+        }
+
+        private void LoadLayout()
+        {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(
+                Authorization.CurrAccCode,
+                nameof(TrInvoiceLine.PosDiscount));
+
+            if (currAccHasClaims)
+                btn_NewInvoice.Visible = true;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

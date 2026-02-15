@@ -459,7 +459,7 @@ namespace Foxoft.Migrations
                             MaritalStatus = (byte)0,
                             NewPassword = "123",
                             OfficeCode = "ofs01",
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         },
                         new
                         {
@@ -477,11 +477,11 @@ namespace Foxoft.Migrations
                             MaritalStatus = (byte)0,
                             NewPassword = "",
                             OfficeCode = "ofs01",
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         },
                         new
                         {
-                            CurrAccCode = "mgz01",
+                            CurrAccCode = "MGZ01",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreditLimit = 0m,
                             CurrAccDesc = "Merkez Mağaza",
@@ -496,11 +496,11 @@ namespace Foxoft.Migrations
                             NewPassword = "456",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         },
                         new
                         {
-                            CurrAccCode = "kassa01",
+                            CurrAccCode = "KASSA01",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreditLimit = 0m,
                             CurrAccDesc = "Nağd Kassa",
@@ -514,7 +514,7 @@ namespace Foxoft.Migrations
                             MaritalStatus = (byte)0,
                             NewPassword = "456",
                             OfficeCode = "ofs01",
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         });
                 });
 
@@ -2047,6 +2047,10 @@ namespace Foxoft.Migrations
                     b.Property<Guid?>("RowGuid")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("StoreCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<string>("TerminalDesc")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -2062,16 +2066,19 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("CashRegisterCode");
 
+                    b.HasIndex("StoreCode");
+
                     b.ToTable("DcTerminals");
 
                     b.HasData(
                         new
                         {
                             TerminalId = 1,
-                            CashRegisterCode = "kassa01",
+                            CashRegisterCode = "KASSA01",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StoreCode = "MGZ01",
                             TerminalDesc = "Notebook",
                             TouchScaleFactor = 1,
                             TouchUIMode = false
@@ -2079,10 +2086,11 @@ namespace Foxoft.Migrations
                         new
                         {
                             TerminalId = 2,
-                            CashRegisterCode = "kassa01",
+                            CashRegisterCode = "KASSA01",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StoreCode = "MGZ01",
                             TerminalDesc = "Telefon",
                             TouchScaleFactor = 2,
                             TouchUIMode = true
@@ -2414,7 +2422,7 @@ namespace Foxoft.Migrations
                             OfficeCode = "ofs01",
                             PermitNegativeStock = false,
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
+                            StoreCode = "MGZ01",
                             WarehouseDesc = "Mərkəz deposu",
                             WarehouseTypeCode = (byte)0,
                             WarnNegativeStock = false,
@@ -2506,7 +2514,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CashRegList",
-                            ReportQuery = "\r\n\r\n	select CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	from \r\n	DcCurrAccs \r\n	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1\r\n	where CurrAccTypeCode = 5 and IsDisabled = 0\r\n		--and DcCurrAccs.IsVIP = 1 \r\n		--and balance.CurrAccCode = '1403'\r\n	group by DcCurrAccs.CurrAccCode\r\n	, CurrAccDesc\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegisterCode \r\n	order by CurrAccDesc",
+                            ReportQuery = "\r\n\r\n	select CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, StoreCode\r\n	from \r\n	DcCurrAccs \r\n	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1\r\n	where CurrAccTypeCode = 5 and IsDisabled = 0\r\n		--and DcCurrAccs.IsVIP = 1 \r\n		--and balance.CurrAccCode = '1403'\r\n	group by DcCurrAccs.CurrAccCode\r\n	, CurrAccDesc\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegisterCode \r\n	, StoreCode\r\n	order by CurrAccDesc",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -3854,6 +3862,14 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
+                            ClaimCode = "TerminalList",
+                            CategoryId = 22,
+                            ClaimDesc = "Terminal Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
                             ClaimCode = "ChangePriceRP",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alış Qiymət Dəyişmə",
@@ -5120,7 +5136,7 @@ namespace Foxoft.Migrations
                             DesignFileFolder = "C:\\Foxoft\\Foxoft Design Files",
                             ImageFolder = "C:\\Foxoft\\Foxoft Images",
                             SalesmanContinuity = false,
-                            StoreCode = "mgz01"
+                            StoreCode = "MGZ01"
                         });
                 });
 
@@ -6819,12 +6835,20 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcTerminal", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCashRegister")
-                        .WithMany("DcTerminals")
+                        .WithMany("DcCashRegDcTerminals")
                         .HasForeignKey("CashRegisterCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
+                        .WithMany("DcStoreDcTerminals")
+                        .HasForeignKey("StoreCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("DcCashRegister");
+
+                    b.Navigation("DcStore");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcUnitOfMeasure", b =>
@@ -7628,11 +7652,13 @@ namespace Foxoft.Migrations
 
                     b.Navigation("CurrAccDcPaymentMethods");
 
+                    b.Navigation("DcCashRegDcTerminals");
+
                     b.Navigation("DcCurrAccContactDetails");
 
-                    b.Navigation("DcStoreTrPaymentHeaders");
+                    b.Navigation("DcStoreDcTerminals");
 
-                    b.Navigation("DcTerminals");
+                    b.Navigation("DcStoreTrPaymentHeaders");
 
                     b.Navigation("SettingStore")
                         .IsRequired();

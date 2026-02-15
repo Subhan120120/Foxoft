@@ -182,6 +182,7 @@ namespace Foxoft
                 case "BarcodeOperations": ShowNewForm<FormBarcodeOperations>(); break;
                 case "PayrollList": ShowNewForm<FormPayrollList>(); break;
                 case "LoyaltyCards": ShowNewForm<FormLoyaltyCards>(); break;
+                case "TerminalList": ShowNewForm<FormTerminalList>(); break;
 
                 default: break;
             }
@@ -266,6 +267,7 @@ namespace Foxoft
             this.ACE_BarcodeOperations.Name = "BarcodeOperations";
             this.ACE_PayrollList.Name = "PayrollList";
             this.ACE_LoyaltyCards.Name = "LoyaltyCards";
+            this.ACE_TerminalList.Name = "TerminalList";
         }
 
         private void InitializeReports()
@@ -457,38 +459,38 @@ namespace Foxoft
 
             //try
             //{
-                var constructors = typeof(T).GetConstructors();
-                var constructor = constructors.FirstOrDefault(c =>
+            var constructors = typeof(T).GetConstructors();
+            var constructor = constructors.FirstOrDefault(c =>
+            {
+                var parameters = c.GetParameters();
+                if (parameters.Length != args.Length)
+                    return false;
+
+                for (int i = 0; i < parameters.Length; i++)
                 {
-                    var parameters = c.GetParameters();
-                    if (parameters.Length != args.Length)
-                        return false;
-
-                    for (int i = 0; i < parameters.Length; i++)
+                    if (args[i] == null)
                     {
-                        if (args[i] == null)
-                        {
-                            if (parameters[i].ParameterType.IsValueType && Nullable.GetUnderlyingType(parameters[i].ParameterType) == null)
-                                return false;
-                        }
-                        else if (!parameters[i].ParameterType.IsInstanceOfType(args[i]))
-                        {
+                        if (parameters[i].ParameterType.IsValueType && Nullable.GetUnderlyingType(parameters[i].ParameterType) == null)
                             return false;
-                        }
                     }
-                    return true;
-                });
+                    else if (!parameters[i].ParameterType.IsInstanceOfType(args[i]))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            });
 
-                if (constructor == null)
-                    throw new ArgumentException(string.Format(Resources.ERP_NoMatchingCtor, typeof(T).Name));
+            if (constructor == null)
+                throw new ArgumentException(string.Format(Resources.ERP_NoMatchingCtor, typeof(T).Name));
 
-                form = (T)constructor.Invoke(args);
-                form.MdiParent = this;
-                form.FormClosed += (s, args) => form.Dispose();
-                form.Show();
-                form.WindowState = FormWindowState.Maximized;
-                if (parentRibbonControl.MergedPages.Count > 0)
-                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            form = (T)constructor.Invoke(args);
+            form.MdiParent = this;
+            form.FormClosed += (s, args) => form.Dispose();
+            form.Show();
+            form.WindowState = FormWindowState.Maximized;
+            if (parentRibbonControl.MergedPages.Count > 0)
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             //}
             //catch (Exception ex)
             //{

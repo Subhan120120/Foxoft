@@ -20,6 +20,11 @@ namespace Foxoft.Models
                            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string TerminalDesc { get; set; }
 
+        [ForeignKey(nameof(DcStore))]
+        [Display(Name = nameof(Resources.Entity_Terminal_StoreCode), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        public string StoreCode { get; set; }
+
         [DefaultValue("0")]
         [Display(Name = nameof(Resources.Common_IsDisabled), ResourceType = typeof(Resources))]
         public bool IsDisabled { get; set; }
@@ -39,5 +44,6 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_Terminal_TouchScaleFactor), ResourceType = typeof(Resources))]
         public int TouchScaleFactor { get; set; }
         public virtual DcCurrAcc DcCashRegister { get; set; }
+        public virtual DcCurrAcc DcStore { get; set; }
     }
 }

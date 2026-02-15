@@ -3584,4 +3584,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_Terminal_CashRegisterCode" xml:space="preserve">
     <value>Kassa Kodu</value>
   </data>
+  <data name="Entity_Terminal_StoreCode" xml:space="preserve">
+    <value>Mağaza Kodu</value>
+  </data>
 </root>

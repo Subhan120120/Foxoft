@@ -217,6 +217,7 @@ namespace Foxoft.Models
         public virtual ICollection<TrCurrAccFeature> TrCurrAccFeatures { get; set; }
         public virtual ICollection<DcCurrAccContactDetail> DcCurrAccContactDetails { get; set; }
         public virtual ICollection<TrInstallmentGuarantor> TrInstallmentGuarantors { get; set; }
-        public virtual ICollection<DcTerminal> DcTerminals{ get; set; }
+        public virtual ICollection<DcTerminal> DcCashRegDcTerminals { get; set; }
+        public virtual ICollection<DcTerminal> DcStoreDcTerminals { get; set; }
     }
 }

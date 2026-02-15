@@ -260,6 +260,20 @@ namespace Foxoft.Models
             });
 
             // more foreign key same table configure
+            modelBuilder.Entity<DcTerminal>(e =>
+            {
+                e.HasOne(field => field.DcStore)
+                 .WithMany(fk => fk.DcStoreDcTerminals)
+                 .HasForeignKey(fk => fk.StoreCode)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasOne(field => field.DcCashRegister)
+                 .WithMany(fk => fk.DcCashRegDcTerminals)
+                 .HasForeignKey(fk => fk.CashRegisterCode)
+                 .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // more foreign key same table configure
             modelBuilder.Entity<DcPaymentMethod>(e =>
             {
                 e.HasOne(field => field.DcCurrAcc)
@@ -585,8 +599,8 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcTerminal>().HasData(
-                new DcTerminal { TerminalId = 1, TerminalDesc = "Notebook",  CashRegisterCode = "kassa01", TouchUIMode = false, TouchScaleFactor = 1 },
-                new DcTerminal { TerminalId = 2, TerminalDesc = "Telefon", CashRegisterCode = "kassa01", TouchUIMode = true, TouchScaleFactor = 2 }
+                new DcTerminal { TerminalId = 1, StoreCode = "MGZ01", TerminalDesc = "Notebook",  CashRegisterCode = "KASSA01", TouchUIMode = false, TouchScaleFactor = 1 },
+                new DcTerminal { TerminalId = 2, StoreCode = "MGZ01", TerminalDesc = "Telefon", CashRegisterCode = "KASSA01", TouchUIMode = true, TouchScaleFactor = 2 }
                 );
 
             modelBuilder.Entity<DcCurrAcc>().HasData(
@@ -594,10 +608,10 @@ namespace Foxoft.Models
                 new DcCurrAcc { CurrAccCode = "C-000002", CurrAccDesc = "Mudir", LastName = "Mudir", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "C-000003", CurrAccDesc = "Operator", LastName = "Operator", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "C-000004", CurrAccDesc = "Satici", LastName = "Satici", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "C-000005", CurrAccDesc = "Ümumi Müştəri", NewPassword = "123", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "C-000006", CurrAccDesc = "Birbank", NewPassword = "", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "mgz01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = 4, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "kassa01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", CurrAccTypeCode = 5, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" });
+                new DcCurrAcc { CurrAccCode = "C-000005", CurrAccDesc = "Ümumi Müştəri", NewPassword = "123", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" },
+                new DcCurrAcc { CurrAccCode = "C-000006", CurrAccDesc = "Birbank", NewPassword = "", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" },
+                new DcCurrAcc { CurrAccCode = "MGZ01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = 4, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "MGZ01" },
+                new DcCurrAcc { CurrAccCode = "KASSA01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", CurrAccTypeCode = 5, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" });
 
             modelBuilder.Entity<DcCurrAccType>().HasData(
                 new DcCurrAccType { CurrAccTypeCode = 1, CurrAccTypeDesc = "Müştəri" },
@@ -619,7 +633,7 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<SettingStore>().HasData(
-               new SettingStore { Id = 1, StoreCode = "mgz01", DefaultUnitOfMeasureId = 1, DesignFileFolder = @"C:\Foxoft\Foxoft Design Files", ImageFolder = @"C:\Foxoft\Foxoft Images" }
+               new SettingStore { Id = 1, StoreCode = "MGZ01", DefaultUnitOfMeasureId = 1, DesignFileFolder = @"C:\Foxoft\Foxoft Design Files", ImageFolder = @"C:\Foxoft\Foxoft Images" }
                 );
 
             modelBuilder.Entity<DcCurrency>().HasData(
@@ -731,6 +745,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PriceList", ClaimDesc = "Qiymət Cədvəli", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "PaymentDetail", ClaimDesc = "Ödəmə", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1, CategoryId = 2 },
+                new DcClaim { ClaimCode = "PosNewInvoice", ClaimDesc = "POS Yeni Faktura", ClaimTypeId = 1, CategoryId = 2 },
+                new DcClaim { ClaimCode = "PosAllowPaymentDifferenceOfInvoice", ClaimDesc = "Faktura ilə ödəniş arasında fərqə icazə", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "CurrAccFeatureType", ClaimDesc = "Cari Hesab Özəlliyi", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "CurrAccCreditLimit", ClaimDesc = "Cari Hesab Kredit Limiti", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəllik Tipləri", ClaimTypeId = 1, CategoryId = 18 },
@@ -744,6 +760,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "Parameters", ClaimDesc = "Parametrlər", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "StoreList", ClaimDesc = "Mağaza Siyahısı", ClaimTypeId = 1, CategoryId = 22 },
                 new DcClaim { ClaimCode = "WarehouseList", ClaimDesc = "Depoların Siyahısı", ClaimTypeId = 1, CategoryId = 22 },
+                new DcClaim { ClaimCode = "TerminalList", ClaimDesc = "Terminal Siyahısı", ClaimTypeId = 1, CategoryId = 22 },
                 new DcClaim { ClaimCode = "ChangePriceRP", ClaimDesc = "Pərakəndə Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 3 },
                 new DcClaim { ClaimCode = "ChangePriceWP", ClaimDesc = "Topdan Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 4 },
                 new DcClaim { ClaimCode = "ChangePriceRS", ClaimDesc = "Pərakəndə Satış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 5 },
@@ -989,7 +1006,7 @@ namespace Foxoft.Models
             );
 
             modelBuilder.Entity<DcWarehouse>().HasData(
-                new DcWarehouse { WarehouseCode = "depo-01", WarehouseDesc = "Mərkəz deposu", OfficeCode = "ofs01", StoreCode = "mgz01", IsDefault = true });
+                new DcWarehouse { WarehouseCode = "depo-01", WarehouseDesc = "Mərkəz deposu", OfficeCode = "ofs01", StoreCode = "MGZ01", IsDefault = true });
 
             modelBuilder.Entity<DcReportType>().HasData(
                 new DcReportType { ReportTypeId = 0, ReportTypeDesc = "Embedded" },

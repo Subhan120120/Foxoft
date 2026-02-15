@@ -5065,6 +5065,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Store Code.
+        /// </summary>
+        public static string Entity_Terminal_StoreCode {
+            get {
+                return ResourceManager.GetString("Entity_Terminal_StoreCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Touch Scale Factor.
         /// </summary>
         public static string Entity_Terminal_TouchScaleFactor {

@@ -19,7 +19,10 @@ namespace Foxoft
         private DcPaymentMethod dcPaymentMethod = new();
         private EfMethods efMethods = new();
         private DcLoyaltyCard dcLoyaltyCard = new();
-        private decimal availableBonus = 0;
+        private decimal availableBonus = 0; 
+        private decimal expectedPayLoc = 0m;  
+        private const decimal tolerance = 0.01m;
+
 
         private bool isNegativ = false;
 
@@ -52,7 +55,9 @@ namespace Foxoft
            : this()
         {
             trInvoiceHeader = invoiceHeader;
-            dcLoyaltyCard = loyaltyCard;
+            dcLoyaltyCard = loyaltyCard; 
+            expectedPayLoc = Math.Abs(pay);
+
 
             if (dcLoyaltyCard != null)
                 availableBonus = efMethods.SelectLoyaltyBonusBalance(dcLoyaltyCard.LoyaltyCardId, trInvoiceHeader.InvoiceHeaderId);
@@ -394,7 +399,10 @@ namespace Foxoft
 
         private void SavePayment()
         {
-            // ✅ bonusu da nəzərə al
+            // ✅ Total = Cash + Cashless + Bonus -> pay ilə eyni olmalıdır (0.01 tolerans)
+            if (!CheckAllowPaymentDifference())
+                return;
+
             if (trPaymentLineCash.PaymentLoc <= 0 &&
                 trPaymentLineCashless.PaymentLoc <= 0 &&
                 trPaymentLineBonus.PaymentLoc <= 0)
@@ -420,18 +428,6 @@ namespace Foxoft
                     return;
                 }
             }
-
-            // ✅ Bonus balansını server tərəfdə də yoxla (UI bypass olmasın)
-            //if (!isNegativ && trPaymentLineBonus.PaymentLoc > 0 &&
-            //    trInvoiceHeader != null && trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
-            //{
-            //    decimal availableBonus = efMethods.SelectCustomerBonusBalance(trInvoiceHeader.CurrAccCode);
-            //    if (trPaymentLineBonus.PaymentLoc > availableBonus)
-            //    {
-            //        dxErrorProvider1.SetError(txtEdit_Bonus, Resources.Validation_Range_Max);
-            //        return;
-            //    }
-            //}
 
             // ✅ OverpaymentMode tətbiqi (insertlərdən ƏVVƏL)
             if (!ApplyOverpaymentMode())
@@ -534,6 +530,37 @@ namespace Foxoft
             }
 
             DialogResult = DialogResult.OK;
+        }
+
+        private bool CheckAllowPaymentDifference()
+        {
+            if (expectedPayLoc <= 0m) return true;
+
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(
+                Authorization.CurrAccCode,
+                "AllowPaymentDifference");
+
+            decimal totalLoc =
+                Math.Abs(trPaymentLineCash.PaymentLoc) +
+                Math.Abs(trPaymentLineCashless.PaymentLoc) +
+                Math.Abs(trPaymentLineBonus.PaymentLoc);
+
+            decimal diff = Math.Abs(totalLoc - expectedPayLoc);
+
+            if (!currAccHasClaims && diff > tolerance)
+            {
+                XtraMessageBox.Show(
+                    this,
+                    $"Ödənişlərin cəmi ({totalLoc:n2}) gözlənilən məbləğə ({expectedPayLoc:n2}) bərabər deyil.\r\n" +
+                    $"Fərq: {diff:n2}",
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return false;
+            }
+
+            return true;
         }
 
         private void SyncLoyaltySpend(Guid paymentHeaderId)
