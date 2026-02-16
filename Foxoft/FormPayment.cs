@@ -219,6 +219,13 @@ namespace Foxoft
                 e.Cancel = true;
         }
 
+        private void textEditCash_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ExceptionMode = ExceptionMode.DisplayError;
+            e.WindowCaption = Resources.Common_Attention;
+            e.ErrorText = Resources.Validation_Range_Min;
+        }
+
         private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
         {
             var code = lUE_cashCurrency.EditValue?.ToString();
@@ -275,6 +282,13 @@ namespace Foxoft
             txtEdit_Cashless.DoValidate();
             RecalcCashlessCommission();
         }
+        private void textEditCashless_Validating(object sender, CancelEventArgs e)
+        {
+            if (trPaymentLineCashless.Payment < 0)
+                e.Cancel = true;
+        }
+
+        private void textEditCashless_InvalidValue(object sender, InvalidValueExceptionEventArgs e) { }
 
         private void lUE_CashlessCurrency_EditValueChanged(object sender, EventArgs e)
         {
@@ -288,6 +302,19 @@ namespace Foxoft
                 trPaymentLineCashless.ExchangeRate = rate;
 
             RecalcCashlessCommission();
+        }
+        private void btnEdit_BankAccout_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            object row = lUE_PaymentMethod.Properties.GetDataSourceRowByKeyValue(lUE_PaymentMethod.EditValue);
+            if (row is not null)
+            {
+                SelectCashRegister(sender);
+            }
+        }
+
+        private void btnEdit_BankAccout_EditValueChanged(object sender, EventArgs e)
+        {
+            trPaymentLineCashless.CashRegisterCode = btnEdit_BankAccout.EditValue?.ToString();
         }
 
         private void textEditBonus_EditValueChanged(object sender, EventArgs e)
@@ -308,6 +335,28 @@ namespace Foxoft
                 e.Cancel = true;
         }
 
+        private void textEditBonus_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ErrorText = "Bonus Balansı Kifayət Deyil.";
+            e.ExceptionMode = ExceptionMode.DisplayError;
+        }
+
+        private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            SelectCashRegister(sender);
+        }
+
+        private void SelectCashRegister(object sender)
+        {
+            ButtonEdit buttonEdit = (ButtonEdit)sender;
+
+            using (FormCashRegisterList form = new(trInvoiceHeader.CurrAccCode))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    buttonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
+            }
+        }
+
         private void btnEdit_CashRegister_EditValueChanged(object sender, EventArgs e)
         {
             trPaymentLineCash.CashRegisterCode = btnEdit_CashRegister.EditValue?.ToString();
@@ -323,12 +372,23 @@ namespace Foxoft
             else trPaymentLineCash.CashRegisterCode = code;
         }
 
+        private void btnEdit_CashRegister_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ErrorText = Resources.Form_Payment_CashRegisterNotFound;
+            e.ExceptionMode = ExceptionMode.DisplayError;
+        }
+
         private void LUE_PaymentPlan_EditValueChanged(object sender, EventArgs e)
         {
             trPaymentLineCommission.LineDescription =
                 LUE_PaymentPlan.GetColumnValue(nameof(DcPaymentPlan.PaymentPlanDesc))?.ToString();
 
             RecalcCashlessCommission();
+        }
+
+        private void txt_CashlessCommission_EditValueChanged(object sender, EventArgs e)
+        {
+            trPaymentLineCommission.Payment = (-1) * (decimal)txt_CashlessCommission.EditValue;
         }
 
         private void RecalcCashlessCommission()
