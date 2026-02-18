@@ -705,7 +705,7 @@ namespace Foxoft
             {
                 if (!decimal.TryParse(e.Value?.ToString(), out decimal newQty))
                 {
-                    SetError(Resources.Form_Invoice_InvalidNumber); // add a resource if you have one
+                    SetError(Resources.Common_InvalidNumber);
                     return;
                 }
 

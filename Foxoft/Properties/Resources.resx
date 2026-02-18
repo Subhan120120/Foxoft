@@ -3590,4 +3590,7 @@ To delete, cancel the receipt!</value>
   <data name="Entity_InvoiceHeader_TerminalId" xml:space="preserve">
     <value>Terminal Id</value>
   </data>
+  <data name="Common_InvalidNumber" xml:space="preserve">
+    <value>Invalid Number</value>
+  </data>
 </root>

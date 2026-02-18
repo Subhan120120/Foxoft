@@ -340,6 +340,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Number.
+        /// </summary>
+        public static string Common_InvalidNumber {
+            get {
+                return ResourceManager.GetString("Common_InvalidNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Disabled.
         /// </summary>
         public static string Common_IsDisabled {
