@@ -3587,4 +3587,7 @@ To delete, cancel the receipt!</value>
   <data name="Entity_Terminal_StoreCode" xml:space="preserve">
     <value>Store Code</value>
   </data>
+  <data name="Entity_InvoiceHeader_TerminalId" xml:space="preserve">
+    <value>Terminal Id</value>
+  </data>
 </root>

@@ -29,6 +29,7 @@ using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.ComponentModel;
@@ -65,6 +66,7 @@ namespace Foxoft
         private decimal CurrAccBalanceBefore;
         private DcLoyaltyCard dcLoyaltyCard;
         ReportClass reportClass;
+        private string salesPersonCode;
 
         private const int WM_GETTAG = 0x0400 + 1; // for acccess to tag via Windows API
 
@@ -137,21 +139,6 @@ namespace Foxoft
             gC_InvoiceLine.Focus();
         }
 
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == WM_GETTAG)
-            {
-                string tagValue = this.Tag?.ToString() ?? string.Empty;
-                byte[] tagBytes = Encoding.UTF8.GetBytes(tagValue);
-                IntPtr tagPointer = Marshal.AllocHGlobal(tagBytes.Length + 1);
-                Marshal.Copy(tagBytes, 0, tagPointer, tagBytes.Length);
-                Marshal.WriteByte(tagPointer, tagBytes.Length, 0); // Null-terminate the string
-                m.Result = tagPointer;
-                return;
-            }
-            base.WndProc(ref m);
-        }
-
         private void InitializeColumnName()
         {
             colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
@@ -161,6 +148,7 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
+            dbContext?.Dispose();
             dbContext = new subContext();
 
 
@@ -201,6 +189,9 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
+            txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
+            dcLoyaltyCard = null;
+
             Tag = btnEdit_DocNum.EditValue;
 
             SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
@@ -234,6 +225,7 @@ namespace Foxoft
             invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
             invoiceHeader.IsMainTF = true;
             invoiceHeader.IsCompleted = true;
+            invoiceHeader.TerminalId = Settings.Default.TerminalId;
             invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
             if (new string[] { "RS", "WS" }.Contains(dcProcess.ProcessCode))
@@ -307,9 +299,13 @@ namespace Foxoft
         {
             SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
 
+            dcLoyaltyCard = null;
+            txt_LoyaltyEarn.EditValue = 0m;
+
             if (new string[] { "EX" }.Contains(dcProcess.ProcessCode))
                 btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
 
+            dbContext?.Dispose();
             dbContext = new subContext();
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
@@ -355,7 +351,9 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
             CalcPaidAmount();
-            //CalcInstallmentAmount();
+
+            dcLoyaltyCard = efMethods.GetLoyaltyCard(InvoiceHeaderId);
+            txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(InvoiceHeaderId);
 
             Tag = btnEdit_DocNum.EditValue;
 
@@ -379,6 +377,9 @@ namespace Foxoft
 
             decimal cashlessSum = efMethods.SelectPaymentLinesCashlessSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
             lbl_InvoicePaidCashlessSum.Text = Math.Round(cashlessSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+
+            decimal loyaltySum = efMethods.SelectPaymentLinesLoyaltySumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
+            lbl_InvoicePaidLoyaltySum.Text = Math.Round(loyaltySum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             decimal totalSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
             lbl_InvoicePaidTotalSum.Text = Math.Round(totalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
@@ -412,12 +413,27 @@ namespace Foxoft
 
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
+                    dcLoyaltyCard = null;
+                    RemoveLoyaltyLinksAll(trInvoiceHeader.InvoiceHeaderId);
+                    XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
                     //if (form.dcCurrAcc.CreditLimit > Math.Abs(form.dcCurrAcc.Balance) || form.dcCurrAcc.CreditLimit == 0)
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-                    //else
-                    //    XtraMessageBox.Show(Resources.Form_Invoice_CreditLimitExceeded, Resources.Common_Attention);
+
+                    txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
+        }
+
+        private void RemoveLoyaltyLinksAll(Guid invoiceHeaderId)
+        {
+            var txns = dbContext.TrLoyaltyTxns
+                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                .ToList();
+
+            if (txns.Count > 0)
+                dbContext.RemoveRange(txns);
+
+            dbContext.SaveChanges(Authorization.CurrAccCode);
         }
 
         private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -438,7 +454,11 @@ namespace Foxoft
                 gv.SetRowCellValue(e.RowHandle, colExchangeRate, currency.ExchangeRate);
             }
 
-            if (settingStore.SalesmanContinuity)
+            if (!string.IsNullOrEmpty(salesPersonCode))
+            {
+                gv.SetRowCellValue(e.RowHandle, col_SalesPersonCode, salesPersonCode);
+            }
+            else if (settingStore.SalesmanContinuity)
             {
                 int lastRowHandle = gv.GetRowHandle(gv.DataRowCount - 1);
                 if (lastRowHandle >= 0)
@@ -565,239 +585,304 @@ namespace Foxoft
         private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
         {
             var view = (GridView)sender;
-            GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
+            var column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
             var tr = view.GetFocusedRow() as TrInvoiceLine;
 
-            string input = (e.Value ??= string.Empty).ToString();
+            // If we can't validate safely, do nothing.
+            if (column == null || tr == null)
+                return;
 
+            string input = (e.Value ?? string.Empty).ToString();
+
+            // Normalize empty input -> default numeric or null (and exit)
             if (string.IsNullOrWhiteSpace(input))
             {
-                if (Type.GetTypeCode(column.ColumnType) is TypeCode.Int32 or TypeCode.Int64
-                    or TypeCode.Decimal or TypeCode.Double
-                    or TypeCode.Single or TypeCode.Int16
-                    or TypeCode.Byte)
-                {
-                    e.Value = Activator.CreateInstance(column.ColumnType); // default(0)
-                }
-                else
-                {
-                    e.Value = null;
-                }
-
+                e.Value = GetEmptyValueForColumn(column);
                 return;
             }
 
-            if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
+            // --- Local helpers --------------------------------------------------------
+            void SetError(string msg)
             {
-                DcProduct product = null;
+                e.Valid = false;
+                e.ErrorText = msg;
+            }
 
-                if (column == col_ProductCode)
-                    product = efMethods.SelectProduct(input, productTypeArr);
-                else if (column == colBarcode)
-                    product = efMethods.SelectProductByBarcode(input);
-                else if (column == colSerialNumberCode)
-                {
-                    bool sN_Exist = efMethods.EntityExists<DcSerialNumber>(input);
-                    if (!sN_Exist)
-                    {
-                        e.Valid = false;
-                        e.ErrorText = Resources.Form_Invoice_SerialNumberNotFound;
-                        return;
-                    }
+            bool IsProductIdentityColumn()
+                => column == colBarcode || column == col_ProductCode || column == colSerialNumberCode;
 
-                    product = efMethods.SelectProductBySerialNumber(input);
-                }
+            bool IsStockSensitiveProcess()
+                => new[] { "RP", "WP", "RS", "WS", "IS", "IT" }.Contains(trInvoiceHeader?.ProcessCode);
 
+            bool ShouldCheckStock()
+            {
+                // NOTE: your original condition had the same expression in both branches.
+                // Keeping intent: check stock only for stock-sensitive processes.
+                if (!IsStockSensitiveProcess()) return false;
+
+                bool dirIn = Convert.ToBoolean(CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode));
+                // If you actually intended different behavior for return/non-return, adjust here.
+                return (!trInvoiceHeader.IsReturn && !dirIn) || (trInvoiceHeader.IsReturn && !dirIn);
+            }
+
+            string ResolveWarehouse()
+            {
+                var wh = lUE_WarehouseCode.EditValue?.ToString();
+
+                // For IT returns, you were checking ToWarehouse
+                if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
+                    wh = lUE_ToWarehouseCode.EditValue?.ToString();
+
+                return wh;
+            }
+
+            bool PermitNegativeStock()
+                => Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
+
+            bool IsServiceProduct(string productCode)
+                => efMethods.SelectEntityById<DcProduct>(productCode)?.ProductTypeCode == 3;
+
+            void ValidateStock(string productCode, decimal qtyToCompare, decimal qtyDeltaForBalanceCalc)
+            {
+                if (!ShouldCheckStock()) return;
+                if (string.IsNullOrWhiteSpace(productCode)) return;
+                if (IsServiceProduct(productCode)) return;
+
+                string wh = ResolveWarehouse();
+                decimal balance = CalcProductBalance(tr, productCode, wh, qtyDeltaForBalanceCalc);
+
+                if (!PermitNegativeStock() && qtyToCompare > balance)
+                    SetError(Resources.Form_Invoice_NoStockQuantity);
+            }
+
+            // -------------------------------------------------------------------------
+
+            if (IsProductIdentityColumn())
+            {
+                var product = ResolveProduct(column, input, out string errorMsg);
                 if (product == null)
                 {
-                    string entityName = dcProcess.ProcessCode == "EX"
-                        ? Resources.Form_Invoice_Expense
-                        : Resources.Form_Invoice_Product;
-
-                    e.Valid = false;
-                    e.ErrorText = string.Format(
-                        Resources.Form_Invoice_EntityNotFoundOrDisabled,
-                        entityName);
-
+                    SetError(errorMsg);
                     return;
                 }
 
-                string returnProductCode = efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
-                                                    .FirstOrDefault()?.ProductCode;
-
-                if (!string.IsNullOrEmpty(returnProductCode) && product.ProductCode != returnProductCode)
+                // Prevent changing product if dependent operations exist
+                if (HasMismatchingProductInReturnLines(tr, product.ProductCode))
                 {
-                    e.Valid = false;
-                    e.ErrorText = Resources.Form_Invoice_ReturnOperationExists_CannotChangeProductCode;
+                    SetError(Resources.Form_Invoice_ReturnOperationExists_CannotChangeProductCode);
                     return;
                 }
 
-                string waybillProductCode = efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
-                                                     .FirstOrDefault()?.ProductCode;
-
-                if (!string.IsNullOrEmpty(waybillProductCode) && product.ProductCode != waybillProductCode)
+                if (HasMismatchingProductInWaybillLines(tr, product.ProductCode))
                 {
-                    e.Valid = false;
-                    e.ErrorText = Resources.Form_Invoice_HandOverOperationExists_CannotChangeProductCode;
+                    SetError(Resources.Form_Invoice_HandOverOperationExists_CannotChangeProductCode);
                     return;
                 }
 
                 if (tr.RelatedLineId is not null)
                 {
-                    string invoiceProductCode = efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader.ProcessCode)
-                                                         .FirstOrDefault()?.ProductCode;
-
-                    if (!string.IsNullOrEmpty(invoiceProductCode) && product.ProductCode != invoiceProductCode)
+                    if (HasMismatchingProductInRelatedReturnLine(tr, product.ProductCode))
                     {
-                        e.Valid = false;
-                        e.ErrorText = Resources.Form_Invoice_RelatedReturnLineExists_CannotChangeProductCode;
+                        SetError(Resources.Form_Invoice_RelatedReturnLineExists_CannotChangeProductCode);
                         return;
                     }
 
-                    string invoiceProductCode2 = efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
-                                                          .FirstOrDefault()?.ProductCode;
-
-                    if (!string.IsNullOrEmpty(invoiceProductCode2) && product.ProductCode != invoiceProductCode2)
+                    if (HasMismatchingProductInRelatedHandOverLine(tr, product.ProductCode))
                     {
-                        e.Valid = false;
-                        e.ErrorText = Resources.Form_Invoice_RelatedHandOverLineExists_CannotChangeProductCode;
+                        SetError(Resources.Form_Invoice_RelatedHandOverLineExists_CannotChangeProductCode);
                         return;
                     }
                 }
 
-                if (new[] { "RP", "WP", "RS", "WS", "IS", "IT" }.Contains(trInvoiceHeader.ProcessCode)
-                    && ((!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
-                        || (trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))))
-                {
-                    var prodType = efMethods.SelectEntityById<DcProduct>(product.ProductCode)?.ProductTypeCode;
-                    if (prodType == 3) // is service
-                        return;
+                // Stock check: compare current qty vs balance (same as your original)
+                ValidateStock(product.ProductCode, tr.Qty, qtyDeltaForBalanceCalc: 0);
+                if (!e.Valid) return;
 
-                    string wareHouse = lUE_WarehouseCode.EditValue?.ToString();
-                    if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
-                        wareHouse = lUE_ToWarehouseCode.EditValue?.ToString();
-
-                    bool permitNegativeStock = Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
-                    decimal balance = CalcProductBalance(tr, product.ProductCode, wareHouse, 0);
-
-                    if (!permitNegativeStock && tr.Qty > balance)
-                    {
-                        e.Valid = false;
-                        e.ErrorText = Resources.Form_Invoice_NoStockQuantity;
-                        return;
-                    }
-                }
+                return;
             }
-            else if (column == colQty)
+
+            if (column == colQty)
             {
-                if (new[] { "RP", "WP", "RS", "WS", "IS", "IT" }.Contains(trInvoiceHeader.ProcessCode)
-                    && ((!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
-                        || (trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))))
+                if (!decimal.TryParse(e.Value?.ToString(), out decimal newQty))
                 {
-                    var prodType = efMethods.SelectEntityById<DcProduct>(tr?.ProductCode)?.ProductTypeCode;
-                    if (prodType == 3) // is service
-                        return;
-
-                    string wareHouse = lUE_WarehouseCode.EditValue?.ToString();
-                    if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
-                        wareHouse = lUE_ToWarehouseCode.EditValue?.ToString();
-
-                    bool permitNegativeStock = Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
-                    decimal balance = CalcProductBalance(tr, tr.ProductCode, wareHouse, tr.Qty);
-
-                    if (!permitNegativeStock && Convert.ToDecimal(e.Value) > balance && !trInvoiceHeader.IsReturn)
-                    {
-                        e.Valid = false;
-                        e.ErrorText = Resources.Form_Invoice_NoStockQuantity;
-                        return;
-                    }
-                }
-
-                decimal returnSum = Math.Abs(efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
-                                                     .Sum(x => x.QtyIn - x.QtyOut));
-                if (Convert.ToDecimal(e.Value) < returnSum)
-                {
-                    e.Valid = false;
-                    e.ErrorText = string.Format(
-                        Resources.Form_Invoice_ReturnQtyLessThanExisting,
-                        returnSum);
+                    SetError(Resources.Form_Invoice_InvalidNumber); // add a resource if you have one
                     return;
                 }
 
-                var invoiceLines = efMethods.SelectInvoiceLineByReturnLine(
-                                       tr.RelatedLineId,
-                                       tr.TrInvoiceHeader?.ProcessCode
-                                   );
+                // Stock check for qty edit: you were passing tr.Qty as delta; keeping same behavior
+                ValidateStock(tr.ProductCode, newQty, qtyDeltaForBalanceCalc: tr.Qty);
+                if (!e.Valid) return;
 
+                // Return qty cannot be less than existing return operations
+                decimal returnSum = Math.Abs(
+                    efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
+                             .Sum(x => x.QtyIn - x.QtyOut)
+                );
+
+                if (newQty < returnSum)
+                {
+                    SetError(string.Format(Resources.Form_Invoice_ReturnQtyLessThanExisting, returnSum));
+                    return;
+                }
+
+                // Return qty cannot exceed original sale qty (when invoice is return)
+                var invoiceLines = efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader?.ProcessCode);
                 decimal invoiceSum = Math.Abs(invoiceLines.Sum(x => x.QtyIn - x.QtyOut));
 
-                if (trInvoiceHeader.IsReturn && invoiceLines.Any() && Convert.ToDecimal(e.Value) > invoiceSum)
+                if (trInvoiceHeader.IsReturn && invoiceLines.Any() && newQty > invoiceSum)
                 {
-                    e.Valid = false;
-                    e.ErrorText = string.Format(
-                        Resources.Form_Invoice_ReturnQtyGreaterThanSale,
-                        invoiceSum);
+                    SetError(string.Format(Resources.Form_Invoice_ReturnQtyGreaterThanSale, invoiceSum));
                     return;
                 }
 
-                decimal waybillSum = Math.Abs(efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
-                                                     .Sum(x => x.QtyIn - x.QtyOut));
-                if (Convert.ToDecimal(e.Value) < waybillSum)
+                // Handover qty cannot be less than delivered qty
+                decimal waybillSum = Math.Abs(
+                    efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
+                             .Sum(x => x.QtyIn - x.QtyOut)
+                );
+
+                if (newQty < waybillSum)
                 {
-                    e.Valid = false;
-                    e.ErrorText = string.Format(
-                        Resources.Form_Invoice_HandOverQtyLessThanDelivery,
-                        waybillSum);
+                    SetError(string.Format(Resources.Form_Invoice_HandOverQtyLessThanDelivery, waybillSum));
                     return;
                 }
 
-                decimal invoiceSum2 = Math.Abs(efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
-                                                      .Sum(x => x.QtyIn - x.QtyOut));
+                // Work order (?) cannot exceed related invoice qty
+                decimal invoiceSum2 = Math.Abs(
+                    efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
+                             .Sum(x => x.QtyIn - x.QtyOut)
+                );
 
-                if (trInvoiceHeader.ProcessCode == "WO" && Convert.ToDecimal(e.Value) > invoiceSum2)
+                if (trInvoiceHeader.ProcessCode == "WO" && newQty > invoiceSum2)
                 {
-                    e.Valid = false;
-                    e.ErrorText = string.Format(
-                        Resources.Form_Invoice_HandOverQtyGreaterThanSale,
-                        invoiceSum2);
+                    SetError(string.Format(Resources.Form_Invoice_HandOverQtyGreaterThanSale, invoiceSum2));
                     return;
                 }
 
+                // Credit limit check (kept as-is, but now uses newQty)
                 if (!string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode)
-                    && new[] { "RP", "WP", "RS", "WS", "IS" }.Contains(trInvoiceHeader.ProcessCode)
-                    && ((!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
-                        || (trInvoiceHeader.IsReturn && (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))))
+                    && new[] { "RP", "WP", "RS", "WS", "IS" }.Contains(trInvoiceHeader.ProcessCode))
                 {
-                    DcCurrAcc dc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
-                    decimal currAccBalance = CalcCurrAccCreditBalance(Convert.ToInt32(e.Value));
-
-                    if (Math.Abs(currAccBalance) > dc.CreditLimit && dc.CreditLimit != 0 && Convert.ToInt32(e.Value) != 0)
+                    bool dirIn = Convert.ToBoolean(CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode));
+                    if ((!trInvoiceHeader.IsReturn && !dirIn) || (trInvoiceHeader.IsReturn && dirIn))
                     {
-                        e.Valid = false;
-                        e.ErrorText = Resources.Form_Invoice_CreditLimitExceeded;
-                        return;
+                        DcCurrAcc dc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
+                        decimal currAccBalance = CalcCurrAccCreditBalance(Convert.ToInt32(newQty));
+
+                        if (Math.Abs(currAccBalance) > dc.CreditLimit && dc.CreditLimit != 0 && Convert.ToInt32(newQty) != 0)
+                        {
+                            SetError(Resources.Form_Invoice_CreditLimitExceeded);
+                            return;
+                        }
                     }
                 }
+
+                return;
             }
-            else if (column == col_SalesPersonCode)
+
+            if (column == col_SalesPersonCode)
             {
                 var acc = efMethods.SelectSalesPerson(input);
                 if (acc == null || acc.CurrAccTypeCode != 3)
                 {
-                    e.Valid = false;
-                    e.ErrorText = Resources.Form_Invoice_SalesPersonNotFound;
+                    SetError(Resources.Form_Invoice_SalesPersonNotFound);
                     return;
                 }
+
+                return;
             }
-            else if (column == colWorkerCode)
+
+            if (column == colWorkerCode)
             {
                 var acc = efMethods.SelectWorker(input);
                 if (acc == null || acc.CurrAccTypeCode != 3)
                 {
-                    e.Valid = false;
-                    e.ErrorText = Resources.Form_Invoice_WorkerNotFound;
+                    SetError(Resources.Form_Invoice_WorkerNotFound);
+                    return;
                 }
+
+                return;
             }
+        }
+
+        private object GetEmptyValueForColumn(GridColumn column)
+        {
+            var type = column.ColumnType ?? typeof(string);
+            var code = Type.GetTypeCode(type);
+
+            return code switch
+            {
+                TypeCode.Int16 or TypeCode.Int32 or TypeCode.Int64
+                or TypeCode.Decimal or TypeCode.Double or TypeCode.Single
+                or TypeCode.Byte => Activator.CreateInstance(type), // default numeric = 0
+                _ => null
+            };
+        }
+
+        private DcProduct ResolveProduct(GridColumn column, string input, out string errorMsg)
+        {
+            errorMsg = null;
+            DcProduct product = null;
+
+            if (column == col_ProductCode)
+            {
+                product = efMethods.SelectProduct(input, productTypeArr);
+            }
+            else if (column == colBarcode)
+            {
+                product = efMethods.SelectProductByBarcode(input);
+            }
+            else if (column == colSerialNumberCode)
+            {
+                bool exists = efMethods.EntityExists<DcSerialNumber>(input);
+                if (!exists)
+                {
+                    errorMsg = Resources.Form_Invoice_SerialNumberNotFound;
+                    return null;
+                }
+
+                product = efMethods.SelectProductBySerialNumber(input);
+            }
+
+            if (product == null)
+            {
+                string entityName = dcProcess.ProcessCode == "EX"
+                    ? Resources.Form_Invoice_Expense
+                    : Resources.Form_Invoice_Product;
+
+                errorMsg = string.Format(Resources.Form_Invoice_EntityNotFoundOrDisabled, entityName);
+                return null;
+            }
+
+            return product;
+        }
+
+        private bool HasMismatchingProductInReturnLines(TrInvoiceLine tr, string newProductCode)
+        {
+            string existing = efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
+                                       .FirstOrDefault()?.ProductCode;
+            return !string.IsNullOrEmpty(existing) && existing != newProductCode;
+        }
+
+        private bool HasMismatchingProductInWaybillLines(TrInvoiceLine tr, string newProductCode)
+        {
+            string existing = efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
+                                       .FirstOrDefault()?.ProductCode;
+            return !string.IsNullOrEmpty(existing) && existing != newProductCode;
+        }
+
+        private bool HasMismatchingProductInRelatedReturnLine(TrInvoiceLine tr, string newProductCode)
+        {
+            string existing = efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader.ProcessCode)
+                                       .FirstOrDefault()?.ProductCode;
+            return !string.IsNullOrEmpty(existing) && existing != newProductCode;
+        }
+
+        private bool HasMismatchingProductInRelatedHandOverLine(TrInvoiceLine tr, string newProductCode)
+        {
+            string existing = efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
+                                       .FirstOrDefault()?.ProductCode;
+            return !string.IsNullOrEmpty(existing) && existing != newProductCode;
         }
 
 
@@ -1064,9 +1149,88 @@ namespace Foxoft
             if (new string[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
                 SavePayment();
 
+            SyncLoyaltyEarn(trInvoiceHeader);
+
             SaveSession();
 
             Tag = btnEdit_DocNum.EditValue;
+        }
+
+        private void SyncLoyaltyEarn(TrInvoiceHeader inv)
+        {
+            if (inv == null || inv.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            // invoice-a bağlı bütün Earn txn-ləri tap (card dəyişsə də)
+            var earnTxn = dbContext.TrLoyaltyTxns
+                .FirstOrDefault(x => x.InvoiceHeaderId == inv.InvoiceHeaderId && x.TxnType == LoyaltyTxnType.Earn);
+
+            // loyaltyCard yoxdursa -> Earn txn sil
+            if (dcLoyaltyCard == null)
+            {
+                if (earnTxn != null)
+                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
+
+                return;
+            }
+
+            // EarnPercent-i DB-dən təhlükəsiz götür (navigation-a güvənmə)
+            var earnPercent = dbContext.DcLoyaltyPrograms
+                .Where(p => p.LoyaltyProgramId == dcLoyaltyCard.LoyaltyProgramId)
+                .Select(p => (decimal?)p.EarnPercent)
+                .FirstOrDefault() ?? 0m;
+
+            if (earnPercent <= 0m)
+            {
+                if (earnTxn != null)
+                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
+                return;
+            }
+
+            // NetAmountLoc cəmi
+            decimal netLoc = dbContext.TrInvoiceLines
+                .Where(x => x.InvoiceHeaderId == inv.InvoiceHeaderId)
+                .Sum(x => (decimal?)x.NetAmountLoc) ?? 0m;
+
+            if (netLoc <= 0m)
+            {
+                if (earnTxn != null)
+                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
+                return;
+            }
+
+            decimal amount = Math.Round(netLoc * earnPercent / 100m, 2);
+
+            if (earnTxn == null)
+            {
+                earnTxn = new TrLoyaltyTxn
+                {
+                    LoyaltyTxnId = Guid.NewGuid(),
+                    InvoiceHeaderId = inv.InvoiceHeaderId,
+                    LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId,
+                    CurrAccCode = inv.CurrAccCode,
+                    DocumentDate = inv.DocumentDate,
+                    TxnType = LoyaltyTxnType.Earn,
+                    Amount = amount,
+                    CreatedUserName = Authorization.CurrAccCode,
+                    Note = $"Invoice: {inv.DocumentNumber}"
+                };
+                dbContext.TrLoyaltyTxns.Add(earnTxn);
+            }
+            else
+            {
+                // Upsert update
+                earnTxn.LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId;
+                earnTxn.CurrAccCode = inv.CurrAccCode;
+                earnTxn.DocumentDate = inv.DocumentDate;
+                earnTxn.Amount = amount;
+                earnTxn.Note = $"Invoice: {inv.DocumentNumber}";
+
+                // tracked entitydirsə Entry.IsModified-ə ehtiyac yoxdur
+            }
+            dbContext.SaveChanges(Authorization.CurrAccCode);
+
+            txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
         }
 
         private void InitilizeTransfer()
@@ -2003,7 +2167,6 @@ namespace Foxoft
 
             if (item.Checked)
                 settingStore.SalesmanContinuity = true;
-
             else
                 settingStore.SalesmanContinuity = false;
 
@@ -2705,8 +2868,10 @@ namespace Foxoft
             {
                 if (form.dcCurrAcc?.CurrAccCode is not null)
                 {
+                    salesPersonCode = form.dcCurrAcc.CurrAccCode;
+
                     for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                        gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, form.dcCurrAcc.CurrAccCode);
+                        gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, salesPersonCode);
                 }
             }
         }
@@ -2823,6 +2988,32 @@ namespace Foxoft
         private void Btn_CashRegCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
+        }
+
+        private void BBI_LoyaltyCardInput_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            string bonusCardNum = Interaction.InputBox(
+                "Bonus Kart Daxil Edin:",
+                "Bonus Kart",
+                ""
+            );
+
+            if (string.IsNullOrEmpty(bonusCardNum))
+                return;
+
+            dcLoyaltyCard = efMethods.SelectLoyalityCard(bonusCardNum);
+
+            if (dcLoyaltyCard is null)
+            {
+                XtraMessageBox.Show("Bonus Kartı tapılmadı!");
+                return;
+            }
+
+            btnEdit_CurrAccCode.EditValue = dcLoyaltyCard.CurrAccCode;
+
+            SaveInvoice();
+
+
         }
     }
 }

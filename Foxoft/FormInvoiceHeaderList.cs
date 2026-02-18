@@ -100,7 +100,7 @@ namespace Foxoft
                             OfficeCode = x.OfficeCode,
                             OperationDate = x.OperationDate,
                             OperationTime = x.OperationTime,
-                            PosTerminalId = x.PosTerminalId,
+                            TerminalId = x.TerminalId,
                             ProcessCode = x.ProcessCode,
                             RelatedInvoiceId = x.RelatedInvoiceId,
                             StoreCode = x.StoreCode,

@@ -3587,4 +3587,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_Terminal_StoreCode" xml:space="preserve">
     <value>Mağaza Kodu</value>
   </data>
+  <data name="Entity_InvoiceHeader_TerminalId" xml:space="preserve">
+    <value>Terminal Id</value>
+  </data>
 </root>

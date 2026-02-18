@@ -1229,6 +1229,17 @@ namespace Foxoft
                                     .Sum(s => s.PaymentLoc);
         }
 
+        public decimal SelectPaymentLinesLoyaltySumByInvoice(Guid invoiceHeaderId, string currAccCode)
+        {
+            using subContext db = new();
+
+            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                    .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
+                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
+                                    .Where(x => x.PaymentTypeCode == PaymentType.Bonus)
+                                    .Sum(s => s.PaymentLoc);
+        }
+
         public decimal SelectPaymentLinesBonusSumByInvoice(DcLoyaltyCard dcLoyaltyCard)
         {
             using subContext db = new();

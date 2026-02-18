@@ -2500,6 +2500,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Terminal Id.
+        /// </summary>
+        public static string Entity_InvoiceHeader_TerminalId {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_TerminalId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total.
         /// </summary>
         public static string Entity_InvoiceHeader_TotalNetAmount {

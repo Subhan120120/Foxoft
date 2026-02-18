@@ -267,7 +267,7 @@ namespace Foxoft
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e) // Parent Form Closing event
         {
             if (efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
-                efMethods.UpdateInvoiceIsSuspended(trInvoiceHeader.InvoiceHeaderId, true); // delete incomplete invoice
+                efMethods.UpdateInvoiceIsSuspended(trInvoiceHeader.InvoiceHeaderId, true); 
         }
 
         private bool TryMergeSameProduct(DcProduct dcProduct, decimal qty, string? salesman)

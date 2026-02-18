@@ -104,10 +104,8 @@ namespace Foxoft.Models
                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? CustomsDocumentNumber { get; set; }
 
-        [Display(Name = nameof(Resources.Entity_InvoiceHeader_PosTerminalId), ResourceType = typeof(Resources))]
-        [StringLength(30, ErrorMessageResourceType = typeof(Resources),
-                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
-        public string? PosTerminalId { get; set; }
+        [Display(Name = nameof(Resources.Entity_InvoiceHeader_TerminalId), ResourceType = typeof(Resources))]
+        public int? TerminalId { get; set; }
 
         [DefaultValue("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsSuspended), ResourceType = typeof(Resources))]

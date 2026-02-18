@@ -91,7 +91,7 @@ namespace Foxoft
                             x.TrInvoiceHeader.OfficeCode,
                             x.TrInvoiceHeader.OperationDate,
                             x.TrInvoiceHeader.OperationTime,
-                            x.TrInvoiceHeader.PosTerminalId,
+                            x.TrInvoiceHeader.TerminalId,
                             x.TrInvoiceHeader.ProcessCode,
                             x.TrInvoiceHeader.RelatedInvoiceId,
                             x.TrInvoiceHeader.StoreCode,
