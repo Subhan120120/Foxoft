@@ -413,12 +413,14 @@ namespace Foxoft
 
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    dcLoyaltyCard = null;
-                    RemoveLoyaltyLinksAll(trInvoiceHeader.InvoiceHeaderId);
-                    XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
-                    //if (form.dcCurrAcc.CreditLimit > Math.Abs(form.dcCurrAcc.Balance) || form.dcCurrAcc.CreditLimit == 0)
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
 
+                    if (dcLoyaltyCard != null && !string.Equals(dcLoyaltyCard.CurrAccCode, form.dcCurrAcc.CurrAccCode, StringComparison.OrdinalIgnoreCase))
+                    {
+                        dcLoyaltyCard = null;
+                        RemoveLoyaltyLinksAll(trInvoiceHeader.InvoiceHeaderId);
+                        XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
+                    }
                     txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
