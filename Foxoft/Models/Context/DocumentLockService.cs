@@ -9,6 +9,7 @@ namespace Foxoft.Models.Context
         bool Acquired,
         bool TakenOver,
         string LockedBy,
+        string LockedByName,
         DateTime? LockedAtUtc,
         DateTime? LastHeartbeatAtUtc,
         string Message
@@ -25,7 +26,8 @@ namespace Foxoft.Models.Context
     public sealed record LockCheckResult(
         LockCloseReason Reason,
         string? Note = null,
-        string? CurrentOwnerUserId = null
+        string? CurrentOwnerUserId = null,
+        string? CurrentOwnerUserName = null
     );
 
     public sealed class DocumentLockService
@@ -45,6 +47,7 @@ namespace Foxoft.Models.Context
             string? reason = null)
         {
             var now = DateTime.UtcNow;
+            string userName = _db.DcCurrAccs.FirstOrDefault(x => x.CurrAccCode == userId).CurrAccDesc;
 
             var newLock = new DocumentLock
             {
@@ -62,16 +65,20 @@ namespace Foxoft.Models.Context
 
             _db.DocumentLocks.Add(newLock);
 
+            _db.SaveChanges();
+
             try
             {
-                _db.SaveChanges();
+                _db.SaveChanges(); // documentId dublicate
 
                 AddAudit(documentType, documentId, "LOCK", userId, machineName, null);
+
 
                 return new LockResult(
                     Acquired: true,
                     TakenOver: false,
                     LockedBy: userId,
+                    LockedByName: userName,
                     LockedAtUtc: null,
                     LastHeartbeatAtUtc: null,
                     Message: "LOCK_ACQUIRED"
@@ -85,8 +92,11 @@ namespace Foxoft.Models.Context
                     .AsNoTracking()
                     .FirstOrDefault(x => x.DocumentType == documentType && x.DocumentId == documentId);
 
+                string lockedByUserId = _db.DcCurrAccs.FirstOrDefault(x => x.CurrAccCode == existing.LockedByUserId).CurrAccDesc;
+
+
                 if (existing is null)
-                    return new LockResult(false, false, null, null, null, "LOCK_RACE_RETRY");
+                    return new LockResult(false, false, null, null, null, null, "LOCK_RACE_RETRY");
 
                 // Timeout takeover
                 if (now - existing.LastHeartbeatAtUtc >= timeout)
@@ -118,6 +128,7 @@ namespace Foxoft.Models.Context
                             Acquired: true,
                             TakenOver: true,
                             LockedBy: userId,
+                            LockedByName: userName,
                             LockedAtUtc: null,
                             LastHeartbeatAtUtc: null,
                             Message: "LOCK_TAKEN_OVER_DUE_TO_TIMEOUT"
@@ -130,12 +141,13 @@ namespace Foxoft.Models.Context
                         .FirstOrDefault(x => x.DocumentType == documentType && x.DocumentId == documentId);
 
                     if (existing is null)
-                        return new LockResult(false, false, null, null, null, "LOCK_MISSING_AFTER_RACE");
+                        return new LockResult(false, false, null, null, null, null, "LOCK_MISSING_AFTER_RACE");
 
                     return new LockResult(
                         Acquired: false,
                         TakenOver: false,
                         LockedBy: existing.LockedByUserId,
+                        LockedByName: lockedByUserId,
                         LockedAtUtc: existing.LockedAtUtc,
                         LastHeartbeatAtUtc: existing.LastHeartbeatAtUtc,
                         Message: "LOCKED"
@@ -146,6 +158,7 @@ namespace Foxoft.Models.Context
                     Acquired: false,
                     TakenOver: false,
                     LockedBy: existing.LockedByUserId,
+                    LockedByName: lockedByUserId,
                     LockedAtUtc: existing.LockedAtUtc,
                     LastHeartbeatAtUtc: existing.LastHeartbeatAtUtc,
                     Message: "LOCKED"
@@ -250,6 +263,8 @@ namespace Foxoft.Models.Context
             if (lockRow == null)
                 return new LockCheckResult(LockCloseReason.LOCK_REMOVED);
 
+            string CurrentOwnerUserName = _db.DcCurrAccs.FirstOrDefault(x => x.CurrAccCode == lockRow.LockedByUserId).CurrAccDesc;
+
             // 2) Ownership dəyişibsə → bağla
             if (lockRow.LockedByUserId != userId
                 || lockRow.AppInstanceId != appInstanceId
@@ -258,7 +273,8 @@ namespace Foxoft.Models.Context
                 return new LockCheckResult(
                     Reason: LockCloseReason.OWNERSHIP_CHANGED,
                     Note: "Lock owner changed.",
-                    CurrentOwnerUserId: lockRow.LockedByUserId
+                    CurrentOwnerUserId: lockRow.LockedByUserId,
+                    CurrentOwnerUserName: CurrentOwnerUserName
                 );
             }
 

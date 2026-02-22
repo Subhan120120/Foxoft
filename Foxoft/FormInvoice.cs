@@ -302,6 +302,13 @@ namespace Foxoft
             {
                 //efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
 
+                _lockService.Unlock(
+                    "Invoice",
+                    trInvoiceHeader.InvoiceHeaderId,
+                    Authorization.CurrAccCode,
+                    Environment.MachineName,
+                    _appInstanceId);
+
                 trInvoiceHeader = form.trInvoiceHeader;
 
                 //LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
@@ -3068,8 +3075,6 @@ namespace Foxoft
             btnEdit_CurrAccCode.EditValue = dcLoyaltyCard.CurrAccCode;
 
             SaveInvoice();
-
-
         }
 
         private bool TryOpenInvoiceForEdit(Guid invoiceHeaderId)
@@ -3088,8 +3093,7 @@ namespace Foxoft
             if (!res.Acquired)
             {
                 XtraMessageBox.Show(
-                    $"Bu sənəd hal-hazırda başqa istifadəçi tərəfindən redaktə olunur.\n" +
-                    $"Faktura hazırda {res.LockedBy} tərəfindən bloklanıb.\n" +
+                    $"Faktura hazırda {res.LockedByName} tərəfindən redaktə olunur.\n" +
                     $"LockedAt: {res.LockedAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n" +
                     $"Heartbeat: {res.LastHeartbeatAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)",
                     "Locked",
@@ -3132,7 +3136,7 @@ namespace Foxoft
                             LockCloseReason.FORCE_CLOSE =>
                                 $"Admin bu sənəd üçün bağlanma əmri verdi.\n{chk.Note}",
                             LockCloseReason.OWNERSHIP_CHANGED =>
-                                $"Sənəd artıq başqa istifadəçiyə keçib: {chk.CurrentOwnerUserId}",
+                                $"Sənəd artıq başqa istifadəçiyə keçib: {chk.CurrentOwnerUserName}",
                             LockCloseReason.LOCK_REMOVED =>
                                 "Sənədin lock-u silinib (ForceUnlock və ya sistem təmizliyi).",
                             _ => "Sənəd bağlanır."

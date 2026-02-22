@@ -24,6 +24,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDocumentLockList));
             gC_DocumentLockList = new DevExpress.XtraGrid.GridControl();
             documentLocksBindingSource = new BindingSource(components);
             gV_DocumentLockList = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -37,11 +38,10 @@ namespace Foxoft
             colMachineName = new DevExpress.XtraGrid.Columns.GridColumn();
             colAppInstanceId = new DevExpress.XtraGrid.Columns.GridColumn();
             colReason = new DevExpress.XtraGrid.Columns.GridColumn();
+            colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            LockedByUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            bBI_DocumentLockNew = new DevExpress.XtraBars.BarButtonItem();
-            bBI_DocumentLockEdit = new DevExpress.XtraBars.BarButtonItem();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
-            bBI_DocumentLockDelete = new DevExpress.XtraBars.BarButtonItem();
             bBI_DocumentLockRefresh = new DevExpress.XtraBars.BarButtonItem();
             BBI_ForceUnlock = new DevExpress.XtraBars.BarButtonItem();
             BBI_UnlockRequest = new DevExpress.XtraBars.BarButtonItem();
@@ -70,11 +70,11 @@ namespace Foxoft
             // 
             // documentLocksBindingSource
             // 
-            documentLocksBindingSource.DataSource = typeof(DocumentLock);
+            documentLocksBindingSource.DataSource = typeof(DocumentLockVM);
             // 
             // gV_DocumentLockList
             // 
-            gV_DocumentLockList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colLockId, colDocumentType, colDocumentId, colLockedByUserId, colLockedByUserName, colLockedAtUtc, colLastHeartbeatAtUtc, colMachineName, colAppInstanceId, colReason });
+            gV_DocumentLockList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colLockId, colDocumentType, colDocumentId, colLockedByUserId, colLockedByUserName, colLockedAtUtc, colLastHeartbeatAtUtc, colMachineName, colAppInstanceId, colReason, colDocumentNumber, LockedByUserName });
             gV_DocumentLockList.GridControl = gC_DocumentLockList;
             gV_DocumentLockList.Name = "gV_DocumentLockList";
             gV_DocumentLockList.OptionsBehavior.Editable = false;
@@ -96,7 +96,7 @@ namespace Foxoft
             colDocumentType.FieldName = "DocumentType";
             colDocumentType.Name = "colDocumentType";
             colDocumentType.Visible = true;
-            colDocumentType.VisibleIndex = 1;
+            colDocumentType.VisibleIndex = 5;
             colDocumentType.Width = 120;
             // 
             // colDocumentId
@@ -104,7 +104,7 @@ namespace Foxoft
             colDocumentId.FieldName = "DocumentId";
             colDocumentId.Name = "colDocumentId";
             colDocumentId.Visible = true;
-            colDocumentId.VisibleIndex = 2;
+            colDocumentId.VisibleIndex = 1;
             colDocumentId.Width = 220;
             // 
             // colLockedByUserId
@@ -112,7 +112,7 @@ namespace Foxoft
             colLockedByUserId.FieldName = "LockedByUserId";
             colLockedByUserId.Name = "colLockedByUserId";
             colLockedByUserId.Visible = true;
-            colLockedByUserId.VisibleIndex = 3;
+            colLockedByUserId.VisibleIndex = 4;
             colLockedByUserId.Width = 220;
             // 
             // colLockedByUserName
@@ -120,7 +120,7 @@ namespace Foxoft
             colLockedByUserName.FieldName = "LockedByUserName";
             colLockedByUserName.Name = "colLockedByUserName";
             colLockedByUserName.Visible = true;
-            colLockedByUserName.VisibleIndex = 4;
+            colLockedByUserName.VisibleIndex = 6;
             colLockedByUserName.Width = 160;
             // 
             // colLockedAtUtc
@@ -128,7 +128,7 @@ namespace Foxoft
             colLockedAtUtc.FieldName = "LockedAtUtc";
             colLockedAtUtc.Name = "colLockedAtUtc";
             colLockedAtUtc.Visible = true;
-            colLockedAtUtc.VisibleIndex = 5;
+            colLockedAtUtc.VisibleIndex = 7;
             colLockedAtUtc.Width = 150;
             // 
             // colLastHeartbeatAtUtc
@@ -136,7 +136,7 @@ namespace Foxoft
             colLastHeartbeatAtUtc.FieldName = "LastHeartbeatAtUtc";
             colLastHeartbeatAtUtc.Name = "colLastHeartbeatAtUtc";
             colLastHeartbeatAtUtc.Visible = true;
-            colLastHeartbeatAtUtc.VisibleIndex = 6;
+            colLastHeartbeatAtUtc.VisibleIndex = 8;
             colLastHeartbeatAtUtc.Width = 150;
             // 
             // colMachineName
@@ -144,7 +144,7 @@ namespace Foxoft
             colMachineName.FieldName = "MachineName";
             colMachineName.Name = "colMachineName";
             colMachineName.Visible = true;
-            colMachineName.VisibleIndex = 7;
+            colMachineName.VisibleIndex = 9;
             colMachineName.Width = 140;
             // 
             // colAppInstanceId
@@ -152,7 +152,7 @@ namespace Foxoft
             colAppInstanceId.FieldName = "AppInstanceId";
             colAppInstanceId.Name = "colAppInstanceId";
             colAppInstanceId.Visible = true;
-            colAppInstanceId.VisibleIndex = 8;
+            colAppInstanceId.VisibleIndex = 10;
             colAppInstanceId.Width = 220;
             // 
             // colReason
@@ -160,13 +160,27 @@ namespace Foxoft
             colReason.FieldName = "Reason";
             colReason.Name = "colReason";
             colReason.Visible = true;
-            colReason.VisibleIndex = 9;
+            colReason.VisibleIndex = 11;
             colReason.Width = 250;
+            // 
+            // colDocumentNumber
+            // 
+            colDocumentNumber.FieldName = "DocumentNumber";
+            colDocumentNumber.Name = "colDocumentNumber";
+            colDocumentNumber.Visible = true;
+            colDocumentNumber.VisibleIndex = 2;
+            // 
+            // LockedByUserName
+            // 
+            LockedByUserName.FieldName = "LockedByUserName";
+            LockedByUserName.Name = "LockedByUserName";
+            LockedByUserName.Visible = true;
+            LockedByUserName.VisibleIndex = 3;
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DocumentLockNew, bBI_DocumentLockEdit, bBI_ExportXlsx, bBI_DocumentLockDelete, bBI_DocumentLockRefresh, BBI_ForceUnlock, BBI_UnlockRequest });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_ExportXlsx, bBI_DocumentLockRefresh, BBI_ForceUnlock, BBI_UnlockRequest });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 11;
             ribbonControl1.Name = "ribbonControl1";
@@ -174,38 +188,19 @@ namespace Foxoft
             ribbonControl1.Size = new Size(980, 158);
             ribbonControl1.StatusBar = ribbonStatusBar1;
             // 
-            // bBI_DocumentLockNew
-            // 
-            bBI_DocumentLockNew.Caption = Resources.Common_New;
-            bBI_DocumentLockNew.Id = 1;
-            bBI_DocumentLockNew.Name = "bBI_DocumentLockNew";
-            bBI_DocumentLockNew.ItemClick += bBI_DocumentLockNew_ItemClick;
-            // 
-            // bBI_DocumentLockEdit
-            // 
-            bBI_DocumentLockEdit.Caption = Resources.Common_Edit;
-            bBI_DocumentLockEdit.Id = 2;
-            bBI_DocumentLockEdit.Name = "bBI_DocumentLockEdit";
-            bBI_DocumentLockEdit.ItemClick += bBI_DocumentLockEdit_ItemClick;
-            // 
             // bBI_ExportXlsx
             // 
             bBI_ExportXlsx.Caption = Resources.Common_ExportToExcel;
             bBI_ExportXlsx.Id = 6;
+            bBI_ExportXlsx.ImageOptions.SvgImage = (SvgImage)resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage");
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
             bBI_ExportXlsx.ItemClick += bBI_ExportXlsx_ItemClick;
-            // 
-            // bBI_DocumentLockDelete
-            // 
-            bBI_DocumentLockDelete.Caption = Resources.Common_Delete;
-            bBI_DocumentLockDelete.Id = 7;
-            bBI_DocumentLockDelete.Name = "bBI_DocumentLockDelete";
-            bBI_DocumentLockDelete.ItemClick += bBI_DocumentLockDelete_ItemClick;
             // 
             // bBI_DocumentLockRefresh
             // 
             bBI_DocumentLockRefresh.Caption = Resources.Common_Refresh;
             bBI_DocumentLockRefresh.Id = 8;
+            bBI_DocumentLockRefresh.ImageOptions.SvgImage = (SvgImage)resources.GetObject("bBI_DocumentLockRefresh.ImageOptions.SvgImage");
             bBI_DocumentLockRefresh.Name = "bBI_DocumentLockRefresh";
             bBI_DocumentLockRefresh.ItemClick += bBI_DocumentLockRefresh_ItemClick;
             // 
@@ -213,6 +208,7 @@ namespace Foxoft
             // 
             BBI_ForceUnlock.Caption = "Force Unlock";
             BBI_ForceUnlock.Id = 9;
+            BBI_ForceUnlock.ImageOptions.SvgImage = (SvgImage)resources.GetObject("BBI_ForceUnlock.ImageOptions.SvgImage");
             BBI_ForceUnlock.Name = "BBI_ForceUnlock";
             BBI_ForceUnlock.ItemClick += BBI_ForceUnlock_ItemClick;
             // 
@@ -220,6 +216,7 @@ namespace Foxoft
             // 
             BBI_UnlockRequest.Caption = "Unlock Request";
             BBI_UnlockRequest.Id = 10;
+            BBI_UnlockRequest.ImageOptions.SvgImage = (SvgImage)resources.GetObject("BBI_UnlockRequest.ImageOptions.SvgImage");
             BBI_UnlockRequest.Name = "BBI_UnlockRequest";
             BBI_UnlockRequest.ItemClick += BBI_UnlockRequest_ItemClick;
             // 
@@ -231,12 +228,9 @@ namespace Foxoft
             // 
             // ribbonPageGroup1
             // 
-            ribbonPageGroup1.ItemLinks.Add(bBI_DocumentLockNew);
-            ribbonPageGroup1.ItemLinks.Add(bBI_DocumentLockEdit);
-            ribbonPageGroup1.ItemLinks.Add(bBI_DocumentLockDelete);
             ribbonPageGroup1.ItemLinks.Add(bBI_DocumentLockRefresh);
-            ribbonPageGroup1.ItemLinks.Add(BBI_ForceUnlock);
             ribbonPageGroup1.ItemLinks.Add(BBI_UnlockRequest);
+            ribbonPageGroup1.ItemLinks.Add(BBI_ForceUnlock);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Manage";
             // 
@@ -281,9 +275,6 @@ namespace Foxoft
         private System.Windows.Forms.BindingSource documentLocksBindingSource;
 
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-        private DevExpress.XtraBars.BarButtonItem bBI_DocumentLockNew;
-        private DevExpress.XtraBars.BarButtonItem bBI_DocumentLockEdit;
-        private DevExpress.XtraBars.BarButtonItem bBI_DocumentLockDelete;
         private DevExpress.XtraBars.BarButtonItem bBI_DocumentLockRefresh;
         private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
 
@@ -304,5 +295,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colReason;
         private DevExpress.XtraBars.BarButtonItem BBI_ForceUnlock;
         private DevExpress.XtraBars.BarButtonItem BBI_UnlockRequest;
+        private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
+        private DevExpress.XtraGrid.Columns.GridColumn LockedByUserName;
     }
 }

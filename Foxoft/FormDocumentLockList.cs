@@ -6,10 +6,6 @@ using Foxoft.Models.Context;
 using Foxoft.Models.Entity;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -34,9 +30,26 @@ namespace Foxoft
         {
             using (dbContext = new subContext())
             {
-                var list = dbContext.Set<DocumentLock>()
-                    .AsNoTracking()
-                    .OrderByDescending(x => x.LockedAtUtc)
+                var list =
+                    (from dl in dbContext.Set<DocumentLock>().AsNoTracking()
+                     join ih in dbContext.TrInvoiceHeaders.AsNoTracking()
+                         on dl.DocumentId equals ih.InvoiceHeaderId into ihj
+                     from ih in ihj.DefaultIfEmpty()
+                     join ca in dbContext.DcCurrAccs.AsNoTracking()
+                         on dl.LockedByUserId equals ca.CurrAccCode into caj
+                     from ca in caj.DefaultIfEmpty()
+                     orderby dl.LockedAtUtc descending
+                     select new DocumentLockVM
+                     {
+                         LockId = dl.LockId,
+                         DocumentType = dl.DocumentType,
+                         DocumentId = dl.DocumentId,
+                         LockedAtUtc = dl.LockedAtUtc,
+                         LockedByUserId = dl.LockedByUserId,
+
+                         DocumentNumber = ih != null ? ih.DocumentNumber : null,
+                         LockedByUserName = ca != null ? ca.CurrAccDesc : null
+                     })
                     .ToList();
 
                 documentLocksBindingSource.DataSource = list;
@@ -146,13 +159,13 @@ namespace Foxoft
 
         private void BBI_ForceUnlock_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DocumentLock documentLock = (DocumentLock)gV_DocumentLockList.GetFocusedRow();
+            DocumentLockVM documentLock = (DocumentLockVM)gV_DocumentLockList.GetFocusedRow();
             _lockService.ForceUnlock(documentLock.DocumentType, documentLock.DocumentId, documentLock.LockedByUserId, "ForceLock");
         }
 
         private void BBI_UnlockRequest_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DocumentLock documentLock = (DocumentLock)gV_DocumentLockList.GetFocusedRow();
+            DocumentLockVM documentLock = (DocumentLockVM)gV_DocumentLockList.GetFocusedRow();
             _lockService.ForceCloseRequest(documentLock.DocumentType, documentLock.DocumentId, documentLock.LockedByUserId, "ForceLock");
         }
     }
