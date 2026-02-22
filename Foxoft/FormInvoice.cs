@@ -163,8 +163,11 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-
             invoiceHeaderId = Guid.NewGuid();
+
+            if (!TryOpenInvoiceForEdit(invoiceHeaderId))
+                return;
+
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
                                       .Include(x => x.DcCurrAcc)
