@@ -103,6 +103,8 @@ namespace Foxoft.Models
         public DbSet<DcLoyaltyCard> DcLoyaltyCards { get; set; }
         public DbSet<DcLoyaltyProgram> DcLoyaltyPrograms { get; set; }
         public DbSet<TrLoyaltyTxn> TrLoyaltyTxns { get; set; }
+        public DbSet<DocumentLock> DocumentLocks { get; set; }
+        public DbSet<DocumentLockAudit> DocumentLockAudits { get; set; }
 
 
         public DbSet<RetailSale> RetailSales { get; set; } // view

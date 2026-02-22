@@ -172,7 +172,7 @@ namespace Foxoft
                 case "PriceList": ShowNewForm<FormPriceList>(); break;
                 case "ProductDiscountList": ShowExistForm<FormCommonList<DcDiscount>>("", nameof(DcDiscount.DiscountId)); break;
                 case "RetailSaleOrder": ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null); break;
-                case "Session": ShowExistForm<FormCurrAccSession>(); break;
+                case "Session": ShowExistForm<FormDocumentLock>(); break;
                 case "ProductFeatureType": ShowExistForm<FormHierarchyFeatureType>(); break;
                 case "CurrAccFeatureType": ShowExistForm<FormCommonList<DcCurrAccFeatureType>>("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId)); break;
                 case "CurrAccClaim": ShowExistForm<FormCurrAccProfile>(); break;
@@ -451,6 +451,11 @@ namespace Foxoft
         private void ACE_BarcodeOperations_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void bBI_Session_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowExistForm<FormDocumentLockList> ();
         }
 
         private void ShowNewForm<T>(params object[] args) where T : Form

@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260221072435_lockService")]
+    partial class lockService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2439,9 +2442,6 @@ namespace Foxoft.Migrations
                     b.Property<Guid>("AppInstanceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ClientProcessId")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("DocumentId")
                         .HasColumnType("uniqueidentifier");
 
@@ -2449,15 +2449,6 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ForceCloseReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ForceCloseRequestedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("FormInstanceId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastHeartbeatAtUtc")
                         .HasColumnType("datetime2");

@@ -122,9 +122,9 @@ namespace Foxoft
             aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_StoreList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_WarehouseList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_TerminalList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_AppSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_TerminalList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -254,6 +254,7 @@ namespace Foxoft
             bBI_Session.Id = 30;
             bBI_Session.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Session.ImageOptions.SvgImage");
             bBI_Session.Name = "bBI_Session";
+            bBI_Session.ItemClick += bBI_Session_ItemClick;
             // 
             // BSI_Report
             // 
@@ -739,6 +740,13 @@ namespace Foxoft
             ACE_WarehouseList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_WarehouseList.Text = Resources.Form_WarehouseList_Caption;
             // 
+            // ACE_TerminalList
+            // 
+            ACE_TerminalList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_TerminalList.ImageOptions.SvgImage");
+            ACE_TerminalList.Name = "ACE_TerminalList";
+            ACE_TerminalList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_TerminalList.Text = "Element1";
+            // 
             // accordionControlSeparator2
             // 
             accordionControlSeparator2.Name = "accordionControlSeparator2";
@@ -749,13 +757,6 @@ namespace Foxoft
             ACE_AppSettings.Name = "ACE_AppSettings";
             ACE_AppSettings.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_AppSettings.Text = Resources.ERP_ACE_AppSettings;
-            // 
-            // ACE_TerminalList
-            // 
-            ACE_TerminalList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement1.ImageOptions.SvgImage");
-            ACE_TerminalList.Name = "ACE_TerminalList";
-            ACE_TerminalList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_TerminalList.Text = "Element1";
             // 
             // FormERP
             // 

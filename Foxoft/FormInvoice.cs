@@ -24,6 +24,7 @@ using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
+using Foxoft.Models.Context;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
@@ -68,13 +69,21 @@ namespace Foxoft
         ReportClass reportClass;
         private string salesPersonCode;
 
-        private const int WM_GETTAG = 0x0400 + 1; // for acccess to tag via Windows API
+        private readonly DocumentLockService _lockService;
+        private readonly Guid _appInstanceId = Guid.NewGuid();
+        private readonly Guid _formInstanceId = Guid.NewGuid();
+        private bool _closingByLock = false;
+        private int _pid => System.Diagnostics.Process.GetCurrentProcess().Id;
+        private System.Windows.Forms.Timer? _hbTimer;
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             dcProcess = efMethods.SelectEntityById<DcProcess>(processCode);
             reportClass = new(settingStore.DesignFileFolder);
+
+            dbContext = new subContext();
+            _lockService = new DocumentLockService(dbContext);
 
             InitializeComponent();
 
@@ -126,7 +135,11 @@ namespace Foxoft
             : this(processCode, isReturn, productTypeArr, relatedInvoiceId)
         {
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
-            LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+
+            if (TryOpenInvoiceForEdit(trInvoiceHeader.InvoiceHeaderId))
+            {
+                LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+            }
         }
 
         private void FormInvoice_Load(object sender, EventArgs e)
@@ -148,7 +161,6 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
-            dbContext?.Dispose();
             dbContext = new subContext();
 
 
@@ -291,7 +303,12 @@ namespace Foxoft
 
                 trInvoiceHeader = form.trInvoiceHeader;
 
-                LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+                //LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+
+                if (TryOpenInvoiceForEdit(trInvoiceHeader.InvoiceHeaderId))
+                {
+                    LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+                }
             }
         }
 
@@ -305,7 +322,6 @@ namespace Foxoft
             if (new string[] { "EX" }.Contains(dcProcess.ProcessCode))
                 btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
 
-            dbContext?.Dispose();
             dbContext = new subContext();
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
@@ -1135,9 +1151,16 @@ namespace Foxoft
             }
         }
 
-        Guid quidHead;
         private void SaveInvoice()
         {
+            if (!_lockService.IsLockOwnedByMe("Invoice", trInvoiceHeader.InvoiceHeaderId,
+                Authorization.CurrAccCode, _appInstanceId, _formInstanceId))
+            {
+                XtraMessageBox.Show("Sənəd artıq sizin deyil. Başqası tərəfində daxil olunub. Save dayandırıldı.");
+                Close();
+                return;
+            }
+
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
 
             if (new string[] { "IT" }.Contains(trInvoiceHeader.ProcessCode))
@@ -1235,6 +1258,7 @@ namespace Foxoft
             txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
         }
 
+        Guid quidHead;
         private void InitilizeTransfer()
         {
             IEnumerable<EntityEntry> entityEntries = dbContext.ChangeTracker.Entries();
@@ -1410,17 +1434,32 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-
                 decimal summaryInvoice = CalcNetAmountSummmaryValue();
 
                 if (summaryInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
                 {
                     SaveInvoice();
 
+                    _lockService.Unlock(
+                            "Invoice",
+                            trInvoiceHeader.InvoiceHeaderId,
+                            Authorization.CurrAccCode,
+                            Environment.MachineName,
+                            _appInstanceId);
+
                     ClearControlsAddNew();
                 }
                 else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                {
+                    _lockService.Unlock(
+                            "Invoice",
+                            trInvoiceHeader.InvoiceHeaderId,
+                            Authorization.CurrAccCode,
+                            Environment.MachineName,
+                            _appInstanceId);
+
                     ClearControlsAddNew();
+                }
             }
             else
             {
@@ -1462,6 +1501,13 @@ namespace Foxoft
 
         private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
         {
+            _lockService.Unlock(
+                            "Invoice",
+                            trInvoiceHeader.InvoiceHeaderId,
+                            Authorization.CurrAccCode,
+                            Environment.MachineName,
+                            _appInstanceId);
+
             ClearControlsAddNew();
         }
 
@@ -1596,6 +1642,13 @@ namespace Foxoft
                             XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionExpense);
 
                 efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
+
+                _lockService.Unlock(
+                    "Invoice",
+                    trInvoiceHeader.InvoiceHeaderId,
+                    Authorization.CurrAccCode,
+                    Environment.MachineName,
+                    _appInstanceId);
 
                 ClearControlsAddNew();
             }
@@ -3017,5 +3070,111 @@ namespace Foxoft
 
 
         }
+
+        private bool TryOpenInvoiceForEdit(Guid invoiceHeaderId)
+        {
+            var res = _lockService.TryAcquire(
+                documentType: "Invoice",
+                documentId: invoiceHeaderId,
+                userId: Authorization.CurrAccCode,
+                machineName: Environment.MachineName,
+                appInstanceId: _appInstanceId,
+                formInstanceId: _formInstanceId,
+                clientProcessId: _pid,
+                timeout: TimeSpan.FromMinutes(10),
+                reason: "Edit invoice");
+
+            if (!res.Acquired)
+            {
+                XtraMessageBox.Show(
+                    $"Bu sənəd hal-hazırda başqa istifadəçi tərəfindən redaktə olunur.\n" +
+                    $"Faktura hazırda {res.LockedBy} tərəfindən bloklanıb.\n" +
+                    $"LockedAt: {res.LockedAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n" +
+                    $"Heartbeat: {res.LastHeartbeatAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)",
+                    "Locked",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                return false;
+            }
+
+            StartHeartbeat();
+            return true;
+        }
+
+        private void StartHeartbeat()
+        {
+            _hbTimer?.Stop();
+            _hbTimer?.Dispose();
+
+            _hbTimer = new System.Windows.Forms.Timer { Interval = 30_000 };
+            _hbTimer.Tick += (_, __) =>
+            {
+                try
+                {
+                    var chk = _lockService.HeartbeatAndCheckForceClose(
+                        "Invoice",
+                        trInvoiceHeader.InvoiceHeaderId,
+                        Authorization.CurrAccCode,
+                        _appInstanceId,
+                        _formInstanceId);
+
+                    if (chk.Reason == LockCloseReason.None)
+                        return;
+
+                    BeginInvoke(new Action(() =>
+                    {
+                        _closingByLock = true;
+
+                        string msg = chk.Reason switch
+                        {
+                            LockCloseReason.FORCE_CLOSE =>
+                                $"Admin bu sənəd üçün bağlanma əmri verdi.\n{chk.Note}",
+                            LockCloseReason.OWNERSHIP_CHANGED =>
+                                $"Sənəd artıq başqa istifadəçiyə keçib: {chk.CurrentOwnerUserId}",
+                            LockCloseReason.LOCK_REMOVED =>
+                                "Sənədin lock-u silinib (ForceUnlock və ya sistem təmizliyi).",
+                            _ => "Sənəd bağlanır."
+                        };
+
+                        XtraMessageBox.Show(msg, "Sənəd bağlanır", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        Close(); // MDI child-u bağlayır
+                    }));
+                }
+                catch
+                {
+                    // log
+                }
+            };
+
+            _hbTimer.Start();
+        }
+
+
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            _hbTimer?.Stop();
+            _hbTimer?.Dispose();
+            _hbTimer = null;
+
+            try
+            {
+                _lockService.Unlock(
+                    "Invoice",
+                    trInvoiceHeader.InvoiceHeaderId,
+                    Authorization.CurrAccCode,
+                    Environment.MachineName,
+                    _appInstanceId);
+            }
+            catch
+            {
+                // log
+            }
+
+            base.OnFormClosing(e);
+        }
+
     }
 }
