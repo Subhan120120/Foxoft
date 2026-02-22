@@ -154,6 +154,11 @@ namespace Foxoft
             }
             finally
             {
+                if (filterInvoiceHeaderId is not null && ReferenceEquals(cts, _cts) && gvMaster.RowCount > 0)
+                {
+                    gvMaster.FocusedRowHandle = 0;
+                    gvMaster.SetMasterRowExpanded(0, true);
+                }
             }
         }
 
