@@ -58,7 +58,7 @@ namespace Foxoft
         readonly SettingStore settingStore;
         private TrInvoiceHeader trInvoiceHeader;
         private bool isReturn;
-        Guid invoiceHeaderId;
+        Guid newInvoiceHeaderId;
         Guid? relatedInvoiceId;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
@@ -161,16 +161,29 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-            invoiceHeaderId = Guid.NewGuid();
+            newInvoiceHeaderId = Guid.NewGuid();
 
-            if (!TryOpenInvoiceForEdit(invoiceHeaderId))
+            if (TryOpenInvoiceForEdit(newInvoiceHeaderId))
+            {
+                if (trInvoiceHeader is not null)
+                {
+                    Guid oldInvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+
+                    _lockService.Unlock(
+                            "Invoice",
+                            oldInvoiceHeaderId,
+                            Authorization.CurrAccCode,
+                            Environment.MachineName,
+                            _appInstanceId);
+                }
+            }
+            else
                 return;
-
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
                                       .Include(x => x.DcCurrAcc)
                                       .Include(x => x.TrInstallment)
-                                      .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                      .Where(x => x.InvoiceHeaderId == newInvoiceHeaderId)
                                       .Load();
 
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
@@ -226,7 +239,7 @@ namespace Foxoft
         private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
         {
             TrInvoiceHeader invoiceHeader = new();
-            invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
+            invoiceHeader.InvoiceHeaderId = newInvoiceHeaderId;
             invoiceHeader.RelatedInvoiceId = relatedInvoiceId;
             string NewDocNum = efMethods.GetNextDocNum(true, dcProcess.ProcessCode, nameof(TrInvoiceHeader.DocumentNumber), nameof(subContext.TrInvoiceHeaders), 6);
             invoiceHeader.DocumentNumber = NewDocNum;
@@ -301,20 +314,18 @@ namespace Foxoft
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 //efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
+                //LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
 
-                _lockService.Unlock(
+                if (TryOpenInvoiceForEdit(form.trInvoiceHeader.InvoiceHeaderId))
+                {
+                    _lockService.Unlock(
                     "Invoice",
                     trInvoiceHeader.InvoiceHeaderId,
                     Authorization.CurrAccCode,
                     Environment.MachineName,
                     _appInstanceId);
 
-                trInvoiceHeader = form.trInvoiceHeader;
-
-                //LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
-
-                if (TryOpenInvoiceForEdit(trInvoiceHeader.InvoiceHeaderId))
-                {
+                    trInvoiceHeader = form.trInvoiceHeader;
                     LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
@@ -1448,24 +1459,10 @@ namespace Foxoft
                 {
                     SaveInvoice();
 
-                    _lockService.Unlock(
-                            "Invoice",
-                            trInvoiceHeader.InvoiceHeaderId,
-                            Authorization.CurrAccCode,
-                            Environment.MachineName,
-                            _appInstanceId);
-
                     ClearControlsAddNew();
                 }
                 else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                 {
-                    _lockService.Unlock(
-                            "Invoice",
-                            trInvoiceHeader.InvoiceHeaderId,
-                            Authorization.CurrAccCode,
-                            Environment.MachineName,
-                            _appInstanceId);
-
                     ClearControlsAddNew();
                 }
             }
@@ -1509,13 +1506,6 @@ namespace Foxoft
 
         private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
         {
-            _lockService.Unlock(
-                            "Invoice",
-                            trInvoiceHeader.InvoiceHeaderId,
-                            Authorization.CurrAccCode,
-                            Environment.MachineName,
-                            _appInstanceId);
-
             ClearControlsAddNew();
         }
 
@@ -1650,13 +1640,6 @@ namespace Foxoft
                             XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionExpense);
 
                 efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
-
-                _lockService.Unlock(
-                    "Invoice",
-                    trInvoiceHeader.InvoiceHeaderId,
-                    Authorization.CurrAccCode,
-                    Environment.MachineName,
-                    _appInstanceId);
 
                 ClearControlsAddNew();
             }

@@ -64,8 +64,7 @@ namespace Foxoft.Models.Context
             };
 
             _db.DocumentLocks.Add(newLock);
-
-            _db.SaveChanges();
+            string docNum = _db.TrInvoiceHeaders.FirstOrDefault(x => x.InvoiceHeaderId == documentId)?.DocumentNumber;
 
             try
             {
