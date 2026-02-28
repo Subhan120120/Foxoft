@@ -3260,7 +3260,7 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
     <value>Şəkil qovluğu</value>
   </data>
   <data name="Form_Store_PrinterName" xml:space="preserve">
-    <value>Çapçı adı</value>
+    <value>Printer Adı</value>
   </data>
   <data name="Form_Store_DefaultUnitOfMeasure" xml:space="preserve">
     <value>Standart ölçü vahidi</value>
@@ -3592,5 +3592,11 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Common_InvalidNumber" xml:space="preserve">
     <value>Etibarsız Say</value>
+  </data>
+  <data name="Entity_Terminal_PrinterName" xml:space="preserve">
+    <value>Printer Adı</value>
+  </data>
+  <data name="ERP_ACE_Terminals" xml:space="preserve">
+    <value>Terminallar</value>
   </data>
 </root>

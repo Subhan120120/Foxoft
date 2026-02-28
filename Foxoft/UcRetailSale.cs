@@ -28,6 +28,7 @@ namespace Foxoft
         ReportClass reportClass;
         subContext dbContext = new();
         readonly SettingStore settingStore;
+        readonly DcTerminal dcTerminal;
         DcLoyaltyCard loyaltyCard;
 
         public UcRetailSale()
@@ -41,6 +42,7 @@ namespace Foxoft
 
             ActiveControl = txtEdit_Barcode;
 
+            dcTerminal = efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId);
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             reportClass = new ReportClass(settingStore.DesignFileFolder);
 
@@ -267,7 +269,7 @@ namespace Foxoft
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e) // Parent Form Closing event
         {
             if (efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
-                efMethods.UpdateInvoiceIsSuspended(trInvoiceHeader.InvoiceHeaderId, true); 
+                efMethods.UpdateInvoiceIsSuspended(trInvoiceHeader.InvoiceHeaderId, true);
         }
 
         private bool TryMergeSameProduct(DcProduct dcProduct, decimal qty, string? salesman)
@@ -653,9 +655,9 @@ namespace Foxoft
 
             if (Settings.Default.AppSetting.AutoPrint)
             {
-                string printerName = string.IsNullOrWhiteSpace(settingStore.PrinterName)
+                string printerName = string.IsNullOrWhiteSpace(dcTerminal.PrinterName)
                     ? new PrinterSettings().PrinterName
-                    : settingStore.PrinterName;
+                    : dcTerminal.PrinterName;
 
                 await PrintFast(printerName);
             }
@@ -778,11 +780,11 @@ namespace Foxoft
         private async void btn_Print_Click(object sender, EventArgs e)
         {
             string printerName =
-                string.IsNullOrEmpty(settingStore.PrinterName)
+                string.IsNullOrEmpty(dcTerminal.PrinterName)
                     ? new PrinterSettings().PrinterName
-                    : settingStore.PrinterName;
+                    : dcTerminal.PrinterName;
 
-            await PrintFast(settingStore.PrinterName);
+            await PrintFast(dcTerminal.PrinterName);
         }
 
         private async Task PrintFast(string printerName)

@@ -5083,6 +5083,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Printer Name.
+        /// </summary>
+        public static string Entity_Terminal_PrinterName {
+            get {
+                return ResourceManager.GetString("Entity_Terminal_PrinterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Store Code.
         /// </summary>
         public static string Entity_Terminal_StoreCode {
@@ -5646,6 +5655,15 @@ namespace Foxoft.Properties {
         public static string ERP_ACE_StoreList {
             get {
                 return ResourceManager.GetString("ERP_ACE_StoreList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminals.
+        /// </summary>
+        public static string ERP_ACE_Terminals {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Terminals", resourceCulture);
             }
         }
         
@@ -9730,7 +9748,7 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Printer name.
+        ///   Looks up a localized string similar to Printer Name.
         /// </summary>
         public static string Form_Store_PrinterName {
             get {

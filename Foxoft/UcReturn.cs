@@ -169,11 +169,13 @@ namespace Foxoft
                         {
                             TrInvoiceLine trInvoiceLine = efMethods.SelectTrInvoiceLineByRelatedLineId(returnInvoiceHeaderId, invoiceLineID);
 
+                            trInvoiceLine.QtyOut -= formQty.input;
+
                             trInvoiceLine.Amount = (-1) * formQty.input * trInvoiceLine.Price;
                             trInvoiceLine.AmountLoc = (-1) * formQty.input * trInvoiceLine.PriceLoc;
-                            trInvoiceLine.NetAmount = (-1) * formQty.input * trInvoiceLine.Price * (100 - trInvoiceLine.PosDiscount);
-                            trInvoiceLine.NetAmountLoc = (-1) * formQty.input * trInvoiceLine.PriceLoc * (100 - trInvoiceLine.PosDiscount);
-                            trInvoiceLine.QtyOut = formQty.input + trInvoiceLine.QtyOut;
+
+                            trInvoiceLine.NetAmount = (-1) * formQty.input * trInvoiceLine.Price * (100m - trInvoiceLine.PosDiscount) / 100m;
+                            trInvoiceLine.NetAmountLoc = (-1) * formQty.input * trInvoiceLine.PriceLoc * (100m - trInvoiceLine.PosDiscount) / 100m;
 
                             efMethods.UpdateEntity(trInvoiceLine);
                         }

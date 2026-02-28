@@ -17,10 +17,6 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_AutoPrint), ResourceType = typeof(Resources))]
         public bool AutoPrint { get; set; }
 
-
-        [Display(Name = nameof(Resources.Entity_AppSetting_PrinterName), ResourceType = typeof(Resources))]
-        public string? PrinterName { get; set; }
-
         [Display(Name = nameof(Resources.Entity_AppSetting_PrintCount), ResourceType = typeof(Resources))]
         public int PrintCount { get; set; }
 

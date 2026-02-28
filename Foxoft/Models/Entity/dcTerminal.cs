@@ -38,6 +38,9 @@ namespace Foxoft.Models
         [ForeignKey(nameof(DcCashRegister))]
         public string CashRegisterCode { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_Terminal_PrinterName), ResourceType = typeof(Resources))]
+        public string? PrinterName { get; set; }
+
         [Display(Name = nameof(Resources.Entity_Terminal_TouchUIMode), ResourceType = typeof(Resources))]
         public bool TouchUIMode { get; set; }
 

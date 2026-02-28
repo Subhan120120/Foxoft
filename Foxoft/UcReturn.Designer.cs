@@ -197,7 +197,7 @@ namespace Foxoft
             col_RProductCode.Name = "col_RProductCode";
             col_RProductCode.Visible = true;
             col_RProductCode.VisibleIndex = 0;
-            col_RProductCode.Width = 87;
+            col_RProductCode.Width = 123;
             // 
             // col_RQty
             // 
@@ -205,8 +205,8 @@ namespace Foxoft
             col_RQty.MinWidth = 23;
             col_RQty.Name = "col_RQty";
             col_RQty.Visible = true;
-            col_RQty.VisibleIndex = 1;
-            col_RQty.Width = 87;
+            col_RQty.VisibleIndex = 2;
+            col_RQty.Width = 246;
             // 
             // col_RPrice
             // 
@@ -214,8 +214,8 @@ namespace Foxoft
             col_RPrice.MinWidth = 23;
             col_RPrice.Name = "col_RPrice";
             col_RPrice.Visible = true;
-            col_RPrice.VisibleIndex = 2;
-            col_RPrice.Width = 87;
+            col_RPrice.VisibleIndex = 3;
+            col_RPrice.Width = 246;
             // 
             // col_RAmount
             // 
@@ -238,8 +238,8 @@ namespace Foxoft
             col_RNetAmount.Name = "col_RNetAmount";
             col_RNetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:0.##}") });
             col_RNetAmount.Visible = true;
-            col_RNetAmount.VisibleIndex = 3;
-            col_RNetAmount.Width = 87;
+            col_RNetAmount.VisibleIndex = 4;
+            col_RNetAmount.Width = 250;
             // 
             // col_RVatRate
             // 
@@ -266,7 +266,8 @@ namespace Foxoft
             col_RProductDesc.FieldName = "ProductDesc";
             col_RProductDesc.Name = "col_RProductDesc";
             col_RProductDesc.Visible = true;
-            col_RProductDesc.VisibleIndex = 4;
+            col_RProductDesc.VisibleIndex = 1;
+            col_RProductDesc.Width = 390;
             // 
             // gC_PaymentLine
             // 

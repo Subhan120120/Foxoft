@@ -745,7 +745,7 @@ namespace Foxoft
             ACE_TerminalList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_TerminalList.ImageOptions.SvgImage");
             ACE_TerminalList.Name = "ACE_TerminalList";
             ACE_TerminalList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_TerminalList.Text = "Element1";
+            ACE_TerminalList.Text = Resources.ERP_ACE_Terminals;
             // 
             // accordionControlSeparator2
             // 

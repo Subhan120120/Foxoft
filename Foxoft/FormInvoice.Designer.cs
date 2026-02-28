@@ -41,14 +41,7 @@ namespace Foxoft
             behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(components);
             trInvoiceLinesBindingSource = new BindingSource(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-            gC_InstallmentGarantor = new DevExpress.XtraGrid.GridControl();
-            trInstallmentGuarantorsBindingSource = new BindingSource(components);
-            gV_InstallmentGarantor = new DevExpress.XtraGrid.Views.Grid.GridView();
-            colInstallmentGarantorId = new GridColumn();
-            ColCurrAccCode = new GridColumn();
-            CurrAccDesc = new GridColumn();
-            colInstallmentGarantorDelete = new GridColumn();
-            repoBtnEdit_InstallmentGarantorDelete = new RepositoryItemButtonEdit();
+            txt_LoyaltyEarn = new DevExpress.XtraEditors.TextEdit();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_Save = new BarButtonItem();
             popupMenu1 = new PopupMenu(components);
@@ -66,9 +59,6 @@ namespace Foxoft
             BBI_ImportExcel = new BarButtonItem();
             BBI_ReportPrintFast = new BarButtonItem();
             popupMenuPrinters = new PopupMenu(components);
-            BBI_PrintSettingSave = new BarButtonItem();
-            BEI_PrinterName = new BarEditItem();
-            repoCBE_PrinterName = new RepositoryItemComboBox();
             barButtonItem3 = new BarButtonItem();
             btn_info = new BarButtonItem();
             BBI_picture = new BarButtonItem();
@@ -97,12 +87,20 @@ namespace Foxoft
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             RibbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup9 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             repoTxtEdit_TwilioInstance = new RepositoryItemTextEdit();
             repoTxtEdit_TwilioToken = new RepositoryItemTextEdit();
             repo = new RepositoryItemCheckedComboBoxEdit();
+            repoCBE_PrinterName = new RepositoryItemComboBox();
+            gC_InstallmentGarantor = new DevExpress.XtraGrid.GridControl();
+            trInstallmentGuarantorsBindingSource = new BindingSource(components);
+            gV_InstallmentGarantor = new DevExpress.XtraGrid.Views.Grid.GridView();
+            colInstallmentGarantorId = new GridColumn();
+            ColCurrAccCode = new GridColumn();
+            CurrAccDesc = new GridColumn();
+            colInstallmentGarantorDelete = new GridColumn();
+            repoBtnEdit_InstallmentGarantorDelete = new RepositoryItemButtonEdit();
             txtEdit_Installment_Commission = new DevExpress.XtraEditors.TextEdit();
             trInvoiceHeadersBindingSource = new BindingSource(components);
             LUE_InstallmentPlan = new DevExpress.XtraEditors.LookUpEdit();
@@ -223,27 +221,27 @@ namespace Foxoft
             LCI_InstallmentCommission = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_InterestRate = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_CashRegCode = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_LoyaltyEarn = new DevExpress.XtraLayout.LayoutControlItem();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
-            txt_LoyaltyEarn = new DevExpress.XtraEditors.TextEdit();
-            LCI_LoyaltyEarn = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)txt_LoyaltyEarn.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_InstallmentGarantor).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInstallmentGuarantorsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_InstallmentGarantor).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_InstallmentGarantorDelete).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Installment_Commission.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LUE_InstallmentPlan.Properties).BeginInit();
@@ -321,11 +319,10 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentCommission).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InterestRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_CashRegCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_LoyaltyEarn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txt_LoyaltyEarn.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_LoyaltyEarn).BeginInit();
             SuspendLayout();
             // 
             // trInvoiceLinesBindingSource
@@ -382,81 +379,20 @@ namespace Foxoft
             dataLayoutControl1.Text = "dataLayoutControl1";
             dataLayoutControl1.Changed += dataLayoutControl1_Changed;
             // 
-            // gC_InstallmentGarantor
+            // txt_LoyaltyEarn
             // 
-            gC_InstallmentGarantor.DataSource = trInstallmentGuarantorsBindingSource;
-            gC_InstallmentGarantor.Location = new Point(787, 144);
-            gC_InstallmentGarantor.MainView = gV_InstallmentGarantor;
-            gC_InstallmentGarantor.MenuManager = ribbonControl1;
-            gC_InstallmentGarantor.Name = "gC_InstallmentGarantor";
-            gC_InstallmentGarantor.RepositoryItems.AddRange(new RepositoryItem[] { repoBtnEdit_InstallmentGarantorDelete });
-            gC_InstallmentGarantor.Size = new Size(522, 92);
-            gC_InstallmentGarantor.TabIndex = 11;
-            gC_InstallmentGarantor.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InstallmentGarantor });
-            // 
-            // trInstallmentGuarantorsBindingSource
-            // 
-            trInstallmentGuarantorsBindingSource.DataSource = typeof(TrInstallmentGuarantor);
-            // 
-            // gV_InstallmentGarantor
-            // 
-            gV_InstallmentGarantor.Columns.AddRange(new GridColumn[] { colInstallmentGarantorId, ColCurrAccCode, CurrAccDesc, colInstallmentGarantorDelete });
-            gV_InstallmentGarantor.GridControl = gC_InstallmentGarantor;
-            gV_InstallmentGarantor.Name = "gV_InstallmentGarantor";
-            gV_InstallmentGarantor.OptionsView.ShowColumnHeaders = false;
-            gV_InstallmentGarantor.OptionsView.ShowGroupPanel = false;
-            gV_InstallmentGarantor.OptionsView.ShowIndicator = false;
-            gV_InstallmentGarantor.CustomUnboundColumnData += gV_InstallmentGarantor_CustomUnboundColumnData;
-            // 
-            // colInstallmentGarantorId
-            // 
-            colInstallmentGarantorId.Caption = Resources.Entity_InstallmentGuarantor_Id;
-            colInstallmentGarantorId.FieldName = "InstallmentGarantorId";
-            colInstallmentGarantorId.Name = "colInstallmentGarantorId";
-            // 
-            // ColCurrAccCode
-            // 
-            ColCurrAccCode.Caption = Resources.FormInvoice_InstallmentGuarantor_CurrAccCode;
-            ColCurrAccCode.FieldName = "CurrAccCode";
-            ColCurrAccCode.Name = "ColCurrAccCode";
-            ColCurrAccCode.Visible = true;
-            ColCurrAccCode.VisibleIndex = 0;
-            ColCurrAccCode.Width = 186;
-            // 
-            // CurrAccDesc
-            // 
-            CurrAccDesc.Caption = Resources.Entity_CurrAcc_CurrAccDesc;
-            CurrAccDesc.FieldName = "CurrAccDesc";
-            CurrAccDesc.Name = "CurrAccDesc";
-            CurrAccDesc.UnboundDataType = typeof(string);
-            CurrAccDesc.Visible = true;
-            CurrAccDesc.VisibleIndex = 1;
-            CurrAccDesc.Width = 186;
-            // 
-            // colInstallmentGarantorDelete
-            // 
-            colInstallmentGarantorDelete.Caption = Resources.Common_Delete;
-            colInstallmentGarantorDelete.ColumnEdit = repoBtnEdit_InstallmentGarantorDelete;
-            colInstallmentGarantorDelete.FieldName = "colInstallmentGarantorDelete";
-            colInstallmentGarantorDelete.MaxWidth = 20;
-            colInstallmentGarantorDelete.Name = "colInstallmentGarantorDelete";
-            colInstallmentGarantorDelete.UnboundDataType = typeof(object);
-            colInstallmentGarantorDelete.Visible = true;
-            colInstallmentGarantorDelete.VisibleIndex = 2;
-            colInstallmentGarantorDelete.Width = 20;
-            // 
-            // repoBtnEdit_InstallmentGarantorDelete
-            // 
-            repoBtnEdit_InstallmentGarantorDelete.AutoHeight = false;
-            repoBtnEdit_InstallmentGarantorDelete.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete) });
-            repoBtnEdit_InstallmentGarantorDelete.Name = "repoBtnEdit_InstallmentGarantorDelete";
-            repoBtnEdit_InstallmentGarantorDelete.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
-            repoBtnEdit_InstallmentGarantorDelete.ButtonClick += repoBtnEdit_InstallmentGarantorDelete_ButtonClick;
+            txt_LoyaltyEarn.Enabled = false;
+            txt_LoyaltyEarn.Location = new Point(393, 386);
+            txt_LoyaltyEarn.MenuManager = ribbonControl1;
+            txt_LoyaltyEarn.Name = "txt_LoyaltyEarn";
+            txt_LoyaltyEarn.Size = new Size(50, 20);
+            txt_LoyaltyEarn.StyleController = dataLayoutControl1;
+            txt_LoyaltyEarn.TabIndex = 6;
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 69;
             ribbonControl1.Name = "ribbonControl1";
@@ -596,27 +532,6 @@ namespace Foxoft
             popupMenuPrinters.Ribbon = ribbonControl1;
             popupMenuPrinters.BeforePopup += popupMenuPrinters_BeforePopup;
             // 
-            // BBI_PrintSettingSave
-            // 
-            BBI_PrintSettingSave.Caption = Resources.FormInvoice_PrintSettingSave;
-            BBI_PrintSettingSave.Id = 31;
-            BBI_PrintSettingSave.Name = "BBI_PrintSettingSave";
-            BBI_PrintSettingSave.ItemClick += BBI_PrintSettingSave_ItemClick;
-            // 
-            // BEI_PrinterName
-            // 
-            BEI_PrinterName.Caption = Resources.Common_Printer;
-            BEI_PrinterName.Edit = repoCBE_PrinterName;
-            BEI_PrinterName.Id = 35;
-            BEI_PrinterName.Name = "BEI_PrinterName";
-            // 
-            // repoCBE_PrinterName
-            // 
-            repoCBE_PrinterName.AutoHeight = false;
-            repoCBE_PrinterName.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoCBE_PrinterName.Name = "repoCBE_PrinterName";
-            repoCBE_PrinterName.EditValueChanged += repoCBE_PrinterName_EditValueChanged;
-            // 
             // barButtonItem3
             // 
             barButtonItem3.Caption = Resources.FormInvoice_Test1;
@@ -654,7 +569,6 @@ namespace Foxoft
             BBI_InvoiceExpenses.Id = 45;
             BBI_InvoiceExpenses.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_InvoiceExpenses.ImageOptions.SvgImage");
             BBI_InvoiceExpenses.Name = "BBI_InvoiceExpenses";
-            BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
             BBI_InvoiceExpenses.ItemClick += BBI_InvoiceExpenses_ItemClick;
             // 
             // BCI_ShowPicture
@@ -820,7 +734,7 @@ namespace Foxoft
             // 
             // ribbonPage2
             // 
-            ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RibbonPageGroup5, ribbonPageGroup6, ribbonPageGroup9, ribbonPageGroup1 });
+            ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RibbonPageGroup5, ribbonPageGroup9, ribbonPageGroup1 });
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = Resources.FormInvoice_RibbonPage_Settings;
             // 
@@ -830,13 +744,6 @@ namespace Foxoft
             RibbonPageGroup5.ItemLinks.Add(BBI_exportXLSX);
             RibbonPageGroup5.Name = "RibbonPageGroup5";
             RibbonPageGroup5.Text = Resources.FormInvoice_RibbonGroup_Report;
-            // 
-            // ribbonPageGroup6
-            // 
-            ribbonPageGroup6.ItemLinks.Add(BEI_PrinterName);
-            ribbonPageGroup6.ItemLinks.Add(BBI_PrintSettingSave);
-            ribbonPageGroup6.Name = "ribbonPageGroup6";
-            ribbonPageGroup6.Text = Resources.FormInvoice_RibbonGroup_PrintSettings;
             // 
             // ribbonPageGroup9
             // 
@@ -867,6 +774,84 @@ namespace Foxoft
             repo.AutoHeight = false;
             repo.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             repo.Name = "repo";
+            // 
+            // repoCBE_PrinterName
+            // 
+            repoCBE_PrinterName.AutoHeight = false;
+            repoCBE_PrinterName.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoCBE_PrinterName.Name = "repoCBE_PrinterName";
+            repoCBE_PrinterName.EditValueChanged += repoCBE_PrinterName_EditValueChanged;
+            // 
+            // gC_InstallmentGarantor
+            // 
+            gC_InstallmentGarantor.DataSource = trInstallmentGuarantorsBindingSource;
+            gC_InstallmentGarantor.Location = new Point(787, 144);
+            gC_InstallmentGarantor.MainView = gV_InstallmentGarantor;
+            gC_InstallmentGarantor.MenuManager = ribbonControl1;
+            gC_InstallmentGarantor.Name = "gC_InstallmentGarantor";
+            gC_InstallmentGarantor.RepositoryItems.AddRange(new RepositoryItem[] { repoBtnEdit_InstallmentGarantorDelete });
+            gC_InstallmentGarantor.Size = new Size(522, 92);
+            gC_InstallmentGarantor.TabIndex = 11;
+            gC_InstallmentGarantor.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InstallmentGarantor });
+            // 
+            // trInstallmentGuarantorsBindingSource
+            // 
+            trInstallmentGuarantorsBindingSource.DataSource = typeof(TrInstallmentGuarantor);
+            // 
+            // gV_InstallmentGarantor
+            // 
+            gV_InstallmentGarantor.Columns.AddRange(new GridColumn[] { colInstallmentGarantorId, ColCurrAccCode, CurrAccDesc, colInstallmentGarantorDelete });
+            gV_InstallmentGarantor.GridControl = gC_InstallmentGarantor;
+            gV_InstallmentGarantor.Name = "gV_InstallmentGarantor";
+            gV_InstallmentGarantor.OptionsView.ShowColumnHeaders = false;
+            gV_InstallmentGarantor.OptionsView.ShowGroupPanel = false;
+            gV_InstallmentGarantor.OptionsView.ShowIndicator = false;
+            gV_InstallmentGarantor.CustomUnboundColumnData += gV_InstallmentGarantor_CustomUnboundColumnData;
+            // 
+            // colInstallmentGarantorId
+            // 
+            colInstallmentGarantorId.Caption = Resources.Entity_InstallmentGuarantor_Id;
+            colInstallmentGarantorId.FieldName = "InstallmentGarantorId";
+            colInstallmentGarantorId.Name = "colInstallmentGarantorId";
+            // 
+            // ColCurrAccCode
+            // 
+            ColCurrAccCode.Caption = Resources.FormInvoice_InstallmentGuarantor_CurrAccCode;
+            ColCurrAccCode.FieldName = "CurrAccCode";
+            ColCurrAccCode.Name = "ColCurrAccCode";
+            ColCurrAccCode.Visible = true;
+            ColCurrAccCode.VisibleIndex = 0;
+            ColCurrAccCode.Width = 186;
+            // 
+            // CurrAccDesc
+            // 
+            CurrAccDesc.Caption = Resources.Entity_CurrAcc_CurrAccDesc;
+            CurrAccDesc.FieldName = "CurrAccDesc";
+            CurrAccDesc.Name = "CurrAccDesc";
+            CurrAccDesc.UnboundDataType = typeof(string);
+            CurrAccDesc.Visible = true;
+            CurrAccDesc.VisibleIndex = 1;
+            CurrAccDesc.Width = 186;
+            // 
+            // colInstallmentGarantorDelete
+            // 
+            colInstallmentGarantorDelete.Caption = Resources.Common_Delete;
+            colInstallmentGarantorDelete.ColumnEdit = repoBtnEdit_InstallmentGarantorDelete;
+            colInstallmentGarantorDelete.FieldName = "colInstallmentGarantorDelete";
+            colInstallmentGarantorDelete.MaxWidth = 20;
+            colInstallmentGarantorDelete.Name = "colInstallmentGarantorDelete";
+            colInstallmentGarantorDelete.UnboundDataType = typeof(object);
+            colInstallmentGarantorDelete.Visible = true;
+            colInstallmentGarantorDelete.VisibleIndex = 2;
+            colInstallmentGarantorDelete.Width = 20;
+            // 
+            // repoBtnEdit_InstallmentGarantorDelete
+            // 
+            repoBtnEdit_InstallmentGarantorDelete.AutoHeight = false;
+            repoBtnEdit_InstallmentGarantorDelete.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete) });
+            repoBtnEdit_InstallmentGarantorDelete.Name = "repoBtnEdit_InstallmentGarantorDelete";
+            repoBtnEdit_InstallmentGarantorDelete.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+            repoBtnEdit_InstallmentGarantorDelete.ButtonClick += repoBtnEdit_InstallmentGarantorDelete_ButtonClick;
             // 
             // txtEdit_Installment_Commission
             // 
@@ -2035,6 +2020,16 @@ namespace Foxoft
             LCI_CashRegCode.TextSize = new Size(107, 13);
             LCI_CashRegCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             // 
+            // LCI_LoyaltyEarn
+            // 
+            LCI_LoyaltyEarn.Control = txt_LoyaltyEarn;
+            LCI_LoyaltyEarn.CustomizationFormText = "Qazanilan Bonus";
+            LCI_LoyaltyEarn.Location = new Point(262, 374);
+            LCI_LoyaltyEarn.Name = "LCI_LoyaltyEarn";
+            LCI_LoyaltyEarn.Size = new Size(173, 80);
+            LCI_LoyaltyEarn.Text = "Qazanilan Bonus";
+            LCI_LoyaltyEarn.TextSize = new Size(107, 13);
+            // 
             // svgImageCollection1
             // 
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
@@ -2058,25 +2053,6 @@ namespace Foxoft
             // 
             dxErrorProvider1.ContainerControl = this;
             // 
-            // txt_LoyaltyEarn
-            // 
-            txt_LoyaltyEarn.Location = new Point(393, 386);
-            txt_LoyaltyEarn.MenuManager = ribbonControl1;
-            txt_LoyaltyEarn.Name = "txt_LoyaltyEarn";
-            txt_LoyaltyEarn.Size = new Size(50, 20);
-            txt_LoyaltyEarn.StyleController = dataLayoutControl1;
-            txt_LoyaltyEarn.TabIndex = 6;
-            // 
-            // LCI_LoyaltyEarn
-            // 
-            LCI_LoyaltyEarn.Control = txt_LoyaltyEarn;
-            LCI_LoyaltyEarn.CustomizationFormText = "Qazanilan Bonus";
-            LCI_LoyaltyEarn.Location = new Point(262, 374);
-            LCI_LoyaltyEarn.Name = "LCI_LoyaltyEarn";
-            LCI_LoyaltyEarn.Size = new Size(173, 80);
-            LCI_LoyaltyEarn.Text = "Qazanilan Bonus";
-            LCI_LoyaltyEarn.TextSize = new Size(107, 13);
-            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -2096,17 +2072,18 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)txt_LoyaltyEarn.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).EndInit();
             ((System.ComponentModel.ISupportInitialize)gC_InstallmentGarantor).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInstallmentGuarantorsBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_InstallmentGarantor).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_InstallmentGarantorDelete).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repo).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Installment_Commission.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)LUE_InstallmentPlan.Properties).EndInit();
@@ -2184,11 +2161,10 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentCommission).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InterestRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_CashRegCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_LoyaltyEarn).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txt_LoyaltyEarn.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_LoyaltyEarn).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2281,10 +2257,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repoTxtEdit_TwilioToken;
         private DevExpress.XtraEditors.CheckEdit checkEdit_IsSent;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportPrintFast;
-        private DevExpress.XtraBars.BarButtonItem BBI_PrintSettingSave;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit repo;
-        private DevExpress.XtraBars.BarEditItem BEI_PrinterName;
         private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repoCBE_PrinterName;
         private DevExpress.XtraEditors.TextEdit txtEdit_PrintCount;
         private DevExpress.XtraLayout.LayoutControlItem lCI_printCount;

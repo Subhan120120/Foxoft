@@ -56,6 +56,7 @@ namespace Foxoft
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
 
         readonly SettingStore settingStore;
+        readonly DcTerminal dcTerminal;
         private TrInvoiceHeader trInvoiceHeader;
         private bool isReturn;
         Guid newInvoiceHeaderId;
@@ -77,6 +78,7 @@ namespace Foxoft
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            dcTerminal = efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId);
             dcProcess = efMethods.SelectEntityById<DcProcess>(processCode);
             reportClass = new(settingStore.DesignFileFolder);
 
@@ -97,7 +99,6 @@ namespace Foxoft
                 checkEdit_IsReturn.Properties.Appearance.ForeColor = (bool)isReturn ? Color.Red : Color.Empty;
             }
 
-            BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
             LUE_InstallmentPlan.Properties.DataSource = efMethods.SelectEntities<DcInstallmentPlan>();
 
@@ -207,7 +208,7 @@ namespace Foxoft
                                     .LoadAsync()
                                     .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
-            if (new string[] { "EX" }.Contains(dcProcess.ProcessCode))
+            if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                 btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
 
             if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
@@ -283,11 +284,16 @@ namespace Foxoft
             if (trInvoiceHeader is null)
                 return;
 
-            if (sender as LookUpEdit == LUE_InstallmentPlan && !string.IsNullOrEmpty(LUE_InstallmentPlan.EditValue?.ToString()))
-                trInvoiceHeader.TrInstallment.InstallmentPlanCode = LUE_InstallmentPlan.EditValue?.ToString();
+            if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
+            {
+                if (sender as LookUpEdit == LUE_InstallmentPlan
+                && !string.IsNullOrEmpty(LUE_InstallmentPlan.EditValue?.ToString()))
+                    trInvoiceHeader.TrInstallment.InstallmentPlanCode = LUE_InstallmentPlan.EditValue?.ToString();
 
-            if (sender as DateEdit == DateEdit_InstallmentDate && !string.IsNullOrEmpty(DateEdit_InstallmentDate.EditValue?.ToString()))
-                trInvoiceHeader.TrInstallment.InstallmentDate = (DateTime)DateEdit_InstallmentDate.EditValue;
+                if (sender as DateEdit == DateEdit_InstallmentDate
+                && !string.IsNullOrEmpty(DateEdit_InstallmentDate.EditValue?.ToString()))
+                    trInvoiceHeader.TrInstallment.InstallmentDate = (DateTime)DateEdit_InstallmentDate.EditValue;
+            }
 
             if (dbContext != null && dataLayoutControl1.IsValid(out _))
                 if (Settings.Default.AppSetting.AutoSave)
@@ -338,7 +344,7 @@ namespace Foxoft
             dcLoyaltyCard = null;
             txt_LoyaltyEarn.EditValue = 0m;
 
-            if (new string[] { "EX" }.Contains(dcProcess.ProcessCode))
+            if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                 btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
 
             dbContext = new subContext();
@@ -1277,67 +1283,124 @@ namespace Foxoft
             txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
         }
 
+        Guid ZeroizeFirst8(Guid id)
+        {
+            String? s = id.ToString("D");
+            return Guid.Parse("00000000" + s.Substring(8));
+        }
+
         Guid quidHead;
         private void InitilizeTransfer()
         {
-            IEnumerable<EntityEntry> entityEntries = dbContext.ChangeTracker.Entries();
-
-            EntityEntry? entryHeader = entityEntries.FirstOrDefault(x => x.Entity is TrInvoiceHeader);
+            EntityEntry? entryHeader = dbContext.ChangeTracker.Entries()
+                .FirstOrDefault(x => x.Entity is TrInvoiceHeader);
 
             if (entryHeader is not null)
             {
-                TrInvoiceHeader trIH = (TrInvoiceHeader)entryHeader.CurrentValues.ToObject();
-
-                string invoHeadStr = trIH.InvoiceHeaderId.ToString();
-
-                quidHead = Guid.Parse(invoHeadStr.Replace(invoHeadStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+                TrInvoiceHeader? trIH = (TrInvoiceHeader)entryHeader.CurrentValues.ToObject();
+                quidHead = ZeroizeFirst8(trIH.InvoiceHeaderId);
 
                 using subContext context2 = new();
 
-                TrInvoiceHeader copyTrIH = trIH;
-                copyTrIH.InvoiceHeaderId = quidHead;
-                string temp = trIH.WarehouseCode;
-                copyTrIH.WarehouseCode = trIH.ToWarehouseCode;
-                copyTrIH.ToWarehouseCode = temp;
-                copyTrIH.StoreCode = trIH.CurrAccCode ??= trIH.StoreCode;
-                copyTrIH.IsMainTF = false;
+                TrInvoiceHeader? copyTrIH = MapNewTrIHForTransfer(trIH, quidHead);
 
-                switch (entryHeader.State)
-                {
-                    case EntityState.Added: context2.TrInvoiceHeaders.Add(copyTrIH); break;
-                    case EntityState.Modified: context2.TrInvoiceHeaders.Update(copyTrIH); break;
-                    case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(copyTrIH); break;
-                    default: break;
-                }
+                context2.Entry(copyTrIH).State = entryHeader.State;
                 context2.SaveChanges(Authorization.CurrAccCode);
             }
 
-            EntityEntry? entryLine = entityEntries.FirstOrDefault(x => x.Entity is TrInvoiceLine);
+            EntityEntry? entryLine = dbContext.ChangeTracker.Entries()
+                .FirstOrDefault(x => x.Entity is TrInvoiceLine);
 
             if (entryLine is not null)
             {
-                TrInvoiceLine trIL = (TrInvoiceLine)entryLine.CurrentValues.ToObject();
-
-                string invoLineStr = trIL.InvoiceLineId.ToString();
-                Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+                TrInvoiceLine? trIL = (TrInvoiceLine)entryLine.CurrentValues.ToObject();
+                Guid quidLine = ZeroizeFirst8(trIL.InvoiceLineId);
 
                 using subContext context2 = new();
 
-                TrInvoiceLine newTrIL = trIL;
-                newTrIL.InvoiceHeaderId = quidHead;
-                newTrIL.InvoiceLineId = quidLine;
-                newTrIL.QtyIn = trIL.QtyOut;
-                newTrIL.QtyOut -= trIL.QtyOut;
+                TrInvoiceLine? newTrIL = MapNewTrILForTransfer(trIL, quidHead, quidLine);
 
-                switch (entryLine.State)
-                {
-                    case EntityState.Added: context2.TrInvoiceLines.Add(newTrIL); break;
-                    case EntityState.Modified: context2.TrInvoiceLines.Update(newTrIL); break;
-                    case EntityState.Deleted: context2.TrInvoiceLines.Remove(newTrIL); break;
-                    default: break;
-                }
+                context2.Entry(newTrIL).State = entryLine.State;
+
                 context2.SaveChanges(Authorization.CurrAccCode);
             }
+        }
+
+        readonly DateTime DefaultSqlDate = new DateTime(1901, 1, 1);
+
+        DateTime FixSqlDate(DateTime dt)
+        {
+            // MinValue və ya SQL datetime limitindən kiçikdirsə default ver
+            return (dt < new DateTime(1753, 1, 1)) ? DefaultSqlDate : dt;
+        }
+
+        DateTime? FixSqlDate(DateTime? dt)
+        {
+            // null isə default ver; doludursa yenə limit yoxla
+            return dt is null ? DefaultSqlDate : FixSqlDate(dt.Value);
+        }
+        private TrInvoiceHeader MapNewTrIHForTransfer(TrInvoiceHeader trIH, Guid quidHead)
+        {
+            // swap + null guard
+            var newWarehouseCode = trIH.ToWarehouseCode ?? trIH.WarehouseCode; // fallback
+            var newToWarehouseCode = trIH.WarehouseCode ?? trIH.ToWarehouseCode;
+            var documentDate = FixSqlDate(trIH.DocumentDate);
+            var operationDate = FixSqlDate(trIH.OperationDate);
+
+            if (string.IsNullOrWhiteSpace(newWarehouseCode))
+                throw new InvalidOperationException("WarehouseCode və ToWarehouseCode hər ikisi boşdur/null-dur.");
+
+            var copyTrIH = new TrInvoiceHeader
+            {
+                InvoiceHeaderId = quidHead,
+                WarehouseCode = newWarehouseCode,
+                ToWarehouseCode = newToWarehouseCode,
+                CurrAccCode = trIH.CurrAccCode,
+                StoreCode = string.IsNullOrWhiteSpace(trIH.CurrAccCode) ? trIH.StoreCode : trIH.CurrAccCode,
+                IsMainTF = false,
+                CustomsDocumentNumber = trIH.CustomsDocumentNumber,
+                Description = trIH.Description,
+                DocumentDate = documentDate,
+                DocumentNumber = trIH.DocumentNumber,
+                DocumentTime = trIH.DocumentTime,
+                FiscalPrintedState = trIH.FiscalPrintedState,
+                IsCompleted = trIH.IsCompleted,
+                IsLocked = trIH.IsLocked,
+                IsOpen = trIH.IsOpen,
+                IsReturn = trIH.IsReturn,
+                IsSalesViaInternet = trIH.IsSalesViaInternet,
+                IsSent = trIH.IsSent,
+                IsSuspended = trIH.IsSuspended,
+                OfficeCode = trIH.OfficeCode,
+                OperationDate = operationDate,
+                OperationTime = trIH.OperationTime,
+                PrintCount = trIH.PrintCount,
+                ProcessCode = trIH.ProcessCode,
+                RelatedInvoiceId = trIH.RelatedInvoiceId,
+                TerminalId = trIH.TerminalId,
+            };
+
+            return copyTrIH;
+        }
+
+        private TrInvoiceLine MapNewTrILForTransfer(TrInvoiceLine trIL, Guid quidHead, Guid quidLine)
+        {
+            TrInvoiceLine? newTrIL = new TrInvoiceLine
+            {
+                InvoiceLineId = quidLine,
+                InvoiceHeaderId = quidHead,
+                RelatedLineId = trIL.RelatedLineId,
+                ProductCode = trIL.ProductCode,
+                UnitOfMeasureId = trIL.UnitOfMeasureId,
+                LineDescription = trIL.LineDescription,
+                SerialNumberCode = trIL.SerialNumberCode,
+                SalesPersonCode = trIL.SalesPersonCode,
+                WorkerCode = trIL.WorkerCode,
+                QtyIn = trIL.QtyOut,
+                QtyOut = trIL.QtyIn,
+            };
+
+            return newTrIL;
         }
 
         private void SaveInstallmentGarantors()
@@ -2426,7 +2489,7 @@ namespace Foxoft
             if (priceInvoice == 0)
                 gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);
 
-            if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+            if (new string[] { "EX", "EI", "CN" }.Contains(dcProcess.ProcessCode))
                 gV_InvoiceLine.SetRowCellValue(rowHandle, colQtyIn, 1);
         }
 
@@ -2484,7 +2547,7 @@ namespace Foxoft
 
         private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
         {
-            await PrintFast(settingStore.PrinterName);
+            await PrintFast(dcTerminal.PrinterName);
         }
 
         private async Task PrintFast(string printerName)
@@ -2524,12 +2587,7 @@ namespace Foxoft
         private void repoCBE_PrinterName_EditValueChanged(object sender, EventArgs e)
         {
             ComboBoxEdit comboBox = (ComboBoxEdit)sender;
-            settingStore.PrinterName = comboBox.EditValue.ToString();
-        }
-
-        private void BBI_PrintSettingSave_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            efMethods.UpdateStoreSettingPrinterName(BEI_PrinterName.EditValue.ToString());
+            dcTerminal.PrinterName = comboBox.EditValue.ToString();
         }
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)

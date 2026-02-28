@@ -23,6 +23,7 @@ namespace Foxoft
         public Guid invoiceLineID;
         public string processCode;
         readonly SettingStore settingStore;
+        readonly DcTerminal dcTerminal;
         ReportClass reportClass;
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
 
@@ -69,6 +70,7 @@ namespace Foxoft
 
             //gvMaster.BestFitColumns();
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            dcTerminal = efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId);
             reportClass = new(settingStore.DesignFileFolder);
 
             //Foxoft.Models.subContext dbContext = new Foxoft.Models.subContext();
@@ -421,7 +423,7 @@ namespace Foxoft
 
         private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
         {
-            await PrintFast(settingStore.PrinterName);
+            await PrintFast(dcTerminal.PrinterName);
         }
 
         private async Task PrintFast(string printerName)

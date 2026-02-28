@@ -24,9 +24,6 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_StoreSetting_ImageFolder), ResourceType = typeof(Resources))]
         public string? ImageFolder { get; set; }
 
-        [Display(Name = nameof(Resources.Entity_StoreSetting_PrinterName), ResourceType = typeof(Resources))]
-        public string? PrinterName { get; set; }
-
         [Display(Name = nameof(Resources.Entity_StoreSetting_SalesmanContinuity), ResourceType = typeof(Resources))]
         public bool SalesmanContinuity { get; set; }
 
