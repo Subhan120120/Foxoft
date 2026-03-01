@@ -748,7 +748,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PaymentDetail", ClaimDesc = "Ödəmə", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "PosNewInvoice", ClaimDesc = "POS Yeni Faktura", ClaimTypeId = 1, CategoryId = 2 },
-                new DcClaim { ClaimCode = "PosAllowPaymentDifferenceOfInvoice", ClaimDesc = "Faktura ilə ödəniş arasında fərqə icazə", ClaimTypeId = 1, CategoryId = 2 },
+                new DcClaim { ClaimCode = "AllowPaymentDifference", ClaimDesc = "Faktura ilə ödəniş arasında fərqə icazə", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "CurrAccFeatureType", ClaimDesc = "Cari Hesab Özəlliyi", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "CurrAccCreditLimit", ClaimDesc = "Cari Hesab Kredit Limiti", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəllik Tipləri", ClaimTypeId = 1, CategoryId = 18 },

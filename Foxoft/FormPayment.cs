@@ -22,8 +22,6 @@ namespace Foxoft
         private DcPaymentMethod dcPaymentMethod = new();
         private readonly EfMethods efMethods = new();
 
-        private DcLoyaltyCard dcLoyaltyCard = new();
-
         private decimal availableBonus = 0m;
         private decimal expectedPayLoc = 0m;
 
@@ -41,15 +39,14 @@ namespace Foxoft
             InitLookups();
         }
 
-        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader, DcLoyaltyCard loyaltyCard = null)
+        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader)
             : this()
         {
             trInvoiceHeader = invoiceHeader;
-            dcLoyaltyCard = loyaltyCard;
             expectedPayLoc = Math.Abs(pay);
 
-            if (dcLoyaltyCard != null && HasInvoice())
-                availableBonus = efMethods.SelectLoyaltyBonusBalance(dcLoyaltyCard.LoyaltyCardId, trInvoiceHeader.InvoiceHeaderId);
+            if (invoiceHeader.DcLoyaltyCard != null && HasInvoice())
+                availableBonus = efMethods.SelectLoyaltyBalanceExceptInvoice(invoiceHeader.DcLoyaltyCard.LoyaltyCardId, trInvoiceHeader.InvoiceHeaderId);
 
             txtEdit_LoyaltyBalance.EditValue = availableBonus;
 
@@ -61,8 +58,8 @@ namespace Foxoft
             ApplyInitialPayments(paymentType, pay);
         }
 
-        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader, bool isInstallmentPayment, DcLoyaltyCard loyaltyCard = null)
-            : this(paymentType, pay, invoiceHeader, loyaltyCard)
+        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader, bool isInstallmentPayment)
+            : this(paymentType, pay, invoiceHeader)
         {
             if (isInstallmentPayment)
                 trPaymentHeader.PaymentKindId = 3;
@@ -325,7 +322,7 @@ namespace Foxoft
 
         private void textEditBonus_Validating(object sender, CancelEventArgs e)
         {
-            if (dcLoyaltyCard is null) { e.Cancel = true; return; }
+            if (trInvoiceHeader.DcLoyaltyCard is null) { e.Cancel = true; return; }
             if (trPaymentLineBonus.Payment < 0) { e.Cancel = true; return; }
 
             if (isNegativ) return; // refund -> limit check etmirik
@@ -692,12 +689,12 @@ namespace Foxoft
             subContext db = new subContext();
 
             if (paymentHeaderId == Guid.Empty) return;
-            if (dcLoyaltyCard == null) return;
+            if (trInvoiceHeader.DcLoyaltyCard == null) return;
 
             var txn = db.TrLoyaltyTxns
                 .FirstOrDefault(x =>
                     x.PaymentLineId == trPaymentLineBonus.PaymentLineId &&
-                    x.LoyaltyCardId == dcLoyaltyCard.LoyaltyCardId &&
+                    x.LoyaltyCardId == trInvoiceHeader.DcLoyaltyCard.LoyaltyCardId &&
                     (x.TxnType == LoyaltyTxnType.Redeem || x.TxnType == LoyaltyTxnType.Refund));
 
             if (txn == null)
@@ -705,7 +702,7 @@ namespace Foxoft
                 txn = new TrLoyaltyTxn
                 {
                     LoyaltyTxnId = Guid.NewGuid(),
-                    LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId,
+                    LoyaltyCardId = trInvoiceHeader.DcLoyaltyCard.LoyaltyCardId,
                     CurrAccCode = trInvoiceHeader.CurrAccCode,
                     InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId, // istəsən saxla
                     CreatedUserName = Authorization.CurrAccCode,

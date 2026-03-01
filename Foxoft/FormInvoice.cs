@@ -23,8 +23,8 @@ using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
+using Foxoft.AppCode;
 using Foxoft.Models;
-using Foxoft.Models.Context;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
@@ -32,6 +32,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
@@ -40,6 +41,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
+using System.Windows.Forms;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
 #endregion
@@ -64,11 +66,11 @@ namespace Foxoft
         public DcProcess dcProcess;
         private byte[] productTypeArr;
         private decimal CurrAccBalanceBefore;
-        private DcLoyaltyCard dcLoyaltyCard;
         ReportClass reportClass;
         private string salesPersonCode;
 
         private readonly DocumentLockService _lockService;
+        private LoyaltyService _loyaltyService;
         private readonly Guid _appInstanceId = Guid.NewGuid();
         private readonly Guid _formInstanceId = Guid.NewGuid();
         private bool _closingByLock = false;
@@ -137,7 +139,7 @@ namespace Foxoft
 
             if (TryOpenInvoiceForEdit(trInvoiceHeader.InvoiceHeaderId))
             {
-                LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+                LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
             }
         }
 
@@ -161,6 +163,7 @@ namespace Foxoft
         private void ClearControlsAddNew()
         {
             dbContext = new subContext();
+            _loyaltyService = new LoyaltyService(dbContext);
 
             newInvoiceHeaderId = Guid.NewGuid();
 
@@ -205,8 +208,9 @@ namespace Foxoft
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                     .Include(x => x.DcUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure)
                                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
-                                    .LoadAsync()
-                                    .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+                                    .LoadAsync();
+
+            trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                 btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
@@ -216,8 +220,7 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
-            dcLoyaltyCard = null;
+            txt_LoyaltyEarn.EditValue = 0m;
 
             Tag = btnEdit_DocNum.EditValue;
 
@@ -298,7 +301,7 @@ namespace Foxoft
             if (dbContext != null && dataLayoutControl1.IsValid(out _))
                 if (Settings.Default.AppSetting.AutoSave)
                     if (gV_InvoiceLine.DataRowCount > 0)
-                        SaveInvoice();
+                        SaveInvoiceAsync();
 
             //gV_InvoiceLine.Focus();
         }
@@ -332,83 +335,53 @@ namespace Foxoft
                     _appInstanceId);
 
                     trInvoiceHeader = form.trInvoiceHeader;
-                    LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+                    LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
         }
 
-        private void LoadInvoice(Guid InvoiceHeaderId)
+        private async Task LoadInvoiceAsync(Guid invoiceHeaderId)
         {
             SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
 
-            dcLoyaltyCard = null;
-            txt_LoyaltyEarn.EditValue = 0m;
-
-            if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
-
-            dbContext = new subContext();
-
-            dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
-                                      .Include(x => x.DcProcess)
-                                      .Include(x => x.TrInstallment)
-                                      .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
-                                      .Load();
-
-            LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
-
-            if (!lV_invoiceHeader.Any(x => x.DcCurrAcc is null))
-                lV_invoiceHeader.ForEach(x =>
-                {
-                    x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
-                    lbl_CurrAccDesc.Text = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
-                });
-
-            trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
-
-            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-
-            dcProcess = efMethods.SelectEntityById<DcProcess>(trInvoiceHeader.ProcessCode);
-
-            Text = $"{dcProcess.ProcessDesc} - ({btnEdit_DocNum.EditValue})";
-
-            dbContext.TrInvoiceLines.Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
-                                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
-                                    .Include(x => x.DcUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure)
-                                    .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
-                                    .OrderBy(x => x.CreatedDate)
-                                    .LoadAsync()
-                                    .ContinueWith(loadTask =>
-                                    {
-                                        trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
-
-                                        gV_InvoiceLine.BestFitColumns();
-                                        gV_InvoiceLine.Focus();
-
-                                    }, TaskScheduler.FromCurrentSynchronizationContext());
-
-            if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
-                LoadInstallmentGarantors();
-
-            dataLayoutControl1.IsValid(out List<string> errorList);
-            CalcPaidAmount();
-
-            dcLoyaltyCard = efMethods.GetLoyaltyCard(InvoiceHeaderId);
-            txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(InvoiceHeaderId);
-
-            Tag = btnEdit_DocNum.EditValue;
-
-            if (!trInvoiceHeader.IsLocked)
+            try
             {
-                bool locked = (DateTime.Now - trInvoiceHeader.DocumentDate).Days > Settings.Default.AppSetting.InvoiceEditGraceDays;
-                trInvoiceHeader.IsLocked = locked;
+                dbContext = new subContext();
+                _loyaltyService = new LoyaltyService(dbContext);
+
+                txt_LoyaltyEarn.EditValue = 0m;
+
+                await dbContext.TrInvoiceHeaders
+                    .Include(x => x.DcCurrAcc)
+                    .Include(x => x.DcProcess)
+                    .Include(x => x.TrInstallment)
+                    .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                    .LoadAsync();
+
+                var lV = dbContext.TrInvoiceHeaders.Local;
+
+                trInvoiceHeadersBindingSource.DataSource = lV.ToBindingList();
+                trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+                // lines
+                await dbContext.TrInvoiceLines
+                    .Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
+                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                    .Include(x => x.DcUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure)
+                    .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                    .OrderBy(x => x.CreatedDate)
+                    .LoadAsync();
+
+                trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+
+                CalcPaidAmount();
+
+                txt_LoyaltyEarn.EditValue = await efMethods.SelectLoyaltyBalanceByInvoiceAsync(invoiceHeaderId);
             }
-
-            SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
-
-            efMethods.UpdateInvoiceIsLocked(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.IsLocked);
-
-            SplashScreenManager.CloseForm(false);
+            finally
+            {
+                SplashScreenManager.CloseForm(false);
+            }
         }
 
         private void CalcPaidAmount()
@@ -435,48 +408,29 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            SelectCurrAcc();
+            SelectCurrAccAsync();
         }
 
         private void btnEdit_CurrAccCode_DoubleClick(object sender, EventArgs e)
         {
-            SelectCurrAcc();
+            SelectCurrAccAsync();
         }
 
-        private void SelectCurrAcc()
+        private async Task SelectCurrAccAsync()
         {
-            if (btnEdit_CurrAccCode.Enabled)
-            {
-                FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false, trInvoiceHeader.CurrAccCode);
+            if (!btnEdit_CurrAccCode.Enabled)
+                return;
 
-                if (trInvoiceHeader.ProcessCode == "IT")
-                    form = new FormCurrAccList(new byte[] { 4 }, false, trInvoiceHeader.CurrAccCode);
+            FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false, trInvoiceHeader.CurrAccCode);
 
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
+            if (trInvoiceHeader.ProcessCode == "IT")
+                form = new FormCurrAccList(new byte[] { 4 }, false, trInvoiceHeader.CurrAccCode);
 
-                    if (dcLoyaltyCard != null && !string.Equals(dcLoyaltyCard.CurrAccCode, form.dcCurrAcc.CurrAccCode, StringComparison.OrdinalIgnoreCase))
-                    {
-                        dcLoyaltyCard = null;
-                        RemoveLoyaltyLinksAll(trInvoiceHeader.InvoiceHeaderId);
-                        XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
-                    }
-                    txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
-                }
-            }
-        }
+            if (form.ShowDialog(this) != DialogResult.OK)
+                return;
 
-        private void RemoveLoyaltyLinksAll(Guid invoiceHeaderId)
-        {
-            var txns = dbContext.TrLoyaltyTxns
-                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                .ToList();
+            btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
 
-            if (txns.Count > 0)
-                dbContext.RemoveRange(txns);
-
-            dbContext.SaveChanges(Authorization.CurrAccCode);
         }
 
         private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -569,7 +523,7 @@ namespace Foxoft
         private void StandartKeys(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F1)
-                SelectCurrAcc();
+                SelectCurrAccAsync();
 
             if (e.KeyCode == Keys.F2)
             {
@@ -1137,7 +1091,7 @@ namespace Foxoft
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
             if (Settings.Default.AppSetting.AutoSave)
-                SaveInvoice();
+                SaveInvoiceAsync();
         }
 
         private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -1148,7 +1102,7 @@ namespace Foxoft
         private void gV_InvoiceLine_RowDeleted(object sender, RowDeletedEventArgs e)
         {
             if (Settings.Default.AppSetting.AutoSave)
-                SaveInvoice();
+                SaveInvoiceAsync();
         }
 
         private void gV_InvoiceLine_RowDeleting(object sender, RowDeletingEventArgs e)
@@ -1176,112 +1130,36 @@ namespace Foxoft
             }
         }
 
-        private void SaveInvoice()
+        private async Task SaveInvoiceAsync()
         {
             if (!_lockService.IsLockOwnedByMe("Invoice", trInvoiceHeader.InvoiceHeaderId,
                 Authorization.CurrAccCode, _appInstanceId, _formInstanceId))
             {
-                XtraMessageBox.Show("Sənəd artıq sizin deyil. Başqası tərəfində daxil olunub. Save dayandırıldı.");
+                XtraMessageBox.Show("Sənəd artıq sizin deyil...");
                 Close();
                 return;
             }
 
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
 
-            if (new string[] { "IT" }.Contains(trInvoiceHeader.ProcessCode))
+            if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode))
                 InitilizeTransfer();
 
             dbContext.ChangeTracker.AcceptAllChanges();
 
-            if (new string[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && trInvoiceHeader.TrInstallment is not null)
+            if (new[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && trInvoiceHeader.TrInstallment is not null)
                 SaveInstallmentGarantors();
 
-            if (new string[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
+            if (new[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
                 SavePayment();
 
-            SyncLoyaltyEarn(trInvoiceHeader);
+            var result = await _loyaltyService.SyncInvoiceAsync(trInvoiceHeader, Authorization.CurrAccCode);
+            txt_LoyaltyEarn.EditValue = result.EarnAmount;
 
             SaveSession();
-
             Tag = btnEdit_DocNum.EditValue;
         }
 
-        private void SyncLoyaltyEarn(TrInvoiceHeader inv)
-        {
-            if (inv == null || inv.InvoiceHeaderId == Guid.Empty)
-                return;
-
-            // invoice-a bağlı bütün Earn txn-ləri tap (card dəyişsə də)
-            var earnTxn = dbContext.TrLoyaltyTxns
-                .FirstOrDefault(x => x.InvoiceHeaderId == inv.InvoiceHeaderId && x.TxnType == LoyaltyTxnType.Earn);
-
-            // loyaltyCard yoxdursa -> Earn txn sil
-            if (dcLoyaltyCard == null)
-            {
-                if (earnTxn != null)
-                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
-
-                return;
-            }
-
-            // EarnPercent-i DB-dən təhlükəsiz götür (navigation-a güvənmə)
-            var earnPercent = dbContext.DcLoyaltyPrograms
-                .Where(p => p.LoyaltyProgramId == dcLoyaltyCard.LoyaltyProgramId)
-                .Select(p => (decimal?)p.EarnPercent)
-                .FirstOrDefault() ?? 0m;
-
-            if (earnPercent <= 0m)
-            {
-                if (earnTxn != null)
-                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
-                return;
-            }
-
-            // NetAmountLoc cəmi
-            decimal netLoc = dbContext.TrInvoiceLines
-                .Where(x => x.InvoiceHeaderId == inv.InvoiceHeaderId)
-                .Sum(x => (decimal?)x.NetAmountLoc) ?? 0m;
-
-            if (netLoc <= 0m)
-            {
-                if (earnTxn != null)
-                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
-                return;
-            }
-
-            decimal amount = Math.Round(netLoc * earnPercent / 100m, 2);
-
-            if (earnTxn == null)
-            {
-                earnTxn = new TrLoyaltyTxn
-                {
-                    LoyaltyTxnId = Guid.NewGuid(),
-                    InvoiceHeaderId = inv.InvoiceHeaderId,
-                    LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId,
-                    CurrAccCode = inv.CurrAccCode,
-                    DocumentDate = inv.DocumentDate,
-                    TxnType = LoyaltyTxnType.Earn,
-                    Amount = amount,
-                    CreatedUserName = Authorization.CurrAccCode,
-                    Note = $"Invoice: {inv.DocumentNumber}"
-                };
-                dbContext.TrLoyaltyTxns.Add(earnTxn);
-            }
-            else
-            {
-                // Upsert update
-                earnTxn.LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId;
-                earnTxn.CurrAccCode = inv.CurrAccCode;
-                earnTxn.DocumentDate = inv.DocumentDate;
-                earnTxn.Amount = amount;
-                earnTxn.Note = $"Invoice: {inv.DocumentNumber}";
-
-                // tracked entitydirsə Entry.IsModified-ə ehtiyac yoxdur
-            }
-            dbContext.SaveChanges(Authorization.CurrAccCode);
-
-            txt_LoyaltyEarn.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
-        }
 
         Guid ZeroizeFirst8(Guid id)
         {
@@ -1334,11 +1212,6 @@ namespace Foxoft
             return (dt < new DateTime(1753, 1, 1)) ? DefaultSqlDate : dt;
         }
 
-        DateTime? FixSqlDate(DateTime? dt)
-        {
-            // null isə default ver; doludursa yenə limit yoxla
-            return dt is null ? DefaultSqlDate : FixSqlDate(dt.Value);
-        }
         private TrInvoiceHeader MapNewTrIHForTransfer(TrInvoiceHeader trIH, Guid quidHead)
         {
             // swap + null guard
@@ -1520,7 +1393,7 @@ namespace Foxoft
 
                 if (summaryInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
                 {
-                    SaveInvoice();
+                    SaveInvoiceAsync();
 
                     ClearControlsAddNew();
                 }
@@ -1551,7 +1424,7 @@ namespace Foxoft
             decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
             decimal pay = Math.Max(Math.Round(Math.Abs(summaryInvoice) - Math.Abs(prePaid), 4), 0);
 
-            using FormPayment formPayment = new(PaymentType.Cash, pay, trInvoiceHeader, dcLoyaltyCard);
+            using FormPayment formPayment = new(PaymentType.Cash, pay, trInvoiceHeader);
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {
@@ -1597,7 +1470,7 @@ namespace Foxoft
                 decimal summaryInvoice = CalcNetAmountSummmaryValue();
 
                 if (summaryInvoice != 0)
-                    SaveInvoice();
+                    SaveInvoiceAsync();
             }
             else
             {
@@ -1748,7 +1621,7 @@ namespace Foxoft
 
                 if (summInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
                 {
-                    SaveInvoice();
+                    SaveInvoiceAsync();
                     Close();
                 }
                 else if (XtraMessageBox.Show(
@@ -1928,37 +1801,48 @@ namespace Foxoft
             return null;
         }
 
+        private string _CurrAccCodeOldValue;
         private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
         {
-
+            _CurrAccCodeOldValue = e.OldValue?.ToString();
         }
 
-        private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
+        private async void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
         {
-            DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(btnEdit_CurrAccCode.EditValue?.ToString());
-            if (trInvoiceHeader is null || curr is null)
+            if (trInvoiceHeader is null) return;
+
+            DcCurrAcc? curr = efMethods.SelectEntityById<DcCurrAcc>(btnEdit_CurrAccCode.EditValue?.ToString());
+            if (curr is null) return;
+
+            // Əgər həqiqətən dəyişməyibsə boşuna iş görmə
+            if (string.Equals(_CurrAccCodeOldValue, curr.CurrAccCode, StringComparison.OrdinalIgnoreCase))
                 return;
 
-            trInvoiceHeader.CurrAccCode = curr?.CurrAccCode;
-            lbl_CurrAccDesc.Text = curr?.CurrAccDesc + " " + curr?.FirstName + " " + curr?.LastName;
+            trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
+            lbl_CurrAccDesc.Text = $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}";
 
-            CurrAccBalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode, trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime)), 2);
+            CurrAccBalanceBefore = Math.Round(
+                efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode,
+                    trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime)), 2);
 
             if (Settings.Default.AppSetting.AutoSave)
-                efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr?.CurrAccCode);
+                efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr.CurrAccCode);
 
-            List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
-            lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
+            // Kart varsa və yeni CurrAccCode kartın CurrAccCode-u ilə fərqlidirsə -> kartı ləğv et
 
-            if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
-                trInvoiceHeader.ToWarehouseCode = null;
-
-            if (dcWarehouses is not null)
+            if (trInvoiceHeader.LoyaltyCardId is Guid cardId)
             {
-                DcWarehouse dcWarehouse = dcWarehouses.FirstOrDefault(x => x.IsDefault == true);
+                DcLoyaltyCard? card = efMethods.SelectEntityById<DcLoyaltyCard>(cardId);
 
-                if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
-                    lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                if (card != null && !string.Equals(curr.CurrAccCode, card.CurrAccCode, StringComparison.OrdinalIgnoreCase))
+                {
+                    await _loyaltyService.DetachCardAsync(trInvoiceHeader, Authorization.CurrAccCode);
+
+                    txt_LoyaltyEarn.EditValue = 0m;
+
+                    XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
+                    return;
+                }
             }
         }
 
@@ -2852,7 +2736,7 @@ namespace Foxoft
                 if (dbContext != null && dataLayoutControl1.IsValid(out _))
                     if (Settings.Default.AppSetting.AutoSave)
                         if (gV_InvoiceLine.DataRowCount > 0)
-                            SaveInvoice();
+                            SaveInvoiceAsync();
             }
         }
 
@@ -2889,7 +2773,7 @@ namespace Foxoft
                 if (dbContext != null && dataLayoutControl1.IsValid(out _))
                     if (Settings.Default.AppSetting.AutoSave)
                         if (gV_InvoiceLine.DataRowCount > 0)
-                            SaveInvoice();
+                            SaveInvoiceAsync();
             }
         }
 
@@ -3094,28 +2978,26 @@ namespace Foxoft
             e.ExceptionMode = ExceptionMode.DisplayError;
         }
 
-        private void BBI_LoyaltyCardInput_ItemClick(object sender, ItemClickEventArgs e)
+        private async void BBI_LoyaltyCardInput_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string bonusCardNum = Interaction.InputBox(
-                "Bonus Kart Daxil Edin:",
-                "Bonus Kart",
-                ""
-            );
-
+            string bonusCardNum = Interaction.InputBox("Bonus Kart Daxil Edin:", "Bonus Kart", "");
             if (string.IsNullOrEmpty(bonusCardNum))
                 return;
 
-            dcLoyaltyCard = efMethods.SelectLoyalityCard(bonusCardNum);
-
-            if (dcLoyaltyCard is null)
+            var card = efMethods.SelectLoyalityCard(bonusCardNum);
+            if (card is null)
             {
                 XtraMessageBox.Show("Bonus Kartı tapılmadı!");
                 return;
             }
 
-            btnEdit_CurrAccCode.EditValue = dcLoyaltyCard.CurrAccCode;
+            // attach card to invoice (persist)
+            await _loyaltyService.AttachCardAsync(trInvoiceHeader, card, Authorization.CurrAccCode);
 
-            SaveInvoice();
+            // keep CurrAcc in sync if your rule requires it
+            btnEdit_CurrAccCode.EditValue = card.CurrAccCode;
+
+            SaveInvoiceAsync(); // will sync earn automatically
         }
 
         private bool TryOpenInvoiceForEdit(Guid invoiceHeaderId)

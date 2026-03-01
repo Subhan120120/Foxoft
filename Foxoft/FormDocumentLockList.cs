@@ -1,8 +1,8 @@
 ﻿using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using Foxoft.AppCode;
 using Foxoft.Models;
-using Foxoft.Models.Context;
 using Foxoft.Models.Entity;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;

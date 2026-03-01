@@ -643,8 +643,7 @@ namespace Foxoft
             using var formPayment = new FormPayment(
                 paymentType,
                 summaryNetAmount,
-                trInvoiceHeader,
-                loyaltyCard);
+                trInvoiceHeader);
 
             if (formPayment.ShowDialog(this) != DialogResult.OK)
                 return;

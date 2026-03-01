@@ -2437,6 +2437,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loyalty Card Id.
+        /// </summary>
+        public static string Entity_InvoiceHeader_LoyaltyCardId {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_LoyaltyCardId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office.
         /// </summary>
         public static string Entity_InvoiceHeader_OfficeCode {

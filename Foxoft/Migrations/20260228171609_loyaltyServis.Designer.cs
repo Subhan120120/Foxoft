@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260228171609_loyaltyServis")]
+    partial class loyaltyServis
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5782,8 +5785,6 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("CurrAccCode");
 
-                    b.HasIndex("LoyaltyCardId");
-
                     b.HasIndex("ProcessCode");
 
                     b.HasIndex("RelatedInvoiceId");
@@ -7360,11 +7361,6 @@ namespace Foxoft.Migrations
                         .HasForeignKey("CurrAccCode")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Foxoft.Models.DcLoyaltyCard", "DcLoyaltyCard")
-                        .WithMany("TrInvoiceHeaders")
-                        .HasForeignKey("LoyaltyCardId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Foxoft.Models.DcProcess", "DcProcess")
                         .WithMany("TrInvoiceHeaders")
                         .HasForeignKey("ProcessCode")
@@ -7377,8 +7373,6 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DcCurrAcc");
-
-                    b.Navigation("DcLoyaltyCard");
 
                     b.Navigation("DcProcess");
 
@@ -7897,8 +7891,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcLoyaltyCard", b =>
                 {
-                    b.Navigation("TrInvoiceHeaders");
-
                     b.Navigation("TrLoyaltyTxns");
                 });
 

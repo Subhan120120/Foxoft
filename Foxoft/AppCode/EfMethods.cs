@@ -1312,7 +1312,7 @@ namespace Foxoft
             return result; // kart tapılmazsa 0 qaytarır
         }
 
-        public decimal SelectLoyaltyBonusBalance(Guid? loyaltyCardId, Guid? invoiceHeaderId)
+        public decimal SelectLoyaltyBalanceExceptInvoice(Guid? loyaltyCardId, Guid? invoiceHeaderId)
         {
             using var db = new subContext();
 
@@ -1323,6 +1323,21 @@ namespace Foxoft
                             && x.InvoiceHeaderId != invoiceHeaderId
                             && (x.ExpireAt == null || x.ExpireAt >= today))
                 .Sum(x => (decimal?)x.Amount) ?? 0m;
+        }
+
+        public async Task<decimal> SelectLoyaltyBalanceByInvoiceAsync(Guid invoiceHeaderId)
+        {
+            await using var db = new subContext();
+
+            DateTime today = DateTime.Today;
+
+            var result = await db.Set<TrLoyaltyTxn>()
+                .AsNoTracking()
+                .Where(x => x.InvoiceHeaderId == invoiceHeaderId
+                            && (x.ExpireAt == null || x.ExpireAt >= today))
+                .SumAsync(x => (decimal?)x.Amount);
+
+            return result ?? 0m;
         }
 
 

@@ -107,6 +107,10 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_TerminalId), ResourceType = typeof(Resources))]
         public int? TerminalId { get; set; }
 
+        [ForeignKey(nameof(DcLoyaltyCard))]
+        [Display(Name = nameof(Resources.Entity_InvoiceHeader_LoyaltyCardId), ResourceType = typeof(Resources))]
+        public Guid? LoyaltyCardId { get; set; }
+
         [DefaultValue("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsSuspended), ResourceType = typeof(Resources))]
         public bool IsSuspended { get; set; }
@@ -152,6 +156,7 @@ namespace Foxoft.Models
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual DcProcess DcProcess { get; set; }
+        public virtual DcLoyaltyCard DcLoyaltyCard { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
         public virtual TrInstallment TrInstallment { get; set; }

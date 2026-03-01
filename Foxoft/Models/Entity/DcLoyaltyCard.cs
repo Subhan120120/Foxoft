@@ -39,5 +39,6 @@ namespace Foxoft.Models
         public virtual DcCurrAcc DcCurrAcc { get; set; }
 
         public virtual ICollection<TrLoyaltyTxn> TrLoyaltyTxns { get; set; } = new HashSet<TrLoyaltyTxn>();
+        public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; } = new HashSet<TrInvoiceHeader>();
     }
 }

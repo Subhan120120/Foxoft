@@ -3599,4 +3599,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="ERP_ACE_Terminals" xml:space="preserve">
     <value>Terminallar</value>
   </data>
+  <data name="Entity_InvoiceHeader_LoyaltyCardId" xml:space="preserve">
+    <value>Bonus Kart Id</value>
+  </data>
 </root>

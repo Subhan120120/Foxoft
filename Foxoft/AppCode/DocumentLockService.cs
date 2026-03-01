@@ -1,9 +1,9 @@
-﻿
+﻿using Foxoft.Models;
 using Foxoft.Models.Entity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace Foxoft.Models.Context
+namespace Foxoft.AppCode
 {
     public sealed record LockResult(
         bool Acquired,

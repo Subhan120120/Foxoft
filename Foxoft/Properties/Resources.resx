@@ -3599,4 +3599,7 @@ To delete, cancel the receipt!</value>
   <data name="ERP_ACE_Terminals" xml:space="preserve">
     <value>Terminals</value>
   </data>
+  <data name="Entity_InvoiceHeader_LoyaltyCardId" xml:space="preserve">
+    <value>Loyalty Card Id</value>
+  </data>
 </root>
