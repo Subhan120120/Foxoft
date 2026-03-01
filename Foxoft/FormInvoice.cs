@@ -2982,7 +2982,10 @@ namespace Foxoft
         {
             string bonusCardNum = Interaction.InputBox("Bonus Kart Daxil Edin:", "Bonus Kart", "");
             if (string.IsNullOrEmpty(bonusCardNum))
+            {
+                await _loyaltyService.DetachCardAsync(trInvoiceHeader, Authorization.CurrAccCode);
                 return;
+            }
 
             var card = efMethods.SelectLoyalityCard(bonusCardNum);
             if (card is null)
