@@ -2984,6 +2984,8 @@ namespace Foxoft
             if (string.IsNullOrEmpty(bonusCardNum))
             {
                 await _loyaltyService.DetachCardAsync(trInvoiceHeader, Authorization.CurrAccCode);
+                txt_LoyaltyEarn.EditValue = 0m;
+                XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
                 return;
             }
 
