@@ -4,9 +4,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+
 
 namespace Foxoft
 {
@@ -17,7 +15,10 @@ namespace Foxoft
         public TrInvoiceHeader returnInvoHeader;
         public Guid invoiceLineID;
         public string processCode;
-        DcLoyaltyCard loyaltyCard;
+
+        private readonly subContext _db = new();
+        private readonly LoyaltyService _loyalty;
+
 
         subContext dbContext = new();
 
@@ -26,6 +27,9 @@ namespace Foxoft
         public UcReturn()
         {
             InitializeComponent();
+
+
+            _loyalty = new LoyaltyService(_db);
         }
 
         public UcReturn(string processCode)
@@ -93,7 +97,7 @@ namespace Foxoft
             //lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
         }
 
-        private void repobtn_ReturnLine_ButtonClick(object sender, ButtonPressedEventArgs e)
+        private async void repobtn_ReturnLine_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             Guid invoiceLineID = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
             decimal maxReturn = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
@@ -126,6 +130,7 @@ namespace Foxoft
                             returnInvoHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
                             returnInvoHeader.IsMainTF = true;
                             returnInvoHeader.IsCompleted = true;
+                            returnInvoHeader.LoyaltyCardId = trInvoiceHeader.LoyaltyCardId;
 
                             efMethods.InsertEntity(returnInvoHeader);
                         }
@@ -180,8 +185,7 @@ namespace Foxoft
                             efMethods.UpdateEntity(trInvoiceLine);
                         }
 
-                        SyncLoyaltyEarn(trInvoiceHeader);
-
+                        await SyncReturnInvoiceLoyaltyAsync();
 
                         List<TrInvoiceLine> returnLines = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
                         gC_ReturnInvoiceLine.DataSource = returnLines;
@@ -194,6 +198,15 @@ namespace Foxoft
             {
                 XtraMessageBox.Show(Resources.Form_Return_Message_NoQtyToReturn);
             }
+        }
+
+        private async Task SyncReturnInvoiceLoyaltyAsync(CancellationToken ct = default)
+        {
+            if (returnInvoHeader is null || returnInvoHeader.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            // Loyalty txn-i return invoice-ın özünə görə hesabla (IsReturn=true => məbləğ mənfi olacaq)
+            await _loyalty.SyncInvoiceAsync(returnInvoHeader, Authorization.CurrAccCode, ct);
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
@@ -308,76 +321,5 @@ namespace Foxoft
                 }
             }
         }
-
-        private void SyncLoyaltyEarn(TrInvoiceHeader inv)
-        {
-            if (inv == null || inv.InvoiceHeaderId == Guid.Empty)
-                return;
-
-            loyaltyCard = dbContext.Set<TrLoyaltyTxn>()
-                .AsNoTracking()
-                .Include(x => x.DcLoyaltyCard)
-                    .ThenInclude(c => c.DcLoyaltyProgram)
-                .Where(x => x.InvoiceHeaderId == inv.InvoiceHeaderId
-                         && x.TxnType == LoyaltyTxnType.Earn)
-                .Select(x => x.DcLoyaltyCard)
-                .FirstOrDefault();
-
-            if (loyaltyCard == null)
-            {
-                //RemoveEarnTxn(inv.InvoiceHeaderId);
-                return;
-            }
-
-            var earnPercent = loyaltyCard.DcLoyaltyProgram?.EarnPercent ?? 0m;
-
-            if (earnPercent <= 0m)
-            {
-                //RemoveEarnTxn(inv.InvoiceHeaderId);
-                return;
-            }
-
-            // NetAmountLoc-u grid-dən yox, context-dən götürmək daha sağlamdır
-            decimal netLoc = dbContext.TrInvoiceLines
-                .AsNoTracking()
-                .Where(x => x.InvoiceHeaderId == returnInvoHeader.InvoiceHeaderId)
-                .Sum(x => (decimal?)x.NetAmountLoc) ?? 0m;
-
-            if (netLoc == 0m)
-            {
-                //RemoveEarnTxn(inv.InvoiceHeaderId);
-                return;
-            }
-
-            TrLoyaltyTxn txn = new TrLoyaltyTxn
-            {
-                LoyaltyTxnId = Guid.NewGuid(),
-                InvoiceHeaderId = returnInvoHeader.InvoiceHeaderId,
-                LoyaltyCardId = loyaltyCard.LoyaltyCardId,
-                Amount = netLoc * loyaltyCard.DcLoyaltyProgram.EarnPercent / 100,
-                CurrAccCode = inv.CurrAccCode,
-                CreatedUserName = Authorization.CurrAccCode,
-                DocumentDate = inv.DocumentDate,
-                TxnType = LoyaltyTxnType.Reverse,
-                Note = $"Invoice: {inv.DocumentNumber}"
-            };
-            dbContext.Set<TrLoyaltyTxn>().Add(txn);
-            dbContext.SaveChanges();
-        }
-
-        private void RemoveEarnTxn(Guid invoiceHeaderId)
-        {
-            if (loyaltyCard == null) return;
-
-            var txn = dbContext.Set<TrLoyaltyTxn>()
-                .FirstOrDefault(x =>
-                    x.InvoiceHeaderId == invoiceHeaderId &&
-                    x.LoyaltyCardId == loyaltyCard.LoyaltyCardId &&
-                    (x.TxnType == LoyaltyTxnType.Earn || x.TxnType == LoyaltyTxnType.Reverse));
-
-            if (txn != null)
-                dbContext.Set<TrLoyaltyTxn>().Remove(txn);
-        }
-
     }
 }

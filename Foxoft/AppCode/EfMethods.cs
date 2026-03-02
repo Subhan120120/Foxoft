@@ -541,6 +541,7 @@ namespace Foxoft
 
             return db.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Include(x => x.TrInvoiceLines)
+                                      .Include(x => x.DcLoyaltyCard)
                                       .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
         }
 

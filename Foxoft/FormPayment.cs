@@ -28,9 +28,14 @@ namespace Foxoft
         private const decimal PayTolerance = 0.01m;
         private bool isNegativ = false;
 
+        private readonly subContext _db = new();
+        private readonly LoyaltyService _loyalty;   
+
         public FormPayment()
         {
             InitializeComponent();
+
+            _loyalty = new LoyaltyService(_db);
 
             Name = "PaymentDetail";
             AcceptButton = btn_Ok;
@@ -45,14 +50,15 @@ namespace Foxoft
             trInvoiceHeader = invoiceHeader;
             expectedPayLoc = Math.Abs(pay);
 
-            if (invoiceHeader.DcLoyaltyCard != null && HasInvoice())
-                availableBonus = efMethods.SelectLoyaltyBalanceExceptInvoice(invoiceHeader.DcLoyaltyCard.LoyaltyCardId, trInvoiceHeader.InvoiceHeaderId);
+            if (trInvoiceHeader.InvoiceHeaderId != null && HasInvoice())
+                availableBonus = efMethods.SelectLoyaltyBalanceExceptInvoice(trInvoiceHeader.LoyaltyCardId, trInvoiceHeader.InvoiceHeaderId);
 
             txtEdit_LoyaltyBalance.EditValue = availableBonus;
 
             PaymentDefaults(invoiceHeader);
 
             SetDefaultPaymentMethod();
+
             isNegativ = (bool)CustomExtensions.DirectionIsIn(invoiceHeader.ProcessCode, invoiceHeader.IsReturn);
 
             ApplyInitialPayments(paymentType, pay);
@@ -322,7 +328,7 @@ namespace Foxoft
 
         private void textEditBonus_Validating(object sender, CancelEventArgs e)
         {
-            if (trInvoiceHeader.DcLoyaltyCard is null) { e.Cancel = true; return; }
+            if (trInvoiceHeader.LoyaltyCardId is null) { e.Cancel = true; return; }
             if (trPaymentLineBonus.Payment < 0) { e.Cancel = true; return; }
 
             if (isNegativ) return; // refund -> limit check etmirik
@@ -411,12 +417,12 @@ namespace Foxoft
             }
         }
 
-        private void btn_Ok_Click(object sender, EventArgs e) => SavePayment();
+        private async void btn_Ok_Click(object sender, EventArgs e) => await SavePaymentAsync();
 
         private decimal TotalPaidLoc()
             => trPaymentLineCash.PaymentLoc + trPaymentLineCashless.PaymentLoc + trPaymentLineBonus.PaymentLoc;
 
-        private void SavePayment()
+        private async Task SavePaymentAsync()
         {
             dxErrorProvider1.ClearErrors();
 
@@ -424,12 +430,19 @@ namespace Foxoft
             if (!ValidateCashlessRequired()) return;
             if (!ValidateUnderpayment()) return;
             if (!ApplyOverpaymentMode()) return;
-            if (!HasAnyPayment()) return; // cap-dən sonra 0 ola bilər
+            if (!HasAnyPayment()) return;
 
             CreateHeaderAndInsertLines();
 
-            if (trPaymentLineBonus.PaymentLoc > 0)
-                SyncLoyaltySpend(trPaymentHeader.PaymentHeaderId);
+            // bonus varsa -> Redeem/Refund txn sync
+            if (trPaymentLineBonus.PaymentLoc > 0 && HasInvoice() && trInvoiceHeader?.LoyaltyCardId != null)
+            {
+                await _loyalty.SyncBonusSpendAsync(
+                    trInvoiceHeader,
+                    trPaymentLineBonus,
+                    isRefund: isNegativ,               // refund -> true
+                    userName: Authorization.CurrAccCode);
+            }
 
             DialogResult = DialogResult.OK;
         }
@@ -512,6 +525,14 @@ namespace Foxoft
             {
                 InsertCashlessFlow();
             }
+
+            if (trPaymentLineBonus.PaymentLoc > 0)
+            {
+                trPaymentLineBonus.PaymentLineId = Guid.NewGuid();
+                trPaymentLineBonus.Payment = isNegativ ? -trPaymentLineBonus.Payment : trPaymentLineBonus.Payment;
+
+                efMethods.InsertEntity(trPaymentLineBonus);
+            }
         }
 
         private void InsertCashlessFlow()
@@ -550,7 +571,7 @@ namespace Foxoft
                 IsMainTF = true,
             };
             efMethods.InsertEntity(redirectedHeader);
-
+                
             var redirectedLine = new TrPaymentLine
             {
                 PaymentLineId = Guid.NewGuid(),
@@ -684,41 +705,6 @@ namespace Foxoft
             line.Payment = Math.Round(desiredLoc / rate, 4);
         }
 
-        private void SyncLoyaltySpend(Guid paymentHeaderId)
-        {
-            subContext db = new subContext();
-
-            if (paymentHeaderId == Guid.Empty) return;
-            if (trInvoiceHeader.DcLoyaltyCard == null) return;
-
-            var txn = db.TrLoyaltyTxns
-                .FirstOrDefault(x =>
-                    x.PaymentLineId == trPaymentLineBonus.PaymentLineId &&
-                    x.LoyaltyCardId == trInvoiceHeader.DcLoyaltyCard.LoyaltyCardId &&
-                    (x.TxnType == LoyaltyTxnType.Redeem || x.TxnType == LoyaltyTxnType.Refund));
-
-            if (txn == null)
-            {
-                txn = new TrLoyaltyTxn
-                {
-                    LoyaltyTxnId = Guid.NewGuid(),
-                    LoyaltyCardId = trInvoiceHeader.DcLoyaltyCard.LoyaltyCardId,
-                    CurrAccCode = trInvoiceHeader.CurrAccCode,
-                    InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId, // istəsən saxla
-                    CreatedUserName = Authorization.CurrAccCode,
-                    Amount = isNegativ ? trPaymentLineBonus.PaymentLoc : -trPaymentLineBonus.PaymentLoc,
-                    DocumentDate = DateTime.Now,
-                    TxnType = isNegativ ? LoyaltyTxnType.Refund : LoyaltyTxnType.Redeem,
-                    Note = $"Payment (Bonus) for Invoice: {trInvoiceHeader.DocumentNumber}"
-                };
-
-                txn.TrPaymentLine = trPaymentLineBonus;
-
-                db.Add(trPaymentLineBonus);
-                db.Add(txn);
-                db.SaveChanges();
-            }
-        }
 
     }
 }

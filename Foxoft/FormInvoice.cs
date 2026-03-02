@@ -4,7 +4,6 @@ using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
-using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -32,7 +31,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
@@ -41,7 +39,6 @@ using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
-using System.Windows.Forms;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
 #endregion
@@ -74,7 +71,7 @@ namespace Foxoft
         private readonly Guid _appInstanceId = Guid.NewGuid();
         private readonly Guid _formInstanceId = Guid.NewGuid();
         private bool _closingByLock = false;
-        private int _pid => System.Diagnostics.Process.GetCurrentProcess().Id;
+        private int _pid => Process.GetCurrentProcess().Id;
         private System.Windows.Forms.Timer? _hbTimer;
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
@@ -1804,7 +1801,9 @@ namespace Foxoft
         private string _CurrAccCodeOldValue;
         private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
         {
-            _CurrAccCodeOldValue = e.OldValue?.ToString();
+            DcCurrAcc? curr = efMethods.SelectEntityById<DcCurrAcc>(e.OldValue?.ToString());
+            if (curr is null) return;
+            _CurrAccCodeOldValue = curr.CurrAccCode;
         }
 
         private async void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
@@ -1830,7 +1829,7 @@ namespace Foxoft
 
             // Kart varsa və yeni CurrAccCode kartın CurrAccCode-u ilə fərqlidirsə -> kartı ləğv et
 
-            if (trInvoiceHeader.LoyaltyCardId is Guid cardId)
+            if (trInvoiceHeader.LoyaltyCardId is Guid cardId && _CurrAccCodeOldValue is not null)
             {
                 DcLoyaltyCard? card = efMethods.SelectEntityById<DcLoyaltyCard>(cardId);
 
@@ -3083,8 +3082,6 @@ namespace Foxoft
 
             _hbTimer.Start();
         }
-
-
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
