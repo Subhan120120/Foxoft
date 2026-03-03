@@ -46,5 +46,6 @@ namespace Foxoft.Models.Entity
         public Guid AppInstanceId { get; set; }
 
         public string? Reason { get; set; } // istəsən [MaxLength(200)] verə bilərsən
+
     }
 }

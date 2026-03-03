@@ -204,21 +204,6 @@ namespace Foxoft.AppCode
                 AddAudit(documentType, documentId, "FORCE_CLOSE_REQUEST", adminUserId, null, note);
         }
 
-        public void ForceUnlock(string documentType, Guid documentId, string adminUserId, string? note)
-        {
-            // əvvəl kimdə idi - audit üçün (opsional)
-            var existing = _db.DocumentLocks.AsNoTracking()
-                .FirstOrDefault(x => x.DocumentType == documentType && x.DocumentId == documentId);
-
-            var deleted = _db.DocumentLocks
-                .Where(x => x.DocumentType == documentType && x.DocumentId == documentId)
-                .ExecuteDelete();
-
-            if (deleted == 1)
-                AddAudit(documentType, documentId, "FORCE_UNLOCK", adminUserId, null,
-                    existing == null ? note : $"PrevOwner={existing.LockedByUserId}; {note}");
-        }
-
         public void Unlock(
             string documentType,
             Guid documentId,
@@ -235,6 +220,21 @@ namespace Foxoft.AppCode
 
             if (deleted == 1)
                 AddAudit(documentType, documentId, "UNLOCK", userId, machineName, null);
+        }
+
+        public void ForceUnlock(string documentType, Guid documentId, string adminUserId, string? note)
+        {
+            // əvvəl kimdə idi - audit üçün (opsional)
+            var existing = _db.DocumentLocks.AsNoTracking()
+                .FirstOrDefault(x => x.DocumentType == documentType && x.DocumentId == documentId);
+
+            var deleted = _db.DocumentLocks
+                .Where(x => x.DocumentType == documentType && x.DocumentId == documentId)
+                .ExecuteDelete();
+
+            if (deleted == 1)
+                AddAudit(documentType, documentId, "FORCE_UNLOCK", adminUserId, null,
+                    existing == null ? note : $"PrevOwner={existing.LockedByUserId}; {note}");
         }
 
         public LockCheckResult HeartbeatAndCheckForceClose(

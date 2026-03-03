@@ -66,7 +66,6 @@ namespace Foxoft
             DesignFileFolderTextEdit = new DevExpress.XtraEditors.TextEdit();
             SalesmanContinuityCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             ImageFolderTextEdit = new DevExpress.XtraEditors.TextEdit();
-            PrinterNameTextEdit = new DevExpress.XtraEditors.TextEdit();
             DefaultUnitOfMeasureIdLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             PhoneNumTextEdit = new DevExpress.XtraEditors.TextEdit();
             textEdit2 = new DevExpress.XtraEditors.TextEdit();
@@ -79,7 +78,6 @@ namespace Foxoft
             ItemForOfficeCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForCurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForSalesmanContinuity = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForPrinterName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDesignFileFolder = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForImageFolder = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDefaultUnitOfMeasureId = new DevExpress.XtraLayout.LayoutControlItem();
@@ -100,7 +98,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)DesignFileFolderTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SalesmanContinuityCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ImageFolderTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)PrinterNameTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DefaultUnitOfMeasureIdLookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PhoneNumTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)textEdit2.Properties).BeginInit();
@@ -113,7 +110,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForOfficeCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccDesc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForSalesmanContinuity).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForPrinterName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDesignFileFolder).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForImageFolder).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDefaultUnitOfMeasureId).BeginInit();
@@ -137,7 +133,6 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(DesignFileFolderTextEdit);
             dataLayoutControl1.Controls.Add(SalesmanContinuityCheckEdit);
             dataLayoutControl1.Controls.Add(ImageFolderTextEdit);
-            dataLayoutControl1.Controls.Add(PrinterNameTextEdit);
             dataLayoutControl1.Controls.Add(DefaultUnitOfMeasureIdLookUpEdit);
             dataLayoutControl1.Controls.Add(PhoneNumTextEdit);
             dataLayoutControl1.Controls.Add(textEdit2);
@@ -161,7 +156,7 @@ namespace Foxoft
             btn_Cancel.Name = "btn_Cancel";
             btn_Cancel.Size = new Size(74, 46);
             btn_Cancel.StyleController = dataLayoutControl1;
-            btn_Cancel.TabIndex = 19;
+            btn_Cancel.TabIndex = 12;
             btn_Cancel.Text = "simpleButton2";
             // 
             // btn_Ok
@@ -172,16 +167,16 @@ namespace Foxoft
             btn_Ok.Name = "btn_Ok";
             btn_Ok.Size = new Size(74, 46);
             btn_Ok.StyleController = dataLayoutControl1;
-            btn_Ok.TabIndex = 20;
+            btn_Ok.TabIndex = 13;
             btn_Ok.Text = "simpleButton1";
             btn_Ok.Click += btn_Ok_Click;
             // 
             // CurrAccCodeTextEdit
             // 
             CurrAccCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccCode", true));
-            CurrAccCodeTextEdit.Location = new Point(122, 12);
+            CurrAccCodeTextEdit.Location = new Point(137, 12);
             CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
-            CurrAccCodeTextEdit.Size = new Size(147, 20);
+            CurrAccCodeTextEdit.Size = new Size(132, 20);
             CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
             CurrAccCodeTextEdit.TabIndex = 0;
             // 
@@ -199,12 +194,12 @@ namespace Foxoft
             IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             IsDisabledCheckEdit.Size = new Size(258, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
-            IsDisabledCheckEdit.TabIndex = 17;
+            IsDisabledCheckEdit.TabIndex = 11;
             // 
             // CurrAccTypeCodeLookUpEdit
             // 
             CurrAccTypeCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccTypeCode", true));
-            CurrAccTypeCodeLookUpEdit.Location = new Point(383, 12);
+            CurrAccTypeCodeLookUpEdit.Location = new Point(398, 12);
             CurrAccTypeCodeLookUpEdit.Name = "CurrAccTypeCodeLookUpEdit";
             CurrAccTypeCodeLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
             CurrAccTypeCodeLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -213,23 +208,23 @@ namespace Foxoft
             CurrAccTypeCodeLookUpEdit.Properties.DisplayMember = "CurrAccTypeDesc";
             CurrAccTypeCodeLookUpEdit.Properties.NullText = "";
             CurrAccTypeCodeLookUpEdit.Properties.ValueMember = "CurrAccTypeCode";
-            CurrAccTypeCodeLookUpEdit.Size = new Size(148, 20);
+            CurrAccTypeCodeLookUpEdit.Size = new Size(133, 20);
             CurrAccTypeCodeLookUpEdit.StyleController = dataLayoutControl1;
-            CurrAccTypeCodeLookUpEdit.TabIndex = 3;
+            CurrAccTypeCodeLookUpEdit.TabIndex = 2;
             // 
             // CurrAccDescTextEdit
             // 
             CurrAccDescTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccDesc", true));
-            CurrAccDescTextEdit.Location = new Point(122, 36);
+            CurrAccDescTextEdit.Location = new Point(137, 36);
             CurrAccDescTextEdit.Name = "CurrAccDescTextEdit";
-            CurrAccDescTextEdit.Size = new Size(147, 20);
+            CurrAccDescTextEdit.Size = new Size(132, 20);
             CurrAccDescTextEdit.StyleController = dataLayoutControl1;
-            CurrAccDescTextEdit.TabIndex = 5;
+            CurrAccDescTextEdit.TabIndex = 3;
             // 
             // OfficeCodeLookUpEdit
             // 
             OfficeCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "OfficeCode", true));
-            OfficeCodeLookUpEdit.Location = new Point(383, 36);
+            OfficeCodeLookUpEdit.Location = new Point(398, 36);
             OfficeCodeLookUpEdit.Name = "OfficeCodeLookUpEdit";
             OfficeCodeLookUpEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             OfficeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -237,18 +232,18 @@ namespace Foxoft
             OfficeCodeLookUpEdit.Properties.DisplayMember = "OfficeDesc";
             OfficeCodeLookUpEdit.Properties.NullText = "";
             OfficeCodeLookUpEdit.Properties.ValueMember = "OfficeCode";
-            OfficeCodeLookUpEdit.Size = new Size(148, 20);
+            OfficeCodeLookUpEdit.Size = new Size(133, 20);
             OfficeCodeLookUpEdit.StyleController = dataLayoutControl1;
-            OfficeCodeLookUpEdit.TabIndex = 6;
+            OfficeCodeLookUpEdit.TabIndex = 4;
             // 
             // DesignFileFolderTextEdit
             // 
             DesignFileFolderTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "SettingStore.DesignFileFolder", true));
-            DesignFileFolderTextEdit.Location = new Point(122, 108);
+            DesignFileFolderTextEdit.Location = new Point(137, 108);
             DesignFileFolderTextEdit.Name = "DesignFileFolderTextEdit";
-            DesignFileFolderTextEdit.Size = new Size(409, 20);
+            DesignFileFolderTextEdit.Size = new Size(394, 20);
             DesignFileFolderTextEdit.StyleController = dataLayoutControl1;
-            DesignFileFolderTextEdit.TabIndex = 21;
+            DesignFileFolderTextEdit.TabIndex = 8;
             // 
             // SalesmanContinuityCheckEdit
             // 
@@ -259,63 +254,54 @@ namespace Foxoft
             SalesmanContinuityCheckEdit.Properties.Caption = Resources.Form_Store_Cancel;
             SalesmanContinuityCheckEdit.Size = new Size(257, 20);
             SalesmanContinuityCheckEdit.StyleController = dataLayoutControl1;
-            SalesmanContinuityCheckEdit.TabIndex = 22;
+            SalesmanContinuityCheckEdit.TabIndex = 10;
             // 
             // ImageFolderTextEdit
             // 
             ImageFolderTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "SettingStore.ImageFolder", true));
-            ImageFolderTextEdit.Location = new Point(122, 132);
+            ImageFolderTextEdit.Location = new Point(137, 132);
             ImageFolderTextEdit.Name = "ImageFolderTextEdit";
-            ImageFolderTextEdit.Size = new Size(409, 20);
+            ImageFolderTextEdit.Size = new Size(394, 20);
             ImageFolderTextEdit.StyleController = dataLayoutControl1;
-            ImageFolderTextEdit.TabIndex = 23;
-            // 
-            // PrinterNameTextEdit
-            // 
-            PrinterNameTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "SettingStore.PrinterName", true));
-            PrinterNameTextEdit.Location = new Point(122, 60);
-            PrinterNameTextEdit.Name = "PrinterNameTextEdit";
-            PrinterNameTextEdit.Size = new Size(147, 20);
-            PrinterNameTextEdit.StyleController = dataLayoutControl1;
-            PrinterNameTextEdit.TabIndex = 24;
+            ImageFolderTextEdit.TabIndex = 9;
             // 
             // DefaultUnitOfMeasureIdLookUpEdit
             // 
             DefaultUnitOfMeasureIdLookUpEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "SettingStore.DefaultUnitOfMeasureId", true));
-            DefaultUnitOfMeasureIdLookUpEdit.Location = new Point(383, 60);
+            DefaultUnitOfMeasureIdLookUpEdit.Location = new Point(398, 60);
             DefaultUnitOfMeasureIdLookUpEdit.Name = "DefaultUnitOfMeasureIdLookUpEdit";
             DefaultUnitOfMeasureIdLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DefaultUnitOfMeasureIdLookUpEdit.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureId", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureDesc", "") });
             DefaultUnitOfMeasureIdLookUpEdit.Properties.DisplayMember = "UnitOfMeasureDesc";
             DefaultUnitOfMeasureIdLookUpEdit.Properties.NullText = "";
             DefaultUnitOfMeasureIdLookUpEdit.Properties.ValueMember = "UnitOfMeasureId";
-            DefaultUnitOfMeasureIdLookUpEdit.Size = new Size(148, 20);
+            DefaultUnitOfMeasureIdLookUpEdit.Size = new Size(133, 20);
             DefaultUnitOfMeasureIdLookUpEdit.StyleController = dataLayoutControl1;
-            DefaultUnitOfMeasureIdLookUpEdit.TabIndex = 25;
+            DefaultUnitOfMeasureIdLookUpEdit.TabIndex = 6;
             // 
             // PhoneNumTextEdit
             // 
             PhoneNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "PhoneNum", true));
             PhoneNumTextEdit.EditValue = "+994";
-            PhoneNumTextEdit.Location = new Point(122, 84);
+            PhoneNumTextEdit.Location = new Point(137, 60);
             PhoneNumTextEdit.Name = "PhoneNumTextEdit";
             PhoneNumTextEdit.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
             PhoneNumTextEdit.Properties.MaskSettings.Set("allowBlankInput", true);
             PhoneNumTextEdit.Properties.MaskSettings.Set("mask", "\\+?[1-9]\\d{0,2}([ ]?\\d{2,4}){2,6}");
             PhoneNumTextEdit.Properties.MaskSettings.Set("showPlaceholders", false);
-            PhoneNumTextEdit.Size = new Size(147, 20);
+            PhoneNumTextEdit.Size = new Size(132, 20);
             PhoneNumTextEdit.StyleController = dataLayoutControl1;
-            PhoneNumTextEdit.TabIndex = 13;
+            PhoneNumTextEdit.TabIndex = 5;
             PhoneNumTextEdit.Validating += PhoneNumTextEdit_Validating;
             // 
             // textEdit2
             // 
             textEdit2.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "Address", true));
-            textEdit2.Location = new Point(383, 84);
+            textEdit2.Location = new Point(137, 84);
             textEdit2.Name = "textEdit2";
-            textEdit2.Size = new Size(148, 20);
+            textEdit2.Size = new Size(394, 20);
             textEdit2.StyleController = dataLayoutControl1;
-            textEdit2.TabIndex = 27;
+            textEdit2.TabIndex = 7;
             // 
             // Root
             // 
@@ -332,7 +318,7 @@ namespace Foxoft
             autoGeneratedGroup0.AllowDrawBackground = false;
             autoGeneratedGroup0.CustomizationFormText = "autoGeneratedGroup0";
             autoGeneratedGroup0.GroupBordersVisible = false;
-            autoGeneratedGroup0.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForCurrAccCode, layoutControlItem1, layoutControlItem2, emptySpaceItem1, ItemForOfficeCode, ItemForCurrAccDesc, ItemForSalesmanContinuity, ItemForPrinterName, ItemForDesignFileFolder, ItemForImageFolder, ItemForDefaultUnitOfMeasureId, ItemForIsDisabled, ItemForCurrAccTypeCode, ItemForAddress, ItemForPhoneNum });
+            autoGeneratedGroup0.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForCurrAccCode, layoutControlItem1, layoutControlItem2, emptySpaceItem1, ItemForOfficeCode, ItemForCurrAccDesc, ItemForSalesmanContinuity, ItemForDesignFileFolder, ItemForImageFolder, ItemForDefaultUnitOfMeasureId, ItemForIsDisabled, ItemForCurrAccTypeCode, ItemForPhoneNum, ItemForAddress });
             autoGeneratedGroup0.Location = new Point(0, 0);
             autoGeneratedGroup0.Name = "autoGeneratedGroup0";
             autoGeneratedGroup0.Size = new Size(523, 218);
@@ -346,7 +332,7 @@ namespace Foxoft
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
             ItemForCurrAccCode.Size = new Size(261, 24);
             ItemForCurrAccCode.Text = Resources.Form_Store_AccountCode;
-            ItemForCurrAccCode.TextSize = new Size(98, 13);
+            ItemForCurrAccCode.TextSize = new Size(113, 13);
             // 
             // layoutControlItem1
             // 
@@ -386,7 +372,7 @@ namespace Foxoft
             ItemForOfficeCode.Name = "ItemForOfficeCode";
             ItemForOfficeCode.Size = new Size(262, 24);
             ItemForOfficeCode.Text = Resources.Form_Store_OfficeCode;
-            ItemForOfficeCode.TextSize = new Size(98, 13);
+            ItemForOfficeCode.TextSize = new Size(113, 13);
             // 
             // ItemForCurrAccDesc
             // 
@@ -395,7 +381,7 @@ namespace Foxoft
             ItemForCurrAccDesc.Name = "ItemForCurrAccDesc";
             ItemForCurrAccDesc.Size = new Size(261, 24);
             ItemForCurrAccDesc.Text = Resources.Form_Store_Save;
-            ItemForCurrAccDesc.TextSize = new Size(98, 13);
+            ItemForCurrAccDesc.TextSize = new Size(113, 13);
             // 
             // ItemForSalesmanContinuity
             // 
@@ -405,15 +391,6 @@ namespace Foxoft
             ItemForSalesmanContinuity.Size = new Size(261, 24);
             ItemForSalesmanContinuity.TextVisible = false;
             // 
-            // ItemForPrinterName
-            // 
-            ItemForPrinterName.Control = PrinterNameTextEdit;
-            ItemForPrinterName.Location = new Point(0, 48);
-            ItemForPrinterName.Name = "item1";
-            ItemForPrinterName.Size = new Size(261, 24);
-            ItemForPrinterName.Text = Resources.Form_Store_PrinterName;
-            ItemForPrinterName.TextSize = new Size(98, 13);
-            // 
             // ItemForDesignFileFolder
             // 
             ItemForDesignFileFolder.Control = DesignFileFolderTextEdit;
@@ -421,7 +398,7 @@ namespace Foxoft
             ItemForDesignFileFolder.Name = "ItemForSettingStore";
             ItemForDesignFileFolder.Size = new Size(523, 24);
             ItemForDesignFileFolder.Text = Resources.Form_Store_DesignFileFolder;
-            ItemForDesignFileFolder.TextSize = new Size(98, 13);
+            ItemForDesignFileFolder.TextSize = new Size(113, 13);
             // 
             // ItemForImageFolder
             // 
@@ -430,7 +407,7 @@ namespace Foxoft
             ItemForImageFolder.Name = "item0";
             ItemForImageFolder.Size = new Size(523, 24);
             ItemForImageFolder.Text = Resources.Form_Store_ImageFolder;
-            ItemForImageFolder.TextSize = new Size(98, 13);
+            ItemForImageFolder.TextSize = new Size(113, 13);
             // 
             // ItemForDefaultUnitOfMeasureId
             // 
@@ -439,7 +416,7 @@ namespace Foxoft
             ItemForDefaultUnitOfMeasureId.Name = "item2";
             ItemForDefaultUnitOfMeasureId.Size = new Size(262, 24);
             ItemForDefaultUnitOfMeasureId.Text = Resources.Form_Store_DefaultUnitOfMeasure;
-            ItemForDefaultUnitOfMeasureId.TextSize = new Size(98, 13);
+            ItemForDefaultUnitOfMeasureId.TextSize = new Size(113, 13);
             // 
             // ItemForIsDisabled
             // 
@@ -461,23 +438,23 @@ namespace Foxoft
             ItemForCurrAccTypeCode.Name = "ItemForCurrAccTypeCode";
             ItemForCurrAccTypeCode.Size = new Size(262, 24);
             ItemForCurrAccTypeCode.Text = Resources.Form_Store_AccountCode;
-            ItemForCurrAccTypeCode.TextSize = new Size(98, 13);
+            ItemForCurrAccTypeCode.TextSize = new Size(113, 13);
             // 
             // ItemForAddress
             // 
             ItemForAddress.Control = textEdit2;
-            ItemForAddress.Location = new Point(261, 72);
+            ItemForAddress.Location = new Point(0, 72);
             ItemForAddress.Name = "ItemForAddress";
-            ItemForAddress.Size = new Size(262, 24);
-            ItemForAddress.TextSize = new Size(98, 13);
+            ItemForAddress.Size = new Size(523, 24);
+            ItemForAddress.TextSize = new Size(113, 13);
             // 
             // ItemForPhoneNum
             // 
             ItemForPhoneNum.Control = PhoneNumTextEdit;
-            ItemForPhoneNum.Location = new Point(0, 72);
+            ItemForPhoneNum.Location = new Point(0, 48);
             ItemForPhoneNum.Name = "ItemForPhoneNum";
             ItemForPhoneNum.Size = new Size(261, 24);
-            ItemForPhoneNum.TextSize = new Size(98, 13);
+            ItemForPhoneNum.TextSize = new Size(113, 13);
             // 
             // bindingSource1
             // 
@@ -494,7 +471,7 @@ namespace Foxoft
             ClientSize = new Size(543, 238);
             Controls.Add(dataLayoutControl1);
             Name = "FormStore";
-            Text = Resources.Form_Store_Caption;
+            Text = "Store";
             Load += FormFormStore_Load;
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
@@ -507,7 +484,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)DesignFileFolderTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)SalesmanContinuityCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ImageFolderTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)PrinterNameTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)DefaultUnitOfMeasureIdLookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PhoneNumTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)textEdit2.Properties).EndInit();
@@ -520,7 +496,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForOfficeCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccDesc).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForSalesmanContinuity).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForPrinterName).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDesignFileFolder).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForImageFolder).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDefaultUnitOfMeasureId).EndInit();

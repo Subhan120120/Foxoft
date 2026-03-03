@@ -159,6 +159,13 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
+            _lockService.Unlock(
+                "Invoice",
+                trInvoiceHeader.InvoiceHeaderId,
+                Authorization.CurrAccCode,
+                Environment.MachineName,
+                _appInstanceId);
+
             dbContext = new subContext();
             _loyaltyService = new LoyaltyService(dbContext);
 
