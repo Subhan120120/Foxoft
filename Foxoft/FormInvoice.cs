@@ -840,7 +840,7 @@ namespace Foxoft
 
             if (product == null)
             {
-                string entityName = dcProcess.ProcessCode == "EX"
+                string entityName = new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode)
                     ? Resources.Form_Invoice_Expense
                     : Resources.Form_Invoice_Product;
 
