@@ -206,7 +206,7 @@ namespace Foxoft
                 return;
 
             // Loyalty txn-i return invoice-ın özünə görə hesabla (IsReturn=true => məbləğ mənfi olacaq)
-            await _loyalty.SyncInvoiceAsync(returnInvoHeader, Authorization.CurrAccCode, ct);
+            await _loyalty.SyncInvoiceAsync(returnInvoHeader, ct);
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using Foxoft.Models;
+﻿using Foxoft;
+using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 
 public sealed record LoyaltySyncResult(
@@ -15,7 +16,7 @@ public sealed class LoyaltyService
 
     public LoyaltyService(subContext db) { }
 
-    public async Task AttachCardAsync(TrInvoiceHeader trInvoiceHeader, DcLoyaltyCard loyaltyCard, string userName, CancellationToken ct = default)
+    public async Task AttachCardAsync(TrInvoiceHeader trInvoiceHeader, DcLoyaltyCard loyaltyCard, CancellationToken ct = default)
     {
         using var db = new subContext();
 
@@ -26,7 +27,7 @@ public sealed class LoyaltyService
         await db.SaveChangesAsync(ct);
     }
 
-    public async Task DetachCardAsync(TrInvoiceHeader trInvoiceHeader, string userName, CancellationToken ct = default)
+    public async Task DetachCardAsync(TrInvoiceHeader trInvoiceHeader, CancellationToken ct = default)
     {
         using var db = new subContext();
 
@@ -47,7 +48,7 @@ public sealed class LoyaltyService
     private static DateTime FixSqlDate(DateTime dt)
         => dt < SqlMin ? DefaultSqlDate : dt;
 
-    public async Task<LoyaltySyncResult> SyncInvoiceAsync(TrInvoiceHeader trInvoiceHeader, string userName, CancellationToken ct = default)
+    public async Task<LoyaltySyncResult> SyncInvoiceAsync(TrInvoiceHeader trInvoiceHeader, CancellationToken ct = default)
     {
         using var db = new subContext();
 
@@ -123,7 +124,7 @@ public sealed class LoyaltyService
                 DocumentDate = FixSqlDate(invoice.DocumentDate),
                 TxnType = LoyaltyTxnType.Earn,
                 Amount = amount,
-                CreatedUserName = userName,
+                CreatedUserName = Authorization.CurrAccCode,
                 Note = $"Invoice: {invoice.DocumentNumber}"
             };
             db.TrLoyaltyTxns.Add(earnTxn);
@@ -142,7 +143,7 @@ public sealed class LoyaltyService
     }
 
 
-    public async Task<(bool TxnExists, string? Note)> SyncBonusSpendAsync(TrInvoiceHeader trInvoiceHeader, TrPaymentLine bonusLine, bool isRefund, string userName, CancellationToken ct = default)
+    public async Task<(bool TxnExists, string? Note)> SyncBonusSpendAsync(TrInvoiceHeader trInvoiceHeader, TrPaymentLine bonusLine, bool isRefund, CancellationToken ct = default)
     {
         using var db = new subContext();
 
@@ -191,7 +192,7 @@ public sealed class LoyaltyService
                 CurrAccCode = invoice.CurrAccCode,
                 InvoiceHeaderId = invoice.InvoiceHeaderId,
                 PaymentLineId = bonusLine.PaymentLineId,
-                CreatedUserName = userName,
+                CreatedUserName = Authorization.CurrAccCode,
                 Amount = amount,
                 DocumentDate = FixSqlDate(DateTime.Now),
                 TxnType = txnType,

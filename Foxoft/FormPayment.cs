@@ -440,8 +440,9 @@ namespace Foxoft
                 await _loyalty.SyncBonusSpendAsync(
                     trInvoiceHeader,
                     trPaymentLineBonus,
-                    isRefund: isNegativ,               // refund -> true
-                    userName: Authorization.CurrAccCode);
+                    isRefund: isNegativ // refund -> true
+                    );              
+
             }
 
             DialogResult = DialogResult.OK;

@@ -3,7 +3,7 @@ using Foxoft.Models.Entity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace Foxoft.AppCode
+namespace Foxoft.AppCode.Service
 {
     public sealed record LockResult(
         bool Acquired,
