@@ -1827,8 +1827,21 @@ namespace Foxoft
             if (Settings.Default.AppSetting.AutoSave)
                 efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr.CurrAccCode);
 
-            // Kart varsa və yeni CurrAccCode kartın CurrAccCode-u ilə fərqlidirsə -> kartı ləğv et
+            List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
+            lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
 
+            if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
+                trInvoiceHeader.ToWarehouseCode = null;
+
+            if (dcWarehouses is not null)
+            {
+                DcWarehouse dcWarehouse = dcWarehouses.FirstOrDefault(x => x.IsDefault == true);
+
+                if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
+                    lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+            }
+
+            // Kart varsa və yeni CurrAccCode kartın CurrAccCode-u ilə fərqlidirsə -> kartı ləğv et
             if (trInvoiceHeader.LoyaltyCardId is Guid cardId && _CurrAccCodeOldValue is not null)
             {
                 DcLoyaltyCard? card = efMethods.SelectEntityById<DcLoyaltyCard>(cardId);
