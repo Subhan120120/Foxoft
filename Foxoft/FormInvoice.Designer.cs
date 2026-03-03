@@ -215,7 +215,7 @@ namespace Foxoft
             lCI_IsSent = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
             LCG_Installment = new DevExpress.XtraLayout.LayoutControlGroup();
-            LCI_PaymentPlan = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_InstallmentPlan = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_InstallmentDate = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_InstallmentGarantors = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_InstallmentCommission = new DevExpress.XtraLayout.LayoutControlItem();
@@ -226,6 +226,7 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
+            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -313,7 +314,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_IsSent).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCG_Installment).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_PaymentPlan).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_InstallmentPlan).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentDate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentGarantors).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentCommission).BeginInit();
@@ -671,7 +672,7 @@ namespace Foxoft
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, RPG_Payment, RPG_Installment, ribbonPageGroup2, RPG_Control, ribbonPageGroup8, ribbonPageGroup3 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, RPG_Payment, RPG_Installment, ribbonPageGroup2, ribbonPageGroup4, RPG_Control, ribbonPageGroup8, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.FormInvoice_RibbonPage_Invoice;
             // 
@@ -702,8 +703,6 @@ namespace Foxoft
             ribbonPageGroup2.ItemLinks.Add(bBI_reportPreview);
             ribbonPageGroup2.ItemLinks.Add(BBI_ReportPrintFast);
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyInvoice);
-            ribbonPageGroup2.ItemLinks.Add(bBI_Whatsapp);
-            ribbonPageGroup2.ItemLinks.Add(BSI_Reports, true);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = Resources.FormInvoice_RibbonGroup_Print;
             // 
@@ -1957,7 +1956,7 @@ namespace Foxoft
             // LCG_Installment
             // 
             LCG_Installment.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            LCG_Installment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_PaymentPlan, LCI_InstallmentDate, LCI_InstallmentGarantors, LCI_InstallmentCommission, LCI_InterestRate });
+            LCG_Installment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_InstallmentPlan, LCI_InstallmentDate, LCI_InstallmentGarantors, LCI_InstallmentCommission, LCI_InterestRate });
             LCG_Installment.Location = new Point(0, 120);
             LCG_Installment.Name = "LCG_Installment";
             LCG_Installment.Size = new Size(1313, 120);
@@ -1966,14 +1965,14 @@ namespace Foxoft
             LCG_Installment.TextVisible = false;
             LCG_Installment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             // 
-            // LCI_PaymentPlan
+            // LCI_InstallmentPlan
             // 
-            LCI_PaymentPlan.Control = LUE_InstallmentPlan;
-            LCI_PaymentPlan.Location = new Point(0, 0);
-            LCI_PaymentPlan.Name = "LCI_PaymentPlan";
-            LCI_PaymentPlan.Size = new Size(644, 24);
-            LCI_PaymentPlan.Text = Resources.Entity_Installment_PlanCode;
-            LCI_PaymentPlan.TextSize = new Size(107, 13);
+            LCI_InstallmentPlan.Control = LUE_InstallmentPlan;
+            LCI_InstallmentPlan.Location = new Point(0, 0);
+            LCI_InstallmentPlan.Name = "LCI_InstallmentPlan";
+            LCI_InstallmentPlan.Size = new Size(644, 24);
+            LCI_InstallmentPlan.Text = Resources.Entity_Installment_PlanCode;
+            LCI_InstallmentPlan.TextSize = new Size(107, 13);
             // 
             // LCI_InstallmentDate
             // 
@@ -2052,6 +2051,13 @@ namespace Foxoft
             // dxErrorProvider1
             // 
             dxErrorProvider1.ContainerControl = this;
+            // 
+            // ribbonPageGroup4
+            // 
+            ribbonPageGroup4.ItemLinks.Add(bBI_Whatsapp);
+            ribbonPageGroup4.ItemLinks.Add(BSI_Reports);
+            ribbonPageGroup4.Name = "ribbonPageGroup4";
+            ribbonPageGroup4.Text = "Export";
             // 
             // FormInvoice
             // 
@@ -2155,7 +2161,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_IsSent).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCG_Installment).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_PaymentPlan).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_InstallmentPlan).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentDate).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentGarantors).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_InstallmentCommission).EndInit();
@@ -2333,7 +2339,7 @@ namespace Foxoft
         private RepositoryItemButtonEdit repoBtnEdit_WorkerCode;
         private DevExpress.XtraEditors.TextEdit txtEdit_Installment_Commission;
         private DevExpress.XtraEditors.LookUpEdit LUE_InstallmentPlan;
-        private DevExpress.XtraLayout.LayoutControlItem LCI_PaymentPlan;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_InstallmentPlan;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InstallmentCommission;
         private DevExpress.XtraLayout.LayoutControlGroup LCG_Installment;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InstallmentDate;
@@ -2369,5 +2375,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit textEdit1;
         private DevExpress.XtraLayout.LayoutControlItem LCI_LoyaltyEarn;
         private DevExpress.XtraEditors.TextEdit txt_LoyaltyEarn;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
     }
 }
