@@ -21,6 +21,7 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
+using DevExpress.XtraRichEdit.Import.Html;
 using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode.Service;
 using Foxoft.AppCode.Services;
@@ -1196,21 +1197,19 @@ namespace Foxoft
 
                 using subContext context2 = new();
 
+                var newWarehouseCode = trIH.ToWarehouseCode ?? trIH.WarehouseCode; // fallback
+                var newToWarehouseCode = trIH.WarehouseCode ?? trIH.ToWarehouseCode;
+
                 TrInvoiceHeader copyTrIH = trIH;
                 copyTrIH.InvoiceHeaderId = quidHead;
-                string temp = trIH.WarehouseCode;
-                copyTrIH.WarehouseCode = trIH.ToWarehouseCode;
-                copyTrIH.ToWarehouseCode = temp;
+                copyTrIH.WarehouseCode = newWarehouseCode;
+                copyTrIH.ToWarehouseCode = newToWarehouseCode;
                 copyTrIH.StoreCode = trIH.CurrAccCode ??= trIH.StoreCode;
                 copyTrIH.IsMainTF = false;
 
-                switch (entryHeader.State)
-                {
-                    case EntityState.Added: context2.TrInvoiceHeaders.Add(copyTrIH); break;
-                    case EntityState.Modified: context2.TrInvoiceHeaders.Update(copyTrIH); break;
-                    case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(copyTrIH); break;
-                    default: break;
-                }
+
+                context2.Entry(copyTrIH).State = entryHeader.State;
+
                 context2.SaveChanges(Authorization.CurrAccCode);
             }
 
@@ -1231,13 +1230,8 @@ namespace Foxoft
                 newTrIL.QtyIn = trIL.QtyOut;
                 newTrIL.QtyOut -= trIL.QtyOut;
 
-                switch (entryLine.State)
-                {
-                    case EntityState.Added: context2.TrInvoiceLines.Add(newTrIL); break;
-                    case EntityState.Modified: context2.TrInvoiceLines.Update(newTrIL); break;
-                    case EntityState.Deleted: context2.TrInvoiceLines.Remove(newTrIL); break;
-                    default: break;
-                }
+                context2.Entry(newTrIL).State = entryLine.State;
+
                 context2.SaveChanges(Authorization.CurrAccCode);
             }
         }
