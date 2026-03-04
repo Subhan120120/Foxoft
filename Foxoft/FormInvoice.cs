@@ -1182,36 +1182,62 @@ namespace Foxoft
         Guid quidHead;
         private void InitilizeTransfer()
         {
-            EntityEntry? entryHeader = dbContext.ChangeTracker.Entries()
-                .FirstOrDefault(x => x.Entity is TrInvoiceHeader);
+            IEnumerable<EntityEntry> entityEntries = dbContext.ChangeTracker.Entries();
+
+            EntityEntry? entryHeader = entityEntries.FirstOrDefault(x => x.Entity is TrInvoiceHeader);
 
             if (entryHeader is not null)
             {
-                TrInvoiceHeader? trIH = (TrInvoiceHeader)entryHeader.CurrentValues.ToObject();
-                quidHead = ZeroizeFirst8(trIH.InvoiceHeaderId);
+                TrInvoiceHeader trIH = (TrInvoiceHeader)entryHeader.CurrentValues.ToObject();
+
+                string invoHeadStr = trIH.InvoiceHeaderId.ToString();
+
+                quidHead = Guid.Parse(invoHeadStr.Replace(invoHeadStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
 
                 using subContext context2 = new();
 
-                TrInvoiceHeader? copyTrIH = MapNewTrIHForTransfer(trIH, quidHead);
+                TrInvoiceHeader copyTrIH = trIH;
+                copyTrIH.InvoiceHeaderId = quidHead;
+                string temp = trIH.WarehouseCode;
+                copyTrIH.WarehouseCode = trIH.ToWarehouseCode;
+                copyTrIH.ToWarehouseCode = temp;
+                copyTrIH.StoreCode = trIH.CurrAccCode ??= trIH.StoreCode;
+                copyTrIH.IsMainTF = false;
 
-                context2.Entry(copyTrIH).State = entryHeader.State;
+                switch (entryHeader.State)
+                {
+                    case EntityState.Added: context2.TrInvoiceHeaders.Add(copyTrIH); break;
+                    case EntityState.Modified: context2.TrInvoiceHeaders.Update(copyTrIH); break;
+                    case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(copyTrIH); break;
+                    default: break;
+                }
                 context2.SaveChanges(Authorization.CurrAccCode);
             }
 
-            EntityEntry? entryLine = dbContext.ChangeTracker.Entries()
-                .FirstOrDefault(x => x.Entity is TrInvoiceLine);
+            EntityEntry? entryLine = entityEntries.FirstOrDefault(x => x.Entity is TrInvoiceLine);
 
             if (entryLine is not null)
             {
-                TrInvoiceLine? trIL = (TrInvoiceLine)entryLine.CurrentValues.ToObject();
-                Guid quidLine = ZeroizeFirst8(trIL.InvoiceLineId);
+                TrInvoiceLine trIL = (TrInvoiceLine)entryLine.CurrentValues.ToObject();
+
+                string invoLineStr = trIL.InvoiceLineId.ToString();
+                Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
 
                 using subContext context2 = new();
 
-                TrInvoiceLine? newTrIL = MapNewTrILForTransfer(trIL, quidHead, quidLine);
+                TrInvoiceLine newTrIL = trIL;
+                newTrIL.InvoiceHeaderId = quidHead;
+                newTrIL.InvoiceLineId = quidLine;
+                newTrIL.QtyIn = trIL.QtyOut;
+                newTrIL.QtyOut -= trIL.QtyOut;
 
-                context2.Entry(newTrIL).State = entryLine.State;
-
+                switch (entryLine.State)
+                {
+                    case EntityState.Added: context2.TrInvoiceLines.Add(newTrIL); break;
+                    case EntityState.Modified: context2.TrInvoiceLines.Update(newTrIL); break;
+                    case EntityState.Deleted: context2.TrInvoiceLines.Remove(newTrIL); break;
+                    default: break;
+                }
                 context2.SaveChanges(Authorization.CurrAccCode);
             }
         }

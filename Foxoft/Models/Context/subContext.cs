@@ -130,8 +130,16 @@ namespace Foxoft.Models
                     line.LastUpdatedDate = DateTime.Now;
                 }
             }
+            try
+            {
 
-            return base.SaveChanges();
+                return base.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public int SaveChanges(bool acceptAllChangesOnSuccess, string currAccCode)
@@ -160,8 +168,15 @@ namespace Foxoft.Models
                     line.LastUpdatedDate = DateTime.Now;
                 }
             }
+            try
+            {
+                return base.SaveChanges(acceptAllChangesOnSuccess);
+            }
+            catch (Exception)
+            {
 
-            return base.SaveChanges(acceptAllChangesOnSuccess);
+                throw;
+            }
         }
 
         public override int SaveChanges()
@@ -177,8 +192,15 @@ namespace Foxoft.Models
                 else if (entry.Entity is TrInvoiceLine line)
                     line.LastUpdatedDate = DateTime.Now;
             }
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (Exception)
+            {
 
-            return base.SaveChanges();
+                throw;
+            }
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -194,8 +216,14 @@ namespace Foxoft.Models
                 else if (entry.Entity is TrInvoiceLine line)
                     line.LastUpdatedDate = DateTime.Now;
             }
-
-            return base.SaveChanges(acceptAllChangesOnSuccess);
+            try
+            {
+                return base.SaveChanges(acceptAllChangesOnSuccess);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
