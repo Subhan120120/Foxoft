@@ -111,6 +111,7 @@ namespace Foxoft
         Guid guidHead;
         private void SavePayment()
         {
+            if (!ValidateChildren()) return;
             try
             {
                 dbContext.SaveChanges(false);
@@ -339,21 +340,6 @@ namespace Foxoft
             lbl_CurrAccBalansBefore.Text = Resources.Form_MoneyTransfer_Label_CurrAccBalanceBefore + BalanceBefore.ToString();
         }
 
-        private decimal CalcSummmaryValue()
-        {
-            decimal sum = 0;
-
-            for (int i = 0; i < gV_PaymentLine.RowCount; i++)
-            {
-                object value = gV_PaymentLine.GetRowCellValue(i, colPaymentLoc);
-
-                if (value != null && value != DBNull.Value)
-                    sum += Convert.ToDecimal(value);
-            }
-
-            return sum;
-        }
-
         private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
@@ -520,13 +506,54 @@ namespace Foxoft
             {
                 buttonEdit.EditValue = dcCurrAcc.CurrAccCode;
                 trPaymentHeader.ToCashRegCode = dcCurrAcc.CurrAccCode;
-                lbl_ToCashRegDesc.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
 
                 BalanceBefore = Math.Round(efMethods.SelectCashRegBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
                 CalcCashRegBalance();
             }
         }
 
+        private void FromCashRegCodeButtonEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            SavePayment();
+        }
+
+        private void ToCashRegCodeButtonEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            SavePayment();
+        }
+
+        private void CashReg_Validating(object sender, CancelEventArgs e)
+        {
+            var be = sender as ButtonEdit;
+            if (be == null) return;
+
+            string code = (be.EditValue ?? "").ToString().Trim();
+
+            string msg = (be == FromCashRegCodeButtonEdit)
+                ? "Çıxış kassası seçilməlidir."
+                : "Giriş kassası seçilməlidir.";
+
+            if (string.IsNullOrWhiteSpace(code))
+            {
+                be.ErrorText = msg;
+                e.Cancel = true;
+                return;
+            }
+
+            // DB yoxla
+            DcCurrAcc cashreg = efMethods.SelectCashRegById(code);
+
+            if (cashreg == null)
+            {
+                be.ErrorText = "Belə kassa mövcud deyil.";
+                e.Cancel = true;
+                return;
+            }
+
+            // hər şey ok
+            lbl_ToCashRegDesc.Text = cashreg.CurrAccDesc + " " + cashreg.FirstName + " " + cashreg.LastName;
+            be.ErrorText = "";
+        }
         private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)
         {
             DcCurrAcc createdCurrAcc = efMethods.SelectCurrAcc(trPaymentHeader.CreatedUserName);
@@ -582,5 +609,7 @@ namespace Foxoft
                 e.Value = runningTotal;
             }
         }
+
+
     }
 }

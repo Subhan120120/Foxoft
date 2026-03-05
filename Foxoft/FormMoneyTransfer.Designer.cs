@@ -569,6 +569,8 @@ namespace Foxoft
             ToCashRegCodeButtonEdit.StyleController = dataLayoutControl1;
             ToCashRegCodeButtonEdit.TabIndex = 3;
             ToCashRegCodeButtonEdit.ButtonPressed += ToCashRegCodeButtonEdit_ButtonPressed;
+            ToCashRegCodeButtonEdit.Validating += CashReg_Validating;
+            ToCashRegCodeButtonEdit.EditValueChanged += ToCashRegCodeButtonEdit_EditValueChanged;
             // 
             // FromCashRegCodeButtonEdit
             // 
@@ -581,6 +583,8 @@ namespace Foxoft
             FromCashRegCodeButtonEdit.StyleController = dataLayoutControl1;
             FromCashRegCodeButtonEdit.TabIndex = 2;
             FromCashRegCodeButtonEdit.ButtonPressed += FromCashRegCodeButtonEdit_ButtonPressed;
+            FromCashRegCodeButtonEdit.Validating += CashReg_Validating;
+            FromCashRegCodeButtonEdit.EditValueChanged += FromCashRegCodeButtonEdit_EditValueChanged;
             // 
             // ItemForCurrAccCode
             // 

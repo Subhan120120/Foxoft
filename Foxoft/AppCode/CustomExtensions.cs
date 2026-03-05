@@ -24,13 +24,11 @@ namespace Foxoft
             foreach (Control ctrl in dataLayoutControl.Controls)
             {
                 BaseEdit baseEdit = ctrl as BaseEdit;
-                if (baseEdit != null)
-                {
-                    string error = baseEdit.ErrorText;
+                if (baseEdit == null)
+                    continue;
 
-                    if (error != string.Empty)
-                        errorList.Add(error);
-                }
+                if (baseEdit.ErrorText != string.Empty)
+                    errorList.Add(baseEdit.ErrorText);
             }
 
             if (errorList.Count == 0)
