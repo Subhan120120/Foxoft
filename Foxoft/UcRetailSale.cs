@@ -28,7 +28,6 @@ namespace Foxoft
         ReportClass reportClass;
         subContext dbContext = new();
         readonly SettingStore settingStore;
-        readonly DcTerminal dcTerminal;
         DcLoyaltyCard loyaltyCard;
 
         public UcRetailSale()
@@ -42,7 +41,6 @@ namespace Foxoft
 
             ActiveControl = txtEdit_Barcode;
 
-            dcTerminal = efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId);
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             reportClass = new ReportClass(settingStore.DesignFileFolder);
 
@@ -149,6 +147,7 @@ namespace Foxoft
             invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
             string defaultCustomer = efMethods.SelectDefaultCustomerByStore(Authorization.StoreCode);
             invoiceHeader.CurrAccCode = defaultCustomer;
+            invoiceHeader.TerminalId = Settings.Default.TerminalId;
 
             e.NewObject = invoiceHeader;
         }
@@ -225,6 +224,7 @@ namespace Foxoft
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Include(x => x.DcProcess)
+                                      .Include(x => x.DcTerminal)
                                       .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
                                       .Load();
 
@@ -654,9 +654,9 @@ namespace Foxoft
 
             if (Settings.Default.AppSetting.AutoPrint)
             {
-                string printerName = string.IsNullOrWhiteSpace(dcTerminal.PrinterName)
+                string printerName = string.IsNullOrWhiteSpace(trInvoiceHeader.DcTerminal.PrinterName)
                     ? new PrinterSettings().PrinterName
-                    : dcTerminal.PrinterName;
+                    : trInvoiceHeader.DcTerminal.PrinterName;
 
                 await PrintFast(printerName);
             }
@@ -779,11 +779,11 @@ namespace Foxoft
         private async void btn_Print_Click(object sender, EventArgs e)
         {
             string printerName =
-                string.IsNullOrEmpty(dcTerminal.PrinterName)
+                string.IsNullOrEmpty(trInvoiceHeader.DcTerminal?.PrinterName)
                     ? new PrinterSettings().PrinterName
-                    : dcTerminal.PrinterName;
+                    : trInvoiceHeader.DcTerminal?.PrinterName;
 
-            await PrintFast(dcTerminal.PrinterName);
+            await PrintFast(trInvoiceHeader.DcTerminal?.PrinterName);
         }
 
         private async Task PrintFast(string printerName)

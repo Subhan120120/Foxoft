@@ -105,6 +105,7 @@ namespace Foxoft.Models
         public string? CustomsDocumentNumber { get; set; }
 
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_TerminalId), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcTerminal))]
         public int? TerminalId { get; set; }
 
         [ForeignKey(nameof(DcLoyaltyCard))]
@@ -162,6 +163,7 @@ namespace Foxoft.Models
         public virtual DcProcess DcProcess { get; set; }
         //public virtual DcCurrAcc DcCashRegister { get; set; }
         public virtual DcLoyaltyCard DcLoyaltyCard { get; set; }
+        public virtual DcTerminal DcTerminal { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
         public virtual TrInstallment TrInstallment { get; set; }

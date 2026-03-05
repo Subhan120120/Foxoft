@@ -48,5 +48,6 @@ namespace Foxoft.Models
         public int TouchScaleFactor { get; set; }
         public virtual DcCurrAcc DcCashRegister { get; set; }
         public virtual DcCurrAcc DcStore { get; set; }
+        public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; } = new HashSet<TrInvoiceHeader>();
     }
 }
