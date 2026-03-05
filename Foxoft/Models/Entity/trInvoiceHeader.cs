@@ -150,12 +150,17 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_CurrAccDesc), ResourceType = typeof(Resources))]
         public string CurrAccDesc { get; set; }
 
+        //[Display(Name = nameof(Resources.Entity_PaymentLine_CashRegisterCode), ResourceType = typeof(Resources))]
+        //[ForeignKey(nameof(DcCashRegister))]
+        //public string? CashRegisterCode { get; set; }
+
         [NotMapped]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_TotalNetAmount), ResourceType = typeof(Resources))]
         public decimal TotalNetAmount { get; set; }
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual DcProcess DcProcess { get; set; }
+        //public virtual DcCurrAcc DcCashRegister { get; set; }
         public virtual DcLoyaltyCard DcLoyaltyCard { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }

@@ -224,7 +224,7 @@ namespace Foxoft
             trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId, Settings.Default.TerminalId);
+                btn_CashRegCode.EditValue = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
 
             if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
                 ClearInstallmentGarantorsAddNew();
@@ -384,6 +384,8 @@ namespace Foxoft
                     .LoadAsync();
 
                 trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+
+                btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId);
 
                 UpdatePaidLabels();
 

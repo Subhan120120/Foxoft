@@ -1034,14 +1034,14 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public string CashRegFromExpense(Guid invoiceHeaderId, int terminalId)
+        public string CashRegFromExpense(Guid invoiceHeaderId)
         {
             using subContext db = new();
             return db.TrPaymentHeaders  //xerce bagli her hansi odenisin kassasi
                 .Where(ph => ph.InvoiceHeaderId == invoiceHeaderId)
                 .SelectMany(ph => ph.TrPaymentLines)
                 .Select(pl => pl.CashRegisterCode)
-                .FirstOrDefault() ?? SelectCashRegisterByTerminal(terminalId);
+                .FirstOrDefault();
         }
 
         public int UpdatePaymentIsLocked(Guid paymentHeaderId, bool isLocked)
