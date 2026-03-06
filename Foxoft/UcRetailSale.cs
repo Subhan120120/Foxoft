@@ -28,7 +28,6 @@ namespace Foxoft
         ReportClass reportClass;
         subContext dbContext = new();
         readonly SettingStore settingStore;
-        DcLoyaltyCard loyaltyCard;
 
         public UcRetailSale()
         {
@@ -207,8 +206,6 @@ namespace Foxoft
                                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
-            loyaltyCard = null;
-
             LoadCurrAcc();
 
             CalcPaidAmount();
@@ -242,7 +239,6 @@ namespace Foxoft
                                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
-            loyaltyCard = efMethods.GetLoyaltyCard(InvoiceHeaderId);
             txt_LoyaltyEarned.EditValue = efMethods.SelectLoyalityTxnAmount(InvoiceHeaderId);
 
             SplashScreenManager.CloseForm(false);
@@ -654,9 +650,9 @@ namespace Foxoft
 
             if (Settings.Default.AppSetting.AutoPrint)
             {
-                string printerName = string.IsNullOrWhiteSpace(trInvoiceHeader.DcTerminal.PrinterName)
+                string printerName = string.IsNullOrWhiteSpace(trInvoiceHeader.DcTerminal?.PrinterName)
                     ? new PrinterSettings().PrinterName
-                    : trInvoiceHeader.DcTerminal.PrinterName;
+                    : trInvoiceHeader.DcTerminal?.PrinterName;
 
                 await PrintFast(printerName);
             }
@@ -710,9 +706,11 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (loyaltyCard != null && !string.Equals(loyaltyCard.CurrAccCode, form.dcCurrAcc.CurrAccCode, StringComparison.OrdinalIgnoreCase))
+                    DcLoyaltyCard dcLoyaltyCard = efMethods.SelectEntityById<DcLoyaltyCard>(trInvoiceHeader.LoyaltyCardId);
+
+                    if (dcLoyaltyCard != null && !string.Equals(dcLoyaltyCard.CurrAccCode, form.dcCurrAcc.CurrAccCode, StringComparison.OrdinalIgnoreCase))
                     {
-                        loyaltyCard = null;
+                        trInvoiceHeader.LoyaltyCardId = null;
                         RemoveLoyaltyLinksAll(trInvoiceHeader.InvoiceHeaderId);
                         XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
                     }
@@ -1156,8 +1154,9 @@ namespace Foxoft
             var earnTxn = dbContext.TrLoyaltyTxns
                 .FirstOrDefault(x => x.InvoiceHeaderId == inv.InvoiceHeaderId && x.TxnType == LoyaltyTxnType.Earn);
 
+            DcLoyaltyCard dcLoyaltyCard = efMethods.SelectEntityById<DcLoyaltyCard>(trInvoiceHeader.LoyaltyCardId);
             // loyaltyCard yoxdursa -> Earn txn sil
-            if (loyaltyCard == null)
+            if (dcLoyaltyCard == null)
             {
                 if (earnTxn != null)
                     dbContext.TrLoyaltyTxns.Remove(earnTxn);
@@ -1167,7 +1166,7 @@ namespace Foxoft
 
             // EarnPercent-i DB-dən təhlükəsiz götür (navigation-a güvənmə)
             var earnPercent = dbContext.DcLoyaltyPrograms
-                .Where(p => p.LoyaltyProgramId == loyaltyCard.LoyaltyProgramId)
+                .Where(p => p.LoyaltyProgramId == dcLoyaltyCard.LoyaltyProgramId)
                 .Select(p => (decimal?)p.EarnPercent)
                 .FirstOrDefault() ?? 0m;
 
@@ -1198,7 +1197,7 @@ namespace Foxoft
                 {
                     LoyaltyTxnId = Guid.NewGuid(),
                     InvoiceHeaderId = inv.InvoiceHeaderId,
-                    LoyaltyCardId = loyaltyCard.LoyaltyCardId,
+                    LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId,
                     CurrAccCode = inv.CurrAccCode,
                     DocumentDate = inv.DocumentDate,
                     TxnType = LoyaltyTxnType.Earn,
@@ -1211,7 +1210,7 @@ namespace Foxoft
             else
             {
                 // Upsert update
-                earnTxn.LoyaltyCardId = loyaltyCard.LoyaltyCardId;
+                earnTxn.LoyaltyCardId = (Guid)trInvoiceHeader.LoyaltyCardId;
                 earnTxn.CurrAccCode = inv.CurrAccCode;
                 earnTxn.DocumentDate = inv.DocumentDate;
                 earnTxn.Amount = amount;
@@ -1304,7 +1303,7 @@ namespace Foxoft
             if (string.IsNullOrEmpty(bonusCardNum))
                 return;
 
-            loyaltyCard = efMethods.SelectLoyalityCard(bonusCardNum);
+            DcLoyaltyCard loyaltyCard = efMethods.SelectLoyalityCard(bonusCardNum);
 
             if (loyaltyCard is null)
             {
@@ -1313,6 +1312,7 @@ namespace Foxoft
             }
 
             trInvoiceHeader.CurrAccCode = loyaltyCard.CurrAccCode;
+            trInvoiceHeader.LoyaltyCardId = loyaltyCard.LoyaltyCardId;
 
             SaveInvoice();
 
