@@ -28,8 +28,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-
-            _loyalty = new LoyaltyService(_db);
+            _loyalty = new LoyaltyService();
         }
 
         public UcReturn(string processCode)
