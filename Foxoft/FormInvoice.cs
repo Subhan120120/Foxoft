@@ -174,7 +174,7 @@ namespace Foxoft
             }
 
             dbContext = new subContext();
-            _loyaltyService = new LoyaltyService(dbContext);
+            _loyaltyService = new LoyaltyService();
 
             newInvoiceHeaderId = Guid.NewGuid();
 
@@ -358,7 +358,7 @@ namespace Foxoft
             try
             {
                 dbContext = new subContext();
-                _loyaltyService = new LoyaltyService(dbContext);
+                _loyaltyService = new LoyaltyService();
 
                 txt_LoyaltyEarn.EditValue = 0m;
 

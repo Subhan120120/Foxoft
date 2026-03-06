@@ -35,7 +35,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            _loyalty = new LoyaltyService(_db);
+            _loyalty = new LoyaltyService();
 
             Name = "PaymentDetail";
             AcceptButton = btn_Ok;

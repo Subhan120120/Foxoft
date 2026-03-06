@@ -14,7 +14,7 @@ public sealed class LoyaltyService
     private static readonly DateTime SqlMin = new(1753, 1, 1);
     private static readonly DateTime DefaultSqlDate = new(1901, 1, 1);
 
-    public LoyaltyService(subContext db) { }
+    public LoyaltyService() { }
 
     public async Task AttachCardAsync(TrInvoiceHeader trInvoiceHeader, DcLoyaltyCard loyaltyCard, CancellationToken ct = default)
     {
