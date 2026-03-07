@@ -374,16 +374,38 @@ namespace Foxoft
                 trInvoiceHeadersBindingSource.DataSource = lV.ToBindingList();
                 trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
+                dcProcess = efMethods.SelectEntityById<DcProcess>(trInvoiceHeader.ProcessCode);
+
+                Text = $"{dcProcess.ProcessDesc} - ({btnEdit_DocNum.EditValue})";
+
                 // lines
                 await dbContext.TrInvoiceLines
                     .Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
-                    .Include(x => x.DcUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure)
+                    .Include(x => x.DcUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure)
                     .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                     .OrderBy(x => x.CreatedDate)
                     .LoadAsync();
 
                 trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+                gV_InvoiceLine.Focus();
+
+                if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
+                    LoadInstallmentGarantors();
+
+                dataLayoutControl1.IsValid(out List<string> errorList);
+
+                Tag = btnEdit_DocNum.EditValue;
+
+                if (!trInvoiceHeader.IsLocked)
+                {
+                    bool locked = (DateTime.Now - trInvoiceHeader.DocumentDate).Days > Settings.Default.AppSetting.InvoiceEditGraceDays;
+                    trInvoiceHeader.IsLocked = locked;
+                }
+
+                SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
+
+                efMethods.UpdateInvoiceIsLocked(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.IsLocked);
 
                 btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId);
 
@@ -1164,23 +1186,10 @@ namespace Foxoft
             if (new[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && trInvoiceHeader.TrInstallment is not null)
                 SaveInstallmentGarantors();
 
-            if (new[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
-            {
-                _paymentService.RebuildPaymentsFromInvoice(trInvoiceHeader, btn_CashRegCode.EditValue?.ToString());
-
-                UpdatePaidLabels();
-            }
-
             SaveSession();
             Tag = btnEdit_DocNum.EditValue;
         }
 
-
-        Guid ZeroizeFirst8(Guid id)
-        {
-            String? s = id.ToString("D");
-            return Guid.Parse("00000000" + s.Substring(8));
-        }
 
         Guid quidHead;
         private void InitilizeTransfer()
@@ -2807,7 +2816,6 @@ namespace Foxoft
             }
         }
 
-
         private void BBI_Salesman_ItemClick(object sender, ItemClickEventArgs e)
         {
             using FormCurrAccList form = new(new byte[] { 3 }, false, new byte[] { 1 });
@@ -2908,7 +2916,7 @@ namespace Foxoft
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode)
                     && dbContext != null
-                    && dataLayoutControl1.IsValid(out _) 
+                    && dataLayoutControl1.IsValid(out _)
                     && gV_InvoiceLine.DataRowCount > 0)
             {
                 _paymentService.RebuildPaymentsFromInvoice(

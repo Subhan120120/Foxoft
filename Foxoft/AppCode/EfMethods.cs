@@ -1037,11 +1037,14 @@ namespace Foxoft
         public string CashRegFromExpense(Guid invoiceHeaderId)
         {
             using subContext db = new();
-            return db.TrPaymentHeaders  //xerce bagli her hansi odenisin kassasi
-                .Where(ph => ph.InvoiceHeaderId == invoiceHeaderId)
-                .SelectMany(ph => ph.TrPaymentLines)
-                .Select(pl => pl.CashRegisterCode)
+            var cashRegisterCode = db.Set<TrInvoiceHeader>()
+                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                .SelectMany(x => x.TrPaymentHeaders)
+                .SelectMany(x => x.TrPaymentLines)
+                .Select(x => x.CashRegisterCode)
                 .FirstOrDefault();
+
+            return cashRegisterCode;
         }
 
         public int UpdatePaymentIsLocked(Guid paymentHeaderId, bool isLocked)
