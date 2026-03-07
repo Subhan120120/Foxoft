@@ -3602,4 +3602,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_InvoiceHeader_LoyaltyCardId" xml:space="preserve">
     <value>Bonus Kart Id</value>
   </data>
+  <data name="Form_Invoice_BonusPaymentExists_CannotChangeCurrAccCode" xml:space="preserve">
+    <value>Bonus ödənişi artıq mövcuddur. Cari hesab kodu dəyişdirilə bilməz.</value>
+  </data>
 </root>

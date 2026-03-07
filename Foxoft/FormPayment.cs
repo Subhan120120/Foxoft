@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System.ComponentModel;
@@ -29,13 +30,13 @@ namespace Foxoft
         private bool isNegativ = false;
 
         private readonly subContext _db = new();
-        private readonly LoyaltyService _loyalty;   
+        private readonly LoyaltyService _loyalty;
 
         public FormPayment()
         {
             InitializeComponent();
 
-            _loyalty = new LoyaltyService();
+            _loyalty = new LoyaltyService(_db);
 
             Name = "PaymentDetail";
             AcceptButton = btn_Ok;
@@ -417,12 +418,12 @@ namespace Foxoft
             }
         }
 
-        private async void btn_Ok_Click(object sender, EventArgs e) => await SavePaymentAsync();
+        private void btn_Ok_Click(object sender, EventArgs e) => SavePaymentAsync();
 
         private decimal TotalPaidLoc()
             => trPaymentLineCash.PaymentLoc + trPaymentLineCashless.PaymentLoc + trPaymentLineBonus.PaymentLoc;
 
-        private async Task SavePaymentAsync()
+        private void SavePaymentAsync()
         {
             dxErrorProvider1.ClearErrors();
 
@@ -437,11 +438,11 @@ namespace Foxoft
             // bonus varsa -> Redeem/Refund txn sync
             if (trPaymentLineBonus.PaymentLoc > 0 && HasInvoice() && trInvoiceHeader?.LoyaltyCardId != null)
             {
-                await _loyalty.SyncBonusSpendAsync(
-                    trInvoiceHeader,
-                    trPaymentLineBonus,
-                    isRefund: isNegativ // refund -> true
-                    );              
+                _loyalty.SyncBonusSpend(
+                   trInvoiceHeader,
+                   trPaymentLineBonus,
+                   isRefund: isNegativ // refund -> true
+                   );
 
             }
 
@@ -572,7 +573,7 @@ namespace Foxoft
                 IsMainTF = true,
             };
             efMethods.InsertEntity(redirectedHeader);
-                
+
             var redirectedLine = new TrPaymentLine
             {
                 PaymentLineId = Guid.NewGuid(),

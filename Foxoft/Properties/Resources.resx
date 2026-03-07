@@ -3602,4 +3602,7 @@ To delete, cancel the receipt!</value>
   <data name="Entity_InvoiceHeader_LoyaltyCardId" xml:space="preserve">
     <value>Loyalty Card Id</value>
   </data>
+  <data name="Form_Invoice_BonusPaymentExists_CannotChangeCurrAccCode" xml:space="preserve">
+    <value>Bonus payment already exists. Current account code cannot be changed.</value>
+  </data>
 </root>

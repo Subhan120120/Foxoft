@@ -82,6 +82,7 @@ namespace Foxoft
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Installment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -226,7 +227,6 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
-            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -705,6 +705,13 @@ namespace Foxoft
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyInvoice);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = Resources.FormInvoice_RibbonGroup_Print;
+            // 
+            // ribbonPageGroup4
+            // 
+            ribbonPageGroup4.ItemLinks.Add(bBI_Whatsapp);
+            ribbonPageGroup4.ItemLinks.Add(BSI_Reports);
+            ribbonPageGroup4.Name = "ribbonPageGroup4";
+            ribbonPageGroup4.Text = "Export";
             // 
             // RPG_Control
             // 
@@ -1839,6 +1846,7 @@ namespace Foxoft
             // 
             // layoutControlItem1
             // 
+            layoutControlItem1.ContentHorzAlignment = DevExpress.Utils.HorzAlignment.Far;
             layoutControlItem1.Control = lbl_InvoicePaidLoyaltySum;
             layoutControlItem1.Location = new Point(63, 40);
             layoutControlItem1.Name = "layoutControlItem1";
@@ -2051,13 +2059,6 @@ namespace Foxoft
             // dxErrorProvider1
             // 
             dxErrorProvider1.ContainerControl = this;
-            // 
-            // ribbonPageGroup4
-            // 
-            ribbonPageGroup4.ItemLinks.Add(bBI_Whatsapp);
-            ribbonPageGroup4.ItemLinks.Add(BSI_Reports);
-            ribbonPageGroup4.Name = "ribbonPageGroup4";
-            ribbonPageGroup4.Text = "Export";
             // 
             // FormInvoice
             // 

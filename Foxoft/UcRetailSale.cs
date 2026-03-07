@@ -5,6 +5,7 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
@@ -28,6 +29,7 @@ namespace Foxoft
         ReportClass reportClass;
         subContext dbContext = new();
         readonly SettingStore settingStore;
+        private LoyaltyService loyaltyService;
 
         public UcRetailSale()
         {
@@ -42,6 +44,8 @@ namespace Foxoft
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             reportClass = new ReportClass(settingStore.DesignFileFolder);
+
+            loyaltyService = new LoyaltyService(dbContext);
 
             ClearControlsAddNew();
 
@@ -186,6 +190,8 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
+            loyaltyService = new LoyaltyService(dbContext);
+
             invoiceHeaderId = Guid.NewGuid();
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
@@ -218,6 +224,8 @@ namespace Foxoft
             SplashScreenManager.ShowForm(this.ParentForm, typeof(WaitForm), true, true, false);
 
             dbContext = new subContext();
+
+            loyaltyService = new LoyaltyService(dbContext);
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Include(x => x.DcProcess)
@@ -708,17 +716,16 @@ namespace Foxoft
                 {
                     DcLoyaltyCard dcLoyaltyCard = efMethods.SelectEntityById<DcLoyaltyCard>(trInvoiceHeader.LoyaltyCardId);
 
-                    if (dcLoyaltyCard != null && !string.Equals(dcLoyaltyCard.CurrAccCode, form.dcCurrAcc.CurrAccCode, StringComparison.OrdinalIgnoreCase))
+                    if (dcLoyaltyCard != null &&
+                        !string.Equals(dcLoyaltyCard.CurrAccCode, form.dcCurrAcc.CurrAccCode, StringComparison.OrdinalIgnoreCase))
                     {
-                        trInvoiceHeader.LoyaltyCardId = null;
-                        RemoveLoyaltyLinksAll(trInvoiceHeader.InvoiceHeaderId);
+                        loyaltyService.DetachCard(trInvoiceHeader);
                         XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
                     }
 
                     trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
 
                     SaveInvoice();
-
                     LoadCurrAcc();
                 }
             }
@@ -1128,20 +1135,22 @@ namespace Foxoft
 
         private void SaveInvoice()
         {
-            // 1) əvvəl invoice/lines state otursun
-            dbContext.SaveChanges(Authorization.CurrAccCode);
+            dbContext.SaveChanges(Authorization.CurrAccCode); // 1) SyncInvoiceEarn əvvəl invoice/lines otursun
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
             Tag = trInvoiceHeader?.DocumentNumber;
 
-            // 2) loyalty entity-lərini hazırla (burada SaveChanges YOX)
-            SyncLoyaltyEarn(trInvoiceHeader);
 
-            // 3) dəyişiklik varsa, 1 dəfə save
+            // 3. loyalty dəyişikliklərini saxla
             dbContext.SaveChanges(Authorization.CurrAccCode);
 
-            // UI göstərici
-            txt_LoyaltyEarned.EditValue = efMethods.SelectLoyalityTxnAmount(trInvoiceHeader.InvoiceHeaderId);
+            if (trInvoiceHeader != null)
+                loyaltyService.SyncInvoiceEarn(trInvoiceHeader);
+
+            // 4. UI refresh
+            txt_LoyaltyEarned.EditValue = trInvoiceHeader == null
+                ? 0
+                : loyaltyService.GetInvoiceEarnAmount(trInvoiceHeader.InvoiceHeaderId);
         }
 
 
@@ -1311,13 +1320,10 @@ namespace Foxoft
                 return;
             }
 
-            trInvoiceHeader.CurrAccCode = loyaltyCard.CurrAccCode;
-            trInvoiceHeader.LoyaltyCardId = loyaltyCard.LoyaltyCardId;
+            loyaltyService.AttachCard(trInvoiceHeader, loyaltyCard);
 
             SaveInvoice();
-
             LoadCurrAcc();
-
         }
     }
 }

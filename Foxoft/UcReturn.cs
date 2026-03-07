@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            _loyalty = new LoyaltyService();
+            _loyalty = new LoyaltyService(_db);
         }
 
         public UcReturn(string processCode)
@@ -96,7 +97,7 @@ namespace Foxoft
             //lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
         }
 
-        private async void repobtn_ReturnLine_ButtonClick(object sender, ButtonPressedEventArgs e)
+        private void repobtn_ReturnLine_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             Guid invoiceLineID = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
             decimal maxReturn = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
@@ -184,7 +185,7 @@ namespace Foxoft
                             efMethods.UpdateEntity(trInvoiceLine);
                         }
 
-                        await SyncReturnInvoiceLoyaltyAsync();
+                        SyncReturnInvoiceLoyaltyAsync();
 
                         List<TrInvoiceLine> returnLines = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
                         gC_ReturnInvoiceLine.DataSource = returnLines;
@@ -199,13 +200,13 @@ namespace Foxoft
             }
         }
 
-        private async Task SyncReturnInvoiceLoyaltyAsync(CancellationToken ct = default)
+        private void SyncReturnInvoiceLoyaltyAsync()
         {
             if (returnInvoHeader is null || returnInvoHeader.InvoiceHeaderId == Guid.Empty)
                 return;
 
             // Loyalty txn-i return invoice-ın özünə görə hesabla (IsReturn=true => məbləğ mənfi olacaq)
-            await _loyalty.SyncInvoiceAsync(returnInvoHeader, ct);
+            _loyalty.SyncInvoiceEarn(returnInvoHeader);
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)

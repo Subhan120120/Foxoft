@@ -67,7 +67,7 @@ namespace Foxoft
             lbl_InvoicePaidTotalSumTxt = new LabelControl();
             lbl_InvoicePaidCashlessSum = new LabelControl();
             lbl_InvoicePaidCashlessSumTxt = new LabelControl();
-            labelControl2 = new LabelControl();
+            lbl_InvoicePaidCashSum = new LabelControl();
             lbl_InvoicePaidCashSumTxt = new LabelControl();
             txt_PrintCount = new TextEdit();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
@@ -159,7 +159,7 @@ namespace Foxoft
             layoutControlItem6 = new LayoutControlItem();
             layoutControlGroup3 = new LayoutControlGroup();
             layoutControlItem7 = new LayoutControlItem();
-            lbl_InvoicePaidCashSum = new LayoutControlItem();
+            layoutControlItem15 = new LayoutControlItem();
             layoutControlItem10 = new LayoutControlItem();
             layoutControlItem12 = new LayoutControlItem();
             layoutControlItem13 = new LayoutControlItem();
@@ -227,7 +227,7 @@ namespace Foxoft
             ((ISupportInitialize)layoutControlItem6).BeginInit();
             ((ISupportInitialize)layoutControlGroup3).BeginInit();
             ((ISupportInitialize)layoutControlItem7).BeginInit();
-            ((ISupportInitialize)lbl_InvoicePaidCashSum).BeginInit();
+            ((ISupportInitialize)layoutControlItem15).BeginInit();
             ((ISupportInitialize)layoutControlItem10).BeginInit();
             ((ISupportInitialize)layoutControlItem12).BeginInit();
             ((ISupportInitialize)layoutControlItem13).BeginInit();
@@ -247,7 +247,7 @@ namespace Foxoft
             lC_InvoiceLine.Controls.Add(lbl_InvoicePaidTotalSumTxt);
             lC_InvoiceLine.Controls.Add(lbl_InvoicePaidCashlessSum);
             lC_InvoiceLine.Controls.Add(lbl_InvoicePaidCashlessSumTxt);
-            lC_InvoiceLine.Controls.Add(labelControl2);
+            lC_InvoiceLine.Controls.Add(lbl_InvoicePaidCashSum);
             lC_InvoiceLine.Controls.Add(lbl_InvoicePaidCashSumTxt);
             lC_InvoiceLine.Controls.Add(txt_PrintCount);
             lC_InvoiceLine.Controls.Add(dataLayoutControl1);
@@ -343,14 +343,14 @@ namespace Foxoft
             // 
             // labelControl2
             // 
-            labelControl2.Appearance.Font = new Font("Tahoma", 12F);
-            labelControl2.Appearance.Options.UseFont = true;
-            labelControl2.Location = new Point(696, 549);
-            labelControl2.Name = "labelControl2";
-            labelControl2.Size = new Size(68, 19);
-            labelControl2.StyleController = lC_InvoiceLine;
-            labelControl2.TabIndex = 1;
-            labelControl2.Text = "0.00 AZN";
+            lbl_InvoicePaidCashSum.Appearance.Font = new Font("Tahoma", 12F);
+            lbl_InvoicePaidCashSum.Appearance.Options.UseFont = true;
+            lbl_InvoicePaidCashSum.Location = new Point(696, 549);
+            lbl_InvoicePaidCashSum.Name = "labelControl2";
+            lbl_InvoicePaidCashSum.Size = new Size(68, 19);
+            lbl_InvoicePaidCashSum.StyleController = lC_InvoiceLine;
+            lbl_InvoicePaidCashSum.TabIndex = 1;
+            lbl_InvoicePaidCashSum.Text = "0.00 AZN";
             // 
             // lbl_InvoicePaidCashSumTxt
             // 
@@ -1391,7 +1391,7 @@ namespace Foxoft
             // layoutControlGroup3
             // 
             layoutControlGroup3.GroupStyle = GroupStyle.Light;
-            layoutControlGroup3.Items.AddRange(new BaseLayoutItem[] { layoutControlItem7, lbl_InvoicePaidCashSum, layoutControlItem10, layoutControlItem12, layoutControlItem13, layoutControlItem11, emptySpaceItem1 });
+            layoutControlGroup3.Items.AddRange(new BaseLayoutItem[] { layoutControlItem7, layoutControlItem15, layoutControlItem10, layoutControlItem12, layoutControlItem13, layoutControlItem11, emptySpaceItem1 });
             layoutControlGroup3.Location = new Point(0, 123);
             layoutControlGroup3.Name = "layoutControlGroup3";
             layoutControlGroup3.Size = new Size(224, 93);
@@ -1408,12 +1408,12 @@ namespace Foxoft
             // 
             // lbl_InvoicePaidCashSum
             // 
-            lbl_InvoicePaidCashSum.ContentHorzAlignment = HorzAlignment.Far;
-            lbl_InvoicePaidCashSum.Control = labelControl2;
-            lbl_InvoicePaidCashSum.Location = new Point(128, 0);
-            lbl_InvoicePaidCashSum.Name = "lbl_InvoicePaidCashSum";
-            lbl_InvoicePaidCashSum.Size = new Size(72, 23);
-            lbl_InvoicePaidCashSum.TextVisible = false;
+            layoutControlItem15.ContentHorzAlignment = HorzAlignment.Far;
+            layoutControlItem15.Control = lbl_InvoicePaidCashSum;
+            layoutControlItem15.Location = new Point(128, 0);
+            layoutControlItem15.Name = "lbl_InvoicePaidCashSum";
+            layoutControlItem15.Size = new Size(72, 23);
+            layoutControlItem15.TextVisible = false;
             // 
             // layoutControlItem10
             // 
@@ -1560,7 +1560,7 @@ namespace Foxoft
             ((ISupportInitialize)layoutControlItem6).EndInit();
             ((ISupportInitialize)layoutControlGroup3).EndInit();
             ((ISupportInitialize)layoutControlItem7).EndInit();
-            ((ISupportInitialize)lbl_InvoicePaidCashSum).EndInit();
+            ((ISupportInitialize)layoutControlItem15).EndInit();
             ((ISupportInitialize)layoutControlItem10).EndInit();
             ((ISupportInitialize)layoutControlItem12).EndInit();
             ((ISupportInitialize)layoutControlItem13).EndInit();
@@ -1694,10 +1694,10 @@ namespace Foxoft
         private LabelControl lbl_InvoicePaidTotalSumTxt;
         private LabelControl lbl_InvoicePaidCashlessSum;
         private LabelControl lbl_InvoicePaidCashlessSumTxt;
-        private LabelControl labelControl2;
+        private LabelControl lbl_InvoicePaidCashSum;
         private LabelControl lbl_InvoicePaidCashSumTxt;
         private LayoutControlItem layoutControlItem7;
-        private LayoutControlItem lbl_InvoicePaidCashSum;
+        private LayoutControlItem layoutControlItem15;
         private LayoutControlItem layoutControlItem10;
         private LayoutControlItem layoutControlItem11;
         private LayoutControlItem layoutControlItem12;

@@ -1321,12 +1321,17 @@ namespace Foxoft
 
             return db.Set<TrLoyaltyTxn>()
                 .Where(x => x.LoyaltyCardId == loyaltyCardId
-                            && x.InvoiceHeaderId != invoiceHeaderId
                             && (x.ExpireAt == null || x.ExpireAt >= today))
-                .Sum(x => (decimal?)x.Amount) ?? 0m;
+                .Sum(x =>
+                    new[] { LoyaltyTxnType.Earn, LoyaltyTxnType.Reverse, LoyaltyTxnType.Adjust, LoyaltyTxnType.Expire }.Contains(x.TxnType)
+                        ? (x.InvoiceHeaderId != invoiceHeaderId ? (decimal?)x.Amount : 0m)
+                        : new[] { LoyaltyTxnType.Redeem, LoyaltyTxnType.Refund }.Contains(x.TxnType)
+                            ? (decimal?)x.Amount
+                            : 0m
+                ) ?? 0m;
         }
 
-        public async Task<decimal> SelectLoyaltyBalanceByInvoiceAsync(Guid invoiceHeaderId)
+        public async Task<decimal> SelectEarnedLoyaltyByInvoiceAsync(Guid invoiceHeaderId)
         {
             await using var db = new subContext();
 
@@ -1335,7 +1340,8 @@ namespace Foxoft
             var result = await db.Set<TrLoyaltyTxn>()
                 .AsNoTracking()
                 .Where(x => x.InvoiceHeaderId == invoiceHeaderId
-                            && (x.ExpireAt == null || x.ExpireAt >= today))
+                            && (x.ExpireAt == null || x.ExpireAt >= today)
+                            && new[] { LoyaltyTxnType.Earn, LoyaltyTxnType.Reverse, LoyaltyTxnType.Expire }.Contains(x.TxnType))
                 .SumAsync(x => (decimal?)x.Amount);
 
             return result ?? 0m;
@@ -1898,6 +1904,19 @@ namespace Foxoft
                         .Any(x => x.DcRole.TrRoleClaims.Any(x => x.DcClaim.TrClaimReports.Any(x => x.DcReport.ReportId.ToString() == claim)));
 
             return hasClaim;
+        }
+
+        public bool BonusPaymentExist(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+
+            bool hasBonusPayment = db.TrPaymentLines
+                .Include(x => x.TrPaymentHeader)
+                .Any(x =>
+                    x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId &&
+                    x.PaymentTypeCode == PaymentType.Bonus);
+
+            return hasBonusPayment;
         }
 
         public int UpdateReportLayout(int id, string reportLayout)

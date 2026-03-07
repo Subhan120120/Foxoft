@@ -6803,6 +6803,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bonus payment already exists. Current account code cannot be changed..
+        /// </summary>
+        public static string Form_Invoice_BonusPaymentExists_CannotChangeCurrAccCode {
+            get {
+                return ResourceManager.GetString("Form_Invoice_BonusPaymentExists_CannotChangeCurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer credit limit is exceeded!.
         /// </summary>
         public static string Form_Invoice_CreditLimitExceeded {
