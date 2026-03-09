@@ -71,7 +71,7 @@ namespace Foxoft
         private readonly DocumentLockService _lockService;
         private LoyaltyService _loyaltyService;
         private PaymentService _paymentService;
-        private readonly Guid _appInstanceId = Guid.NewGuid();
+        private readonly Guid _appInstanceId;
         private readonly Guid _formInstanceId = Guid.NewGuid();
         private bool _closingByLock = false;
         private int _pid => Process.GetCurrentProcess().Id;
@@ -87,6 +87,9 @@ namespace Foxoft
             dbContext = new subContext();
             _lockService = new DocumentLockService(dbContext);
             _paymentService = new PaymentService(dcProcess);
+
+            FormERP parent = Application.OpenForms["FormERP"] as FormERP;
+            _appInstanceId = parent._appInstanceId;
 
             InitializeComponent();
 
@@ -224,7 +227,10 @@ namespace Foxoft
             trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                btn_CashRegCode.EditValue = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
+            {
+                trInvoiceHeader.CashRegisterCode = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
+                btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
+            }
 
             if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
                 ClearInstallmentGarantorsAddNew();
@@ -312,7 +318,8 @@ namespace Foxoft
             if (dbContext != null && dataLayoutControl1.IsValid(out _))
                 if (Settings.Default.AppSetting.AutoSave)
                     if (gV_InvoiceLine.DataRowCount > 0)
-                        SaveInvoice();
+                        if (!String.IsNullOrEmpty(trInvoiceHeader.CashRegisterCode))
+                            SaveInvoice();
 
             //gV_InvoiceLine.Focus();
         }
@@ -333,9 +340,6 @@ namespace Foxoft
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-                //efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
-                //LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
-
                 if (TryOpenInvoiceForEdit(form.trInvoiceHeader.InvoiceHeaderId))
                 {
                     _lockService.Unlock(
@@ -369,9 +373,7 @@ namespace Foxoft
                     .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                     .LoadAsync();
 
-                var lV = dbContext.TrInvoiceHeaders.Local;
-
-                trInvoiceHeadersBindingSource.DataSource = lV.ToBindingList();
+                trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
                 trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
                 dcProcess = efMethods.SelectEntityById<DcProcess>(trInvoiceHeader.ProcessCode);
@@ -407,7 +409,8 @@ namespace Foxoft
 
                 efMethods.UpdateInvoiceIsLocked(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.IsLocked);
 
-                btn_CashRegCode.EditValue = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId);
+                trInvoiceHeader.CashRegisterCode = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId);
+                btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
 
                 UpdatePaidLabels();
 
@@ -1179,6 +1182,13 @@ namespace Foxoft
                 InitilizeTransfer();
 
             dbContext.ChangeTracker.AcceptAllChanges();
+
+            if (new[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
+            {
+                _paymentService.RebuildPaymentsFromInvoice(trInvoiceHeader, trInvoiceHeader.CashRegisterCode);
+
+                UpdatePaidLabels();
+            }
 
             var result = _loyaltyService.SyncInvoiceEarn(trInvoiceHeader);
             txt_LoyaltyEarn.EditValue = result.EarnAmount;
@@ -2947,6 +2957,8 @@ namespace Foxoft
                 return;
             }
 
+            trInvoiceHeader.CashRegisterCode = curr.CurrAccCode;
+
             dxErrorProvider1.SetError(editor, string.Empty);
         }
 
@@ -2985,6 +2997,27 @@ namespace Foxoft
             SaveInvoice();
         }
 
+        private bool TryActivateOpenedInvoiceForm(Guid invoiceHeaderId)
+        {
+            if (MdiParent != null)
+            {
+                foreach (Form child in MdiParent.MdiChildren)
+                {
+                    if (child is FormInvoice frm && frm.trInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
+                    {
+                        if (frm.WindowState == FormWindowState.Minimized)
+                            frm.WindowState = FormWindowState.Normal;
+
+                        frm.BringToFront();
+                        frm.Activate();
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private bool TryOpenInvoiceForEdit(Guid invoiceHeaderId)
         {
             var res = _lockService.TryAcquire(
@@ -3000,8 +3033,18 @@ namespace Foxoft
 
             if (!res.Acquired)
             {
+
+                // lock mənimdir və eyni app instance içindədirsə -> açıq child formu activate et
+                if (res.LockedBy == Authorization.CurrAccCode &&
+                    res.AppInstanceId == _appInstanceId)
+                {
+                    if (TryActivateOpenedInvoiceForm(invoiceHeaderId))
+                        return false;
+                }
+
                 XtraMessageBox.Show(
                     $"Faktura hazırda {res.LockedByName} tərəfindən redaktə olunur.\n" +
+                    $"Machine: {res.MachineName}\n" +
                     $"LockedAt: {res.LockedAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n" +
                     $"Heartbeat: {res.LastHeartbeatAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)",
                     "Locked",

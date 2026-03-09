@@ -1037,9 +1037,8 @@ namespace Foxoft
         public string CashRegFromExpense(Guid invoiceHeaderId)
         {
             using subContext db = new();
-            var cashRegisterCode = db.Set<TrInvoiceHeader>()
+            var cashRegisterCode = db.Set<TrPaymentHeader>()
                 .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                .SelectMany(x => x.TrPaymentHeaders)
                 .SelectMany(x => x.TrPaymentLines)
                 .Select(x => x.CashRegisterCode)
                 .FirstOrDefault();

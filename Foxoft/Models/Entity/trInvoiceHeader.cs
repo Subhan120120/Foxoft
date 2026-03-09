@@ -153,7 +153,8 @@ namespace Foxoft.Models
 
         //[Display(Name = nameof(Resources.Entity_PaymentLine_CashRegisterCode), ResourceType = typeof(Resources))]
         //[ForeignKey(nameof(DcCashRegister))]
-        //public string? CashRegisterCode { get; set; }
+        [NotMapped]
+        public string? CashRegisterCode { get; set; }
 
         [NotMapped]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_TotalNetAmount), ResourceType = typeof(Resources))]

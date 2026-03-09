@@ -25,6 +25,7 @@ namespace Foxoft
         ReportClass reportClass = new();
         AdoMethods adoMethods = new();
 
+        public readonly Guid _appInstanceId = Guid.NewGuid();
         private AccordionControlElement aCE_Active;
         private ContextMenuStrip _cms;
 
@@ -455,7 +456,7 @@ namespace Foxoft
 
         private void bBI_Session_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ShowExistForm<FormDocumentLockList> ();
+            ShowExistForm<FormDocumentLockList>();
         }
 
         private void ShowNewForm<T>(params object[] args) where T : Form
@@ -523,7 +524,5 @@ namespace Foxoft
                 ShowNewForm<T>(args);
             }
         }
-
-
     }
 }

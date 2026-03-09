@@ -8,10 +8,13 @@ namespace Foxoft.AppCode.Service
     public sealed record LockResult(
         bool Acquired,
         bool TakenOver,
-        string LockedBy,
-        string LockedByName,
+        string? LockedBy,
+        string? LockedByName,
         DateTime? LockedAtUtc,
         DateTime? LastHeartbeatAtUtc,
+        Guid? AppInstanceId,
+        Guid? FormInstanceId,
+        string? MachineName,
         string Message
     );
 
@@ -80,6 +83,9 @@ namespace Foxoft.AppCode.Service
                     LockedByName: userName,
                     LockedAtUtc: null,
                     LastHeartbeatAtUtc: null,
+                    AppInstanceId: appInstanceId,
+                    FormInstanceId: formInstanceId,
+                    MachineName: machineName,
                     Message: "LOCK_ACQUIRED"
                 );
             }
@@ -91,11 +97,13 @@ namespace Foxoft.AppCode.Service
                     .AsNoTracking()
                     .FirstOrDefault(x => x.DocumentType == documentType && x.DocumentId == documentId);
 
-                string lockedByUserId = _db.DcCurrAccs.FirstOrDefault(x => x.CurrAccCode == existing.LockedByUserId).CurrAccDesc;
-
-
                 if (existing is null)
-                    return new LockResult(false, false, null, null, null, null, "LOCK_RACE_RETRY");
+                    return new LockResult(false, false, null, null, null, null, null, null, null, "LOCK_RACE_RETRY");
+
+                string? lockedByUserName = _db.DcCurrAccs
+                    .Where(x => x.CurrAccCode == existing.LockedByUserId)
+                    .Select(x => x.CurrAccDesc)
+                    .FirstOrDefault();
 
                 // Timeout takeover
                 if (now - existing.LastHeartbeatAtUtc >= timeout)
@@ -130,6 +138,9 @@ namespace Foxoft.AppCode.Service
                             LockedByName: userName,
                             LockedAtUtc: null,
                             LastHeartbeatAtUtc: null,
+                            AppInstanceId: appInstanceId,
+                            FormInstanceId: formInstanceId,
+                            MachineName: machineName,
                             Message: "LOCK_TAKEN_OVER_DUE_TO_TIMEOUT"
                         );
                     }
@@ -140,15 +151,18 @@ namespace Foxoft.AppCode.Service
                         .FirstOrDefault(x => x.DocumentType == documentType && x.DocumentId == documentId);
 
                     if (existing is null)
-                        return new LockResult(false, false, null, null, null, null, "LOCK_MISSING_AFTER_RACE");
+                        return new LockResult(false, false, null, null, null, null, null, null, null, "LOCK_MISSING_AFTER_RACE");
 
                     return new LockResult(
                         Acquired: false,
                         TakenOver: false,
                         LockedBy: existing.LockedByUserId,
-                        LockedByName: lockedByUserId,
+                        LockedByName: lockedByUserName,
                         LockedAtUtc: existing.LockedAtUtc,
                         LastHeartbeatAtUtc: existing.LastHeartbeatAtUtc,
+                        AppInstanceId: existing.AppInstanceId,
+                        FormInstanceId: existing.FormInstanceId,
+                        MachineName: existing.MachineName,
                         Message: "LOCKED"
                     );
                 }
@@ -157,9 +171,12 @@ namespace Foxoft.AppCode.Service
                     Acquired: false,
                     TakenOver: false,
                     LockedBy: existing.LockedByUserId,
-                    LockedByName: lockedByUserId,
+                    LockedByName: lockedByUserName,
                     LockedAtUtc: existing.LockedAtUtc,
                     LastHeartbeatAtUtc: existing.LastHeartbeatAtUtc,
+                    AppInstanceId: existing.AppInstanceId,
+                    FormInstanceId: existing.FormInstanceId,
+                    MachineName: existing.MachineName,
                     Message: "LOCKED"
                 );
             }
