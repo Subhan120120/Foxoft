@@ -151,7 +151,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_CurrAccDesc), ResourceType = typeof(Resources))]
         public string CurrAccDesc { get; set; }
 
-        //[Display(Name = nameof(Resources.Entity_PaymentLine_CashRegisterCode), ResourceType = typeof(Resources))]
+        [Display(Name = nameof(Resources.Entity_PaymentLine_CashRegisterCode), ResourceType = typeof(Resources))]
         //[ForeignKey(nameof(DcCashRegister))]
         [NotMapped]
         public string? CashRegisterCode { get; set; }
