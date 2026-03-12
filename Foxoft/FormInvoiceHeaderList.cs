@@ -130,30 +130,7 @@ namespace Foxoft
 
         private void ApproveInvoiceHeader()
         {
-            bool isOpen = InvoiceIsOpen(trInvoiceHeader.DocumentNumber);
-
-            if (!isOpen)
                 DialogResult = DialogResult.OK;
-        }
-
-        private bool InvoiceIsOpen(string docNum)
-        {
-            bool isOpen = false;
-            Process[]? processes = Process.GetProcessesByName("Foxoft");
-            foreach (Process? process in processes)
-            {
-                List<WindowInfo> childWindows = WindowsAPI.GetMDIChildWindowsOfProcess(process);
-                foreach (WindowInfo? window in childWindows)
-                {
-                    if (window.Tag == docNum)
-                    {
-                        isOpen = true;
-                        XtraMessageBox.Show(Resources.Form_InvoiceHeaderList_InvoiceIsOpen);
-                    }
-                }
-            }
-
-            return isOpen;
         }
 
         private void gC_InvoiceHeaderList_ProcessGridKey(object sender, KeyEventArgs e)

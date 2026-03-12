@@ -21,7 +21,6 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
-using DevExpress.XtraRichEdit.Import.Html;
 using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode.Service;
 using Foxoft.AppCode.Services;
@@ -31,7 +30,6 @@ using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.VisualBasic;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.ComponentModel;
@@ -58,7 +56,7 @@ namespace Foxoft
 
         readonly SettingStore settingStore;
         readonly DcTerminal dcTerminal;
-        private TrInvoiceHeader trInvoiceHeader;
+        public TrInvoiceHeader trInvoiceHeader;
         private bool isReturn;
         Guid newInvoiceHeaderId;
         Guid? relatedInvoiceId;
@@ -72,7 +70,7 @@ namespace Foxoft
         private LoyaltyService _loyaltyService;
         private PaymentService _paymentService;
         private readonly Guid _appInstanceId;
-        private readonly Guid _formInstanceId = Guid.NewGuid();
+        public Guid _formInstanceId;
         private bool _closingByLock = false;
         private int _pid => Process.GetCurrentProcess().Id;
         private System.Windows.Forms.Timer? _hbTimer;
@@ -92,6 +90,8 @@ namespace Foxoft
             _appInstanceId = parent._appInstanceId;
 
             InitializeComponent();
+
+            _formInstanceId = Guid.NewGuid();
 
             InitializeColumnName();
 
@@ -141,10 +141,8 @@ namespace Foxoft
         {
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-            if (TryOpenInvoiceForEdit(trInvoiceHeader.InvoiceHeaderId))
-            {
-                LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
-            }
+            LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+
         }
 
         private void FormInvoice_Load(object sender, EventArgs e)
@@ -168,7 +166,7 @@ namespace Foxoft
         {
             if (trInvoiceHeader is not null)
             {
-                _lockService.Unlock(
+                _lockService.ReleaseLock(
                     "Invoice",
                     trInvoiceHeader.InvoiceHeaderId,
                     Authorization.CurrAccCode,
@@ -181,13 +179,13 @@ namespace Foxoft
 
             newInvoiceHeaderId = Guid.NewGuid();
 
-            if (TryOpenInvoiceForEdit(newInvoiceHeaderId))
+            if (TryAcquireInvoiceLockForEdit(newInvoiceHeaderId))
             {
                 if (trInvoiceHeader is not null)
                 {
                     Guid oldInvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
 
-                    _lockService.Unlock(
+                    _lockService.ReleaseLock(
                             "Invoice",
                             oldInvoiceHeaderId,
                             Authorization.CurrAccCode,
@@ -341,14 +339,15 @@ namespace Foxoft
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-                if (TryOpenInvoiceForEdit(form.trInvoiceHeader.InvoiceHeaderId))
+                if (TryAcquireInvoiceLockForEdit(form.trInvoiceHeader.InvoiceHeaderId))
                 {
-                    _lockService.Unlock(
-                    "Invoice",
-                    trInvoiceHeader.InvoiceHeaderId,
-                    Authorization.CurrAccCode,
-                    Environment.MachineName,
-                    _appInstanceId);
+                    if (trInvoiceHeader is not null)
+                        _lockService.ReleaseLock(
+                        "Invoice",
+                        trInvoiceHeader.InvoiceHeaderId,
+                        Authorization.CurrAccCode,
+                        Environment.MachineName,
+                        _appInstanceId);
 
                     trInvoiceHeader = form.trInvoiceHeader;
                     LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
@@ -2998,30 +2997,35 @@ namespace Foxoft
             SaveInvoice();
         }
 
-        private bool TryActivateOpenedInvoiceForm(Guid invoiceHeaderId)
+        private bool TryActivateOpenInvoiceWindow(Guid invoiceHeaderId)
         {
-            if (MdiParent != null)
-            {
-                foreach (Form child in MdiParent.MdiChildren)
-                {
-                    if (child is FormInvoice frm && frm.trInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
-                    {
-                        if (frm.WindowState == FormWindowState.Minimized)
-                            frm.WindowState = FormWindowState.Normal;
+            if (MdiParent == null)
+                return false;
 
-                        frm.BringToFront();
-                        frm.Activate();
-                        return true;
-                    }
+            foreach (Form child in MdiParent.MdiChildren)
+            {
+                if (child is FormInvoice frm &&
+                    frm.trInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
+                {
+                    if (frm.WindowState == FormWindowState.Minimized)
+                        frm.WindowState = FormWindowState.Normal;
+
+                    frm.BringToFront();
+                    frm.Activate();
+                    return true;
                 }
             }
 
             return false;
         }
 
-        private bool TryOpenInvoiceForEdit(Guid invoiceHeaderId)
+        private System.Windows.Forms.Timer? _lockHeartbeatTimer;
+        private bool _isClosingByLockEvent;
+        private bool _closeRequestDialogOpen;
+
+        private bool TryAcquireInvoiceLockForEdit(Guid invoiceHeaderId)
         {
-            var res = _lockService.TryAcquire(
+            var res = _lockService.TryAcquireLock(
                 documentType: "Invoice",
                 documentId: invoiceHeaderId,
                 userId: Authorization.CurrAccCode,
@@ -3034,42 +3038,50 @@ namespace Foxoft
 
             if (!res.Acquired)
             {
-
-                // lock mənimdir və eyni app instance içindədirsə -> açıq child formu activate et
                 if (res.LockedBy == Authorization.CurrAccCode &&
                     res.AppInstanceId == _appInstanceId)
                 {
-                    if (TryActivateOpenedInvoiceForm(invoiceHeaderId))
+                    if (TryActivateOpenInvoiceWindow(invoiceHeaderId))
                         return false;
                 }
 
-                XtraMessageBox.Show(
+                var answer = XtraMessageBox.Show(
                     $"Faktura hazırda {res.LockedByName} tərəfindən redaktə olunur.\n" +
                     $"Machine: {res.MachineName}\n" +
                     $"LockedAt: {res.LockedAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n" +
-                    $"Heartbeat: {res.LastHeartbeatAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)",
-                    "Locked",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    $"Heartbeat: {res.LastHeartbeatAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n\n" +
+                    $"Sənəd sahibinə bağlama sorğusu göndərilsin?",
+                    "Sənəd lock olunub",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (answer == DialogResult.Yes)
+                {
+                    _lockService.RequestOwnerToClose(
+                        documentType: "Invoice",
+                        documentId: invoiceHeaderId,
+                        requestedByUserId: Authorization.CurrAccCode,
+                        note: "Another user wants to edit this invoice.");
+                }
 
                 return false;
             }
 
-            StartHeartbeat();
+            StartLockHeartbeat();
             return true;
         }
 
-        private void StartHeartbeat()
+        private void StartLockHeartbeat()
         {
-            _hbTimer?.Stop();
-            _hbTimer?.Dispose();
+            _lockHeartbeatTimer?.Stop();
+            _lockHeartbeatTimer?.Dispose();
 
-            _hbTimer = new System.Windows.Forms.Timer { Interval = 30_000 };
-            _hbTimer.Tick += (_, __) =>
+            _lockHeartbeatTimer = new System.Windows.Forms.Timer { Interval = 30_000 };
+            _lockHeartbeatTimer.Tick += (_, __) =>
             {
                 try
                 {
-                    var chk = _lockService.HeartbeatAndCheckForceClose(
+                    var chk = _lockService.RefreshLockHeartbeatAndCheckSignals(
                         "Invoice",
                         trInvoiceHeader.InvoiceHeaderId,
                         Authorization.CurrAccCode,
@@ -3081,7 +3093,47 @@ namespace Foxoft
 
                     BeginInvoke(new Action(() =>
                     {
-                        _closingByLock = true;
+                        if (chk.Reason == LockCloseReason.CLOSE_REQUESTED)
+                        {
+                            if (_closeRequestDialogOpen)
+                                return;
+
+                            _closeRequestDialogOpen = true;
+                            try
+                            {
+                                var result = XtraMessageBox.Show(
+                                    $"İstifadəçi: {chk.RequestedByUserName}\n" +
+                                    $"Qeyd: {chk.Note}\n\n" +
+                                    $"Bu sənədi bağlamağa razısınız?",
+                                    "Bağlama sorğusu",
+                                    MessageBoxButtons.YesNo,
+                                    MessageBoxIcon.Question);
+
+                                if (result == DialogResult.Yes)
+                                {
+                                    _isClosingByLockEvent = true;
+                                    Close();
+                                }
+                                else
+                                {
+                                    _lockService.ClearOwnerCloseRequest(
+                                        "Invoice",
+                                        trInvoiceHeader.InvoiceHeaderId,
+                                        Authorization.CurrAccCode,
+                                        _appInstanceId,
+                                        _formInstanceId,
+                                        "Owner rejected close request.");
+                                }
+                            }
+                            finally
+                            {
+                                _closeRequestDialogOpen = false;
+                            }
+
+                            return;
+                        }
+
+                        _isClosingByLockEvent = true;
 
                         string msg = chk.Reason switch
                         {
@@ -3090,13 +3142,17 @@ namespace Foxoft
                             LockCloseReason.OWNERSHIP_CHANGED =>
                                 $"Sənəd artıq başqa istifadəçiyə keçib: {chk.CurrentOwnerUserName}",
                             LockCloseReason.LOCK_REMOVED =>
-                                "Sənədin lock-u silinib (ForceUnlock və ya sistem təmizliyi).",
+                                "Sənədin lock-u silinib.",
                             _ => "Sənəd bağlanır."
                         };
 
-                        XtraMessageBox.Show(msg, "Sənəd bağlanır", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        XtraMessageBox.Show(
+                            msg,
+                            "Sənəd bağlanır",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
 
-                        Close(); // MDI child-u bağlayır
+                        Close();
                     }));
                 }
                 catch
@@ -3105,18 +3161,18 @@ namespace Foxoft
                 }
             };
 
-            _hbTimer.Start();
+            _lockHeartbeatTimer.Start();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            _hbTimer?.Stop();
-            _hbTimer?.Dispose();
-            _hbTimer = null;
+            _lockHeartbeatTimer?.Stop();
+            _lockHeartbeatTimer?.Dispose();
+            _lockHeartbeatTimer = null;
 
             try
             {
-                _lockService.Unlock(
+                _lockService.ReleaseLock(
                     "Invoice",
                     trInvoiceHeader.InvoiceHeaderId,
                     Authorization.CurrAccCode,

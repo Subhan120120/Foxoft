@@ -23,14 +23,17 @@ namespace Foxoft.AppCode.Service
         None = 0,
         LOCK_REMOVED = 1,
         OWNERSHIP_CHANGED = 2,
-        FORCE_CLOSE = 3
+        CLOSE_REQUESTED = 3,
+        FORCE_CLOSE = 4
     }
 
     public sealed record LockCheckResult(
         LockCloseReason Reason,
         string? Note = null,
         string? CurrentOwnerUserId = null,
-        string? CurrentOwnerUserName = null
+        string? CurrentOwnerUserName = null,
+        string? RequestedByUserId = null,
+        string? RequestedByUserName = null
     );
 
     public sealed class DocumentLockService
@@ -38,7 +41,7 @@ namespace Foxoft.AppCode.Service
         private readonly subContext _db;
         public DocumentLockService(subContext db) => _db = db;
 
-        public LockResult TryAcquire(
+        public LockResult TryAcquireLock(
             string documentType,
             Guid documentId,
             string userId,
@@ -50,7 +53,11 @@ namespace Foxoft.AppCode.Service
             string? reason = null)
         {
             var now = DateTime.UtcNow;
-            string userName = _db.DcCurrAccs.FirstOrDefault(x => x.CurrAccCode == userId).CurrAccDesc;
+
+            string? userName = _db.DcCurrAccs
+                .Where(x => x.CurrAccCode == userId)
+                .Select(x => x.CurrAccDesc)
+                .FirstOrDefault();
 
             var newLock = new DocumentLock
             {
@@ -67,14 +74,12 @@ namespace Foxoft.AppCode.Service
             };
 
             _db.DocumentLocks.Add(newLock);
-            string docNum = _db.TrInvoiceHeaders.FirstOrDefault(x => x.InvoiceHeaderId == documentId)?.DocumentNumber;
 
             try
             {
-                _db.SaveChanges(); // documentId dublicate
+                _db.SaveChanges();
 
                 AddAudit(documentType, documentId, "LOCK", userId, machineName, null);
-
 
                 return new LockResult(
                     Acquired: true,
@@ -105,7 +110,6 @@ namespace Foxoft.AppCode.Service
                     .Select(x => x.CurrAccDesc)
                     .FirstOrDefault();
 
-                // Timeout takeover
                 if (now - existing.LastHeartbeatAtUtc >= timeout)
                 {
                     using var tx = _db.Database.BeginTransaction();
@@ -122,7 +126,12 @@ namespace Foxoft.AppCode.Service
                             .SetProperty(x => x.AppInstanceId, appInstanceId)
                             .SetProperty(x => x.FormInstanceId, formInstanceId)
                             .SetProperty(x => x.ClientProcessId, clientProcessId)
-                            .SetProperty(x => x.Reason, reason));
+                            .SetProperty(x => x.Reason, reason)
+                            .SetProperty(x => x.CloseRequestedAtUtc, (DateTime?)null)
+                            .SetProperty(x => x.CloseRequestedByUserId, (string?)null)
+                            .SetProperty(x => x.CloseRequestReason, (string?)null)
+                            .SetProperty(x => x.ForceCloseRequestedAtUtc, (DateTime?)null)
+                            .SetProperty(x => x.ForceCloseReason, (string?)null));
 
                     if (rows == 1)
                     {
@@ -152,6 +161,11 @@ namespace Foxoft.AppCode.Service
 
                     if (existing is null)
                         return new LockResult(false, false, null, null, null, null, null, null, null, "LOCK_MISSING_AFTER_RACE");
+
+                    lockedByUserName = _db.DcCurrAccs
+                        .Where(x => x.CurrAccCode == existing.LockedByUserId)
+                        .Select(x => x.CurrAccDesc)
+                        .FirstOrDefault();
 
                     return new LockResult(
                         Acquired: false,
@@ -219,24 +233,6 @@ namespace Foxoft.AppCode.Service
 
             if (rows == 1)
                 AddAudit(documentType, documentId, "FORCE_CLOSE_REQUEST", adminUserId, null, note);
-        }
-
-        public void Unlock(
-            string documentType,
-            Guid documentId,
-            string userId,
-            string? machineName,
-            Guid appInstanceId)
-        {
-            var deleted = _db.DocumentLocks
-                .Where(x => x.DocumentType == documentType
-                         && x.DocumentId == documentId
-                         && x.LockedByUserId == userId
-                         && x.AppInstanceId == appInstanceId)
-                .ExecuteDelete();
-
-            if (deleted == 1)
-                AddAudit(documentType, documentId, "UNLOCK", userId, machineName, null);
         }
 
         public void ForceUnlock(string documentType, Guid documentId, string adminUserId, string? note)
@@ -320,6 +316,149 @@ namespace Foxoft.AppCode.Service
 
             return new LockCheckResult(LockCloseReason.None);
         }
+        public bool RequestOwnerToClose(
+            string documentType,
+            Guid documentId,
+            string requestedByUserId,
+            string? note)
+        {
+            var now = DateTime.UtcNow;
+
+            var rows = _db.DocumentLocks
+                .Where(x => x.DocumentType == documentType && x.DocumentId == documentId)
+                .ExecuteUpdate(s => s
+                    .SetProperty(x => x.CloseRequestedAtUtc, now)
+                    .SetProperty(x => x.CloseRequestedByUserId, requestedByUserId)
+                    .SetProperty(x => x.CloseRequestReason, note));
+
+            if (rows == 1)
+            {
+                AddAudit(documentType, documentId, "CLOSE_REQUEST", requestedByUserId, null, note);
+                return true;
+            }
+
+            return false;
+        }
+
+        public void ClearOwnerCloseRequest(
+            string documentType,
+            Guid documentId,
+            string userId,
+            Guid appInstanceId,
+            Guid formInstanceId,
+            string? note = null)
+        {
+            var rows = _db.DocumentLocks
+                .Where(x => x.DocumentType == documentType
+                         && x.DocumentId == documentId
+                         && x.LockedByUserId == userId
+                         && x.AppInstanceId == appInstanceId
+                         && x.FormInstanceId == formInstanceId)
+                .ExecuteUpdate(s => s
+                    .SetProperty(x => x.CloseRequestedAtUtc, (DateTime?)null)
+                    .SetProperty(x => x.CloseRequestedByUserId, (string?)null)
+                    .SetProperty(x => x.CloseRequestReason, (string?)null));
+
+            if (rows == 1)
+                AddAudit(documentType, documentId, "CLOSE_REQUEST_CLEARED", userId, null, note);
+        }
+
+        public void ReleaseLock(
+            string documentType,
+            Guid documentId,
+            string userId,
+            string? machineName,
+            Guid appInstanceId)
+        {
+            var deleted = _db.DocumentLocks
+                .Where(x => x.DocumentType == documentType
+                         && x.DocumentId == documentId
+                         && x.LockedByUserId == userId
+                         && x.AppInstanceId == appInstanceId)
+                .ExecuteDelete();
+
+            if (deleted == 1)
+                AddAudit(documentType, documentId, "UNLOCK", userId, machineName, null);
+        }
+
+
+        public LockCheckResult RefreshLockHeartbeatAndCheckSignals(
+            string documentType,
+            Guid documentId,
+            string userId,
+            Guid appInstanceId,
+            Guid formInstanceId)
+        {
+            var now = DateTime.UtcNow;
+
+            var lockRow = _db.DocumentLocks.AsNoTracking()
+                .Where(x => x.DocumentType == documentType && x.DocumentId == documentId)
+                .Select(x => new
+                {
+                    x.LockedByUserId,
+                    x.AppInstanceId,
+                    x.FormInstanceId,
+                    x.CloseRequestedAtUtc,
+                    x.CloseRequestedByUserId,
+                    x.CloseRequestReason,
+                    x.ForceCloseRequestedAtUtc,
+                    x.ForceCloseReason
+                })
+                .FirstOrDefault();
+
+            if (lockRow == null)
+                return new LockCheckResult(LockCloseReason.LOCK_REMOVED);
+
+            string? currentOwnerUserName = _db.DcCurrAccs
+                .Where(x => x.CurrAccCode == lockRow.LockedByUserId)
+                .Select(x => x.CurrAccDesc)
+                .FirstOrDefault();
+
+            if (lockRow.LockedByUserId != userId
+                || lockRow.AppInstanceId != appInstanceId
+                || lockRow.FormInstanceId != formInstanceId)
+            {
+                return new LockCheckResult(
+                    Reason: LockCloseReason.OWNERSHIP_CHANGED,
+                    Note: "Lock owner changed.",
+                    CurrentOwnerUserId: lockRow.LockedByUserId,
+                    CurrentOwnerUserName: currentOwnerUserName
+                );
+            }
+
+            _db.DocumentLocks
+                .Where(x => x.DocumentType == documentType
+                         && x.DocumentId == documentId
+                         && x.LockedByUserId == userId
+                         && x.AppInstanceId == appInstanceId
+                         && x.FormInstanceId == formInstanceId)
+                .ExecuteUpdate(s => s.SetProperty(x => x.LastHeartbeatAtUtc, now));
+
+            var requestedByUserName = lockRow.CloseRequestedByUserId == null
+                ? null
+                : _db.DcCurrAccs
+                    .Where(x => x.CurrAccCode == lockRow.CloseRequestedByUserId)
+                    .Select(x => x.CurrAccDesc)
+                    .FirstOrDefault();
+
+            if (lockRow.ForceCloseRequestedAtUtc != null)
+                return new LockCheckResult(
+                    LockCloseReason.FORCE_CLOSE,
+                    lockRow.ForceCloseReason,
+                    RequestedByUserId: lockRow.CloseRequestedByUserId,
+                    RequestedByUserName: requestedByUserName
+                );
+
+            if (lockRow.CloseRequestedAtUtc != null)
+                return new LockCheckResult(
+                    LockCloseReason.CLOSE_REQUESTED,
+                    lockRow.CloseRequestReason,
+                    RequestedByUserId: lockRow.CloseRequestedByUserId,
+                    RequestedByUserName: requestedByUserName
+                );
+
+            return new LockCheckResult(LockCloseReason.None);
+        }
 
         public bool IsLockOwnedByMe(string documentType, Guid documentId, string userId, Guid appInstanceId, Guid formInstanceId)
         {
@@ -330,5 +469,6 @@ namespace Foxoft.AppCode.Service
                 x.AppInstanceId == appInstanceId &&
                 x.FormInstanceId == formInstanceId);
         }
+
     }
 }

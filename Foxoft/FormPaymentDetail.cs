@@ -30,6 +30,7 @@ namespace Foxoft
         private subContext dbContext;
         private Guid paymentHeaderId;
         private decimal BalanceBefore;
+        readonly DcTerminal dcTerminal;
 
         public FormPaymentDetail()
         {
@@ -93,6 +94,7 @@ namespace Foxoft
             paymentHeader.StoreCode = Authorization.StoreCode;
             paymentHeader.CreatedUserName = Authorization.CurrAccCode;
             paymentHeader.IsMainTF = true;
+            paymentHeader.TerminalId = Settings.Default.TerminalId;
 
             e.NewObject = paymentHeader;
         }

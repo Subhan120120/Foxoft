@@ -47,5 +47,10 @@ namespace Foxoft.Models.Entity
 
         public string? Reason { get; set; } // istəsən [MaxLength(200)] verə bilərsən
 
+        public DateTime? CloseRequestedAtUtc { get; set; }
+        public string? CloseRequestedByUserId { get; set; }
+        public string? CloseRequestReason { get; set; }
+
+
     }
 }

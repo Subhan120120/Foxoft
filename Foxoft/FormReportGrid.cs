@@ -21,23 +21,25 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using DevExpress.XtraReports.UserDesigner.Native;
 using Foxoft.AppCode;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Data;
-using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.Identity.Client;
-using Microsoft.VisualBasic;
-using Foxoft.Models.Entity.Report;
 #endregion
 
 namespace Foxoft
@@ -49,11 +51,13 @@ namespace Foxoft
         ReportClass reportClass = new();
         DcReport dcReport = new();
         SqlParameter[] sqlParameters;
+        subContext dbContext = new();
 
         string ReportQuery = "select 0 Nothing";
         string ProductsFolder;
 
         RepositoryItemPictureEdit riPictureEdit = new();
+        private DocumentLockService _lockService;
         GridColumn colImage = new();
 
         public FormReportGrid()
@@ -61,6 +65,8 @@ namespace Foxoft
             InitializeComponent();
 
             InitializeGVReportEvents();
+
+            _lockService = new DocumentLockService(dbContext);
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             try
@@ -162,7 +168,7 @@ namespace Foxoft
             }
         }
 
-        private void    LoadData()
+        private void LoadData()
         {
             DataTable dt = adoMethods.SqlGetDt(ReportQuery, sqlParameters);
             gC_Report.DataSource = dt;
@@ -347,14 +353,21 @@ namespace Foxoft
                     return;
                 }
 
+                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+
+                Guid formInstanceId = Guid.NewGuid();
                 byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
                 FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
-                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                frm.MdiParent = formERP;
-                frm.WindowState = FormWindowState.Maximized;
-                frm.Show();
-                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                frm._formInstanceId = formInstanceId;
+
+                if (TryAcquireInvoiceLockForEdit(trInvoiceHeader.InvoiceHeaderId, formERP, formInstanceId))
+                {
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
             }
             else if (trPaymentHeader is not null)
             {
@@ -390,6 +403,81 @@ namespace Foxoft
             else
                 MessageBox.Show(Resources.Common_NotFound);
         }
+
+        private bool TryActivateOpenInvoiceWindow(Guid invoiceHeaderId, FormERP formERP)
+        {
+            if (formERP == null)
+                return false;
+
+            foreach (Form child in formERP.MdiChildren)
+            {
+                if (child is FormInvoice frm &&
+                    frm.trInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
+                {
+                    if (frm.WindowState == FormWindowState.Minimized)
+                        frm.WindowState = FormWindowState.Normal;
+
+                    frm.BringToFront();
+                    frm.Activate();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private System.Windows.Forms.Timer? _lockHeartbeatTimer;
+        private bool _isClosingByLockEvent;
+        private bool _closeRequestDialogOpen;
+
+        private bool TryAcquireInvoiceLockForEdit(Guid invoiceHeaderId, FormERP formERP, Guid formInstanceId)
+        {
+
+            var res = _lockService.TryAcquireLock(
+                documentType: "Invoice",
+                documentId: invoiceHeaderId,
+                userId: Authorization.CurrAccCode,
+                machineName: Environment.MachineName,
+                appInstanceId: formERP._appInstanceId,
+                formInstanceId: formInstanceId,
+                clientProcessId: Process.GetCurrentProcess().Id,
+                timeout: TimeSpan.FromMinutes(10),
+                reason: "Edit invoice");
+
+            if (!res.Acquired)
+            {
+                if (res.LockedBy == Authorization.CurrAccCode &&
+                    res.AppInstanceId == formERP._appInstanceId)
+                {
+                    if (TryActivateOpenInvoiceWindow(invoiceHeaderId, formERP))
+                        return false;
+                }
+
+                var answer = XtraMessageBox.Show(
+                    $"Faktura hazırda {res.LockedByName} tərəfindən redaktə olunur.\n" +
+                    $"Machine: {res.MachineName}\n" +
+                    $"LockedAt: {res.LockedAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n" +
+                    $"Heartbeat: {res.LastHeartbeatAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n\n" +
+                    $"Sənəd sahibinə bağlama sorğusu göndərilsin?",
+                    "Sənəd lock olunub",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (answer == DialogResult.Yes)
+                {
+                    _lockService.RequestOwnerToClose(
+                        documentType: "Invoice",
+                        documentId: invoiceHeaderId,
+                        requestedByUserId: Authorization.CurrAccCode,
+                        note: "Another user wants to edit this invoice.");
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
 
         private void gV_Report_RowStyle(object sender, RowStyleEventArgs e)
         {
