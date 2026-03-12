@@ -318,7 +318,8 @@ namespace Foxoft
             if (dbContext != null && dataLayoutControl1.IsValid(out _))
                 if (Settings.Default.AppSetting.AutoSave)
                     if (gV_InvoiceLine.DataRowCount > 0)
-                        if (!String.IsNullOrEmpty(trInvoiceHeader.CashRegisterCode))
+                        if (!new[] { "EX", "EI" }.Contains(dcProcess.ProcessCode) // bunun yerine trInvoiceHeader.CashRegisterCode validation olmalidi
+                            || !string.IsNullOrEmpty(trInvoiceHeader.CashRegisterCode))
                             SaveInvoice();
 
             //gV_InvoiceLine.Focus();
