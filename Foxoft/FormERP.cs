@@ -328,6 +328,14 @@ namespace Foxoft
                     bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, shortcut.Name);
                     if (currAccHasClaims)
                         ACG_Favorites.Elements.Add(shortcut);
+
+                    if (shortcut.Name == "PaymentDetail")
+                    {
+                        bool currAccHasMakePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "MakePayment");
+                        bool currAccHasReceivePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ReceivePayment");
+                        if (currAccHasMakePaymentClaims || currAccHasReceivePaymentClaims)
+                            ACG_Favorites.Elements.Add(aCE_PaymentDetail);
+                    }
                 }
             }
         }
