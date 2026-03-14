@@ -773,7 +773,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ProductDiscountList", ClaimDesc = "Endirim Siyahısı", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "BarcodeOperations", ClaimDesc = "Barkod Əməliyatları", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "PriceList", ClaimDesc = "Qiymət Cədvəli", ClaimTypeId = 1, CategoryId = 18 },
-                new DcClaim { ClaimCode = "MakePayment", ClaimDesc = "Ödəniş Etmək", ClaimTypeId = 1, CategoryId = 21 },
+                new DcClaim { ClaimCode = "MakePayment", ClaimDesc = "Ödəniş Etmək", ClaimTypeId = 1, CategoryId = 21 }, 
                 new DcClaim { ClaimCode = "ReceivePayment", ClaimDesc = "Ödəniş Qəbul Etmək", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "DeletePayment", ClaimDesc = "Ödənişi Silmək", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1, CategoryId = 2 },
@@ -832,7 +832,7 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 8, RoleCode = "Admin", ClaimCode = "ProductDiscountList" },
                 new TrRoleClaim { RoleClaimId = 9, RoleCode = "Admin", ClaimCode = "Expense" },
                 new TrRoleClaim { RoleClaimId = 10, RoleCode = "Admin", ClaimCode = "InventoryTransfer" },
-                new TrRoleClaim { RoleClaimId = 11, RoleCode = "Admin", ClaimCode = "Payment" },
+                new TrRoleClaim { RoleClaimId = 11, RoleCode = "Admin", ClaimCode = "LoyaltyCards" },
                 new TrRoleClaim { RoleClaimId = 12, RoleCode = "Admin", ClaimCode = "PosDiscount" },
                 new TrRoleClaim { RoleClaimId = 13, RoleCode = "Admin", ClaimCode = "PriceList" },
                 new TrRoleClaim { RoleClaimId = 14, RoleCode = "Admin", ClaimCode = "Products" },
@@ -881,7 +881,10 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 58, RoleCode = "Admin", ClaimCode = "ChangePriceIS" },
                 new TrRoleClaim { RoleClaimId = 59, RoleCode = "Admin", ClaimCode = "ChangePriceCI" },
                 new TrRoleClaim { RoleClaimId = 60, RoleCode = "Admin", ClaimCode = "ChangePriceCO" },
-                new TrRoleClaim { RoleClaimId = 61, RoleCode = "Admin", ClaimCode = "Count" }
+                new TrRoleClaim { RoleClaimId = 61, RoleCode = "Admin", ClaimCode = "Count" },
+                new TrRoleClaim { RoleClaimId = 62, RoleCode = "Admin", ClaimCode = "MakePayment" },
+                new TrRoleClaim { RoleClaimId = 63, RoleCode = "Admin", ClaimCode = "ReceivePayment" },
+                new TrRoleClaim { RoleClaimId = 64, RoleCode = "Admin", ClaimCode = "DeletePayment" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
