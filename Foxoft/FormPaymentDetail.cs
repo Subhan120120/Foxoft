@@ -47,6 +47,20 @@ namespace Foxoft
             colCurrencyCode.ColumnEdit = gC_PaymentLine.AddCurrencyLookUpEdit();
 
             ClearControlsAddNew();
+
+            InitializeClaims();
+        }
+
+        private void InitializeClaims()
+        {
+            bool currAccHasMakePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "MakePayment");
+            bool currAccHasReceivePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ReceivePayment");
+
+            if (!currAccHasMakePaymentClaims)
+                colMakePayment.Visible = false;
+
+            if (!currAccHasReceivePaymentClaims)
+                colReceivePayment.Visible = false;
         }
 
         public FormPaymentDetail(Guid paymentHeaderId)
