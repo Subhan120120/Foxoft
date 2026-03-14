@@ -131,6 +131,7 @@ namespace Foxoft
                             returnInvoHeader.IsMainTF = true;
                             returnInvoHeader.IsCompleted = true;
                             returnInvoHeader.LoyaltyCardId = trInvoiceHeader.LoyaltyCardId;
+                            returnInvoHeader.TerminalId = Settings.Default.TerminalId;
 
                             efMethods.InsertEntity(returnInvoHeader);
                         }
