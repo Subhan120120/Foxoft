@@ -97,7 +97,7 @@ namespace Foxoft
             {
                 object storeCode = gV_StoreList.GetFocusedRowCellValue(nameof(DcCurrAcc.CurrAccCode));
                 if (storeCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(storeCode.ToString());
+                    dcCurrAcc = efMethods.SelectStore(storeCode.ToString());
             }
             else
                 dcCurrAcc = null;
@@ -160,9 +160,9 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object currAccCode = view.GetFocusedRowCellValue(nameof(DcCurrAcc.StoreCode));
-                if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                object storeCode = view.GetFocusedRowCellValue(nameof(DcCurrAcc.StoreCode));
+                if (storeCode is not null)
+                    dcCurrAcc = efMethods.SelectStore(storeCode.ToString());
             }
             else
                 dcCurrAcc = null;
@@ -210,9 +210,9 @@ namespace Foxoft
 
             if (gV_StoreList.FocusedRowHandle >= 0)
             {
-                object currAccCode = gV_StoreList.GetFocusedRowCellValue(nameof(DcCurrAcc.CurrAccCode));
-                if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                object storeCode = gV_StoreList.GetFocusedRowCellValue(nameof(DcCurrAcc.CurrAccCode));
+                if (storeCode is not null)
+                    dcCurrAcc = efMethods.SelectStore(storeCode.ToString());
             }
             else
                 dcCurrAcc = null;
@@ -250,9 +250,9 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object currAccCode = view.GetRowCellValue(view.FocusedRowHandle, nameof(DcCurrAcc.CurrAccCode));
-                if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                object storeCode = view.GetRowCellValue(view.FocusedRowHandle, nameof(DcCurrAcc.CurrAccCode));
+                if (storeCode is not null)
+                    dcCurrAcc = efMethods.SelectStore(storeCode.ToString());
             }
             else
                 dcCurrAcc = null;

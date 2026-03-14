@@ -371,7 +371,7 @@ namespace Foxoft
             var code = btnEdit_CashRegister.EditValue?.ToString();
             if (string.IsNullOrWhiteSpace(code)) return;
 
-            var cashReg = efMethods.SelectCurrAcc(code);
+            var cashReg = efMethods.SelectCashReg(code);
             if (cashReg is null) e.Cancel = true;
             else trPaymentLineCash.CashRegisterCode = code;
         }

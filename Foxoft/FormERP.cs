@@ -69,7 +69,7 @@ namespace Foxoft
 
             BSI_CompanyDesc.Caption = "| " + efMethods.SelectCompany(Settings.Default.CompanyCode).CompanyDesc;
             bSI_UserName.Caption = "| " + efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
-            BSI_StoreDesc.Caption = "| " + efMethods.SelectCurrAcc(Authorization.StoreCode).CurrAccDesc;
+            BSI_StoreDesc.Caption = "| " + efMethods.SelectStore(Authorization.StoreCode).CurrAccDesc;
             bSI_TerminalName.Caption = "| " + efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId).TerminalDesc;
 
             InitializeReports();

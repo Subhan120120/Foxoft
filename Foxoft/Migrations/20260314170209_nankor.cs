@@ -12,11 +12,6 @@ namespace Foxoft.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "DcClaims",
-                keyColumn: "ClaimCode",
-                keyValue: "PaymentDetail");
-
             migrationBuilder.UpdateData(
                 table: "DcClaims",
                 keyColumn: "ClaimCode",

@@ -541,7 +541,7 @@ namespace Foxoft
             }
 
             // DB yoxla
-            DcCurrAcc cashreg = efMethods.SelectCashRegById(code);
+            DcCurrAcc cashreg = efMethods.SelectCashReg(code);
 
             if (cashreg == null)
             {

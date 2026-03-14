@@ -107,7 +107,7 @@ namespace Foxoft
             {
                 object cashRegCode = gV_CashRegList.GetFocusedRowCellValue("CurrAccCode");
                 if (cashRegCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(cashRegCode.ToString());
+                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode.ToString());
             }
             else
                 dcCurrAcc = null;
@@ -161,9 +161,9 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object currAccCode = view.GetFocusedRowCellValue("CashRegisterCode");
-                if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                object cashRegCode = view.GetFocusedRowCellValue("CashRegisterCode");
+                if (cashRegCode is not null)
+                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode.ToString());
             }
             else
                 dcCurrAcc = null;
@@ -211,9 +211,9 @@ namespace Foxoft
 
             if (gV_CashRegList.FocusedRowHandle >= 0)
             {
-                object currAccCode = gV_CashRegList.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
-                if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                object cashRegCode = gV_CashRegList.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
+                if (cashRegCode is not null)
+                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode.ToString());
             }
             else
                 dcCurrAcc = null;
@@ -251,9 +251,9 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object currAccCode = view.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
-                if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                object cashRegCode = view.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
+                if (cashRegCode is not null)
+                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode.ToString());
             }
             else
                 dcCurrAcc = null;

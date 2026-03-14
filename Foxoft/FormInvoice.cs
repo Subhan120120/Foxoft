@@ -1836,7 +1836,16 @@ namespace Foxoft
             if (string.IsNullOrEmpty(value))
                 return;
 
-            DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(value);
+
+            DcCurrAcc curr = efMethods.SelectCurrAccIsDisabled(value);
+
+            if (curr is not null)
+            {
+                SetValidationError(editor, e, "Cari hesab deaktivdir");
+                return;
+            }
+
+            curr = efMethods.SelectCurrAcc(value);
 
             if (curr is null)
             {
@@ -2916,7 +2925,7 @@ namespace Foxoft
 
         private void Btn_CashRegCode_EditValueChanged(object sender, EventArgs e)
         {
-            DcCurrAcc curr = efMethods.SelectCashRegById(btn_CashRegCode.EditValue?.ToString());
+            DcCurrAcc curr = efMethods.SelectCashReg(btn_CashRegCode.EditValue?.ToString());
             if (trInvoiceHeader is null || curr is null)
                 return;
 
@@ -2945,7 +2954,7 @@ namespace Foxoft
             if (string.IsNullOrEmpty(value))
                 return;
 
-            DcCurrAcc curr = efMethods.SelectCashRegById(value);
+            DcCurrAcc curr = efMethods.SelectCashReg(value);
 
             if (curr is null)
             {

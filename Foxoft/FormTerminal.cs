@@ -155,7 +155,7 @@ namespace Foxoft
             if (string.IsNullOrEmpty(value))
                 return;
 
-            DcCurrAcc curr = efMethods.SelectCashRegById(value);
+            DcCurrAcc curr = efMethods.SelectCashReg(value);
 
             if (curr is null)
             {

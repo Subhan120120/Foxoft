@@ -1496,8 +1496,28 @@ namespace Foxoft
         public DcCurrAcc SelectCurrAcc(string currAccCode)
         {
             using subContext db = new();
-            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
-                                .FirstOrDefault(x => x.CurrAccCode == currAccCode);
+            return db.DcCurrAccs
+                .Where(x => x.IsDisabled == false)
+                .Where(x => new[] { 1, 2, 3 }.Contains(x.CurrAccTypeCode))
+                .FirstOrDefault(x => x.CurrAccCode == currAccCode);
+        }
+
+        public DcCurrAcc SelectCurrAccIsDisabled(string currAccCode)
+        {
+            using subContext db = new();
+            return db.DcCurrAccs
+                .Where(x => x.IsDisabled == true)
+                .Where(x => new[] { 1, 2, 3 }.Contains(x.CurrAccTypeCode))
+                .FirstOrDefault(x => x.CurrAccCode == currAccCode);
+        }
+
+        public DcCurrAcc? SelectCashReg(string currAccCode)
+        {
+            using subContext db = new();
+            return db.DcCurrAccs
+                .Where(x => x.IsDisabled == false)
+                .Where(x => new[] { 5 }.Contains(x.CurrAccTypeCode))
+                .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
         public DcCurrAcc SelectSalesPerson(string currAccCode)
@@ -1705,14 +1725,6 @@ namespace Foxoft
                 wareCode = dcWarehouse.WarehouseCode;
 
             return wareCode;
-        }
-
-        public DcCurrAcc? SelectCashRegById(string currAccCode)
-        {
-            using subContext db = new();
-
-            return db.DcCurrAccs.Where(x => x.IsDisabled == false && x.CurrAccTypeCode == 5)
-                                  .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
         public string? SelectCashRegByStore(string storeCode)
