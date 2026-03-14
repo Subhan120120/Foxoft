@@ -179,22 +179,22 @@ namespace Foxoft
 
             newInvoiceHeaderId = Guid.NewGuid();
 
-            if (TryAcquireInvoiceLockForEdit(newInvoiceHeaderId))
-            {
-                if (trInvoiceHeader is not null)
-                {
-                    Guid oldInvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+            //if (TryAcquireInvoiceLockForEdit(newInvoiceHeaderId))
+            //{
+            //    if (trInvoiceHeader is not null)
+            //    {
+            //        Guid oldInvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
 
-                    _lockService.ReleaseLock(
-                            "Invoice",
-                            oldInvoiceHeaderId,
-                            Authorization.CurrAccCode,
-                            Environment.MachineName,
-                            _appInstanceId);
-                }
-            }
-            else
-                return;
+            //        _lockService.ReleaseLock(
+            //                "Invoice",
+            //                oldInvoiceHeaderId,
+            //                Authorization.CurrAccCode,
+            //                Environment.MachineName,
+            //                _appInstanceId);
+            //    }
+            //}
+            //else
+            //    return;
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
                                       .Include(x => x.DcCurrAcc)
