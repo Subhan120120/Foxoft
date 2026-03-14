@@ -41,9 +41,7 @@ namespace Foxoft
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
             reportClass.AddReports(BSI_Report, "ERP", null, null, activeFilterStr);
 
-            foreach (AccordionControlElement ACE_Groups in aC_Root.Elements)
-                foreach (AccordionControlElement? ACE_Element in ACE_Groups.Elements)
-                    HideClaimlesElements(ACE_Element);
+            InitializeACEClaims();
 
             foreach (BarItem bbi in parentRibbonControl.Items)
                 if (bbi is BarButtonItem barButtonItem)
@@ -76,6 +74,24 @@ namespace Foxoft
 
             InitializeReports();
             InitializeFavorites();
+        }
+
+        private void InitializeACEClaims()
+        {
+            foreach (AccordionControlElement ACE_Groups in aC_Root.Elements)
+                foreach (AccordionControlElement? ACE_Element in ACE_Groups.Elements)
+                    HideClaimlesElements(ACE_Element);
+
+            bool currAccHasMakePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "MakePayment");
+            bool currAccHasReceivePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ReceivePayment");
+            aCE_PaymentDetail.Visible = currAccHasMakePaymentClaims || currAccHasReceivePaymentClaims;
+        }
+
+        private void HideClaimlesElements(AccordionControlElement? childElement)
+        {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, childElement.Name);
+            if (!currAccHasClaims)
+                childElement.Visible = false;
         }
 
         private void aC_Root_MouseDown(object sender, MouseEventArgs e)
@@ -121,12 +137,6 @@ namespace Foxoft
             }
         }
 
-        private void HideClaimlesElements(AccordionControlElement? childElement)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, childElement.Name);
-            if (!currAccHasClaims)
-                childElement.Visible = false;
-        }
 
         private void BBI_ItemClick(AccordionControlElement el)
         {

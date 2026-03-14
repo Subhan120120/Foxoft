@@ -1501,7 +1501,7 @@ namespace Foxoft
                         Resources.Form_Invoice_DeleteInvoiceQuestion,
                         "DeleteInvoice")) == DialogResult.OK)
             {
-                bool currAccHasPayClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
+                bool currAccHasDeletePayClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeletePayment");
                 bool currAccHasExpenceClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
                 bool currAccHasDeleteEXClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeleteInvoiceEX");
                 bool currAccHasDeleteISClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeleteInvoiceIS");
@@ -1514,7 +1514,7 @@ namespace Foxoft
                                      Resources.Common_Attention,
                                      Resources.Form_Invoice_DeletePaymentsForInvoiceQuestion,
                                      "DeletePayment")) == DialogResult.OK)
-                        if (currAccHasPayClaims)
+                        if (currAccHasDeletePayClaims)
                             efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
                         else
                             XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionDeletePayment);
@@ -2048,10 +2048,6 @@ namespace Foxoft
 
             if (File.Exists(layoutLineFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutLineFilePath);
-
-            bool currAccHasClaimsPayment = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
-            if (!currAccHasClaimsPayment)
-                RPG_Payment.Visible = false;
 
             bool currAccHasClaimsExpences = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ExpenseOfInvoice");
             if (!currAccHasClaimsExpences)
