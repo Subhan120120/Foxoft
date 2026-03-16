@@ -371,10 +371,10 @@ namespace Foxoft
             }
             else if (trPaymentHeader is not null)
             {
-                string claim = CustomExtensions.GetClaim(trPaymentHeader.ProcessCode);
+                bool currAccHasMakePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "MakePayment");
+                bool currAccHasReceivePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ReceivePayment");
 
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
-                if (!currAccHasClaims)
+                if (!(currAccHasMakePaymentClaims || currAccHasReceivePaymentClaims))
                 {
                     MessageBox.Show(Resources.Common_AccessDenied);
                     return;

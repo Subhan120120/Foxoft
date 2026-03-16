@@ -1511,6 +1511,15 @@ namespace Foxoft
                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
+        public DcCurrAcc SelectStoreIsDisabled(string storeCode)
+        {
+            using subContext db = new();
+            return db.DcCurrAccs
+                .Where(x => x.IsDisabled == true)
+                .Where(x => new[] { 4 }.Contains(x.CurrAccTypeCode))
+                .FirstOrDefault(x => x.CurrAccCode == storeCode);
+        }
+
         public DcCurrAcc? SelectCashReg(string currAccCode)
         {
             using subContext db = new();

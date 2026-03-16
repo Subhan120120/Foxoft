@@ -143,13 +143,18 @@ namespace Foxoft
             {
                 object currAccCode = gV_CurrAccList.GetFocusedRowCellValue("CurrAccCode");
                 if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                    if (currAccTypeArr.Contains((byte)4))
+                        dcCurrAcc = efMethods.SelectStore(currAccCode.ToString());
+                    else
+                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
             }
             else
                 dcCurrAcc = null;
 
             gV_CurrAccList.MakeRowVisible(gV_CurrAccList.FocusedRowHandle);
         }
+
+
 
         public static List<T> GetFilteredData<T>(ColumnView view)
         {
@@ -239,7 +244,10 @@ namespace Foxoft
             {
                 object currAccCode = view.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
                 if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                    if (currAccTypeArr.Contains((byte)4))
+                        dcCurrAcc = efMethods.SelectStore(currAccCode.ToString());
+                    else
+                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
             }
             else
                 dcCurrAcc = null;
@@ -289,7 +297,10 @@ namespace Foxoft
             {
                 object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
                 if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                    if (currAccTypeArr.Contains((byte)4))
+                        dcCurrAcc = efMethods.SelectStore(currAccCode.ToString());
+                    else
+                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
             }
             else
                 dcCurrAcc = null;
@@ -331,7 +342,10 @@ namespace Foxoft
             {
                 object currAccCode = view.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
                 if (currAccCode is not null)
-                    dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                    if (currAccTypeArr.Contains((byte)4))
+                        dcCurrAcc = efMethods.SelectStore(currAccCode.ToString());
+                    else
+                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
             }
             else
                 dcCurrAcc = null;

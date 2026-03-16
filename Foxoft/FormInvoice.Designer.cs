@@ -442,6 +442,7 @@ namespace Foxoft
             bBI_Payment.Id = 5;
             bBI_Payment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Payment.ImageOptions.SvgImage");
             bBI_Payment.Name = "bBI_Payment";
+            bBI_Payment.Visibility = BarItemVisibility.Never;
             bBI_Payment.ItemClick += bBI_Payment_ItemClick;
             // 
             // bBI_New

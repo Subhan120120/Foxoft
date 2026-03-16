@@ -179,22 +179,22 @@ namespace Foxoft
 
             newInvoiceHeaderId = Guid.NewGuid();
 
-            //if (TryAcquireInvoiceLockForEdit(newInvoiceHeaderId))
-            //{
-            //    if (trInvoiceHeader is not null)
-            //    {
-            //        Guid oldInvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+            if (TryAcquireInvoiceLockForEdit(newInvoiceHeaderId))
+            {
+                if (trInvoiceHeader is not null)
+                {
+                    Guid oldInvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
 
-            //        _lockService.ReleaseLock(
-            //                "Invoice",
-            //                oldInvoiceHeaderId,
-            //                Authorization.CurrAccCode,
-            //                Environment.MachineName,
-            //                _appInstanceId);
-            //    }
-            //}
-            //else
-            //    return;
+                    _lockService.ReleaseLock(
+                            "Invoice",
+                            oldInvoiceHeaderId,
+                            Authorization.CurrAccCode,
+                            Environment.MachineName,
+                            _appInstanceId);
+                }
+            }
+            else
+                return;
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
                                       .Include(x => x.DcCurrAcc)
@@ -1383,18 +1383,10 @@ namespace Foxoft
             decimal pay = Math.Max(Math.Round(Math.Abs(summaryInvoice) - Math.Abs(prePaid), 4), 0);
 
             using FormPayment formPayment = new(PaymentType.Cash, pay, trInvoiceHeader);
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
-            if (!currAccHasClaims)
+
+            if (formPayment.ShowDialog(this) == DialogResult.OK)
             {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-            else
-            {
-                if (formPayment.ShowDialog(this) == DialogResult.OK)
-                {
-                    UpdatePaidLabels();
-                }
+                UpdatePaidLabels();
             }
         }
 
@@ -1836,62 +1828,83 @@ namespace Foxoft
             if (string.IsNullOrEmpty(value))
                 return;
 
-
-            DcCurrAcc curr = efMethods.SelectCurrAccIsDisabled(value);
-
-            if (curr is not null)
+            if (trInvoiceHeader.ProcessCode == "IT")
             {
-                SetValidationError(editor, e, "Cari hesab deaktivdir");
-                return;
-            }
+                DcCurrAcc store = efMethods.SelectStoreIsDisabled(value);
 
-            curr = efMethods.SelectCurrAcc(value);
-
-            if (curr is null)
-            {
-                SetValidationError(editor, e, Resources.Form_Invoice_NoSuchCurrAcc);
-                return;
-            }
-
-            decimal netAmountLocSum = CalcNetAmountSummmaryValue();
-            decimal currAccBalance = CurrAccBalanceBefore - netAmountLocSum;
-
-            if (!(bool)CustomExtensions.DirectionIsIn(dcProcess.ProcessCode) && curr.CreditLimit > 0 && Math.Abs(currAccBalance) > curr.CreditLimit)
-            {
-                SetValidationError(editor, e, Resources.Form_Invoice_CreditLimitExceeded);
-                return;
-            }
-
-            bool hasBonusPayment = efMethods.BonusPaymentExist(trInvoiceHeader.InvoiceHeaderId);
-
-            if (hasBonusPayment)
-            {
-                SetValidationError(editor, e, Resources.Form_Invoice_BonusPaymentExists_CannotChangeCurrAccCode);
-                return;
-            }
-
-            if (trInvoiceHeader.RelatedInvoiceId is not null)
-            {
-                var returnLine = efMethods
-                    .SelectInvoiceLineByReturnHeader(trInvoiceHeader.RelatedInvoiceId, trInvoiceHeader.ProcessCode)
-                    .FirstOrDefault();
-
-                if (returnLine is not null && curr.CurrAccCode != returnLine.CurrAccCode)
+                if (store is not null)
                 {
-                    SetValidationError(editor, e, Resources.Form_Invoice_ReturnInvoiceExists_CurrAccCannotChange);
+                    SetValidationError(editor, e, "Mağaza deaktivdir");
                     return;
                 }
 
-                var handoverLine = efMethods
-                    .SelectInvoiceLinesByHeaderId(trInvoiceHeader.RelatedInvoiceId)
-                    .FirstOrDefault();
+                store = efMethods.SelectStore(value);
 
-                if (handoverLine is not null && curr.CurrAccCode != handoverLine.CurrAccCode)
+                if (store is null)
                 {
-                    SetValidationError(editor, e, Resources.Form_Invoice_HandOverInvoiceExists_CurrAccCannotChange);
+                    SetValidationError(editor, e, Resources.Form_Invoice_NoSuchCurrAcc);
                     return;
                 }
             }
+            else
+            {
+                DcCurrAcc curr = efMethods.SelectCurrAccIsDisabled(value);
+
+                if (curr is not null)
+                {
+                    SetValidationError(editor, e, "Cari hesab deaktivdir");
+                    return;
+                }
+
+                curr = efMethods.SelectCurrAcc(value);
+
+                if (curr is null)
+                {
+                    SetValidationError(editor, e, Resources.Form_Invoice_NoSuchCurrAcc);
+                    return;
+                }
+
+                decimal netAmountLocSum = CalcNetAmountSummmaryValue();
+                decimal currAccBalance = CurrAccBalanceBefore - netAmountLocSum;
+
+                if (!(bool)CustomExtensions.DirectionIsIn(dcProcess.ProcessCode) && curr.CreditLimit > 0 && Math.Abs(currAccBalance) > curr.CreditLimit)
+                {
+                    SetValidationError(editor, e, Resources.Form_Invoice_CreditLimitExceeded);
+                    return;
+                }
+
+                bool hasBonusPayment = efMethods.BonusPaymentExist(trInvoiceHeader.InvoiceHeaderId);
+
+                if (hasBonusPayment)
+                {
+                    SetValidationError(editor, e, Resources.Form_Invoice_BonusPaymentExists_CannotChangeCurrAccCode);
+                    return;
+                }
+
+                if (trInvoiceHeader.RelatedInvoiceId is not null)
+                {
+                    var returnLine = efMethods
+                        .SelectInvoiceLineByReturnHeader(trInvoiceHeader.RelatedInvoiceId, trInvoiceHeader.ProcessCode)
+                        .FirstOrDefault();
+
+                    if (returnLine is not null && curr.CurrAccCode != returnLine.CurrAccCode)
+                    {
+                        SetValidationError(editor, e, Resources.Form_Invoice_ReturnInvoiceExists_CurrAccCannotChange);
+                        return;
+                    }
+
+                    var handoverLine = efMethods
+                        .SelectInvoiceLinesByHeaderId(trInvoiceHeader.RelatedInvoiceId)
+                        .FirstOrDefault();
+
+                    if (handoverLine is not null && curr.CurrAccCode != handoverLine.CurrAccCode)
+                    {
+                        SetValidationError(editor, e, Resources.Form_Invoice_HandOverInvoiceExists_CurrAccCannotChange);
+                        return;
+                    }
+                }
+            }
+
 
             dxErrorProvider1.SetError(editor, string.Empty);
         }
