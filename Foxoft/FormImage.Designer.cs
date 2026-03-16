@@ -1,4 +1,5 @@
 ﻿using DevExpress.Utils.Drawing;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon.Gallery;
 using Foxoft.Properties;
 using System.Drawing;
@@ -27,12 +28,9 @@ namespace Foxoft
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormImage));
             galleryControl1 = new DevExpress.XtraBars.Ribbon.GalleryControl();
             galleryControlClient1 = new DevExpress.XtraBars.Ribbon.GalleryControlClient();
@@ -40,10 +38,15 @@ namespace Foxoft
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            btn_Add = new DevExpress.XtraBars.BarButtonItem();
-            btn_Delete = new DevExpress.XtraBars.BarButtonItem();
+            btn_Add = new BarButtonItem();
+            btn_Delete = new BarButtonItem();
+            BBI_GalleryLoad = new BarButtonItem();
+            BBI_GalleryDelete = new BarButtonItem();
+            BBI_GalleryPaste = new BarButtonItem();
+            BBI_GalleryCopy = new BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            popupMenu_Gallery = new PopupMenu(components);
             ((System.ComponentModel.ISupportInitialize)galleryControl1).BeginInit();
             galleryControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
@@ -51,6 +54,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu_Gallery).BeginInit();
             SuspendLayout();
             // 
             // galleryControl1
@@ -69,6 +73,8 @@ namespace Foxoft
             galleryControl1.StyleController = layoutControl1;
             galleryControl1.TabIndex = 0;
             galleryControl1.Text = "galleryControl1";
+            galleryControl1.MouseDoubleClick += galleryControl1_MouseDoubleClick;
+            galleryControl1.MouseDown += galleryControl1_MouseDown;
             // 
             // galleryControlClient1
             // 
@@ -79,7 +85,7 @@ namespace Foxoft
             // layoutControl1
             // 
             layoutControl1.Controls.Add(galleryControl1);
-            layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            layoutControl1.Dock = DockStyle.Fill;
             layoutControl1.Location = new Point(0, 158);
             layoutControl1.Name = "layoutControl1";
             layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(692, 252, 650, 400);
@@ -103,27 +109,21 @@ namespace Foxoft
             layoutControlItem1.Location = new Point(0, 0);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(754, 235);
-            layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-                ribbonControl1.ExpandCollapseItem,
-                ribbonControl1.SearchEditItem,
-                btn_Add,
-                btn_Delete
-            });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, btn_Add, btn_Delete, BBI_GalleryLoad, BBI_GalleryDelete, BBI_GalleryPaste, BBI_GalleryCopy });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 3;
+            ribbonControl1.MaxItemId = 7;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(774, 158);
             // 
             // btn_Add
             // 
-            btn_Add.Caption = Resources.Common_New; // əvvəl: "Əlavə Et"
+            btn_Add.Caption = Resources.Common_New;
             btn_Add.Id = 1;
             btn_Add.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Add.ImageOptions.SvgImage");
             btn_Add.Name = "btn_Add";
@@ -131,11 +131,43 @@ namespace Foxoft
             // 
             // btn_Delete
             // 
-            btn_Delete.Caption = Resources.Common_Delete; // əvvəl: "Sil"
+            btn_Delete.Caption = Resources.Common_Delete;
             btn_Delete.Id = 2;
             btn_Delete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Delete.ImageOptions.SvgImage");
             btn_Delete.Name = "btn_Delete";
             btn_Delete.ItemClick += btn_Delete_ItemClick;
+            // 
+            // BBI_GalleryLoad
+            // 
+            BBI_GalleryLoad.Caption = Resources.Common_Load;
+            BBI_GalleryLoad.Id = 3;
+            BBI_GalleryLoad.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GalleryLoad.ImageOptions.SvgImage");
+            BBI_GalleryLoad.Name = "BBI_GalleryLoad";
+            BBI_GalleryLoad.ItemClick += BBI_GalleryLoad_ItemClick;
+            // 
+            // BBI_GalleryDelete
+            // 
+            BBI_GalleryDelete.Caption = Resources.Common_Delete;
+            BBI_GalleryDelete.Id = 4;
+            BBI_GalleryDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GalleryDelete.ImageOptions.SvgImage");
+            BBI_GalleryDelete.Name = "BBI_GalleryDelete";
+            BBI_GalleryDelete.ItemClick += BBI_GalleryDelete_ItemClick;
+            // 
+            // BBI_GalleryPaste
+            // 
+            BBI_GalleryPaste.Caption = Resources.Common_Paste;
+            BBI_GalleryPaste.Id = 5;
+            BBI_GalleryPaste.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GalleryPaste.ImageOptions.SvgImage");
+            BBI_GalleryPaste.Name = "BBI_GalleryPaste";
+            BBI_GalleryPaste.ItemClick += BBI_GalleryPaste_ItemClick;
+            // 
+            // BBI_GalleryCopy
+            // 
+            BBI_GalleryCopy.Caption = Resources.Common_Copy;
+            BBI_GalleryCopy.Id = 6;
+            BBI_GalleryCopy.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GalleryCopy.ImageOptions.SvgImage");
+            BBI_GalleryCopy.Name = "BBI_GalleryCopy";
+            BBI_GalleryCopy.ItemClick += BBI_GalleryCopy_ItemClick;
             // 
             // ribbonPage1
             // 
@@ -150,16 +182,27 @@ namespace Foxoft
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = Resources.Common_Operations;
             // 
+            // popupMenu_Gallery
+            // 
+            popupMenu_Gallery.ItemLinks.Add(BBI_GalleryCopy);
+            popupMenu_Gallery.ItemLinks.Add(BBI_GalleryPaste);
+            popupMenu_Gallery.ItemLinks.Add(BBI_GalleryLoad);
+            popupMenu_Gallery.ItemLinks.Add(BBI_GalleryDelete);
+            popupMenu_Gallery.Name = "popupMenu_Gallery";
+            popupMenu_Gallery.Ribbon = ribbonControl1;
+            popupMenu_Gallery.BeforePopup += popupMenu_Gallery_BeforePopup;
+            // 
             // FormImage
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(774, 413);
             Controls.Add(layoutControl1);
             Controls.Add(ribbonControl1);
             Name = "FormImage";
             Ribbon = ribbonControl1;
-            Text = Resources.Form_Image_Caption; // əvvəl: "Form1"
+            Text = "Images";
+            Load += FormImage_Load;
             ((System.ComponentModel.ISupportInitialize)galleryControl1).EndInit();
             galleryControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
@@ -167,6 +210,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu_Gallery).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -183,5 +227,11 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.BarButtonItem btn_Delete;
+
+        private DevExpress.XtraBars.BarButtonItem BBI_GalleryLoad;
+        private DevExpress.XtraBars.BarButtonItem BBI_GalleryDelete;
+        private DevExpress.XtraBars.BarButtonItem BBI_GalleryPaste;
+        private DevExpress.XtraBars.BarButtonItem BBI_GalleryCopy;
+        private DevExpress.XtraBars.PopupMenu popupMenu_Gallery;
     }
 }
