@@ -2079,6 +2079,11 @@ namespace Foxoft
             if (!currAccHasClaimsExpences)
                 BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
 
+            bool currAccHasMakePayClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "MakePayment");
+            bool currAccHasReceivePayClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ReceivePayment");
+            if (currAccHasMakePayClaim || currAccHasReceivePayClaim)
+                bBI_Payment.Visibility = BarItemVisibility.Always;
+
             bool currAccHasClaimsEditInvoice = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "EditLockedInvoice");
             if (!currAccHasClaimsEditInvoice)
                 BBI_EditInvoice.Visibility = BarItemVisibility.Never;
