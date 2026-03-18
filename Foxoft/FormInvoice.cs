@@ -129,11 +129,16 @@ namespace Foxoft
                 if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                     AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
 
-            ClearControlsAddNew();
 
             DateEdit_InstallmentDate.EditValueChanged += trInvoiceHeadersBindingSource_CurrentItemChanged;
             LUE_InstallmentPlan.EditValueChanged += trInvoiceHeadersBindingSource_CurrentItemChanged;
             txtEdit_Installment_Commission.Leave += trInvoiceHeadersBindingSource_CurrentItemChanged;
+        }
+
+        public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, bool isNew)
+            : this(processCode, isReturn, productTypeArr, relatedInvoiceId)
+        {
+            ClearControlsAddNew();
         }
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, Guid invoiceHeaderId)
@@ -2585,7 +2590,7 @@ namespace Foxoft
 
         private void BBI_InvoiceExpenses_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormInvoice formInvoice = new("EI", null, new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId);
+            FormInvoice formInvoice = new("EI", null, new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId, true);
             formInvoice.WindowState = FormWindowState.Normal;
             formInvoice.ShowDialog();
         }

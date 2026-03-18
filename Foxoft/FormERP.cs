@@ -149,23 +149,23 @@ namespace Foxoft
                 case "CurrAccs": ShowExistForm<FormCurrAccList>(new byte[] { 1, 2, 3 }, false); break;
                 case "CurrAccsDisabled": ShowExistForm<FormCurrAccList>(new byte[] { 1, 2, 3 }, true); break;
 
-                case "RetailPurchaseInvoice": ShowNewForm<FormInvoice>("RP", false, new byte[] { 1, 3 }, null); break;
-                case "RetailSaleInvoice": ShowNewForm<FormInvoice>("RS", false, new byte[] { 1, 3 }, null); break;
-                case "WholesaleInvoice": ShowNewForm<FormInvoice>("WS", false, new byte[] { 1, 3 }, null); break;
-                case "InstallmentSaleInvoice": ShowNewForm<FormInvoice>("IS", false, new byte[] { 1, 3 }, null); break;
-                case "Expense": ShowNewForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null); break;
+                case "RetailPurchaseInvoice": ShowNewForm<FormInvoice>("RP", false, new byte[] { 1, 3 }, null, true); break;
+                case "RetailSaleInvoice": ShowNewForm<FormInvoice>("RS", false, new byte[] { 1, 3 }, null, true); break;
+                case "WholesaleInvoice": ShowNewForm<FormInvoice>("WS", false, new byte[] { 1, 3 }, null, true); break;
+                case "InstallmentSaleInvoice": ShowNewForm<FormInvoice>("IS", false, new byte[] { 1, 3 }, null, true); break;
+                case "Expense": ShowNewForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null, true); break;
 
 
-                case "Count": ShowNewForm<FormInvoice>("CN", false, new byte[] { 1 }, null); break;
-                case "CountIn": ShowNewForm<FormInvoice>("CI", false, new byte[] { 1 }, null); break;
-                case "CountOut": ShowNewForm<FormInvoice>("CO", false, new byte[] { 1 }, null); break;
-                case "InventoryTransfer": ShowNewForm<FormInvoice>("IT", false, new byte[] { 1 }, null); break;
+                case "Count": ShowNewForm<FormInvoice>("CN", false, new byte[] { 1 }, null, true); break;
+                case "CountIn": ShowNewForm<FormInvoice>("CI", false, new byte[] { 1 }, null, true); break;
+                case "CountOut": ShowNewForm<FormInvoice>("CO", false, new byte[] { 1 }, null, true); break;
+                case "InventoryTransfer": ShowNewForm<FormInvoice>("IT", false, new byte[] { 1 }, null, true); break;
 
-                case "RetailPurchaseReturnCustom": ShowNewForm<FormInvoice>("RP", true, new byte[] { 1, 3 }, null); break;
-                case "RetailsaleReturnCustom": ShowNewForm<FormInvoice>("RS", true, new byte[] { 1, 3 }, null); break;
-                case "WholesaleReturnCustom": ShowNewForm<FormInvoice>("WS", true, new byte[] { 1, 3 }, null); break;
-                case "InstallmentSaleReturnCustom": ShowNewForm<FormInvoice>("IS", true, new byte[] { 1, 3 }, null); break;
-                case "InventoryTransferReturnCustom": ShowNewForm<FormInvoice>("IT", true, new byte[] { 1, 3 }, null); break;
+                case "RetailPurchaseReturnCustom": ShowNewForm<FormInvoice>("RP", true, new byte[] { 1, 3 }, null, true); break;
+                case "RetailsaleReturnCustom": ShowNewForm<FormInvoice>("RS", true, new byte[] { 1, 3 }, null, true); break;
+                case "WholesaleReturnCustom": ShowNewForm<FormInvoice>("WS", true, new byte[] { 1, 3 }, null, true); break;
+                case "InstallmentSaleReturnCustom": ShowNewForm<FormInvoice>("IS", true, new byte[] { 1, 3 }, null, true); break;
+                case "InventoryTransferReturnCustom": ShowNewForm<FormInvoice>("IT", true, new byte[] { 1, 3 }, null, true); break;
 
                 case "RetailPurchaseReturn": ShowExistForm<FormReturn>("RP"); break;
                 case "RetailSaleReturn": ShowExistForm<FormReturn>("RS"); break;
