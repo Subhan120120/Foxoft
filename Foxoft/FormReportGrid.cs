@@ -358,11 +358,10 @@ namespace Foxoft
                 Guid formInstanceId = Guid.NewGuid();
                 byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
-                FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
-                frm._formInstanceId = formInstanceId;
-
                 if (TryAcquireInvoiceLockForEdit(trInvoiceHeader.InvoiceHeaderId, formERP, formInstanceId))
                 {
+                    FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
+                    frm._formInstanceId = formInstanceId;
                     frm.MdiParent = formERP;
                     frm.WindowState = FormWindowState.Maximized;
                     frm.Show();

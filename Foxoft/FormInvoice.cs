@@ -142,7 +142,6 @@ namespace Foxoft
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
             LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
-
         }
 
         private void FormInvoice_Load(object sender, EventArgs e)

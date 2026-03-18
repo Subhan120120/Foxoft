@@ -160,6 +160,9 @@ namespace Foxoft
         private void BBI_ForceUnlock_ItemClick(object sender, ItemClickEventArgs e)
         {
             DocumentLockVM documentLock = (DocumentLockVM)gV_DocumentLockList.GetFocusedRow();
+
+            if (documentLock == null) return;
+
             _lockService.ForceUnlock(documentLock.DocumentType, documentLock.DocumentId, documentLock.LockedByUserId, "ForceLock");
 
             RefreshList();
@@ -168,6 +171,9 @@ namespace Foxoft
         private void BBI_UnlockRequest_ItemClick(object sender, ItemClickEventArgs e)
         {
             DocumentLockVM documentLock = (DocumentLockVM)gV_DocumentLockList.GetFocusedRow();
+
+            if (documentLock == null) return;
+
             _lockService.ForceCloseRequest(documentLock.DocumentType, documentLock.DocumentId, documentLock.LockedByUserId, "ForceLock");
         }
     }
