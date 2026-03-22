@@ -30,23 +30,23 @@ namespace Foxoft.Models
         public string ProcessCode { get; set; }
 
         [Display(Name = nameof(Resources.Entity_PaymentHeader_DocumentDate), ResourceType = typeof(Resources))]
-        [DefaultValue("getdate()")]
+        [DefaultValueSql("getdate()")]
         [Column(TypeName = "date")]
         public DateTime DocumentDate { get; set; }
 
         [Display(Name = nameof(Resources.Entity_PaymentHeader_DocumentTime), ResourceType = typeof(Resources))]
         [Column(TypeName = "time(0)")]
-        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
+        [DefaultValueSql("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan DocumentTime { get; set; }
 
-        [DefaultValue("getdate()")]
+        [DefaultValueSql("getdate()")]
         [Column(TypeName = "date")]
         [Display(Name = nameof(Resources.Entity_PaymentHeader_OperationDate), ResourceType = typeof(Resources))]
         public DateTime OperationDate { get; set; }
 
         [Display(Name = nameof(Resources.Entity_PaymentHeader_OperationTime), ResourceType = typeof(Resources))]
         [Column(TypeName = "time(0)")]
-        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
+        [DefaultValueSql("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan OperationTime { get; set; }
 
         [Display(Name = nameof(Resources.Entity_PaymentHeader_CurrAccCode), ResourceType = typeof(Resources))]
@@ -75,7 +75,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_PaymentHeader_PaymentKindId), ResourceType = typeof(Resources))]
         public byte? PaymentKindId { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_PaymentHeader_CompanyCode), ResourceType = typeof(Resources))]
         public string? CompanyCode { get; set; }
 
@@ -93,15 +93,15 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_PaymentHeader_TerminalId), ResourceType = typeof(Resources))]
         public int? TerminalId { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_PaymentHeader_IsCompleted), ResourceType = typeof(Resources))]
         public bool IsCompleted { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_PaymentHeader_IsSent), ResourceType = typeof(Resources))]
         public bool IsSent { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_PaymentHeader_IsLocked), ResourceType = typeof(Resources))]
         public bool IsLocked { get; set; }
 

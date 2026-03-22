@@ -38,11 +38,11 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_DueDate), ResourceType = typeof(Resources))]
         public string? DueDate { get; set; }  // lazimsiz prop, silinecek
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_AppSetting_UsePriceList), ResourceType = typeof(Resources))]
         public bool UsePriceList { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_AppSetting_AutoSave), ResourceType = typeof(Resources))]
         public bool AutoSave { get; set; }
 

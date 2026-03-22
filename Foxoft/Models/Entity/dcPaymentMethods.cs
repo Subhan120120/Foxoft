@@ -45,7 +45,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_PaymentMethod_IsDefault), ResourceType = typeof(Resources))]
         public bool IsDefault { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Common_IsDisabled), ResourceType = typeof(Resources))]
         public bool IsDisabled { get; set; }
 

@@ -181,6 +181,7 @@ namespace Foxoft
                 case "CashRegs": ShowExistForm<FormCashRegisterList>(); break;
                 case "InstallmentSales": ShowExistForm<FormInstallmentSale>(); break;
                 case "PriceList": ShowNewForm<FormPriceList>(); break;
+                case "CampaignList": ShowExistForm<FormCampaignList>(); break;
                 case "ProductDiscountList": ShowExistForm<FormCommonList<DcDiscount>>("", nameof(DcDiscount.DiscountId)); break;
                 case "RetailSaleOrder": ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null); break;
                 case "Session": ShowExistForm<FormDocumentLock>(); break;
@@ -268,6 +269,7 @@ namespace Foxoft
             this.ACE_AppSettings.Name = "Parameters";
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_ProductDiscounts.Name = "ProductDiscountList";
+            this.ACE_CampaignList.Name = "CampaignList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
             this.ACE_CurrAccFeatureType.Name = "CurrAccFeatureType";
             this.aCE_CurrAccRole.Name = "CurrAccClaim";
@@ -475,6 +477,11 @@ namespace Foxoft
         private void bBI_Session_ItemClick(object sender, ItemClickEventArgs e)
         {
             ShowExistForm<FormDocumentLockList>();
+        }
+
+        private void BBI_ChangeUser_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowExistForm<FormInvoiceCampaignLogList>();
         }
 
         private void ShowNewForm<T>(params object[] args) where T : Form

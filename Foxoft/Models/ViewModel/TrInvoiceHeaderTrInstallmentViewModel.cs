@@ -31,23 +31,23 @@ namespace Foxoft.Models
         public bool IsReturn { get; set; }
 
         [Column(TypeName = "date")]
-        [DefaultValue("getdate()")]
+        [DefaultValueSql("getdate()")]
         [Display(Name = "Faktura Tarixi")]
         public DateTime DocumentDate { get; set; }
 
         [Column(TypeName = "time(0)")]
         [Display(Name = "Faktura Vaxtı")]
-        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
+        [DefaultValueSql("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan DocumentTime { get; set; }
 
         [Column(TypeName = "date")]
-        [DefaultValue("getdate()")]
+        [DefaultValueSql("getdate()")]
         [Display(Name = "Əməliyat Tarixi")]
         public DateTime OperationDate { get; set; }
 
         [Column(TypeName = "time(0)")]
         [Display(Name = "Əməliyat Vaxtı")]
-        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
+        [DefaultValueSql("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan OperationTime { get; set; }
 
 
@@ -90,40 +90,40 @@ namespace Foxoft.Models
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string PosTerminalId { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = "Asqıdadır")]
         public bool IsSuspended { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = "Göndərilib")]
         public bool IsSent { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = "Açıqdır")]
         public bool IsOpen { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = "Tamamlanıb")]
         public bool IsCompleted { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = "Çap Sayı")]
         public byte PrintCount { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = "Fiscal Çap Durumu")]
         public byte FiscalPrintedState { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = "İnternet Üzərindən Satış")]
         public bool IsSalesViaInternet { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = "Kilidlənib")]
         public bool IsLocked { get; set; }
 
         [Display(Name = "Əsas Transfer")]
-        //[DefaultValue("1")]
+        //[DefaultValueSql("1")]
         public bool IsMainTF { get; set; }
     }
 

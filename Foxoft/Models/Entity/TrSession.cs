@@ -25,7 +25,7 @@ namespace Foxoft.Models
             ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public int PID { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_Session_IsBlocked), ResourceType = typeof(Resources))]
         public bool IsBlocked { get; set; }
 

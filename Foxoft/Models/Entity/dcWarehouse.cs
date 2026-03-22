@@ -1,6 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using Foxoft.Models.Entity;
 using Foxoft.Properties;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Foxoft.Models
 {
@@ -57,5 +58,8 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Common_RowGuid), ResourceType = typeof(Resources))]
         public Guid RowGuid { get; set; }
+
+        
+        public virtual ICollection<TrCampaignWarehouse> TrCampaignWarehouses { get; set; }
     }
 }

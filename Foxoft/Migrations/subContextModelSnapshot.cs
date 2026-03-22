@@ -159,6 +159,109 @@ namespace Foxoft.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcCampaign", b =>
+                {
+                    b.Property<Guid>("CampaignId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CampaignCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("CampaignDesc")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("CampaignTypeCode")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<int>("DiscountTypeCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
+                    b.Property<decimal>("DiscountValue")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("1");
+
+                    b.Property<bool>("IsCombinable")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<decimal>("MaxDiscountAmount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<decimal>("MinInvoiceAmount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("Priority")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<string>("PromoCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CampaignId");
+
+                    b.HasIndex("CampaignCode")
+                        .IsUnique();
+
+                    b.HasIndex("IsActive", "StartDate", "EndDate");
+
+                    b.ToTable("DcCampaigns");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcContactType", b =>
                 {
                     b.Property<byte>("Id")
@@ -2334,6 +2437,11 @@ namespace Foxoft.Migrations
                         {
                             VariableCode = "IS",
                             VariableDesc = "Kredit Satışı"
+                        },
+                        new
+                        {
+                            VariableCode = "CP",
+                            VariableDesc = "Kampaniya"
                         });
                 });
 
@@ -3831,6 +3939,14 @@ namespace Foxoft.Migrations
                             ClaimCode = "ProductDiscountList",
                             CategoryId = 18,
                             ClaimDesc = "Endirim Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "CampaignList",
+                            CategoryId = 18,
+                            ClaimDesc = "Endirim Kampaniyası Siyahısı",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         },
@@ -5480,7 +5596,7 @@ namespace Foxoft.Migrations
                     b.Property<decimal>("Qty")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(18,2)")
-                        .HasDefaultValueSql("1");
+                        .HasDefaultValue(1m);
 
                     b.HasKey("Id");
 
@@ -5491,6 +5607,284 @@ namespace Foxoft.Migrations
                     b.HasIndex("ProductCode");
 
                     b.ToTable("TrBarcodeOperationLines");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignCategory", b =>
+                {
+                    b.Property<Guid>("CampaignCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("HierarchyCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.HasKey("CampaignCategoryId");
+
+                    b.HasIndex("HierarchyCode");
+
+                    b.HasIndex("CampaignId", "HierarchyCode")
+                        .IsUnique();
+
+                    b.ToTable("TrCampaignCategories");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignCustomer", b =>
+                {
+                    b.Property<Guid>("CampaignCustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.HasKey("CampaignCustomerId");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.HasIndex("CampaignId", "CurrAccCode")
+                        .IsUnique();
+
+                    b.ToTable("TrCampaignCustomers");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignPaymentMethod", b =>
+                {
+                    b.Property<Guid>("CampaignPaymentMethodId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<int>("PaymentMethodId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CampaignPaymentMethodId");
+
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("CampaignId", "PaymentMethodId")
+                        .IsUnique();
+
+                    b.ToTable("TrCampaignPaymentMethods");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignProduct", b =>
+                {
+                    b.Property<Guid>("CampaignProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("ProductCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("CampaignProductId");
+
+                    b.HasIndex("ProductCode");
+
+                    b.HasIndex("CampaignId", "ProductCode")
+                        .IsUnique();
+
+                    b.ToTable("TrCampaignProducts");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignStore", b =>
+                {
+                    b.Property<Guid>("CampaignStoreId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("DcStoreCurrAccCode")
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("StoreCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("CampaignStoreId");
+
+                    b.HasIndex("DcStoreCurrAccCode");
+
+                    b.HasIndex("CampaignId", "StoreCode")
+                        .IsUnique();
+
+                    b.ToTable("TrCampaignStores");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignWarehouse", b =>
+                {
+                    b.Property<Guid>("CampaignWarehouseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("DcWarehouseWarehouseCode")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("WarehouseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("CampaignWarehouseId");
+
+                    b.HasIndex("DcWarehouseWarehouseCode");
+
+                    b.HasIndex("WarehouseCode");
+
+                    b.HasIndex("CampaignId", "WarehouseCode")
+                        .IsUnique();
+
+                    b.ToTable("TrCampaignWarehouses");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrCurrAccFeature", b =>
@@ -5682,6 +6076,152 @@ namespace Foxoft.Migrations
                     b.HasIndex("InstallmentId");
 
                     b.ToTable("TrInstallmentGuarantors");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrInvoiceCampaignHeader", b =>
+                {
+                    b.Property<Guid>("InvoiceCampaignHeaderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<Guid>("InvoiceHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("PromoCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("InvoiceCampaignHeaderId");
+
+                    b.HasIndex("InvoiceHeaderId")
+                        .IsUnique();
+
+                    b.ToTable("TrInvoiceCampaignHeaders");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrInvoiceCampaignLog", b =>
+                {
+                    b.Property<Guid>("InvoiceCampaignLogId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("BaseAmount")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("BaseAmountLoc")
+                        .HasColumnType("money");
+
+                    b.Property<string>("CampaignCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("CampaignDesc")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("CampaignTypeCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<int?>("DcPaymentMethodPaymentMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("DiscountAmountLoc")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("DiscountPercent")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<Guid>("InvoiceHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("InvoiceLineId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsCombinable")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("PaymentMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Priority")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<string>("PromoCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("InvoiceCampaignLogId");
+
+                    b.HasIndex("CampaignId");
+
+                    b.HasIndex("DcPaymentMethodPaymentMethodId");
+
+                    b.HasIndex("InvoiceHeaderId");
+
+                    b.HasIndex("InvoiceLineId");
+
+                    b.ToTable("TrInvoiceCampaignLogs");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
@@ -6595,7 +7135,7 @@ namespace Foxoft.Migrations
                     b.Property<decimal>("Qty")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(18,2)")
-                        .HasDefaultValueSql("1");
+                        .HasDefaultValue(1m);
 
                     b.HasKey("Id");
 
@@ -7282,6 +7822,123 @@ namespace Foxoft.Migrations
                     b.Navigation("TrBarcodeOperationHeader");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrCampaignCategory", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCampaign", "DcCampaign")
+                        .WithMany("TrCampaignCategories")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
+                        .WithMany()
+                        .HasForeignKey("HierarchyCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCampaign");
+
+                    b.Navigation("DcHierarchy");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignCustomer", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCampaign", "DcCampaign")
+                        .WithMany("TrCampaignCustomers")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany()
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCampaign");
+
+                    b.Navigation("DcCurrAcc");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignPaymentMethod", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCampaign", "DcCampaign")
+                        .WithMany("TrCampaignPaymentMethods")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcPaymentMethod", "DcPaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCampaign");
+
+                    b.Navigation("DcPaymentMethod");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignProduct", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCampaign", "DcCampaign")
+                        .WithMany("TrCampaignProducts")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
+                        .WithMany()
+                        .HasForeignKey("ProductCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCampaign");
+
+                    b.Navigation("DcProduct");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignStore", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCampaign", "DcCampaign")
+                        .WithMany("TrCampaignStores")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
+                        .WithMany()
+                        .HasForeignKey("DcStoreCurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DcCampaign");
+
+                    b.Navigation("DcStore");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCampaignWarehouse", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCampaign", "DcCampaign")
+                        .WithMany("TrCampaignWarehouses")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcWarehouse", null)
+                        .WithMany("TrCampaignWarehouses")
+                        .HasForeignKey("DcWarehouseWarehouseCode");
+
+                    b.HasOne("Foxoft.Models.DcWarehouse", "DcWarehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCampaign");
+
+                    b.Navigation("DcWarehouse");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrCurrAccFeature", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
@@ -7402,6 +8059,50 @@ namespace Foxoft.Migrations
                     b.Navigation("DcCurrAcc");
 
                     b.Navigation("TrInstallment");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrInvoiceCampaignHeader", b =>
+                {
+                    b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
+                        .WithMany()
+                        .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TrInvoiceHeader");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrInvoiceCampaignLog", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCampaign", "DcCampaign")
+                        .WithMany("TrInvoiceCampaignLogs")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcPaymentMethod", "DcPaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("DcPaymentMethodPaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
+                        .WithMany()
+                        .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.TrInvoiceLine", "TrInvoiceLine")
+                        .WithMany()
+                        .HasForeignKey("InvoiceLineId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DcCampaign");
+
+                    b.Navigation("DcPaymentMethod");
+
+                    b.Navigation("TrInvoiceHeader");
+
+                    b.Navigation("TrInvoiceLine");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
@@ -7824,6 +8525,23 @@ namespace Foxoft.Migrations
                     b.Navigation("TrProductBarcodes");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcCampaign", b =>
+                {
+                    b.Navigation("TrCampaignCategories");
+
+                    b.Navigation("TrCampaignCustomers");
+
+                    b.Navigation("TrCampaignPaymentMethods");
+
+                    b.Navigation("TrCampaignProducts");
+
+                    b.Navigation("TrCampaignStores");
+
+                    b.Navigation("TrCampaignWarehouses");
+
+                    b.Navigation("TrInvoiceCampaignLogs");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcContactType", b =>
                 {
                     b.Navigation("DcContactDetails");
@@ -8075,6 +8793,11 @@ namespace Foxoft.Migrations
                     b.Navigation("SettingStores");
 
                     b.Navigation("TrInvoiceLines");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcWarehouse", b =>
+                {
+                    b.Navigation("TrCampaignWarehouses");
                 });
 
             modelBuilder.Entity("Foxoft.Models.Entity.Report.DcReport", b =>

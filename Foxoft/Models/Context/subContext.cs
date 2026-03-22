@@ -106,6 +106,16 @@ namespace Foxoft.Models
         public DbSet<DocumentLock> DocumentLocks { get; set; }
         public DbSet<DocumentLockAudit> DocumentLockAudits { get; set; }
 
+        public DbSet<DcCampaign> DcCampaigns { get; set; }
+        public DbSet<TrCampaignProduct> TrCampaignProducts { get; set; }
+        public DbSet<TrCampaignCategory> TrCampaignCategories { get; set; }
+        public DbSet<TrCampaignCustomer> TrCampaignCustomers { get; set; }
+        public DbSet<TrCampaignStore> TrCampaignStores { get; set; }
+        public DbSet<TrCampaignWarehouse> TrCampaignWarehouses { get; set; }
+        public DbSet<TrCampaignPaymentMethod> TrCampaignPaymentMethods { get; set; }
+        public DbSet<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
+        public DbSet<TrInvoiceCampaignHeader> TrInvoiceCampaignHeaders { get; set; }
+
 
         public DbSet<RetailSale> RetailSales { get; set; } // view
         public DbSet<ProductBalance> ProductBalances { get; set; } // view
@@ -243,14 +253,20 @@ namespace Foxoft.Models
 
             //for DefaultValue Attribute for Entity propertires.
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
+            {
                 foreach (IMutableProperty property in entityType.GetProperties())
                 {
-                    MemberInfo memberInfo = property.PropertyInfo ?? (MemberInfo)property.FieldInfo;
-                    if (memberInfo == null) continue;
-                    DefaultValueAttribute defaultValue = Attribute.GetCustomAttribute(memberInfo, typeof(DefaultValueAttribute)) as DefaultValueAttribute;
-                    if (defaultValue == null) continue;
-                    property.SetDefaultValueSql(defaultValue.Value.ToString());
+                    MemberInfo? memberInfo = property.PropertyInfo ?? (MemberInfo?)property.FieldInfo;
+                    if (memberInfo == null)
+                        continue;
+
+                    if (Attribute.GetCustomAttribute(memberInfo, typeof(DefaultValueAttribute)) is DefaultValueAttribute defaultValue)
+                        property.SetDefaultValue(defaultValue.Value);
+
+                    if (Attribute.GetCustomAttribute(memberInfo, typeof(DefaultValueSqlAttribute)) is DefaultValueSqlAttribute defaultValueSql)
+                        property.SetDefaultValueSql(defaultValueSql.Value?.ToString());
                 }
+            }
 
             base.OnModelCreating(modelBuilder);
 
@@ -433,6 +449,110 @@ namespace Foxoft.Models
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict; // NoAction
 
+            modelBuilder.Entity<TrCampaignProduct>(entity =>
+            {
+                entity.HasOne(x => x.DcCampaign)
+                    .WithMany(x => x.TrCampaignProducts)
+                    .HasForeignKey(x => x.CampaignId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(x => x.DcProduct)
+                    .WithMany()
+                    .HasForeignKey(x => x.ProductCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrCampaignCategory>(entity =>
+            {
+                entity.HasOne(x => x.DcCampaign)
+                    .WithMany(x => x.TrCampaignCategories)
+                    .HasForeignKey(x => x.CampaignId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(x => x.DcHierarchy)
+                    .WithMany()
+                    .HasForeignKey(x => x.HierarchyCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrCampaignCustomer>(entity =>
+            {
+                entity.HasOne(x => x.DcCampaign)
+                    .WithMany(x => x.TrCampaignCustomers)
+                    .HasForeignKey(x => x.CampaignId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(x => x.DcCurrAcc)
+                    .WithMany()
+                    .HasForeignKey(x => x.CurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrCampaignStore>(entity =>
+            {
+                entity.HasOne(x => x.DcCampaign)
+                    .WithMany(x => x.TrCampaignStores)
+                    .HasForeignKey(x => x.CampaignId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrCampaignWarehouse>(entity =>
+            {
+                entity.HasOne(x => x.DcCampaign)
+                    .WithMany(x => x.TrCampaignWarehouses)
+                    .HasForeignKey(x => x.CampaignId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(x => x.DcWarehouse)
+                    .WithMany()
+                    .HasForeignKey(x => x.WarehouseCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrCampaignPaymentMethod>(entity =>
+            {
+                entity.HasOne(x => x.DcCampaign)
+                    .WithMany(x => x.TrCampaignPaymentMethods)
+                    .HasForeignKey(x => x.CampaignId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(x => x.DcPaymentMethod)
+                    .WithMany()
+                    .HasForeignKey(x => x.PaymentMethodId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrInvoiceCampaignHeader>(entity =>
+            {
+                entity.HasOne(x => x.TrInvoiceHeader)
+                    .WithMany()
+                    .HasForeignKey(x => x.InvoiceHeaderId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrInvoiceCampaignLog>(entity =>
+            {
+                entity.HasOne(x => x.DcCampaign)
+                    .WithMany(x => x.TrInvoiceCampaignLogs)
+                    .HasForeignKey(x => x.CampaignId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.TrInvoiceHeader)
+                    .WithMany()
+                    .HasForeignKey(x => x.InvoiceHeaderId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(x => x.TrInvoiceLine)
+                    .WithMany()
+                    .HasForeignKey(x => x.InvoiceLineId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrInvoiceCampaignHeader>()
+                .HasOne(x => x.TrInvoiceHeader)
+                .WithMany()
+                .HasForeignKey(x => x.InvoiceHeaderId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<TrProductFeature>(entity =>
@@ -771,6 +891,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "InventoryTransferReturnCustom", ClaimDesc = "Məhsul Transferi Xüsusi Qaytarması", ClaimTypeId = 1, CategoryId = 14 },
                 new DcClaim { ClaimCode = "Column_ProductCost", ClaimDesc = "Maya Dəyəri", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "ProductDiscountList", ClaimDesc = "Endirim Siyahısı", ClaimTypeId = 1, CategoryId = 18 },
+                new DcClaim { ClaimCode = "CampaignList", ClaimDesc = "Endirim Kampaniyası Siyahısı", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "BarcodeOperations", ClaimDesc = "Barkod Əməliyatları", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "PriceList", ClaimDesc = "Qiymət Cədvəli", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "MakePayment", ClaimDesc = "Ödəniş Etmək", ClaimTypeId = 1, CategoryId = 21 }, 
@@ -1081,7 +1202,8 @@ namespace Foxoft.Models
                 new DcVariable { VariableCode = "EI", VariableDesc = "Xərclər" },
                 new DcVariable { VariableCode = "IT", VariableDesc = "Mal Transferi" },
                 new DcVariable { VariableCode = "CT", VariableDesc = "Pul transferi" },
-                new DcVariable { VariableCode = "IS", VariableDesc = "Kredit Satışı" }
+                new DcVariable { VariableCode = "IS", VariableDesc = "Kredit Satışı" },
+                new DcVariable { VariableCode = "CP", VariableDesc = "Kampaniya" }
 
                 );
         }

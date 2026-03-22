@@ -38,12 +38,12 @@ namespace Foxoft.Models.ViewModel
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
         public decimal Qty { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_QtyIn), ResourceType = typeof(Resources))]
         [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public decimal QtyIn { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_QtyOut), ResourceType = typeof(Resources))]
         [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public decimal QtyOut { get; set; }
@@ -60,7 +60,7 @@ namespace Foxoft.Models.ViewModel
         [Display(Name = nameof(Resources.Entity_InvoiceLine_CurrencyCode), ResourceType = typeof(Resources))]
         public string CurrencyCode { get; set; } = Settings.Default.AppSetting.LocalCurrencyCode;
 
-        [DefaultValue("1")]
+        [DefaultValueSql("1")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_ExchangeRate), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public float ExchangeRate { get; set; } = 1;
@@ -81,7 +81,7 @@ namespace Foxoft.Models.ViewModel
         [Display(Name = nameof(Resources.Entity_InvoiceLine_AmountLoc), ResourceType = typeof(Resources))]
         public decimal AmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_PosDiscount), ResourceType = typeof(Resources))]
         public decimal PosDiscount { get; set; }
 
@@ -95,13 +95,13 @@ namespace Foxoft.Models.ViewModel
         [Display(Name = nameof(Resources.Entity_InvoiceLine_NetAmountLoc), ResourceType = typeof(Resources))]
         public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * PriceLoc * (1 - PosDiscount / 100); } set { } }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Column(TypeName = "money")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_DiscountCampaign), ResourceType = typeof(Resources))]
         public decimal DiscountCampaign { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_VatRate), ResourceType = typeof(Resources))]
         public float VatRate { get; set; }
 

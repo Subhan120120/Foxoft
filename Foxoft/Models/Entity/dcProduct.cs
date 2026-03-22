@@ -60,7 +60,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_Product_HierarchyCode), ResourceType = typeof(Resources))]
         public string? HierarchyCode { get; set; }
 
-        [DefaultValue("1")]
+        [DefaultValueSql("1")]
         [Display(Name = nameof(Resources.Entity_Product_UsePos), ResourceType = typeof(Resources))]
         public bool UsePos { get; set; }
 
@@ -74,32 +74,32 @@ namespace Foxoft.Models
                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? PromotionCode2 { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_Product_TaxRate), ResourceType = typeof(Resources))]
         public double TaxRate { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_Product_PosDiscount), ResourceType = typeof(Resources))]
         public double PosDiscount { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Common_IsDisabled), ResourceType = typeof(Resources))]
         public bool IsDisabled { get; set; }
 
         //const string qiymetler = "Qiymətlər";
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_Product_PurchasePrice), ResourceType = typeof(Resources), GroupName = nameof(Resources.Entity_Product_Prices), Order = 0)]
         public decimal PurchasePrice { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_Product_WholesalePrice), ResourceType = typeof(Resources), GroupName = nameof(Resources.Entity_Product_Prices), Order = 1)]
         public decimal WholesalePrice { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_Product_RetailPrice), ResourceType = typeof(Resources), GroupName = nameof(Resources.Entity_Product_Prices), Order = 2)]
         public decimal RetailPrice { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_Product_UseInternet), ResourceType = typeof(Resources))]
         public bool UseInternet { get; set; }
 

@@ -21,7 +21,7 @@ namespace Foxoft.Models
         public Guid InvoiceHeaderId { get; set; }
 
         [Column(TypeName = "date")]
-        [DefaultValue("getdate()")]
+        [DefaultValueSql("getdate()")]
         [Display(Name = nameof(Resources.Entity_Installment_Date), ResourceType = typeof(Resources))]
         public DateTime InstallmentDate { get; set; }
 

@@ -38,7 +38,7 @@ namespace Foxoft.Models
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string CurrencyCode { get; set; }
 
-        [DefaultValue("1")]
+        [DefaultValueSql("1")]
         [Display(Name = nameof(Resources.Entity_PaymentLine_ExchangeRate), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public float ExchangeRate { get; set; } = 1;

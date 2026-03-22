@@ -116,13 +116,13 @@ namespace Foxoft.Models
         [ForeignKey(nameof(DcUILanguage))]
         public string? LanguageCode { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Column(TypeName = "money")]
         [Display(Name = nameof(Resources.Entity_CurrAcc_CreditLimit), ResourceType = typeof(Resources))]
         public decimal CreditLimit { get; set; }
 
         [Column("IsVIP")]
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_CurrAcc_VIP), ResourceType = typeof(Resources))]
         public bool IsVip { get; set; }
 
@@ -139,11 +139,11 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_CurrAcc_CashRegPaymentType), ResourceType = typeof(Resources))]
         public PaymentType? CashRegPaymentTypeCode { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_CurrAcc_CustomerPosDiscountRate), ResourceType = typeof(Resources))]
         public double CustomerPosDiscountRate { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Common_IsDisabled), ResourceType = typeof(Resources))]
         public bool IsDisabled { get; set; }
 
@@ -171,10 +171,10 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Entity_CurrAcc_BirthDate), ResourceType = typeof(Resources))]
         [Column(TypeName = "date")]
-        [DefaultValue("'1901-01-01'")]
+        [DefaultValueSql("'1901-01-01'")]
         public DateTime? BirthDate { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_CurrAcc_IsDefault), ResourceType = typeof(Resources))]
         public bool IsDefault { get; set; }
 

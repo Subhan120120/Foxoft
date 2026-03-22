@@ -147,6 +147,8 @@ namespace Foxoft
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
             LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+
+            InitializeCampaignArea();
         }
 
         private void FormInvoice_Load(object sender, EventArgs e)
@@ -242,6 +244,8 @@ namespace Foxoft
             txt_LoyaltyEarn.EditValue = 0m;
 
             Tag = btnEdit_DocNum.EditValue;
+
+            ClearInvoiceCampaignState();
 
             SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
         }
@@ -400,6 +404,8 @@ namespace Foxoft
                     LoadInstallmentGarantors();
 
                 dataLayoutControl1.IsValid(out List<string> errorList);
+
+                LoadInvoiceCampaignState();
 
                 Tag = btnEdit_DocNum.EditValue;
 
@@ -1182,6 +1188,8 @@ namespace Foxoft
 
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
 
+            ApplyCampaignsFromForm(false);
+
             if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode))
                 InitilizeTransfer();
 
@@ -1391,6 +1399,7 @@ namespace Foxoft
             if (formPayment.ShowDialog(this) == DialogResult.OK)
             {
                 UpdatePaidLabels();
+                ApplyCampaignsFromForm(false);
             }
         }
 
@@ -3214,5 +3223,18 @@ namespace Foxoft
             base.OnFormClosing(e);
         }
 
+        private void bBI_CampaignApply_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ApplyCampaignsFromForm(true);
+        }
+
+        private void bBI_CampaignLog_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            using FormInvoiceCampaignLogList form = new(trInvoiceHeader.InvoiceHeaderId);
+            form.ShowDialog(this);
+        }
     }
 }

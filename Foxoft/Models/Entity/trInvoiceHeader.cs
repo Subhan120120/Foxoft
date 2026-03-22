@@ -45,23 +45,23 @@ namespace Foxoft.Models
         public bool IsReturn { get; set; }
 
         [Column(TypeName = "date")]
-        [DefaultValue("getdate()")]
+        [DefaultValueSql("getdate()")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_DocumentDate), ResourceType = typeof(Resources))]
         public DateTime DocumentDate { get; set; }
 
         [Column(TypeName = "time(0)")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_DocumentTime), ResourceType = typeof(Resources))]
-        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
+        [DefaultValueSql("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan DocumentTime { get; set; }
 
         [Column(TypeName = "date")]
-        [DefaultValue("getdate()")]
+        [DefaultValueSql("getdate()")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_OperationDate), ResourceType = typeof(Resources))]
         public DateTime OperationDate { get; set; }
 
         [Column(TypeName = "time(0)")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_OperationTime), ResourceType = typeof(Resources))]
-        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
+        [DefaultValueSql("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan OperationTime { get; set; }
 
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_Description), ResourceType = typeof(Resources))]
@@ -112,35 +112,35 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_LoyaltyCardId), ResourceType = typeof(Resources))]
         public Guid? LoyaltyCardId { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsSuspended), ResourceType = typeof(Resources))]
         public bool IsSuspended { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsSent), ResourceType = typeof(Resources))]
         public bool IsSent { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsOpen), ResourceType = typeof(Resources))]
         public bool IsOpen { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsCompleted), ResourceType = typeof(Resources))]
         public bool IsCompleted { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_PrintCount), ResourceType = typeof(Resources))]
         public byte PrintCount { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_FiscalPrintedState), ResourceType = typeof(Resources))]
         public byte FiscalPrintedState { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsSalesViaInternet), ResourceType = typeof(Resources))]
         public bool IsSalesViaInternet { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsLocked), ResourceType = typeof(Resources))]
         public bool IsLocked { get; set; }
 
@@ -173,5 +173,6 @@ namespace Foxoft.Models
         public virtual ICollection<TrInvoiceHeader> InverseRelatedHeaders { get; set; } // Navigation property for the inverse relationship
 
         public virtual ICollection<TrLoyaltyTxn> TrLoyaltyTxns { get; set; }
+        //public virtual ICollection<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
     }
 }

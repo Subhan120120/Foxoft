@@ -12,10 +12,10 @@ namespace Foxoft // remove Dc/Tr prefixes from entity names in keys (not applica
         [StringLength(20,
             ErrorMessageResourceType = typeof(Resources),
             ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
-        [DefaultValue(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))")]
+        [DefaultValueSql(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))")]
         public string? CreatedUserName { get; set; }
 
-        [DefaultValue("getdate()")]
+        [DefaultValueSql("getdate()")]
         [Column(TypeName = "datetime")]
         [Display(Name = nameof(Resources.Entity_Base_CreatedDate), ResourceType = typeof(Resources))]
         public DateTime CreatedDate { get; set; }
@@ -24,10 +24,10 @@ namespace Foxoft // remove Dc/Tr prefixes from entity names in keys (not applica
         [StringLength(20,
             ErrorMessageResourceType = typeof(Resources),
             ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
-        [DefaultValue(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))")]
+        [DefaultValueSql(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))")]
         public string? LastUpdatedUserName { get; set; }
 
-        [DefaultValue("getdate()")]
+        [DefaultValueSql("getdate()")]
         [Column(TypeName = "datetime")]
         [Display(Name = nameof(Resources.Entity_Base_LastUpdatedDate), ResourceType = typeof(Resources))]
         public DateTime LastUpdatedDate { get; set; }

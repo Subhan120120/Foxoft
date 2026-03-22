@@ -77,6 +77,7 @@ namespace Foxoft
             BBI_SumSameProducts = new BarButtonItem();
             BBI_CountingStock = new BarButtonItem();
             BBI_LoyaltyCardInput = new BarButtonItem();
+            bBI_CampaignApply = new BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -227,6 +228,7 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
+            bBI_CampaignLog = new BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -393,9 +395,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 69;
+            ribbonControl1.MaxItemId = 71;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -671,6 +673,14 @@ namespace Foxoft
             BBI_LoyaltyCardInput.Name = "BBI_LoyaltyCardInput";
             BBI_LoyaltyCardInput.ItemClick += BBI_LoyaltyCardInput_ItemClick;
             // 
+            // bBI_CampaignApply
+            // 
+            bBI_CampaignApply.Caption = "Kampaniya Tətbiq Et";
+            bBI_CampaignApply.Id = 69;
+            bBI_CampaignApply.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CampaignApply.ImageOptions.SvgImage");
+            bBI_CampaignApply.Name = "bBI_CampaignApply";
+            bBI_CampaignApply.ItemClick += bBI_CampaignApply_ItemClick;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, RPG_Payment, RPG_Installment, ribbonPageGroup2, ribbonPageGroup4, RPG_Control, ribbonPageGroup8, ribbonPageGroup3 });
@@ -736,6 +746,8 @@ namespace Foxoft
             ribbonPageGroup3.ItemLinks.Add(BBI_SumSameProducts);
             ribbonPageGroup3.ItemLinks.Add(BBI_LoyaltyCardInput);
             ribbonPageGroup3.ItemLinks.Add(BBI_CountingStock);
+            ribbonPageGroup3.ItemLinks.Add(bBI_CampaignApply);
+            ribbonPageGroup3.ItemLinks.Add(bBI_CampaignLog);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = Resources.FormInvoice_RibbonGroup_Tools;
             // 
@@ -2061,6 +2073,13 @@ namespace Foxoft
             // 
             dxErrorProvider1.ContainerControl = this;
             // 
+            // bBI_CampaignLog
+            // 
+            bBI_CampaignLog.Caption = "Kampaniya Log";
+            bBI_CampaignLog.Id = 70;
+            bBI_CampaignLog.Name = "bBI_CampaignLog";
+            bBI_CampaignLog.ItemClick += this.bBI_CampaignLog_ItemClick;
+            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -2378,5 +2397,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem LCI_LoyaltyEarn;
         private DevExpress.XtraEditors.TextEdit txt_LoyaltyEarn;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
+        private BarButtonItem bBI_CampaignApply;
+        private BarButtonItem bBI_CampaignLog;
     }
 }

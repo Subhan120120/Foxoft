@@ -91,12 +91,12 @@ namespace Foxoft.Models
             }
         }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_QtyIn), ResourceType = typeof(Resources))]
         [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public decimal QtyIn { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_QtyOut), ResourceType = typeof(Resources))]
         [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public decimal QtyOut { get; set; }
@@ -115,7 +115,7 @@ namespace Foxoft.Models
         [ForeignKey(nameof(DcCurrency))]
         public string CurrencyCode { get; set; } = Settings.Default.AppSetting.LocalCurrencyCode;
 
-        [DefaultValue("1")]
+        [DefaultValueSql("1")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_ExchangeRate), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public float ExchangeRate { get; set; } = 1;
@@ -136,27 +136,43 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceLine_AmountLoc), ResourceType = typeof(Resources))]
         public decimal AmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_PosDiscount), ResourceType = typeof(Resources))]
         public decimal PosDiscount { get; set; }
+
+        [NotMapped]
+        public decimal NetAmountBeforeCampaign => (QtyIn + QtyOut) * Price * (1 - PosDiscount / 100);
+
+        [NotMapped]
+        public decimal NetAmountLocBeforeCampaign => (QtyIn + QtyOut) * PriceLoc * (1 - PosDiscount / 100);
 
         [Column(TypeName = "money")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_NetAmount), ResourceType = typeof(Resources))]
-        public decimal NetAmount { get { return (QtyIn + QtyOut) * Price * (1 - PosDiscount / 100); } set { } }
+        public decimal NetAmount { get { return NetAmountBeforeCampaign - DiscountCampaign; } set { } }
 
         [Column(TypeName = "money")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_NetAmountLoc), ResourceType = typeof(Resources))]
-        public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * PriceLoc * (1 - PosDiscount / 100); } set { } }
+        public decimal NetAmountLoc { get { return NetAmountLocBeforeCampaign - DiscountCampaignLoc; } set { } }
 
-        [DefaultValue("0")]
+        [NotMapped]
+        public decimal DiscountCampaignLoc
+        {
+            get
+            {
+                decimal exRate = ExchangeRate == 0 ? 1 : (decimal)ExchangeRate;
+                return Math.Round(DiscountCampaign / exRate, 4);
+            }
+        }
+
+        [DefaultValueSql("0")]
         [Column(TypeName = "money")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_DiscountCampaign), ResourceType = typeof(Resources))]
         public decimal DiscountCampaign { get; set; }
 
-        [DefaultValue("0")]
+        [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_VatRate), ResourceType = typeof(Resources))]
         public float VatRate { get; set; }
 
