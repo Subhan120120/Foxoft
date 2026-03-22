@@ -51,6 +51,44 @@ namespace Foxoft
             return repo;
         }
 
+        public static RepositoryItemButtonEdit AddCurrAccCodeButtonEdit(
+            this GridControl grid,
+            EventHandler<ButtonPressedEventArgs>? externalClick = null)
+        {
+            var repo = new RepositoryItemButtonEdit();   // hər dəfə yeni instans
+            repo.Buttons.Clear();
+            repo.Buttons.Add(new EditorButton());
+
+            repo.ButtonClick += (s, e) =>
+            {
+                var editor = s as ButtonEdit;
+                if (editor == null) return;
+
+                try
+                {
+                    using FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false, editor.EditValue?.ToString());
+
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        editor.EditValue = form.dcCurrAcc?.CurrAccCode;
+
+                        var gridCtrl = editor.Parent as GridControl;
+                        var view = gridCtrl?.FocusedView as GridView;
+                        view?.PostEditor();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+                externalClick?.Invoke(s, e);
+            };
+
+            grid.RepositoryItems.Add(repo);
+            return repo;
+        }
+
         public static RepositoryItemButtonEdit AddBarcodeTypeButtonEdit(
             this GridControl grid,
             EventHandler<ButtonPressedEventArgs>? externalClick = null)
@@ -71,6 +109,105 @@ namespace Foxoft
 
                     if (form.ShowDialog() == DialogResult.OK)
                         editor.EditValue = form.Value_Id;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), Resources.Common_ErrorTitle);
+                }
+
+                externalClick?.Invoke(s, e);
+            };
+
+            grid.RepositoryItems.Add(repo);
+            return repo;
+        }
+
+        public static RepositoryItemButtonEdit AddPaymentMethodButtonEdit(
+            this GridControl grid,
+            EventHandler<ButtonPressedEventArgs>? externalClick = null)
+        {
+            var repo = new RepositoryItemButtonEdit();   // hər dəfə yeni instans
+            repo.Buttons.Clear();
+            repo.Buttons.Add(new EditorButton());
+
+            repo.ButtonClick += (s, e) =>
+            {
+                var editor = s as ButtonEdit;
+                if (editor == null) return;
+
+                try
+                {
+                    using FormCommonList<DcPaymentMethod> form =
+                        new("", nameof(DcPaymentMethod.PaymentMethodId), editor.EditValue?.ToString());
+
+                    if (form.ShowDialog() == DialogResult.OK)
+                        editor.EditValue = form.Value_Id;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), Resources.Common_ErrorTitle);
+                }
+
+                externalClick?.Invoke(s, e);
+            };
+
+            grid.RepositoryItems.Add(repo);
+            return repo;
+        }
+
+        public static RepositoryItemButtonEdit AddWarehouseCodeButtonEdit(
+            this GridControl grid,
+            EventHandler<ButtonPressedEventArgs>? externalClick = null)
+        {
+            var repo = new RepositoryItemButtonEdit();   // hər dəfə yeni instans
+            repo.Buttons.Clear();
+            repo.Buttons.Add(new EditorButton());
+
+            repo.ButtonClick += (s, e) =>
+            {
+                var editor = s as ButtonEdit;
+                if (editor == null) return;
+
+                try
+                {
+                    using FormWarehouseList form =
+                        new();
+
+                    if (form.ShowDialog() == DialogResult.OK)
+                        editor.EditValue = form.dcWarehouse.WarehouseCode;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), Resources.Common_ErrorTitle);
+                }
+
+                externalClick?.Invoke(s, e);
+            };
+
+            grid.RepositoryItems.Add(repo);
+            return repo;
+        }
+
+        public static RepositoryItemButtonEdit AddHierarchyCodeButtonEdit(
+            this GridControl grid,
+            EventHandler<ButtonPressedEventArgs>? externalClick = null)
+        {
+            var repo = new RepositoryItemButtonEdit();   // hər dəfə yeni instans
+            repo.Buttons.Clear();
+            repo.Buttons.Add(new EditorButton());
+
+            repo.ButtonClick += (s, e) =>
+            {
+                var editor = s as ButtonEdit;
+                if (editor == null) return;
+
+                try
+                {
+                    using FormHierarchyList form =
+                        new(editor.EditValue?.ToString());
+
+                    if (form.ShowDialog() == DialogResult.OK)
+                        editor.EditValue = form.DcHierarchy.HierarchyCode;
                 }
                 catch (Exception ex)
                 {
@@ -126,6 +263,44 @@ namespace Foxoft
                 {
                     MessageBox.Show(ex.ToString(), Resources.Common_ErrorTitle);
                 }
+
+                externalClick?.Invoke(editor, e);
+            };
+
+            grid.RepositoryItems.Add(repo);
+            return repo;
+        }
+
+
+        public static RepositoryItemLookUpEdit AddStoreCodeLookUpEdit(
+            this GridControl grid,
+            EventHandler<EventArgs>? externalClick = null)
+        {
+            var gridview = grid.MainView;
+
+            var repo = new RepositoryItemLookUpEdit();
+            repo.DataSource = efMethods.SelectStores();
+            repo.Buttons.Clear();
+            repo.AutoHeight = false;
+            repo.BestFitMode = BestFitMode.BestFitResizePopup;
+            repo.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            repo.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo(nameof(DcCurrAcc.CurrAccCode), ""), new LookUpColumnInfo(nameof(DcCurrAcc.CurrAccDesc), "") });
+            repo.DisplayMember = nameof(DcCurrAcc.CurrAccDesc);
+            repo.NullText = "";
+            repo.PopupFilterMode = PopupFilterMode.Contains;
+            repo.SearchMode = SearchMode.AutoComplete;
+            repo.ShowFooter = false;
+            repo.ShowHeader = false;
+            repo.ValueMember = nameof(DcCurrAcc.CurrAccCode);
+
+            repo.EditValueChanged += (s, e) =>
+            {
+                LookUpEdit editor = (LookUpEdit)s;
+                if (editor == null) return;
+
+                var grid = editor.Parent as GridControl;                  // grid that hosts the editor
+                var view = grid?.FocusedView as GridView; // current view
+                if (view == null) return;
 
                 externalClick?.Invoke(editor, e);
             };

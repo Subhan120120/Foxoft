@@ -27,6 +27,7 @@ namespace Foxoft
                 e.CustomRepositoryItem = MyRepositoryItem((e.CurrentNode.Property).Name);
             }
         }
+
         private static RepositoryItem MyRepositoryItem(string PropName)
         {
             if (PropName == nameof(DcProduct.ProductCode) || PropName.Contains("." + nameof(DcProduct.ProductCode)))

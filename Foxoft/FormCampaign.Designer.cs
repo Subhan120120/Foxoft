@@ -53,7 +53,7 @@ namespace Foxoft
             gV_Product = new DevExpress.XtraGrid.Views.Grid.GridView();
             colCampaignProductId = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoLUE_ProductCode = new RepositoryItemLookUpEdit();
+            colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             panelProduct = new DevExpress.XtraEditors.PanelControl();
             btnDeleteProduct = new DevExpress.XtraEditors.SimpleButton();
             btnAddProduct = new DevExpress.XtraEditors.SimpleButton();
@@ -63,7 +63,6 @@ namespace Foxoft
             gV_Category = new DevExpress.XtraGrid.Views.Grid.GridView();
             colCampaignCategoryId = new DevExpress.XtraGrid.Columns.GridColumn();
             colHierarchyCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoLUE_CategoryCode = new RepositoryItemLookUpEdit();
             panelCategory = new DevExpress.XtraEditors.PanelControl();
             btnDeleteCategory = new DevExpress.XtraEditors.SimpleButton();
             btnAddCategory = new DevExpress.XtraEditors.SimpleButton();
@@ -73,7 +72,7 @@ namespace Foxoft
             gV_Customer = new DevExpress.XtraGrid.Views.Grid.GridView();
             colCampaignCustomerId = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoLUE_CustomerCode = new RepositoryItemLookUpEdit();
+            colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             panelCustomer = new DevExpress.XtraEditors.PanelControl();
             btnDeleteCustomer = new DevExpress.XtraEditors.SimpleButton();
             btnAddCustomer = new DevExpress.XtraEditors.SimpleButton();
@@ -83,7 +82,6 @@ namespace Foxoft
             gV_Store = new DevExpress.XtraGrid.Views.Grid.GridView();
             colCampaignStoreId = new DevExpress.XtraGrid.Columns.GridColumn();
             colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoLUE_StoreCode = new RepositoryItemLookUpEdit();
             panelStore = new DevExpress.XtraEditors.PanelControl();
             btnDeleteStore = new DevExpress.XtraEditors.SimpleButton();
             btnAddStore = new DevExpress.XtraEditors.SimpleButton();
@@ -93,7 +91,6 @@ namespace Foxoft
             gV_Warehouse = new DevExpress.XtraGrid.Views.Grid.GridView();
             colCampaignWarehouseId = new DevExpress.XtraGrid.Columns.GridColumn();
             colWarehouseCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoLUE_WarehouseCode = new RepositoryItemLookUpEdit();
             panelWarehouse = new DevExpress.XtraEditors.PanelControl();
             btnDeleteWarehouse = new DevExpress.XtraEditors.SimpleButton();
             btnAddWarehouse = new DevExpress.XtraEditors.SimpleButton();
@@ -103,7 +100,6 @@ namespace Foxoft
             gV_PaymentMethod = new DevExpress.XtraGrid.Views.Grid.GridView();
             colCampaignPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoLUE_PaymentMethod = new RepositoryItemLookUpEdit();
             panelPaymentMethod = new DevExpress.XtraEditors.PanelControl();
             btnDeletePaymentMethod = new DevExpress.XtraEditors.SimpleButton();
             btnAddPaymentMethod = new DevExpress.XtraEditors.SimpleButton();
@@ -111,6 +107,7 @@ namespace Foxoft
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             dcCampaignsBindingSource = new BindingSource(components);
+            colPaymentMethodDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CampaignCodeTextEdit.Properties).BeginInit();
@@ -135,42 +132,36 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_Product).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignProductsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_Product).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_ProductCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelProduct).BeginInit();
             panelProduct.SuspendLayout();
             tabCategory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_Category).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignCategoriesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_Category).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_CategoryCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelCategory).BeginInit();
             panelCategory.SuspendLayout();
             tabCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_Customer).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignCustomersBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_Customer).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_CustomerCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelCustomer).BeginInit();
             panelCustomer.SuspendLayout();
             tabStore.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_Store).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignStoresBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_Store).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_StoreCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelStore).BeginInit();
             panelStore.SuspendLayout();
             tabWarehouse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_Warehouse).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignWarehousesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_Warehouse).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_WarehouseCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelWarehouse).BeginInit();
             panelWarehouse.SuspendLayout();
             tabPaymentMethod.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_PaymentMethod).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignPaymentMethodsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_PaymentMethod).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_PaymentMethod).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelPaymentMethod).BeginInit();
             panelPaymentMethod.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panelButtons).BeginInit();
@@ -210,34 +201,216 @@ namespace Foxoft
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(1180, 228);
-            // labels
-            lblCampaignCode.Location = new Point(12, 15); lblCampaignCode.Text = "Kampaniya kodu";
-            lblCampaignDesc.Location = new Point(400, 15); lblCampaignDesc.Text = "Kampaniya adı";
-            lblCampaignType.Location = new Point(12, 45); lblCampaignType.Text = "Tip";
-            lblPromoCode.Location = new Point(400, 45); lblPromoCode.Text = "Promo code";
-            lblDiscountType.Location = new Point(788, 45); lblDiscountType.Text = "Endirim tipi";
-            lblDiscountValue.Location = new Point(12, 75); lblDiscountValue.Text = "Endirim";
-            lblPriority.Location = new Point(400, 75); lblPriority.Text = "Prioritet";
-            lblStartDate.Location = new Point(12, 105); lblStartDate.Text = "Başlama tarixi";
-            lblEndDate.Location = new Point(400, 105); lblEndDate.Text = "Bitmə tarixi";
-            lblMinInvoiceAmount.Location = new Point(788, 105); lblMinInvoiceAmount.Text = "Min. faktura";
-            lblMaxDiscountAmount.Location = new Point(12, 135); lblMaxDiscountAmount.Text = "Maks. endirim";
-            lblNote.Location = new Point(12, 165); lblNote.Text = "Qeyd";
-            // editors
-            CampaignCodeTextEdit.Location = new Point(124, 12); CampaignCodeTextEdit.Size = new Size(240, 20);
-            CampaignDescTextEdit.Location = new Point(500, 12); CampaignDescTextEdit.Size = new Size(668, 20);
-            CampaignTypeCodeComboBoxEdit.Location = new Point(124, 42); CampaignTypeCodeComboBoxEdit.Size = new Size(240, 20); CampaignTypeCodeComboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            PromoCodeTextEdit.Location = new Point(500, 42); PromoCodeTextEdit.Size = new Size(240, 20);
-            DiscountTypeCodeComboBoxEdit.Location = new Point(896, 42); DiscountTypeCodeComboBoxEdit.Size = new Size(272, 20); DiscountTypeCodeComboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            DiscountValueCalcEdit.Location = new Point(124, 72); DiscountValueCalcEdit.Size = new Size(240, 20); DiscountValueCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            PrioritySpinEdit.Location = new Point(500, 72); PrioritySpinEdit.Size = new Size(240, 20); PrioritySpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            IsActiveCheckEdit.Location = new Point(896, 72); IsActiveCheckEdit.Size = new Size(120, 20); IsActiveCheckEdit.Properties.Caption = "Aktiv";
-            IsCombinableCheckEdit.Location = new Point(1024, 72); IsCombinableCheckEdit.Size = new Size(144, 20); IsCombinableCheckEdit.Properties.Caption = "Birləşə bilir";
-            StartDateDateEdit.Location = new Point(124, 102); StartDateDateEdit.Size = new Size(240, 20); StartDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) }); StartDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            EndDateDateEdit.Location = new Point(500, 102); EndDateDateEdit.Size = new Size(240, 20); EndDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) }); EndDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            MinInvoiceAmountCalcEdit.Location = new Point(896, 102); MinInvoiceAmountCalcEdit.Size = new Size(272, 20); MinInvoiceAmountCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            MaxDiscountAmountCalcEdit.Location = new Point(124, 132); MaxDiscountAmountCalcEdit.Size = new Size(240, 20); MaxDiscountAmountCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            NoteMemoEdit.Location = new Point(124, 162); NoteMemoEdit.Size = new Size(1044, 54);
+            panelHeader.TabIndex = 2;
+            // 
+            // lblCampaignCode
+            // 
+            lblCampaignCode.Location = new Point(12, 15);
+            lblCampaignCode.Name = "lblCampaignCode";
+            lblCampaignCode.Size = new Size(78, 13);
+            lblCampaignCode.TabIndex = 0;
+            lblCampaignCode.Text = "Kampaniya kodu";
+            // 
+            // lblCampaignDesc
+            // 
+            lblCampaignDesc.Location = new Point(400, 15);
+            lblCampaignDesc.Name = "lblCampaignDesc";
+            lblCampaignDesc.Size = new Size(69, 13);
+            lblCampaignDesc.TabIndex = 1;
+            lblCampaignDesc.Text = "Kampaniya adı";
+            // 
+            // lblCampaignType
+            // 
+            lblCampaignType.Location = new Point(12, 45);
+            lblCampaignType.Name = "lblCampaignType";
+            lblCampaignType.Size = new Size(14, 13);
+            lblCampaignType.TabIndex = 2;
+            lblCampaignType.Text = "Tip";
+            // 
+            // lblPromoCode
+            // 
+            lblPromoCode.Location = new Point(400, 45);
+            lblPromoCode.Name = "lblPromoCode";
+            lblPromoCode.Size = new Size(56, 13);
+            lblPromoCode.TabIndex = 3;
+            lblPromoCode.Text = "Promo code";
+            // 
+            // lblDiscountType
+            // 
+            lblDiscountType.Location = new Point(788, 45);
+            lblDiscountType.Name = "lblDiscountType";
+            lblDiscountType.Size = new Size(51, 13);
+            lblDiscountType.TabIndex = 4;
+            lblDiscountType.Text = "Endirim tipi";
+            // 
+            // lblDiscountValue
+            // 
+            lblDiscountValue.Location = new Point(12, 75);
+            lblDiscountValue.Name = "lblDiscountValue";
+            lblDiscountValue.Size = new Size(34, 13);
+            lblDiscountValue.TabIndex = 5;
+            lblDiscountValue.Text = "Endirim";
+            // 
+            // lblPriority
+            // 
+            lblPriority.Location = new Point(400, 75);
+            lblPriority.Name = "lblPriority";
+            lblPriority.Size = new Size(38, 13);
+            lblPriority.TabIndex = 6;
+            lblPriority.Text = "Prioritet";
+            // 
+            // lblStartDate
+            // 
+            lblStartDate.Location = new Point(12, 105);
+            lblStartDate.Name = "lblStartDate";
+            lblStartDate.Size = new Size(66, 13);
+            lblStartDate.TabIndex = 7;
+            lblStartDate.Text = "Başlama tarixi";
+            // 
+            // lblEndDate
+            // 
+            lblEndDate.Location = new Point(400, 105);
+            lblEndDate.Name = "lblEndDate";
+            lblEndDate.Size = new Size(53, 13);
+            lblEndDate.TabIndex = 8;
+            lblEndDate.Text = "Bitmə tarixi";
+            // 
+            // lblMinInvoiceAmount
+            // 
+            lblMinInvoiceAmount.Location = new Point(788, 105);
+            lblMinInvoiceAmount.Name = "lblMinInvoiceAmount";
+            lblMinInvoiceAmount.Size = new Size(58, 13);
+            lblMinInvoiceAmount.TabIndex = 9;
+            lblMinInvoiceAmount.Text = "Min. faktura";
+            // 
+            // lblMaxDiscountAmount
+            // 
+            lblMaxDiscountAmount.Location = new Point(12, 135);
+            lblMaxDiscountAmount.Name = "lblMaxDiscountAmount";
+            lblMaxDiscountAmount.Size = new Size(65, 13);
+            lblMaxDiscountAmount.TabIndex = 10;
+            lblMaxDiscountAmount.Text = "Maks. endirim";
+            // 
+            // lblNote
+            // 
+            lblNote.Location = new Point(12, 165);
+            lblNote.Name = "lblNote";
+            lblNote.Size = new Size(26, 13);
+            lblNote.TabIndex = 11;
+            lblNote.Text = "Qeyd";
+            // 
+            // CampaignCodeTextEdit
+            // 
+            CampaignCodeTextEdit.Location = new Point(124, 12);
+            CampaignCodeTextEdit.Name = "CampaignCodeTextEdit";
+            CampaignCodeTextEdit.Size = new Size(240, 20);
+            CampaignCodeTextEdit.TabIndex = 12;
+            // 
+            // CampaignDescTextEdit
+            // 
+            CampaignDescTextEdit.Location = new Point(500, 12);
+            CampaignDescTextEdit.Name = "CampaignDescTextEdit";
+            CampaignDescTextEdit.Size = new Size(668, 20);
+            CampaignDescTextEdit.TabIndex = 13;
+            // 
+            // CampaignTypeCodeComboBoxEdit
+            // 
+            CampaignTypeCodeComboBoxEdit.Location = new Point(124, 42);
+            CampaignTypeCodeComboBoxEdit.Name = "CampaignTypeCodeComboBoxEdit";
+            CampaignTypeCodeComboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            CampaignTypeCodeComboBoxEdit.Size = new Size(240, 20);
+            CampaignTypeCodeComboBoxEdit.TabIndex = 14;
+            // 
+            // PromoCodeTextEdit
+            // 
+            PromoCodeTextEdit.Location = new Point(500, 42);
+            PromoCodeTextEdit.Name = "PromoCodeTextEdit";
+            PromoCodeTextEdit.Size = new Size(240, 20);
+            PromoCodeTextEdit.TabIndex = 15;
+            // 
+            // DiscountTypeCodeComboBoxEdit
+            // 
+            DiscountTypeCodeComboBoxEdit.Location = new Point(896, 42);
+            DiscountTypeCodeComboBoxEdit.Name = "DiscountTypeCodeComboBoxEdit";
+            DiscountTypeCodeComboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            DiscountTypeCodeComboBoxEdit.Size = new Size(272, 20);
+            DiscountTypeCodeComboBoxEdit.TabIndex = 16;
+            // 
+            // DiscountValueCalcEdit
+            // 
+            DiscountValueCalcEdit.Location = new Point(124, 72);
+            DiscountValueCalcEdit.Name = "DiscountValueCalcEdit";
+            DiscountValueCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DiscountValueCalcEdit.Size = new Size(240, 20);
+            DiscountValueCalcEdit.TabIndex = 17;
+            // 
+            // PrioritySpinEdit
+            // 
+            PrioritySpinEdit.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
+            PrioritySpinEdit.Location = new Point(500, 72);
+            PrioritySpinEdit.Name = "PrioritySpinEdit";
+            PrioritySpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            PrioritySpinEdit.Size = new Size(240, 20);
+            PrioritySpinEdit.TabIndex = 18;
+            // 
+            // IsActiveCheckEdit
+            // 
+            IsActiveCheckEdit.Location = new Point(896, 72);
+            IsActiveCheckEdit.Name = "IsActiveCheckEdit";
+            IsActiveCheckEdit.Properties.Caption = "Aktiv";
+            IsActiveCheckEdit.Size = new Size(120, 20);
+            IsActiveCheckEdit.TabIndex = 19;
+            // 
+            // IsCombinableCheckEdit
+            // 
+            IsCombinableCheckEdit.Location = new Point(1024, 72);
+            IsCombinableCheckEdit.Name = "IsCombinableCheckEdit";
+            IsCombinableCheckEdit.Properties.Caption = "Birləşə bilir";
+            IsCombinableCheckEdit.Size = new Size(144, 20);
+            IsCombinableCheckEdit.TabIndex = 20;
+            // 
+            // StartDateDateEdit
+            // 
+            StartDateDateEdit.EditValue = new DateTime(2026, 3, 22, 0, 0, 0, 0);
+            StartDateDateEdit.Location = new Point(124, 102);
+            StartDateDateEdit.Name = "StartDateDateEdit";
+            StartDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            StartDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            StartDateDateEdit.Size = new Size(240, 20);
+            StartDateDateEdit.TabIndex = 21;
+            // 
+            // EndDateDateEdit
+            // 
+            EndDateDateEdit.EditValue = new DateTime(2026, 3, 22, 0, 0, 0, 0);
+            EndDateDateEdit.Location = new Point(500, 102);
+            EndDateDateEdit.Name = "EndDateDateEdit";
+            EndDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            EndDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            EndDateDateEdit.Size = new Size(240, 20);
+            EndDateDateEdit.TabIndex = 22;
+            // 
+            // MinInvoiceAmountCalcEdit
+            // 
+            MinInvoiceAmountCalcEdit.Location = new Point(896, 102);
+            MinInvoiceAmountCalcEdit.Name = "MinInvoiceAmountCalcEdit";
+            MinInvoiceAmountCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            MinInvoiceAmountCalcEdit.Size = new Size(272, 20);
+            MinInvoiceAmountCalcEdit.TabIndex = 23;
+            // 
+            // MaxDiscountAmountCalcEdit
+            // 
+            MaxDiscountAmountCalcEdit.Location = new Point(124, 132);
+            MaxDiscountAmountCalcEdit.Name = "MaxDiscountAmountCalcEdit";
+            MaxDiscountAmountCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            MaxDiscountAmountCalcEdit.Size = new Size(240, 20);
+            MaxDiscountAmountCalcEdit.TabIndex = 24;
+            // 
+            // NoteMemoEdit
+            // 
+            NoteMemoEdit.Location = new Point(124, 162);
+            NoteMemoEdit.Name = "NoteMemoEdit";
+            NoteMemoEdit.Size = new Size(1044, 54);
+            NoteMemoEdit.TabIndex = 25;
             // 
             // xtraTabControl1
             // 
@@ -246,86 +419,504 @@ namespace Foxoft
             xtraTabControl1.Name = "xtraTabControl1";
             xtraTabControl1.SelectedTabPage = tabProduct;
             xtraTabControl1.Size = new Size(1180, 444);
+            xtraTabControl1.TabIndex = 0;
             xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabProduct, tabCategory, tabCustomer, tabStore, tabWarehouse, tabPaymentMethod });
-            // product
-            tabProduct.Controls.Add(gC_Product); tabProduct.Controls.Add(panelProduct); tabProduct.Text = "Məhsullar";
-            panelProduct.Controls.Add(btnDeleteProduct); panelProduct.Controls.Add(btnAddProduct); panelProduct.Dock = DockStyle.Top; panelProduct.Size = new Size(1178, 40);
-            btnAddProduct.Location = new Point(8, 8); btnAddProduct.Size = new Size(110, 24); btnAddProduct.Text = "Əlavə et"; btnAddProduct.Click += btnAddProduct_Click;
-            btnDeleteProduct.Location = new Point(124, 8); btnDeleteProduct.Size = new Size(110, 24); btnDeleteProduct.Text = "Sil"; btnDeleteProduct.Click += btnDeleteProduct_Click;
-            gC_Product.DataSource = trCampaignProductsBindingSource; gC_Product.Dock = DockStyle.Fill; gC_Product.Location = new Point(0, 40); gC_Product.MainView = gV_Product; gC_Product.RepositoryItems.AddRange(new RepositoryItem[] { repoLUE_ProductCode }); gC_Product.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Product });
-            gV_Product.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignProductId, colProductCode }); gV_Product.GridControl = gC_Product; gV_Product.OptionsView.ShowGroupPanel = false;
-            colCampaignProductId.FieldName = "CampaignProductId"; colProductCode.FieldName = "ProductCode"; colProductCode.Caption = "Məhsul"; colProductCode.ColumnEdit = repoLUE_ProductCode; colProductCode.Visible = true; colProductCode.VisibleIndex = 0;
-            repoLUE_ProductCode.AutoHeight = false; repoLUE_ProductCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            // category
-            tabCategory.Controls.Add(gC_Category); tabCategory.Controls.Add(panelCategory); tabCategory.Text = "Kateqoriyalar";
-            panelCategory.Controls.Add(btnDeleteCategory); panelCategory.Controls.Add(btnAddCategory); panelCategory.Dock = DockStyle.Top; panelCategory.Size = new Size(1178, 40);
-            btnAddCategory.Location = new Point(8, 8); btnAddCategory.Size = new Size(110, 24); btnAddCategory.Text = "Əlavə et"; btnAddCategory.Click += btnAddCategory_Click;
-            btnDeleteCategory.Location = new Point(124, 8); btnDeleteCategory.Size = new Size(110, 24); btnDeleteCategory.Text = "Sil"; btnDeleteCategory.Click += btnDeleteCategory_Click;
-            gC_Category.DataSource = trCampaignCategoriesBindingSource; gC_Category.Dock = DockStyle.Fill; gC_Category.Location = new Point(0, 40); gC_Category.MainView = gV_Category; gC_Category.RepositoryItems.AddRange(new RepositoryItem[] { repoLUE_CategoryCode }); gC_Category.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Category });
-            gV_Category.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignCategoryId, colHierarchyCode }); gV_Category.GridControl = gC_Category; gV_Category.OptionsView.ShowGroupPanel = false;
-            colCampaignCategoryId.FieldName = "CampaignCategoryId"; colHierarchyCode.FieldName = "HierarchyCode"; colHierarchyCode.Caption = "Kateqoriya"; colHierarchyCode.ColumnEdit = repoLUE_CategoryCode; colHierarchyCode.Visible = true; colHierarchyCode.VisibleIndex = 0;
-            repoLUE_CategoryCode.AutoHeight = false; repoLUE_CategoryCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            // customer
-            tabCustomer.Controls.Add(gC_Customer); tabCustomer.Controls.Add(panelCustomer); tabCustomer.Text = "Müştərilər";
-            panelCustomer.Controls.Add(btnDeleteCustomer); panelCustomer.Controls.Add(btnAddCustomer); panelCustomer.Dock = DockStyle.Top; panelCustomer.Size = new Size(1178, 40);
-            btnAddCustomer.Location = new Point(8, 8); btnAddCustomer.Size = new Size(110, 24); btnAddCustomer.Text = "Əlavə et"; btnAddCustomer.Click += btnAddCustomer_Click;
-            btnDeleteCustomer.Location = new Point(124, 8); btnDeleteCustomer.Size = new Size(110, 24); btnDeleteCustomer.Text = "Sil"; btnDeleteCustomer.Click += btnDeleteCustomer_Click;
-            gC_Customer.DataSource = trCampaignCustomersBindingSource; gC_Customer.Dock = DockStyle.Fill; gC_Customer.Location = new Point(0, 40); gC_Customer.MainView = gV_Customer; gC_Customer.RepositoryItems.AddRange(new RepositoryItem[] { repoLUE_CustomerCode }); gC_Customer.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Customer });
-            gV_Customer.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignCustomerId, colCurrAccCode }); gV_Customer.GridControl = gC_Customer; gV_Customer.OptionsView.ShowGroupPanel = false;
-            colCampaignCustomerId.FieldName = "CampaignCustomerId"; colCurrAccCode.FieldName = "CurrAccCode"; colCurrAccCode.Caption = "Müştəri"; colCurrAccCode.ColumnEdit = repoLUE_CustomerCode; colCurrAccCode.Visible = true; colCurrAccCode.VisibleIndex = 0;
-            repoLUE_CustomerCode.AutoHeight = false; repoLUE_CustomerCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            // store
-            tabStore.Controls.Add(gC_Store); tabStore.Controls.Add(panelStore); tabStore.Text = "Store";
-            panelStore.Controls.Add(btnDeleteStore); panelStore.Controls.Add(btnAddStore); panelStore.Dock = DockStyle.Top; panelStore.Size = new Size(1178, 40);
-            btnAddStore.Location = new Point(8, 8); btnAddStore.Size = new Size(110, 24); btnAddStore.Text = "Əlavə et"; btnAddStore.Click += btnAddStore_Click;
-            btnDeleteStore.Location = new Point(124, 8); btnDeleteStore.Size = new Size(110, 24); btnDeleteStore.Text = "Sil"; btnDeleteStore.Click += btnDeleteStore_Click;
-            gC_Store.DataSource = trCampaignStoresBindingSource; gC_Store.Dock = DockStyle.Fill; gC_Store.Location = new Point(0, 40); gC_Store.MainView = gV_Store; gC_Store.RepositoryItems.AddRange(new RepositoryItem[] { repoLUE_StoreCode }); gC_Store.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Store });
-            gV_Store.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignStoreId, colStoreCode }); gV_Store.GridControl = gC_Store; gV_Store.OptionsView.ShowGroupPanel = false;
-            colCampaignStoreId.FieldName = "CampaignStoreId"; colStoreCode.FieldName = "StoreCode"; colStoreCode.Caption = "Store"; colStoreCode.ColumnEdit = repoLUE_StoreCode; colStoreCode.Visible = true; colStoreCode.VisibleIndex = 0;
-            repoLUE_StoreCode.AutoHeight = false; repoLUE_StoreCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            // warehouse
-            tabWarehouse.Controls.Add(gC_Warehouse); tabWarehouse.Controls.Add(panelWarehouse); tabWarehouse.Text = "Depolar";
-            panelWarehouse.Controls.Add(btnDeleteWarehouse); panelWarehouse.Controls.Add(btnAddWarehouse); panelWarehouse.Dock = DockStyle.Top; panelWarehouse.Size = new Size(1178, 40);
-            btnAddWarehouse.Location = new Point(8, 8); btnAddWarehouse.Size = new Size(110, 24); btnAddWarehouse.Text = "Əlavə et"; btnAddWarehouse.Click += btnAddWarehouse_Click;
-            btnDeleteWarehouse.Location = new Point(124, 8); btnDeleteWarehouse.Size = new Size(110, 24); btnDeleteWarehouse.Text = "Sil"; btnDeleteWarehouse.Click += btnDeleteWarehouse_Click;
-            gC_Warehouse.DataSource = trCampaignWarehousesBindingSource; gC_Warehouse.Dock = DockStyle.Fill; gC_Warehouse.Location = new Point(0, 40); gC_Warehouse.MainView = gV_Warehouse; gC_Warehouse.RepositoryItems.AddRange(new RepositoryItem[] { repoLUE_WarehouseCode }); gC_Warehouse.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Warehouse });
-            gV_Warehouse.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignWarehouseId, colWarehouseCode }); gV_Warehouse.GridControl = gC_Warehouse; gV_Warehouse.OptionsView.ShowGroupPanel = false;
-            colCampaignWarehouseId.FieldName = "CampaignWarehouseId"; colWarehouseCode.FieldName = "WarehouseCode"; colWarehouseCode.Caption = "Depo"; colWarehouseCode.ColumnEdit = repoLUE_WarehouseCode; colWarehouseCode.Visible = true; colWarehouseCode.VisibleIndex = 0;
-            repoLUE_WarehouseCode.AutoHeight = false; repoLUE_WarehouseCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            // payment method
-            tabPaymentMethod.Controls.Add(gC_PaymentMethod); tabPaymentMethod.Controls.Add(panelPaymentMethod); tabPaymentMethod.Text = "Ödəmə üsulları";
-            panelPaymentMethod.Controls.Add(btnDeletePaymentMethod); panelPaymentMethod.Controls.Add(btnAddPaymentMethod); panelPaymentMethod.Dock = DockStyle.Top; panelPaymentMethod.Size = new Size(1178, 40);
-            btnAddPaymentMethod.Location = new Point(8, 8); btnAddPaymentMethod.Size = new Size(110, 24); btnAddPaymentMethod.Text = "Əlavə et"; btnAddPaymentMethod.Click += btnAddPaymentMethod_Click;
-            btnDeletePaymentMethod.Location = new Point(124, 8); btnDeletePaymentMethod.Size = new Size(110, 24); btnDeletePaymentMethod.Text = "Sil"; btnDeletePaymentMethod.Click += btnDeletePaymentMethod_Click;
-            gC_PaymentMethod.DataSource = trCampaignPaymentMethodsBindingSource; gC_PaymentMethod.Dock = DockStyle.Fill; gC_PaymentMethod.Location = new Point(0, 40); gC_PaymentMethod.MainView = gV_PaymentMethod; gC_PaymentMethod.RepositoryItems.AddRange(new RepositoryItem[] { repoLUE_PaymentMethod }); gC_PaymentMethod.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_PaymentMethod });
-            gV_PaymentMethod.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignPaymentMethodId, colPaymentMethodId }); gV_PaymentMethod.GridControl = gC_PaymentMethod; gV_PaymentMethod.OptionsView.ShowGroupPanel = false;
-            colCampaignPaymentMethodId.FieldName = "CampaignPaymentMethodId"; colPaymentMethodId.FieldName = "PaymentMethodId"; colPaymentMethodId.Caption = "Ödəmə üsulu"; colPaymentMethodId.ColumnEdit = repoLUE_PaymentMethod; colPaymentMethodId.Visible = true; colPaymentMethodId.VisibleIndex = 0;
-            repoLUE_PaymentMethod.AutoHeight = false; repoLUE_PaymentMethod.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            // 
+            // tabProduct
+            // 
+            tabProduct.Controls.Add(gC_Product);
+            tabProduct.Controls.Add(panelProduct);
+            tabProduct.Name = "tabProduct";
+            tabProduct.Size = new Size(1178, 419);
+            tabProduct.Text = "Məhsullar";
+            // 
+            // gC_Product
+            // 
+            gC_Product.DataSource = trCampaignProductsBindingSource;
+            gC_Product.Dock = DockStyle.Fill;
+            gC_Product.Location = new Point(0, 40);
+            gC_Product.MainView = gV_Product;
+            gC_Product.Name = "gC_Product";
+            gC_Product.Size = new Size(1178, 379);
+            gC_Product.TabIndex = 0;
+            gC_Product.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Product });
+            // 
+            // trCampaignProductsBindingSource
+            // 
+            trCampaignProductsBindingSource.DataSource = typeof(TrCampaignProduct);
+            trCampaignProductsBindingSource.AddingNew += trCampaignProductsBindingSource_AddingNew;
+            // 
+            // gV_Product
+            // 
+            gV_Product.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignProductId, colProductCode, colProductDesc });
+            gV_Product.GridControl = gC_Product;
+            gV_Product.Name = "gV_Product";
+            gV_Product.OptionsView.ShowGroupPanel = false;
+            gV_Product.CustomUnboundColumnData += gV_Product_CustomUnboundColumnData;
+            // 
+            // colCampaignProductId
+            // 
+            colCampaignProductId.FieldName = "CampaignProductId";
+            colCampaignProductId.Name = "colCampaignProductId";
+            // 
+            // colProductCode
+            // 
+            colProductCode.Caption = "Məhsul";
+            colProductCode.FieldName = "ProductCode";
+            colProductCode.Name = "colProductCode";
+            colProductCode.Visible = true;
+            colProductCode.VisibleIndex = 0;
+            // 
+            // colProductDesc
+            // 
+            colProductDesc.FieldName = "DcProduct.ProductDesc";
+            colProductDesc.Name = "colProductDesc";
+            colProductDesc.UnboundDataType = typeof(string);
+            colProductDesc.Visible = true;
+            colProductDesc.VisibleIndex = 1;
+            // 
+            // panelProduct
+            // 
+            panelProduct.Controls.Add(btnDeleteProduct);
+            panelProduct.Controls.Add(btnAddProduct);
+            panelProduct.Dock = DockStyle.Top;
+            panelProduct.Location = new Point(0, 0);
+            panelProduct.Name = "panelProduct";
+            panelProduct.Size = new Size(1178, 40);
+            panelProduct.TabIndex = 1;
+            // 
+            // btnDeleteProduct
+            // 
+            btnDeleteProduct.Location = new Point(124, 8);
+            btnDeleteProduct.Name = "btnDeleteProduct";
+            btnDeleteProduct.Size = new Size(110, 24);
+            btnDeleteProduct.TabIndex = 0;
+            btnDeleteProduct.Text = "Sil";
+            btnDeleteProduct.Click += btnDeleteProduct_Click;
+            // 
+            // btnAddProduct
+            // 
+            btnAddProduct.Location = new Point(8, 8);
+            btnAddProduct.Name = "btnAddProduct";
+            btnAddProduct.Size = new Size(110, 24);
+            btnAddProduct.TabIndex = 1;
+            btnAddProduct.Text = "Əlavə et";
+            btnAddProduct.Click += btnAddProduct_Click;
+            // 
+            // tabCategory
+            // 
+            tabCategory.Controls.Add(gC_Category);
+            tabCategory.Controls.Add(panelCategory);
+            tabCategory.Name = "tabCategory";
+            tabCategory.Size = new Size(1178, 419);
+            tabCategory.Text = "Kateqoriyalar";
+            // 
+            // gC_Category
+            // 
+            gC_Category.DataSource = trCampaignCategoriesBindingSource;
+            gC_Category.Dock = DockStyle.Fill;
+            gC_Category.Location = new Point(0, 40);
+            gC_Category.MainView = gV_Category;
+            gC_Category.Name = "gC_Category";
+            gC_Category.Size = new Size(1178, 379);
+            gC_Category.TabIndex = 0;
+            gC_Category.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Category });
+            // 
+            // trCampaignCategoriesBindingSource
+            // 
+            trCampaignCategoriesBindingSource.DataSource = typeof(TrCampaignCategory);
+            trCampaignCategoriesBindingSource.AddingNew += trCampaignCategoriesBindingSource_AddingNew;
+            // 
+            // gV_Category
+            // 
+            gV_Category.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignCategoryId, colHierarchyCode });
+            gV_Category.GridControl = gC_Category;
+            gV_Category.Name = "gV_Category";
+            gV_Category.OptionsView.ShowGroupPanel = false;
+            // 
+            // colCampaignCategoryId
+            // 
+            colCampaignCategoryId.FieldName = "CampaignCategoryId";
+            colCampaignCategoryId.Name = "colCampaignCategoryId";
+            // 
+            // colHierarchyCode
+            // 
+            colHierarchyCode.Caption = "Kateqoriya";
+            colHierarchyCode.FieldName = "HierarchyCode";
+            colHierarchyCode.Name = "colHierarchyCode";
+            colHierarchyCode.Visible = true;
+            colHierarchyCode.VisibleIndex = 0;
+            // 
+            // panelCategory
+            // 
+            panelCategory.Controls.Add(btnDeleteCategory);
+            panelCategory.Controls.Add(btnAddCategory);
+            panelCategory.Dock = DockStyle.Top;
+            panelCategory.Location = new Point(0, 0);
+            panelCategory.Name = "panelCategory";
+            panelCategory.Size = new Size(1178, 40);
+            panelCategory.TabIndex = 1;
+            // 
+            // btnDeleteCategory
+            // 
+            btnDeleteCategory.Location = new Point(124, 8);
+            btnDeleteCategory.Name = "btnDeleteCategory";
+            btnDeleteCategory.Size = new Size(110, 24);
+            btnDeleteCategory.TabIndex = 0;
+            btnDeleteCategory.Text = "Sil";
+            btnDeleteCategory.Click += btnDeleteCategory_Click;
+            // 
+            // btnAddCategory
+            // 
+            btnAddCategory.Location = new Point(8, 8);
+            btnAddCategory.Name = "btnAddCategory";
+            btnAddCategory.Size = new Size(110, 24);
+            btnAddCategory.TabIndex = 1;
+            btnAddCategory.Text = "Əlavə et";
+            btnAddCategory.Click += btnAddCategory_Click;
+            // 
+            // tabCustomer
+            // 
+            tabCustomer.Controls.Add(gC_Customer);
+            tabCustomer.Controls.Add(panelCustomer);
+            tabCustomer.Name = "tabCustomer";
+            tabCustomer.Size = new Size(1178, 419);
+            tabCustomer.Text = "Müştərilər";
+            // 
+            // gC_Customer
+            // 
+            gC_Customer.DataSource = trCampaignCustomersBindingSource;
+            gC_Customer.Dock = DockStyle.Fill;
+            gC_Customer.Location = new Point(0, 40);
+            gC_Customer.MainView = gV_Customer;
+            gC_Customer.Name = "gC_Customer";
+            gC_Customer.Size = new Size(1178, 379);
+            gC_Customer.TabIndex = 0;
+            gC_Customer.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Customer });
+            // 
+            // trCampaignCustomersBindingSource
+            // 
+            trCampaignCustomersBindingSource.DataSource = typeof(TrCampaignCustomer);
+            trCampaignCustomersBindingSource.AddingNew += trCampaignCustomersBindingSource_AddingNew;
+            // 
+            // gV_Customer
+            // 
+            gV_Customer.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignCustomerId, colCurrAccCode, colCurrAccDesc });
+            gV_Customer.GridControl = gC_Customer;
+            gV_Customer.Name = "gV_Customer";
+            gV_Customer.OptionsView.ShowGroupPanel = false;
+            gV_Customer.CustomUnboundColumnData += gV_Customer_CustomUnboundColumnData;
+            // 
+            // colCampaignCustomerId
+            // 
+            colCampaignCustomerId.FieldName = "CampaignCustomerId";
+            colCampaignCustomerId.Name = "colCampaignCustomerId";
+            // 
+            // colCurrAccCode
+            // 
+            colCurrAccCode.Caption = "Müştəri";
+            colCurrAccCode.FieldName = "CurrAccCode";
+            colCurrAccCode.Name = "colCurrAccCode";
+            colCurrAccCode.Visible = true;
+            colCurrAccCode.VisibleIndex = 0;
+            // 
+            // colCurrAccDesc
+            // 
+            colCurrAccDesc.FieldName = "DcCurrAcc.CurrAccDesc";
+            colCurrAccDesc.Name = "colCurrAccDesc";
+            colCurrAccDesc.UnboundDataType = typeof(string);
+            colCurrAccDesc.Visible = true;
+            colCurrAccDesc.VisibleIndex = 1;
+            // 
+            // panelCustomer
+            // 
+            panelCustomer.Controls.Add(btnDeleteCustomer);
+            panelCustomer.Controls.Add(btnAddCustomer);
+            panelCustomer.Dock = DockStyle.Top;
+            panelCustomer.Location = new Point(0, 0);
+            panelCustomer.Name = "panelCustomer";
+            panelCustomer.Size = new Size(1178, 40);
+            panelCustomer.TabIndex = 1;
+            // 
+            // btnDeleteCustomer
+            // 
+            btnDeleteCustomer.Location = new Point(124, 8);
+            btnDeleteCustomer.Name = "btnDeleteCustomer";
+            btnDeleteCustomer.Size = new Size(110, 24);
+            btnDeleteCustomer.TabIndex = 0;
+            btnDeleteCustomer.Text = "Sil";
+            btnDeleteCustomer.Click += btnDeleteCustomer_Click;
+            // 
+            // btnAddCustomer
+            // 
+            btnAddCustomer.Location = new Point(8, 8);
+            btnAddCustomer.Name = "btnAddCustomer";
+            btnAddCustomer.Size = new Size(110, 24);
+            btnAddCustomer.TabIndex = 1;
+            btnAddCustomer.Text = "Əlavə et";
+            btnAddCustomer.Click += btnAddCustomer_Click;
+            // 
+            // tabStore
+            // 
+            tabStore.Controls.Add(gC_Store);
+            tabStore.Controls.Add(panelStore);
+            tabStore.Name = "tabStore";
+            tabStore.Size = new Size(1178, 419);
+            tabStore.Text = "Store";
+            // 
+            // gC_Store
+            // 
+            gC_Store.DataSource = trCampaignStoresBindingSource;
+            gC_Store.Dock = DockStyle.Fill;
+            gC_Store.Location = new Point(0, 40);
+            gC_Store.MainView = gV_Store;
+            gC_Store.Name = "gC_Store";
+            gC_Store.Size = new Size(1178, 379);
+            gC_Store.TabIndex = 0;
+            gC_Store.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Store });
+            // 
+            // trCampaignStoresBindingSource
+            // 
+            trCampaignStoresBindingSource.DataSource = typeof(TrCampaignStore);
+            trCampaignStoresBindingSource.AddingNew += trCampaignStoresBindingSource_AddingNew;
+            // 
+            // gV_Store
+            // 
+            gV_Store.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignStoreId, colStoreCode });
+            gV_Store.GridControl = gC_Store;
+            gV_Store.Name = "gV_Store";
+            gV_Store.OptionsView.ShowGroupPanel = false;
+            // 
+            // colCampaignStoreId
+            // 
+            colCampaignStoreId.FieldName = "CampaignStoreId";
+            colCampaignStoreId.Name = "colCampaignStoreId";
+            // 
+            // colStoreCode
+            // 
+            colStoreCode.Caption = "Store";
+            colStoreCode.FieldName = "StoreCode";
+            colStoreCode.Name = "colStoreCode";
+            colStoreCode.Visible = true;
+            colStoreCode.VisibleIndex = 0;
+            // 
+            // panelStore
+            // 
+            panelStore.Controls.Add(btnDeleteStore);
+            panelStore.Controls.Add(btnAddStore);
+            panelStore.Dock = DockStyle.Top;
+            panelStore.Location = new Point(0, 0);
+            panelStore.Name = "panelStore";
+            panelStore.Size = new Size(1178, 40);
+            panelStore.TabIndex = 1;
+            // 
+            // btnDeleteStore
+            // 
+            btnDeleteStore.Location = new Point(124, 8);
+            btnDeleteStore.Name = "btnDeleteStore";
+            btnDeleteStore.Size = new Size(110, 24);
+            btnDeleteStore.TabIndex = 0;
+            btnDeleteStore.Text = "Sil";
+            btnDeleteStore.Click += btnDeleteStore_Click;
+            // 
+            // btnAddStore
+            // 
+            btnAddStore.Location = new Point(8, 8);
+            btnAddStore.Name = "btnAddStore";
+            btnAddStore.Size = new Size(110, 24);
+            btnAddStore.TabIndex = 1;
+            btnAddStore.Text = "Əlavə et";
+            btnAddStore.Click += btnAddStore_Click;
+            // 
+            // tabWarehouse
+            // 
+            tabWarehouse.Controls.Add(gC_Warehouse);
+            tabWarehouse.Controls.Add(panelWarehouse);
+            tabWarehouse.Name = "tabWarehouse";
+            tabWarehouse.Size = new Size(1178, 419);
+            tabWarehouse.Text = "Depolar";
+            // 
+            // gC_Warehouse
+            // 
+            gC_Warehouse.DataSource = trCampaignWarehousesBindingSource;
+            gC_Warehouse.Dock = DockStyle.Fill;
+            gC_Warehouse.Location = new Point(0, 40);
+            gC_Warehouse.MainView = gV_Warehouse;
+            gC_Warehouse.Name = "gC_Warehouse";
+            gC_Warehouse.Size = new Size(1178, 379);
+            gC_Warehouse.TabIndex = 0;
+            gC_Warehouse.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Warehouse });
+            // 
+            // trCampaignWarehousesBindingSource
+            // 
+            trCampaignWarehousesBindingSource.DataSource = typeof(TrCampaignWarehouse);
+            trCampaignWarehousesBindingSource.AddingNew += trCampaignWarehousesBindingSource_AddingNew;
+            // 
+            // gV_Warehouse
+            // 
+            gV_Warehouse.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignWarehouseId, colWarehouseCode });
+            gV_Warehouse.GridControl = gC_Warehouse;
+            gV_Warehouse.Name = "gV_Warehouse";
+            gV_Warehouse.OptionsView.ShowGroupPanel = false;
+            // 
+            // colCampaignWarehouseId
+            // 
+            colCampaignWarehouseId.FieldName = "CampaignWarehouseId";
+            colCampaignWarehouseId.Name = "colCampaignWarehouseId";
+            // 
+            // colWarehouseCode
+            // 
+            colWarehouseCode.Caption = "Depo";
+            colWarehouseCode.FieldName = "WarehouseCode";
+            colWarehouseCode.Name = "colWarehouseCode";
+            colWarehouseCode.Visible = true;
+            colWarehouseCode.VisibleIndex = 0;
+            // 
+            // panelWarehouse
+            // 
+            panelWarehouse.Controls.Add(btnDeleteWarehouse);
+            panelWarehouse.Controls.Add(btnAddWarehouse);
+            panelWarehouse.Dock = DockStyle.Top;
+            panelWarehouse.Location = new Point(0, 0);
+            panelWarehouse.Name = "panelWarehouse";
+            panelWarehouse.Size = new Size(1178, 40);
+            panelWarehouse.TabIndex = 1;
+            // 
+            // btnDeleteWarehouse
+            // 
+            btnDeleteWarehouse.Location = new Point(124, 8);
+            btnDeleteWarehouse.Name = "btnDeleteWarehouse";
+            btnDeleteWarehouse.Size = new Size(110, 24);
+            btnDeleteWarehouse.TabIndex = 0;
+            btnDeleteWarehouse.Text = "Sil";
+            btnDeleteWarehouse.Click += btnDeleteWarehouse_Click;
+            // 
+            // btnAddWarehouse
+            // 
+            btnAddWarehouse.Location = new Point(8, 8);
+            btnAddWarehouse.Name = "btnAddWarehouse";
+            btnAddWarehouse.Size = new Size(110, 24);
+            btnAddWarehouse.TabIndex = 1;
+            btnAddWarehouse.Text = "Əlavə et";
+            btnAddWarehouse.Click += btnAddWarehouse_Click;
+            // 
+            // tabPaymentMethod
+            // 
+            tabPaymentMethod.Controls.Add(gC_PaymentMethod);
+            tabPaymentMethod.Controls.Add(panelPaymentMethod);
+            tabPaymentMethod.Name = "tabPaymentMethod";
+            tabPaymentMethod.Size = new Size(1178, 419);
+            tabPaymentMethod.Text = "Ödəmə üsulları";
+            // 
+            // gC_PaymentMethod
+            // 
+            gC_PaymentMethod.DataSource = trCampaignPaymentMethodsBindingSource;
+            gC_PaymentMethod.Dock = DockStyle.Fill;
+            gC_PaymentMethod.Location = new Point(0, 40);
+            gC_PaymentMethod.MainView = gV_PaymentMethod;
+            gC_PaymentMethod.Name = "gC_PaymentMethod";
+            gC_PaymentMethod.Size = new Size(1178, 379);
+            gC_PaymentMethod.TabIndex = 0;
+            gC_PaymentMethod.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_PaymentMethod });
+            // 
+            // trCampaignPaymentMethodsBindingSource
+            // 
+            trCampaignPaymentMethodsBindingSource.DataSource = typeof(TrCampaignPaymentMethod);
+            trCampaignPaymentMethodsBindingSource.AddingNew += trCampaignPaymentMethodsBindingSource_AddingNew;
+            // 
+            // gV_PaymentMethod
+            // 
+            gV_PaymentMethod.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCampaignPaymentMethodId, colPaymentMethodId, colPaymentMethodDesc });
+            gV_PaymentMethod.GridControl = gC_PaymentMethod;
+            gV_PaymentMethod.Name = "gV_PaymentMethod";
+            gV_PaymentMethod.OptionsView.ShowGroupPanel = false;
+            gV_PaymentMethod.CustomUnboundColumnData += gV_PaymentMethod_CustomUnboundColumnData;
+            // 
+            // colCampaignPaymentMethodId
+            // 
+            colCampaignPaymentMethodId.FieldName = "CampaignPaymentMethodId";
+            colCampaignPaymentMethodId.Name = "colCampaignPaymentMethodId";
+            // 
+            // colPaymentMethodId
+            // 
+            colPaymentMethodId.Caption = "Ödəmə üsulu";
+            colPaymentMethodId.FieldName = "PaymentMethodId";
+            colPaymentMethodId.Name = "colPaymentMethodId";
+            colPaymentMethodId.Visible = true;
+            colPaymentMethodId.VisibleIndex = 0;
+            // 
+            // panelPaymentMethod
+            // 
+            panelPaymentMethod.Controls.Add(btnDeletePaymentMethod);
+            panelPaymentMethod.Controls.Add(btnAddPaymentMethod);
+            panelPaymentMethod.Dock = DockStyle.Top;
+            panelPaymentMethod.Location = new Point(0, 0);
+            panelPaymentMethod.Name = "panelPaymentMethod";
+            panelPaymentMethod.Size = new Size(1178, 40);
+            panelPaymentMethod.TabIndex = 1;
+            // 
+            // btnDeletePaymentMethod
+            // 
+            btnDeletePaymentMethod.Location = new Point(124, 8);
+            btnDeletePaymentMethod.Name = "btnDeletePaymentMethod";
+            btnDeletePaymentMethod.Size = new Size(110, 24);
+            btnDeletePaymentMethod.TabIndex = 0;
+            btnDeletePaymentMethod.Text = "Sil";
+            btnDeletePaymentMethod.Click += btnDeletePaymentMethod_Click;
+            // 
+            // btnAddPaymentMethod
+            // 
+            btnAddPaymentMethod.Location = new Point(8, 8);
+            btnAddPaymentMethod.Name = "btnAddPaymentMethod";
+            btnAddPaymentMethod.Size = new Size(110, 24);
+            btnAddPaymentMethod.TabIndex = 1;
+            btnAddPaymentMethod.Text = "Əlavə et";
+            btnAddPaymentMethod.Click += btnAddPaymentMethod_Click;
+            // 
             // panelButtons
-            panelButtons.Controls.Add(btn_Cancel); 
-            panelButtons.Controls.Add(btn_Ok); 
-            panelButtons.Dock = DockStyle.Bottom; 
-            panelButtons.Location = new Point(0, 672); 
+            // 
+            panelButtons.Controls.Add(btn_Cancel);
+            panelButtons.Controls.Add(btn_Ok);
+            panelButtons.Dock = DockStyle.Bottom;
+            panelButtons.Location = new Point(0, 672);
+            panelButtons.Name = "panelButtons";
             panelButtons.Size = new Size(1180, 48);
-            btn_Ok.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_Ok.Location = new Point(942, 10); 
-            btn_Ok.Size = new Size(110, 28); 
-            btn_Ok.Text = "Yadda saxla"; 
-            btn_Ok.Click += btn_Ok_Click;
+            panelButtons.TabIndex = 1;
+            // 
+            // btn_Cancel
+            // 
             btn_Cancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_Cancel.Location = new Point(1058, 10); 
-            btn_Cancel.Size = new Size(110, 28); 
-            btn_Cancel.Text = "Bağla"; 
+            btn_Cancel.Location = new Point(1058, 10);
+            btn_Cancel.Name = "btn_Cancel";
+            btn_Cancel.Size = new Size(110, 28);
+            btn_Cancel.TabIndex = 0;
+            btn_Cancel.Text = "Bağla";
             btn_Cancel.Click += btn_Cancel_Click;
-            // binding sources
+            // 
+            // btn_Ok
+            // 
+            btn_Ok.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btn_Ok.Location = new Point(942, 10);
+            btn_Ok.Name = "btn_Ok";
+            btn_Ok.Size = new Size(110, 28);
+            btn_Ok.TabIndex = 1;
+            btn_Ok.Text = "Yadda saxla";
+            btn_Ok.Click += btn_Ok_Click;
+            // 
+            // dcCampaignsBindingSource
+            // 
             dcCampaignsBindingSource.DataSource = typeof(DcCampaign);
-            trCampaignProductsBindingSource.DataSource = typeof(TrCampaignProduct); trCampaignProductsBindingSource.AddingNew += trCampaignProductsBindingSource_AddingNew;
-            trCampaignCategoriesBindingSource.DataSource = typeof(TrCampaignCategory); trCampaignCategoriesBindingSource.AddingNew += trCampaignCategoriesBindingSource_AddingNew;
-            trCampaignCustomersBindingSource.DataSource = typeof(TrCampaignCustomer); trCampaignCustomersBindingSource.AddingNew += trCampaignCustomersBindingSource_AddingNew;
-            trCampaignStoresBindingSource.DataSource = typeof(TrCampaignStore); trCampaignStoresBindingSource.AddingNew += trCampaignStoresBindingSource_AddingNew;
-            trCampaignWarehousesBindingSource.DataSource = typeof(TrCampaignWarehouse); trCampaignWarehousesBindingSource.AddingNew += trCampaignWarehousesBindingSource_AddingNew;
-            trCampaignPaymentMethodsBindingSource.DataSource = typeof(TrCampaignPaymentMethod); trCampaignPaymentMethodsBindingSource.AddingNew += trCampaignPaymentMethodsBindingSource_AddingNew;
-            // form
+            // 
+            // colPaymentMethodDesc
+            // 
+            colPaymentMethodDesc.FieldName = "DcPaymentMethod.PaymentMethodDesc";
+            colPaymentMethodDesc.Name = "colPaymentMethodDesc";
+            colPaymentMethodDesc.UnboundDataType = typeof(string);
+            colPaymentMethodDesc.Visible = true;
+            colPaymentMethodDesc.VisibleIndex = 1;
+            // 
+            // FormCampaign
+            // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1180, 720);
@@ -361,42 +952,36 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_Product).EndInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignProductsBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_Product).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_ProductCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelProduct).EndInit();
             panelProduct.ResumeLayout(false);
             tabCategory.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gC_Category).EndInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignCategoriesBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_Category).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_CategoryCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelCategory).EndInit();
             panelCategory.ResumeLayout(false);
             tabCustomer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gC_Customer).EndInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignCustomersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_Customer).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_CustomerCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelCustomer).EndInit();
             panelCustomer.ResumeLayout(false);
             tabStore.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gC_Store).EndInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignStoresBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_Store).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_StoreCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelStore).EndInit();
             panelStore.ResumeLayout(false);
             tabWarehouse.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gC_Warehouse).EndInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignWarehousesBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_Warehouse).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_WarehouseCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelWarehouse).EndInit();
             panelWarehouse.ResumeLayout(false);
             tabPaymentMethod.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gC_PaymentMethod).EndInit();
             ((System.ComponentModel.ISupportInitialize)trCampaignPaymentMethodsBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_PaymentMethod).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_PaymentMethod).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelPaymentMethod).EndInit();
             panelPaymentMethod.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)panelButtons).EndInit();
@@ -418,6 +1003,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.LabelControl lblMinInvoiceAmount;
         private DevExpress.XtraEditors.LabelControl lblMaxDiscountAmount;
         private DevExpress.XtraEditors.LabelControl lblNote;
+
         private DevExpress.XtraEditors.TextEdit CampaignCodeTextEdit;
         private DevExpress.XtraEditors.TextEdit CampaignDescTextEdit;
         private DevExpress.XtraEditors.ComboBoxEdit CampaignTypeCodeComboBoxEdit;
@@ -432,6 +1018,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.CalcEdit MinInvoiceAmountCalcEdit;
         private DevExpress.XtraEditors.CalcEdit MaxDiscountAmountCalcEdit;
         private DevExpress.XtraEditors.MemoEdit NoteMemoEdit;
+
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
         private DevExpress.XtraTab.XtraTabPage tabProduct;
         private DevExpress.XtraTab.XtraTabPage tabCategory;
@@ -439,6 +1026,7 @@ namespace Foxoft
         private DevExpress.XtraTab.XtraTabPage tabStore;
         private DevExpress.XtraTab.XtraTabPage tabWarehouse;
         private DevExpress.XtraTab.XtraTabPage tabPaymentMethod;
+
         private DevExpress.XtraGrid.GridControl gC_Product;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_Product;
         private DevExpress.XtraGrid.GridControl gC_Category;
@@ -451,6 +1039,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Views.Grid.GridView gV_Warehouse;
         private DevExpress.XtraGrid.GridControl gC_PaymentMethod;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentMethod;
+
         private BindingSource dcCampaignsBindingSource;
         private BindingSource trCampaignProductsBindingSource;
         private BindingSource trCampaignCategoriesBindingSource;
@@ -458,21 +1047,19 @@ namespace Foxoft
         private BindingSource trCampaignStoresBindingSource;
         private BindingSource trCampaignWarehousesBindingSource;
         private BindingSource trCampaignPaymentMethodsBindingSource;
-        private RepositoryItemLookUpEdit repoLUE_ProductCode;
-        private RepositoryItemLookUpEdit repoLUE_CategoryCode;
-        private RepositoryItemLookUpEdit repoLUE_CustomerCode;
-        private RepositoryItemLookUpEdit repoLUE_StoreCode;
-        private RepositoryItemLookUpEdit repoLUE_WarehouseCode;
-        private RepositoryItemLookUpEdit repoLUE_PaymentMethod;
+
+
         private DevExpress.XtraEditors.PanelControl panelButtons;
         private DevExpress.XtraEditors.SimpleButton btn_Ok;
         private DevExpress.XtraEditors.SimpleButton btn_Cancel;
+
         private DevExpress.XtraEditors.PanelControl panelProduct;
         private DevExpress.XtraEditors.PanelControl panelCategory;
         private DevExpress.XtraEditors.PanelControl panelCustomer;
         private DevExpress.XtraEditors.PanelControl panelStore;
         private DevExpress.XtraEditors.PanelControl panelWarehouse;
         private DevExpress.XtraEditors.PanelControl panelPaymentMethod;
+
         private DevExpress.XtraEditors.SimpleButton btnAddProduct;
         private DevExpress.XtraEditors.SimpleButton btnDeleteProduct;
         private DevExpress.XtraEditors.SimpleButton btnAddCategory;
@@ -485,6 +1072,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.SimpleButton btnDeleteWarehouse;
         private DevExpress.XtraEditors.SimpleButton btnAddPaymentMethod;
         private DevExpress.XtraEditors.SimpleButton btnDeletePaymentMethod;
+
         private DevExpress.XtraGrid.Columns.GridColumn colCampaignProductId;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
         private DevExpress.XtraGrid.Columns.GridColumn colCampaignCategoryId;
@@ -497,5 +1085,8 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colWarehouseCode;
         private DevExpress.XtraGrid.Columns.GridColumn colCampaignPaymentMethodId;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodId;
+        private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodDesc;
     }
 }

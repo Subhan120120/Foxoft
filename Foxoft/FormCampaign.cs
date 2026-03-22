@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Models.Entity;
 using Microsoft.EntityFrameworkCore;
@@ -39,35 +40,17 @@ namespace Foxoft
         {
             using subContext lookUpDb = new();
 
-            repoLUE_ProductCode.DataSource = lookUpDb.DcProducts.AsNoTracking().ToList();
-            repoLUE_ProductCode.DisplayMember = nameof(DcProduct.ProductCode);
-            repoLUE_ProductCode.ValueMember = nameof(DcProduct.ProductCode);
-            repoLUE_ProductCode.NullText = "";
+            colProductCode.ColumnEdit = gC_Product.AddProductCodeButtonEdit();
 
-            repoLUE_CustomerCode.DataSource = lookUpDb.DcCurrAccs.AsNoTracking().ToList();
-            repoLUE_CustomerCode.DisplayMember = nameof(DcCurrAcc.CurrAccCode);
-            repoLUE_CustomerCode.ValueMember = nameof(DcCurrAcc.CurrAccCode);
-            repoLUE_CustomerCode.NullText = "";
+            colCurrAccCode.ColumnEdit = gC_Product.AddCurrAccCodeButtonEdit();
 
-            repoLUE_CategoryCode.DataSource = lookUpDb.DcHierarchies.AsNoTracking().ToList();
-            repoLUE_CategoryCode.DisplayMember = nameof(DcHierarchy.HierarchyCode);
-            repoLUE_CategoryCode.ValueMember = nameof(DcHierarchy.HierarchyCode);
-            repoLUE_CategoryCode.NullText = "";
+            colHierarchyCode.ColumnEdit = gC_Product.AddHierarchyCodeButtonEdit();
 
-            repoLUE_StoreCode.DataSource = efMethods.SelectStores();
-            repoLUE_StoreCode.DisplayMember = "StoreCode";
-            repoLUE_StoreCode.ValueMember = "StoreCode";
-            repoLUE_StoreCode.NullText = "";
+            colStoreCode.ColumnEdit = gC_Product.AddStoreCodeLookUpEdit();
 
-            repoLUE_WarehouseCode.DataSource = lookUpDb.DcWarehouses.AsNoTracking().ToList();
-            repoLUE_WarehouseCode.DisplayMember = nameof(DcWarehouse.WarehouseCode);
-            repoLUE_WarehouseCode.ValueMember = nameof(DcWarehouse.WarehouseCode);
-            repoLUE_WarehouseCode.NullText = "";
+            colWarehouseCode.ColumnEdit = gC_Product.AddWarehouseCodeButtonEdit();
 
-            repoLUE_PaymentMethod.DataSource = lookUpDb.DcPaymentMethods.AsNoTracking().ToList();
-            repoLUE_PaymentMethod.DisplayMember = nameof(DcPaymentMethod.PaymentMethodDesc);
-            repoLUE_PaymentMethod.ValueMember = nameof(DcPaymentMethod.PaymentMethodId);
-            repoLUE_PaymentMethod.NullText = "";
+            colPaymentMethodId.ColumnEdit = gC_Product.AddPaymentMethodButtonEdit();
 
             CampaignTypeCodeComboBoxEdit.Properties.Items.Clear();
             CampaignTypeCodeComboBoxEdit.Properties.Items.AddRange(new object[]
@@ -316,7 +299,7 @@ namespace Foxoft
             };
         }
 
-        private static void DeleteFocusedRow(DevExpress.XtraGrid.Views.Grid.GridView gridView)
+        private static void DeleteFocusedRow(GridView gridView)
         {
             if (gridView.FocusedRowHandle >= 0)
                 gridView.DeleteRow(gridView.FocusedRowHandle);
@@ -334,5 +317,43 @@ namespace Foxoft
         private void btnDeleteWarehouse_Click(object sender, EventArgs e) => DeleteFocusedRow(gV_Warehouse);
         private void btnAddPaymentMethod_Click(object sender, EventArgs e) => trCampaignPaymentMethodsBindingSource.AddNew();
         private void btnDeletePaymentMethod_Click(object sender, EventArgs e) => DeleteFocusedRow(gV_PaymentMethod);
+
+        private void gV_Product_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
+        {
+            if (e.Column.FieldName == $"{nameof(DcProduct)}.{nameof(DcProduct.ProductDesc)}" && e.IsGetData)
+            {
+                GridView view = sender as GridView;
+                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+                string productCode = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
+
+                DcProduct dcProduct = efMethods.SelectProduct(productCode, new byte[] { 1 });
+
+                e.Value = dcProduct?.ProductDesc;
+            }
+        }
+
+        private void gV_Customer_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
+        {
+            if (e.Column.FieldName == $"{nameof(DcCurrAcc)}.{nameof(DcCurrAcc.CurrAccDesc)}" && e.IsGetData)
+            {
+                GridView view = sender as GridView;
+                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+                string currAccCode = view.GetRowCellValue(rowInd, colCurrAccCode) as string ?? string.Empty;
+                DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
+                e.Value = dcCurrAcc?.CurrAccDesc;
+            }
+        }
+
+        private void gV_PaymentMethod_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
+        {
+            if (e.Column.FieldName == $"{nameof(DcPaymentMethod)}.{nameof(DcPaymentMethod.PaymentMethodDesc)}" && e.IsGetData)
+            {
+                GridView view = sender as GridView;
+                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+                int paymentMethodId = Convert.ToInt32(view.GetRowCellValue(rowInd, colPaymentMethodId));
+                DcPaymentMethod dcPaymentMethod = efMethods.SelectEntityById<DcPaymentMethod>(paymentMethodId);
+                e.Value = dcPaymentMethod?.PaymentMethodDesc;
+            }
+        }
     }
 }

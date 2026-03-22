@@ -455,11 +455,6 @@ namespace Foxoft.Models
                     .WithMany(x => x.TrCampaignProducts)
                     .HasForeignKey(x => x.CampaignId)
                     .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(x => x.DcProduct)
-                    .WithMany()
-                    .HasForeignKey(x => x.ProductCode)
-                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<TrCampaignCategory>(entity =>
@@ -468,11 +463,6 @@ namespace Foxoft.Models
                     .WithMany(x => x.TrCampaignCategories)
                     .HasForeignKey(x => x.CampaignId)
                     .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(x => x.DcHierarchy)
-                    .WithMany()
-                    .HasForeignKey(x => x.HierarchyCode)
-                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<TrCampaignCustomer>(entity =>
@@ -481,11 +471,6 @@ namespace Foxoft.Models
                     .WithMany(x => x.TrCampaignCustomers)
                     .HasForeignKey(x => x.CampaignId)
                     .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(x => x.DcCurrAcc)
-                    .WithMany()
-                    .HasForeignKey(x => x.CurrAccCode)
-                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<TrCampaignStore>(entity =>
@@ -502,11 +487,6 @@ namespace Foxoft.Models
                     .WithMany(x => x.TrCampaignWarehouses)
                     .HasForeignKey(x => x.CampaignId)
                     .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(x => x.DcWarehouse)
-                    .WithMany()
-                    .HasForeignKey(x => x.WarehouseCode)
-                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<TrCampaignPaymentMethod>(entity =>
@@ -515,11 +495,6 @@ namespace Foxoft.Models
                     .WithMany(x => x.TrCampaignPaymentMethods)
                     .HasForeignKey(x => x.CampaignId)
                     .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(x => x.DcPaymentMethod)
-                    .WithMany()
-                    .HasForeignKey(x => x.PaymentMethodId)
-                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<TrInvoiceCampaignHeader>(entity =>
@@ -537,23 +512,11 @@ namespace Foxoft.Models
                     .HasForeignKey(x => x.CampaignId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(x => x.TrInvoiceHeader)
-                    .WithMany()
-                    .HasForeignKey(x => x.InvoiceHeaderId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
                 entity.HasOne(x => x.TrInvoiceLine)
                     .WithMany()
                     .HasForeignKey(x => x.InvoiceLineId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
-
-            modelBuilder.Entity<TrInvoiceCampaignHeader>()
-                .HasOne(x => x.TrInvoiceHeader)
-                .WithMany()
-                .HasForeignKey(x => x.InvoiceHeaderId)
-                .OnDelete(DeleteBehavior.Cascade);
-
 
             modelBuilder.Entity<TrProductFeature>(entity =>
             {
