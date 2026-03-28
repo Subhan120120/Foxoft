@@ -3329,44 +3329,10 @@ namespace Foxoft
             CampaignService campaignService = new();
             campaignService.Apply(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode, allowedPaymentMethodIds);
 
-            RefreshInvoiceLinesAfterCampaignApply();
             UpdatePaidLabels();
 
             return true;
         }
-        private void RefreshInvoiceLinesAfterCampaignApply()
-        {
-            using var db = new subContext();
 
-            List<TrInvoiceLine> refreshedLines = db.TrInvoiceLines
-                .AsNoTracking()
-                .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
-                .ToList();
-
-            foreach (TrInvoiceLine refreshedLine in refreshedLines)
-            {
-                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                {
-                    int rowHandle = gV_InvoiceLine.GetVisibleRowHandle(i);
-                    TrInvoiceLine currentLine = gV_InvoiceLine.GetRow(rowHandle) as TrInvoiceLine;
-
-                    if (currentLine is null || currentLine.InvoiceLineId != refreshedLine.InvoiceLineId)
-                        continue;
-
-                    gV_InvoiceLine.SetRowCellValue(rowHandle, col_PosDiscount, refreshedLine.PosDiscount);
-                    gV_InvoiceLine.SetRowCellValue(rowHandle, col_NetAmount, refreshedLine.NetAmount);
-                    gV_InvoiceLine.SetRowCellValue(rowHandle, colNetAmountLoc, refreshedLine.NetAmountLoc);
-                    gV_InvoiceLine.SetRowCellValue(rowHandle, col_Amount, refreshedLine.Amount);
-                    gV_InvoiceLine.SetRowCellValue(rowHandle, colAmountLoc, refreshedLine.AmountLoc);
-                    gV_InvoiceLine.SetRowCellValue(rowHandle, colBenefit, refreshedLine.Benefit);
-                    gV_InvoiceLine.SetRowCellValue(rowHandle, col_TotalBenefit, refreshedLine.TotalBenefit);
-
-                    break;
-                }
-            }
-
-            gV_InvoiceLine.RefreshData();
-            gC_InvoiceLine.RefreshDataSource();
-        }
     }
 }
