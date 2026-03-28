@@ -1442,22 +1442,30 @@ namespace Foxoft
             }
         }
 
-        private async void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (trInvoiceHeader is null)
                 return;
 
-            SaveInvoice();
+            gV_InvoiceLine.CloseEditor();
+            gV_InvoiceLine.UpdateCurrentRow();
+            dataLayoutControl1.Validate();
 
-            decimal pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+            if (!dataLayoutControl1.IsValid(out _))
+                return;
+
+            if (gV_InvoiceLine.DataRowCount <= 0)
+                return;
+
+            SaveInvoice();
 
             List<int> allowedPaymentMethodIds;
             bool applyPaymentMethodCampaign = AskApplyPaymentMethodCampaign(out allowedPaymentMethodIds);
 
             if (applyPaymentMethodCampaign)
-                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+                ReloadInvoiceCampaignValues();
 
-            pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+            decimal pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
 
             using FormPayment form = applyPaymentMethodCampaign
                 ? new FormPayment(PaymentType.Cash, pay, trInvoiceHeader, allowedPaymentMethodIds)
@@ -1465,7 +1473,7 @@ namespace Foxoft
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+                ReloadInvoiceCampaignValues();
                 UpdatePaidLabels();
             }
         }
@@ -3321,9 +3329,44 @@ namespace Foxoft
             CampaignService campaignService = new();
             campaignService.Apply(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode, allowedPaymentMethodIds);
 
-            LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+            RefreshInvoiceLinesAfterCampaignApply();
+            UpdatePaidLabels();
 
             return true;
+        }
+        private void RefreshInvoiceLinesAfterCampaignApply()
+        {
+            using var db = new subContext();
+
+            List<TrInvoiceLine> refreshedLines = db.TrInvoiceLines
+                .AsNoTracking()
+                .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                .ToList();
+
+            foreach (TrInvoiceLine refreshedLine in refreshedLines)
+            {
+                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                {
+                    int rowHandle = gV_InvoiceLine.GetVisibleRowHandle(i);
+                    TrInvoiceLine currentLine = gV_InvoiceLine.GetRow(rowHandle) as TrInvoiceLine;
+
+                    if (currentLine is null || currentLine.InvoiceLineId != refreshedLine.InvoiceLineId)
+                        continue;
+
+                    gV_InvoiceLine.SetRowCellValue(rowHandle, col_PosDiscount, refreshedLine.PosDiscount);
+                    gV_InvoiceLine.SetRowCellValue(rowHandle, col_NetAmount, refreshedLine.NetAmount);
+                    gV_InvoiceLine.SetRowCellValue(rowHandle, colNetAmountLoc, refreshedLine.NetAmountLoc);
+                    gV_InvoiceLine.SetRowCellValue(rowHandle, col_Amount, refreshedLine.Amount);
+                    gV_InvoiceLine.SetRowCellValue(rowHandle, colAmountLoc, refreshedLine.AmountLoc);
+                    gV_InvoiceLine.SetRowCellValue(rowHandle, colBenefit, refreshedLine.Benefit);
+                    gV_InvoiceLine.SetRowCellValue(rowHandle, col_TotalBenefit, refreshedLine.TotalBenefit);
+
+                    break;
+                }
+            }
+
+            gV_InvoiceLine.RefreshData();
+            gC_InvoiceLine.RefreshDataSource();
         }
     }
 }
