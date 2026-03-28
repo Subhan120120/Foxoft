@@ -33,6 +33,7 @@ namespace Foxoft
         private readonly LoyaltyService _loyalty;
 
         private readonly List<int>? _allowedPaymentMethodIds;
+        private List<PaymentType>? _allowedPaymentTypes;
 
         public FormPayment()
         {
@@ -62,8 +63,6 @@ namespace Foxoft
 
             PaymentDefaults(invoiceHeader);
 
-            SetDefaultPaymentMethod();
-
             isNegativ = (bool)CustomExtensions.DirectionIsIn(invoiceHeader.ProcessCode, invoiceHeader.IsReturn);
 
             ApplyInitialPayments(paymentType, pay);
@@ -82,37 +81,54 @@ namespace Foxoft
             LUE_PaymentPlan.Properties.DisplayMember = nameof(DcPaymentPlan.PaymentPlanDesc);
             LUE_PaymentPlan.Properties.Columns.AddRange(new LookUpColumnInfo[]
             {
-        new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
-        new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
-        new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
-        new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
             });
-
-            var currencies = efMethods.SelectEntities<DcCurrency>();
-            lUE_cashCurrency.Properties.DataSource = currencies;
-            lUE_CashlessCurrency.Properties.DataSource = currencies;
-
-            var paymentMethods = efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless });
-
-            if (_allowedPaymentMethodIds?.Any() == true)
-                paymentMethods = paymentMethods
-                    .Where(x => _allowedPaymentMethodIds.Contains(x.PaymentMethodId))
-                    .ToList();
-
-            lUE_PaymentMethod.Properties.DataSource = paymentMethods;
         }
 
-        private void SetDefaultPaymentMethod()
+        private void ApplyAllowedPaymentTypeState()
         {
-            List<DcPaymentMethod> paymentMethods = lUE_PaymentMethod.Properties.DataSource as List<DcPaymentMethod>
-                                                   ?? new List<DcPaymentMethod>();
+            bool onlyCash = _allowedPaymentTypes?.Count == 1 && _allowedPaymentTypes.Contains(PaymentType.Cash);
+            bool onlyCashless = _allowedPaymentTypes?.Count == 1 && _allowedPaymentTypes.Contains(PaymentType.Cashless);
 
-            lUE_PaymentMethod.EditValue = paymentMethods
-                .FirstOrDefault(x => x.IsDefault)?.PaymentMethodId;
+            if (onlyCash)
+            {
+                txtEdit_Cashless.EditValue = 0m;
+                trPaymentLineCashless.Payment = 0m;
 
-            if (lUE_PaymentMethod.EditValue == null)
-                lUE_PaymentMethod.EditValue = paymentMethods.FirstOrDefault()?.PaymentMethodId;
+                txt_CashlessCommission.EditValue = 0m;
+                trPaymentLineCommission.Payment = 0m;
+
+                lUE_PaymentMethod.EditValue = null;
+                lUE_PaymentMethod.Properties.DataSource = null;
+
+                LUE_PaymentPlan.EditValue = null;
+                btnEdit_BankAccout.EditValue = null;
+
+                lCG_Cashless.Enabled = false;
+                lCG_Cash.Enabled = true;
+            }
+            else if (onlyCashless)
+            {
+                txtEdit_Cash.EditValue = 0m;
+                trPaymentLineCash.Payment = 0m;
+                btnEdit_CashRegister.EditValue = null;
+                trPaymentLineCash.CashRegisterCode = null;
+
+                lCG_Cash.Enabled = false;
+                lCG_Cashless.Enabled = true;
+            }
+            else
+            {
+                lCG_Cash.Enabled = true;
+                lCG_Cashless.Enabled = true;
+            }
         }
+
+        private bool HasInvoice()
+            => trInvoiceHeader != null && trInvoiceHeader.InvoiceHeaderId != Guid.Empty;
 
         private void ApplyInitialPayments(PaymentType paymentType, decimal pay)
         {
@@ -174,7 +190,12 @@ namespace Foxoft
             trPaymentLineCommission.PaymentMethodId = 3;
             trPaymentLineCommission.CreatedUserName = Authorization.CurrAccCode;
 
-            SetDefaultCashRegisterToLines();
+            var cashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
+            if (!string.IsNullOrWhiteSpace(cashReg))
+            {
+                trPaymentLineCash.CashRegisterCode = cashReg;
+                trPaymentLineCashless.CashRegisterCode = cashReg;
+            }
         }
 
         private void InitLineDefaults(TrPaymentLine line, PaymentType type, int paymentMethodId)
@@ -186,19 +207,6 @@ namespace Foxoft
             line.ExchangeRate = 1;
             line.CreatedUserName = Authorization.CurrAccCode;
         }
-
-        private void SetDefaultCashRegisterToLines()
-        {
-            var cashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
-            if (!string.IsNullOrWhiteSpace(cashReg))
-            {
-                trPaymentLineCash.CashRegisterCode = cashReg;
-                trPaymentLineCashless.CashRegisterCode = cashReg;
-            }
-        }
-
-        private bool HasInvoice()
-            => trInvoiceHeader != null && trInvoiceHeader.InvoiceHeaderId != Guid.Empty;
 
         private void FormPayment_Load(object sender, EventArgs e) => FillControls();
 
@@ -214,6 +222,36 @@ namespace Foxoft
             lUE_CashlessCurrency.EditValue = trPaymentLineCashless.CurrencyCode;
 
             txtEdit_Bonus.EditValue = trPaymentLineBonus.PaymentLoc;
+
+            var currencies = efMethods.SelectEntities<DcCurrency>();
+            lUE_cashCurrency.Properties.DataSource = currencies;
+            lUE_CashlessCurrency.Properties.DataSource = currencies;
+
+            if (_allowedPaymentMethodIds?.Any() != true)
+                _allowedPaymentTypes = new List<PaymentType>();
+            else
+            {
+                _allowedPaymentTypes = efMethods.SelectEntities<DcPaymentMethod>()
+                    .Where(x => _allowedPaymentMethodIds.Contains(x.PaymentMethodId))
+                    .Select(x => x.PaymentTypeCode)
+                    .Distinct()
+                    .ToList();
+            }
+
+            ApplyAllowedPaymentTypeState();
+
+            if (!(_allowedPaymentTypes?.Count == 1 && _allowedPaymentTypes.Contains(PaymentType.Cash)))
+            {
+                List<DcPaymentMethod> paymentMethods = efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless });
+
+                if (_allowedPaymentMethodIds?.Any() == true)
+                    paymentMethods = paymentMethods
+                        .Where(x => _allowedPaymentMethodIds.Contains(x.PaymentMethodId))
+                        .ToList();
+
+                lUE_PaymentMethod.Properties.DataSource = paymentMethods;
+                lUE_PaymentMethod.EditValue = paymentMethods.FirstOrDefault(x => x.IsDefault)?.PaymentMethodId;
+            }
         }
 
         private void dateEdit_Date_EditValueChanged(object sender, EventArgs e)
@@ -222,7 +260,6 @@ namespace Foxoft
                 trPaymentHeader.OperationDate = dt;
         }
 
-        // ---------- Safe decimal parsing ----------
         private static decimal TryGetDecimal(object value)
             => value == null ? 0m : decimal.TryParse(value.ToString(), out var d) ? d : 0m;
 

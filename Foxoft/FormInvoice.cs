@@ -1462,20 +1462,43 @@ namespace Foxoft
             List<int> allowedPaymentMethodIds;
             bool applyPaymentMethodCampaign = AskApplyPaymentMethodCampaign(out allowedPaymentMethodIds);
 
-            if (applyPaymentMethodCampaign)
-                ReloadInvoiceCampaignValues();
-
             decimal pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
 
-            using FormPayment form = applyPaymentMethodCampaign
-                ? new FormPayment(PaymentType.Cash, pay, trInvoiceHeader, allowedPaymentMethodIds)
-                : new FormPayment(PaymentType.Cash, pay, trInvoiceHeader);
+            PaymentType paymentType = PaymentType.Cash;
+
+             FormPayment form = new FormPayment(paymentType, pay, trInvoiceHeader);
+
+            if (applyPaymentMethodCampaign)
+            {
+                paymentType = ResolvePaymentTypeByAllowedMethods(allowedPaymentMethodIds, PaymentType.Cash);
+                form = new FormPayment(paymentType, pay, trInvoiceHeader, allowedPaymentMethodIds);
+            }
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 ReloadInvoiceCampaignValues();
                 UpdatePaidLabels();
             }
+        }
+        private PaymentType ResolvePaymentTypeByAllowedMethods(IEnumerable<int>? allowedPaymentMethodIds, PaymentType defaultPaymentType)
+        {
+            List<int> paymentMethodIds = allowedPaymentMethodIds?
+                .Distinct()
+                .ToList() ?? new List<int>();
+
+            if (!paymentMethodIds.Any())
+                return defaultPaymentType;
+
+            List<PaymentType> paymentTypes = efMethods.SelectEntities<DcPaymentMethod>()
+                .Where(x => paymentMethodIds.Contains(x.PaymentMethodId))
+                .Select(x => x.PaymentTypeCode)
+                .Distinct()
+                .ToList();
+
+            if (paymentTypes.Count == 1)
+                return paymentTypes.First();
+
+            return defaultPaymentType;
         }
 
         private void bBI_DeleteInvoice_ItemClick(object sender, ItemClickEventArgs e)
