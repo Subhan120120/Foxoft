@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
-    public enum CampaignTypeCode
-    {
-        Standard = 1,
-        PromoCode = 2,
-        CategoryDiscount = 3,
-        PaymentMethodCampaign = 4
-    }
+    //public enum CampaignTypeCode
+    //{
+    //    Standard = 1,
+    //    PromoCode = 2,
+    //    CategoryDiscount = 3,
+    //    PaymentMethodCampaign = 4
+    //}
 
     public enum DiscountTypeCode
     {
@@ -35,11 +35,11 @@ namespace Foxoft.Models
         [Display(Name = "Kampaniya adı")]
         public string CampaignDesc { get; set; }
 
-        [Required]
-        [StringLength(20)]
-        [DefaultValue(CampaignTypeCode.Standard)]
-        [Display(Name = "Kampaniya tipi")]
-        public CampaignTypeCode CampaignTypeCode { get; set; } = CampaignTypeCode.Standard;
+        //[Required]
+        //[StringLength(20)]
+        //[DefaultValue(CampaignTypeCode.Standard)]
+        //[Display(Name = "Kampaniya tipi")]
+        //public CampaignTypeCode CampaignTypeCode { get; set; } = CampaignTypeCode.Standard;
 
         [StringLength(50)]
         [Display(Name = "Promo code")]

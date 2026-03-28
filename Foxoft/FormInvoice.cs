@@ -1442,20 +1442,31 @@ namespace Foxoft
             }
         }
 
-        private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
+        private async void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (dataLayoutControl1.IsValid(out List<string> errorList))
-            {
-                decimal summaryInvoice = CalcNetAmountSummmaryValue();
+            if (trInvoiceHeader is null)
+                return;
 
-                if (summaryInvoice != 0)
-                    MakePayment(summaryInvoice);
+            SaveInvoice();
 
-            }
-            else
+            decimal pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+
+            List<int> allowedPaymentMethodIds;
+            bool applyPaymentMethodCampaign = AskApplyPaymentMethodCampaign(out allowedPaymentMethodIds);
+
+            if (applyPaymentMethodCampaign)
+                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+
+            pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+
+            using FormPayment form = applyPaymentMethodCampaign
+                ? new FormPayment(PaymentType.Cash, pay, trInvoiceHeader, allowedPaymentMethodIds)
+                : new FormPayment(PaymentType.Cash, pay, trInvoiceHeader);
+
+            if (form.ShowDialog(this) == DialogResult.OK)
             {
-                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
-                XtraMessageBox.Show(combinedString);
+                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+                UpdatePaidLabels();
             }
         }
 
@@ -3235,6 +3246,84 @@ namespace Foxoft
 
             using FormInvoiceCampaignLogList form = new(trInvoiceHeader.InvoiceHeaderId);
             form.ShowDialog(this);
+        }
+
+        private List<int> GetAvailablePaymentMethodCampaignIds()
+        {
+            using var db = new subContext();
+
+            TrInvoiceHeader invoiceHeader = db.TrInvoiceHeaders
+                .AsNoTracking()
+                .FirstOrDefault(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
+
+            if (invoiceHeader is null)
+                return new List<int>();
+
+            List<TrInvoiceLine> invoiceLines = db.TrInvoiceLines
+                .AsNoTracking()
+                .Include(x => x.DcProduct)
+                .Where(x => x.InvoiceHeaderId == invoiceHeader.InvoiceHeaderId)
+                .ToList();
+
+            decimal invoiceNetAmount = invoiceLines.Sum(x => Math.Max(0, x.NetAmountBeforeCampaign));
+
+            List<DcCampaign> campaigns = db.DcCampaigns
+                .Include(x => x.TrCampaignCustomers)
+                .Include(x => x.TrCampaignStores)
+                .Include(x => x.TrCampaignWarehouses)
+                .Include(x => x.TrCampaignPaymentMethods)
+                .Where(x => x.IsActive)
+                .Where(x => x.StartDate <= invoiceHeader.DocumentDate && x.EndDate >= invoiceHeader.DocumentDate)
+                .AsNoTracking()
+                .ToList();
+
+            List<int> paymentMethodIds = new();
+
+            foreach (DcCampaign campaign in campaigns)
+            {
+                if (campaign.MinInvoiceAmount > 0 && invoiceNetAmount < campaign.MinInvoiceAmount)
+                    continue;
+
+                if (campaign.TrCampaignCustomers.Any()
+                    && !campaign.TrCampaignCustomers.Any(x => x.CurrAccCode == invoiceHeader.CurrAccCode))
+                    continue;
+
+                if (campaign.TrCampaignStores.Any()
+                    && !campaign.TrCampaignStores.Any(x => x.StoreCode == invoiceHeader.StoreCode))
+                    continue;
+
+                if (campaign.TrCampaignWarehouses.Any()
+                    && !campaign.TrCampaignWarehouses.Any(x => x.WarehouseCode == invoiceHeader.WarehouseCode))
+                    continue;
+
+                paymentMethodIds.AddRange(campaign.TrCampaignPaymentMethods.Select(x => x.PaymentMethodId));
+            }
+
+            return paymentMethodIds.Distinct().ToList();
+        }
+
+        private bool AskApplyPaymentMethodCampaign(out List<int> allowedPaymentMethodIds)
+        {
+            allowedPaymentMethodIds = GetAvailablePaymentMethodCampaignIds();
+
+            if (!allowedPaymentMethodIds.Any())
+                return false;
+
+            DialogResult dr = MessageBox.Show(
+                "Ödəniş metoduna görə endirim kampaniyası tətbiq etmək istəyirsiniz?",
+                Resources.Common_Confirm,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (dr != DialogResult.Yes)
+                return false;
+
+            CampaignService campaignService = new();
+            campaignService.Apply(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode, allowedPaymentMethodIds);
+
+            LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+
+            return true;
         }
     }
 }

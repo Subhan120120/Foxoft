@@ -121,7 +121,6 @@ namespace Foxoft.AppCode.Service
                         CampaignId = selectedCampaign.Campaign.CampaignId,
                         CampaignCode = selectedCampaign.Campaign.CampaignCode,
                         CampaignDesc = selectedCampaign.Campaign.CampaignDesc,
-                        CampaignTypeCode = selectedCampaign.Campaign.CampaignTypeCode,
                         PromoCode = promoCode,
                         PaymentMethodId = resolvedPaymentMethodIds.FirstOrDefault(),
                         Priority = selectedCampaign.Campaign.Priority,

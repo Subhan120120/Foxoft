@@ -52,14 +52,14 @@ namespace Foxoft
 
             colPaymentMethodId.ColumnEdit = gC_Product.AddPaymentMethodButtonEdit();
 
-            CampaignTypeCodeComboBoxEdit.Properties.Items.Clear();
-            CampaignTypeCodeComboBoxEdit.Properties.Items.AddRange(new object[]
-            {
-                CampaignTypeCode.Standard,
-                CampaignTypeCode.PromoCode,
-                CampaignTypeCode.CategoryDiscount,
-                CampaignTypeCode.PaymentMethodCampaign
-            });
+            //CampaignTypeCodeComboBoxEdit.Properties.Items.Clear();
+            //CampaignTypeCodeComboBoxEdit.Properties.Items.AddRange(new object[]
+            //{
+            //    CampaignTypeCode.Standard,
+            //    CampaignTypeCode.PromoCode,
+            //    CampaignTypeCode.CategoryDiscount,
+            //    CampaignTypeCode.PaymentMethodCampaign
+            //});
 
             DiscountTypeCodeComboBoxEdit.Properties.Items.Clear();
             DiscountTypeCodeComboBoxEdit.Properties.Items.AddRange(new object[]
@@ -99,7 +99,7 @@ namespace Foxoft
                 dcCampaign.EndDate = DateTime.Today.AddMonths(1);
                 dcCampaign.IsActive = true;
                 dcCampaign.DiscountTypeCode = DiscountTypeCode.Percent;
-                dcCampaign.CampaignTypeCode = CampaignTypeCode.Standard;
+                //dcCampaign.CampaignTypeCode = CampaignTypeCode.Standard;
                 dcCampaign.Priority = 100;
                 dcCampaign.CreatedUserName = Authorization.CurrAccCode;
             }
@@ -112,7 +112,6 @@ namespace Foxoft
         {
             CampaignCodeTextEdit.DataBindings.Clear();
             CampaignDescTextEdit.DataBindings.Clear();
-            CampaignTypeCodeComboBoxEdit.DataBindings.Clear();
             PromoCodeTextEdit.DataBindings.Clear();
             DiscountTypeCodeComboBoxEdit.DataBindings.Clear();
             DiscountValueCalcEdit.DataBindings.Clear();
@@ -127,7 +126,6 @@ namespace Foxoft
 
             CampaignCodeTextEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.CampaignCode), true, DataSourceUpdateMode.OnPropertyChanged);
             CampaignDescTextEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.CampaignDesc), true, DataSourceUpdateMode.OnPropertyChanged);
-            CampaignTypeCodeComboBoxEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.CampaignTypeCode), true, DataSourceUpdateMode.OnPropertyChanged);
             PromoCodeTextEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.PromoCode), true, DataSourceUpdateMode.OnPropertyChanged);
             DiscountTypeCodeComboBoxEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.DiscountTypeCode), true, DataSourceUpdateMode.OnPropertyChanged);
             DiscountValueCalcEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.DiscountValue), true, DataSourceUpdateMode.OnPropertyChanged);

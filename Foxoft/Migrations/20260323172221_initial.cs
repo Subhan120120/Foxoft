@@ -80,7 +80,7 @@ namespace Foxoft.Migrations
                         column: x => x.InvoiceHeaderId,
                         principalTable: "TrInvoiceHeaders",
                         principalColumn: "InvoiceHeaderId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -305,14 +305,19 @@ namespace Foxoft.Migrations
                         column: x => x.InvoiceHeaderId,
                         principalTable: "TrInvoiceHeaders",
                         principalColumn: "InvoiceHeaderId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TrInvoiceCampaignLogs_TrInvoiceLines_InvoiceLineId",
                         column: x => x.InvoiceLineId,
                         principalTable: "TrInvoiceLines",
                         principalColumn: "InvoiceLineId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "DcClaims",
+                columns: new[] { "ClaimCode", "CategoryId", "ClaimDesc", "ClaimTypeId" },
+                values: new object[] { "CampaignList", 18, "Endirim Kampaniyası Siyahısı", (byte)1 });
 
             migrationBuilder.InsertData(
                 table: "DcVariables",
@@ -452,6 +457,11 @@ namespace Foxoft.Migrations
 
             migrationBuilder.DropTable(
                 name: "DcCampaigns");
+
+            migrationBuilder.DeleteData(
+                table: "DcClaims",
+                keyColumn: "ClaimCode",
+                keyValue: "CampaignList");
 
             migrationBuilder.DeleteData(
                 table: "DcVariables",

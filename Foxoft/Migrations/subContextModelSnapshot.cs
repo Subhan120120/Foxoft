@@ -175,12 +175,6 @@ namespace Foxoft.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("CampaignTypeCode")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -6138,10 +6132,6 @@ namespace Foxoft.Migrations
 
                     b.Property<Guid>("CampaignId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("CampaignTypeCode")
-                        .HasMaxLength(20)
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()

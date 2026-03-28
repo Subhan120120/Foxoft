@@ -22,7 +22,6 @@ namespace Foxoft
             panelHeader = new DevExpress.XtraEditors.PanelControl();
             lblCampaignCode = new DevExpress.XtraEditors.LabelControl();
             lblCampaignDesc = new DevExpress.XtraEditors.LabelControl();
-            lblCampaignType = new DevExpress.XtraEditors.LabelControl();
             lblPromoCode = new DevExpress.XtraEditors.LabelControl();
             lblDiscountType = new DevExpress.XtraEditors.LabelControl();
             lblDiscountValue = new DevExpress.XtraEditors.LabelControl();
@@ -34,7 +33,6 @@ namespace Foxoft
             lblNote = new DevExpress.XtraEditors.LabelControl();
             CampaignCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
             CampaignDescTextEdit = new DevExpress.XtraEditors.TextEdit();
-            CampaignTypeCodeComboBoxEdit = new DevExpress.XtraEditors.ComboBoxEdit();
             PromoCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
             DiscountTypeCodeComboBoxEdit = new DevExpress.XtraEditors.ComboBoxEdit();
             DiscountValueCalcEdit = new DevExpress.XtraEditors.CalcEdit();
@@ -100,6 +98,7 @@ namespace Foxoft
             gV_PaymentMethod = new DevExpress.XtraGrid.Views.Grid.GridView();
             colCampaignPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPaymentMethodDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             panelPaymentMethod = new DevExpress.XtraEditors.PanelControl();
             btnDeletePaymentMethod = new DevExpress.XtraEditors.SimpleButton();
             btnAddPaymentMethod = new DevExpress.XtraEditors.SimpleButton();
@@ -107,12 +106,10 @@ namespace Foxoft
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             dcCampaignsBindingSource = new BindingSource(components);
-            colPaymentMethodDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CampaignCodeTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CampaignDescTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)CampaignTypeCodeComboBoxEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PromoCodeTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DiscountTypeCodeComboBoxEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DiscountValueCalcEdit.Properties).BeginInit();
@@ -173,7 +170,6 @@ namespace Foxoft
             // 
             panelHeader.Controls.Add(lblCampaignCode);
             panelHeader.Controls.Add(lblCampaignDesc);
-            panelHeader.Controls.Add(lblCampaignType);
             panelHeader.Controls.Add(lblPromoCode);
             panelHeader.Controls.Add(lblDiscountType);
             panelHeader.Controls.Add(lblDiscountValue);
@@ -185,7 +181,6 @@ namespace Foxoft
             panelHeader.Controls.Add(lblNote);
             panelHeader.Controls.Add(CampaignCodeTextEdit);
             panelHeader.Controls.Add(CampaignDescTextEdit);
-            panelHeader.Controls.Add(CampaignTypeCodeComboBoxEdit);
             panelHeader.Controls.Add(PromoCodeTextEdit);
             panelHeader.Controls.Add(DiscountTypeCodeComboBoxEdit);
             panelHeader.Controls.Add(DiscountValueCalcEdit);
@@ -200,7 +195,7 @@ namespace Foxoft
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1180, 228);
+            panelHeader.Size = new Size(1180, 202);
             panelHeader.TabIndex = 2;
             // 
             // lblCampaignCode
@@ -218,14 +213,6 @@ namespace Foxoft
             lblCampaignDesc.Size = new Size(69, 13);
             lblCampaignDesc.TabIndex = 1;
             lblCampaignDesc.Text = "Kampaniya adı";
-            // 
-            // lblCampaignType
-            // 
-            lblCampaignType.Location = new Point(12, 45);
-            lblCampaignType.Name = "lblCampaignType";
-            lblCampaignType.Size = new Size(14, 13);
-            lblCampaignType.TabIndex = 2;
-            lblCampaignType.Text = "Tip";
             // 
             // lblPromoCode
             // 
@@ -245,7 +232,7 @@ namespace Foxoft
             // 
             // lblDiscountValue
             // 
-            lblDiscountValue.Location = new Point(12, 75);
+            lblDiscountValue.Location = new Point(12, 45);
             lblDiscountValue.Name = "lblDiscountValue";
             lblDiscountValue.Size = new Size(34, 13);
             lblDiscountValue.TabIndex = 5;
@@ -261,7 +248,7 @@ namespace Foxoft
             // 
             // lblStartDate
             // 
-            lblStartDate.Location = new Point(12, 105);
+            lblStartDate.Location = new Point(12, 75);
             lblStartDate.Name = "lblStartDate";
             lblStartDate.Size = new Size(66, 13);
             lblStartDate.TabIndex = 7;
@@ -285,7 +272,7 @@ namespace Foxoft
             // 
             // lblMaxDiscountAmount
             // 
-            lblMaxDiscountAmount.Location = new Point(12, 135);
+            lblMaxDiscountAmount.Location = new Point(12, 105);
             lblMaxDiscountAmount.Name = "lblMaxDiscountAmount";
             lblMaxDiscountAmount.Size = new Size(65, 13);
             lblMaxDiscountAmount.TabIndex = 10;
@@ -293,7 +280,7 @@ namespace Foxoft
             // 
             // lblNote
             // 
-            lblNote.Location = new Point(12, 165);
+            lblNote.Location = new Point(13, 136);
             lblNote.Name = "lblNote";
             lblNote.Size = new Size(26, 13);
             lblNote.TabIndex = 11;
@@ -313,14 +300,6 @@ namespace Foxoft
             CampaignDescTextEdit.Size = new Size(668, 20);
             CampaignDescTextEdit.TabIndex = 13;
             // 
-            // CampaignTypeCodeComboBoxEdit
-            // 
-            CampaignTypeCodeComboBoxEdit.Location = new Point(124, 42);
-            CampaignTypeCodeComboBoxEdit.Name = "CampaignTypeCodeComboBoxEdit";
-            CampaignTypeCodeComboBoxEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            CampaignTypeCodeComboBoxEdit.Size = new Size(240, 20);
-            CampaignTypeCodeComboBoxEdit.TabIndex = 14;
-            // 
             // PromoCodeTextEdit
             // 
             PromoCodeTextEdit.Location = new Point(500, 42);
@@ -338,7 +317,7 @@ namespace Foxoft
             // 
             // DiscountValueCalcEdit
             // 
-            DiscountValueCalcEdit.Location = new Point(124, 72);
+            DiscountValueCalcEdit.Location = new Point(124, 42);
             DiscountValueCalcEdit.Name = "DiscountValueCalcEdit";
             DiscountValueCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DiscountValueCalcEdit.Size = new Size(240, 20);
@@ -372,7 +351,7 @@ namespace Foxoft
             // StartDateDateEdit
             // 
             StartDateDateEdit.EditValue = new DateTime(2026, 3, 22, 0, 0, 0, 0);
-            StartDateDateEdit.Location = new Point(124, 102);
+            StartDateDateEdit.Location = new Point(124, 72);
             StartDateDateEdit.Name = "StartDateDateEdit";
             StartDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             StartDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -399,7 +378,7 @@ namespace Foxoft
             // 
             // MaxDiscountAmountCalcEdit
             // 
-            MaxDiscountAmountCalcEdit.Location = new Point(124, 132);
+            MaxDiscountAmountCalcEdit.Location = new Point(124, 102);
             MaxDiscountAmountCalcEdit.Name = "MaxDiscountAmountCalcEdit";
             MaxDiscountAmountCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             MaxDiscountAmountCalcEdit.Size = new Size(240, 20);
@@ -407,7 +386,7 @@ namespace Foxoft
             // 
             // NoteMemoEdit
             // 
-            NoteMemoEdit.Location = new Point(124, 162);
+            NoteMemoEdit.Location = new Point(125, 133);
             NoteMemoEdit.Name = "NoteMemoEdit";
             NoteMemoEdit.Size = new Size(1044, 54);
             NoteMemoEdit.TabIndex = 25;
@@ -415,10 +394,10 @@ namespace Foxoft
             // xtraTabControl1
             // 
             xtraTabControl1.Dock = DockStyle.Fill;
-            xtraTabControl1.Location = new Point(0, 228);
+            xtraTabControl1.Location = new Point(0, 202);
             xtraTabControl1.Name = "xtraTabControl1";
             xtraTabControl1.SelectedTabPage = tabProduct;
-            xtraTabControl1.Size = new Size(1180, 444);
+            xtraTabControl1.Size = new Size(1180, 470);
             xtraTabControl1.TabIndex = 0;
             xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabProduct, tabCategory, tabCustomer, tabStore, tabWarehouse, tabPaymentMethod });
             // 
@@ -427,7 +406,7 @@ namespace Foxoft
             tabProduct.Controls.Add(gC_Product);
             tabProduct.Controls.Add(panelProduct);
             tabProduct.Name = "tabProduct";
-            tabProduct.Size = new Size(1178, 419);
+            tabProduct.Size = new Size(1178, 445);
             tabProduct.Text = "Məhsullar";
             // 
             // gC_Product
@@ -437,7 +416,7 @@ namespace Foxoft
             gC_Product.Location = new Point(0, 40);
             gC_Product.MainView = gV_Product;
             gC_Product.Name = "gC_Product";
-            gC_Product.Size = new Size(1178, 379);
+            gC_Product.Size = new Size(1178, 405);
             gC_Product.TabIndex = 0;
             gC_Product.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Product });
             // 
@@ -845,6 +824,14 @@ namespace Foxoft
             colPaymentMethodId.Visible = true;
             colPaymentMethodId.VisibleIndex = 0;
             // 
+            // colPaymentMethodDesc
+            // 
+            colPaymentMethodDesc.FieldName = "DcPaymentMethod.PaymentMethodDesc";
+            colPaymentMethodDesc.Name = "colPaymentMethodDesc";
+            colPaymentMethodDesc.UnboundDataType = typeof(string);
+            colPaymentMethodDesc.Visible = true;
+            colPaymentMethodDesc.VisibleIndex = 1;
+            // 
             // panelPaymentMethod
             // 
             panelPaymentMethod.Controls.Add(btnDeletePaymentMethod);
@@ -907,14 +894,6 @@ namespace Foxoft
             // 
             dcCampaignsBindingSource.DataSource = typeof(DcCampaign);
             // 
-            // colPaymentMethodDesc
-            // 
-            colPaymentMethodDesc.FieldName = "DcPaymentMethod.PaymentMethodDesc";
-            colPaymentMethodDesc.Name = "colPaymentMethodDesc";
-            colPaymentMethodDesc.UnboundDataType = typeof(string);
-            colPaymentMethodDesc.Visible = true;
-            colPaymentMethodDesc.VisibleIndex = 1;
-            // 
             // FormCampaign
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -932,7 +911,6 @@ namespace Foxoft
             panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CampaignCodeTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)CampaignDescTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)CampaignTypeCodeComboBoxEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PromoCodeTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)DiscountTypeCodeComboBoxEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)DiscountValueCalcEdit.Properties).EndInit();
@@ -993,7 +971,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.PanelControl panelHeader;
         private DevExpress.XtraEditors.LabelControl lblCampaignCode;
         private DevExpress.XtraEditors.LabelControl lblCampaignDesc;
-        private DevExpress.XtraEditors.LabelControl lblCampaignType;
         private DevExpress.XtraEditors.LabelControl lblPromoCode;
         private DevExpress.XtraEditors.LabelControl lblDiscountType;
         private DevExpress.XtraEditors.LabelControl lblDiscountValue;
@@ -1006,7 +983,6 @@ namespace Foxoft
 
         private DevExpress.XtraEditors.TextEdit CampaignCodeTextEdit;
         private DevExpress.XtraEditors.TextEdit CampaignDescTextEdit;
-        private DevExpress.XtraEditors.ComboBoxEdit CampaignTypeCodeComboBoxEdit;
         private DevExpress.XtraEditors.TextEdit PromoCodeTextEdit;
         private DevExpress.XtraEditors.ComboBoxEdit DiscountTypeCodeComboBoxEdit;
         private DevExpress.XtraEditors.CalcEdit DiscountValueCalcEdit;

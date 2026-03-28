@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20260321173621_initial")]
-    partial class initial
+    [Migration("20260328145059_asdasd")]
+    partial class asdasd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,12 +177,6 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("CampaignTypeCode")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -3947,6 +3941,14 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
+                            ClaimCode = "CampaignList",
+                            CategoryId = 18,
+                            ClaimDesc = "Endirim Kampaniyası Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
                             ClaimCode = "BarcodeOperations",
                             CategoryId = 18,
                             ClaimDesc = "Barkod Əməliyatları",
@@ -6134,10 +6136,6 @@ namespace Foxoft.Migrations
                     b.Property<Guid>("CampaignId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("CampaignTypeCode")
-                        .HasMaxLength(20)
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -8052,7 +8050,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany()
                         .HasForeignKey("InvoiceHeaderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("TrInvoiceHeader");
@@ -8074,13 +8072,13 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany()
                         .HasForeignKey("InvoiceHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Foxoft.Models.TrInvoiceLine", "TrInvoiceLine")
                         .WithMany()
                         .HasForeignKey("InvoiceLineId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("DcCampaign");
 

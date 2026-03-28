@@ -28,8 +28,8 @@ namespace Foxoft.Models
         [StringLength(100)]
         public string? CampaignDesc { get; set; }
 
-        [StringLength(20)]
-        public CampaignTypeCode? CampaignTypeCode { get; set; }
+        //[StringLength(20)]
+        //public CampaignTypeCode? CampaignTypeCode { get; set; }
 
         [StringLength(50)]
         public string? PromoCode { get; set; }

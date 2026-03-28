@@ -34,7 +34,6 @@ namespace Foxoft
                     CreatedDate = x.CreatedDate,
                     CampaignCode = x.CampaignCode,
                     CampaignDesc = x.CampaignDesc,
-                    CampaignTypeCode = x.CampaignTypeCode,
                     PromoCode = x.PromoCode,
                     ProductCode = x.TrInvoiceLine != null ? x.TrInvoiceLine.ProductCode : null,
                     DiscountAmount = x.DiscountAmount,
@@ -65,7 +64,7 @@ namespace Foxoft
             public DateTime CreatedDate { get; set; }
             public string? CampaignCode { get; set; }
             public string? CampaignDesc { get; set; }
-            public CampaignTypeCode? CampaignTypeCode { get; set; }
+            //public CampaignTypeCode? CampaignTypeCode { get; set; }
             public string? PromoCode { get; set; }
             public string? ProductCode { get; set; }
             public decimal DiscountAmount { get; set; }

@@ -32,6 +32,8 @@ namespace Foxoft
         private readonly subContext _db = new();
         private readonly LoyaltyService _loyalty;
 
+        private readonly List<int>? _allowedPaymentMethodIds;
+
         public FormPayment()
         {
             InitializeComponent();
@@ -45,9 +47,11 @@ namespace Foxoft
             InitLookups();
         }
 
-        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader)
+        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader, IEnumerable<int>? allowedPaymentMethodIds = null)
             : this()
         {
+            _allowedPaymentMethodIds = allowedPaymentMethodIds?.Distinct().ToList();
+
             trInvoiceHeader = invoiceHeader;
             expectedPayLoc = Math.Abs(pay);
 
@@ -65,8 +69,8 @@ namespace Foxoft
             ApplyInitialPayments(paymentType, pay);
         }
 
-        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader, bool isInstallmentPayment)
-            : this(paymentType, pay, invoiceHeader)
+        public FormPayment(PaymentType paymentType, decimal pay, TrInvoiceHeader invoiceHeader, bool isInstallmentPayment, IEnumerable<int>? allowedPaymentMethodIds = null)
+            : this(paymentType, pay, invoiceHeader, allowedPaymentMethodIds)
         {
             if (isInstallmentPayment)
                 trPaymentHeader.PaymentKindId = 3;
@@ -78,25 +82,36 @@ namespace Foxoft
             LUE_PaymentPlan.Properties.DisplayMember = nameof(DcPaymentPlan.PaymentPlanDesc);
             LUE_PaymentPlan.Properties.Columns.AddRange(new LookUpColumnInfo[]
             {
-                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
-                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
-                new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
-                new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
+        new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
+        new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
+        new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
+        new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
             });
 
             var currencies = efMethods.SelectEntities<DcCurrency>();
             lUE_cashCurrency.Properties.DataSource = currencies;
             lUE_CashlessCurrency.Properties.DataSource = currencies;
 
-            lUE_PaymentMethod.Properties.DataSource =
-                efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless });
+            var paymentMethods = efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless });
+
+            if (_allowedPaymentMethodIds?.Any() == true)
+                paymentMethods = paymentMethods
+                    .Where(x => _allowedPaymentMethodIds.Contains(x.PaymentMethodId))
+                    .ToList();
+
+            lUE_PaymentMethod.Properties.DataSource = paymentMethods;
         }
 
         private void SetDefaultPaymentMethod()
         {
-            lUE_PaymentMethod.EditValue =
-                efMethods.SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cashless })
-                         .FirstOrDefault(x => x.IsDefault)?.PaymentMethodId;
+            List<DcPaymentMethod> paymentMethods = lUE_PaymentMethod.Properties.DataSource as List<DcPaymentMethod>
+                                                   ?? new List<DcPaymentMethod>();
+
+            lUE_PaymentMethod.EditValue = paymentMethods
+                .FirstOrDefault(x => x.IsDefault)?.PaymentMethodId;
+
+            if (lUE_PaymentMethod.EditValue == null)
+                lUE_PaymentMethod.EditValue = paymentMethods.FirstOrDefault()?.PaymentMethodId;
         }
 
         private void ApplyInitialPayments(PaymentType paymentType, decimal pay)
