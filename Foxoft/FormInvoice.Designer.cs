@@ -78,15 +78,18 @@ namespace Foxoft
             BBI_CountingStock = new BarButtonItem();
             BBI_LoyaltyCardInput = new BarButtonItem();
             bBI_CampaignApply = new BarButtonItem();
+            bBI_CampaignLog = new BarButtonItem();
+            BBI_PromoCodeCampaign = new BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            RPG_Invoice = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Installment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            RPG_Print = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            RPG_Export = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            RPG_Tools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            RPG_Campaign = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             RibbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup9 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -173,6 +176,8 @@ namespace Foxoft
             col_TotalBenefit = new GridColumn();
             colWorkerCode = new GridColumn();
             repoBtnEdit_WorkerCode = new RepositoryItemButtonEdit();
+            colDiscountCampaign = new GridColumn();
+            colDiscountCampaignLoc = new GridColumn();
             repoBtnEdit_UnitOfMeasure = new RepositoryItemButtonEdit();
             DateEdit_InstallmentDate = new DevExpress.XtraEditors.DateEdit();
             TrInstallmentTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -228,7 +233,6 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
-            bBI_CampaignLog = new BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -395,9 +399,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog, BBI_PromoCodeCampaign });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 71;
+            ribbonControl1.MaxItemId = 72;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -681,19 +685,35 @@ namespace Foxoft
             bBI_CampaignApply.Name = "bBI_CampaignApply";
             bBI_CampaignApply.ItemClick += bBI_CampaignApply_ItemClick;
             // 
+            // bBI_CampaignLog
+            // 
+            bBI_CampaignLog.Caption = "Kampaniya Log";
+            bBI_CampaignLog.Id = 70;
+            bBI_CampaignLog.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CampaignLog.ImageOptions.SvgImage");
+            bBI_CampaignLog.Name = "bBI_CampaignLog";
+            bBI_CampaignLog.ItemClick += bBI_CampaignLog_ItemClick;
+            // 
+            // BBI_PromoCodeCampaign
+            // 
+            BBI_PromoCodeCampaign.Caption = "Promo Kod";
+            BBI_PromoCodeCampaign.Id = 71;
+            BBI_PromoCodeCampaign.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_PromoCodeCampaign.ImageOptions.SvgImage");
+            BBI_PromoCodeCampaign.Name = "BBI_PromoCodeCampaign";
+            BBI_PromoCodeCampaign.ItemClick += BBI_PromoCodeCampaign_ItemClick;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, RPG_Payment, RPG_Installment, ribbonPageGroup2, ribbonPageGroup4, RPG_Control, ribbonPageGroup8, ribbonPageGroup3 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RPG_Invoice, RPG_Payment, RPG_Installment, RPG_Print, RPG_Export, RPG_Control, ribbonPageGroup8, RPG_Tools, RPG_Campaign });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.FormInvoice_RibbonPage_Invoice;
             // 
-            // Faktura
+            // RPG_Invoice
             // 
-            Faktura.ItemLinks.Add(bBI_Save);
-            Faktura.ItemLinks.Add(bBI_New);
-            Faktura.ItemLinks.Add(bBI_DeleteInvoice);
-            Faktura.Name = "Faktura";
-            Faktura.Text = Resources.FormInvoice_RibbonGroup_InvoiceOperations;
+            RPG_Invoice.ItemLinks.Add(bBI_Save);
+            RPG_Invoice.ItemLinks.Add(bBI_New);
+            RPG_Invoice.ItemLinks.Add(bBI_DeleteInvoice);
+            RPG_Invoice.Name = "RPG_Invoice";
+            RPG_Invoice.Text = Resources.FormInvoice_RibbonGroup_InvoiceOperations;
             // 
             // RPG_Payment
             // 
@@ -709,20 +729,20 @@ namespace Foxoft
             RPG_Installment.Text = Resources.FormInvoice_RibbonGroup_Installment;
             RPG_Installment.Visible = false;
             // 
-            // ribbonPageGroup2
+            // RPG_Print
             // 
-            ribbonPageGroup2.ItemLinks.Add(bBI_reportPreview);
-            ribbonPageGroup2.ItemLinks.Add(BBI_ReportPrintFast);
-            ribbonPageGroup2.ItemLinks.Add(bBI_CopyInvoice);
-            ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = Resources.FormInvoice_RibbonGroup_Print;
+            RPG_Print.ItemLinks.Add(bBI_reportPreview);
+            RPG_Print.ItemLinks.Add(BBI_ReportPrintFast);
+            RPG_Print.ItemLinks.Add(bBI_CopyInvoice);
+            RPG_Print.Name = "RPG_Print";
+            RPG_Print.Text = Resources.FormInvoice_RibbonGroup_Print;
             // 
-            // ribbonPageGroup4
+            // RPG_Export
             // 
-            ribbonPageGroup4.ItemLinks.Add(bBI_Whatsapp);
-            ribbonPageGroup4.ItemLinks.Add(BSI_Reports);
-            ribbonPageGroup4.Name = "ribbonPageGroup4";
-            ribbonPageGroup4.Text = "Export";
+            RPG_Export.ItemLinks.Add(bBI_Whatsapp);
+            RPG_Export.ItemLinks.Add(BSI_Reports);
+            RPG_Export.Name = "RPG_Export";
+            RPG_Export.Text = "Export";
             // 
             // RPG_Control
             // 
@@ -738,18 +758,24 @@ namespace Foxoft
             ribbonPageGroup8.Name = "ribbonPageGroup8";
             ribbonPageGroup8.Text = Resources.FormInvoice_RibbonGroup_Info;
             // 
-            // ribbonPageGroup3
+            // RPG_Tools
             // 
-            ribbonPageGroup3.ItemLinks.Add(BBI_picture);
-            ribbonPageGroup3.ItemLinks.Add(BBI_InvoiceDiscount);
-            ribbonPageGroup3.ItemLinks.Add(BBI_Salesman);
-            ribbonPageGroup3.ItemLinks.Add(BBI_SumSameProducts);
-            ribbonPageGroup3.ItemLinks.Add(BBI_LoyaltyCardInput);
-            ribbonPageGroup3.ItemLinks.Add(BBI_CountingStock);
-            ribbonPageGroup3.ItemLinks.Add(bBI_CampaignApply);
-            ribbonPageGroup3.ItemLinks.Add(bBI_CampaignLog);
-            ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = Resources.FormInvoice_RibbonGroup_Tools;
+            RPG_Tools.ItemLinks.Add(BBI_picture);
+            RPG_Tools.ItemLinks.Add(BBI_InvoiceDiscount);
+            RPG_Tools.ItemLinks.Add(BBI_Salesman);
+            RPG_Tools.ItemLinks.Add(BBI_SumSameProducts);
+            RPG_Tools.ItemLinks.Add(BBI_LoyaltyCardInput);
+            RPG_Tools.ItemLinks.Add(BBI_CountingStock);
+            RPG_Tools.Name = "RPG_Tools";
+            RPG_Tools.Text = Resources.FormInvoice_RibbonGroup_Tools;
+            // 
+            // RPG_Campaign
+            // 
+            RPG_Campaign.ItemLinks.Add(bBI_CampaignApply);
+            RPG_Campaign.ItemLinks.Add(bBI_CampaignLog);
+            RPG_Campaign.ItemLinks.Add(BBI_PromoCodeCampaign);
+            RPG_Campaign.Name = "RPG_Campaign";
+            RPG_Campaign.Text = "Campaign";
             // 
             // ribbonPage2
             // 
@@ -1270,7 +1296,7 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode, colUnitOfMeasureId, col_TotalBenefit, colWorkerCode });
+            gV_InvoiceLine.Columns.AddRange(new GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode, colUnitOfMeasureId, col_TotalBenefit, colWorkerCode, colDiscountCampaign, colDiscountCampaignLoc });
             gV_InvoiceLine.CustomizationFormBounds = new Rectangle(760, 184, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -1591,6 +1617,26 @@ namespace Foxoft
             repoBtnEdit_WorkerCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             repoBtnEdit_WorkerCode.Name = "repoBtnEdit_WorkerCode";
             repoBtnEdit_WorkerCode.ButtonPressed += repoBtnEdit_WorkerCode_ButtonPressed;
+            // 
+            // colDiscountCampaign
+            // 
+            colDiscountCampaign.Caption = "Kampaniya endirimi";
+            colDiscountCampaign.DisplayFormat.FormatString = "n2";
+            colDiscountCampaign.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colDiscountCampaign.FieldName = "DiscountCampaign";
+            colDiscountCampaign.Name = "colDiscountCampaign";
+            colDiscountCampaign.OptionsColumn.AllowEdit = false;
+            colDiscountCampaign.OptionsColumn.ReadOnly = true;
+            colDiscountCampaign.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DiscountCampaign", "{0:n2}") });
+            colDiscountCampaign.Visible = true;
+            colDiscountCampaign.VisibleIndex = 9;
+            // 
+            // colDiscountCampaignLoc
+            // 
+            colDiscountCampaignLoc.FieldName = "DiscountCampaignLoc";
+            colDiscountCampaignLoc.Name = "colDiscountCampaignLoc";
+            colDiscountCampaignLoc.Visible = true;
+            colDiscountCampaignLoc.VisibleIndex = 10;
             // 
             // repoBtnEdit_UnitOfMeasure
             // 
@@ -2073,13 +2119,6 @@ namespace Foxoft
             // 
             dxErrorProvider1.ContainerControl = this;
             // 
-            // bBI_CampaignLog
-            // 
-            bBI_CampaignLog.Caption = "Kampaniya Log";
-            bBI_CampaignLog.Id = 70;
-            bBI_CampaignLog.Name = "bBI_CampaignLog";
-            bBI_CampaignLog.ItemClick += this.bBI_CampaignLog_ItemClick;
-            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -2241,7 +2280,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_SaveAndNew;
         private DevExpress.XtraGrid.Columns.GridColumn col_SalesPersonCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SalesPersonCode;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Print;
         private DevExpress.XtraBars.BarButtonItem bBI_Payment;
         private DevExpress.XtraEditors.LabelControl lbl_InvoicePaidSum;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InvoicePaidSum;
@@ -2262,7 +2301,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colNetAmountLoc;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_PriceLoc;
         private DevExpress.XtraBars.BarButtonItem bBI_SaveAndQuit;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup Faktura;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Invoice;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
         private DevExpress.XtraGrid.Columns.GridColumn colQty;
         private DevExpress.XtraEditors.LabelControl lbl_CurrAccDesc;
@@ -2380,7 +2419,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit txtEdit_Installment_InterestRate;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InterestRate;
         private BarButtonItem BBI_InvoiceDiscount;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Tools;
         private BarButtonItem BBI_Salesman;
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
         private BarButtonItem BBI_SumSameProducts;
@@ -2396,8 +2435,12 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit textEdit1;
         private DevExpress.XtraLayout.LayoutControlItem LCI_LoyaltyEarn;
         private DevExpress.XtraEditors.TextEdit txt_LoyaltyEarn;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Export;
         private BarButtonItem bBI_CampaignApply;
         private BarButtonItem bBI_CampaignLog;
+        private GridColumn colDiscountCampaign;
+        private GridColumn colDiscountCampaignLoc;
+        private BarButtonItem BBI_PromoCodeCampaign;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Campaign;
     }
 }

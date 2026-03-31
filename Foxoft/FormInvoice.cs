@@ -147,8 +147,6 @@ namespace Foxoft
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
             LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
-
-            InitializeCampaignArea();
         }
 
         private void FormInvoice_Load(object sender, EventArgs e)
@@ -244,8 +242,6 @@ namespace Foxoft
             txt_LoyaltyEarn.EditValue = 0m;
 
             Tag = btnEdit_DocNum.EditValue;
-
-            ClearInvoiceCampaignState();
 
             SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
         }
@@ -404,8 +400,6 @@ namespace Foxoft
                     LoadInstallmentGarantors();
 
                 dataLayoutControl1.IsValid(out List<string> errorList);
-
-                LoadInvoiceCampaignState();
 
                 Tag = btnEdit_DocNum.EditValue;
 
@@ -1466,7 +1460,7 @@ namespace Foxoft
 
             PaymentType paymentType = PaymentType.Cash;
 
-             FormPayment form = new FormPayment(paymentType, pay, trInvoiceHeader);
+            FormPayment form = new FormPayment(paymentType, pay, trInvoiceHeader);
 
             if (applyPaymentMethodCampaign)
             {
@@ -3355,6 +3349,112 @@ namespace Foxoft
             UpdatePaidLabels();
 
             return true;
+        }
+
+        private void BBI_PromoCodeCampaign_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            using var db = new subContext();
+
+            TrInvoiceCampaignHeader? campaignHeader = db.TrInvoiceCampaignHeaders
+                .AsNoTracking()
+                .FirstOrDefault(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
+
+            string? promoCode = campaignHeader?.PromoCode;
+
+            ApplyCampaignsFromForm(true);
+        }
+
+        private void ApplyCampaignsFromForm(bool showMessage)
+        {
+            if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            if (dbContext is null)
+                return;
+
+            try
+            {
+                Validate();
+                trInvoiceLinesBindingSource?.EndEdit();
+                trInvoiceHeadersBindingSource?.EndEdit();
+
+                List<int> paymentMethodIds = GetInvoicePaymentMethodIds();
+
+                using var db = new subContext();
+
+                TrInvoiceCampaignHeader? campaignHeader = db.TrInvoiceCampaignHeaders
+                    .AsNoTracking()
+                    .FirstOrDefault(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
+
+                string? promoCode = campaignHeader?.PromoCode;
+
+                CampaignService campaignService = new();
+                CampaignApplyResult result = campaignService.Apply(
+                    trInvoiceHeader.InvoiceHeaderId,
+                    Authorization.CurrAccCode,
+                    paymentMethodIds,
+                    promoCode);
+
+                ReloadInvoiceCampaignValues();
+
+                if (showMessage)
+                {
+                    string msg = result.AppliedCampaignCodes.Count == 0
+                        ? "Uyğun kampaniya tapılmadı."
+                        : $"Tətbiq olunan kampaniyalar: {string.Join(", ", result.AppliedCampaignCodes)}\nCəmi endirim: {Math.Round(result.TotalDiscount, 2)}";
+
+                    XtraMessageBox.Show(msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, "Kampaniya", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void ReloadInvoiceCampaignValues()
+        {
+            if (dbContext is null)
+                return;
+
+            List<TrInvoiceLine> trackedLines = dbContext.TrInvoiceLines
+                .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                .ToList();
+
+            foreach (TrInvoiceLine line in trackedLines)
+            {
+                try
+                {
+                    dbContext.Entry(line).Reload();
+                }
+                catch
+                {
+                }
+            }
+
+            trInvoiceLinesBindingSource?.ResetBindings(false);
+            gV_InvoiceLine.RefreshData();
+        }
+
+        private List<int> GetInvoicePaymentMethodIds()
+        {
+            using var db = new subContext();
+
+            List<Guid> paymentHeaderIds = db.TrPaymentHeaders
+                .AsNoTracking()
+                .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                .Select(x => x.PaymentHeaderId)
+                .ToList();
+
+            if (paymentHeaderIds.Count == 0)
+                return new List<int>();
+
+            return db.TrPaymentLines
+                .AsNoTracking()
+                .Where(x => paymentHeaderIds.Contains(x.PaymentHeaderId))
+                .Select(x => x.PaymentMethodId)
+                .Distinct()
+                .ToList();
         }
 
     }
