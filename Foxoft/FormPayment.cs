@@ -92,6 +92,7 @@ namespace Foxoft
         {
             bool onlyCash = _allowedPaymentTypes?.Count == 1 && _allowedPaymentTypes.Contains(PaymentType.Cash);
             bool onlyCashless = _allowedPaymentTypes?.Count == 1 && _allowedPaymentTypes.Contains(PaymentType.Cashless);
+            bool onlyBonus = _allowedPaymentTypes.Contains(PaymentType.Bonus);
 
             if (onlyCash)
             {
@@ -109,6 +110,7 @@ namespace Foxoft
 
                 lCG_Cashless.Enabled = false;
                 lCG_Cash.Enabled = true;
+                lCG_CustomerBonus.Enabled = false; // Disable Bonus
             }
             else if (onlyCashless)
             {
@@ -119,11 +121,19 @@ namespace Foxoft
 
                 lCG_Cash.Enabled = false;
                 lCG_Cashless.Enabled = true;
+                lCG_CustomerBonus.Enabled = false; // Disable Bonus
+            }
+            else if (onlyBonus)
+            {
+                lCG_Cash.Enabled = false;
+                lCG_Cashless.Enabled = false;
+                lCG_CustomerBonus.Enabled = true; // Enable Bonus
             }
             else
             {
                 lCG_Cash.Enabled = true;
                 lCG_Cashless.Enabled = true;
+                lCG_CustomerBonus.Enabled = true; // Enable Bonus if both are available
             }
         }
 
