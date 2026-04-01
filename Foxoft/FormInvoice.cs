@@ -75,6 +75,8 @@ namespace Foxoft
         private int _pid => Process.GetCurrentProcess().Id;
         private System.Windows.Forms.Timer? _hbTimer;
 
+        private string promoCode = null;
+
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
@@ -408,6 +410,12 @@ namespace Foxoft
                     bool locked = (DateTime.Now - trInvoiceHeader.DocumentDate).Days > Settings.Default.AppSetting.InvoiceEditGraceDays;
                     trInvoiceHeader.IsLocked = locked;
                 }
+
+                TrInvoiceCampaignHeader? campaignHeader = dbContext.TrInvoiceCampaignHeaders
+                    .AsNoTracking()
+                    .FirstOrDefault(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
+
+                promoCode = campaignHeader?.PromoCode;
 
                 SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
 
@@ -3359,7 +3367,7 @@ namespace Foxoft
                 .AsNoTracking()
                 .FirstOrDefault(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
 
-            string? promoCode = campaignHeader?.PromoCode;
+            promoCode = campaignHeader?.PromoCode;
 
             ApplyCampaignsFromForm(true);
         }
@@ -3386,7 +3394,7 @@ namespace Foxoft
                     .AsNoTracking()
                     .FirstOrDefault(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
 
-                string? promoCode = campaignHeader?.PromoCode;
+                promoCode = campaignHeader?.PromoCode;
 
                 CampaignService campaignService = new();
                 CampaignApplyResult result = campaignService.Apply(
