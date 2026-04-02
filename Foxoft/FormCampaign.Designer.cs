@@ -20,6 +20,8 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             panelHeader = new DevExpress.XtraEditors.PanelControl();
+            lblProcessCode = new DevExpress.XtraEditors.LabelControl();
+            LUE_processCode = new DevExpress.XtraEditors.LookUpEdit();
             lblCampaignCode = new DevExpress.XtraEditors.LabelControl();
             lblCampaignDesc = new DevExpress.XtraEditors.LabelControl();
             lblPromoCode = new DevExpress.XtraEditors.LabelControl();
@@ -108,6 +110,7 @@ namespace Foxoft
             dcCampaignsBindingSource = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
             panelHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)LUE_processCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CampaignCodeTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CampaignDescTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PromoCodeTextEdit.Properties).BeginInit();
@@ -168,6 +171,8 @@ namespace Foxoft
             // 
             // panelHeader
             // 
+            panelHeader.Controls.Add(lblProcessCode);
+            panelHeader.Controls.Add(LUE_processCode);
             panelHeader.Controls.Add(lblCampaignCode);
             panelHeader.Controls.Add(lblCampaignDesc);
             panelHeader.Controls.Add(lblPromoCode);
@@ -197,6 +202,27 @@ namespace Foxoft
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(1180, 202);
             panelHeader.TabIndex = 2;
+            // 
+            // lblProcessCode
+            // 
+            lblProcessCode.Location = new Point(788, 15);
+            lblProcessCode.Name = "lblProcessCode";
+            lblProcessCode.Size = new Size(32, 13);
+            lblProcessCode.TabIndex = 26;
+            lblProcessCode.Text = "Proses";
+            // 
+            // LUE_processCode
+            // 
+            LUE_processCode.EditValue = "RS";
+            LUE_processCode.Location = new Point(896, 12);
+            LUE_processCode.Name = "LUE_processCode";
+            LUE_processCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_processCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ProcessCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ProcessDesc", "Name2") });
+            LUE_processCode.Properties.DisplayMember = "ProcessDesc";
+            LUE_processCode.Properties.NullText = "";
+            LUE_processCode.Properties.ValueMember = "ProcessCode";
+            LUE_processCode.Size = new Size(272, 20);
+            LUE_processCode.TabIndex = 3;
             // 
             // lblCampaignCode
             // 
@@ -297,7 +323,7 @@ namespace Foxoft
             // 
             CampaignDescTextEdit.Location = new Point(500, 12);
             CampaignDescTextEdit.Name = "CampaignDescTextEdit";
-            CampaignDescTextEdit.Size = new Size(668, 20);
+            CampaignDescTextEdit.Size = new Size(240, 20);
             CampaignDescTextEdit.TabIndex = 13;
             // 
             // PromoCodeTextEdit
@@ -487,7 +513,7 @@ namespace Foxoft
             tabCategory.Controls.Add(gC_Category);
             tabCategory.Controls.Add(panelCategory);
             tabCategory.Name = "tabCategory";
-            tabCategory.Size = new Size(1178, 419);
+            tabCategory.Size = new Size(1178, 445);
             tabCategory.Text = "Kateqoriyalar";
             // 
             // gC_Category
@@ -497,7 +523,7 @@ namespace Foxoft
             gC_Category.Location = new Point(0, 40);
             gC_Category.MainView = gV_Category;
             gC_Category.Name = "gC_Category";
-            gC_Category.Size = new Size(1178, 379);
+            gC_Category.Size = new Size(1178, 405);
             gC_Category.TabIndex = 0;
             gC_Category.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Category });
             // 
@@ -559,7 +585,7 @@ namespace Foxoft
             tabCustomer.Controls.Add(gC_Customer);
             tabCustomer.Controls.Add(panelCustomer);
             tabCustomer.Name = "tabCustomer";
-            tabCustomer.Size = new Size(1178, 419);
+            tabCustomer.Size = new Size(1178, 445);
             tabCustomer.Text = "Müştərilər";
             // 
             // gC_Customer
@@ -569,7 +595,7 @@ namespace Foxoft
             gC_Customer.Location = new Point(0, 40);
             gC_Customer.MainView = gV_Customer;
             gC_Customer.Name = "gC_Customer";
-            gC_Customer.Size = new Size(1178, 379);
+            gC_Customer.Size = new Size(1178, 405);
             gC_Customer.TabIndex = 0;
             gC_Customer.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Customer });
             // 
@@ -640,7 +666,7 @@ namespace Foxoft
             tabStore.Controls.Add(gC_Store);
             tabStore.Controls.Add(panelStore);
             tabStore.Name = "tabStore";
-            tabStore.Size = new Size(1178, 419);
+            tabStore.Size = new Size(1178, 445);
             tabStore.Text = "Store";
             // 
             // gC_Store
@@ -650,7 +676,7 @@ namespace Foxoft
             gC_Store.Location = new Point(0, 40);
             gC_Store.MainView = gV_Store;
             gC_Store.Name = "gC_Store";
-            gC_Store.Size = new Size(1178, 379);
+            gC_Store.Size = new Size(1178, 405);
             gC_Store.TabIndex = 0;
             gC_Store.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Store });
             // 
@@ -712,7 +738,7 @@ namespace Foxoft
             tabWarehouse.Controls.Add(gC_Warehouse);
             tabWarehouse.Controls.Add(panelWarehouse);
             tabWarehouse.Name = "tabWarehouse";
-            tabWarehouse.Size = new Size(1178, 419);
+            tabWarehouse.Size = new Size(1178, 445);
             tabWarehouse.Text = "Depolar";
             // 
             // gC_Warehouse
@@ -722,7 +748,7 @@ namespace Foxoft
             gC_Warehouse.Location = new Point(0, 40);
             gC_Warehouse.MainView = gV_Warehouse;
             gC_Warehouse.Name = "gC_Warehouse";
-            gC_Warehouse.Size = new Size(1178, 379);
+            gC_Warehouse.Size = new Size(1178, 405);
             gC_Warehouse.TabIndex = 0;
             gC_Warehouse.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Warehouse });
             // 
@@ -784,7 +810,7 @@ namespace Foxoft
             tabPaymentMethod.Controls.Add(gC_PaymentMethod);
             tabPaymentMethod.Controls.Add(panelPaymentMethod);
             tabPaymentMethod.Name = "tabPaymentMethod";
-            tabPaymentMethod.Size = new Size(1178, 419);
+            tabPaymentMethod.Size = new Size(1178, 445);
             tabPaymentMethod.Text = "Ödəmə üsulları";
             // 
             // gC_PaymentMethod
@@ -794,7 +820,7 @@ namespace Foxoft
             gC_PaymentMethod.Location = new Point(0, 40);
             gC_PaymentMethod.MainView = gV_PaymentMethod;
             gC_PaymentMethod.Name = "gC_PaymentMethod";
-            gC_PaymentMethod.Size = new Size(1178, 379);
+            gC_PaymentMethod.Size = new Size(1178, 405);
             gC_PaymentMethod.TabIndex = 0;
             gC_PaymentMethod.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_PaymentMethod });
             // 
@@ -909,6 +935,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelHeader).EndInit();
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)LUE_processCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)CampaignCodeTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)CampaignDescTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PromoCodeTextEdit.Properties).EndInit();
@@ -1064,5 +1091,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodDesc;
+        private DevExpress.XtraEditors.LookUpEdit LUE_processCode;
+        private DevExpress.XtraEditors.LabelControl lblProcessCode;
     }
 }

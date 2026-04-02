@@ -80,6 +80,11 @@ namespace Foxoft.Models
         [Display(Name = "Maks. endirim")]
         public decimal MaxDiscountAmount { get; set; }
 
+        [Required]
+        [Display(Name = "Process Kodu")]
+        [DefaultValue("RS")]
+        public string ProcessCode { get; set; } = "RS"; 
+
         [StringLength(250)]
         [Display(Name = "Qeyd")]
         public string? Note { get; set; }

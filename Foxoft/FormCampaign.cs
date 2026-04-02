@@ -67,6 +67,8 @@ namespace Foxoft
                 DiscountTypeCode.Percent,
                 DiscountTypeCode.Amount
             });
+
+            LUE_processCode.Properties.DataSource = efMethods.SelectEntities<DcProcess>();
         }
 
         private void LoadCampaign()
@@ -137,6 +139,7 @@ namespace Foxoft
             MinInvoiceAmountCalcEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.MinInvoiceAmount), true, DataSourceUpdateMode.OnPropertyChanged);
             MaxDiscountAmountCalcEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.MaxDiscountAmount), true, DataSourceUpdateMode.OnPropertyChanged);
             NoteMemoEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.Note), true, DataSourceUpdateMode.OnPropertyChanged);
+            LUE_processCode.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.ProcessCode), true, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private void BindChildSources()
