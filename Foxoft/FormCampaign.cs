@@ -1,10 +1,14 @@
-using System.ComponentModel;
-using System.Drawing;
+using DevExpress.DataAccess.Excel;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
-using Foxoft.Models.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Globalization;
+using System.Text;
 
 namespace Foxoft
 {
@@ -22,6 +26,8 @@ namespace Foxoft
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
+
+            InitializeImportButtons();
         }
 
         public FormCampaign(Guid campaignId)
@@ -355,6 +361,463 @@ namespace Foxoft
                 DcPaymentMethod dcPaymentMethod = efMethods.SelectEntityById<DcPaymentMethod>(paymentMethodId);
                 e.Value = dcPaymentMethod?.PaymentMethodDesc;
             }
+        }
+
+        private sealed class ImportResult
+        {
+            public int AddedCount { get; set; }
+            public int SkippedCount { get; set; }
+            public int EmptyCount { get; set; }
+            public StringBuilder Errors { get; } = new();
+        }
+
+        private void InitializeImportButtons()
+        {
+            AddImportButton(panelProduct, btnDeleteProduct, "btnImportProduct", btnImportProduct_Click);
+            AddImportButton(panelCategory, btnDeleteCategory, "btnImportCategory", btnImportCategory_Click);
+            AddImportButton(panelCustomer, btnDeleteCustomer, "btnImportCustomer", btnImportCustomer_Click);
+            AddImportButton(panelStore, btnDeleteStore, "btnImportStore", btnImportStore_Click);
+            AddImportButton(panelWarehouse, btnDeleteWarehouse, "btnImportWarehouse", btnImportWarehouse_Click);
+            AddImportButton(panelPaymentMethod, btnDeletePaymentMethod, "btnImportPaymentMethod", btnImportPaymentMethod_Click);
+        }
+
+        private static void AddImportButton(PanelControl panel, SimpleButton anchorButton, string buttonName, EventHandler clickHandler)
+        {
+            SimpleButton btnImport = new()
+            {
+                Name = buttonName,
+                Text = "Excel-dən import",
+                Size = new Size(140, 24),
+                Location = new Point(anchorButton.Right + 8, anchorButton.Top)
+            };
+
+            btnImport.Click += clickHandler;
+            panel.Controls.Add(btnImport);
+            btnImport.BringToFront();
+        }
+
+        private void btnImportProduct_Click(object sender, EventArgs e) => ImportProductsFromExcel();
+        private void btnImportCategory_Click(object sender, EventArgs e) => ImportCategoriesFromExcel();
+        private void btnImportCustomer_Click(object sender, EventArgs e) => ImportCustomersFromExcel();
+        private void btnImportStore_Click(object sender, EventArgs e) => ImportStoresFromExcel();
+        private void btnImportWarehouse_Click(object sender, EventArgs e) => ImportWarehousesFromExcel();
+        private void btnImportPaymentMethod_Click(object sender, EventArgs e) => ImportPaymentMethodsFromExcel();
+
+        private void ImportProductsFromExcel()
+        {
+            HashSet<string> existingValues = dbContext.TrCampaignProducts.Local
+                .Where(x => x.CampaignId == dcCampaign.CampaignId && !string.IsNullOrWhiteSpace(x.ProductCode))
+                .Select(x => x.ProductCode.Trim())
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            ImportFromExcel(
+                gV_Product,
+                new[] { colProductCode.Caption, nameof(TrCampaignProduct.ProductCode), "ProductCode", "Məhsul" },
+                (lookUpDb, rawValue, result) =>
+                {
+                    string productCode = rawValue.Trim();
+
+                    bool masterExists = lookUpDb.DcProducts
+                        .AsNoTracking()
+                        .Any(x => x.ProductCode == productCode);
+
+                    if (!masterExists)
+                    {
+                        result.Errors.AppendLine($"{colProductCode.Caption}: {productCode}");
+                        return;
+                    }
+
+                    if (!existingValues.Add(productCode))
+                    {
+                        result.SkippedCount++;
+                        return;
+                    }
+
+                    dbContext.TrCampaignProducts.Add(new TrCampaignProduct
+                    {
+                        CampaignProductId = Guid.NewGuid(),
+                        CampaignId = dcCampaign.CampaignId,
+                        ProductCode = productCode
+                    });
+
+                    result.AddedCount++;
+                });
+        }
+
+        private void ImportCategoriesFromExcel()
+        {
+            HashSet<string> existingValues = dbContext.TrCampaignCategories.Local
+                .Where(x => x.CampaignId == dcCampaign.CampaignId && !string.IsNullOrWhiteSpace(x.HierarchyCode))
+                .Select(x => x.HierarchyCode.Trim())
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            ImportFromExcel(
+                gV_Category,
+                new[] { colHierarchyCode.Caption, nameof(TrCampaignCategory.HierarchyCode), "HierarchyCode", "Kateqoriya" },
+                (lookUpDb, rawValue, result) =>
+                {
+                    string hierarchyCode = rawValue.Trim();
+
+                    bool masterExists = lookUpDb.DcHierarchies
+                        .AsNoTracking()
+                        .Any(x => x.HierarchyCode == hierarchyCode);
+
+                    if (!masterExists)
+                    {
+                        result.Errors.AppendLine($"{colHierarchyCode.Caption}: {hierarchyCode}");
+                        return;
+                    }
+
+                    if (!existingValues.Add(hierarchyCode))
+                    {
+                        result.SkippedCount++;
+                        return;
+                    }
+
+                    dbContext.TrCampaignCategories.Add(new TrCampaignCategory
+                    {
+                        CampaignCategoryId = Guid.NewGuid(),
+                        CampaignId = dcCampaign.CampaignId,
+                        HierarchyCode = hierarchyCode
+                    });
+
+                    result.AddedCount++;
+                });
+        }
+
+        private void ImportCustomersFromExcel()
+        {
+            HashSet<string> existingValues = dbContext.TrCampaignCustomers.Local
+                .Where(x => x.CampaignId == dcCampaign.CampaignId && !string.IsNullOrWhiteSpace(x.CurrAccCode))
+                .Select(x => x.CurrAccCode.Trim())
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            ImportFromExcel(
+                gV_Customer,
+                new[] { colCurrAccCode.Caption, nameof(TrCampaignCustomer.CurrAccCode), "CurrAccCode", "Müştəri" },
+                (lookUpDb, rawValue, result) =>
+                {
+                    string currAccCode = rawValue.Trim();
+
+                    bool masterExists = lookUpDb.DcCurrAccs
+                        .AsNoTracking()
+                        .Any(x => x.CurrAccCode == currAccCode);
+
+                    if (!masterExists)
+                    {
+                        result.Errors.AppendLine($"{colCurrAccCode.Caption}: {currAccCode}");
+                        return;
+                    }
+
+                    if (!existingValues.Add(currAccCode))
+                    {
+                        result.SkippedCount++;
+                        return;
+                    }
+
+                    dbContext.TrCampaignCustomers.Add(new TrCampaignCustomer
+                    {
+                        CampaignCustomerId = Guid.NewGuid(),
+                        CampaignId = dcCampaign.CampaignId,
+                        CurrAccCode = currAccCode
+                    });
+
+                    result.AddedCount++;
+                });
+        }
+
+        private void ImportStoresFromExcel()
+        {
+            HashSet<string> existingValues = dbContext.TrCampaignStores.Local
+                .Where(x => x.CampaignId == dcCampaign.CampaignId && !string.IsNullOrWhiteSpace(x.StoreCode))
+                .Select(x => x.StoreCode.Trim())
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            ImportFromExcel(
+                gV_Store,
+                new[] { colStoreCode.Caption, nameof(TrCampaignStore.StoreCode), "StoreCode", "Store" },
+                (lookUpDb, rawValue, result) =>
+                {
+                    string storeCode = rawValue.Trim();
+
+                    bool masterExists = lookUpDb.SettingStores
+                        .AsNoTracking()
+                        .Any(x => x.StoreCode == storeCode);
+
+                    if (!masterExists)
+                    {
+                        result.Errors.AppendLine($"{colStoreCode.Caption}: {storeCode}");
+                        return;
+                    }
+
+                    if (!existingValues.Add(storeCode))
+                    {
+                        result.SkippedCount++;
+                        return;
+                    }
+
+                    dbContext.TrCampaignStores.Add(new TrCampaignStore
+                    {
+                        CampaignStoreId = Guid.NewGuid(),
+                        CampaignId = dcCampaign.CampaignId,
+                        StoreCode = storeCode
+                    });
+
+                    result.AddedCount++;
+                });
+        }
+
+        private void ImportWarehousesFromExcel()
+        {
+            HashSet<string> existingValues = dbContext.TrCampaignWarehouses.Local
+                .Where(x => x.CampaignId == dcCampaign.CampaignId && !string.IsNullOrWhiteSpace(x.WarehouseCode))
+                .Select(x => x.WarehouseCode.Trim())
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            ImportFromExcel(
+                gV_Warehouse,
+                new[] { colWarehouseCode.Caption, nameof(TrCampaignWarehouse.WarehouseCode), "WarehouseCode", "Depo" },
+                (lookUpDb, rawValue, result) =>
+                {
+                    string warehouseCode = rawValue.Trim();
+
+                    bool masterExists = lookUpDb.DcWarehouses
+                        .AsNoTracking()
+                        .Any(x => x.WarehouseCode == warehouseCode);
+
+                    if (!masterExists)
+                    {
+                        result.Errors.AppendLine($"{colWarehouseCode.Caption}: {warehouseCode}");
+                        return;
+                    }
+
+                    if (!existingValues.Add(warehouseCode))
+                    {
+                        result.SkippedCount++;
+                        return;
+                    }
+
+                    dbContext.TrCampaignWarehouses.Add(new TrCampaignWarehouse
+                    {
+                        CampaignWarehouseId = Guid.NewGuid(),
+                        CampaignId = dcCampaign.CampaignId,
+                        WarehouseCode = warehouseCode
+                    });
+
+                    result.AddedCount++;
+                });
+        }
+
+        private void ImportPaymentMethodsFromExcel()
+        {
+            HashSet<int> existingValues = dbContext.TrCampaignPaymentMethods.Local
+                .Where(x => x.CampaignId == dcCampaign.CampaignId && x.PaymentMethodId > 0)
+                .Select(x => x.PaymentMethodId)
+                .ToHashSet();
+
+            ImportFromExcel(
+                gV_PaymentMethod,
+                new[] { colPaymentMethodId.Caption, nameof(TrCampaignPaymentMethod.PaymentMethodId), "PaymentMethodId", "Ödəmə üsulu" },
+                (lookUpDb, rawValue, result) =>
+                {
+                    DcPaymentMethod paymentMethod = null;
+
+                    if (int.TryParse(rawValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out int paymentMethodId))
+                    {
+                        paymentMethod = lookUpDb.DcPaymentMethods
+                            .AsNoTracking()
+                            .FirstOrDefault(x => x.PaymentMethodId == paymentMethodId);
+                    }
+
+                    paymentMethod ??= lookUpDb.DcPaymentMethods
+                        .AsNoTracking()
+                        .FirstOrDefault(x => x.PaymentMethodDesc == rawValue);
+
+                    if (paymentMethod is null)
+                    {
+                        result.Errors.AppendLine($"{colPaymentMethodId.Caption}: {rawValue}");
+                        return;
+                    }
+
+                    if (!existingValues.Add(paymentMethod.PaymentMethodId))
+                    {
+                        result.SkippedCount++;
+                        return;
+                    }
+
+                    dbContext.TrCampaignPaymentMethods.Add(new TrCampaignPaymentMethod
+                    {
+                        CampaignPaymentMethodId = Guid.NewGuid(),
+                        CampaignId = dcCampaign.CampaignId,
+                        PaymentMethodId = paymentMethod.PaymentMethodId
+                    });
+
+                    result.AddedCount++;
+                });
+        }
+
+        private void ImportFromExcel(
+            GridView gridView,
+            string[] columnAliases,
+            Action<subContext, string, ImportResult> importAction)
+        {
+            OpenFileDialog dialog = new()
+            {
+                Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*",
+                Title = "Excel faylı seçin."
+            };
+
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
+
+            try
+            {
+                ExcelDataSource excelDataSource = new();
+                excelDataSource.FileName = dialog.FileName;
+
+                ExcelWorksheetSettings excelWorksheetSettings = new(0);
+
+                ExcelSourceOptions excelOptions = new();
+                excelOptions.ImportSettings = excelWorksheetSettings;
+                excelOptions.SkipHiddenRows = false;
+                excelOptions.SkipHiddenColumns = false;
+                excelOptions.UseFirstRowAsHeader = true;
+
+                excelDataSource.SourceOptions = excelOptions;
+                excelDataSource.Fill();
+
+                DataTable dt = ToDataTableFromExcelDataSource(excelDataSource);
+
+                if (dt.Rows.Count == 0)
+                {
+                    XtraMessageBox.Show("Excel faylında import ediləcək məlumat tapılmadı.");
+                    return;
+                }
+
+                string columnName = ResolveColumnName(dt, columnAliases);
+                if (string.IsNullOrWhiteSpace(columnName))
+                {
+                    XtraMessageBox.Show("Excel faylında uyğun sütun tapılmadı.");
+                    return;
+                }
+
+                gridView.GridControl.BeginUpdate();
+                gridView.BeginUpdate();
+
+                try
+                {
+                    ImportResult result = new();
+                    using subContext lookUpDb = new();
+
+                    double rowCount = 0;
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        int progress = Convert.ToInt32(rowCount / dt.Rows.Count * 100);
+                        SplashScreenManager.Default.SendCommand(WaitForm.WaitFormCommand.SetProgress, progress);
+                        SplashScreenManager.Default.SetWaitFormDescription(progress + "%");
+                        rowCount++;
+
+                        string rawValue = row[columnName]?.ToString()?.Trim() ?? string.Empty;
+
+                        if (string.IsNullOrWhiteSpace(rawValue))
+                        {
+                            result.EmptyCount++;
+                            continue;
+                        }
+
+                        importAction(lookUpDb, rawValue, result);
+                    }
+
+                    gridView.RefreshData();
+                    gridView.BestFitColumns();
+
+                    ShowImportResult(result);
+                }
+                finally
+                {
+                    gridView.EndUpdate();
+                    gridView.GridControl.EndUpdate();
+                }
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show("Excel import zamanı xəta baş verdi.\n" + ex.Message, "Xəta");
+            }
+            finally
+            {
+                try
+                {
+                    SplashScreenManager.CloseForm(false);
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        private static string ResolveColumnName(DataTable dt, params string[] aliases)
+        {
+            foreach (string alias in aliases.Where(x => !string.IsNullOrWhiteSpace(x)))
+            {
+                DataColumn column = dt.Columns
+                    .Cast<DataColumn>()
+                    .FirstOrDefault(x => string.Equals(
+                        x.ColumnName?.Trim(),
+                        alias.Trim(),
+                        StringComparison.OrdinalIgnoreCase));
+
+                if (column is not null)
+                    return column.ColumnName;
+            }
+
+            return dt.Columns.Count > 0 ? dt.Columns[0].ColumnName : string.Empty;
+        }
+
+        public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)
+        {
+            IList list = ((IListSource)excelDataSource).GetList();
+            DevExpress.DataAccess.Native.Excel.DataView dataView = (DevExpress.DataAccess.Native.Excel.DataView)list;
+            List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
+
+            DataTable table = new();
+
+            foreach (var prop in props)
+            {
+                table.Columns.Add(prop.Name, prop.PropertyType);
+            }
+            object[] values = new object[props.Count];
+            foreach (DevExpress.DataAccess.Native.Excel.ViewRow item in list)
+            {
+                for (int i = 0; i < values.Length; i++)
+                {
+                    values[i] = props[i].GetValue(item);
+                }
+                table.Rows.Add(values);
+            }
+            return table;
+        }
+
+        private static void ShowImportResult(ImportResult result)
+        {
+            StringBuilder message = new();
+            message.AppendLine($"Əlavə edildi: {result.AddedCount}");
+
+            if (result.SkippedCount > 0)
+                message.AppendLine($"Təkrara görə keçildi: {result.SkippedCount}");
+
+            if (result.EmptyCount > 0)
+                message.AppendLine($"Boş sətir: {result.EmptyCount}");
+
+            if (result.Errors.Length > 0)
+            {
+                message.AppendLine();
+                message.AppendLine("Aşağıdakı dəyərlər tapılmadı və ya uyğun gəlmədi:");
+                message.AppendLine(result.Errors.ToString());
+            }
+
+            XtraMessageBox.Show(message.ToString(), "Excel import");
         }
     }
 }
