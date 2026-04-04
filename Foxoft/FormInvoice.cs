@@ -4,6 +4,7 @@ using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
+using DevExpress.Utils.Behaviors.Common;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -77,6 +78,7 @@ namespace Foxoft
 
         private string promoCode = null;
         private bool _isApplyingCampaigns;
+        public bool isNew = false;
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
@@ -141,19 +143,22 @@ namespace Foxoft
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, bool isNew)
             : this(processCode, isReturn, productTypeArr, relatedInvoiceId)
         {
-            ClearControlsAddNew();
+            this.isNew = isNew;
         }
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, Guid invoiceHeaderId)
             : this(processCode, isReturn, productTypeArr, relatedInvoiceId)
         {
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
-
-            LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
         }
 
         private void FormInvoice_Load(object sender, EventArgs e)
         {
+            if (isNew)
+                ClearControlsAddNew();
+            else
+                LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+
             dataLayoutControl1.IsValid(out List<string> errorList);
         }
 
@@ -210,9 +215,9 @@ namespace Foxoft
                                       .Load();
 
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+            trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
             trInvoiceLinesBindingSource.DataSource = null;
-            trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
             this.Text = $"{dcProcess.ProcessDesc} - ({btnEdit_DocNum.EditValue})";
 
@@ -1278,70 +1283,6 @@ namespace Foxoft
         {
             // MinValue və ya SQL datetime limitindən kiçikdirsə default ver
             return (dt < new DateTime(1753, 1, 1)) ? DefaultSqlDate : dt;
-        }
-
-        private TrInvoiceHeader MapNewTrIHForTransfer(TrInvoiceHeader trIH, Guid quidHead)
-        {
-            // swap + null guard
-            var newWarehouseCode = trIH.ToWarehouseCode ?? trIH.WarehouseCode; // fallback
-            var newToWarehouseCode = trIH.WarehouseCode ?? trIH.ToWarehouseCode;
-            var documentDate = FixSqlDate(trIH.DocumentDate);
-            var operationDate = FixSqlDate(trIH.OperationDate);
-
-            if (string.IsNullOrWhiteSpace(newWarehouseCode))
-                throw new InvalidOperationException("WarehouseCode və ToWarehouseCode hər ikisi boşdur/null-dur.");
-
-            var copyTrIH = new TrInvoiceHeader
-            {
-                InvoiceHeaderId = quidHead,
-                WarehouseCode = newWarehouseCode,
-                ToWarehouseCode = newToWarehouseCode,
-                CurrAccCode = trIH.CurrAccCode,
-                StoreCode = string.IsNullOrWhiteSpace(trIH.CurrAccCode) ? trIH.StoreCode : trIH.CurrAccCode,
-                IsMainTF = false,
-                CustomsDocumentNumber = trIH.CustomsDocumentNumber,
-                Description = trIH.Description,
-                DocumentDate = documentDate,
-                DocumentNumber = trIH.DocumentNumber,
-                DocumentTime = trIH.DocumentTime,
-                FiscalPrintedState = trIH.FiscalPrintedState,
-                IsCompleted = trIH.IsCompleted,
-                IsLocked = trIH.IsLocked,
-                IsOpen = trIH.IsOpen,
-                IsReturn = trIH.IsReturn,
-                IsSalesViaInternet = trIH.IsSalesViaInternet,
-                IsSent = trIH.IsSent,
-                IsSuspended = trIH.IsSuspended,
-                OfficeCode = trIH.OfficeCode,
-                OperationDate = operationDate,
-                OperationTime = trIH.OperationTime,
-                PrintCount = trIH.PrintCount,
-                ProcessCode = trIH.ProcessCode,
-                RelatedInvoiceId = trIH.RelatedInvoiceId,
-                TerminalId = trIH.TerminalId,
-            };
-
-            return copyTrIH;
-        }
-
-        private TrInvoiceLine MapNewTrILForTransfer(TrInvoiceLine trIL, Guid quidHead, Guid quidLine)
-        {
-            TrInvoiceLine? newTrIL = new TrInvoiceLine
-            {
-                InvoiceLineId = quidLine,
-                InvoiceHeaderId = quidHead,
-                RelatedLineId = trIL.RelatedLineId,
-                ProductCode = trIL.ProductCode,
-                UnitOfMeasureId = trIL.UnitOfMeasureId,
-                LineDescription = trIL.LineDescription,
-                SerialNumberCode = trIL.SerialNumberCode,
-                SalesPersonCode = trIL.SalesPersonCode,
-                WorkerCode = trIL.WorkerCode,
-                QtyIn = trIL.QtyOut,
-                QtyOut = trIL.QtyIn,
-            };
-
-            return newTrIL;
         }
 
         private void SaveInstallmentGarantors()
@@ -2489,11 +2430,11 @@ namespace Foxoft
 
             if (dcWarehouses is not null && trInvoiceHeader is not null)
             {
-                DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
+                DcWarehouse defaultWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
 
-                if (dcWarehouse is not null && !dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader.WarehouseCode))
+                if (defaultWarehouse is not null && !dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader.WarehouseCode))
                 {
-                    lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                    lUE_WarehouseCode.EditValue = defaultWarehouse.WarehouseCode;
                     //trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
                 }
             }
@@ -2501,12 +2442,14 @@ namespace Foxoft
 
         private void lUE_WarehouseCode_EditValueChanged(object sender, EventArgs e)
         {
-            trInvoiceHeader.WarehouseCode = lUE_WarehouseCode.EditValue?.ToString();
+            //if (trInvoiceHeader is not null)
+            //    trInvoiceHeader.WarehouseCode = lUE_WarehouseCode.EditValue?.ToString();
         }
 
         private void lUE_ToWarehouseCode_EditValueChanged(object sender, EventArgs e)
         {
-            trInvoiceHeader.ToWarehouseCode = lUE_ToWarehouseCode.EditValue?.ToString();
+            //if (trInvoiceHeader is not null)
+            //    trInvoiceHeader.ToWarehouseCode = lUE_ToWarehouseCode.EditValue?.ToString();
         }
 
         private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
