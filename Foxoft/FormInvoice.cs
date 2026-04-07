@@ -154,16 +154,17 @@ namespace Foxoft
 
         private void FormInvoice_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void FormInvoice_Shown(object sender, EventArgs e)
+        {
             if (isNew)
                 ClearControlsAddNew();
             else
                 LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
 
             dataLayoutControl1.IsValid(out List<string> errorList);
-        }
-
-        private void FormInvoice_Shown(object sender, EventArgs e)
-        {
             gC_InvoiceLine.Focus();
         }
 
