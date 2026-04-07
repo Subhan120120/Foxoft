@@ -491,7 +491,6 @@ namespace Foxoft
             {
                 buttonEdit.EditValue = dcCurrAcc.CurrAccCode;
                 trPaymentHeader.FromCashRegCode = dcCurrAcc.CurrAccCode;
-                lbl_FromCashRegDesc.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
 
                 CalcCashRegBalance();
             }
@@ -524,36 +523,44 @@ namespace Foxoft
 
         private void CashReg_Validating(object sender, CancelEventArgs e)
         {
-            var be = sender as ButtonEdit;
-            if (be == null) return;
+            ButtonEdit be = sender as ButtonEdit;
+            if (be == null)
+                return;
 
-            string code = (be.EditValue ?? "").ToString().Trim();
+            string code = (be.EditValue ?? string.Empty).ToString().Trim();
 
-            string msg = (be == FromCashRegCodeButtonEdit)
+            bool isFromCashReg = be == FromCashRegCodeButtonEdit;
+
+            string emptyMessage = isFromCashReg
                 ? "Çıxış kassası seçilməlidir."
                 : "Giriş kassası seçilməlidir.";
 
+            LabelControl targetLabel = isFromCashReg
+                ? lbl_FromCashRegDesc
+                : lbl_ToCashRegDesc;
+
             if (string.IsNullOrWhiteSpace(code))
             {
-                be.ErrorText = msg;
+                be.ErrorText = emptyMessage;
+                targetLabel.Text = string.Empty;
                 e.Cancel = true;
                 return;
             }
 
-            // DB yoxla
-            DcCurrAcc cashreg = efMethods.SelectCashReg(code);
+            DcCurrAcc cashReg = efMethods.SelectCashReg(code);
 
-            if (cashreg == null)
+            if (cashReg == null)
             {
                 be.ErrorText = "Belə kassa mövcud deyil.";
+                targetLabel.Text = string.Empty;
                 e.Cancel = true;
                 return;
             }
 
-            // hər şey ok
-            lbl_ToCashRegDesc.Text = cashreg.CurrAccDesc + " " + cashreg.FirstName + " " + cashreg.LastName;
-            be.ErrorText = "";
+            be.ErrorText = string.Empty;
+            targetLabel.Text = $"{cashReg.CurrAccDesc} {cashReg.FirstName} {cashReg.LastName}".Trim();
         }
+
         private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)
         {
             DcCurrAcc createdCurrAcc = efMethods.SelectCurrAcc(trPaymentHeader.CreatedUserName);
