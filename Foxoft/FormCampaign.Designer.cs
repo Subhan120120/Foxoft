@@ -19,6 +19,8 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            lblCampaignPassword = new DevExpress.XtraEditors.LabelControl();
+            CampaignPasswordTextEdit = new DevExpress.XtraEditors.TextEdit();
             panelHeader = new DevExpress.XtraEditors.PanelControl();
             lblProcessCode = new DevExpress.XtraEditors.LabelControl();
             LUE_processCode = new DevExpress.XtraEditors.LookUpEdit();
@@ -108,6 +110,7 @@ namespace Foxoft
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             dcCampaignsBindingSource = new BindingSource(components);
+            ((System.ComponentModel.ISupportInitialize)CampaignPasswordTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LUE_processCode.Properties).BeginInit();
@@ -169,6 +172,22 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)dcCampaignsBindingSource).BeginInit();
             SuspendLayout();
             // 
+            // lblCampaignPassword
+            // 
+            lblCampaignPassword.Location = new Point(788, 15);
+            lblCampaignPassword.Name = "lblCampaignPassword";
+            lblCampaignPassword.Size = new Size(22, 13);
+            lblCampaignPassword.TabIndex = 27;
+            lblCampaignPassword.Text = "Şifrə";
+            // 
+            // CampaignPasswordTextEdit
+            // 
+            CampaignPasswordTextEdit.Location = new Point(901, 12);
+            CampaignPasswordTextEdit.Name = "CampaignPasswordTextEdit";
+            CampaignPasswordTextEdit.Properties.UseSystemPasswordChar = true;
+            CampaignPasswordTextEdit.Size = new Size(239, 20);
+            CampaignPasswordTextEdit.TabIndex = 28;
+            // 
             // panelHeader
             // 
             panelHeader.Controls.Add(lblProcessCode);
@@ -197,6 +216,8 @@ namespace Foxoft
             panelHeader.Controls.Add(MinInvoiceAmountCalcEdit);
             panelHeader.Controls.Add(MaxDiscountAmountCalcEdit);
             panelHeader.Controls.Add(NoteMemoEdit);
+            panelHeader.Controls.Add(lblCampaignPassword);
+            panelHeader.Controls.Add(CampaignPasswordTextEdit);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
@@ -205,7 +226,7 @@ namespace Foxoft
             // 
             // lblProcessCode
             // 
-            lblProcessCode.Location = new Point(788, 15);
+            lblProcessCode.Location = new Point(12, 137);
             lblProcessCode.Name = "lblProcessCode";
             lblProcessCode.Size = new Size(32, 13);
             lblProcessCode.TabIndex = 26;
@@ -214,14 +235,14 @@ namespace Foxoft
             // LUE_processCode
             // 
             LUE_processCode.EditValue = "RS";
-            LUE_processCode.Location = new Point(896, 12);
+            LUE_processCode.Location = new Point(120, 134);
             LUE_processCode.Name = "LUE_processCode";
             LUE_processCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             LUE_processCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ProcessCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ProcessDesc", "Name2") });
             LUE_processCode.Properties.DisplayMember = "ProcessDesc";
             LUE_processCode.Properties.NullText = "";
             LUE_processCode.Properties.ValueMember = "ProcessCode";
-            LUE_processCode.Size = new Size(272, 20);
+            LUE_processCode.Size = new Size(244, 20);
             LUE_processCode.TabIndex = 3;
             // 
             // lblCampaignCode
@@ -282,7 +303,7 @@ namespace Foxoft
             // 
             // lblEndDate
             // 
-            lblEndDate.Location = new Point(400, 105);
+            lblEndDate.Location = new Point(12, 105);
             lblEndDate.Name = "lblEndDate";
             lblEndDate.Size = new Size(53, 13);
             lblEndDate.TabIndex = 8;
@@ -290,7 +311,7 @@ namespace Foxoft
             // 
             // lblMinInvoiceAmount
             // 
-            lblMinInvoiceAmount.Location = new Point(788, 105);
+            lblMinInvoiceAmount.Location = new Point(400, 109);
             lblMinInvoiceAmount.Name = "lblMinInvoiceAmount";
             lblMinInvoiceAmount.Size = new Size(58, 13);
             lblMinInvoiceAmount.TabIndex = 9;
@@ -298,7 +319,7 @@ namespace Foxoft
             // 
             // lblMaxDiscountAmount
             // 
-            lblMaxDiscountAmount.Location = new Point(12, 105);
+            lblMaxDiscountAmount.Location = new Point(400, 137);
             lblMaxDiscountAmount.Name = "lblMaxDiscountAmount";
             lblMaxDiscountAmount.Size = new Size(65, 13);
             lblMaxDiscountAmount.TabIndex = 10;
@@ -306,7 +327,7 @@ namespace Foxoft
             // 
             // lblNote
             // 
-            lblNote.Location = new Point(13, 136);
+            lblNote.Location = new Point(12, 167);
             lblNote.Name = "lblNote";
             lblNote.Size = new Size(26, 13);
             lblNote.TabIndex = 11;
@@ -387,7 +408,7 @@ namespace Foxoft
             // EndDateDateEdit
             // 
             EndDateDateEdit.EditValue = new DateTime(2026, 3, 22, 0, 0, 0, 0);
-            EndDateDateEdit.Location = new Point(500, 102);
+            EndDateDateEdit.Location = new Point(124, 102);
             EndDateDateEdit.Name = "EndDateDateEdit";
             EndDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             EndDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -396,15 +417,15 @@ namespace Foxoft
             // 
             // MinInvoiceAmountCalcEdit
             // 
-            MinInvoiceAmountCalcEdit.Location = new Point(896, 102);
+            MinInvoiceAmountCalcEdit.Location = new Point(500, 106);
             MinInvoiceAmountCalcEdit.Name = "MinInvoiceAmountCalcEdit";
             MinInvoiceAmountCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            MinInvoiceAmountCalcEdit.Size = new Size(272, 20);
+            MinInvoiceAmountCalcEdit.Size = new Size(240, 20);
             MinInvoiceAmountCalcEdit.TabIndex = 23;
             // 
             // MaxDiscountAmountCalcEdit
             // 
-            MaxDiscountAmountCalcEdit.Location = new Point(124, 102);
+            MaxDiscountAmountCalcEdit.Location = new Point(500, 134);
             MaxDiscountAmountCalcEdit.Name = "MaxDiscountAmountCalcEdit";
             MaxDiscountAmountCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             MaxDiscountAmountCalcEdit.Size = new Size(240, 20);
@@ -412,9 +433,9 @@ namespace Foxoft
             // 
             // NoteMemoEdit
             // 
-            NoteMemoEdit.Location = new Point(125, 133);
+            NoteMemoEdit.Location = new Point(125, 165);
             NoteMemoEdit.Name = "NoteMemoEdit";
-            NoteMemoEdit.Size = new Size(1044, 54);
+            NoteMemoEdit.Size = new Size(1044, 22);
             NoteMemoEdit.TabIndex = 25;
             // 
             // xtraTabControl1
@@ -932,6 +953,7 @@ namespace Foxoft
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Kampaniya";
             Load += FormCampaign_Load;
+            ((System.ComponentModel.ISupportInitialize)CampaignPasswordTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelHeader).EndInit();
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
@@ -1093,5 +1115,8 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodDesc;
         private DevExpress.XtraEditors.LookUpEdit LUE_processCode;
         private DevExpress.XtraEditors.LabelControl lblProcessCode;
+
+        private DevExpress.XtraEditors.LabelControl lblCampaignPassword;
+        private DevExpress.XtraEditors.TextEdit CampaignPasswordTextEdit;
     }
 }

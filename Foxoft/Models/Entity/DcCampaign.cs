@@ -89,9 +89,9 @@ namespace Foxoft.Models
         [Display(Name = "Qeyd")]
         public string? Note { get; set; }
 
-        //[StringLength(50)]
-        //[Display(Name = "Şifrə")]
-        //public string? CampaignPassword { get; set; }
+        [StringLength(50)]
+        [Display(Name = "Kampaniya şifrəsi")]
+        public string? CampaignPassword { get; set; }
 
         public virtual ICollection<TrCampaignProduct> TrCampaignProducts { get; set; } = new List<TrCampaignProduct>();
         public virtual ICollection<TrCampaignCategory> TrCampaignCategories { get; set; } = new List<TrCampaignCategory>();

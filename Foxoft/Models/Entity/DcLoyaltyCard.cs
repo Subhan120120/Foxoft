@@ -26,7 +26,7 @@ namespace Foxoft.Models
         public bool IsActive { get; set; } = true;
 
         [StringLength(200)]
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

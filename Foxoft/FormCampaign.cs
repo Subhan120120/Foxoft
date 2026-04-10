@@ -121,6 +121,7 @@ namespace Foxoft
             CampaignCodeTextEdit.DataBindings.Clear();
             CampaignDescTextEdit.DataBindings.Clear();
             PromoCodeTextEdit.DataBindings.Clear();
+            CampaignPasswordTextEdit.DataBindings.Clear();
             DiscountTypeCodeComboBoxEdit.DataBindings.Clear();
             DiscountValueCalcEdit.DataBindings.Clear();
             PrioritySpinEdit.DataBindings.Clear();
@@ -135,6 +136,7 @@ namespace Foxoft
             CampaignCodeTextEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.CampaignCode), true, DataSourceUpdateMode.OnPropertyChanged);
             CampaignDescTextEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.CampaignDesc), true, DataSourceUpdateMode.OnPropertyChanged);
             PromoCodeTextEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.PromoCode), true, DataSourceUpdateMode.OnPropertyChanged);
+            CampaignPasswordTextEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.CampaignPassword), true, DataSourceUpdateMode.OnPropertyChanged);
             DiscountTypeCodeComboBoxEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.DiscountTypeCode), true, DataSourceUpdateMode.OnPropertyChanged);
             DiscountValueCalcEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.DiscountValue), true, DataSourceUpdateMode.OnPropertyChanged);
             PrioritySpinEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.Priority), true, DataSourceUpdateMode.OnPropertyChanged);
