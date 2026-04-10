@@ -283,9 +283,9 @@ namespace Foxoft.Models
             modelBuilder.Entity<ProductBalance>() //view
                         .ToView(nameof(ProductBalance));
 
-            modelBuilder.Entity<GetNextDocNum>() //procedure
+            modelBuilder.Entity<GetNextDocNumResult>() //procedure
                         .HasNoKey()
-                        .ToView(nameof(GetNextDocNum));
+                        .ToView(nameof(GetNextDocNumResult));
 
             modelBuilder.Entity<SlugifyResult>() // function
                         .HasNoKey()

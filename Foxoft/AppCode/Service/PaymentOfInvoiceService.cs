@@ -41,11 +41,11 @@ namespace Foxoft.AppCode.Services
             else
             {
                 string newDocNum = _ef.GetNextDocNum(
-                    DefisExist: true,
+                    defisExist: true,
                     processCode: "PA",
                     columnName: nameof(TrPaymentHeader.DocumentNumber),
                     tableName: nameof(subContext.TrPaymentHeaders),
-                    ReplicateNum: 6);
+                    replicateNum: 6);
 
                 paymentHeader.DocumentNumber = newDocNum;
                 paymentHeader.Description = invoice.Description;

@@ -217,9 +217,11 @@ namespace Foxoft
 
             Entity = bindingSource1.AddNew() as T;
 
-            PropertyInfo? property_2 = typeof(T).GetProperty(FieldName_2);
-            if (property_2 != null && property_2.CanWrite)
-                property_2.SetValue(Entity, value_2);
+            if (!string.IsNullOrWhiteSpace(FieldName_2) && Entity != null)
+            {
+                var property_2 = typeof(T).GetProperty(FieldName_2);
+                property_2?.SetValue(Entity, value_2);
+            }
 
             string tableName = dbContext.Model.FindEntityType(typeof(T)).GetTableName();
 

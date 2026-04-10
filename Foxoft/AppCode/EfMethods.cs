@@ -31,12 +31,12 @@ namespace Foxoft
             //this.db = new subContext();
         }
 
-        public string GetNextDocNum(bool DefisExist, string processCode, string columnName, string tableName, int ReplicateNum)
+        public string GetNextDocNum(bool defisExist, string processCode, string columnName, string tableName, int replicateNum)
         {
             using subContext db = new();
-            string qry = $"exec [dbo].[GetNextDocNum] {DefisExist}, '{processCode}', '{columnName}', '{tableName}', {ReplicateNum}";
+            string qry = $"exec [dbo].[GetNextDocNum] {defisExist}, '{processCode}', '{columnName}', '{tableName}', {replicateNum}";
 
-            return db.Set<GetNextDocNum>()
+            return db.Set<GetNextDocNumResult>()
                 .FromSqlRaw(qry)
                 .AsEnumerable()
                 .First()
