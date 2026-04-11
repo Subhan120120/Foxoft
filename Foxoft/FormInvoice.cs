@@ -40,6 +40,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
+using static Foxoft.AppCode.Service.CampaignService;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
 #endregion
@@ -79,6 +80,11 @@ namespace Foxoft
         private string promoCode = null;
         private bool _isApplyingCampaigns;
         public bool isNew = false;
+
+        private HashSet<Guid> _approvedCampaignIds = new();
+        private string? _campaignApprovalKey;
+        private HashSet<Guid> _paymentApprovedCampaignIds = new();
+        private HashSet<Guid> _pendingApprovedCampaignIds = new();
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
@@ -1197,7 +1203,7 @@ namespace Foxoft
 
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
 
-            ApplyCampaignsFromForm(false);
+            ApplyCampaignsFromForm(false, null);
 
             if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode))
                 InitilizeTransfer();
@@ -1334,20 +1340,6 @@ namespace Foxoft
             }
         }
 
-        private void MakePayment(decimal summaryInvoice)
-        {
-            decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
-            decimal pay = Math.Max(Math.Round(Math.Abs(summaryInvoice) - Math.Abs(prePaid), 4), 0);
-
-            using FormPayment formPayment = new(PaymentType.Cash, pay, trInvoiceHeader);
-
-            if (formPayment.ShowDialog(this) == DialogResult.OK)
-            {
-                UpdatePaidLabels();
-                ApplyCampaignsFromForm(false);
-            }
-        }
-
         private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
         {
             ClearControlsAddNew();
@@ -1407,7 +1399,37 @@ namespace Foxoft
             List<int> allowedPaymentMethodIds = GetAvailablePaymentMethodCampaignIds();
             bool usePaymentMethodCampaign = ShouldApplyPaymentMethodCampaign(allowedPaymentMethodIds);
 
-            decimal pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+            if (usePaymentMethodCampaign)
+            {
+                if (!ApproveCampaignsBeforePayment(allowedPaymentMethodIds))
+                    return;
+
+                ApplyCampaignsFromForm(
+                    false,
+                    allowedPaymentMethodIds,
+                    _pendingApprovedCampaignIds.Count == 0 ? null : _pendingApprovedCampaignIds);
+
+                ReloadInvoiceCampaignValues();
+                UpdatePaidLabels();
+            }
+            else
+            {
+                _pendingApprovedCampaignIds.Clear();
+            }
+
+            decimal pay = GetRemainingPaymentAmount();
+
+            if (pay <= 0)
+            {
+                XtraMessageBox.Show(
+                    "Ödəniləcək məbləğ qalmayıb.",
+                    "Ödəniş",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                _pendingApprovedCampaignIds.Clear();
+                return;
+            }
 
             PaymentType paymentType = PaymentType.Cash;
             FormPayment form;
@@ -1425,14 +1447,24 @@ namespace Foxoft
             using (form)
             {
                 if (form.ShowDialog(this) != DialogResult.OK)
+                {
+                    CancelCampaignsFromForm();
+                    _pendingApprovedCampaignIds.Clear();
                     return;
+                }
             }
 
             if (usePaymentMethodCampaign)
             {
                 List<int> actualPaymentMethodIds = GetInvoicePaymentMethodIds();
-                ApplyCampaignsFromForm(false, actualPaymentMethodIds);
+
+                ApplyCampaignsFromForm(
+                    false,
+                    actualPaymentMethodIds,
+                    _pendingApprovedCampaignIds.Count == 0 ? null : _pendingApprovedCampaignIds);
             }
+
+            _pendingApprovedCampaignIds.Clear();
 
             ReloadInvoiceCampaignValues();
             UpdatePaidLabels();
@@ -3227,7 +3259,7 @@ namespace Foxoft
 
         private void bBI_CampaignApply_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ApplyCampaignsFromForm(true);
+            ApplyCampaignsFromForm(true, null);
         }
 
         private void bBI_CampaignLog_ItemClick(object sender, ItemClickEventArgs e)
@@ -3293,10 +3325,13 @@ namespace Foxoft
 
             promoCode = campaignHeader?.PromoCode;
 
-            ApplyCampaignsFromForm(true);
+            ApplyCampaignsFromForm(true, null);
         }
 
-        private void ApplyCampaignsFromForm(bool showMessage, IEnumerable<int>? paymentMethodIds = null)
+        private void ApplyCampaignsFromForm(
+            bool showMessage,
+            IEnumerable<int>? paymentMethodIds = null,
+            IEnumerable<Guid>? approvedCampaignIds = null)
         {
             if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
                 return;
@@ -3329,14 +3364,25 @@ namespace Foxoft
                     }
                 }
 
+                string? currentPromoCode = string.IsNullOrWhiteSpace(promoCode)
+                    ? null
+                    : promoCode.Trim();
+
+                List<Guid>? approvedIds = approvedCampaignIds?
+                    .Where(x => x != Guid.Empty)
+                    .Distinct()
+                    .ToList();
+
                 CampaignService campaignService = new();
                 CampaignApplyResult result = campaignService.Apply(
                     trInvoiceHeader.InvoiceHeaderId,
                     Authorization.CurrAccCode,
                     paymentIds,
-                    string.IsNullOrWhiteSpace(promoCode) ? null : promoCode.Trim());
+                    currentPromoCode,
+                    approvedIds);
 
                 ReloadInvoiceCampaignValues();
+                UpdatePaidLabels();
 
                 if (showMessage)
                 {
@@ -3344,12 +3390,20 @@ namespace Foxoft
                         ? "Uyğun kampaniya tapılmadı."
                         : $"Tətbiq olunan kampaniyalar: {string.Join(", ", result.AppliedCampaignCodes)}\nCəmi endirim: {Math.Round(result.TotalDiscount, 2)}";
 
-                    XtraMessageBox.Show(msg);
+                    XtraMessageBox.Show(
+                        msg,
+                        "Kampaniya",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(ex.Message, "Kampaniya", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(
+                    ex.Message,
+                    "Kampaniya",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             finally
             {
@@ -3412,6 +3466,161 @@ namespace Foxoft
                 .Distinct()
                 .ToList();
         }
+        private HashSet<Guid>? GetApprovedCampaignIds(CampaignService campaignService, IReadOnlyCollection<int> paymentMethodIds, string? promoCode)
+        {
+            List<CampaignPasswordCandidate> passwordCampaigns = campaignService.GetPasswordProtectedCampaigns(
+                trInvoiceHeader.InvoiceHeaderId,
+                paymentMethodIds,
+                string.IsNullOrWhiteSpace(promoCode) ? null : promoCode.Trim());
 
+            HashSet<Guid> approvedCampaignIds = new();
+
+            foreach (CampaignPasswordCandidate campaign in passwordCampaigns)
+            {
+                string? enteredPassword = ShowCampaignPasswordDialog(
+                    $"{campaign.CampaignCode} - {campaign.CampaignDesc} kampaniyasını tətbiq etmək üçün şifrəni daxil edin.");
+
+                if (enteredPassword is null)
+                    return null;
+
+                if (!campaignService.ValidateCampaignPassword(campaign.CampaignId, enteredPassword))
+                {
+                    XtraMessageBox.Show(
+                        $"{campaign.CampaignCode} kampaniyası üçün şifrə yanlışdır. Endirim tətbiq olunmadı.",
+                        "Kampaniya",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    return null;
+                }
+
+                approvedCampaignIds.Add(campaign.CampaignId);
+            }
+
+            return approvedCampaignIds;
+        }
+
+        private string? ShowCampaignPasswordDialog(string prompt)
+        {
+            var result = XtraInputBox.Show("Şifrə Daxil Edin:", "Kampaniya Endirimi Şifrəsi", "");
+
+            if (result == null)
+                return null;
+
+            return result.ToString().Trim();
+        }
+
+        private string BuildCampaignApprovalKey(IEnumerable<int> paymentMethodIds, string? promoCode)
+        {
+            string paymentKey = string.Join(",",
+                paymentMethodIds
+                    .Where(x => x > 0)
+                    .Distinct()
+                    .OrderBy(x => x));
+
+            decimal netAmount = dbContext?.TrInvoiceLines.Local
+                .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                .Sum(x => Math.Max(0m, x.NetAmountBeforeCampaign)) ?? 0m;
+
+            return string.Join("|",
+                trInvoiceHeader.InvoiceHeaderId,
+                trInvoiceHeader.CurrAccCode,
+                trInvoiceHeader.StoreCode,
+                trInvoiceHeader.WarehouseCode,
+                trInvoiceHeader.DocumentDate.ToString("yyyyMMdd"),
+                promoCode ?? string.Empty,
+                paymentKey,
+                netAmount.ToString("0.####"));
+        }
+
+        private HashSet<Guid> GetPreviouslyApprovedCampaignIds(CampaignService campaignService, IReadOnlyCollection<int> paymentIds, string? promoCode)
+        {
+            HashSet<Guid> protectedCampaignIds = campaignService
+                .GetPasswordProtectedCampaigns(
+                    trInvoiceHeader.InvoiceHeaderId,
+                    paymentIds,
+                    promoCode)
+                .Select(x => x.CampaignId)
+                .ToHashSet();
+
+            if (protectedCampaignIds.Count == 0)
+                return new HashSet<Guid>();
+
+            using var db = new subContext();
+
+            return db.TrInvoiceCampaignLogs
+                .AsNoTracking()
+                .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                .Where(x => protectedCampaignIds.Contains(x.CampaignId))
+                .Select(x => x.CampaignId)
+                .Distinct()
+                .ToHashSet();
+        }
+
+        private bool ApproveCampaignsBeforePayment(IEnumerable<int>? paymentMethodIds = null)
+        {
+            CampaignService campaignService = new();
+
+            List<int> paymentIds = paymentMethodIds?
+                .Where(x => x > 0)
+                .Distinct()
+                .ToList() ?? new List<int>();
+
+            string? currentPromoCode = string.IsNullOrWhiteSpace(promoCode)
+                ? null
+                : promoCode.Trim();
+
+            HashSet<Guid>? approvedCampaignIds = GetApprovedCampaignIds(
+                campaignService,
+                paymentIds,
+                currentPromoCode);
+
+            if (approvedCampaignIds is null)
+                return false;
+
+            _pendingApprovedCampaignIds = approvedCampaignIds;
+            return true;
+        }
+        private decimal GetRemainingPaymentAmount()
+        {
+            decimal invoiceSum = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+            decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
+
+            return Math.Max(Math.Round(Math.Abs(invoiceSum) - Math.Abs(prePaid), 4), 0);
+        }
+
+        private void ResetCampaignApprovals()
+        {
+            _approvedCampaignIds.Clear();
+            _campaignApprovalKey = null;
+        }
+
+        private void CancelCampaignsFromForm()
+        {
+            if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            using (var db = new subContext())
+            {
+                List<TrInvoiceLine> lines = db.TrInvoiceLines
+                    .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                    .ToList();
+
+                foreach (TrInvoiceLine line in lines)
+                    line.DiscountCampaign = 0;
+
+                List<TrInvoiceCampaignLog> logs = db.TrInvoiceCampaignLogs
+                    .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                    .ToList();
+
+                if (logs.Count > 0)
+                    db.TrInvoiceCampaignLogs.RemoveRange(logs);
+
+                db.SaveChanges(Authorization.CurrAccCode);
+            }
+
+            ReloadInvoiceCampaignValues();
+            UpdatePaidLabels();
+        }
     }
 }

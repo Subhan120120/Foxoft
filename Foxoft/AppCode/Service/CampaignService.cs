@@ -5,7 +5,12 @@ namespace Foxoft.AppCode.Service
 {
     public class CampaignService
     {
-        public CampaignApplyResult Apply(Guid invoiceHeaderId, string currAccCode, IEnumerable<int>? paymentMethodIds = null, string? promoCode = null)
+        public CampaignApplyResult Apply(
+                    Guid invoiceHeaderId,
+                    string currAccCode,
+                    IEnumerable<int>? paymentMethodIds = null,
+                    string? promoCode = null,
+                    IEnumerable<Guid>? approvedCampaignIds = null)
         {
             using var db = new subContext();
 
@@ -33,47 +38,14 @@ namespace Foxoft.AppCode.Service
                 return CampaignApplyResult.Empty;
             }
 
-            List<DcCampaign> campaigns = db.DcCampaigns
-                .Include(x => x.TrCampaignProducts)
-                .Include(x => x.TrCampaignCategories)
-                .Include(x => x.TrCampaignCustomers)
-                .Include(x => x.TrCampaignStores)
-                .Include(x => x.TrCampaignWarehouses)
-                .Include(x => x.TrCampaignPaymentMethods)
-                .Where(x => x.IsActive)
-                .Where(x => x.StartDate <= invoiceHeader.DocumentDate && x.EndDate >= invoiceHeader.DocumentDate)
-                .AsNoTracking()
-                .ToList();
-
-            decimal invoiceNetAmount = invoiceLines.Sum(x => Math.Max(0, x.NetAmountBeforeCampaign));
-
-            List<CampaignCandidate> candidates = new();
-
-            foreach (DcCampaign campaign in campaigns)
-            {
-                if (!MatchesHeaderScope(campaign, invoiceHeader, resolvedPaymentMethodIds, promoCode))
-                    continue;
-
-                if (campaign.MinInvoiceAmount > 0 && invoiceNetAmount < campaign.MinInvoiceAmount)
-                    continue;
-
-                List<TrInvoiceLine> matchedLines = invoiceLines
-                    .Where(x => MatchesLineScope(campaign, x))
-                    .ToList();
-
-                if (matchedLines.Count == 0)
-                    continue;
-
-                List<CampaignLineDiscount> lineDiscounts = BuildLineDiscounts(campaign, matchedLines);
-                if (lineDiscounts.Count == 0)
-                    continue;
-
-                candidates.Add(new CampaignCandidate
-                {
-                    Campaign = campaign,
-                    LineDiscounts = lineDiscounts
-                });
-            }
+            List<CampaignCandidate> candidates = GetCampaignCandidates(
+                db,
+                invoiceHeader,
+                invoiceLines,
+                resolvedPaymentMethodIds,
+                promoCode,
+                approvedCampaignIds,
+                true);
 
             if (candidates.Count == 0)
             {
@@ -99,19 +71,17 @@ namespace Foxoft.AppCode.Service
                     if (!trackedLines.TryGetValue(lineDiscount.InvoiceLineId, out TrInvoiceLine? trackedLine))
                         continue;
 
-                    decimal lineBase = Math.Max(0, trackedLine.NetAmountBeforeCampaign);
-                    decimal existingDiscount = currentLineDiscounts[trackedLine.InvoiceLineId];
-                    decimal remainingDiscountable = Math.Max(0, lineBase - existingDiscount);
-                    decimal appliedDiscount = Math.Min(remainingDiscountable, lineDiscount.DiscountAmount);
+                    decimal remainBase = Math.Max(0, trackedLine.NetAmountBeforeCampaign - currentLineDiscounts[trackedLine.InvoiceLineId]);
+                    if (remainBase <= 0)
+                        continue;
 
+                    decimal appliedDiscount = Math.Min(remainBase, lineDiscount.DiscountAmount);
                     if (appliedDiscount <= 0)
                         continue;
 
                     currentLineDiscounts[trackedLine.InvoiceLineId] += appliedDiscount;
                     trackedLine.DiscountCampaign = currentLineDiscounts[trackedLine.InvoiceLineId];
                     totalDiscount += appliedDiscount;
-
-                    decimal rate = trackedLine.ExchangeRate == 0 ? 1 : (decimal)trackedLine.ExchangeRate;
 
                     db.TrInvoiceCampaignLogs.Add(new TrInvoiceCampaignLog
                     {
@@ -121,14 +91,16 @@ namespace Foxoft.AppCode.Service
                         CampaignId = selectedCampaign.Campaign.CampaignId,
                         CampaignCode = selectedCampaign.Campaign.CampaignCode,
                         CampaignDesc = selectedCampaign.Campaign.CampaignDesc,
-                        PromoCode = promoCode,
-                        PaymentMethodId = resolvedPaymentMethodIds.FirstOrDefault(),
+                        PromoCode = string.IsNullOrWhiteSpace(promoCode) ? null : promoCode.Trim(),
+                        PaymentMethodId = selectedCampaign.Campaign.TrCampaignPaymentMethods
+                            .Select(x => (int?)x.PaymentMethodId)
+                            .FirstOrDefault(),
                         Priority = selectedCampaign.Campaign.Priority,
                         IsCombinable = selectedCampaign.Campaign.IsCombinable,
                         BaseAmount = lineDiscount.BaseAmount,
-                        BaseAmountLoc = Math.Round(lineDiscount.BaseAmount / rate, 4),
+                        BaseAmountLoc = lineDiscount.BaseAmount,
                         DiscountAmount = appliedDiscount,
-                        DiscountAmountLoc = Math.Round(appliedDiscount / rate, 4),
+                        DiscountAmountLoc = appliedDiscount,
                         DiscountPercent = lineDiscount.DiscountPercent,
                         Note = lineDiscount.Note
                     });
@@ -139,11 +111,89 @@ namespace Foxoft.AppCode.Service
 
             return new CampaignApplyResult
             {
-                AppliedCampaignIds = selected.Select(x => x.Campaign.CampaignId).ToList(),
+                AppliedCampaignIds = selected.Select(x => x.Campaign.CampaignId).Distinct().ToList(),
                 AppliedCampaignCodes = selected.Select(x => x.Campaign.CampaignCode).Distinct().ToList(),
                 TotalDiscount = totalDiscount
             };
         }
+
+        private List<CampaignCandidate> GetCampaignCandidates(
+            subContext db,
+            TrInvoiceHeader invoiceHeader,
+            List<TrInvoiceLine> invoiceLines,
+            List<int> resolvedPaymentMethodIds,
+            string? promoCode,
+            IEnumerable<Guid>? approvedCampaignIds,
+            bool enforcePassword)
+        {
+            List<CampaignCandidate> candidates = new();
+
+            if (invoiceLines.Count == 0)
+                return candidates;
+
+            string? promoCodeValue = string.IsNullOrWhiteSpace(promoCode) ? null : promoCode.Trim();
+
+            HashSet<Guid> approvedIdSet = approvedCampaignIds is null
+                ? new HashSet<Guid>()
+                : new HashSet<Guid>(approvedCampaignIds);
+
+            List<DcCampaign> campaigns = db.DcCampaigns
+                .Include(x => x.TrCampaignProducts)
+                .Include(x => x.TrCampaignCategories)
+                .Include(x => x.TrCampaignCustomers)
+                .Include(x => x.TrCampaignStores)
+                .Include(x => x.TrCampaignWarehouses)
+                .Include(x => x.TrCampaignPaymentMethods)
+                .Where(x => x.IsActive)
+                .Where(x => x.StartDate <= invoiceHeader.DocumentDate && x.EndDate >= invoiceHeader.DocumentDate)
+                .AsNoTracking()
+                .ToList();
+
+            decimal invoiceNetAmount = invoiceLines.Sum(x => Math.Max(0, x.NetAmountBeforeCampaign));
+
+            foreach (DcCampaign campaign in campaigns)
+            {
+                if (!MatchesHeaderScope(campaign, invoiceHeader, resolvedPaymentMethodIds, promoCodeValue))
+                    continue;
+
+                if (campaign.MinInvoiceAmount > 0 && invoiceNetAmount < campaign.MinInvoiceAmount)
+                    continue;
+
+                if (enforcePassword
+                    && !string.IsNullOrWhiteSpace(campaign.CampaignPassword)
+                    && !approvedIdSet.Contains(campaign.CampaignId))
+                    continue;
+
+                List<TrInvoiceLine> matchedLines = invoiceLines
+                    .Where(x => MatchesLineScope(campaign, x))
+                    .ToList();
+
+                if (matchedLines.Count == 0)
+                    continue;
+
+                List<CampaignLineDiscount> lineDiscounts = BuildLineDiscounts(campaign, matchedLines);
+                if (lineDiscounts.Count == 0)
+                    continue;
+
+                candidates.Add(new CampaignCandidate
+                {
+                    Campaign = campaign,
+                    LineDiscounts = lineDiscounts
+                });
+            }
+
+            return candidates;
+        }
+
+
+        public sealed class CampaignPasswordCandidate
+        {
+            public Guid CampaignId { get; set; }
+            public string CampaignCode { get; set; }
+            public string CampaignDesc { get; set; }
+        }
+
+
 
         private static void SaveCampaignHeader(subContext db, Guid invoiceHeaderId, string? promoCode, string currAccCode)
         {
@@ -364,8 +414,63 @@ namespace Foxoft.AppCode.Service
             public decimal DiscountPercent { get; set; }
             public string? Note { get; set; }
         }
-    }
 
+        public List<CampaignPasswordCandidate> GetPasswordProtectedCampaigns(Guid invoiceHeaderId, IEnumerable<int>? paymentMethodIds = null, string? promoCode = null)
+        {
+            using var db = new subContext();
+
+            TrInvoiceHeader? invoiceHeader = db.TrInvoiceHeaders
+                .AsNoTracking()
+                .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
+
+            if (invoiceHeader is null)
+                return new List<CampaignPasswordCandidate>();
+
+            List<int> resolvedPaymentMethodIds = ResolvePaymentMethodIds(db, invoiceHeaderId, paymentMethodIds);
+
+            List<TrInvoiceLine> invoiceLines = db.TrInvoiceLines
+                .Include(x => x.DcProduct)
+                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                .ToList();
+
+            List<CampaignCandidate> candidates = GetCampaignCandidates(
+                db,
+                invoiceHeader,
+                invoiceLines,
+                resolvedPaymentMethodIds,
+                promoCode,
+                null,
+                false);
+
+            return candidates
+                .Where(x => !string.IsNullOrWhiteSpace(x.Campaign.CampaignPassword))
+                .GroupBy(x => x.Campaign.CampaignId)
+                .Select(x => new CampaignPasswordCandidate
+                {
+                    CampaignId = x.Key,
+                    CampaignCode = x.First().Campaign.CampaignCode,
+                    CampaignDesc = x.First().Campaign.CampaignDesc
+                })
+                .OrderBy(x => x.CampaignCode)
+                .ToList();
+        }
+
+        public bool ValidateCampaignPassword(Guid campaignId, string? campaignPassword)
+        {
+            using var db = new subContext();
+
+            string? currentPassword = db.DcCampaigns
+                .AsNoTracking()
+                .Where(x => x.CampaignId == campaignId)
+                .Select(x => x.CampaignPassword)
+                .FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(currentPassword))
+                return true;
+
+            return string.Equals(currentPassword.Trim(), campaignPassword?.Trim(), StringComparison.Ordinal);
+        }
+    }
     public sealed class CampaignApplyResult
     {
         public static CampaignApplyResult Empty => new();
@@ -374,4 +479,6 @@ namespace Foxoft.AppCode.Service
         public List<string> AppliedCampaignCodes { get; set; } = new();
         public decimal TotalDiscount { get; set; }
     }
+
+
 }
