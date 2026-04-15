@@ -31,7 +31,6 @@ namespace Foxoft
         readonly SettingStore settingStore;
         private LoyaltyService loyaltyService;
 
-        private readonly CampaignService _campaignService = new();
         private string? promoCode = null;
         private bool _isApplyingCampaign = false;
 
@@ -236,22 +235,8 @@ namespace Foxoft
                 gV_InvoiceLine.UpdateCurrentRow();
                 trInvoiceLinesBindingSource.EndEdit();
 
-                CampaignApplyResult result = _campaignService.Apply(
-                    trInvoiceHeader.InvoiceHeaderId,
-                    Authorization.CurrAccCode,
-                    paymentMethodIds,
-                    promoCode);
-
                 ReloadInvoiceCampaignValues();
 
-                if (showMessage)
-                {
-                    string message = result.AppliedCampaignCodes.Any()
-                        ? $"Kampaniya tətbiq edildi: {string.Join(", ", result.AppliedCampaignCodes)}{Environment.NewLine}Endirim: {result.TotalDiscount:n2}"
-                        : "Aktiv kampaniya tapılmadı.";
-
-                    XtraMessageBox.Show(message);
-                }
             }
             finally
             {
@@ -343,7 +328,6 @@ namespace Foxoft
                 .Include(x => x.TrCampaignCustomers)
                 .Include(x => x.TrCampaignStores)
                 .Include(x => x.TrCampaignWarehouses)
-                .Include(x => x.TrCampaignPaymentMethods)
                 .Where(x => x.IsActive)
                 .Where(x => x.StartDate <= trInvoiceHeader.DocumentDate && x.EndDate >= trInvoiceHeader.DocumentDate)
                 .AsNoTracking()
@@ -353,9 +337,6 @@ namespace Foxoft
 
             foreach (DcCampaign campaign in campaigns)
             {
-                if (!campaign.TrCampaignPaymentMethods.Any())
-                    continue;
-
                 if (!string.IsNullOrWhiteSpace(campaign.PromoCode) &&
                     !string.Equals(campaign.PromoCode.Trim(), promoCode?.Trim(), StringComparison.OrdinalIgnoreCase))
                     continue;
@@ -386,7 +367,6 @@ namespace Foxoft
                 if (!matchedLines.Any())
                     continue;
 
-                paymentMethodIds.AddRange(campaign.TrCampaignPaymentMethods.Select(x => x.PaymentMethodId));
             }
 
             return paymentMethodIds.Distinct().ToList();
@@ -407,12 +387,6 @@ namespace Foxoft
 
             if (dr != DialogResult.Yes)
                 return false;
-
-            _campaignService.Apply(
-                trInvoiceHeader.InvoiceHeaderId,
-                Authorization.CurrAccCode,
-                allowedPaymentMethodIds,
-                promoCode);
 
             ReloadInvoiceCampaignValues();
             CalcPaidAmount();

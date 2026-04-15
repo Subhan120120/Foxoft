@@ -110,6 +110,7 @@ namespace Foxoft
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             dcCampaignsBindingSource = new BindingSource(components);
+            IsCashOnlyCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             ((System.ComponentModel.ISupportInitialize)CampaignPasswordTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
             panelHeader.SuspendLayout();
@@ -170,6 +171,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelButtons).BeginInit();
             panelButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dcCampaignsBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)IsCashOnlyCheckEdit.Properties).BeginInit();
             SuspendLayout();
             // 
             // lblCampaignPassword
@@ -209,6 +211,7 @@ namespace Foxoft
             panelHeader.Controls.Add(DiscountTypeCodeComboBoxEdit);
             panelHeader.Controls.Add(DiscountValueCalcEdit);
             panelHeader.Controls.Add(PrioritySpinEdit);
+            panelHeader.Controls.Add(IsCashOnlyCheckEdit);
             panelHeader.Controls.Add(IsActiveCheckEdit);
             panelHeader.Controls.Add(IsCombinableCheckEdit);
             panelHeader.Controls.Add(StartDateDateEdit);
@@ -847,7 +850,6 @@ namespace Foxoft
             // 
             // trCampaignPaymentMethodsBindingSource
             // 
-            trCampaignPaymentMethodsBindingSource.DataSource = typeof(TrCampaignPaymentMethod);
             trCampaignPaymentMethodsBindingSource.AddingNew += trCampaignPaymentMethodsBindingSource_AddingNew;
             // 
             // gV_PaymentMethod
@@ -941,6 +943,14 @@ namespace Foxoft
             // 
             dcCampaignsBindingSource.DataSource = typeof(DcCampaign);
             // 
+            // IsCashOnlyCheckEdit
+            // 
+            IsCashOnlyCheckEdit.Location = new Point(896, 98);
+            IsCashOnlyCheckEdit.Name = "IsCashOnlyCheckEdit";
+            IsCashOnlyCheckEdit.Properties.Caption = "IsCashOnly";
+            IsCashOnlyCheckEdit.Size = new Size(120, 20);
+            IsCashOnlyCheckEdit.TabIndex = 19;
+            // 
             // FormCampaign
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -1014,6 +1024,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelButtons).EndInit();
             panelButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dcCampaignsBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)IsCashOnlyCheckEdit.Properties).EndInit();
             ResumeLayout(false);
         }
 
@@ -1118,5 +1129,6 @@ namespace Foxoft
 
         private DevExpress.XtraEditors.LabelControl lblCampaignPassword;
         private DevExpress.XtraEditors.TextEdit CampaignPasswordTextEdit;
+        private DevExpress.XtraEditors.CheckEdit IsCashOnlyCheckEdit;
     }
 }

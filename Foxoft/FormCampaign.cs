@@ -89,7 +89,6 @@ namespace Foxoft
                 dbContext.TrCampaignCustomers.Where(x => x.CampaignId == campaignId.Value).Load();
                 dbContext.TrCampaignStores.Where(x => x.CampaignId == campaignId.Value).Load();
                 dbContext.TrCampaignWarehouses.Where(x => x.CampaignId == campaignId.Value).Load();
-                dbContext.TrCampaignPaymentMethods.Where(x => x.CampaignId == campaignId.Value).Load();
 
                 dcCampaignsBindingSource.DataSource = dbContext.DcCampaigns.Local.ToBindingList();
                 dcCampaign = dcCampaignsBindingSource.Current as DcCampaign ?? new DcCampaign();
@@ -126,6 +125,7 @@ namespace Foxoft
             DiscountValueCalcEdit.DataBindings.Clear();
             PrioritySpinEdit.DataBindings.Clear();
             IsActiveCheckEdit.DataBindings.Clear();
+            IsCashOnlyCheckEdit.DataBindings.Clear();
             IsCombinableCheckEdit.DataBindings.Clear();
             StartDateDateEdit.DataBindings.Clear();
             EndDateDateEdit.DataBindings.Clear();
@@ -141,6 +141,7 @@ namespace Foxoft
             DiscountValueCalcEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.DiscountValue), true, DataSourceUpdateMode.OnPropertyChanged);
             PrioritySpinEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.Priority), true, DataSourceUpdateMode.OnPropertyChanged);
             IsActiveCheckEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.IsActive), true, DataSourceUpdateMode.OnPropertyChanged);
+            IsCashOnlyCheckEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.IsCashOnly), true, DataSourceUpdateMode.OnPropertyChanged);
             IsCombinableCheckEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.IsCombinable), true, DataSourceUpdateMode.OnPropertyChanged);
             StartDateDateEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.StartDate), true, DataSourceUpdateMode.OnPropertyChanged);
             EndDateDateEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.EndDate), true, DataSourceUpdateMode.OnPropertyChanged);
@@ -157,7 +158,6 @@ namespace Foxoft
             trCampaignCustomersBindingSource.DataSource = dbContext.TrCampaignCustomers.Local.ToBindingList();
             trCampaignStoresBindingSource.DataSource = dbContext.TrCampaignStores.Local.ToBindingList();
             trCampaignWarehousesBindingSource.DataSource = dbContext.TrCampaignWarehouses.Local.ToBindingList();
-            trCampaignPaymentMethodsBindingSource.DataSource = dbContext.TrCampaignPaymentMethods.Local.ToBindingList();
         }
 
         private bool ValidateCampaign()
@@ -190,7 +190,6 @@ namespace Foxoft
             RemoveInvalidCustomers();
             RemoveInvalidStores();
             RemoveInvalidWarehouses();
-            RemoveInvalidPaymentMethods();
         }
 
         private void RemoveInvalidProducts()
@@ -221,12 +220,6 @@ namespace Foxoft
         {
             foreach (TrCampaignWarehouse item in dbContext.TrCampaignWarehouses.Local.Where(x => string.IsNullOrWhiteSpace(x.WarehouseCode)).ToList())
                 dbContext.TrCampaignWarehouses.Remove(item);
-        }
-
-        private void RemoveInvalidPaymentMethods()
-        {
-            foreach (TrCampaignPaymentMethod item in dbContext.TrCampaignPaymentMethods.Local.Where(x => x.PaymentMethodId <= 0).ToList())
-                dbContext.TrCampaignPaymentMethods.Remove(item);
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
@@ -301,11 +294,6 @@ namespace Foxoft
 
         private void trCampaignPaymentMethodsBindingSource_AddingNew(object sender, AddingNewEventArgs e)
         {
-            e.NewObject = new TrCampaignPaymentMethod
-            {
-                CampaignPaymentMethodId = Guid.NewGuid(),
-                CampaignId = dcCampaign.CampaignId
-            };
         }
 
         private static void DeleteFocusedRow(GridView gridView)
@@ -612,14 +600,9 @@ namespace Foxoft
 
         private void ImportPaymentMethodsFromExcel()
         {
-            HashSet<int> existingValues = dbContext.TrCampaignPaymentMethods.Local
-                .Where(x => x.CampaignId == dcCampaign.CampaignId && x.PaymentMethodId > 0)
-                .Select(x => x.PaymentMethodId)
-                .ToHashSet();
-
             ImportFromExcel(
                 gV_PaymentMethod,
-                new[] { colPaymentMethodId.Caption, nameof(TrCampaignPaymentMethod.PaymentMethodId), "PaymentMethodId", "Ödəmə üsulu" },
+                new[] { colPaymentMethodId.Caption, "PaymentMethodId", "Ödəmə üsulu" },
                 (lookUpDb, rawValue, result) =>
                 {
                     DcPaymentMethod paymentMethod = null;
@@ -640,19 +623,6 @@ namespace Foxoft
                         result.Errors.AppendLine($"{colPaymentMethodId.Caption}: {rawValue}");
                         return;
                     }
-
-                    if (!existingValues.Add(paymentMethod.PaymentMethodId))
-                    {
-                        result.SkippedCount++;
-                        return;
-                    }
-
-                    dbContext.TrCampaignPaymentMethods.Add(new TrCampaignPaymentMethod
-                    {
-                        CampaignPaymentMethodId = Guid.NewGuid(),
-                        CampaignId = dcCampaign.CampaignId,
-                        PaymentMethodId = paymentMethod.PaymentMethodId
-                    });
 
                     result.AddedCount++;
                 });

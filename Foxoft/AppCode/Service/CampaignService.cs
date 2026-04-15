@@ -1,484 +1,265 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Foxoft.AppCode.Service
+namespace Foxoft.AppCode.Services
 {
+    /// <summary>
+    /// Kampaniya tətbiqinin nəticəsini saxlayır.
+    /// Rollback üçün original endirim dəyərləri burada tutulur.
+    /// </summary>
+    public class CampaignApplyResult
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; } = string.Empty;
+
+        /// <summary>DB-yə yazılmış log ID-ləri — rollback zamanı silinir.</summary>
+        public List<Guid> AppliedLogIds { get; set; } = new();
+
+        /// <summary>Hər sətrin əvvəlki DiscountCampaign dəyəri: InvoiceLineId → dəyər</summary>
+        public Dictionary<Guid, decimal> OriginalLineDiscounts { get; set; } = new();
+
+        public Guid CampaignId { get; set; }
+        public string CampaignDesc { get; set; } = string.Empty;
+    }
+
     public class CampaignService
     {
-        public CampaignApplyResult Apply(
-                    Guid invoiceHeaderId,
-                    string currAccCode,
-                    IEnumerable<int>? paymentMethodIds = null,
-                    string? promoCode = null,
-                    IEnumerable<Guid>? approvedCampaignIds = null)
+        private readonly subContext _db;
+        private readonly EfMethods _ef;
+
+        public CampaignService(subContext db, EfMethods ef)
         {
-            using var db = new subContext();
+            _db = db;
+            _ef = ef;
+        }
 
-            TrInvoiceHeader? invoiceHeader = db.TrInvoiceHeaders
-                .AsNoTracking()
-                .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
+        // ──────────────────────────────────────────────────────────
+        // SORĞU METODLARİ
+        // ──────────────────────────────────────────────────────────
 
-            if (invoiceHeader is null)
-                return CampaignApplyResult.Empty;
+        /// <summary>
+        /// Fakturaya uyğun bütün aktiv kampaniyaları qaytarır.
+        /// promoCode göndərilirsə yalnız o promo koda uyğun kampaniyalar qaytarılır.
+        /// </summary>
+        public List<DcCampaign> GetApplicableCampaigns(
+            TrInvoiceHeader header,
+            IList<TrInvoiceLine> lines,
+            string? promoCode = null)
+        {
+            var today = header.DocumentDate.Date;
 
-            SaveCampaignHeader(db, invoiceHeaderId, promoCode, currAccCode);
+            var query = _db.DcCampaigns
+                .Include(c => c.TrCampaignProducts)
+                .Include(c => c.TrCampaignCategories)
+                .Include(c => c.TrCampaignCustomers)
+                .Include(c => c.TrCampaignStores)
+                .Include(c => c.TrCampaignWarehouses)
+                .Where(c => c.IsActive
+                         && c.StartDate.Date <= today
+                         && c.EndDate.Date >= today
+                         && (c.ProcessCode == header.ProcessCode))
+                .AsEnumerable(); // client-side üçün
 
-            List<int> resolvedPaymentMethodIds = ResolvePaymentMethodIds(db, invoiceHeaderId, paymentMethodIds);
+            if (!string.IsNullOrWhiteSpace(promoCode))
+                query = query.Where(c =>
+                    string.Equals(c.PromoCode, promoCode, StringComparison.OrdinalIgnoreCase));
 
-            List<TrInvoiceLine> invoiceLines = db.TrInvoiceLines
-                .Include(x => x.DcProduct)
-                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                .ToList();
+            return query.Where(c => IsCampaignApplicable(c, header, lines)).ToList();
+        }
 
-            ResetInvoiceCampaigns(db, invoiceHeaderId);
+        /// <summary>Yalnız IsCashOnly=true olan kampaniyalar.</summary>
+        public List<DcCampaign> GetApplicableCashOnlyCampaigns(
+            TrInvoiceHeader header,
+            IList<TrInvoiceLine> lines)
+            => GetApplicableCampaigns(header, lines).Where(c => c.IsCashOnly).ToList();
 
-            if (invoiceLines.Count == 0)
+        // ──────────────────────────────────────────────────────────
+        // TƏTBİQ
+        // ──────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Kampaniyanı sətirə tətbiq edir, DiscountCampaign güncəlləyir
+        /// və TrInvoiceCampaignLog yazır.
+        /// </summary>
+        public CampaignApplyResult ApplyCampaign(
+            DcCampaign campaign,
+            TrInvoiceHeader header,
+            IList<TrInvoiceLine> lines)
+        {
+            var result = new CampaignApplyResult
             {
-                db.SaveChanges(currAccCode);
-                return CampaignApplyResult.Empty;
-            }
-
-            List<CampaignCandidate> candidates = GetCampaignCandidates(
-                db,
-                invoiceHeader,
-                invoiceLines,
-                resolvedPaymentMethodIds,
-                promoCode,
-                approvedCampaignIds,
-                true);
-
-            if (candidates.Count == 0)
-            {
-                db.SaveChanges(currAccCode);
-                return CampaignApplyResult.Empty;
-            }
-
-            List<CampaignCandidate> selected = SelectCampaigns(candidates);
-
-            Dictionary<Guid, TrInvoiceLine> trackedLines = db.TrInvoiceLines
-                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                .ToDictionary(x => x.InvoiceLineId);
-
-            Dictionary<Guid, decimal> currentLineDiscounts = trackedLines.Values
-                .ToDictionary(x => x.InvoiceLineId, x => 0m);
-
-            decimal totalDiscount = 0;
-
-            foreach (CampaignCandidate selectedCampaign in selected)
-            {
-                foreach (CampaignLineDiscount lineDiscount in selectedCampaign.LineDiscounts)
-                {
-                    if (!trackedLines.TryGetValue(lineDiscount.InvoiceLineId, out TrInvoiceLine? trackedLine))
-                        continue;
-
-                    decimal remainBase = Math.Max(0, trackedLine.NetAmountBeforeCampaign - currentLineDiscounts[trackedLine.InvoiceLineId]);
-                    if (remainBase <= 0)
-                        continue;
-
-                    decimal appliedDiscount = Math.Min(remainBase, lineDiscount.DiscountAmount);
-                    if (appliedDiscount <= 0)
-                        continue;
-
-                    currentLineDiscounts[trackedLine.InvoiceLineId] += appliedDiscount;
-                    trackedLine.DiscountCampaign = currentLineDiscounts[trackedLine.InvoiceLineId];
-                    totalDiscount += appliedDiscount;
-
-                    db.TrInvoiceCampaignLogs.Add(new TrInvoiceCampaignLog
-                    {
-                        InvoiceCampaignLogId = Guid.NewGuid(),
-                        InvoiceHeaderId = invoiceHeaderId,
-                        InvoiceLineId = trackedLine.InvoiceLineId,
-                        CampaignId = selectedCampaign.Campaign.CampaignId,
-                        CampaignCode = selectedCampaign.Campaign.CampaignCode,
-                        CampaignDesc = selectedCampaign.Campaign.CampaignDesc,
-                        PromoCode = string.IsNullOrWhiteSpace(promoCode) ? null : promoCode.Trim(),
-                        PaymentMethodId = selectedCampaign.Campaign.TrCampaignPaymentMethods
-                            .Select(x => (int?)x.PaymentMethodId)
-                            .FirstOrDefault(),
-                        Priority = selectedCampaign.Campaign.Priority,
-                        IsCombinable = selectedCampaign.Campaign.IsCombinable,
-                        BaseAmount = lineDiscount.BaseAmount,
-                        BaseAmountLoc = lineDiscount.BaseAmount,
-                        DiscountAmount = appliedDiscount,
-                        DiscountAmountLoc = appliedDiscount,
-                        DiscountPercent = lineDiscount.DiscountPercent,
-                        Note = lineDiscount.Note
-                    });
-                }
-            }
-
-            db.SaveChanges(currAccCode);
-
-            return new CampaignApplyResult
-            {
-                AppliedCampaignIds = selected.Select(x => x.Campaign.CampaignId).Distinct().ToList(),
-                AppliedCampaignCodes = selected.Select(x => x.Campaign.CampaignCode).Distinct().ToList(),
-                TotalDiscount = totalDiscount
+                CampaignId = campaign.CampaignId,
+                CampaignDesc = campaign.CampaignDesc
             };
-        }
 
-        private List<CampaignCandidate> GetCampaignCandidates(
-            subContext db,
-            TrInvoiceHeader invoiceHeader,
-            List<TrInvoiceLine> invoiceLines,
-            List<int> resolvedPaymentMethodIds,
-            string? promoCode,
-            IEnumerable<Guid>? approvedCampaignIds,
-            bool enforcePassword)
-        {
-            List<CampaignCandidate> candidates = new();
-
-            if (invoiceLines.Count == 0)
-                return candidates;
-
-            string? promoCodeValue = string.IsNullOrWhiteSpace(promoCode) ? null : promoCode.Trim();
-
-            HashSet<Guid> approvedIdSet = approvedCampaignIds is null
-                ? new HashSet<Guid>()
-                : new HashSet<Guid>(approvedCampaignIds);
-
-            List<DcCampaign> campaigns = db.DcCampaigns
-                .Include(x => x.TrCampaignProducts)
-                .Include(x => x.TrCampaignCategories)
-                .Include(x => x.TrCampaignCustomers)
-                .Include(x => x.TrCampaignStores)
-                .Include(x => x.TrCampaignWarehouses)
-                .Include(x => x.TrCampaignPaymentMethods)
-                .Where(x => x.IsActive)
-                .Where(x => x.StartDate <= invoiceHeader.DocumentDate && x.EndDate >= invoiceHeader.DocumentDate)
-                .AsNoTracking()
+            var applicableLines = lines
+                .Where(l => IsLineApplicable(campaign, l) && l.NetAmountBeforeCampaign > 0)
                 .ToList();
 
-            decimal invoiceNetAmount = invoiceLines.Sum(x => Math.Max(0, x.NetAmountBeforeCampaign));
-
-            foreach (DcCampaign campaign in campaigns)
+            if (!applicableLines.Any())
             {
-                if (!MatchesHeaderScope(campaign, invoiceHeader, resolvedPaymentMethodIds, promoCodeValue))
-                    continue;
-
-                if (campaign.MinInvoiceAmount > 0 && invoiceNetAmount < campaign.MinInvoiceAmount)
-                    continue;
-
-                if (enforcePassword
-                    && !string.IsNullOrWhiteSpace(campaign.CampaignPassword)
-                    && !approvedIdSet.Contains(campaign.CampaignId))
-                    continue;
-
-                List<TrInvoiceLine> matchedLines = invoiceLines
-                    .Where(x => MatchesLineScope(campaign, x))
-                    .ToList();
-
-                if (matchedLines.Count == 0)
-                    continue;
-
-                List<CampaignLineDiscount> lineDiscounts = BuildLineDiscounts(campaign, matchedLines);
-                if (lineDiscounts.Count == 0)
-                    continue;
-
-                candidates.Add(new CampaignCandidate
-                {
-                    Campaign = campaign,
-                    LineDiscounts = lineDiscounts
-                });
+                result.Success = false;
+                result.Message = $"'{campaign.CampaignDesc}' kampaniyası üçün uyğun sətir tapılmadı.";
+                return result;
             }
 
-            return candidates;
-        }
+            decimal totalBase = applicableLines.Sum(l => l.NetAmountBeforeCampaign);
+            decimal remainingMaxDiscount = campaign.MaxDiscountAmount > 0
+                ? campaign.MaxDiscountAmount
+                : decimal.MaxValue;
 
-
-        public sealed class CampaignPasswordCandidate
-        {
-            public Guid CampaignId { get; set; }
-            public string CampaignCode { get; set; }
-            public string CampaignDesc { get; set; }
-        }
-
-
-
-        private static void SaveCampaignHeader(subContext db, Guid invoiceHeaderId, string? promoCode, string currAccCode)
-        {
-            TrInvoiceCampaignHeader? header = db.TrInvoiceCampaignHeaders
-                .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
-
-            if (header is null)
+            foreach (var line in applicableLines)
             {
-                header = new TrInvoiceCampaignHeader
+                // Original dəyəri yadda saxla (rollback üçün)
+                result.OriginalLineDiscounts[line.InvoiceLineId] = line.DiscountCampaign;
+
+                decimal lineDiscount = campaign.DiscountTypeCode == DiscountTypeCode.Percent
+                    ? line.NetAmountBeforeCampaign * campaign.DiscountValue / 100m
+                    : (totalBase > 0
+                        ? campaign.DiscountValue * (line.NetAmountBeforeCampaign / totalBase)
+                        : 0m);
+
+                // MaxDiscountAmount kap
+                if (campaign.MaxDiscountAmount > 0)
                 {
-                    InvoiceCampaignHeaderId = Guid.NewGuid(),
-                    InvoiceHeaderId = invoiceHeaderId,
-                    PromoCode = string.IsNullOrWhiteSpace(promoCode) ? null : promoCode.Trim()
+                    lineDiscount = Math.Min(lineDiscount, remainingMaxDiscount);
+                    remainingMaxDiscount -= lineDiscount;
+                }
+
+                lineDiscount = Math.Round(lineDiscount, 4);
+                line.DiscountCampaign = Math.Round(line.DiscountCampaign + lineDiscount, 4);
+
+                // Log yaz
+                decimal exRate = line.ExchangeRate == 0 ? 1m : (decimal)line.ExchangeRate;
+
+                var log = new TrInvoiceCampaignLog
+                {
+                    InvoiceCampaignLogId = Guid.NewGuid(),
+                    InvoiceHeaderId = header.InvoiceHeaderId,
+                    InvoiceLineId = line.InvoiceLineId,
+                    CampaignId = campaign.CampaignId,
+                    CampaignCode = campaign.CampaignCode,
+                    CampaignDesc = campaign.CampaignDesc,
+                    PromoCode = campaign.PromoCode,
+                    Priority = campaign.Priority,
+                    IsCombinable = campaign.IsCombinable,
+                    BaseAmount = line.NetAmountBeforeCampaign,
+                    BaseAmountLoc = line.NetAmountLocBeforeCampaign,
+                    DiscountAmount = lineDiscount,
+                    DiscountAmountLoc = Math.Round(lineDiscount / exRate, 4),
+                    DiscountPercent = campaign.DiscountTypeCode == DiscountTypeCode.Percent
+                        ? campaign.DiscountValue
+                        : (totalBase > 0 ? Math.Round(lineDiscount / line.NetAmountBeforeCampaign * 100, 4) : 0m)
                 };
 
-                db.TrInvoiceCampaignHeaders.Add(header);
+                _db.TrInvoiceCampaignLogs.Add(log);
+                result.AppliedLogIds.Add(log.InvoiceCampaignLogId);
             }
-            else
+
+            _db.SaveChanges();
+
+            decimal totalApplied = applicableLines.Sum(l =>
+                l.DiscountCampaign - (result.OriginalLineDiscounts.ContainsKey(l.InvoiceLineId)
+                    ? result.OriginalLineDiscounts[l.InvoiceLineId]
+                    : 0m));
+
+            result.Success = true;
+            result.Message = $"Kampaniya tətbiq edildi: {campaign.CampaignDesc}\n" +
+                             $"Ümumi endirim: {totalApplied:n2}";
+            return result;
+        }
+
+        // ──────────────────────────────────────────────────────────
+        // ROLLBACK
+        // ──────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// ApplyCampaign nəticəsini tam geri alır:
+        /// sətirlərin DiscountCampaign əvvəlki dəyərə qayıdır,
+        /// log qeydləri silinir.
+        /// </summary>
+        public void RollbackCampaign(
+            CampaignApplyResult applyResult,
+            IList<TrInvoiceLine> lines)
+        {
+            // Sətirləri bərpa et
+            foreach (var (lineId, originalDiscount) in applyResult.OriginalLineDiscounts)
             {
-                header.PromoCode = string.IsNullOrWhiteSpace(promoCode) ? null : promoCode.Trim();
+                var line = lines.FirstOrDefault(l => l.InvoiceLineId == lineId);
+                if (line != null)
+                    line.DiscountCampaign = originalDiscount;
             }
+
+            // DB-dən logları sil
+            if (applyResult.AppliedLogIds.Any())
+            {
+                var logsToRemove = _db.TrInvoiceCampaignLogs
+                    .Where(l => applyResult.AppliedLogIds.Contains(l.InvoiceCampaignLogId))
+                    .ToList();
+
+                _db.TrInvoiceCampaignLogs.RemoveRange(logsToRemove);
+            }
+
+            _db.SaveChanges();
         }
 
-        private static void ResetInvoiceCampaigns(subContext db, Guid invoiceHeaderId)
+        // ──────────────────────────────────────────────────────────
+        // KÖMƏKÇI METODLARİ
+        // ──────────────────────────────────────────────────────────
+
+        private bool IsCampaignApplicable(
+            DcCampaign campaign,
+            TrInvoiceHeader header,
+            IList<TrInvoiceLine> lines)
         {
-            List<TrInvoiceLine> trackedLines = db.TrInvoiceLines
-                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                .ToList();
-
-            foreach (TrInvoiceLine trackedLine in trackedLines)
-                trackedLine.DiscountCampaign = 0;
-
-            List<TrInvoiceCampaignLog> oldLogs = db.TrInvoiceCampaignLogs
-                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                .ToList();
-
-            if (oldLogs.Count > 0)
-                db.TrInvoiceCampaignLogs.RemoveRange(oldLogs);
-        }
-
-        private static List<int> ResolvePaymentMethodIds(subContext db, Guid invoiceHeaderId, IEnumerable<int>? paymentMethodIds)
-        {
-            List<int> resolved = paymentMethodIds?
-                .Where(x => x > 0)
-                .Distinct()
-                .ToList()
-                ?? new List<int>();
-
-            if (resolved.Count > 0)
-                return resolved;
-
-            List<Guid> paymentHeaderIds = db.TrPaymentHeaders
-                .AsNoTracking()
-                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                .Select(x => x.PaymentHeaderId)
-                .ToList();
-
-            if (paymentHeaderIds.Count == 0)
-                return resolved;
-
-            return db.TrPaymentLines
-                .AsNoTracking()
-                .Where(x => paymentHeaderIds.Contains(x.PaymentHeaderId))
-                .Select(x => x.PaymentMethodId)
-                .Distinct()
-                .ToList();
-        }
-
-        private static bool MatchesHeaderScope(DcCampaign campaign, TrInvoiceHeader invoiceHeader, List<int> paymentMethodIds, string? promoCode)
-        {
-            if (!string.IsNullOrWhiteSpace(campaign.PromoCode) &&
-                !string.Equals(campaign.PromoCode.Trim(), promoCode?.Trim(), StringComparison.OrdinalIgnoreCase))
-                return false;
-
-            if (campaign.TrCampaignCustomers.Any() &&
-                !campaign.TrCampaignCustomers.Any(x => x.CurrAccCode == invoiceHeader.CurrAccCode))
-                return false;
-
+            // Mağaza yoxlanması
             if (campaign.TrCampaignStores.Any() &&
-                !campaign.TrCampaignStores.Any(x => x.StoreCode == invoiceHeader.StoreCode))
+                !campaign.TrCampaignStores.Any(s => s.StoreCode == header.StoreCode))
                 return false;
 
+            // Anbar yoxlanması
             if (campaign.TrCampaignWarehouses.Any() &&
-                !campaign.TrCampaignWarehouses.Any(x => x.WarehouseCode == invoiceHeader.WarehouseCode))
+                !campaign.TrCampaignWarehouses.Any(w => w.WarehouseCode == header.WarehouseCode))
                 return false;
 
-            if (campaign.TrCampaignPaymentMethods.Any())
-            {
-                if (paymentMethodIds.Count == 0)
-                    return false;
+            // Müştəri yoxlanması
+            if (campaign.TrCampaignCustomers.Any() &&
+                !campaign.TrCampaignCustomers.Any(c => c.CurrAccCode == header.CurrAccCode))
+                return false;
 
-                if (!campaign.TrCampaignPaymentMethods.Any(x => paymentMethodIds.Contains(x.PaymentMethodId)))
+            // MinInvoiceAmount yoxlanması
+            decimal totalNet = lines.Sum(l => l.NetAmountBeforeCampaign);
+            if (campaign.MinInvoiceAmount > 0 && totalNet < campaign.MinInvoiceAmount)
+                return false;
+
+            // Məhsul / kateqoriya yoxlanması
+            if (campaign.TrCampaignProducts.Any() || campaign.TrCampaignCategories.Any())
+                if (!lines.Any(l => IsLineApplicable(campaign, l)))
                     return false;
-            }
 
             return true;
         }
 
-        private static bool MatchesLineScope(DcCampaign campaign, TrInvoiceLine line)
+        private bool IsLineApplicable(DcCampaign campaign, TrInvoiceLine line)
         {
-            bool hasProducts = campaign.TrCampaignProducts.Any();
-            bool hasCategories = campaign.TrCampaignCategories.Any();
-
-            if (!hasProducts && !hasCategories)
+            // Heç bir məhsul/kateqoriya məhdudiyyəti yoxdursa — bütün sətirlərdə keçərlidir
+            if (!campaign.TrCampaignProducts.Any() && !campaign.TrCampaignCategories.Any())
                 return true;
 
-            bool productMatch = hasProducts && campaign.TrCampaignProducts.Any(x => x.ProductCode == line.ProductCode);
-
-            string? hierarchyCode = line.DcProduct?.HierarchyCode;
-            bool categoryMatch = hasCategories &&
-                                 !string.IsNullOrWhiteSpace(hierarchyCode) &&
-                                 campaign.TrCampaignCategories.Any(x => x.HierarchyCode == hierarchyCode);
-
-            return productMatch || categoryMatch;
-        }
-
-        private static List<CampaignCandidate> SelectCampaigns(List<CampaignCandidate> candidates)
-        {
-            List<CampaignCandidate> ordered = candidates
-                .OrderByDescending(x => x.Campaign.Priority)
-                .ThenByDescending(x => x.TotalDiscountAmount)
-                .ThenBy(x => x.Campaign.CampaignCode)
-                .ToList();
-
-            if (ordered.Count == 0)
-                return new List<CampaignCandidate>();
-
-            CampaignCandidate top = ordered.First();
-
-            if (!top.Campaign.IsCombinable)
-                return new List<CampaignCandidate> { top };
-
-            return ordered
-                .Where(x => x.Campaign.IsCombinable)
-                .ToList();
-        }
-
-        private static List<CampaignLineDiscount> BuildLineDiscounts(DcCampaign campaign, List<TrInvoiceLine> lines)
-        {
-            List<CampaignLineDiscount> result = new();
-
-            decimal totalBase = lines.Sum(x => Math.Max(0, x.NetAmountBeforeCampaign));
-            if (totalBase <= 0)
-                return result;
-
-            if (campaign.DiscountTypeCode == DiscountTypeCode.Percent)
-            {
-                foreach (TrInvoiceLine line in lines)
-                {
-                    decimal lineBase = Math.Max(0, line.NetAmountBeforeCampaign);
-                    if (lineBase <= 0)
-                        continue;
-
-                    decimal discount = Math.Round(lineBase * campaign.DiscountValue / 100m, 4);
-                    result.Add(new CampaignLineDiscount
-                    {
-                        InvoiceLineId = line.InvoiceLineId,
-                        BaseAmount = lineBase,
-                        DiscountAmount = Math.Min(lineBase, discount),
-                        DiscountPercent = campaign.DiscountValue
-                    });
-                }
-            }
-            else
-            {
-                decimal remaining = campaign.DiscountValue;
-
-                foreach (TrInvoiceLine line in lines.OrderByDescending(x => x.NetAmountBeforeCampaign))
-                {
-                    decimal lineBase = Math.Max(0, line.NetAmountBeforeCampaign);
-                    if (lineBase <= 0 || remaining <= 0)
-                        continue;
-
-                    decimal proportional = Math.Round(campaign.DiscountValue * (lineBase / totalBase), 4);
-                    decimal discount = Math.Min(lineBase, proportional);
-                    discount = Math.Min(discount, remaining);
-
-                    remaining -= discount;
-
-                    result.Add(new CampaignLineDiscount
-                    {
-                        InvoiceLineId = line.InvoiceLineId,
-                        BaseAmount = lineBase,
-                        DiscountAmount = discount,
-                        DiscountPercent = 0
-                    });
-                }
-            }
-
-            if (campaign.MaxDiscountAmount > 0)
-            {
-                decimal totalDiscount = result.Sum(x => x.DiscountAmount);
-                if (totalDiscount > campaign.MaxDiscountAmount)
-                {
-                    decimal ratio = campaign.MaxDiscountAmount / totalDiscount;
-                    foreach (CampaignLineDiscount row in result)
-                        row.DiscountAmount = Math.Round(row.DiscountAmount * ratio, 4);
-                }
-            }
-
-            return result
-                .Where(x => x.DiscountAmount > 0)
-                .ToList();
-        }
-
-        private sealed class CampaignCandidate
-        {
-            public DcCampaign Campaign { get; set; }
-            public List<CampaignLineDiscount> LineDiscounts { get; set; } = new();
-            public decimal TotalDiscountAmount => LineDiscounts.Sum(x => x.DiscountAmount);
-        }
-
-        private sealed class CampaignLineDiscount
-        {
-            public Guid InvoiceLineId { get; set; }
-            public decimal BaseAmount { get; set; }
-            public decimal DiscountAmount { get; set; }
-            public decimal DiscountPercent { get; set; }
-            public string? Note { get; set; }
-        }
-
-        public List<CampaignPasswordCandidate> GetPasswordProtectedCampaigns(Guid invoiceHeaderId, IEnumerable<int>? paymentMethodIds = null, string? promoCode = null)
-        {
-            using var db = new subContext();
-
-            TrInvoiceHeader? invoiceHeader = db.TrInvoiceHeaders
-                .AsNoTracking()
-                .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
-
-            if (invoiceHeader is null)
-                return new List<CampaignPasswordCandidate>();
-
-            List<int> resolvedPaymentMethodIds = ResolvePaymentMethodIds(db, invoiceHeaderId, paymentMethodIds);
-
-            List<TrInvoiceLine> invoiceLines = db.TrInvoiceLines
-                .Include(x => x.DcProduct)
-                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                .ToList();
-
-            List<CampaignCandidate> candidates = GetCampaignCandidates(
-                db,
-                invoiceHeader,
-                invoiceLines,
-                resolvedPaymentMethodIds,
-                promoCode,
-                null,
-                false);
-
-            return candidates
-                .Where(x => !string.IsNullOrWhiteSpace(x.Campaign.CampaignPassword))
-                .GroupBy(x => x.Campaign.CampaignId)
-                .Select(x => new CampaignPasswordCandidate
-                {
-                    CampaignId = x.Key,
-                    CampaignCode = x.First().Campaign.CampaignCode,
-                    CampaignDesc = x.First().Campaign.CampaignDesc
-                })
-                .OrderBy(x => x.CampaignCode)
-                .ToList();
-        }
-
-        public bool ValidateCampaignPassword(Guid campaignId, string? campaignPassword)
-        {
-            using var db = new subContext();
-
-            string? currentPassword = db.DcCampaigns
-                .AsNoTracking()
-                .Where(x => x.CampaignId == campaignId)
-                .Select(x => x.CampaignPassword)
-                .FirstOrDefault();
-
-            if (string.IsNullOrWhiteSpace(currentPassword))
+            // Məhsul üzrə
+            if (campaign.TrCampaignProducts.Any(p => p.ProductCode == line.ProductCode))
                 return true;
 
-            return string.Equals(currentPassword.Trim(), campaignPassword?.Trim(), StringComparison.Ordinal);
+            // Kateqoriya üzrə
+            if (campaign.TrCampaignCategories.Any())
+            {
+                var product = _db.DcProducts.Find(line.ProductCode);
+                if (product != null &&
+                    campaign.TrCampaignCategories.Any(c => c.HierarchyCode == product.HierarchyCode))
+                    return true;
+            }
+
+            return false;
         }
     }
-    public sealed class CampaignApplyResult
-    {
-        public static CampaignApplyResult Empty => new();
-
-        public List<Guid> AppliedCampaignIds { get; set; } = new();
-        public List<string> AppliedCampaignCodes { get; set; } = new();
-        public decimal TotalDiscount { get; set; }
-    }
-
-
 }

@@ -93,12 +93,17 @@ namespace Foxoft.Models
         [Display(Name = "Kampaniya şifrəsi")]
         public string? CampaignPassword { get; set; }
 
+        [DefaultValueSql("0")]
+        [Display(Name = "Yalnız nağd alışda keçərlidir")]
+        public bool IsCashOnly { get; set; }
+
+
+
         public virtual ICollection<TrCampaignProduct> TrCampaignProducts { get; set; } = new List<TrCampaignProduct>();
         public virtual ICollection<TrCampaignCategory> TrCampaignCategories { get; set; } = new List<TrCampaignCategory>();
         public virtual ICollection<TrCampaignCustomer> TrCampaignCustomers { get; set; } = new List<TrCampaignCustomer>();
         public virtual ICollection<TrCampaignStore> TrCampaignStores { get; set; } = new List<TrCampaignStore>();
         public virtual ICollection<TrCampaignWarehouse> TrCampaignWarehouses { get; set; } = new List<TrCampaignWarehouse>();
-        public virtual ICollection<TrCampaignPaymentMethod> TrCampaignPaymentMethods { get; set; } = new List<TrCampaignPaymentMethod>();
         public virtual ICollection<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; } = new List<TrInvoiceCampaignLog>();
     }
 }

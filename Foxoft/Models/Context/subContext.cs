@@ -112,7 +112,6 @@ namespace Foxoft.Models
         public DbSet<TrCampaignCustomer> TrCampaignCustomers { get; set; }
         public DbSet<TrCampaignStore> TrCampaignStores { get; set; }
         public DbSet<TrCampaignWarehouse> TrCampaignWarehouses { get; set; }
-        public DbSet<TrCampaignPaymentMethod> TrCampaignPaymentMethods { get; set; }
         public DbSet<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
         public DbSet<TrInvoiceCampaignHeader> TrInvoiceCampaignHeaders { get; set; }
 
@@ -485,14 +484,6 @@ namespace Foxoft.Models
             {
                 entity.HasOne(x => x.DcCampaign)
                     .WithMany(x => x.TrCampaignWarehouses)
-                    .HasForeignKey(x => x.CampaignId)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<TrCampaignPaymentMethod>(entity =>
-            {
-                entity.HasOne(x => x.DcCampaign)
-                    .WithMany(x => x.TrCampaignPaymentMethods)
                     .HasForeignKey(x => x.CampaignId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
