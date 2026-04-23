@@ -313,7 +313,7 @@ namespace Foxoft
             gC_PaymentLine.MainView = gV_PaymentLine;
             gC_PaymentLine.MenuManager = ribbonControl1;
             gC_PaymentLine.Name = "gC_PaymentLine";
-            gC_PaymentLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {  repoCalcEdit_ReceivePayment, repoCalcEdit_MakePayment, repoBtnEdit_CashregisterCode, repoLUE_PaymentTypeCode });
+            gC_PaymentLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoCalcEdit_ReceivePayment, repoCalcEdit_MakePayment, repoBtnEdit_CashregisterCode, repoLUE_PaymentTypeCode });
             gC_PaymentLine.Size = new Size(875, 276);
             gC_PaymentLine.TabIndex = 6;
             gC_PaymentLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_PaymentLine });
@@ -546,6 +546,7 @@ namespace Foxoft
             LUE_StoreCode.Properties.AllowMouseWheel = false;
             LUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             LUE_StoreCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_StoreCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", "Name1"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "Name2") });
             LUE_StoreCode.Properties.DisplayMember = "CurrAccDesc";
             LUE_StoreCode.Properties.NullText = "";
             LUE_StoreCode.Properties.ValueMember = "CurrAccCode";
