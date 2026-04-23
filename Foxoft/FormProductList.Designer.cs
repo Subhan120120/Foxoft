@@ -89,7 +89,6 @@ namespace Foxoft
             SerializableAppearanceObject serializableAppearanceObject19 = new SerializableAppearanceObject();
             SerializableAppearanceObject serializableAppearanceObject20 = new SerializableAppearanceObject();
             gC_ProductList = new MyGridControl();
-            gV_ProductList = new MyGridView(this);
             dcProductsBindingSource = new BindingSource(components);
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             BBI_ProductNew = new DevExpress.XtraBars.BarButtonItem();
@@ -106,8 +105,9 @@ namespace Foxoft
             BSI_Reports = new DevExpress.XtraBars.BarSubItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -119,7 +119,6 @@ namespace Foxoft
             repositoryItemRibbonSearchEdit1 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
             repositoryItemRibbonSearchEdit2 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
             btnEdit_BarcodeSearch = new DevExpress.XtraEditors.ButtonEdit();
-            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_ProductList).BeginInit();
@@ -152,20 +151,7 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-                ribbonControl1.ExpandCollapseItem,
-                BBI_ProductNew,
-                btn_ProductEdit,
-                bBI_ExportExcel,
-                bBI_ProductDelete,
-                bBI_ProductRefresh,
-                BBI_query,
-                barButtonItem4,
-                txtEdit_filtercolumns,
-                BBI_Save,
-                BBI_Show,
-                BSI_Reports
-            });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_ProductNew, btn_ProductEdit, bBI_ExportExcel, bBI_ProductDelete, bBI_ProductRefresh, BBI_query, barButtonItem4, txtEdit_filtercolumns, BBI_Save, BBI_Show, BSI_Reports });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 41;
             ribbonControl1.Name = "ribbonControl1";
@@ -259,12 +245,7 @@ namespace Foxoft
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-                ribbonPageGroup1,
-                ribbonPageGroup3,
-                ribbonPageGroup4,
-                ribbonPageGroup2
-            });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3, ribbonPageGroup4, ribbonPageGroup2 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.Form_ProductList_RibbonPage_Main;
             // 
@@ -277,16 +258,22 @@ namespace Foxoft
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = Resources.Form_ProductList_RibbonGroup_Manage;
             // 
-            // ribbonPageGroup2
-            // 
-            ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = Resources.Form_ProductList_RibbonGroup_Control;
-            // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.ItemLinks.Add(BSI_Reports);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = Resources.Form_ProductList_RibbonGroup_Report;
+            // 
+            // ribbonPageGroup4
+            // 
+            ribbonPageGroup4.ItemLinks.Add(bBI_ExportExcel);
+            ribbonPageGroup4.Name = "ribbonPageGroup4";
+            ribbonPageGroup4.Text = Resources.Form_ProductList_RibbonGroup_Tools;
+            // 
+            // ribbonPageGroup2
+            // 
+            ribbonPageGroup2.Name = "ribbonPageGroup2";
+            ribbonPageGroup2.Text = Resources.Form_ProductList_RibbonGroup_Control;
             // 
             // ribbonPage3
             // 
@@ -344,42 +331,7 @@ namespace Foxoft
             repositoryItemRibbonSearchEdit1.AutoHeight = false;
             repositoryItemRibbonSearchEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
             editorButtonImageOptions1.AllowGlyphSkinning = DefaultBoolean.True;
-            repositoryItemRibbonSearchEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-                new DevExpress.XtraEditors.Controls.EditorButton(
-                    DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph,
-                    "",
-                    -1,
-                    true,
-                    true,
-                    true,
-                    editorButtonImageOptions1,
-                    new KeyShortcut(Keys.None),
-                    serializableAppearanceObject1,
-                    serializableAppearanceObject2,
-                    serializableAppearanceObject3,
-                    serializableAppearanceObject4,
-                    "",
-                    null,
-                    null,
-                    ToolTipAnchor.Default),
-                new DevExpress.XtraEditors.Controls.EditorButton(
-                    DevExpress.XtraEditors.Controls.ButtonPredefines.Clear,
-                    "",
-                    -1,
-                    true,
-                    false,
-                    false,
-                    editorButtonImageOptions2,
-                    new KeyShortcut(Keys.None),
-                    serializableAppearanceObject5,
-                    serializableAppearanceObject6,
-                    serializableAppearanceObject7,
-                    serializableAppearanceObject8,
-                    "",
-                    null,
-                    null,
-                    ToolTipAnchor.Default)
-            });
+            repositoryItemRibbonSearchEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions1, new KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions2, new KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, ToolTipAnchor.Default) });
             repositoryItemRibbonSearchEdit1.Name = "repositoryItemRibbonSearchEdit1";
             repositoryItemRibbonSearchEdit1.NullText = Resources.Common_Search;
             // 
@@ -389,42 +341,7 @@ namespace Foxoft
             repositoryItemRibbonSearchEdit2.AutoHeight = false;
             repositoryItemRibbonSearchEdit2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
             editorButtonImageOptions3.AllowGlyphSkinning = DefaultBoolean.True;
-            repositoryItemRibbonSearchEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-                new DevExpress.XtraEditors.Controls.EditorButton(
-                    DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph,
-                    "",
-                    -1,
-                    true,
-                    true,
-                    true,
-                    editorButtonImageOptions3,
-                    new KeyShortcut(Keys.None),
-                    serializableAppearanceObject9,
-                    serializableAppearanceObject10,
-                    serializableAppearanceObject11,
-                    serializableAppearanceObject12,
-                    "",
-                    null,
-                    null,
-                    ToolTipAnchor.Default),
-                new DevExpress.XtraEditors.Controls.EditorButton(
-                    DevExpress.XtraEditors.Controls.ButtonPredefines.Clear,
-                    "",
-                    -1,
-                    true,
-                    false,
-                    false,
-                    editorButtonImageOptions4,
-                    new KeyShortcut(Keys.None),
-                    serializableAppearanceObject13,
-                    serializableAppearanceObject14,
-                    serializableAppearanceObject15,
-                    serializableAppearanceObject16,
-                    "",
-                    null,
-                    null,
-                    ToolTipAnchor.Default)
-            });
+            repositoryItemRibbonSearchEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions3, new KeyShortcut(Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions4, new KeyShortcut(Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "", null, null, ToolTipAnchor.Default) });
             repositoryItemRibbonSearchEdit2.Name = "repositoryItemRibbonSearchEdit2";
             repositoryItemRibbonSearchEdit2.NullText = Resources.Common_Search;
             // 
@@ -435,34 +352,10 @@ namespace Foxoft
             btnEdit_BarcodeSearch.Name = "btnEdit_BarcodeSearch";
             editorButtonImageOptions5.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions5.SvgImage");
             editorButtonImageOptions5.SvgImageSize = new Size(16, 16);
-            btnEdit_BarcodeSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-                new DevExpress.XtraEditors.Controls.EditorButton(
-                    DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph,
-                    "",
-                    -1,
-                    true,
-                    true,
-                    false,
-                    editorButtonImageOptions5,
-                    new KeyShortcut(Keys.None),
-                    serializableAppearanceObject17,
-                    serializableAppearanceObject18,
-                    serializableAppearanceObject19,
-                    serializableAppearanceObject20,
-                    "",
-                    null,
-                    null,
-                    ToolTipAnchor.Default)
-            });
+            btnEdit_BarcodeSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions5, new KeyShortcut(Keys.None), serializableAppearanceObject17, serializableAppearanceObject18, serializableAppearanceObject19, serializableAppearanceObject20, "", null, null, ToolTipAnchor.Default) });
             btnEdit_BarcodeSearch.Size = new Size(150, 24);
             btnEdit_BarcodeSearch.TabIndex = 6;
             btnEdit_BarcodeSearch.EditValueChanged += btnEdit_BarcodeSearch_EditValueChanged;
-            // 
-            // ribbonPageGroup4
-            // 
-            ribbonPageGroup4.ItemLinks.Add(bBI_ExportExcel);
-            ribbonPageGroup4.Name = "ribbonPageGroup4";
-            ribbonPageGroup4.Text = Resources.Form_ProductList_RibbonGroup_Tools;
             // 
             // FormProductList
             // 
@@ -478,7 +371,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterParent;
             StatusBar = ribbonStatusBar1;
-            Text = Resources.Form_ProductList_Caption;
+            Text = "Product List";
             KeyDown += FormProductList_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).EndInit();

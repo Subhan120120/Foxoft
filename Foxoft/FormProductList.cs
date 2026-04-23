@@ -511,6 +511,7 @@ namespace Foxoft
                         {
                             efMethods.DeleteBarcodesByProduct(dcProduct.ProductCode);
                         }
+                        else return;
                     }
 
                     efMethods.DeleteProduct(dcProduct);
