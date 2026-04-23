@@ -96,10 +96,12 @@ namespace Foxoft
                     // Get the loaded entity (or create it if not exists)
                     AppSetting = dbContext.AppSettings.Local.FirstOrDefault(x => x.Id == 1);
 
+                    OverpaymentModeImageComboBoxEdit.EditValue = (int)AppSetting.OverpaymentMode;
                     // Now safe
                     SetSelectedIdsManual(AppSetting.POSFindProductBy);
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
+
         }
 
 
@@ -110,6 +112,10 @@ namespace Foxoft
                         ?? dbContext.AppSettings.FirstOrDefault(x => x.Id == 1);
 
             AppSetting.POSFindProductBy = POSFindProductByCheckedComboBoxEdit.EditValue?.ToString()?.Trim() ?? "";
+
+            if (OverpaymentModeImageComboBoxEdit.EditValue is int modeVal)
+                AppSetting.OverpaymentMode = (OverpaymentMode)modeVal;
+
             dbContext.SaveChanges();
         }
 

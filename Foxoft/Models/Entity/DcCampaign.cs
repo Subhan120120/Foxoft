@@ -4,14 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
-    //public enum CampaignTypeCode
-    //{
-    //    Standard = 1,
-    //    PromoCode = 2,
-    //    CategoryDiscount = 3,
-    //    PaymentMethodCampaign = 4
-    //}
-
     public enum DiscountTypeCode
     {
         Percent = 1,
@@ -34,12 +26,6 @@ namespace Foxoft.Models
         [StringLength(100)]
         [Display(Name = "Kampaniya adı")]
         public string CampaignDesc { get; set; }
-
-        //[Required]
-        //[StringLength(20)]
-        //[DefaultValue(CampaignTypeCode.Standard)]
-        //[Display(Name = "Kampaniya tipi")]
-        //public CampaignTypeCode CampaignTypeCode { get; set; } = CampaignTypeCode.Standard;
 
         [StringLength(50)]
         [Display(Name = "Promo code")]
@@ -83,7 +69,7 @@ namespace Foxoft.Models
         [Required]
         [Display(Name = "Process Kodu")]
         [DefaultValue("RS")]
-        public string ProcessCode { get; set; } = "RS"; 
+        public string ProcessCode { get; set; } = "RS";
 
         [StringLength(250)]
         [Display(Name = "Qeyd")]
@@ -97,7 +83,12 @@ namespace Foxoft.Models
         [Display(Name = "Yalnız nağd alışda keçərlidir")]
         public bool IsCashOnly { get; set; }
 
-
+        /// <summary>
+        /// Fakturaya məhsul əlavə edildikdə kampaniya avtomatik tətbiq edilsin
+        /// </summary>
+        [DefaultValueSql("0")]
+        [Display(Name = "Avtomatik tətbiq et")]
+        public bool IsAutoApply { get; set; }
 
         public virtual ICollection<TrCampaignProduct> TrCampaignProducts { get; set; } = new List<TrCampaignProduct>();
         public virtual ICollection<TrCampaignCategory> TrCampaignCategories { get; set; } = new List<TrCampaignCategory>();

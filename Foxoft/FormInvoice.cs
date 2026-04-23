@@ -33,6 +33,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -77,6 +78,8 @@ namespace Foxoft
         private System.Windows.Forms.Timer? _hbTimer;
 
         public bool isNew = false;
+        public string promoCode = "";
+
 
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
@@ -189,6 +192,8 @@ namespace Foxoft
             dbContext = new subContext();
             _loyaltyService = new LoyaltyService(dbContext);
 
+            _campaignService = new CampaignService(dbContext);
+
             newInvoiceHeaderId = Guid.NewGuid();
 
             if (TryAcquireInvoiceLockForEdit(newInvoiceHeaderId))
@@ -247,11 +252,15 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            ResetCampaignState();
-
             txt_LoyaltyEarn.EditValue = 0m;
 
+            InitCampaignService();
+            _cashOnlyCampaignApplied = false;
+            _appliedPromoCode = null;
+            promoCode = null;
+
             Tag = btnEdit_DocNum.EditValue;
+
 
             SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
         }
@@ -378,6 +387,8 @@ namespace Foxoft
                 dbContext = new subContext();
                 _loyaltyService = new LoyaltyService(dbContext);
 
+                _campaignService = new CampaignService(dbContext);
+
                 txt_LoyaltyEarn.EditValue = 0m;
 
                 await dbContext.TrInvoiceHeaders
@@ -429,6 +440,10 @@ namespace Foxoft
                 UpdatePaidLabels();
 
                 txt_LoyaltyEarn.EditValue = await efMethods.SelectEarnedLoyaltyByInvoiceAsync(invoiceHeaderId);
+
+                InitCampaignService();
+                _cashOnlyCampaignApplied =
+                    _campaignService.HasCashOnlyCampaignApplied(invoiceHeaderId);
             }
             finally
             {
@@ -1142,6 +1157,11 @@ namespace Foxoft
         {
             if (Settings.Default.AppSetting.AutoSave)
                 SaveInvoice();
+
+            // ── YENİ: Kampaniya yenidən hesablama ──
+            RecalcCampaignsIfNeeded();
+            AutoApplyCampaignsIfConfigured();
+
         }
 
         private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -1153,6 +1173,11 @@ namespace Foxoft
         {
             if (Settings.Default.AppSetting.AutoSave)
                 SaveInvoice();
+
+            // ── YENİ: Kampaniya yenidən hesablama ──
+            RecalcCampaignsIfNeeded();
+            AutoApplyCampaignsIfConfigured();
+
         }
 
         private void gV_InvoiceLine_RowDeleting(object sender, RowDeletingEventArgs e)
@@ -1366,53 +1391,8 @@ namespace Foxoft
             }
         }
 
-        //private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
-        //{
-        //    if (trInvoiceHeader is null)
-        //        return;
-
-        //    gV_InvoiceLine.CloseEditor();
-        //    gV_InvoiceLine.UpdateCurrentRow();
-        //    dataLayoutControl1.Validate();
-
-        //    if (!dataLayoutControl1.IsValid(out _))
-        //        return;
-
-        //    if (gV_InvoiceLine.DataRowCount <= 0)
-        //        return;
-
-        //    SaveInvoice();
-
-        //    decimal pay = GetRemainingPaymentAmount();
-
-        //    if (pay <= 0)
-        //    {
-        //        XtraMessageBox.Show(
-        //            "Ödəniləcək məbləğ qalmayıb.",
-        //            "Ödəniş",
-        //            MessageBoxButtons.OK,
-        //            MessageBoxIcon.Information);
-
-        //        return;
-        //    }
-
-        //    PaymentType paymentType = PaymentType.Cash;
-        //    FormPayment form;
-
-
-        //    form = new FormPayment(paymentType, pay, trInvoiceHeader);
-
-        //    using (form)
-        //    {
-        //        if (form.ShowDialog(this) != DialogResult.OK)
-        //        {
-        //            OnPaymentCancelled();
-        //            return;
-        //        }
-        //    }
-
-        //    UpdatePaidLabels();
-        //}
+        private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
+            => bBI_Payment_ItemClick_WithCampaign(sender, e);
 
         private PaymentType ResolvePaymentTypeByAllowedMethods(IEnumerable<int>? allowedPaymentMethodIds, PaymentType defaultPaymentType)
         {
@@ -1533,16 +1513,7 @@ namespace Foxoft
         }
 
         private void bBI_PaymentDelete_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (MessageBox.Show(
-                    Resources.Form_Invoice_DeletePaymentsQuestion,
-                    Resources.Common_Attention,
-                    MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-                UpdatePaidLabels();
-            }
-        }
+            => bBI_PaymentDelete_ItemClick_WithCampaign(sender, e);
 
 
         private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)

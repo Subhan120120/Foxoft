@@ -41,6 +41,7 @@ namespace Foxoft
             DiscountTypeCodeComboBoxEdit = new DevExpress.XtraEditors.ComboBoxEdit();
             DiscountValueCalcEdit = new DevExpress.XtraEditors.CalcEdit();
             PrioritySpinEdit = new DevExpress.XtraEditors.SpinEdit();
+            IsCashOnlyCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             IsActiveCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             IsCombinableCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             StartDateDateEdit = new DevExpress.XtraEditors.DateEdit();
@@ -110,7 +111,7 @@ namespace Foxoft
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             dcCampaignsBindingSource = new BindingSource(components);
-            IsCashOnlyCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            IsAutoApplyCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             ((System.ComponentModel.ISupportInitialize)CampaignPasswordTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
             panelHeader.SuspendLayout();
@@ -121,6 +122,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)DiscountTypeCodeComboBoxEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DiscountValueCalcEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PrioritySpinEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)IsCashOnlyCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IsActiveCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IsCombinableCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)StartDateDateEdit.Properties).BeginInit();
@@ -171,7 +173,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelButtons).BeginInit();
             panelButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dcCampaignsBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)IsCashOnlyCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)IsAutoApplyCheckEdit.Properties).BeginInit();
             SuspendLayout();
             // 
             // lblCampaignPassword
@@ -211,6 +213,7 @@ namespace Foxoft
             panelHeader.Controls.Add(DiscountTypeCodeComboBoxEdit);
             panelHeader.Controls.Add(DiscountValueCalcEdit);
             panelHeader.Controls.Add(PrioritySpinEdit);
+            panelHeader.Controls.Add(IsAutoApplyCheckEdit);
             panelHeader.Controls.Add(IsCashOnlyCheckEdit);
             panelHeader.Controls.Add(IsActiveCheckEdit);
             panelHeader.Controls.Add(IsCombinableCheckEdit);
@@ -381,6 +384,14 @@ namespace Foxoft
             PrioritySpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             PrioritySpinEdit.Size = new Size(240, 20);
             PrioritySpinEdit.TabIndex = 18;
+            // 
+            // IsCashOnlyCheckEdit
+            // 
+            IsCashOnlyCheckEdit.Location = new Point(896, 98);
+            IsCashOnlyCheckEdit.Name = "IsCashOnlyCheckEdit";
+            IsCashOnlyCheckEdit.Properties.Caption = "IsCashOnly";
+            IsCashOnlyCheckEdit.Size = new Size(120, 20);
+            IsCashOnlyCheckEdit.TabIndex = 19;
             // 
             // IsActiveCheckEdit
             // 
@@ -943,13 +954,13 @@ namespace Foxoft
             // 
             dcCampaignsBindingSource.DataSource = typeof(DcCampaign);
             // 
-            // IsCashOnlyCheckEdit
+            // IsAutoApplyCheckEdit
             // 
-            IsCashOnlyCheckEdit.Location = new Point(896, 98);
-            IsCashOnlyCheckEdit.Name = "IsCashOnlyCheckEdit";
-            IsCashOnlyCheckEdit.Properties.Caption = "IsCashOnly";
-            IsCashOnlyCheckEdit.Size = new Size(120, 20);
-            IsCashOnlyCheckEdit.TabIndex = 19;
+            IsAutoApplyCheckEdit.Location = new Point(1024, 98);
+            IsAutoApplyCheckEdit.Name = "IsAutoApplyCheckEdit";
+            IsAutoApplyCheckEdit.Properties.Caption = "IsAutoApply";
+            IsAutoApplyCheckEdit.Size = new Size(120, 20);
+            IsAutoApplyCheckEdit.TabIndex = 19;
             // 
             // FormCampaign
             // 
@@ -974,6 +985,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)DiscountTypeCodeComboBoxEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)DiscountValueCalcEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PrioritySpinEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)IsCashOnlyCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)IsActiveCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)IsCombinableCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)StartDateDateEdit.Properties.CalendarTimeProperties).EndInit();
@@ -1024,7 +1036,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelButtons).EndInit();
             panelButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dcCampaignsBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)IsCashOnlyCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)IsAutoApplyCheckEdit.Properties).EndInit();
             ResumeLayout(false);
         }
 
@@ -1130,5 +1142,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.LabelControl lblCampaignPassword;
         private DevExpress.XtraEditors.TextEdit CampaignPasswordTextEdit;
         private DevExpress.XtraEditors.CheckEdit IsCashOnlyCheckEdit;
+        private DevExpress.XtraEditors.CheckEdit IsAutoApplyCheckEdit;
     }
 }

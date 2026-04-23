@@ -132,6 +132,7 @@ namespace Foxoft
             MinInvoiceAmountCalcEdit.DataBindings.Clear();
             MaxDiscountAmountCalcEdit.DataBindings.Clear();
             NoteMemoEdit.DataBindings.Clear();
+            IsAutoApplyCheckEdit.DataBindings.Clear();
 
             CampaignCodeTextEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.CampaignCode), true, DataSourceUpdateMode.OnPropertyChanged);
             CampaignDescTextEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.CampaignDesc), true, DataSourceUpdateMode.OnPropertyChanged);
@@ -142,6 +143,7 @@ namespace Foxoft
             PrioritySpinEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.Priority), true, DataSourceUpdateMode.OnPropertyChanged);
             IsActiveCheckEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.IsActive), true, DataSourceUpdateMode.OnPropertyChanged);
             IsCashOnlyCheckEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.IsCashOnly), true, DataSourceUpdateMode.OnPropertyChanged);
+            IsAutoApplyCheckEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.IsAutoApply), true, DataSourceUpdateMode.OnPropertyChanged);
             IsCombinableCheckEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.IsCombinable), true, DataSourceUpdateMode.OnPropertyChanged);
             StartDateDateEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.StartDate), true, DataSourceUpdateMode.OnPropertyChanged);
             EndDateDateEdit.DataBindings.Add("EditValue", dcCampaignsBindingSource, nameof(DcCampaign.EndDate), true, DataSourceUpdateMode.OnPropertyChanged);

@@ -80,6 +80,7 @@ namespace Foxoft
             bBI_CampaignApply = new BarButtonItem();
             bBI_CampaignLog = new BarButtonItem();
             BBI_PromoCodeCampaign = new BarButtonItem();
+            bBI_CampaignDelete = new BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             RPG_Invoice = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -399,9 +400,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog, BBI_PromoCodeCampaign });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog, BBI_PromoCodeCampaign, bBI_CampaignDelete });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 72;
+            ribbonControl1.MaxItemId = 73;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -701,6 +702,14 @@ namespace Foxoft
             BBI_PromoCodeCampaign.Name = "BBI_PromoCodeCampaign";
             BBI_PromoCodeCampaign.ItemClick += BBI_PromoCodeCampaign_ItemClick;
             // 
+            // bBI_CampaignDelete
+            // 
+            bBI_CampaignDelete.Caption = "Kampaniyanı Sil";
+            bBI_CampaignDelete.Id = 72;
+            bBI_CampaignDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
+            bBI_CampaignDelete.Name = "bBI_CampaignDelete";
+            bBI_CampaignDelete.ItemClick += bBI_CampaignDelete_ItemClick;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RPG_Invoice, RPG_Payment, RPG_Installment, RPG_Print, RPG_Export, RPG_Control, ribbonPageGroup8, RPG_Tools, RPG_Campaign });
@@ -773,6 +782,7 @@ namespace Foxoft
             // 
             RPG_Campaign.ItemLinks.Add(bBI_CampaignApply);
             RPG_Campaign.ItemLinks.Add(bBI_CampaignLog);
+            RPG_Campaign.ItemLinks.Add(bBI_CampaignDelete);
             RPG_Campaign.ItemLinks.Add(BBI_PromoCodeCampaign);
             RPG_Campaign.Name = "RPG_Campaign";
             RPG_Campaign.Text = "Campaign";
@@ -2442,5 +2452,6 @@ namespace Foxoft
         private GridColumn colDiscountCampaignLoc;
         private BarButtonItem BBI_PromoCodeCampaign;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Campaign;
+        private BarButtonItem bBI_CampaignDelete;
     }
 }

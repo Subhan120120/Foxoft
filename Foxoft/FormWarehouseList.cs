@@ -71,7 +71,7 @@ namespace Foxoft
         private void bBI_WarehouseNew_ItemClick(object sender, ItemClickEventArgs e)
         {
             dcWarehouse = new DcWarehouse();
-            FormCurrAcc form = new();
+            FormWarehouse form = new();
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 UpdateGridViewData();
@@ -163,10 +163,10 @@ namespace Foxoft
             if (dcWarehouse is null)
                 return;
 
-            if (efMethods.CurrAccExist(dcWarehouse.WarehouseCode))
+            if (efMethods.EntityExists<DcWarehouse>(dcWarehouse.WarehouseCode))
             {
                 if (XtraMessageBox.Show(
-                        Resources.Message_DeleteConfirm + Environment.NewLine + dcWarehouse.WarehouseDesc,
+                    string.Format(Resources.Message_DeleteConfirm, dcWarehouse.WarehouseDesc),
                         Resources.Common_Attention,
                         MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {

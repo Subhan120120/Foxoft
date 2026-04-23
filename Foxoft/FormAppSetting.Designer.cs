@@ -1,5 +1,6 @@
 ﻿
 using DevExpress.XtraEditors.Controls;
+using Foxoft.Models;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -340,13 +341,17 @@ namespace Foxoft
             // 
             // OverpaymentModeImageComboBoxEdit
             // 
-            OverpaymentModeImageComboBoxEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "OverpaymentMode", true));
             OverpaymentModeImageComboBoxEdit.Location = new Point(176, 348);
             OverpaymentModeImageComboBoxEdit.Name = "OverpaymentModeImageComboBoxEdit";
             OverpaymentModeImageComboBoxEdit.Properties.Appearance.Options.UseTextOptions = true;
             OverpaymentModeImageComboBoxEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
             OverpaymentModeImageComboBoxEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
-            OverpaymentModeImageComboBoxEdit.Properties.Items.AddRange(new ImageComboBoxItem[] { new ImageComboBoxItem("Hər dəfə soruş", "Hər dəfə soruş", 0), new ImageComboBoxItem("Dəqiq məbləği qəbul et və qalığı qaytar", "Dəqiq məbləği qəbul et və qalığı qaytar", 1), new ImageComboBoxItem("Hamısını avans kimi qəbul et", "Hamısını avans kimi qəbul et", 2) });
+            OverpaymentModeImageComboBoxEdit.Properties.Items.AddRange(new ImageComboBoxItem[]
+            {
+                new ImageComboBoxItem("Hər dəfə soruş",                        (int)OverpaymentMode.AskEachTime,                 -1),
+                new ImageComboBoxItem("Dəqiq məbləği qəbul et, qalığı qaytar", (int)OverpaymentMode.AcceptExactAndReturnChange,  -1),
+                new ImageComboBoxItem("Hamısını avans kimi qəbul et",          (int)OverpaymentMode.AcceptAllAsAdvance,          -1),
+            });
             OverpaymentModeImageComboBoxEdit.Properties.UseCtrlScroll = true;
             OverpaymentModeImageComboBoxEdit.Size = new Size(318, 20);
             OverpaymentModeImageComboBoxEdit.StyleController = dataLayoutControl1;
@@ -625,7 +630,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.CheckedComboBoxEdit POSFindProductByCheckedComboBoxEdit;
         private DevExpress.XtraEditors.CheckEdit POSMergeSameProductsCheckEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPOSMergeSameProducts;
-        private DevExpress.XtraEditors.ComboBoxEdit OverpaymentModeComboBoxEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForOverpaymentMode;
         private DevExpress.XtraEditors.ImageComboBoxEdit OverpaymentModeImageComboBoxEdit;
     }
