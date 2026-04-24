@@ -3605,4 +3605,7 @@ To delete, cancel the receipt!</value>
   <data name="Form_Invoice_BonusPaymentExists_CannotChangeCurrAccCode" xml:space="preserve">
     <value>Bonus payment already exists. Current account code cannot be changed.</value>
   </data>
+  <data name="Entity_AppSetting_UseCampaign" xml:space="preserve">
+    <value>Use Campaign</value>
+  </data>
 </root>

@@ -925,6 +925,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Campaign.
+        /// </summary>
+        public static string Entity_AppSetting_UseCampaign {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_UseCampaign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Price List.
         /// </summary>
         public static string Entity_AppSetting_UsePriceList {

@@ -62,6 +62,9 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_UseBarcode), ResourceType = typeof(Resources))]
         public bool UseBarcode { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_AppSetting_UseCampaign), ResourceType = typeof(Resources))]
+        public bool UseCampaign { get; set; }
+
         [Display(Name = nameof(Resources.Entity_AppSetting_POSShowQuantityDialog), ResourceType = typeof(Resources))]
         public bool POSShowQuantityDialog { get; set; }
 

@@ -3605,4 +3605,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_Invoice_BonusPaymentExists_CannotChangeCurrAccCode" xml:space="preserve">
     <value>Bonus ödənişi artıq mövcuddur. Cari hesab kodu dəyişdirilə bilməz.</value>
   </data>
+  <data name="Entity_AppSetting_UseCampaign" xml:space="preserve">
+    <value>Kampaniya Enidirimi İstidfadə et</value>
+  </data>
 </root>
