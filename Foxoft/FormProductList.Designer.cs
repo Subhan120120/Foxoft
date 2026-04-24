@@ -99,6 +99,7 @@ namespace Foxoft
             BBI_query = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             txtEdit_filtercolumns = new DevExpress.XtraBars.BarEditItem();
+            gV_ProductList = new MyGridView(this);
             repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             BBI_Save = new DevExpress.XtraBars.BarButtonItem();
             BBI_Show = new DevExpress.XtraBars.BarButtonItem();
