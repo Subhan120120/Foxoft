@@ -78,7 +78,9 @@ namespace Foxoft
         private System.Windows.Forms.Timer? _hbTimer;
 
         public bool isNew = false;
-        public string promoCode = "";
+        private bool IsCampaignEnabled
+            => Settings.Default.AppSetting != null
+            && Settings.Default.AppSetting.UseCampaign;
 
 
 
@@ -192,8 +194,6 @@ namespace Foxoft
             dbContext = new subContext();
             _loyaltyService = new LoyaltyService(dbContext);
 
-            _campaignService = new CampaignService(dbContext);
-
             newInvoiceHeaderId = Guid.NewGuid();
 
             if (TryAcquireInvoiceLockForEdit(newInvoiceHeaderId))
@@ -254,10 +254,13 @@ namespace Foxoft
 
             txt_LoyaltyEarn.EditValue = 0m;
 
-            InitCampaignService();
-            _cashOnlyCampaignApplied = false;
-            _appliedPromoCode = null;
-            promoCode = null;
+            InitCampaignIfEnabled();
+
+            if (!IsCampaignEnabled)
+            {
+                _cashOnlyCampaignApplied = false;
+                _appliedPromoCode = null;
+            }
 
             Tag = btnEdit_DocNum.EditValue;
 
@@ -387,8 +390,6 @@ namespace Foxoft
                 dbContext = new subContext();
                 _loyaltyService = new LoyaltyService(dbContext);
 
-                _campaignService = new CampaignService(dbContext);
-
                 txt_LoyaltyEarn.EditValue = 0m;
 
                 await dbContext.TrInvoiceHeaders
@@ -441,9 +442,17 @@ namespace Foxoft
 
                 txt_LoyaltyEarn.EditValue = await efMethods.SelectEarnedLoyaltyByInvoiceAsync(invoiceHeaderId);
 
-                InitCampaignService();
-                _cashOnlyCampaignApplied =
-                    _campaignService.HasCashOnlyCampaignApplied(invoiceHeaderId);
+                if (IsCampaignEnabled)
+                {
+                    InitCampaignIfEnabled();
+                    _cashOnlyCampaignApplied =
+                        _campaignService.HasCashOnlyCampaignApplied(invoiceHeaderId);
+                }
+                else
+                {
+                    _cashOnlyCampaignApplied = false;
+                    _appliedPromoCode = null;
+                }
             }
             finally
             {
@@ -1157,11 +1166,6 @@ namespace Foxoft
         {
             if (Settings.Default.AppSetting.AutoSave)
                 SaveInvoice();
-
-            // ── YENİ: Kampaniya yenidən hesablama ──
-            RecalcCampaignsIfNeeded();
-            AutoApplyCampaignsIfConfigured();
-
         }
 
         private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -1173,10 +1177,6 @@ namespace Foxoft
         {
             if (Settings.Default.AppSetting.AutoSave)
                 SaveInvoice();
-
-            // ── YENİ: Kampaniya yenidən hesablama ──
-            RecalcCampaignsIfNeeded();
-            AutoApplyCampaignsIfConfigured();
 
         }
 
@@ -1237,6 +1237,12 @@ namespace Foxoft
 
             SaveSession();
             Tag = btnEdit_DocNum.EditValue;
+
+            if (IsCampaignEnabled)
+            {
+                RecalcCampaignsIfNeeded();
+                AutoApplyCampaignsIfConfigured();
+            }
         }
 
 
@@ -1751,7 +1757,10 @@ namespace Foxoft
                 DcWarehouse dcWarehouse = dcWarehouses.FirstOrDefault(x => x.IsDefault == true);
 
                 if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
-                    lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                {
+                    trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
+                    //lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                }
             }
 
             // Kart varsa və yeni CurrAccCode kartın CurrAccCode-u ilə fərqlidirsə -> kartı ləğv et
@@ -1979,6 +1988,7 @@ namespace Foxoft
 
             if (new string[] { "EX", "EI", "CN", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
             {
+
                 btnEdit_CurrAccCode.Enabled = false;
                 colBalance.Visible = false;
                 col_PosDiscount.Visible = false;
@@ -1988,6 +1998,7 @@ namespace Foxoft
                 BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
                 RPG_Payment.Visible = false;
                 RPG_Installment.Visible = false;
+                RPG_Campaign.Visible = IsCampaignEnabled;
 
                 if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                 {
@@ -2372,19 +2383,34 @@ namespace Foxoft
 
         private void lUE_StoreCode_EditValueChanged(object sender, EventArgs e)
         {
-            string storeCode = lUE_StoreCode.EditValue.ToString();
+            if (trInvoiceHeader is null)
+                return;
+
+            string storeCode = lUE_StoreCode.EditValue?.ToString();
+
+            if (string.IsNullOrWhiteSpace(storeCode))
+                return;
+
+            trInvoiceHeader.StoreCode = storeCode;
+
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
             lUE_WarehouseCode.Properties.DataSource = dcWarehouses;
 
-            if (dcWarehouses is not null && trInvoiceHeader is not null)
-            {
-                DcWarehouse defaultWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
+            string currentWarehouseCode = trInvoiceHeader.WarehouseCode;
 
-                if (defaultWarehouse is not null && !dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader.WarehouseCode))
-                {
-                    lUE_WarehouseCode.EditValue = defaultWarehouse.WarehouseCode;
-                    //trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
-                }
+            if (!string.IsNullOrWhiteSpace(currentWarehouseCode)
+                && dcWarehouses.Any(x => x.WarehouseCode == currentWarehouseCode))
+            {
+                lUE_WarehouseCode.EditValue = currentWarehouseCode;
+                return;
+            }
+
+            DcWarehouse defaultWarehouse = dcWarehouses.FirstOrDefault(x => x.IsDefault);
+
+            if (defaultWarehouse is not null)
+            {
+                trInvoiceHeader.WarehouseCode = defaultWarehouse.WarehouseCode;
+                //lUE_WarehouseCode.EditValue = defaultWarehouse.WarehouseCode;
             }
         }
 

@@ -37,8 +37,15 @@ namespace Foxoft
         // ══════════════════════════════════════════════════════
         //  İNİSİALİZASİYA
         // ══════════════════════════════════════════════════════
-        private void InitCampaignService()
+        private void InitCampaignIfEnabled()
         {
+            if (!IsCampaignEnabled)
+            {
+                _cashOnlyCampaignApplied = false;
+                _appliedPromoCode = null;
+                return;
+            }
+
             _campaignService = new CampaignService(dbContext);
         }
 
@@ -60,7 +67,12 @@ namespace Foxoft
 
         /// <summary>"Kampaniya Tətbiq Et" düyməsi</summary>
         private void bBI_CampaignApply_ItemClick(object sender, ItemClickEventArgs e)
-            => ApplyRegularCampaigns();
+        {
+            if (!IsCampaignEnabled)
+                return;
+
+            ApplyRegularCampaigns();
+        }
 
         private void ApplyRegularCampaigns()
         {
@@ -75,7 +87,7 @@ namespace Foxoft
             gV_InvoiceLine.CloseEditor();
             gV_InvoiceLine.UpdateCurrentRow();
 
-            InitCampaignService();
+            InitCampaignIfEnabled();
             var result = _campaignService.ApplyCampaigns(
                 trInvoiceHeader, GetInvoiceLines(), _appliedPromoCode, CampaignFilter.RegularOnly);
 
@@ -91,7 +103,7 @@ namespace Foxoft
         private void bBI_CampaignLog_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (trInvoiceHeader is null) return;
-            InitCampaignService();
+            InitCampaignIfEnabled();
 
             var logs = _campaignService.GetCampaignLogs(trInvoiceHeader.InvoiceHeaderId);
             if (!logs.Any())
@@ -131,14 +143,13 @@ namespace Foxoft
             string code = input.ToString()?.Trim() ?? "";
             if (string.IsNullOrEmpty(code)) return;
 
-            InitCampaignService();
+            InitCampaignIfEnabled();
             var lines = GetInvoiceLines();
 
             // Mövcud endirimləri sil
             _campaignService.RemoveAllCampaigns(trInvoiceHeader, lines);
             _cashOnlyCampaignApplied = false;
             _appliedPromoCode = code;
-            promoCode = code;
 
             var result = _campaignService.ApplyCampaigns(
                 trInvoiceHeader, lines, _appliedPromoCode, CampaignFilter.RegularOnly);
@@ -163,12 +174,11 @@ namespace Foxoft
                 MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            InitCampaignService();
+            InitCampaignIfEnabled();
             var lines = GetInvoiceLines();
             _campaignService.RemoveAllCampaigns(trInvoiceHeader, lines);
             _cashOnlyCampaignApplied = false;
             _appliedPromoCode = null;
-            promoCode = null;
 
             gV_InvoiceLine.RefreshData();
             SaveInvoice();
@@ -201,18 +211,24 @@ namespace Foxoft
                 return;
             }
 
-            // IsCashOnly kampaniya yoxlaması
             IEnumerable<int>? allowedPaymentMethodIds = null;
-            TryApplyCashOnlyCampaign(ref pay, out allowedPaymentMethodIds);
+            if (IsCampaignEnabled)
+            {
+                // IsCashOnly kampaniya yoxlaması
+                TryApplyCashOnlyCampaign(ref pay, out allowedPaymentMethodIds);
+            }
 
             // FormPayment açılır
             using FormPayment form = new(PaymentType.Cash, pay, trInvoiceHeader, allowedPaymentMethodIds);
 
             if (form.ShowDialog(this) != DialogResult.OK)
             {
-                // İstifadəçi ödənişi ləğv etdi → IsCashOnly geri al
-                if (_cashOnlyCampaignApplied)
-                    RollbackCashOnlyCampaign();
+                if (IsCampaignEnabled)
+                    if (_cashOnlyCampaignApplied)
+                    {
+                        // İstifadəçi ödənişi ləğv etdi → IsCashOnly geri al
+                        RollbackCashOnlyCampaign();
+                    }
 
                 return;
             }
@@ -227,7 +243,7 @@ namespace Foxoft
         {
             allowedPaymentMethodIds = null;
 
-            InitCampaignService();
+            InitCampaignIfEnabled();
             var lines = GetInvoiceLines();
             var cashOnlyCampaigns = _campaignService.GetEligibleCampaigns(
                 trInvoiceHeader, lines, null, CampaignFilter.CashOnlyOnly);
@@ -330,20 +346,24 @@ namespace Foxoft
         {
             if (trInvoiceHeader is null) return;
 
-            // IsCashOnly kampaniya tətbiq edilibsə – silinməyə icazə verma
-            InitCampaignService();
-            if (_campaignService.HasCashOnlyCampaignApplied(trInvoiceHeader.InvoiceHeaderId))
+            if (IsCampaignEnabled)
             {
-                XtraMessageBox.Show(
-                    "Bu fakturaya nağd ödəniş kampaniyası (IsCashOnly) tətbiq edilib.\n" +
-                    "Ödənişi silmədən öncə kampaniya endirimi ləğv edilməlidir.\n\n" +
-                    "Bunun üçün «Kampaniyaları Sil» düyməsindən istifadə edin.",
-                    Resources.Common_Attention,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-                return;
-            }
+                // IsCashOnly kampaniya tətbiq edilibsə – silinməyə icazə verma
+                InitCampaignIfEnabled();
 
+                if (_campaignService.HasCashOnlyCampaignApplied(trInvoiceHeader.InvoiceHeaderId))
+                {
+                    XtraMessageBox.Show(
+                        "Bu fakturaya nağd ödəniş kampaniyası (IsCashOnly) tətbiq edilib.\n" +
+                        "Ödənişi silmədən öncə kampaniya endirimi ləğv edilməlidir.\n\n" +
+                        "Bunun üçün «Kampaniyaları Sil» düyməsindən istifadə edin.",
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
+            }
             if (MessageBox.Show(
                 Resources.Form_Invoice_DeletePaymentsQuestion,
                 Resources.Common_Attention,
@@ -364,8 +384,11 @@ namespace Foxoft
         /// </summary>
         private void RecalcCampaignsIfNeeded()
         {
+            if (!IsCampaignEnabled)
+                return;
+
             if (trInvoiceHeader is null) return;
-            InitCampaignService();
+            InitCampaignIfEnabled();
 
             if (!_campaignService.HasCampaignApplied(trInvoiceHeader.InvoiceHeaderId))
                 return;
@@ -394,7 +417,7 @@ namespace Foxoft
         private void AutoApplyCampaignsIfConfigured()
         {
             if (trInvoiceHeader is null) return;
-            InitCampaignService();
+            InitCampaignIfEnabled();
 
             var lines = GetInvoiceLines();
             var eligible = _campaignService.GetEligibleCampaigns(

@@ -49,9 +49,9 @@ namespace Foxoft
         //  SAHƏLƏR
         // ══════════════════════════════════════════════════════
         private CampaignService _campaignService = null!;
-        private string?         _promoCode                = null;
-        private bool            _cashOnlyCampaignApplied  = false;
-        private bool            _isApplyingCampaign       = false;
+        private string? _promoCode = null;
+        private bool _cashOnlyCampaignApplied = false;
+        private bool _isApplyingCampaign = false;
 
         // ══════════════════════════════════════════════════════
         //  İNİSİALİZASİYA
@@ -126,7 +126,7 @@ namespace Foxoft
             var lines = GetInvoiceLines();
             _campaignService.RemoveAllCampaigns(trInvoiceHeader, lines);
             _cashOnlyCampaignApplied = false;
-            _promoCode               = null;
+            _promoCode = null;
 
             gV_InvoiceLine.RefreshData();
             SaveInvoice();
@@ -174,7 +174,7 @@ namespace Foxoft
             // Mövcud kampaniyaları sil
             _campaignService.RemoveAllCampaigns(trInvoiceHeader, lines);
             _cashOnlyCampaignApplied = false;
-            _promoCode               = input;
+            _promoCode = input;
 
             var result = _campaignService.ApplyCampaigns(
                 trInvoiceHeader, lines, _promoCode, CampaignFilter.RegularOnly);
@@ -213,12 +213,15 @@ namespace Foxoft
 
             // ── Temel ödəniş növü ──────────────────────────────
             PaymentType paymentType = PaymentType.Cash;
-            if (sender == btn_Cashless)       paymentType = PaymentType.Cashless;
+            if (sender == btn_Cashless) paymentType = PaymentType.Cashless;
             else if (sender == btn_CustomerBonus) paymentType = PaymentType.Bonus;
 
             // ── IsCashOnly kampaniya yoxlaması ─────────────────
             IEnumerable<int>? allowedPaymentMethodIds = null;
-            bool cashOnlyApplied = TryApplyCashOnlyCampaign(ref paymentType, out allowedPaymentMethodIds);
+
+            bool cashOnlyApplied = false;
+            if (IsCampaignEnabled)
+                cashOnlyApplied = TryApplyCashOnlyCampaign(ref paymentType, out allowedPaymentMethodIds);
 
             decimal pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
 
@@ -229,14 +232,20 @@ namespace Foxoft
 
             if (formPayment.ShowDialog(this) == DialogResult.OK)
             {
-                ReloadInvoiceCampaignValues();
+                if (IsCampaignEnabled)
+                {
+                    ReloadInvoiceCampaignValues();
+                }
                 CalcPaidAmount();
             }
             else
             {
-                // İstifadəçi ləğv etdi → IsCashOnly geri al
-                if (cashOnlyApplied)
-                    RollbackCashOnlyCampaign();
+                if (IsCampaignEnabled)
+                {
+                    // İstifadəçi ləğv etdi → IsCashOnly geri al
+                    if (cashOnlyApplied)
+                        RollbackCashOnlyCampaign();
+                }
             }
 
             ActiveControl = txtEdit_Barcode;
@@ -250,7 +259,7 @@ namespace Foxoft
             allowedPaymentMethodIds = null;
 
             InitCampaignService();
-            var lines             = GetInvoiceLines();
+            var lines = GetInvoiceLines();
             var cashOnlyCampaigns = _campaignService.GetEligibleCampaigns(
                 trInvoiceHeader, lines, null, CampaignFilter.CashOnlyOnly);
 
@@ -302,7 +311,7 @@ namespace Foxoft
             _cashOnlyCampaignApplied = true;
 
             // Yalnız nağd ödəniş metodları
-            paymentType             = PaymentType.Cash;
+            paymentType = PaymentType.Cash;
             allowedPaymentMethodIds = efMethods
                 .SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cash })
                 .Select(m => m.PaymentMethodId);
@@ -392,7 +401,7 @@ namespace Foxoft
             if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty) return;
 
             InitCampaignService();
-            var lines    = GetInvoiceLines();
+            var lines = GetInvoiceLines();
             var eligible = _campaignService.GetEligibleCampaigns(
                 trInvoiceHeader, lines, _promoCode, CampaignFilter.RegularOnly);
 

@@ -31,7 +31,9 @@ namespace Foxoft
         readonly SettingStore settingStore;
         private LoyaltyService loyaltyService;
 
-        private string? promoCode = null;
+        private bool IsCampaignEnabled
+            => Settings.Default.AppSetting != null
+            && Settings.Default.AppSetting.UseCampaign;
 
         public UcRetailSale()
         {
@@ -64,6 +66,20 @@ namespace Foxoft
 
             if (currAccHasClaims)
                 LCI_NewInvoice.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
+
+            ApplyCampaignVisibility();
+        }
+
+        private void ApplyCampaignVisibility()
+        {
+            var visible = IsCampaignEnabled
+                ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always
+                : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+
+            LCI_CampaignApply.Visibility = visible;
+            LCI_CampaignDelete.Visibility = visible;
+            LCI_CampaignLog.Visibility = visible;
+            LCI_PromoCode.Visibility = visible;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -195,10 +211,6 @@ namespace Foxoft
 
             invoiceHeaderId = Guid.NewGuid();
 
-            InitCampaignService();
-            _cashOnlyCampaignApplied = false;
-            _promoCode = null;
-
             dbContext.TrInvoiceHeaders
                 .Include(x => x.DcCurrAcc)
                 .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
@@ -217,6 +229,19 @@ namespace Foxoft
 
             LoadCampaignHeader();
             CalcPaidAmount();
+
+
+            if (IsCampaignEnabled)
+            {
+                InitCampaignService();
+                _cashOnlyCampaignApplied = false;
+                _promoCode = null;
+            }
+            else
+            {
+                _cashOnlyCampaignApplied = false;
+                _promoCode = null;
+            }
         }
 
         //private void ApplyCampaignsFromForm(bool showMessage = false, IEnumerable<int>? paymentMethodIds = null)
@@ -249,13 +274,19 @@ namespace Foxoft
 
         private void LoadCampaignHeader()
         {
+            if (!IsCampaignEnabled)
+            {
+                _promoCode = null;
+                return;
+            }
+
             using var db = new subContext();
 
             TrInvoiceCampaignHeader? campaignHeader = db.TrInvoiceCampaignHeaders
                 .AsNoTracking()
                 .FirstOrDefault(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
 
-            promoCode = campaignHeader?.PromoCode;
+            _promoCode = campaignHeader?.PromoCode;
         }
 
         //private void ReloadInvoiceCampaignValues()
@@ -1356,8 +1387,11 @@ namespace Foxoft
                 ? 0
                 : loyaltyService.GetInvoiceEarnAmount(trInvoiceHeader.InvoiceHeaderId);
 
-            RecalcCampaignsIfNeeded();
-            AutoApplyCampaignsIfConfigured();
+            if (IsCampaignEnabled)
+            {
+                RecalcCampaignsIfNeeded();
+                AutoApplyCampaignsIfConfigured();
+            }
         }
 
 
