@@ -137,7 +137,6 @@ namespace Foxoft
             }
         }
 
-
         private void BBI_ItemClick(AccordionControlElement el)
         {
             if (el?.Name is not string name) return;
@@ -154,7 +153,6 @@ namespace Foxoft
                 case "WholesaleInvoice": ShowNewForm<FormInvoice>("WS", false, new byte[] { 1, 3 }, null, true); break;
                 case "InstallmentSaleInvoice": ShowNewForm<FormInvoice>("IS", false, new byte[] { 1, 3 }, null, true); break;
                 case "Expense": ShowNewForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null, true); break;
-
 
                 case "Count": ShowNewForm<FormInvoice>("CN", false, new byte[] { 1 }, null, true); break;
                 case "CountIn": ShowNewForm<FormInvoice>("CI", false, new byte[] { 1 }, null, true); break;
@@ -195,6 +193,7 @@ namespace Foxoft
                 case "PayrollList": ShowNewForm<FormPayrollList>(); break;
                 case "LoyaltyCards": ShowNewForm<FormLoyaltyCards>(); break;
                 case "TerminalList": ShowNewForm<FormTerminalList>(); break;
+                case "CrmActivityList": ShowExistForm<FormCrmActivityList>(); break;
 
                 default: break;
             }
@@ -281,6 +280,7 @@ namespace Foxoft
             this.ACE_PayrollList.Name = "PayrollList";
             this.ACE_LoyaltyCards.Name = "LoyaltyCards";
             this.ACE_TerminalList.Name = "TerminalList";
+            this.ACE_CrmActivityList.Name = "CrmActivityList";
         }
 
         private void InitializeReports()

@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260425185325_asd")]
+    partial class asd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5968,7 +5971,7 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("CurrAccCode", "ActivityDate");
 
-                    b.ToTable("TrCrmActivities");
+                    b.ToTable("CrmActivities");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrCurrAccFeature", b =>

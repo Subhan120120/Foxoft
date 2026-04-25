@@ -115,6 +115,9 @@ namespace Foxoft.Models
         public DbSet<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
         public DbSet<TrInvoiceCampaignHeader> TrInvoiceCampaignHeaders { get; set; }
 
+        //CRM Model
+        public DbSet<TrCrmActivity> TrCrmActivities { get; set; }
+        public DbSet<DcCrmActivityType> DcCrmActivityTypes { get; set; }
 
         public DbSet<RetailSale> RetailSales { get; set; } // view
         public DbSet<ProductBalance> ProductBalances { get; set; } // view
@@ -417,6 +420,18 @@ namespace Foxoft.Models
             {
                 entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta vermesin deye
             });
+
+            modelBuilder.Entity<TrCrmActivity>(entity =>
+            {
+                entity.Property(x => x.Status)
+                      .HasConversion<byte>()
+                      .HasColumnType("tinyint");
+
+                entity.Property(x => x.Priority)
+                      .HasConversion<byte>()
+                      .HasColumnType("tinyint");
+            });
+
 
             modelBuilder.Entity<MigrationHistory>(entity =>
             {

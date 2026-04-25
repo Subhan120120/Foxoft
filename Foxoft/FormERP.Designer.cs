@@ -118,6 +118,7 @@ namespace Foxoft
             ACE_PayrollList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_LoyaltyCards = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CampaignList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_CrmActivityList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -640,7 +641,7 @@ namespace Foxoft
             // 
             // aCE_Operation
             // 
-            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_PayrollList, ACE_LoyaltyCards, ACE_CampaignList });
+            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_PayrollList, ACE_LoyaltyCards, ACE_CampaignList, ACE_CrmActivityList });
             aCE_Operation.Expanded = true;
             aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
             aCE_Operation.Name = "aCE_Operation";
@@ -712,6 +713,13 @@ namespace Foxoft
             ACE_CampaignList.Name = "ACE_CampaignList";
             ACE_CampaignList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_CampaignList.Text = "Endirim Kampaniyası Siyahısı";
+            // 
+            // ACE_CrmActivityList
+            // 
+            ACE_CrmActivityList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CrmActivityList.ImageOptions.SvgImage");
+            ACE_CrmActivityList.Name = "ACE_CrmActivityList";
+            ACE_CrmActivityList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_CrmActivityList.Text = "CRM Activity List";
             // 
             // aCE_Reports
             // 
@@ -892,5 +900,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_LoyaltyCards;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_TerminalList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CampaignList;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CrmActivityList;
     }
 }
