@@ -2272,7 +2272,7 @@ namespace Foxoft
                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_ProductCode, product.ProductCode);
 
                             // Əgər grid-də ayrıca barcode sütununuz varsa, onu da doldurun:
-                            // gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_Barcode, barcode);
+                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colBarcode, barcode);
                         }
                         else if (column.ColumnName == captionQty)
                         {
@@ -2283,9 +2283,6 @@ namespace Foxoft
 
                         else if (column.ColumnName == captionSerialNumber)
                             gV_InvoiceLine.SetFocusedRowCellValue(colSerialNumberCode, Cell(row, captionSerialNumber));
-
-                        else if (dcProcess.ProcessCode == "IT")
-                            break;
 
                         else if (column.ColumnName == captionPrice)
                             gV_InvoiceLine.SetFocusedRowCellValue(col_Price, Cell(row, captionPrice));
