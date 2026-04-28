@@ -50,6 +50,7 @@ namespace Foxoft
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            colNextPlanDate = new DevExpress.XtraGrid.Columns.GridColumn();
             ((ISupportInitialize)gC_CrmActivityList).BeginInit();
             ((ISupportInitialize)crmActivitiesBindingSource).BeginInit();
             ((ISupportInitialize)gV_CrmActivityList).BeginInit();
@@ -60,11 +61,11 @@ namespace Foxoft
             // 
             gC_CrmActivityList.DataSource = crmActivitiesBindingSource;
             gC_CrmActivityList.Dock = DockStyle.Fill;
-            gC_CrmActivityList.Location = new Point(0, 150);
+            gC_CrmActivityList.Location = new Point(0, 158);
             gC_CrmActivityList.MainView = gV_CrmActivityList;
             gC_CrmActivityList.MenuManager = ribbonControl1;
             gC_CrmActivityList.Name = "gC_CrmActivityList";
-            gC_CrmActivityList.Size = new Size(1100, 467);
+            gC_CrmActivityList.Size = new Size(1100, 462);
             gC_CrmActivityList.TabIndex = 0;
             gC_CrmActivityList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_CrmActivityList });
             gC_CrmActivityList.Paint += gC_CrmActivityList_Paint;
@@ -76,7 +77,7 @@ namespace Foxoft
             // 
             // gV_CrmActivityList
             // 
-            gV_CrmActivityList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colActivityCode, colActivityDate, colSubject, colCurrAccCode, colActivityTypeDesc, colStatus, colPriority, colIsCompleted, colAssignedCurrAccCode });
+            gV_CrmActivityList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colActivityCode, colActivityDate, colSubject, colCurrAccCode, colActivityTypeDesc, colStatus, colPriority, colIsCompleted, colAssignedCurrAccCode, colNextPlanDate });
             gV_CrmActivityList.GridControl = gC_CrmActivityList;
             gV_CrmActivityList.Name = "gV_CrmActivityList";
             gV_CrmActivityList.OptionsBehavior.Editable = false;
@@ -90,29 +91,21 @@ namespace Foxoft
             // 
             colCreatedUserName.FieldName = "CreatedUserName";
             colCreatedUserName.Name = "colCreatedUserName";
-            colCreatedUserName.Visible = true;
-            colCreatedUserName.VisibleIndex = 9;
             // 
             // colCreatedDate
             // 
             colCreatedDate.FieldName = "CreatedDate";
             colCreatedDate.Name = "colCreatedDate";
-            colCreatedDate.Visible = true;
-            colCreatedDate.VisibleIndex = 10;
             // 
             // colLastUpdatedUserName
             // 
             colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
             colLastUpdatedUserName.Name = "colLastUpdatedUserName";
-            colLastUpdatedUserName.Visible = true;
-            colLastUpdatedUserName.VisibleIndex = 11;
             // 
             // colLastUpdatedDate
             // 
             colLastUpdatedDate.FieldName = "LastUpdatedDate";
             colLastUpdatedDate.Name = "colLastUpdatedDate";
-            colLastUpdatedDate.Visible = true;
-            colLastUpdatedDate.VisibleIndex = 12;
             // 
             // colActivityCode
             // 
@@ -194,7 +187,7 @@ namespace Foxoft
             ribbonControl1.MaxItemId = 6;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
-            ribbonControl1.Size = new Size(1100, 150);
+            ribbonControl1.Size = new Size(1100, 158);
             ribbonControl1.StatusBar = ribbonStatusBar1;
             // 
             // bBI_CrmActivityNew
@@ -260,10 +253,17 @@ namespace Foxoft
             // 
             // ribbonStatusBar1
             // 
-            ribbonStatusBar1.Location = new Point(0, 617);
+            ribbonStatusBar1.Location = new Point(0, 620);
             ribbonStatusBar1.Name = "ribbonStatusBar1";
             ribbonStatusBar1.Ribbon = ribbonControl1;
-            ribbonStatusBar1.Size = new Size(1100, 27);
+            ribbonStatusBar1.Size = new Size(1100, 24);
+            // 
+            // colNextPlanDate
+            // 
+            colNextPlanDate.FieldName = "NextPlanDate";
+            colNextPlanDate.Name = "colNextPlanDate";
+            colNextPlanDate.Visible = true;
+            colNextPlanDate.VisibleIndex = 9;
             // 
             // FormCrmActivityList
             // 
@@ -274,7 +274,9 @@ namespace Foxoft
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
             Name = "FormCrmActivityList";
+            Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
+            StatusBar = ribbonStatusBar1;
             Text = "CRM Aktivlikləri";
             FormClosed += FormCrmActivityList_FormClosed;
             Load += FormCrmActivityList_Load;
@@ -314,5 +316,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colPriority;
         private DevExpress.XtraGrid.Columns.GridColumn colIsCompleted;
         private DevExpress.XtraGrid.Columns.GridColumn colAssignedCurrAccCode;
+        private DevExpress.XtraGrid.Columns.GridColumn colNextPlanDate;
     }
 }

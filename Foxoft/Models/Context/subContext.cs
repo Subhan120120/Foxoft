@@ -718,7 +718,7 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcTerminal>().HasData(
-                new DcTerminal { TerminalId = 1, StoreCode = "MGZ01", TerminalDesc = "Notebook",  CashRegisterCode = "KASSA01", TouchUIMode = false, TouchScaleFactor = 1 },
+                new DcTerminal { TerminalId = 1, StoreCode = "MGZ01", TerminalDesc = "Notebook", CashRegisterCode = "KASSA01", TouchUIMode = false, TouchScaleFactor = 1 },
                 new DcTerminal { TerminalId = 2, StoreCode = "MGZ01", TerminalDesc = "Telefon", CashRegisterCode = "KASSA01", TouchUIMode = true, TouchScaleFactor = 2 }
                 );
 
@@ -863,7 +863,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "CampaignList", ClaimDesc = "Endirim Kampaniyası Siyahısı", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "BarcodeOperations", ClaimDesc = "Barkod Əməliyatları", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "PriceList", ClaimDesc = "Qiymət Cədvəli", ClaimTypeId = 1, CategoryId = 18 },
-                new DcClaim { ClaimCode = "MakePayment", ClaimDesc = "Ödəniş Etmək", ClaimTypeId = 1, CategoryId = 21 }, 
+                new DcClaim { ClaimCode = "MakePayment", ClaimDesc = "Ödəniş Etmək", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "ReceivePayment", ClaimDesc = "Ödəniş Qəbul Etmək", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "DeletePayment", ClaimDesc = "Ödənişi Silmək", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1, CategoryId = 2 },
@@ -1173,8 +1173,15 @@ namespace Foxoft.Models
                 new DcVariable { VariableCode = "CT", VariableDesc = "Pul transferi" },
                 new DcVariable { VariableCode = "IS", VariableDesc = "Kredit Satışı" },
                 new DcVariable { VariableCode = "CP", VariableDesc = "Kampaniya" }
-
                 );
+
+            modelBuilder.Entity<DcCrmActivityType>().HasData(
+                new DcCrmActivityType { ActivityTypeId = 1, ActivityTypeDesc = "Zəng", IsDisabled = false },
+                new DcCrmActivityType { ActivityTypeId = 2, ActivityTypeDesc = "Görüş", IsDisabled = false },
+                new DcCrmActivityType { ActivityTypeId = 3, ActivityTypeDesc = "Tapşırıq", IsDisabled = false },
+                new DcCrmActivityType { ActivityTypeId = 4, ActivityTypeDesc = "Email", IsDisabled = false },
+                new DcCrmActivityType { ActivityTypeId = 5, ActivityTypeDesc = "Ziyarət", IsDisabled = false }
+            );
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

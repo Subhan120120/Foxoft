@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +22,7 @@ namespace Foxoft
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
+            AutoValidate = AutoValidate.EnableAllowFocusChange;
         }
 
         public FormCrmActivity(Guid activityId)
@@ -140,8 +141,7 @@ namespace Foxoft
             trCrmActivity.ActivityCode = efMethods.GetNextDocNum(true, "CRA", nameof(TrCrmActivity.ActivityCode), nameof(subContext.TrCrmActivities), 6);
             trCrmActivity.OfficeCode = Authorization.OfficeCode;
             trCrmActivity.StoreCode = Authorization.StoreCode;
-            trCrmActivity.ActivityDate = DateTime.Today;
-            trCrmActivity.StartTime = DateTime.Now.TimeOfDay;
+            trCrmActivity.StartTime = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
             trCrmActivity.Status = CrmActivityStatus.Planned;
             trCrmActivity.Priority = CrmActivityPriority.Medium;
             trCrmActivity.ActivityTypeId = 1;
@@ -231,34 +231,41 @@ namespace Foxoft
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {
-            if (dataLayoutControl1.IsValid(out List<string> errorList))
+            crmActivitiesBindingSource.EndEdit();
+
+            Validate();
+            dataLayoutControl1.Validate();
+
+            if (!dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                crmActivitiesBindingSource.EndEdit();
+                string combined = string.Join(Environment.NewLine, errorList);
+                XtraMessageBox.Show(combined);
+                return;
+            }
 
-                trCrmActivity = crmActivitiesBindingSource.Current as TrCrmActivity ?? new TrCrmActivity();
+            trCrmActivity = crmActivitiesBindingSource.Current as TrCrmActivity ?? new TrCrmActivity();
 
-                if (!efMethods.EntityExists<TrCrmActivity>(trCrmActivity.ActivityId))
-                {
-                    trCrmActivity.CreatedDate = trCrmActivity.CreatedDate == default ? DateTime.Now : trCrmActivity.CreatedDate;
-                    trCrmActivity.CreatedUserName ??= Authorization.CurrAccCode;
+            // istəyirsənsə confirm burda olsun
+            // if (XtraMessageBox.Show("Yadda saxlanılsın?", "Təsdiq",
+            //     MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            //     return;
 
-                    efMethods.InsertEntity(trCrmActivity);
-                }
-                else
-                {
-                    trCrmActivity.LastUpdatedDate = DateTime.Now;
-                    trCrmActivity.LastUpdatedUserName = Authorization.CurrAccCode;
+            if (!efMethods.EntityExists<TrCrmActivity>(trCrmActivity.ActivityId))
+            {
+                trCrmActivity.CreatedDate = trCrmActivity.CreatedDate == default ? DateTime.Now : trCrmActivity.CreatedDate;
+                trCrmActivity.CreatedUserName ??= Authorization.CurrAccCode;
 
-                    dbContext.SaveChanges();
-                }
-
-                DialogResult = DialogResult.OK;
+                efMethods.InsertEntity(trCrmActivity);
             }
             else
             {
-                string combined = errorList.Aggregate((x, y) => x + "" + y);
-                XtraMessageBox.Show(combined);
+                trCrmActivity.LastUpdatedDate = DateTime.Now;
+                trCrmActivity.LastUpdatedUserName = Authorization.CurrAccCode;
+
+                dbContext.SaveChanges();
             }
+
+            DialogResult = DialogResult.OK;
         }
 
         private void btn_Cancel_Click(object sender, EventArgs e)

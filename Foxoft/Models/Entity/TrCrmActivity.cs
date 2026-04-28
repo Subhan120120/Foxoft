@@ -80,20 +80,18 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_CurrAcc_StoreCode), ResourceType = typeof(Resources))]
         public string StoreCode { get; set; }
 
-        [Required(
-            ErrorMessageResourceType = typeof(Resources),
-            ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         [StringLength(200,
             ErrorMessageResourceType = typeof(Resources),
             ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         [Display(Name = "Mövzu")]
-        public string Subject { get; set; }
+        public string? Subject { get; set; }
 
         [Required(
             ErrorMessageResourceType = typeof(Resources),
             ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         [ForeignKey(nameof(DcCrmActivityType))]
         [Display(Name = "Aktivlik Növü")]
+        [DefaultValue(1)]
         public byte ActivityTypeId { get; set; }
 
         [Column(TypeName = "tinyint")]
@@ -106,7 +104,11 @@ namespace Foxoft.Models
 
         [Column(TypeName = "date")]
         [Display(Name = "Tarix")]
-        public DateTime ActivityDate { get; set; }
+        public DateTime ActivityDate { get; set; } = DateTime.Today;
+
+        [Column(TypeName = "date")]
+        [Display(Name = "Növbəti Plan Tarixi")]
+        public DateTime NextPlanDate { get; set; } = DateTime.Today;
 
         [Column(TypeName = "time(0)")]
         [Display(Name = "Başlama Saatı")]
