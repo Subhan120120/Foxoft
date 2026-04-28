@@ -19,22 +19,33 @@ namespace Foxoft
     {
         public static bool IsValid(this DataLayoutControl dataLayoutControl, out List<string> errorList)
         {
+            return IsValid(dataLayoutControl, null, out errorList);
+        }
+
+        public static bool IsValid(this DataLayoutControl dataLayoutControl,
+                                   DXErrorProvider dxErrorProvider,
+                                   out List<string> errorList)
+        {
             errorList = new();
 
             foreach (Control ctrl in dataLayoutControl.Controls)
             {
-                BaseEdit baseEdit = ctrl as BaseEdit;
-                if (baseEdit == null)
+                if (ctrl is not BaseEdit baseEdit)
                     continue;
 
-                if (baseEdit.ErrorText != string.Empty)
-                    errorList.Add(baseEdit.ErrorText);
+                if (string.IsNullOrWhiteSpace(baseEdit.ErrorText))
+                    continue;
+
+                // DXErrorProvider varsa və error tipi Information-dursa,
+                // bu sadəcə bildirişdir, form invalid olmasın
+                if (dxErrorProvider != null &&
+                    dxErrorProvider.GetErrorType(baseEdit) == ErrorType.Information)
+                    continue;
+
+                errorList.Add(baseEdit.ErrorText);
             }
 
-            if (errorList.Count == 0)
-                return true;
-            else
-                return false;
+            return errorList.Count == 0;
         }
 
         public static string GetPreviewText(decimal PosDiscountRate, decimal Amount, decimal NetAmount, float VatRate, string Barcode, string SalesPersonCode)
