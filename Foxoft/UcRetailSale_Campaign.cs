@@ -236,7 +236,21 @@ namespace Foxoft
                 {
                     ReloadInvoiceCampaignValues();
                 }
+                trInvoiceHeader.IsCompleted = true;
+
+                dbContext.SaveChanges();
+
+                //if (Settings.Default.AppSetting.AutoPrint)
+                //{
+                //    string printerName = string.IsNullOrWhiteSpace(settingStore.PrinterName)
+                //        ? new PrinterSettings().PrinterName
+                //        : settingStore.PrinterName;
+
+                //    await PrintFast(printerName);
+                //}
+
                 CalcPaidAmount();
+                ClearControlsAddNew();
             }
             else
             {

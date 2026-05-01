@@ -1,4 +1,4 @@
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.Utils.Svg;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -86,6 +86,7 @@ namespace Foxoft
             gV_CrmActivityList.OptionsView.ShowGroupPanel = false;
             gV_CrmActivityList.RowCellClick += gV_CrmActivityList_RowCellClick;
             gV_CrmActivityList.CustomColumnDisplayText += gV_CrmActivityList_CustomColumnDisplayText;
+            gV_CrmActivityList.PopupMenuShowing += gV_CrmActivityList_PopupMenuShowing;
             // 
             // colCreatedUserName
             // 
