@@ -82,8 +82,6 @@ namespace Foxoft
             => Settings.Default.AppSetting != null
             && Settings.Default.AppSetting.UseCampaign;
 
-
-
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
@@ -1664,11 +1662,34 @@ namespace Foxoft
 
                 string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: "Faktura");
                 
+                SaveWhatsAppLog(trInvoiceHeader.InvoiceHeaderId, formattedNumber, "Image");
+
                 alertControl1.Show(this, "WhatsApp mesajı", "Uğurla göndərildi.", "", (Image)null, null);
             }
             catch (Exception ex)
             {
                 XtraMessageBox.Show($"Xəta baş verdi: {ex.Message}");
+            }
+        }
+
+        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, string messageType)
+        {
+            try
+            {
+                using var ctx = new subContext();
+                ctx.TrWhatsAppMessageLogs.Add(new TrWhatsAppMessageLog
+                {
+                    WhatsAppMessageLogId = Guid.NewGuid(),
+                    DocumentHeaderId = documentHeaderId,
+                    ReceiverPhoneNumber = receiverPhone,
+                    MessageType = messageType,
+                    Sender = Authorization.CurrAccCode
+                });
+                ctx.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"WhatsApp log save error: {ex.Message}");
             }
         }
 
@@ -2016,6 +2037,10 @@ namespace Foxoft
         {
             // RP, WP, EX, EI, SB, CI, WI, CN, IT, RS, WS, IS, CO, WO, RPO, RSO
 
+            RPG_Campaign.Visible = IsCampaignEnabled;
+            if (colDiscountCampaign != null) colDiscountCampaign.Visible = IsCampaignEnabled;
+            if (colDiscountCampaignLoc != null) colDiscountCampaignLoc.Visible = IsCampaignEnabled;
+
             if (new string[] { "EX", "EI", "CN", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
             {
 
@@ -2028,7 +2053,6 @@ namespace Foxoft
                 BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
                 RPG_Payment.Visible = false;
                 RPG_Installment.Visible = false;
-                RPG_Campaign.Visible = IsCampaignEnabled;
 
                 if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                 {

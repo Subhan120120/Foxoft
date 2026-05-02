@@ -1,4 +1,5 @@
-﻿using DevExpress.Data;
+using DevExpress.Data;
+using DevExpress.DataAccess.Sql;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -8,16 +9,22 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraPrinting;
+using DevExpress.XtraReports.UI;
 using DevExpress.XtraVerticalGrid;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
 
 namespace Foxoft
 {
@@ -349,18 +356,29 @@ namespace Foxoft
             this.Close();
         }
 
-        private void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
+        private async void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!String.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
+            if (String.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
             {
-                string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
+                MessageBox.Show(Resources.Form_Payment_CurrAccNotSelected);
+                return;
+            }
 
-                string copyText = PaymentText("%0A");
+            string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode)?.PhoneNum;
 
-                sendWhatsApp(phoneNum, copyText);
+            MemoryStream memoryStream = GetPaymentReportImg();
+            if (memoryStream == null) return;
+
+            Clipboard.SetImage(Image.FromStream(memoryStream));
+
+            if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
+            {
+                await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream);
             }
             else
-                MessageBox.Show(Resources.Form_Payment_CurrAccNotSelected);
+            {
+                sendWhatsApp(phoneNum, "");
+            }
         }
 
         private string PaymentText(string newLine)
@@ -404,6 +422,112 @@ namespace Foxoft
             myProcess.StartInfo.UseShellExecute = true;
             myProcess.StartInfo.FileName = link;
             myProcess.Start();
+        }
+
+        private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowReportPreview();
+        }
+
+        private void ShowReportPreview()
+        {
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_PaymentReport");
+
+            if (dcReport == null)
+            {
+                XtraMessageBox.Show("Report_Embedded_PaymentReport tapılmadı.");
+                return;
+            }
+
+            foreach (var item in dcReport.DcReportVariables)
+                if (item.VariableProperty == nameof(TrPaymentHeader.PaymentHeaderId))
+                    item.VariableValue = trPaymentHeader.PaymentHeaderId.ToString();
+
+            FormReportPreview form = new(dcReport.ReportQuery, "", dcReport);
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
+        private MemoryStream GetPaymentReportImg()
+        {
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_PaymentReport");
+
+            if (dcReport == null)
+            {
+                XtraMessageBox.Show("Report_Embedded_PaymentReport tapılmadı.");
+                return null;
+            }
+
+            foreach (var item in dcReport.DcReportVariables)
+                if (item.VariableProperty == nameof(TrPaymentHeader.PaymentHeaderId))
+                    item.VariableValue = trPaymentHeader.PaymentHeaderId.ToString();
+
+            SqlParameter[] sqlParameters;
+            dcReport.ReportQuery = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
+            List<QueryParameter> qryParams = reportClass.ConvertSqlParametersToQueryParameters(sqlParameters);
+            CustomSqlQuery mainQuery = new("Main", dcReport.ReportQuery);
+            mainQuery.Parameters.AddRange(qryParams);
+            List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
+            XtraReport xtraReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
+
+            MemoryStream ms = new();
+            xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 240 });
+
+            return ms;
+        }
+
+        private async Task SendWhatsAppViaEvolutionApi(string number, MemoryStream memoryStream)
+        {
+            if (string.IsNullOrEmpty(number))
+            {
+                MessageBox.Show(Resources.Form_PaymentDetail_PhoneNotFound);
+                return;
+            }
+
+            var apiSetting = efMethods.SelectEntityById<DcWhatsAppProviderSetting>(1);
+            if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl) || string.IsNullOrEmpty(apiSetting.InstanceName) || string.IsNullOrEmpty(apiSetting.ApiKey))
+            {
+                XtraMessageBox.Show("API ayarları tam deyil. Lütfən AppSetting-dən tənzimləyin.");
+                return;
+            }
+
+            try
+            {
+                using var client = new Foxoft.AppCode.EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
+
+                string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
+
+                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: "Ödəniş");
+
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, "Image");
+
+                alertControl1.Show(this, "WhatsApp mesajı", "Uğurla göndərildi.", "", (Image)null, null);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Xəta baş verdi: {ex.Message}");
+            }
+        }
+
+        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, string messageType)
+        {
+            try
+            {
+                using var ctx = new subContext();
+                ctx.TrWhatsAppMessageLogs.Add(new TrWhatsAppMessageLog
+                {
+                    WhatsAppMessageLogId = Guid.NewGuid(),
+                    DocumentHeaderId = documentHeaderId,
+                    ReceiverPhoneNumber = receiverPhone,
+                    MessageType = messageType,
+                    Sender = Authorization.CurrAccCode
+                });
+                ctx.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"WhatsApp log save error: {ex.Message}");
+            }
         }
 
         private void bBI_NewPayment_ItemClick(object sender, ItemClickEventArgs e)

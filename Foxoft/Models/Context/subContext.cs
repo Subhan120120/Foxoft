@@ -115,6 +115,7 @@ namespace Foxoft.Models
         public DbSet<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
         public DbSet<TrInvoiceCampaignHeader> TrInvoiceCampaignHeaders { get; set; }
         public DbSet<DcWhatsAppProviderSetting> DcWhatsAppProviderSettings { get; set; }
+        public DbSet<TrWhatsAppMessageLog> TrWhatsAppMessageLogs { get; set; }
 
         //CRM Model
         public DbSet<TrCrmActivity> TrCrmActivities { get; set; }
@@ -1009,6 +1010,7 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 6, ReportTypeId = 0, ReportName = "Report_Embedded_InstallmentSale", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_InstallmentSale.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 7, ReportTypeId = 0, ReportName = "Report_Embedded_StoreList", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_StoreList.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 8, ReportTypeId = 0, ReportName = "Report_Embedded_BarcodeOperation", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_BarcodeOperation.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 9, ReportTypeId = 0, ReportName = "Report_Embedded_PaymentReport", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_PaymentReport.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 11, ReportTypeId = 1, ReportCategoryId = 5, ReportName = "Xərclər", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Expenses.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 12, ReportTypeId = 1, ReportCategoryId = 5, ReportName = "Pulun Hərəkəti", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MoneyMovements.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 13, ReportTypeId = 1, ReportCategoryId = 1, ReportName = "Cari Hesab ilə Əməliyatlar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MovementsWithAccounts.sql"), ReportLayout = "" },
@@ -1032,7 +1034,8 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcReportVariable>().HasData(
                 new DcReportVariable { VariableId = 1, ReportId = 4, VariableTypeId = 1, VariableProperty = "InvoiceHeaderId", Representative = "@InvoiceHeaderId", VariableValue = "", VariableOperator = "", VariableValueType = "System.Guid" },
                 new DcReportVariable { VariableId = 2, ReportId = 13, VariableTypeId = 2, VariableProperty = "CurrAccCode", Representative = "{CurrAccCode}", VariableValue = "c-0000001", VariableOperator = "=", VariableValueType = "System.String" },
-                new DcReportVariable { VariableId = 3, ReportId = 17, VariableTypeId = 2, VariableProperty = "DocumentDate", Representative = "{StartDate}", VariableValue = "08.01.2030", VariableOperator = "<=", VariableValueType = "System.DateTime" }
+                new DcReportVariable { VariableId = 3, ReportId = 17, VariableTypeId = 2, VariableProperty = "DocumentDate", Representative = "{StartDate}", VariableValue = "08.01.2030", VariableOperator = "<=", VariableValueType = "System.DateTime" },
+                new DcReportVariable { VariableId = 4, ReportId = 9, VariableTypeId = 1, VariableProperty = "PaymentHeaderId", Representative = "@PaymentHeaderId", VariableValue = "", VariableOperator = "", VariableValueType = "System.Guid" }
                );
 
             modelBuilder.Entity<DcReportCategory>().HasData(

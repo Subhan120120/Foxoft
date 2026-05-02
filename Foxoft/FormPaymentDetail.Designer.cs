@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -42,6 +42,7 @@ namespace Foxoft
             BBI_Info = new DevExpress.XtraBars.BarButtonItem();
             BSI_Reports = new DevExpress.XtraBars.BarSubItem();
             BBI_EditPayment = new DevExpress.XtraBars.BarButtonItem();
+            bBI_reportPreview = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -97,6 +98,7 @@ namespace Foxoft
             ItemForStoreCode = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -134,9 +136,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Reports, BBI_EditPayment });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Reports, BBI_EditPayment, bBI_reportPreview });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 17;
+            ribbonControl1.MaxItemId = 18;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(899, 158);
@@ -207,6 +209,14 @@ namespace Foxoft
             BBI_EditPayment.Name = "BBI_EditPayment";
             BBI_EditPayment.ItemClick += BBI_EditPayment_ItemClick_1;
             // 
+            // bBI_reportPreview
+            // 
+            bBI_reportPreview.Caption = "Hesabat";
+            bBI_reportPreview.Id = 17;
+            bBI_reportPreview.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_reportPreview.ImageOptions.SvgImage");
+            bBI_reportPreview.Name = "bBI_reportPreview";
+            bBI_reportPreview.ItemClick += bBI_reportPreview_ItemClick;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, RPG_Report, ribbonPageGroup3, ribbonPageGroup4 });
@@ -225,6 +235,7 @@ namespace Foxoft
             // 
             ribbonPageGroup2.ItemLinks.Add(bBI_SendWhatsapp);
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyPayment);
+            ribbonPageGroup2.ItemLinks.Add(bBI_reportPreview);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = Resources.Form_PaymentDetail_RibbonGroup_Tools;
             // 
@@ -800,5 +811,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
         private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansBefore;
         private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansAfter;
+        private DevExpress.XtraBars.BarButtonItem bBI_reportPreview;
+        private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
     }
 }

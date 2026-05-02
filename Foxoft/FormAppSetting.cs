@@ -125,6 +125,9 @@ namespace Foxoft
                 AppSetting.OverpaymentMode = (OverpaymentMode)modeVal;
 
             dbContext.SaveChanges();
+
+            Settings.Default.AppSetting = AppSetting;
+            Settings.Default.Save();
         }
 
 
@@ -138,6 +141,11 @@ namespace Foxoft
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        private void ServerUrlTextEdit_EditValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
