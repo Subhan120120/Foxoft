@@ -64,7 +64,6 @@ namespace Foxoft
             ItemForPrintCount = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPrintDesignPath = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForLocalCurrencyCode = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForWhatsappChromeProfileName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForUsePriceList = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForAutoSave = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForInvoiceEditGraceDays = new DevExpress.XtraLayout.LayoutControlItem();
@@ -83,10 +82,11 @@ namespace Foxoft
             ItemForUseScales = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForUseCampaign = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlGroupWhatsApp = new DevExpress.XtraLayout.LayoutControlGroup();
+            ItemForServerUrl = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForInstanceName = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForApiKey = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForWhatsappChromeProfileName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsAppProvider = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForEvolutionServerUrl = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForEvolutionInstanceName = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForEvolutionApiKey = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)GridViewLayoutTextEdit.Properties).BeginInit();
@@ -118,7 +118,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForPrintCount).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPrintDesignPath).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForLocalCurrencyCode).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUsePriceList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForAutoSave).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForInvoiceEditGraceDays).BeginInit();
@@ -137,10 +136,11 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForUseScales).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseCampaign).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroupWhatsApp).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForServerUrl).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForInstanceName).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForApiKey).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForEvolutionServerUrl).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForEvolutionInstanceName).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForEvolutionApiKey).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
@@ -181,7 +181,7 @@ namespace Foxoft
             // 
             // btn_OptimizeDatabaseIndexes
             // 
-            btn_OptimizeDatabaseIndexes.Location = new Point(12, 447);
+            btn_OptimizeDatabaseIndexes.Location = new Point(12, 585);
             btn_OptimizeDatabaseIndexes.Name = "btn_OptimizeDatabaseIndexes";
             btn_OptimizeDatabaseIndexes.Size = new Size(393, 22);
             btn_OptimizeDatabaseIndexes.StyleController = dataLayoutControl1;
@@ -193,7 +193,7 @@ namespace Foxoft
             // 
             btn_Save.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Save.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Save.ImageOptions.SvgImage");
-            btn_Save.Location = new Point(210, 499);
+            btn_Save.Location = new Point(210, 637);
             btn_Save.Name = "btn_Save";
             btn_Save.Size = new Size(195, 22);
             btn_Save.StyleController = dataLayoutControl1;
@@ -204,7 +204,7 @@ namespace Foxoft
             // GridViewLayoutTextEdit
             // 
             GridViewLayoutTextEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "GridViewLayout", true));
-            GridViewLayoutTextEdit.Location = new Point(176, 234);
+            GridViewLayoutTextEdit.Location = new Point(176, 372);
             GridViewLayoutTextEdit.Name = "GridViewLayoutTextEdit";
             GridViewLayoutTextEdit.Size = new Size(229, 20);
             GridViewLayoutTextEdit.StyleController = dataLayoutControl1;
@@ -217,7 +217,7 @@ namespace Foxoft
             // AutoPrintCheckEdit
             // 
             AutoPrintCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "AutoPrint", true));
-            AutoPrintCheckEdit.Location = new Point(12, -126);
+            AutoPrintCheckEdit.Location = new Point(12, 12);
             AutoPrintCheckEdit.Name = "AutoPrintCheckEdit";
             AutoPrintCheckEdit.Properties.Caption = Resources.Entity_AppSetting_AutoPrint;
             AutoPrintCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -229,7 +229,7 @@ namespace Foxoft
             // 
             PrintCountSpinEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "PrintCount", true));
             PrintCountSpinEdit.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
-            PrintCountSpinEdit.Location = new Point(176, -102);
+            PrintCountSpinEdit.Location = new Point(176, 36);
             PrintCountSpinEdit.Name = "PrintCountSpinEdit";
             PrintCountSpinEdit.Properties.Appearance.Options.UseTextOptions = true;
             PrintCountSpinEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -243,7 +243,7 @@ namespace Foxoft
             // PrintDesignPathButtonEdit
             // 
             PrintDesignPathButtonEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "PrintDesignPath", true));
-            PrintDesignPathButtonEdit.Location = new Point(176, -78);
+            PrintDesignPathButtonEdit.Location = new Point(176, 60);
             PrintDesignPathButtonEdit.Name = "PrintDesignPathButtonEdit";
             PrintDesignPathButtonEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton() });
             PrintDesignPathButtonEdit.Size = new Size(229, 20);
@@ -253,7 +253,7 @@ namespace Foxoft
             // LocalCurrencyCodeButtonEdit
             // 
             LocalCurrencyCodeButtonEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "LocalCurrencyCode", true));
-            LocalCurrencyCodeButtonEdit.Location = new Point(176, -54);
+            LocalCurrencyCodeButtonEdit.Location = new Point(176, 84);
             LocalCurrencyCodeButtonEdit.Name = "LocalCurrencyCodeButtonEdit";
             LocalCurrencyCodeButtonEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton() });
             LocalCurrencyCodeButtonEdit.Size = new Size(229, 20);
@@ -263,7 +263,7 @@ namespace Foxoft
             // WhatsappChromeProfileNameTextEdit
             // 
             WhatsappChromeProfileNameTextEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "WhatsappChromeProfileName", true));
-            WhatsappChromeProfileNameTextEdit.Location = new Point(188, 339);
+            WhatsappChromeProfileNameTextEdit.Location = new Point(188, 477);
             WhatsappChromeProfileNameTextEdit.Name = "WhatsappChromeProfileNameTextEdit";
             WhatsappChromeProfileNameTextEdit.Size = new Size(205, 20);
             WhatsappChromeProfileNameTextEdit.StyleController = dataLayoutControl1;
@@ -272,7 +272,7 @@ namespace Foxoft
             // UsePriceListCheckEdit
             // 
             UsePriceListCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UsePriceList", true));
-            UsePriceListCheckEdit.Location = new Point(12, -30);
+            UsePriceListCheckEdit.Location = new Point(12, 108);
             UsePriceListCheckEdit.Name = "UsePriceListCheckEdit";
             UsePriceListCheckEdit.Properties.Caption = Resources.Entity_AppSetting_UsePriceList;
             UsePriceListCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -283,7 +283,7 @@ namespace Foxoft
             // AutoSaveCheckEdit
             // 
             AutoSaveCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "AutoSave", true));
-            AutoSaveCheckEdit.Location = new Point(12, -6);
+            AutoSaveCheckEdit.Location = new Point(12, 132);
             AutoSaveCheckEdit.Name = "AutoSaveCheckEdit";
             AutoSaveCheckEdit.Properties.Caption = Resources.Entity_AppSetting_AutoSave;
             AutoSaveCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -295,7 +295,7 @@ namespace Foxoft
             // 
             InvoiceEditGraceDaysSpinEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "InvoiceEditGraceDays", true));
             InvoiceEditGraceDaysSpinEdit.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
-            InvoiceEditGraceDaysSpinEdit.Location = new Point(176, 18);
+            InvoiceEditGraceDaysSpinEdit.Location = new Point(176, 156);
             InvoiceEditGraceDaysSpinEdit.Name = "InvoiceEditGraceDaysSpinEdit";
             InvoiceEditGraceDaysSpinEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             InvoiceEditGraceDaysSpinEdit.Properties.Appearance.Options.UseTextOptions = true;
@@ -311,7 +311,7 @@ namespace Foxoft
             // 
             PaymentEditGraceDaysSpinEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "PaymentEditGraceDays", true));
             PaymentEditGraceDaysSpinEdit.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
-            PaymentEditGraceDaysSpinEdit.Location = new Point(176, 42);
+            PaymentEditGraceDaysSpinEdit.Location = new Point(176, 180);
             PaymentEditGraceDaysSpinEdit.Name = "PaymentEditGraceDaysSpinEdit";
             PaymentEditGraceDaysSpinEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             PaymentEditGraceDaysSpinEdit.Properties.Appearance.Options.UseTextOptions = true;
@@ -325,7 +325,7 @@ namespace Foxoft
             // 
             // btn_ClearMemory
             // 
-            btn_ClearMemory.Location = new Point(12, 473);
+            btn_ClearMemory.Location = new Point(12, 611);
             btn_ClearMemory.Name = "btn_ClearMemory";
             btn_ClearMemory.Size = new Size(393, 22);
             btn_ClearMemory.StyleController = dataLayoutControl1;
@@ -336,7 +336,7 @@ namespace Foxoft
             // POSShowQuantityDialogCheckEdit
             // 
             POSShowQuantityDialogCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSShowQuantityDialog", true));
-            POSShowQuantityDialogCheckEdit.Location = new Point(12, 66);
+            POSShowQuantityDialogCheckEdit.Location = new Point(12, 204);
             POSShowQuantityDialogCheckEdit.Name = "POSShowQuantityDialogCheckEdit";
             POSShowQuantityDialogCheckEdit.Properties.Caption = Resources.Entity_AppSetting_POSShowQuantityDialog;
             POSShowQuantityDialogCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -347,7 +347,7 @@ namespace Foxoft
             // POSShowSalesmanCodeDialogCheckEdit
             // 
             POSShowSalesmanCodeDialogCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSShowSalesmanCodeDialog", true));
-            POSShowSalesmanCodeDialogCheckEdit.Location = new Point(12, 90);
+            POSShowSalesmanCodeDialogCheckEdit.Location = new Point(12, 228);
             POSShowSalesmanCodeDialogCheckEdit.Name = "POSShowSalesmanCodeDialogCheckEdit";
             POSShowSalesmanCodeDialogCheckEdit.Properties.Caption = Resources.Entity_AppSetting_POSShowSalesmanDialog;
             POSShowSalesmanCodeDialogCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -358,7 +358,7 @@ namespace Foxoft
             // POSFindProductByCheckedComboBoxEdit
             // 
             POSFindProductByCheckedComboBoxEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSFindProductBy", true));
-            POSFindProductByCheckedComboBoxEdit.Location = new Point(176, 210);
+            POSFindProductByCheckedComboBoxEdit.Location = new Point(176, 348);
             POSFindProductByCheckedComboBoxEdit.Name = "POSFindProductByCheckedComboBoxEdit";
             POSFindProductByCheckedComboBoxEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
             POSFindProductByCheckedComboBoxEdit.Size = new Size(229, 20);
@@ -368,7 +368,7 @@ namespace Foxoft
             // POSMergeSameProductsCheckEdit
             // 
             POSMergeSameProductsCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSMergeSameProducts", true));
-            POSMergeSameProductsCheckEdit.Location = new Point(12, 114);
+            POSMergeSameProductsCheckEdit.Location = new Point(12, 252);
             POSMergeSameProductsCheckEdit.Name = "POSMergeSameProductsCheckEdit";
             POSMergeSameProductsCheckEdit.Properties.Caption = "Merge Same Products on POS";
             POSMergeSameProductsCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -378,7 +378,7 @@ namespace Foxoft
             // 
             // OverpaymentModeImageComboBoxEdit
             // 
-            OverpaymentModeImageComboBoxEdit.Location = new Point(176, 258);
+            OverpaymentModeImageComboBoxEdit.Location = new Point(176, 396);
             OverpaymentModeImageComboBoxEdit.Name = "OverpaymentModeImageComboBoxEdit";
             OverpaymentModeImageComboBoxEdit.Properties.Appearance.Options.UseTextOptions = true;
             OverpaymentModeImageComboBoxEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
@@ -392,7 +392,7 @@ namespace Foxoft
             // UseBarcodeCheckEdit
             // 
             UseBarcodeCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UseBarcode", true));
-            UseBarcodeCheckEdit.Location = new Point(12, 138);
+            UseBarcodeCheckEdit.Location = new Point(12, 276);
             UseBarcodeCheckEdit.Name = "UseBarcodeCheckEdit";
             UseBarcodeCheckEdit.Properties.Caption = "Use Barcode";
             UseBarcodeCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -403,7 +403,7 @@ namespace Foxoft
             // UseScalesCheckEdit
             // 
             UseScalesCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UseScales", true));
-            UseScalesCheckEdit.Location = new Point(12, 162);
+            UseScalesCheckEdit.Location = new Point(12, 300);
             UseScalesCheckEdit.Name = "UseScalesCheckEdit";
             UseScalesCheckEdit.Properties.Caption = "Use Scales";
             UseScalesCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -414,7 +414,7 @@ namespace Foxoft
             // UseCampaignCheckEdit
             // 
             UseCampaignCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UseCampaign", true));
-            UseCampaignCheckEdit.Location = new Point(12, 186);
+            UseCampaignCheckEdit.Location = new Point(12, 324);
             UseCampaignCheckEdit.Name = "UseCampaignCheckEdit";
             UseCampaignCheckEdit.Properties.Caption = "Use Campaign";
             UseCampaignCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -425,19 +425,17 @@ namespace Foxoft
             // WhatsAppProviderImageComboBoxEdit
             // 
             WhatsAppProviderImageComboBoxEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "WhatsAppProvider", true));
-            WhatsAppProviderImageComboBoxEdit.Location = new Point(188, 315);
+            WhatsAppProviderImageComboBoxEdit.Location = new Point(188, 453);
             WhatsAppProviderImageComboBoxEdit.Name = "WhatsAppProviderImageComboBoxEdit";
-            WhatsAppProviderImageComboBoxEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            WhatsAppProviderImageComboBoxEdit.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.ImageComboBoxItem[] {
-            new DevExpress.XtraEditors.Controls.ImageComboBoxItem("Chrome", Foxoft.Models.WhatsAppProvider.Chrome, -1),
-            new DevExpress.XtraEditors.Controls.ImageComboBoxItem("EvolutionApi", Foxoft.Models.WhatsAppProvider.EvolutionApi, -1)});
+            WhatsAppProviderImageComboBoxEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            WhatsAppProviderImageComboBoxEdit.Properties.Items.AddRange(new ImageComboBoxItem[] { new ImageComboBoxItem("Chrome", WhatsAppProvider.Chrome, -1), new ImageComboBoxItem("EvolutionApi", WhatsAppProvider.EvolutionApi, -1) });
             WhatsAppProviderImageComboBoxEdit.Size = new Size(205, 20);
             WhatsAppProviderImageComboBoxEdit.StyleController = dataLayoutControl1;
             WhatsAppProviderImageComboBoxEdit.TabIndex = 0;
             // 
             // ServerUrlTextEdit
             // 
-            ServerUrlTextEdit.Location = new Point(188, 411);
+            ServerUrlTextEdit.Location = new Point(188, 549);
             ServerUrlTextEdit.Name = "ServerUrlTextEdit";
             ServerUrlTextEdit.Size = new Size(205, 20);
             ServerUrlTextEdit.StyleController = dataLayoutControl1;
@@ -445,7 +443,7 @@ namespace Foxoft
             // 
             // InstanceNameTextEdit
             // 
-            InstanceNameTextEdit.Location = new Point(188, 387);
+            InstanceNameTextEdit.Location = new Point(188, 525);
             InstanceNameTextEdit.Name = "InstanceNameTextEdit";
             InstanceNameTextEdit.Size = new Size(205, 20);
             InstanceNameTextEdit.StyleController = dataLayoutControl1;
@@ -453,7 +451,7 @@ namespace Foxoft
             // 
             // ApiKeyTextEdit
             // 
-            ApiKeyTextEdit.Location = new Point(188, 363);
+            ApiKeyTextEdit.Location = new Point(188, 501);
             ApiKeyTextEdit.Name = "ApiKeyTextEdit";
             ApiKeyTextEdit.Size = new Size(205, 20);
             ApiKeyTextEdit.StyleController = dataLayoutControl1;
@@ -511,15 +509,6 @@ namespace Foxoft
             ItemForLocalCurrencyCode.Size = new Size(397, 24);
             ItemForLocalCurrencyCode.Text = Resources.Entity_AppSetting_LocalCurrencyCode;
             ItemForLocalCurrencyCode.TextSize = new Size(152, 13);
-            // 
-            // ItemForWhatsappChromeProfileName
-            // 
-            ItemForWhatsappChromeProfileName.Control = WhatsappChromeProfileNameTextEdit;
-            ItemForWhatsappChromeProfileName.Location = new Point(0, 24);
-            ItemForWhatsappChromeProfileName.Name = "ItemForWhatsappChromeProfileName";
-            ItemForWhatsappChromeProfileName.Size = new Size(373, 24);
-            ItemForWhatsappChromeProfileName.Text = Resources.Entity_AppSetting_WhatsappChromeProfileName;
-            ItemForWhatsappChromeProfileName.TextSize = new Size(152, 13);
             // 
             // ItemForUsePriceList
             // 
@@ -662,11 +651,47 @@ namespace Foxoft
             // 
             // layoutControlGroupWhatsApp
             // 
-            layoutControlGroupWhatsApp.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForEvolutionServerUrl, ItemForEvolutionInstanceName, ItemForEvolutionApiKey, ItemForWhatsappChromeProfileName, ItemForWhatsAppProvider });
+            layoutControlGroupWhatsApp.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForServerUrl, ItemForInstanceName, ItemForApiKey, ItemForWhatsappChromeProfileName, ItemForWhatsAppProvider });
             layoutControlGroupWhatsApp.Location = new Point(0, 408);
             layoutControlGroupWhatsApp.Name = "layoutControlGroupWhatsApp";
             layoutControlGroupWhatsApp.Size = new Size(397, 165);
             layoutControlGroupWhatsApp.Text = "Whatsapp Provider";
+            // 
+            // ItemForServerUrl
+            // 
+            ItemForServerUrl.Control = ServerUrlTextEdit;
+            ItemForServerUrl.Location = new Point(0, 96);
+            ItemForServerUrl.Name = "ItemForServerUrl";
+            ItemForServerUrl.Size = new Size(373, 24);
+            ItemForServerUrl.Text = "Server URL";
+            ItemForServerUrl.TextSize = new Size(152, 13);
+            // 
+            // ItemForInstanceName
+            // 
+            ItemForInstanceName.Control = InstanceNameTextEdit;
+            ItemForInstanceName.Location = new Point(0, 72);
+            ItemForInstanceName.Name = "ItemForInstanceName";
+            ItemForInstanceName.Size = new Size(373, 24);
+            ItemForInstanceName.Text = "Instance Name";
+            ItemForInstanceName.TextSize = new Size(152, 13);
+            // 
+            // ItemForApiKey
+            // 
+            ItemForApiKey.Control = ApiKeyTextEdit;
+            ItemForApiKey.Location = new Point(0, 48);
+            ItemForApiKey.Name = "ItemForApiKey";
+            ItemForApiKey.Size = new Size(373, 24);
+            ItemForApiKey.Text = "API Key";
+            ItemForApiKey.TextSize = new Size(152, 13);
+            // 
+            // ItemForWhatsappChromeProfileName
+            // 
+            ItemForWhatsappChromeProfileName.Control = WhatsappChromeProfileNameTextEdit;
+            ItemForWhatsappChromeProfileName.Location = new Point(0, 24);
+            ItemForWhatsappChromeProfileName.Name = "ItemForWhatsappChromeProfileName";
+            ItemForWhatsappChromeProfileName.Size = new Size(373, 24);
+            ItemForWhatsappChromeProfileName.Text = Resources.Entity_AppSetting_WhatsappChromeProfileName;
+            ItemForWhatsappChromeProfileName.TextSize = new Size(152, 13);
             // 
             // ItemForWhatsAppProvider
             // 
@@ -676,33 +701,6 @@ namespace Foxoft
             ItemForWhatsAppProvider.Size = new Size(373, 24);
             ItemForWhatsAppProvider.Text = "WhatsApp Provider";
             ItemForWhatsAppProvider.TextSize = new Size(152, 13);
-            // 
-            // ItemForEvolutionServerUrl
-            // 
-            ItemForEvolutionServerUrl.Control = ServerUrlTextEdit;
-            ItemForEvolutionServerUrl.Location = new Point(0, 96);
-            ItemForEvolutionServerUrl.Name = "ItemForEvolutionServerUrl";
-            ItemForEvolutionServerUrl.Size = new Size(373, 24);
-            ItemForEvolutionServerUrl.Text = "Server URL";
-            ItemForEvolutionServerUrl.TextSize = new Size(152, 13);
-            // 
-            // ItemForEvolutionInstanceName
-            // 
-            ItemForEvolutionInstanceName.Control = InstanceNameTextEdit;
-            ItemForEvolutionInstanceName.Location = new Point(0, 72);
-            ItemForEvolutionInstanceName.Name = "ItemForEvolutionInstanceName";
-            ItemForEvolutionInstanceName.Size = new Size(373, 24);
-            ItemForEvolutionInstanceName.Text = "Instance Name";
-            ItemForEvolutionInstanceName.TextSize = new Size(152, 13);
-            // 
-            // ItemForEvolutionApiKey
-            // 
-            ItemForEvolutionApiKey.Control = ApiKeyTextEdit;
-            ItemForEvolutionApiKey.Location = new Point(0, 48);
-            ItemForEvolutionApiKey.Name = "ItemForEvolutionApiKey";
-            ItemForEvolutionApiKey.Size = new Size(373, 24);
-            ItemForEvolutionApiKey.Text = "API Key";
-            ItemForEvolutionApiKey.TextSize = new Size(152, 13);
             // 
             // FormAppSetting
             // 
@@ -744,7 +742,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForPrintCount).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPrintDesignPath).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForLocalCurrencyCode).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUsePriceList).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForAutoSave).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForInvoiceEditGraceDays).EndInit();
@@ -763,10 +760,11 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForUseScales).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseCampaign).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroupWhatsApp).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForServerUrl).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForInstanceName).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForApiKey).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForEvolutionServerUrl).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForEvolutionInstanceName).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForEvolutionApiKey).EndInit();
             ResumeLayout(false);
         }
 
@@ -828,8 +826,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit ApiKeyTextEdit;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupWhatsApp;
         private DevExpress.XtraLayout.LayoutControlItem ItemForWhatsAppProvider;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForEvolutionServerUrl;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForEvolutionInstanceName;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForEvolutionApiKey;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForServerUrl;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForInstanceName;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForApiKey;
     }
 }
