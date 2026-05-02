@@ -219,7 +219,7 @@ namespace Foxoft
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, RPG_Report, ribbonPageGroup3, ribbonPageGroup4 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup4, ribbonPageGroup2, RPG_Report, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.Form_PaymentDetail_RibbonPage_Main;
             // 
@@ -233,7 +233,6 @@ namespace Foxoft
             // 
             // ribbonPageGroup2
             // 
-            ribbonPageGroup2.ItemLinks.Add(bBI_SendWhatsapp);
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyPayment);
             ribbonPageGroup2.ItemLinks.Add(bBI_reportPreview);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
@@ -241,9 +240,10 @@ namespace Foxoft
             // 
             // RPG_Report
             // 
+            RPG_Report.ItemLinks.Add(bBI_SendWhatsapp);
             RPG_Report.ItemLinks.Add(BSI_Reports);
             RPG_Report.Name = "RPG_Report";
-            RPG_Report.Text = Resources.Form_PaymentDetail_RibbonGroup_Report;
+            RPG_Report.Text = "Export";
             // 
             // ribbonPageGroup3
             // 

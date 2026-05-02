@@ -32,16 +32,20 @@ namespace Foxoft
     {
         private TrPaymentHeader trPaymentHeader;
         private EfMethods efMethods = new();
-        private ReportClass reportClass = new();
+        private ReportClass reportClass;
 
         private subContext dbContext;
         private Guid paymentHeaderId;
         private decimal BalanceBefore;
         readonly DcTerminal dcTerminal;
+        readonly SettingStore settingStore;
 
         public FormPaymentDetail()
         {
             InitializeComponent();
+
+            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            reportClass = new(settingStore.DesignFileFolder);
 
             string activeFilterStr = "[StoreCode] = '" + Authorization.StoreCode + "'";
 
