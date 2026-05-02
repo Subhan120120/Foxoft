@@ -1631,7 +1631,7 @@ namespace Foxoft
             Clipboard.SetImage(Image.FromStream(memoryStream));
             string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
-            if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.EvolutionApi)
+            if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
             {
                 await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream);
             }

@@ -428,7 +428,7 @@ namespace Foxoft
             WhatsAppProviderImageComboBoxEdit.Location = new Point(188, 453);
             WhatsAppProviderImageComboBoxEdit.Name = "WhatsAppProviderImageComboBoxEdit";
             WhatsAppProviderImageComboBoxEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
-            WhatsAppProviderImageComboBoxEdit.Properties.Items.AddRange(new ImageComboBoxItem[] { new ImageComboBoxItem("Chrome", WhatsAppProvider.Chrome, -1), new ImageComboBoxItem("EvolutionApi", WhatsAppProvider.EvolutionApi, -1) });
+            WhatsAppProviderImageComboBoxEdit.Properties.Items.AddRange(new ImageComboBoxItem[] { new ImageComboBoxItem("Chrome", WhatsAppProvider.Chrome, -1), new ImageComboBoxItem("API", WhatsAppProvider.API, -1) });
             WhatsAppProviderImageComboBoxEdit.Size = new Size(205, 20);
             WhatsAppProviderImageComboBoxEdit.StyleController = dataLayoutControl1;
             WhatsAppProviderImageComboBoxEdit.TabIndex = 0;
