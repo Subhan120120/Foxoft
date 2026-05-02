@@ -28,8 +28,8 @@ namespace Foxoft.Models
 
     public enum WhatsAppProvider : byte
     {
-        Chrome = 0,       // Chrome/Web vasitəsilə (default)
-        API = 1  // Evolution API vasitəsilə
+        Chrome = 0,       
+        API = 1 
     }
 
 }

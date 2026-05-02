@@ -281,7 +281,7 @@ namespace Foxoft
 
         private async Task SendWhatsappMessageAsync(string phoneNumber, string message)
         {
-            string serverUrl = "https://evolution.tokla.az"; // məsələn: https://wa.mysite.com
+            string serverUrl = "https://evolution.tokla.az"; 
             string instanceName = "tokla";
             string apiKey = "2fdqo0JtF6dnG23N7JbnZ9wMoVMRvRkh";
 

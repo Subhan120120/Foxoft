@@ -1652,7 +1652,7 @@ namespace Foxoft
             var apiSetting = efMethods.SelectEntityById<DcWhatsAppProviderSetting>(1);
             if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl) || string.IsNullOrEmpty(apiSetting.InstanceName) || string.IsNullOrEmpty(apiSetting.ApiKey))
             {
-                XtraMessageBox.Show("Evolution API ayarları tam deyil. Lütfən AppSetting-dən tənzimləyin.");
+                XtraMessageBox.Show("API ayarları tam deyil. Lütfən AppSetting-dən tənzimləyin.");
                 return;
             }
 
