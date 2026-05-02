@@ -12,7 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
+using System.Net.Http;
 using System.Net.NetworkInformation;
+using System.Text;
+using System.Text.Json;
 
 namespace Foxoft
 {
@@ -271,25 +274,46 @@ namespace Foxoft
             //lC_Root.RegisterUserCustomizationForm(typeof(Form1));
         }
 
-        private void bbi_test_ItemClick(object sender, ItemClickEventArgs e)
+        private async void bbi_test_ItemClick(object sender, EventArgs e)
         {
-            FormHandOver deliveryBrowser = new("WO");
-            deliveryBrowser.ShowDialog();
+            await SendWhatsappMessageAsync("994773628800", "Salam, test mesajıdır.");
         }
 
-        private static async Task TestWhatsapp()
+        private async Task SendWhatsappMessageAsync(string phoneNumber, string message)
         {
-            var TOKEN = "EAAWMnYx6BxYBPa19qH7uteeer8zFHrwagkVtCLtd7NhFpjCSHdYL52O8zlB0m23N68VXm7qpa4xMYefYY8uLTe6bXXmCIRVXEQoTHJQmKouCcq1hjrrB8Ogf0NtAoHKUZCh50Rln8aRw0xffrZAnHkT1aYhQcsF26fVVt2gVL68k5o0mQEDMy3c7ivsP5oCUOePkziqloxpxnHCo7QKCMfpWt7ZC5BoZC53jXl4cNfTiFSu3nQveA6rmrOZCL6wZDZD";
-            var PHONEID = "792567567267494";
-            var TO = "994519678909";
+            string serverUrl = "https://evolution.tokla.az"; // məsələn: https://wa.mysite.com
+            string instanceName = "tokla";
+            string apiKey = "2fdqo0JtF6dnG23N7JbnZ9wMoVMRvRkh";
 
-            var filePath = @"C:\Users\Subhan\Downloads\as.jpg";
+            string url = $"{serverUrl}/message/sendText/{instanceName}";
 
-            using var wa = new WhatsAppClient(TOKEN, PHONEID);
+            var body = new
+            {
+                number = phoneNumber,
+                text = message,
+                delay = 1000,
+                linkPreview = false
+            };
 
-            using var ms = new MemoryStream(File.ReadAllBytes(filePath));
-            var messageId = await wa.UploadAndSendImageAsync(TO, ms, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
-            Console.WriteLine($"Sent: {messageId}");
+            string json = JsonSerializer.Serialize(body);
+
+            using HttpClient client = new HttpClient();
+
+            client.DefaultRequestHeaders.Add("apikey", apiKey);
+
+            using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PostAsync(url, content);
+
+            string result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Xəta: " + result);
+                return;
+            }
+
+            MessageBox.Show("Mesaj göndərildi: " + result);
         }
     }
 }

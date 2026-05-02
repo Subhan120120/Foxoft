@@ -1,4 +1,4 @@
-﻿
+
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -1631,15 +1631,44 @@ namespace Foxoft
             Clipboard.SetImage(Image.FromStream(memoryStream));
             string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
-            SendWhatsApp(phoneNum, "");
+            if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.EvolutionApi)
+            {
+                await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream);
+            }
+            else
+            {
+                SendWhatsApp(phoneNum, "");
+            }
+        }
 
-            //var TOKEN = "EAAWMnYx6BxYBQcbO6PYlNa7QL9yC19ctbj4SbYwfUdZBWILi0sC28WJrEGgBsE7n1kiWzFFzt9nZBlexQUgVh9mwng15ofi6FlwrN9UZA9X6uABj9RZCc9Opb0mnBg4uMXgJGuvCTWAooR2DbMZBnxeLEMvbU2RJpLphqR4EAGPXtTW0LyBtO697rU33pNipXOejoq9ZAhpyTNPlbQCB39v3J1lfEDxQB3oIvgMfo6TC53ft48iB1d0DzYeBsNgVmQAsEDTy56qF3AgWHr7JgSLdouaCiMkD4ZC82UvKgZDZD";
-            //var PHONEID = "758761373995375";
+        private async Task SendWhatsAppViaEvolutionApi(string number, MemoryStream memoryStream)
+        {
+            if (string.IsNullOrEmpty(number))
+            {
+                MessageBox.Show(Resources.Form_Invoice_Whatsapp_NumberNotEntered);
+                return;
+            }
 
-            //using var wa = new WhatsAppClient(TOKEN, PHONEID);
+            var apiSetting = efMethods.SelectEntityById<DcWhatsAppProviderSetting>(1);
+            if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl) || string.IsNullOrEmpty(apiSetting.InstanceName) || string.IsNullOrEmpty(apiSetting.ApiKey))
+            {
+                XtraMessageBox.Show("Evolution API ayarları tam deyil. Lütfən AppSetting-dən tənzimləyin.");
+                return;
+            }
 
-            //var messageId = await wa.UploadAndSendImageAsync(phoneNum, memoryStream, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
-            //XtraMessageBox.Show($"Sent: {messageId}");
+            try
+            {
+                using var client = new Foxoft.AppCode.EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
+                
+                string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
+                
+                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: "Faktura");
+                XtraMessageBox.Show("WhatsApp mesajı uğurla göndərildi.");
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Xəta baş verdi: {ex.Message}");
+            }
         }
 
         private void SendWhatsApp(string number, string message)

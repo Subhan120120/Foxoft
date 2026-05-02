@@ -1,4 +1,4 @@
-﻿using Foxoft.AppCode;
+using Foxoft.AppCode;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Models.Entity.RoleClaim;
@@ -114,6 +114,7 @@ namespace Foxoft.Models
         public DbSet<TrCampaignWarehouse> TrCampaignWarehouses { get; set; }
         public DbSet<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
         public DbSet<TrInvoiceCampaignHeader> TrInvoiceCampaignHeaders { get; set; }
+        public DbSet<DcWhatsAppProviderSetting> DcWhatsAppProviderSettings { get; set; }
 
         //CRM Model
         public DbSet<TrCrmActivity> TrCrmActivities { get; set; }
@@ -697,6 +698,10 @@ namespace Foxoft.Models
 
         private static void InitializeHasData(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DcWhatsAppProviderSetting>().HasData(
+                new DcWhatsAppProviderSetting { Id = 1, ServerUrl = "https://evolution.tokla.az", InstanceName = "tokla", ApiKey = "2fdqo0JtF6dnG23N7JbnZ9wMoVMRvRkh" }
+            );
+
             modelBuilder.Entity<DcHierarchy>().HasData(
                 new DcHierarchy { HierarchyCode = "Root", HierarchyDesc = "Root", HierarchyLevel = 0, Order = 0 }
                 );

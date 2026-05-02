@@ -1,4 +1,4 @@
-﻿// File: Models/HrEnums.cs
+// File: Models/HrEnums.cs
 namespace Foxoft.Models
 {
     public enum OverpaymentMode : byte
@@ -24,6 +24,12 @@ namespace Foxoft.Models
         Cashless = 2,    // Nağdsız
         Bonus = 3,       // Bonus
         Commission = 4   // Komissiya
+    }
+
+    public enum WhatsAppProvider : byte
+    {
+        Chrome = 0,       // Chrome/Web vasitəsilə (default)
+        EvolutionApi = 1  // Evolution API vasitəsilə
     }
 
 }

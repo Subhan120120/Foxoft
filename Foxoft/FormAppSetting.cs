@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -76,10 +76,18 @@ namespace Foxoft
             }
         }
 
+        private DcWhatsAppProviderSetting WhatsAppProviderSetting;
 
         private void FillDataLayout()
         {
             dbContext = new subContext();
+
+            WhatsAppProviderSetting = dbContext.DcWhatsAppProviderSettings.FirstOrDefault(x => x.Id == 1);
+            if (WhatsAppProviderSetting == null)
+            {
+                WhatsAppProviderSetting = new DcWhatsAppProviderSetting { Id = 1 };
+                dbContext.DcWhatsAppProviderSettings.Add(WhatsAppProviderSetting);
+            }
 
             dbContext.AppSettings
                 .Where(x => x.Id == 1)

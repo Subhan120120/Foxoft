@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+using Foxoft.Properties;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -79,6 +79,10 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Entity_AppSetting_OverpaymentMode), ResourceType = typeof(Resources))]
         public OverpaymentMode OverpaymentMode { get; set; } = OverpaymentMode.AskEachTime;
+
+        [DefaultValueSql("0")]
+        [Display(Name = "WhatsApp Provider")]
+        public WhatsAppProvider WhatsAppProvider { get; set; } = WhatsAppProvider.Chrome;
 
 
         [ForeignKey("LocalCurrencyCode")]
