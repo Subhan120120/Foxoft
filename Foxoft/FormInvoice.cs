@@ -1659,11 +1659,12 @@ namespace Foxoft
             try
             {
                 using var client = new Foxoft.AppCode.EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
-                
+
                 string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
-                
+
                 string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: "Faktura");
-                XtraMessageBox.Show("WhatsApp mesajı uğurla göndərildi.");
+                
+                alertControl1.Show(this, "WhatsApp mesajı", "Uğurla göndərildi.", "", (Image)null, null);
             }
             catch (Exception ex)
             {
@@ -2301,7 +2302,7 @@ namespace Foxoft
                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_ProductCode, product.ProductCode);
 
                             // Əgər grid-də ayrıca barcode sütununuz varsa, onu da doldurun:
-                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colBarcode, barcode);
+                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colBarcode, barcode);
                         }
                         else if (column.ColumnName == captionQty)
                         {
@@ -2465,9 +2466,10 @@ namespace Foxoft
                 await Task.Run(() => GetPrint(trInvoiceHeader.InvoiceHeaderId, printerName));
             else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
 
-            Task task = Task.Run((Action)ShowPrintCount);
+            if (this.IsHandleCreated)
+                this.BeginInvoke(new Action(ShowPrintCount));
 
-            alertControl1.Show(this, "Print Göndərildi.", "Printer: " + printerName, "", (Image)null, null);
+            alertControl1.Show(this, "Print Göndərildi.", printerName, "", (Image)null, null);
         }
 
         private void GetPrint(Guid invoiceHeaderId, string printerName)
@@ -2549,13 +2551,7 @@ namespace Foxoft
 
         private async void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-            //MemoryStream memoryStream = GetInvoiceReportImg();
-            //Clipboard.SetImage(Image.FromStream(memoryStream));
-            //string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
-            //SendWhatsApp(phoneNum, "");
-
-            LUE_InstallmentPlan.DoValidate();
         }
 
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)

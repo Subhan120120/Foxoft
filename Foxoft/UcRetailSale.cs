@@ -1,4 +1,4 @@
-﻿using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.Sql;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
@@ -1045,7 +1045,8 @@ namespace Foxoft
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-            Task task = Task.Run((Action)ShowPrintCount);
+            if (this.IsHandleCreated)
+                this.BeginInvoke(new Action(ShowPrintCount));
 
             alertControl1.Show(
                 this.ParentForm,
