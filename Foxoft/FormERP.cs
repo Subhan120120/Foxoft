@@ -1,4 +1,4 @@
-﻿using DevExpress.LookAndFeel;
+using DevExpress.LookAndFeel;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
@@ -194,6 +194,7 @@ namespace Foxoft
                 case "LoyaltyCards": ShowNewForm<FormLoyaltyCards>(); break;
                 case "TerminalList": ShowNewForm<FormTerminalList>(); break;
                 case "CrmActivityList": ShowExistForm<FormCrmActivityList>(); break;
+                case "CreditList": ShowExistForm<FormCreditList>(); break;
 
                 default: break;
             }
@@ -281,6 +282,7 @@ namespace Foxoft
             this.ACE_LoyaltyCards.Name = "LoyaltyCards";
             this.ACE_TerminalList.Name = "TerminalList";
             this.ACE_CrmActivityList.Name = "CrmActivityList";
+            this.ACE_CreditList.Name = "CreditList";
         }
 
         private void InitializeReports()

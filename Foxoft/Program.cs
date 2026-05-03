@@ -1,4 +1,5 @@
-﻿using DevExpress.Export;
+using DevExpress.DataAccess.Excel;
+using DevExpress.Export;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
@@ -6,7 +7,10 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Net;
 
 namespace Foxoft
@@ -95,51 +99,70 @@ namespace Foxoft
                 if (!CheckForInternetConnection(1000, "http://www.google.com"))
                     return false;
 
-                //string url = @"https://drive.usercontent.google.com/download?id=1NCnJoEonMjtzxIaM3n5x5ppC3DlvpLCu&export=download&authuser=0&confirm=t&uuid=10ba17da-5c80-445b-8974-62f562889c84&at=APZUnTUKwjTq71SBFZ5uIwBa1UWI:1717941152672";
-                //using (HttpClient client = new() { Timeout = TimeSpan.FromMilliseconds(2000) })
-                //using (HttpResponseMessage response = client.GetAsync(url).Result)
-                //    result = response.IsSuccessStatusCode ? response.Content.ReadAsStringAsync().Result : null;
+                using GoogleDriveAPI googleDriveAPI = new();
+                using MemoryStream excelStream = googleDriveAPI.DownloadAsStream("1F_FHrpN3eLC1jfXXHmxQklttwq-P8v1v");
 
-                GoogleDriveAPI googleDriveAPI = new();
-                string result = googleDriveAPI.Drive();
+                ExcelDataSource excelDataSource = new();
+                excelDataSource.Stream = excelStream;
+                excelDataSource.StreamDocumentFormat = ExcelDocumentFormat.Xlsx;
 
-                string[] txtLisence = result.Split(
-                    new string[] { " ", "\r\n", "\r", "\n" },
-                    StringSplitOptions.None);
+                ExcelWorksheetSettings worksheetSettings = new(0);
 
-                if (txtLisence is not null && txtLisence.Length % 3 == 0)
+                ExcelSourceOptions excelOptions = new();
+                excelOptions.ImportSettings = worksheetSettings;
+                excelOptions.UseFirstRowAsHeader = true;
+                excelOptions.SkipHiddenRows = false;
+                excelOptions.SkipHiddenColumns = false;
+
+                excelDataSource.SourceOptions = excelOptions;
+                excelDataSource.Fill();
+
+                IList list = ((IListSource)excelDataSource).GetList();
+
+                if (list == null || list.Count == 0)
+                    return false;
+
+                DevExpress.DataAccess.Native.Excel.DataView dataView = (DevExpress.DataAccess.Native.Excel.DataView)list;
+                List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
+
+                int companyCodeIndex = props.FindIndex(p => string.Equals(p.Name, "CompanyCode", StringComparison.OrdinalIgnoreCase));
+                int licenseIndex = props.FindIndex(p => string.Equals(p.Name, "License", StringComparison.OrdinalIgnoreCase));
+                int dueDateIndex = props.FindIndex(p => string.Equals(p.Name, "DueDate", StringComparison.OrdinalIgnoreCase));
+
+                if (companyCodeIndex == -1 || licenseIndex == -1 || dueDateIndex == -1)
+                    return false;
+
+                List<DcCompany> companies = efMethods.SelectCompanies();
+
+                foreach (DevExpress.DataAccess.Native.Excel.ViewRow row in list)
                 {
-                    for (int i = 0; i < txtLisence.Length; i = i + 3)
+                    string companyCode = props[companyCodeIndex].GetValue(row)?.ToString()?.Trim() ?? string.Empty;
+                    string license = props[licenseIndex].GetValue(row)?.ToString()?.Trim() ?? string.Empty;
+                    string dueDate = props[dueDateIndex].GetValue(row)?.ToString()?.Trim() ?? string.Empty;
+
+                    if (string.IsNullOrEmpty(companyCode) || string.IsNullOrEmpty(license) || string.IsNullOrEmpty(dueDate))
+                        continue;
+
+                    if (license == CustomExtensions.GetPhiscalAdress())
                     {
-                        string databaseName = txtLisence[i + 0];
-                        string localAddress = txtLisence[i + 1];
-                        string date = txtLisence[i + 2];
+                        string licenseString = companyCode + "+" + license + "+" + dueDate;
+                        string key = "FoxoftIsTheBestP";
+                        string iv = "ThisIsAnInitVect";
 
-                        if (localAddress == CustomExtensions.GetPhiscalAdress())
+                        CustomMethods cM = new();
+                        string encrypt = cM.EncryptString(licenseString, key, iv);
+
+                        foreach (DcCompany company in companies)
                         {
-                            string license = databaseName + "+" + localAddress + "+" + date;
-                            string key = "FoxoftIsTheBestP";
-                            string iv = "ThisIsAnInitVect";
-
-                            CustomMethods cM = new();
-                            string encrypt = cM.EncryptString(license, key, iv);
-
-                            List<DcCompany> companies = efMethods.SelectCompanies();
-
-                            foreach (DcCompany company in companies)
+                            if (company.CompanyCode == companyCode)
                             {
-                                if (company.CompanyCode == databaseName)
-                                {
-                                    efMethods.UpdateAppSettingLicense(encrypt, company.CompanyCode);
-                                }
+                                efMethods.UpdateAppSettingLicense(encrypt, company.CompanyCode);
                             }
                         }
                     }
-
-                    return true;
                 }
-                else
-                    return false;
+
+                return true;
             }
 
             bool CheckForInternetConnection(int timeoutMs = 10000, string url = null)

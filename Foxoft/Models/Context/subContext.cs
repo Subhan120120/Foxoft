@@ -116,6 +116,7 @@ namespace Foxoft.Models
         public DbSet<TrInvoiceCampaignHeader> TrInvoiceCampaignHeaders { get; set; }
         public DbSet<DcWhatsAppProviderSetting> DcWhatsAppProviderSettings { get; set; }
         public DbSet<TrWhatsAppMessageLog> TrWhatsAppMessageLogs { get; set; }
+        public DbSet<TrCredit> TrCredits { get; set; }
 
         //CRM Model
         public DbSet<TrCrmActivity> TrCrmActivities { get; set; }
@@ -430,6 +431,13 @@ namespace Foxoft.Models
                       .HasColumnType("tinyint");
 
                 entity.Property(x => x.Priority)
+                      .HasConversion<byte>()
+                      .HasColumnType("tinyint");
+            });
+
+            modelBuilder.Entity<TrCredit>(entity =>
+            {
+                entity.Property(x => x.TransactionType)
                       .HasConversion<byte>()
                       .HasColumnType("tinyint");
             });
@@ -900,7 +908,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ChangePriceCI", ClaimDesc = "Sayım Artırma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "PayrollList", ClaimDesc = "Əməkhaqqı Siyahısı", ClaimTypeId = 1, CategoryId = 9 },
-                new DcClaim { ClaimCode = "LoyaltyCards", ClaimDesc = "Bonus Kartlar", ClaimTypeId = 1, CategoryId = 19 }
+                new DcClaim { ClaimCode = "LoyaltyCards", ClaimDesc = "Bonus Kartlar", ClaimTypeId = 1, CategoryId = 19 },
+                new DcClaim { ClaimCode = "CreditList", ClaimDesc = "Kredit Əməliyyatları", ClaimTypeId = 1, CategoryId = 15 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(

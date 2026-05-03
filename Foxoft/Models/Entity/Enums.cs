@@ -32,4 +32,10 @@ namespace Foxoft.Models
         API = 1 
     }
 
+    public enum CreditTransactionType : byte
+    {
+        Purchase = 1,  // Satın alma (+)
+        Usage = 2      // Xərc (-)
+    }
+
 }

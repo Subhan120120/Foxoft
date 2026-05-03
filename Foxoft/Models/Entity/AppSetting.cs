@@ -29,9 +29,6 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_WhatsappChromeProfileName), ResourceType = typeof(Resources))]
         public string? WhatsappChromeProfileName { get; set; }
 
-        [Display(Name = "Twilio Token")]
-        public string? TwilioToken { get; set; }
-
         [Display(Name = nameof(Resources.Entity_AppSetting_License), ResourceType = typeof(Resources))]
         public string? License { get; set; }
 
