@@ -58,6 +58,8 @@ namespace Foxoft
             ServerUrlTextEdit = new DevExpress.XtraEditors.TextEdit();
             InstanceNameTextEdit = new DevExpress.XtraEditors.TextEdit();
             ApiKeyTextEdit = new DevExpress.XtraEditors.TextEdit();
+            NotifyBalanceWarningLevelCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            LockReturnDocumentCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             ItemForGetPrint = new DevExpress.XtraLayout.LayoutControlItem();
@@ -85,6 +87,8 @@ namespace Foxoft
             ItemForServerUrl = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForInstanceName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForApiKey = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForNotifyBalanceWarningLevel = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForLockReturnDocument = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsappChromeProfileName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsAppProvider = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -112,6 +116,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ServerUrlTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)InstanceNameTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ApiKeyTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NotifyBalanceWarningLevelCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LockReturnDocumentCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGetPrint).BeginInit();
@@ -139,6 +145,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForServerUrl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForInstanceName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForApiKey).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForNotifyBalanceWarningLevel).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForLockReturnDocument).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).BeginInit();
             SuspendLayout();
@@ -170,18 +178,20 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(ServerUrlTextEdit);
             dataLayoutControl1.Controls.Add(InstanceNameTextEdit);
             dataLayoutControl1.Controls.Add(ApiKeyTextEdit);
+            dataLayoutControl1.Controls.Add(NotifyBalanceWarningLevelCheckEdit);
+            dataLayoutControl1.Controls.Add(LockReturnDocumentCheckEdit);
             dataLayoutControl1.DataSource = appSettingBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.Location = new Point(0, 0);
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new Size(434, 533);
+            dataLayoutControl1.Size = new Size(434, 581);
             dataLayoutControl1.TabIndex = 0;
             dataLayoutControl1.Text = "dataLayoutControl1";
             // 
             // btn_OptimizeDatabaseIndexes
             // 
-            btn_OptimizeDatabaseIndexes.Location = new Point(12, 447);
+            btn_OptimizeDatabaseIndexes.Location = new Point(12, 495);
             btn_OptimizeDatabaseIndexes.Name = "btn_OptimizeDatabaseIndexes";
             btn_OptimizeDatabaseIndexes.Size = new Size(393, 22);
             btn_OptimizeDatabaseIndexes.StyleController = dataLayoutControl1;
@@ -193,7 +203,7 @@ namespace Foxoft
             // 
             btn_Save.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Save.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Save.ImageOptions.SvgImage");
-            btn_Save.Location = new Point(210, 499);
+            btn_Save.Location = new Point(210, 547);
             btn_Save.Name = "btn_Save";
             btn_Save.Size = new Size(195, 22);
             btn_Save.StyleController = dataLayoutControl1;
@@ -325,7 +335,7 @@ namespace Foxoft
             // 
             // btn_ClearMemory
             // 
-            btn_ClearMemory.Location = new Point(12, 473);
+            btn_ClearMemory.Location = new Point(12, 521);
             btn_ClearMemory.Name = "btn_ClearMemory";
             btn_ClearMemory.Size = new Size(393, 22);
             btn_ClearMemory.StyleController = dataLayoutControl1;
@@ -433,9 +443,31 @@ namespace Foxoft
             WhatsAppProviderImageComboBoxEdit.StyleController = dataLayoutControl1;
             WhatsAppProviderImageComboBoxEdit.TabIndex = 0;
             // 
+            // NotifyBalanceWarningLevelCheckEdit
+            // 
+            NotifyBalanceWarningLevelCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "NotifyBalanceWarningLevel", true));
+            NotifyBalanceWarningLevelCheckEdit.Location = new Point(12, 336);
+            NotifyBalanceWarningLevelCheckEdit.Name = "NotifyBalanceWarningLevelCheckEdit";
+            NotifyBalanceWarningLevelCheckEdit.Properties.Caption = "Stok Xəbərdarlığı";
+            NotifyBalanceWarningLevelCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            NotifyBalanceWarningLevelCheckEdit.Size = new Size(393, 20);
+            NotifyBalanceWarningLevelCheckEdit.StyleController = dataLayoutControl1;
+            NotifyBalanceWarningLevelCheckEdit.TabIndex = 26;
+            // 
+            // LockReturnDocumentCheckEdit
+            // 
+            LockReturnDocumentCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "LockReturnDocument", true));
+            LockReturnDocumentCheckEdit.Location = new Point(12, 360);
+            LockReturnDocumentCheckEdit.Name = "LockReturnDocumentCheckEdit";
+            LockReturnDocumentCheckEdit.Properties.Caption = "Qaytarılan Formu Kilidlə";
+            LockReturnDocumentCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            LockReturnDocumentCheckEdit.Size = new Size(393, 20);
+            LockReturnDocumentCheckEdit.StyleController = dataLayoutControl1;
+            LockReturnDocumentCheckEdit.TabIndex = 27;
+            // 
             // ServerUrlTextEdit
             // 
-            ServerUrlTextEdit.Location = new Point(188, 411);
+            ServerUrlTextEdit.Location = new Point(188, 459);
             ServerUrlTextEdit.Name = "ServerUrlTextEdit";
             ServerUrlTextEdit.Size = new Size(205, 20);
             ServerUrlTextEdit.StyleController = dataLayoutControl1;
@@ -444,7 +476,7 @@ namespace Foxoft
             // 
             // InstanceNameTextEdit
             // 
-            InstanceNameTextEdit.Location = new Point(188, 387);
+            InstanceNameTextEdit.Location = new Point(188, 435);
             InstanceNameTextEdit.Name = "InstanceNameTextEdit";
             InstanceNameTextEdit.Size = new Size(205, 20);
             InstanceNameTextEdit.StyleController = dataLayoutControl1;
@@ -452,7 +484,7 @@ namespace Foxoft
             // 
             // ApiKeyTextEdit
             // 
-            ApiKeyTextEdit.Location = new Point(188, 363);
+            ApiKeyTextEdit.Location = new Point(188, 411);
             ApiKeyTextEdit.Name = "ApiKeyTextEdit";
             ApiKeyTextEdit.Size = new Size(205, 20);
             ApiKeyTextEdit.StyleController = dataLayoutControl1;
@@ -464,17 +496,17 @@ namespace Foxoft
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
             Root.Name = "Root";
-            Root.Size = new Size(417, 671);
+            Root.Size = new Size(417, 719);
             Root.TextVisible = false;
             // 
             // layoutControlGroup1
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSFindProductBy, ItemForPOSMergeSameProducts, ItemForOverpaymentMode, ItemForUseBarcode, ItemForUseScales, ItemForUseCampaign, layoutControlGroupWhatsApp });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSFindProductBy, ItemForPOSMergeSameProducts, ItemForOverpaymentMode, ItemForUseBarcode, ItemForUseScales, ItemForUseCampaign, layoutControlGroupWhatsApp, ItemForNotifyBalanceWarningLevel, ItemForLockReturnDocument });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new Size(397, 651);
+            layoutControlGroup1.Size = new Size(397, 699);
             // 
             // ItemForGetPrint
             // 
@@ -547,14 +579,14 @@ namespace Foxoft
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.Location = new Point(0, 625);
+            emptySpaceItem1.Location = new Point(0, 673);
             emptySpaceItem1.Name = "emptySpaceItem1";
             emptySpaceItem1.Size = new Size(198, 26);
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Save;
-            layoutControlItem1.Location = new Point(198, 625);
+            layoutControlItem1.Location = new Point(198, 673);
             layoutControlItem1.MinSize = new Size(70, 26);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(199, 26);
@@ -564,7 +596,7 @@ namespace Foxoft
             // layoutControlItem2
             // 
             layoutControlItem2.Control = btn_OptimizeDatabaseIndexes;
-            layoutControlItem2.Location = new Point(0, 573);
+            layoutControlItem2.Location = new Point(0, 621);
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(397, 26);
             layoutControlItem2.TextVisible = false;
@@ -572,7 +604,7 @@ namespace Foxoft
             // ItemForGridViewLayout
             // 
             ItemForGridViewLayout.Control = GridViewLayoutTextEdit;
-            ItemForGridViewLayout.Location = new Point(0, 360);
+            ItemForGridViewLayout.Location = new Point(0, 384);
             ItemForGridViewLayout.Name = "ItemForGridViewLayout";
             ItemForGridViewLayout.Size = new Size(397, 24);
             ItemForGridViewLayout.Text = Resources.Entity_AppSetting_GridViewLayout;
@@ -581,7 +613,7 @@ namespace Foxoft
             // LCI_ClearMemory
             // 
             LCI_ClearMemory.Control = btn_ClearMemory;
-            LCI_ClearMemory.Location = new Point(0, 599);
+            LCI_ClearMemory.Location = new Point(0, 647);
             LCI_ClearMemory.Name = "LCI_ClearMemory";
             LCI_ClearMemory.Size = new Size(397, 26);
             LCI_ClearMemory.TextVisible = false;
@@ -605,7 +637,7 @@ namespace Foxoft
             // ItemForPOSFindProductBy
             // 
             ItemForPOSFindProductBy.Control = POSFindProductByCheckedComboBoxEdit;
-            ItemForPOSFindProductBy.Location = new Point(0, 336);
+            ItemForPOSFindProductBy.Location = new Point(0, 384);
             ItemForPOSFindProductBy.Name = "ItemForPOSFindProductBy";
             ItemForPOSFindProductBy.Size = new Size(397, 24);
             ItemForPOSFindProductBy.TextSize = new Size(152, 13);
@@ -621,7 +653,7 @@ namespace Foxoft
             // ItemForOverpaymentMode
             // 
             ItemForOverpaymentMode.Control = OverpaymentModeImageComboBoxEdit;
-            ItemForOverpaymentMode.Location = new Point(0, 384);
+            ItemForOverpaymentMode.Location = new Point(0, 432);
             ItemForOverpaymentMode.Name = "ItemForOverpaymentMode";
             ItemForOverpaymentMode.Size = new Size(397, 24);
             ItemForOverpaymentMode.TextSize = new Size(152, 13);
@@ -650,10 +682,26 @@ namespace Foxoft
             ItemForUseCampaign.Size = new Size(397, 24);
             ItemForUseCampaign.TextVisible = false;
             // 
+            // ItemForNotifyBalanceWarningLevel
+            // 
+            ItemForNotifyBalanceWarningLevel.Control = NotifyBalanceWarningLevelCheckEdit;
+            ItemForNotifyBalanceWarningLevel.Location = new Point(0, 336);
+            ItemForNotifyBalanceWarningLevel.Name = "ItemForNotifyBalanceWarningLevel";
+            ItemForNotifyBalanceWarningLevel.Size = new Size(397, 24);
+            ItemForNotifyBalanceWarningLevel.TextVisible = false;
+            // 
+            // ItemForLockReturnDocument
+            // 
+            ItemForLockReturnDocument.Control = LockReturnDocumentCheckEdit;
+            ItemForLockReturnDocument.Location = new Point(0, 360);
+            ItemForLockReturnDocument.Name = "ItemForLockReturnDocument";
+            ItemForLockReturnDocument.Size = new Size(397, 24);
+            ItemForLockReturnDocument.TextVisible = false;
+            // 
             // layoutControlGroupWhatsApp
             // 
             layoutControlGroupWhatsApp.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForServerUrl, ItemForInstanceName, ItemForApiKey, ItemForWhatsappChromeProfileName, ItemForWhatsAppProvider });
-            layoutControlGroupWhatsApp.Location = new Point(0, 408);
+            layoutControlGroupWhatsApp.Location = new Point(0, 456);
             layoutControlGroupWhatsApp.Name = "layoutControlGroupWhatsApp";
             layoutControlGroupWhatsApp.Size = new Size(397, 165);
             layoutControlGroupWhatsApp.Text = "Whatsapp Provider";
@@ -707,7 +755,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(434, 533);
+            ClientSize = new Size(434, 581);
             Controls.Add(dataLayoutControl1);
             Name = "FormAppSetting";
             Text = "Application Settings";
@@ -737,6 +785,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ServerUrlTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)InstanceNameTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ApiKeyTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NotifyBalanceWarningLevelCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LockReturnDocumentCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGetPrint).EndInit();
@@ -764,6 +814,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForServerUrl).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForInstanceName).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForApiKey).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForNotifyBalanceWarningLevel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForLockReturnDocument).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).EndInit();
             ResumeLayout(false);
@@ -830,5 +882,9 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForServerUrl;
         private DevExpress.XtraLayout.LayoutControlItem ItemForInstanceName;
         private DevExpress.XtraLayout.LayoutControlItem ItemForApiKey;
+        private DevExpress.XtraEditors.CheckEdit NotifyBalanceWarningLevelCheckEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForNotifyBalanceWarningLevel;
+        private DevExpress.XtraEditors.CheckEdit LockReturnDocumentCheckEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForLockReturnDocument;
     }
 }

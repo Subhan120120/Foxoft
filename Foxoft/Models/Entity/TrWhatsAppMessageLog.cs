@@ -14,8 +14,12 @@ namespace Foxoft.Models
         [StringLength(30)]
         public string? ReceiverPhoneNumber { get; set; }
 
+
         [StringLength(50)]
         public string? MessageType { get; set; }
+
+        [StringLength(1000)]
+        public string? Message { get; set; }
 
         [StringLength(30)]
         public string? Sender { get; set; }

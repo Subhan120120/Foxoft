@@ -1,4 +1,4 @@
-﻿#region usings
+#region usings
 using DevExpress.Data;
 using DevExpress.Utils;
 using DevExpress.Utils.Design;
@@ -594,6 +594,16 @@ namespace Foxoft
                         e.HitInfo.RowHandle,
                         menu.Column,
                         null));
+
+                    if (menu.Column.UnboundDataType != null)
+                    {
+                        DXMenuItem removeItem = new DXMenuItem("Sütunu Sil", (s, args) =>
+                        {
+                            gV_Report.Columns.Remove(menu.Column);
+                        });
+                        removeItem.BeginGroup = true;
+                        menu.Items.Add(removeItem);
+                    }
 
                     DXSubMenuItem menuSubItem = CreateSubMenuReports(e.HitInfo.Column, e.HitInfo.RowHandle);
                     menuSubItem.BeginGroup = true;

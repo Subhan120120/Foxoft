@@ -81,6 +81,14 @@ namespace Foxoft.Models
         [Display(Name = "WhatsApp Provider")]
         public WhatsAppProvider WhatsAppProvider { get; set; } = WhatsAppProvider.Chrome;
 
+        [DefaultValueSql("0")]
+        [Display(Name = "Stok Xəbərdarlığı")]
+        public bool NotifyBalanceWarningLevel { get; set; }
+
+        [DefaultValueSql("0")]
+        [Display(Name = "Qaytarılan Formu Kilidlə")]
+        public bool LockReturnDocument { get; set; }
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }

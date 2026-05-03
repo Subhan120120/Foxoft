@@ -1,4 +1,4 @@
-﻿using DevExpress.Data.Linq;
+using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
@@ -116,7 +116,7 @@ namespace Foxoft
             gV_InvoiceHeaderList.ActiveFilterString =
                 $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{storeCode}'";
 
-            gV_InvoiceHeaderList.BestFitColumns();
+            LoadGridLayout();
         }
 
         private void gV_TrInvoiceHeaderList_DoubleClick(object sender, EventArgs e)
@@ -215,6 +215,44 @@ namespace Foxoft
                 gV_InvoiceHeaderList.FindPanelVisible = false;
                 if (!gV_InvoiceHeaderList.FindPanelVisible)
                     gC_InvoiceHeaderList.BeginInvoke(new Action(gV_InvoiceHeaderList.ShowFindPanel));
+            }
+        }
+
+        private void LoadGridLayout()
+        {
+            string fileName = "InvoiceHeaderList_" + processCode + ".xml";
+            string layoutFilePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+
+            if (File.Exists(layoutFilePath))
+                gV_InvoiceHeaderList.RestoreLayoutFromXml(layoutFilePath);
+        }
+
+        private void SaveGridLayout()
+        {
+            string fileName = "InvoiceHeaderList_" + processCode + ".xml";
+            string layoutFileDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
+
+            if (!Directory.Exists(layoutFileDir))
+                Directory.CreateDirectory(layoutFileDir);
+
+            gV_InvoiceHeaderList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+        }
+
+        private void gV_InvoiceHeaderList_PopupMenuShowing(object sender, DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs e)
+        {
+            if (e.MenuType == DevExpress.XtraGrid.Views.Grid.GridMenuType.Column)
+            {
+                var menu = e.Menu as DevExpress.XtraGrid.Menu.GridViewColumnMenu;
+                if (menu != null)
+                {
+                    var saveItem = new DevExpress.Utils.Menu.DXMenuItem("Save Layout", (s, args) => SaveGridLayout());
+                    saveItem.BeginGroup = true;
+                    menu.Items.Add(saveItem);
+                }
             }
         }
     }

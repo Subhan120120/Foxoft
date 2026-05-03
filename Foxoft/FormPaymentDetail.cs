@@ -381,7 +381,7 @@ namespace Foxoft
             }
             else
             {
-                sendWhatsApp(phoneNum, "");
+                sendWhatsApp(phoneNum, $"Ödəniş №{trPaymentHeader.DocumentNumber}");
             }
         }
 
@@ -501,7 +501,7 @@ namespace Foxoft
 
                 string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
 
-                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: "Ödəniş");
+                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: $"Ödəniş №{trPaymentHeader.DocumentNumber}");
 
                 SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, "Image");
 
@@ -526,6 +526,16 @@ namespace Foxoft
                     MessageType = messageType,
                     Sender = Authorization.CurrAccCode
                 });
+
+                ctx.TrCredits.Add(new TrCredit
+                {
+                    CreditId = Guid.NewGuid(),
+                    TransactionType = CreditTransactionType.Usage,
+                    Amount = 0.05m,
+                    ServiceType = "WhatsApp",
+                    Description = $"WhatsApp {messageType} - {receiverPhone}"
+                });
+
                 ctx.SaveChanges();
             }
             catch (Exception ex)

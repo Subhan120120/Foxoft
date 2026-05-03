@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils.Extensions;
+using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -593,7 +593,7 @@ namespace Foxoft
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {
-            if (dataLayoutControl1.IsValid(out List<string> errorList))
+            if (dataLayoutControl1.IsValid(dxErrorProvider1, out List<string> errorList))
             {
                 dcProduct = dcProductsBindingSource.Current as DcProduct;
                 if (isNew)
@@ -619,7 +619,7 @@ namespace Foxoft
 
         private void btn_Apply_Click(object sender, EventArgs e)
         {
-            if (dataLayoutControl1.IsValid(out List<string> errorList))
+            if (dataLayoutControl1.IsValid(dxErrorProvider1, out List<string> errorList))
             {
                 dcProduct = dcProductsBindingSource.Current as DcProduct;
                 if (isNew)
@@ -658,15 +658,15 @@ namespace Foxoft
 
         private void ProductDescTextEdit_Validating(object sender, CancelEventArgs e)
         {
-            //if (string.IsNullOrEmpty(ProductDescTextEdit.Text)) return;
+            if (string.IsNullOrEmpty(ProductDescTextEdit.Text)) return;
 
-            //if (efMethods.ProductExistByNameExceptProduct(ProductDescTextEdit.Text, dcProduct.ProductCode))
-            //    dxErrorProvider1.(
-            //        ProductDescTextEdit,
-            //        Resources.Form_Product_Validation_ProductNameExists,
-            //        ErrorType.Information);
-            //else
-            //    dxErrorProvider1.ClearErrors();
+            if (efMethods.ProductExistByNameExceptProduct(ProductDescTextEdit.Text, dcProduct.ProductCode))
+                dxErrorProvider1.SetError(
+                    ProductDescTextEdit,
+                    Resources.Form_Product_Validation_ProductNameExists,
+                    ErrorType.Information);
+            else
+                dxErrorProvider1.ClearErrors();
         }
     }
 }

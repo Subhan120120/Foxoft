@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.AppCode.Service;
@@ -284,6 +284,7 @@ namespace Foxoft
             // Loyalty txn-i return invoice-ın özünə görə hesabla (IsReturn=true => məbləğ mənfi olacaq)
             _loyalty.SyncInvoiceEarn(returnInvoHeader);
         }
+        
         private void btn_Ok_Click(object sender, EventArgs e)
         {
             decimal sumNetAmount = efMethods.SelectInvoiceNetAmount(returnInvoiceHeaderId);
@@ -291,6 +292,9 @@ namespace Foxoft
             if (sumNetAmount != 0)
             {
                 efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+
+                if (Settings.Default.AppSetting.LockReturnDocument)
+                    efMethods.UpdateInvoiceIsLocked(returnInvoiceHeaderId, true);
 
                 if (DialogResult.OK == XtraMessageBox.Show(
                         Resources.Form_Return_Message_OpenInvoiceQuestion,

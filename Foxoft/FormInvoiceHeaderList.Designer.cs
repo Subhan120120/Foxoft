@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
 
@@ -93,6 +93,7 @@ namespace Foxoft
             gV_InvoiceHeaderList.CellValueChanging += gV_InvoiceHeaderList_CellValueChanging;
             gV_InvoiceHeaderList.ColumnFilterChanged += gV_InvoiceHeaderList_ColumnFilterChanged;
             gV_InvoiceHeaderList.DoubleClick += gV_TrInvoiceHeaderList_DoubleClick;
+            gV_InvoiceHeaderList.PopupMenuShowing += gV_InvoiceHeaderList_PopupMenuShowing;
             // 
             // colDocumentNumber
             // 

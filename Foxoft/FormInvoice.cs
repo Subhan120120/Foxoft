@@ -846,6 +846,26 @@ namespace Foxoft
                     }
                 }
 
+                // Stock balance warning notification
+                if (Settings.Default.AppSetting.NotifyBalanceWarningLevel
+                    && new[] { "RS", "WS", "IS" }.Contains(trInvoiceHeader.ProcessCode)
+                    && !string.IsNullOrEmpty(tr.ProductCode))
+                {
+                    DcProduct warningProduct = efMethods.SelectEntityById<DcProduct>(tr.ProductCode);
+                    if (warningProduct != null && warningProduct.BalanceWarningLevel > 0)
+                    {
+                        string wh = ResolveWarehouse();
+                        decimal remainingBalance = CalcProductBalance(tr, tr.ProductCode, wh, 0) - newQty + tr.Qty;
+                        if (remainingBalance <= warningProduct.BalanceWarningLevel)
+                        {
+                            alertControl1.Show(this,
+                                "Stok Xəbərdarlığı",
+                                $"{warningProduct.ProductDesc}: Qalıq {remainingBalance:n2} (Limit: {warningProduct.BalanceWarningLevel:n2})",
+                                "", (Image)null, null);
+                        }
+                    }
+                }
+
                 return;
             }
 
@@ -1631,15 +1651,15 @@ namespace Foxoft
 
             if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
             {
-                await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream);
+                await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream, trInvoiceHeader.DocumentNumber);
             }
             else
             {
-                SendWhatsApp(phoneNum, "");
+                SendWhatsApp(phoneNum, $"Faktura №{trInvoiceHeader.DocumentNumber}");
             }
         }
 
-        private async Task SendWhatsAppViaEvolutionApi(string number, MemoryStream memoryStream)
+        private async Task SendWhatsAppViaEvolutionApi(string number, MemoryStream memoryStream, string documentNumber = null)
         {
             if (string.IsNullOrEmpty(number))
             {
@@ -1660,7 +1680,8 @@ namespace Foxoft
 
                 string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
 
-                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: "Faktura");
+                string caption = string.IsNullOrEmpty(documentNumber) ? "Faktura" : $"Faktura №{documentNumber}";
+                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: caption);
                 
                 SaveWhatsAppLog(trInvoiceHeader.InvoiceHeaderId, formattedNumber, "Image");
 
@@ -1685,6 +1706,16 @@ namespace Foxoft
                     MessageType = messageType,
                     Sender = Authorization.CurrAccCode
                 });
+
+                ctx.TrCredits.Add(new TrCredit
+                {
+                    CreditId = Guid.NewGuid(),
+                    TransactionType = CreditTransactionType.Usage,
+                    Amount = 0.05m,
+                    ServiceType = "WhatsApp",
+                    Description = $"WhatsApp {messageType} - {receiverPhone}"
+                });
+
                 ctx.SaveChanges();
             }
             catch (Exception ex)
@@ -2144,6 +2175,12 @@ namespace Foxoft
             colNetAmountLoc.OptionsColumn.ReadOnly = true;
             col_Amount.OptionsColumn.ReadOnly = true;
             colAmountLoc.OptionsColumn.ReadOnly = true;
+
+            if (colExchangeRate != null)
+            {
+                bool canChangeExchangeRate = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ChangeExchangeRate");
+                colExchangeRate.OptionsColumn.ReadOnly = !canChangeExchangeRate;
+            }
 
 
             if (!colNetAmountLoc.Summary.Any(x => x.SummaryType == SummaryItemType.Sum))
