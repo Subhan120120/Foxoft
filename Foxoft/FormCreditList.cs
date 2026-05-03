@@ -115,7 +115,7 @@ namespace Foxoft
                 if (creditValue == null)
                 {
                     XtraMessageBox.Show(
-                        "Daxil edilən API Key Excel faylında tapılmadı!",
+                        "Daxil edilən API Key aktiv deyil!",
                         "Xəta",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
