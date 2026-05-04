@@ -1,4 +1,4 @@
-﻿using DevExpress.CodeParser;
+using DevExpress.CodeParser;
 using DevExpress.Xpo;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
@@ -40,7 +40,7 @@ namespace Foxoft
                 DcCurrAcc store = efMethods.SelectStore(userCurrAcc.StoreCode);
                 if (store == null)
                 {
-                    XtraMessageBox.Show("Mağaza Aktiv Deyil");
+                    XtraMessageBox.Show(Properties.Resources.Auth_StoreNotActive);
                     return false;
                 }
 
@@ -58,7 +58,7 @@ namespace Foxoft
                         }
                         else if (string.Equals(session.CurrAccCode, user, StringComparison.InvariantCultureIgnoreCase))
                         {
-                            XtraMessageBox.Show("Istifadəçi artıq sistemə daxil olub.");
+                            XtraMessageBox.Show(Properties.Resources.Auth_UserAlreadyLoggedIn);
                             return false;
                         }
                     }
@@ -84,7 +84,7 @@ namespace Foxoft
             }
             else
             {
-                XtraMessageBox.Show("İstifadəçi və ya şifrə yanlışdır");
+                XtraMessageBox.Show(Properties.Resources.Auth_InvalidUserOrPassword);
                 return false;
             }
         }

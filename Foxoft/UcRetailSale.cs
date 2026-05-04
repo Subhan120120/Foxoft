@@ -5,6 +5,7 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
+using Foxoft.AppCode;
 using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
@@ -31,6 +32,9 @@ namespace Foxoft
         readonly SettingStore settingStore;
         private LoyaltyService loyaltyService;
 
+        // Dinamik shortcut sistemi
+        private Dictionary<Keys, Action> shortcutActions = new();
+
         private bool IsCampaignEnabled
             => Settings.Default.AppSetting != null
             && Settings.Default.AppSetting.UseCampaign;
@@ -55,7 +59,63 @@ namespace Foxoft
 
             InitializeResourseName();
 
+            LoadShortcuts();
+
             LoadLayout();
+        }
+
+        private void LoadShortcuts()
+        {
+            shortcutActions.Clear();
+
+            // Button adı → click handler və SimpleButton referansı
+            var buttonMap = new Dictionary<string, (Action action, SimpleButton button)>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["btn_ProductSearch"]       = (() => btn_ProductSearch_Click(btn_ProductSearch, EventArgs.Empty), btn_ProductSearch),
+                ["btn_Cash"]                = (() => btn_Payment_Click(btn_Cash, EventArgs.Empty), btn_Cash),
+                ["btn_Cashless"]            = (() => btn_Payment_Click(btn_Cashless, EventArgs.Empty), btn_Cashless),
+                ["btn_CustomerBonus"]       = (() => btn_Payment_Click(btn_CustomerBonus, EventArgs.Empty), btn_CustomerBonus),
+                ["btn_LineDiscount"]        = (() => btn_LineDiscount_Click(btn_LineDiscount, EventArgs.Empty), btn_LineDiscount),
+                ["btn_CancelInvoice"]       = (() => btn_CancelInvoice_Click(btn_CancelInvoice, EventArgs.Empty), btn_CancelInvoice),
+                ["btn_DeleteLine"]          = (() => btn_DeleteLine_Click(btn_DeleteLine, EventArgs.Empty), btn_DeleteLine),
+                ["btn_SalesPerson"]         = (() => btn_SalesPerson_Click(btn_SalesPerson, EventArgs.Empty), btn_SalesPerson),
+                ["btn_InvoiceDiscount"]     = (() => btn_InvoiceDiscount_Click(btn_InvoiceDiscount, EventArgs.Empty), btn_InvoiceDiscount),
+                ["btn_NewInvoice"]          = (() => Btn_NewInvoice_Click(btn_NewInvoice, EventArgs.Empty), btn_NewInvoice),
+                ["btn_AddBasket"]           = (() => Btn_AddBasket_Click(btn_AddBasket, EventArgs.Empty), btn_AddBasket),
+                ["btn_UncomplatedInvoices"] = (() => btn_UncomplatedInvoices_Click(btn_UncomplatedInvoices, EventArgs.Empty), btn_UncomplatedInvoices),
+                ["btn_LoyaltyCard"]         = (() => Btn_LoyaltyCard_Click(btn_LoyaltyCard, EventArgs.Empty), btn_LoyaltyCard),
+                ["btn_Print"]               = (() => btn_Print_Click(btn_Print, EventArgs.Empty), btn_Print),
+                ["btn_PrintPreview"]        = (() => btn_PrintPrevieww_Click(btn_PrintPreview, EventArgs.Empty), btn_PrintPreview),
+                ["btn_ReportZ"]             = (() => btn_ReportZ_Click(btn_ReportZ, EventArgs.Empty), btn_ReportZ),
+                ["btn_CampaignApply"]       = (() => btn_CampaignApply_Click(btn_CampaignApply, EventArgs.Empty), btn_CampaignApply),
+                ["btn_CampaignDelete"]      = (() => btn_CampaignDelete_Click(btn_CampaignDelete, EventArgs.Empty), btn_CampaignDelete),
+                ["btn_CampaignLog"]         = (() => btn_CampaignLog_Click(btn_CampaignLog, EventArgs.Empty), btn_CampaignLog),
+                ["btn_PromoCode"]           = (() => btn_PromoCode_Click(btn_PromoCode, EventArgs.Empty), btn_PromoCode),
+            };
+
+            var shortcuts = ShortcutHelper.LoadShortcuts("UcRetailSale");
+
+            foreach (var kvp in shortcuts)
+            {
+                if (buttonMap.TryGetValue(kvp.Key, out var mapping))
+                {
+                    shortcutActions[kvp.Value] = mapping.action;
+
+                    // Button text-inin sonuna shortcut yazılır
+                    mapping.button.Text = ShortcutHelper.AppendShortcutToText(mapping.button.Text, kvp.Value);
+                }
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (shortcutActions.TryGetValue(keyData, out Action action))
+            {
+                action.Invoke();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void LoadLayout()
@@ -82,21 +142,6 @@ namespace Foxoft
             LCI_PromoCode.Visibility = visible;
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.F2)
-            {
-                btn_ProductSearch_Click(btn_ProductSearch, EventArgs.Empty);
-                return true; // shortcut handled
-            }
-            if (keyData == Keys.F3)
-            {
-                btn_Payment_Click(btn_Cash, EventArgs.Empty);
-                return true; // shortcut handled
-            }
-
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
 
         private void InitializeResourseName()
         {
@@ -955,7 +1000,7 @@ namespace Foxoft
                         !string.Equals(dcLoyaltyCard.CurrAccCode, form.dcCurrAcc.CurrAccCode, StringComparison.OrdinalIgnoreCase))
                     {
                         loyaltyService.DetachCard(trInvoiceHeader);
-                        XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
+                        XtraMessageBox.Show(Properties.Resources.BonusCard_Cancelled, Properties.Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                     trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
@@ -1323,8 +1368,8 @@ namespace Foxoft
         private string? InputSalesMan()
         {
             string identityCardNum = Interaction.InputBox(
-                "Satıcı Kodu Daxil Edin:",
-                "Satıcı",
+                Properties.Resources.Salesperson_EnterCode,
+                Properties.Resources.Salesperson_Title,
                 ""
             );
 
@@ -1546,8 +1591,8 @@ namespace Foxoft
         private void Btn_LoyaltyCard_Click(object sender, EventArgs e)
         {
             string bonusCardNum = Interaction.InputBox(
-                "Bonus Kart Daxil Edin:",
-                "Bonus Kart",
+                Properties.Resources.BonusCard_EnterNum,
+                Properties.Resources.BonusCard_Title,
                 ""
             );
 
@@ -1558,7 +1603,7 @@ namespace Foxoft
 
             if (loyaltyCard is null)
             {
-                XtraMessageBox.Show("Bonus Kartı tapılmadı!");
+                XtraMessageBox.Show(Properties.Resources.BonusCard_NotFound, Properties.Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

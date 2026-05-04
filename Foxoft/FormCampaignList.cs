@@ -68,7 +68,7 @@ namespace Foxoft
             if (!id.HasValue)
                 return;
 
-            if (XtraMessageBox.Show("Seçilmiş kampaniya silinsin?", "Diqqət", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (XtraMessageBox.Show(Properties.Resources.Campaign_ConfirmDelete, Properties.Resources.Common_Attention, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             using subContext ctx = new();
@@ -80,7 +80,7 @@ namespace Foxoft
             bool hasLogs = ctx.TrInvoiceCampaignLogs.Any(x => x.CampaignId == id.Value);
             if (hasLogs)
             {
-                XtraMessageBox.Show("Bu kampaniya artıq fakturalarda istifadə olunub. Silmək əvəzinə deaktiv edin.");
+                XtraMessageBox.Show(Properties.Resources.Campaign_CannotDeleteInUse, Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -96,7 +96,7 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CustomExtensions.ExportToExcel(this, "Kampaniyalar", gC_CampaignList);
+            CustomExtensions.ExportToExcel(this, Properties.Resources.Campaign_ListTitle, gC_CampaignList);
         }
 
         private void gV_CampaignList_DoubleClick(object sender, EventArgs e)

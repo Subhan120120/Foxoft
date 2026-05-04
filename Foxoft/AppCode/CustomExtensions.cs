@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
@@ -54,16 +54,16 @@ namespace Foxoft
             if (Amount != 0 && NetAmount != 0)
                 PosDiscount = Math.Round(PosDiscountRate * Amount / 100, 2);
 
-            string previewText = "ƏDV: " + VatRate + "%\n";
+            string previewText = Properties.Resources.Preview_VAT + VatRate + "%\n";
 
             if (!string.IsNullOrEmpty(Barcode))
-                previewText += "Barkod: " + Barcode + "\n";
+                previewText += Properties.Resources.Preview_Barcode + Barcode + "\n";
 
             if (PosDiscount > 0)
-                previewText += "Pos Endirimi: [" + PosDiscountRate + "%] = " + PosDiscount + "\n";
+                previewText += Properties.Resources.Preview_PosDiscount + "[" + PosDiscountRate + "%] = " + PosDiscount + "\n";
 
             if (!string.IsNullOrEmpty(SalesPersonCode))
-                previewText += "Satıcı: " + SalesPersonCode + "\n";
+                previewText += Properties.Resources.Preview_Salesperson + SalesPersonCode + "\n";
 
             return previewText;
         }
@@ -164,7 +164,7 @@ namespace Foxoft
                 PingReply reply = pingSender.Send(IPAddress, 500);
                 if (reply.Status != IPStatus.Success)
                 {
-                    MessageBox.Show(IPAddress + " ile elaqe qurula bilmir.");
+                    XtraMessageBox.Show(string.Format(Properties.Resources.Network_CannotConnect, IPAddress));
                     return false;
                 }
             }
@@ -213,8 +213,8 @@ namespace Foxoft
             {
                 using (SaveFileDialog sFD = new())
                 {
-                    sFD.Filter = "Excel Faylı|*.xlsx";
-                    sFD.Title = "Excel Faylı Yadda Saxla";
+                    sFD.Filter = Properties.Resources.ExcelExport_Filter;
+                    sFD.Title = Properties.Resources.ExcelExport_SaveTitle;
                     sFD.FileName = fileNameText;
                     sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                     sFD.DefaultExt = "*.xlsx";
@@ -230,7 +230,7 @@ namespace Foxoft
 
                         gridControl.ExportToXlsx(sFD.FileName);
 
-                        if (XtraMessageBox.Show(form, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                        if (XtraMessageBox.Show(form, Properties.Resources.Common_OpenConfirmation, Properties.Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                         {
                             Process p = new();
                             p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };

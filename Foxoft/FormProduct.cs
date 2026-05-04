@@ -310,18 +310,18 @@ namespace Foxoft
                 string sourceProductCode = frm.dcProduct.ProductCode;
                 if (sourceProductCode == dcProduct.ProductCode)
                 {
-                    XtraMessageBox.Show("Eyni məhsuldan klonlamaq olmaz.", Resources.Common_Attention);
+                    XtraMessageBox.Show(Properties.Resources.Product_CannotCloneSameProduct, Resources.Common_Attention);
                     return;
                 }
 
-                if (XtraMessageBox.Show(sourceProductCode + " kodlu məhsulun özəllikləri klonlansın?", Resources.Common_Attention, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (XtraMessageBox.Show(string.Format(Properties.Resources.Product_CloneConfirmation, sourceProductCode), Resources.Common_Attention, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     var features = efMethods.SelectProductFeatures(sourceProductCode);
                     foreach (var feature in features)
                     {
                         efMethods.UpdateDcFeature_Value((byte)feature.FeatureTypeId, dcProduct.ProductCode, feature.FeatureCode);
                     }
-                    XtraMessageBox.Show("Özəlliklər uğurla klonlandı.", Resources.Common_Info);
+                    XtraMessageBox.Show(Properties.Resources.Product_FeaturesClonedSuccessfully, Resources.Common_Info);
                 }
             }
         }

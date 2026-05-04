@@ -717,7 +717,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show("Excel import zamanı xəta baş verdi.\n" + ex.Message, "Xəta");
+                XtraMessageBox.Show(Properties.Resources.Campaign_ExcelImportError + "\n" + ex.Message, Properties.Resources.Common_Error);
             }
             finally
             {

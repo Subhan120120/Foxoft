@@ -31,6 +31,10 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAppSetting));
+            tabControl1 = new DevExpress.XtraTab.XtraTabControl();
+            tabPageSettings = new DevExpress.XtraTab.XtraTabPage();
+            tabPageShortcuts = new DevExpress.XtraTab.XtraTabPage();
+            ucShortcutSetting1 = new Foxoft.UcShortcutSetting();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             btn_OptimizeDatabaseIndexes = new DevExpress.XtraEditors.SimpleButton();
             btn_Save = new DevExpress.XtraEditors.SimpleButton();
@@ -91,6 +95,10 @@ namespace Foxoft
             ItemForLockReturnDocument = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsappChromeProfileName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsAppProvider = new DevExpress.XtraLayout.LayoutControlItem();
+            ((System.ComponentModel.ISupportInitialize)tabControl1).BeginInit();
+            tabControl1.SuspendLayout();
+            tabPageSettings.SuspendLayout();
+            tabPageShortcuts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)GridViewLayoutTextEdit.Properties).BeginInit();
@@ -150,6 +158,38 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).BeginInit();
             SuspendLayout();
+            // 
+            // tabControl1
+            // 
+            tabControl1.Dock = DockStyle.Fill;
+            tabControl1.Location = new Point(0, 0);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedTabPage = tabPageSettings;
+            tabControl1.Size = new Size(434, 581);
+            tabControl1.TabIndex = 1;
+            tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts });
+            // 
+            // tabPageSettings
+            // 
+            tabPageSettings.Controls.Add(dataLayoutControl1);
+            tabPageSettings.Name = "tabPageSettings";
+            tabPageSettings.Size = new Size(432, 556);
+            tabPageSettings.Text = Resources.Form_AppSetting_Caption;
+            // 
+            // tabPageShortcuts
+            // 
+            tabPageShortcuts.Controls.Add(ucShortcutSetting1);
+            tabPageShortcuts.Name = "tabPageShortcuts";
+            tabPageShortcuts.Size = new Size(432, 556);
+            tabPageShortcuts.Text = Resources.FormShortcut_Title;
+            // 
+            // ucShortcutSetting1
+            // 
+            ucShortcutSetting1.Dock = DockStyle.Fill;
+            ucShortcutSetting1.Location = new Point(0, 0);
+            ucShortcutSetting1.Name = "ucShortcutSetting1";
+            ucShortcutSetting1.Size = new Size(432, 556);
+            ucShortcutSetting1.TabIndex = 0;
             // 
             // dataLayoutControl1
             // 
@@ -756,10 +796,14 @@ namespace Foxoft
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(434, 581);
-            Controls.Add(dataLayoutControl1);
+            Controls.Add(tabControl1);
             Name = "FormAppSetting";
             Text = "Application Settings";
             Load += FormAppSetting_Load;
+            ((System.ComponentModel.ISupportInitialize)tabControl1).EndInit();
+            tabControl1.ResumeLayout(false);
+            tabPageSettings.ResumeLayout(false);
+            tabPageShortcuts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)GridViewLayoutTextEdit.Properties).EndInit();
@@ -886,5 +930,9 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForNotifyBalanceWarningLevel;
         private DevExpress.XtraEditors.CheckEdit LockReturnDocumentCheckEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForLockReturnDocument;
+        private DevExpress.XtraTab.XtraTabControl tabControl1;
+        private DevExpress.XtraTab.XtraTabPage tabPageSettings;
+        private DevExpress.XtraTab.XtraTabPage tabPageShortcuts;
+        private Foxoft.UcShortcutSetting ucShortcutSetting1;
     }
 }

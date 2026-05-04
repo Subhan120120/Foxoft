@@ -79,8 +79,8 @@ namespace Foxoft
             if (trInvoiceHeader is null) return;
             if (gV_InvoiceLine.DataRowCount <= 0)
             {
-                XtraMessageBox.Show("Fakturada məhsul yoxdur.",
-                    Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(Properties.Resources.Campaign_NoProductInInvoice,
+                    Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -108,8 +108,8 @@ namespace Foxoft
             var logs = _campaignService.GetCampaignLogs(trInvoiceHeader.InvoiceHeaderId);
             if (!logs.Any())
             {
-                XtraMessageBox.Show("Heç bir kampaniya tətbiq edilməyib.",
-                    "Kampaniya Loqu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(Properties.Resources.Campaign_NoCampaignApplied,
+                    Properties.Resources.Campaign_LogTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -129,14 +129,14 @@ namespace Foxoft
                 $"  Sətir sayı : {g.Lines}\n" +
                 $"  Endirim    : {g.TotalDiscount:n2}  ({g.TotalDiscountLoc:n2} AZN)"));
 
-            XtraMessageBox.Show(text, "Kampaniya Loqu",
+            XtraMessageBox.Show(text, Properties.Resources.Campaign_LogTitle,
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>"Promo Kod" düyməsi</summary>
         private void BBI_PromoCodeCampaign_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var input = XtraInputBox.Show("Promo kodu daxil edin:", "Promo Kod",
+            var input = XtraInputBox.Show(Properties.Resources.Campaign_EnterPromoCode, Properties.Resources.Campaign_PromoCodeTitle,
                 _appliedPromoCode ?? "");
             if (input == null) return;
 
@@ -157,7 +157,7 @@ namespace Foxoft
             gV_InvoiceLine.RefreshData();
             if (result.Success) SaveInvoice();
 
-            XtraMessageBox.Show(result.Message, "Promo Kod",
+            XtraMessageBox.Show(result.Message, Properties.Resources.Campaign_PromoCodeTitle,
                 MessageBoxButtons.OK,
                 result.Success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
         }
@@ -168,7 +168,7 @@ namespace Foxoft
             if (trInvoiceHeader is null) return;
 
             if (XtraMessageBox.Show(
-                "Tətbiq edilmiş bütün kampaniya endirimi silinsin?",
+                Properties.Resources.Campaign_ConfirmDelete,
                 Resources.Common_Attention,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) != DialogResult.Yes)
@@ -183,7 +183,7 @@ namespace Foxoft
             gV_InvoiceLine.RefreshData();
             SaveInvoice();
 
-            XtraMessageBox.Show("Kampaniya endirimi silindi.",
+            XtraMessageBox.Show(Properties.Resources.Campaign_DiscountDeleted,
                 "Kampaniya", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -206,7 +206,7 @@ namespace Foxoft
             decimal pay = GetRemainingPaymentAmount();
             if (pay <= 0)
             {
-                XtraMessageBox.Show("Ödəniləcək məbləğ qalmayıb.", "Ödəniş",
+                XtraMessageBox.Show(Properties.Resources.Payment_NoRemainingAmount, Properties.Resources.Payment_Title,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -274,7 +274,7 @@ namespace Foxoft
                 var pwd = XtraInputBox.Show("Kampaniya şifrəsini daxil edin:", "Şifrə", "");
                 if (pwd?.ToString() != campaign.CampaignPassword)
                 {
-                    XtraMessageBox.Show("Şifrə yanlışdır! Kampaniya tətbiq edilmədi.",
+                    XtraMessageBox.Show(Properties.Resources.Campaign_PasswordIncorrect,
                         Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
@@ -286,7 +286,7 @@ namespace Foxoft
 
             if (!result.Success)
             {
-                XtraMessageBox.Show("Kampaniya tətbiq edilmədi.",
+                XtraMessageBox.Show(Properties.Resources.Campaign_NotApplied,
                     Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
@@ -354,9 +354,7 @@ namespace Foxoft
                 if (_campaignService.HasCashOnlyCampaignApplied(trInvoiceHeader.InvoiceHeaderId))
                 {
                     XtraMessageBox.Show(
-                        "Bu fakturaya nağd ödəniş kampaniyası (IsCashOnly) tətbiq edilib.\n" +
-                        "Ödənişi silmədən öncə kampaniya endirimi ləğv edilməlidir.\n\n" +
-                        "Bunun üçün «Kampaniyaları Sil» düyməsindən istifadə edin.",
+                        Properties.Resources.Campaign_CashOnlyAppliedDeleteWarning,
                         Resources.Common_Attention,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);

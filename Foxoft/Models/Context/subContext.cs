@@ -117,6 +117,7 @@ namespace Foxoft.Models
         public DbSet<DcWhatsAppProviderSetting> DcWhatsAppProviderSettings { get; set; }
         public DbSet<TrWhatsAppMessageLog> TrWhatsAppMessageLogs { get; set; }
         public DbSet<TrCredit> TrCredits { get; set; }
+        public DbSet<DcShortcut> DcShortcuts { get; set; }
 
         //CRM Model
         public DbSet<TrCrmActivity> TrCrmActivities { get; set; }
@@ -400,6 +401,10 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcHierarchy>().ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta verir 
             modelBuilder.Entity<DcProduct>().ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta verir 
+
+            modelBuilder.Entity<DcShortcut>()
+                        .HasIndex(s => new { s.FormName, s.ButtonName })
+                        .IsUnique();
 
             modelBuilder.Entity<TrInvoiceHeader>(entity =>
             {
@@ -709,6 +714,58 @@ namespace Foxoft.Models
         {
             modelBuilder.Entity<DcWhatsAppProviderSetting>().HasData(
                 new DcWhatsAppProviderSetting { Id = 1, ServerUrl = "https://evolution.tokla.az", InstanceName = "tokla", ApiKey = "2fdqo0JtF6dnG23N7JbnZ9wMoVMRvRkh" }
+            );
+
+            // --- DcShortcut Seed Data ---
+            modelBuilder.Entity<DcShortcut>().HasData(
+                // UcRetailSale buttons
+                new DcShortcut { Id = 1,  FormName = "UcRetailSale", ButtonName = "btn_ProductSearch",      ShortcutKeys = "F2",  ButtonDescription = "Məhsul Axtar" },
+                new DcShortcut { Id = 2,  FormName = "UcRetailSale", ButtonName = "btn_Cash",               ShortcutKeys = "F3",  ButtonDescription = "Nağd Ödəmə" },
+                new DcShortcut { Id = 3,  FormName = "UcRetailSale", ButtonName = "btn_Cashless",           ShortcutKeys = "",    ButtonDescription = "Nağdsız Ödəmə" },
+                new DcShortcut { Id = 4,  FormName = "UcRetailSale", ButtonName = "btn_CustomerBonus",      ShortcutKeys = "",    ButtonDescription = "Bonus Ödəmə" },
+                new DcShortcut { Id = 5,  FormName = "UcRetailSale", ButtonName = "btn_LineDiscount",       ShortcutKeys = "",    ButtonDescription = "Sətir Endirimi" },
+                new DcShortcut { Id = 6,  FormName = "UcRetailSale", ButtonName = "btn_CancelInvoice",      ShortcutKeys = "",    ButtonDescription = "Çeki Ləğv Et" },
+                new DcShortcut { Id = 7,  FormName = "UcRetailSale", ButtonName = "btn_DeleteLine",         ShortcutKeys = "",    ButtonDescription = "Sətri Sil" },
+                new DcShortcut { Id = 8,  FormName = "UcRetailSale", ButtonName = "btn_SalesPerson",        ShortcutKeys = "",    ButtonDescription = "Satıcı" },
+                new DcShortcut { Id = 9,  FormName = "UcRetailSale", ButtonName = "btn_InvoiceDiscount",    ShortcutKeys = "",    ButtonDescription = "Qaimə Endirimi" },
+                new DcShortcut { Id = 10, FormName = "UcRetailSale", ButtonName = "btn_NewInvoice",         ShortcutKeys = "",    ButtonDescription = "Yeni Faktura" },
+                new DcShortcut { Id = 11, FormName = "UcRetailSale", ButtonName = "btn_AddBasket",          ShortcutKeys = "",    ButtonDescription = "Səbətə At" },
+                new DcShortcut { Id = 12, FormName = "UcRetailSale", ButtonName = "btn_UncomplatedInvoices",ShortcutKeys = "",    ButtonDescription = "Natamam Fakturalar" },
+                new DcShortcut { Id = 13, FormName = "UcRetailSale", ButtonName = "btn_LoyaltyCard",        ShortcutKeys = "",    ButtonDescription = "Bonus Kart" },
+                new DcShortcut { Id = 14, FormName = "UcRetailSale", ButtonName = "btn_Print",              ShortcutKeys = "",    ButtonDescription = "Çap" },
+                new DcShortcut { Id = 15, FormName = "UcRetailSale", ButtonName = "btn_PrintPreview",       ShortcutKeys = "",    ButtonDescription = "Çap Görünüş" },
+                new DcShortcut { Id = 16, FormName = "UcRetailSale", ButtonName = "btn_ReportZ",            ShortcutKeys = "",    ButtonDescription = "Gün Sonu" },
+                new DcShortcut { Id = 17, FormName = "UcRetailSale", ButtonName = "btn_CampaignApply",      ShortcutKeys = "",    ButtonDescription = "Kampaniya Tətbiq Et" },
+                new DcShortcut { Id = 18, FormName = "UcRetailSale", ButtonName = "btn_CampaignDelete",     ShortcutKeys = "",    ButtonDescription = "Kampaniyanı Sil" },
+                new DcShortcut { Id = 19, FormName = "UcRetailSale", ButtonName = "btn_CampaignLog",        ShortcutKeys = "",    ButtonDescription = "Kampaniya Log" },
+                new DcShortcut { Id = 20, FormName = "UcRetailSale", ButtonName = "btn_PromoCode",          ShortcutKeys = "",    ButtonDescription = "Promo Kod" },
+
+                // FormInvoice buttons
+                new DcShortcut { Id = 21, FormName = "FormInvoice", ButtonName = "bBI_Save",              ShortcutKeys = "",        ButtonDescription = "Saxla" },
+                new DcShortcut { Id = 22, FormName = "FormInvoice", ButtonName = "bBI_SaveAndNew",         ShortcutKeys = "",        ButtonDescription = "Saxla və Yeni" },
+                new DcShortcut { Id = 23, FormName = "FormInvoice", ButtonName = "bBI_SaveAndQuit",        ShortcutKeys = "F12",     ButtonDescription = "Saxla və Bağla" },
+                new DcShortcut { Id = 24, FormName = "FormInvoice", ButtonName = "bBI_Payment",            ShortcutKeys = "",        ButtonDescription = "Ödəniş" },
+                new DcShortcut { Id = 25, FormName = "FormInvoice", ButtonName = "bBI_New",                ShortcutKeys = "Ctrl+N",  ButtonDescription = "Yeni" },
+                new DcShortcut { Id = 26, FormName = "FormInvoice", ButtonName = "bBI_reportPreview",      ShortcutKeys = "",        ButtonDescription = "Çap Görünüşü" },
+                new DcShortcut { Id = 27, FormName = "FormInvoice", ButtonName = "bBI_DeleteInvoice",      ShortcutKeys = "",        ButtonDescription = "Fakturanı Sil" },
+                new DcShortcut { Id = 28, FormName = "FormInvoice", ButtonName = "bBI_PaymentDelete",      ShortcutKeys = "",        ButtonDescription = "Ödənişi Sil" },
+                new DcShortcut { Id = 29, FormName = "FormInvoice", ButtonName = "bBI_CopyInvoice",        ShortcutKeys = "",        ButtonDescription = "Fakturanı Kopyala" },
+                new DcShortcut { Id = 30, FormName = "FormInvoice", ButtonName = "bBI_Whatsapp",           ShortcutKeys = "",        ButtonDescription = "WhatsApp Göndər" },
+                new DcShortcut { Id = 31, FormName = "FormInvoice", ButtonName = "BBI_EditInvoice",        ShortcutKeys = "",        ButtonDescription = "Fakturanı Dəyiş" },
+                new DcShortcut { Id = 32, FormName = "FormInvoice", ButtonName = "BBI_exportXLSX",         ShortcutKeys = "",        ButtonDescription = "Excelə İxrac" },
+                new DcShortcut { Id = 33, FormName = "FormInvoice", ButtonName = "BBI_ImportExcel",        ShortcutKeys = "",        ButtonDescription = "Exceldən Al" },
+                new DcShortcut { Id = 34, FormName = "FormInvoice", ButtonName = "BBI_ReportPrintFast",    ShortcutKeys = "",        ButtonDescription = "Sürətli Çap" },
+                new DcShortcut { Id = 35, FormName = "FormInvoice", ButtonName = "BBI_InvoiceDiscount",    ShortcutKeys = "",        ButtonDescription = "Faktura Endirimi" },
+                new DcShortcut { Id = 36, FormName = "FormInvoice", ButtonName = "BBI_Salesman",           ShortcutKeys = "",        ButtonDescription = "Satıcı" },
+                new DcShortcut { Id = 37, FormName = "FormInvoice", ButtonName = "BBI_SumSameProducts",    ShortcutKeys = "",        ButtonDescription = "Eyni Məhsulları Birləşdir" },
+                new DcShortcut { Id = 38, FormName = "FormInvoice", ButtonName = "BBI_LoyaltyCardInput",   ShortcutKeys = "",        ButtonDescription = "Bonus Kart" },
+                new DcShortcut { Id = 39, FormName = "FormInvoice", ButtonName = "bBI_CampaignApply",      ShortcutKeys = "",        ButtonDescription = "Kampaniya Tətbiq Et" },
+                new DcShortcut { Id = 40, FormName = "FormInvoice", ButtonName = "bBI_CampaignLog",        ShortcutKeys = "",        ButtonDescription = "Kampaniya Log" },
+                new DcShortcut { Id = 41, FormName = "FormInvoice", ButtonName = "BBI_PromoCodeCampaign",  ShortcutKeys = "",        ButtonDescription = "Promo Kod" },
+                new DcShortcut { Id = 42, FormName = "FormInvoice", ButtonName = "bBI_CampaignDelete",     ShortcutKeys = "",        ButtonDescription = "Kampaniyanı Sil" },
+                new DcShortcut { Id = 43, FormName = "FormInvoice", ButtonName = "BBI_picture",            ShortcutKeys = "",        ButtonDescription = "Şəkillər" },
+                new DcShortcut { Id = 44, FormName = "FormInvoice", ButtonName = "BBI_InvoiceExpenses",    ShortcutKeys = "",        ButtonDescription = "Xərclər" },
+                new DcShortcut { Id = 45, FormName = "FormInvoice", ButtonName = "BBI_CountingStock",      ShortcutKeys = "",        ButtonDescription = "Stok Sayım" }
             );
 
             modelBuilder.Entity<DcHierarchy>().HasData(

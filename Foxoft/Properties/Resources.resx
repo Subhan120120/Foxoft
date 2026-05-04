@@ -2637,7 +2637,7 @@ Do you want to return to the invoice?</value>
     <value>New Payment</value>
   </data>
   <data name="Common_Info" xml:space="preserve">
-    <value>Info</value>
+    <value>Information</value>
   </data>
   <data name="Form_MoneyTransfer_Label_CurrAccBalanceBefore" xml:space="preserve">
     <value>Current Account Previous Balance: </value>
@@ -3616,5 +3616,227 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Form_Store_CurrAccTypeCode" xml:space="preserve">
     <value>Current Acount Type Code</value>
+  </data>
+  <data name="Entity_Shortcut" xml:space="preserve">
+    <value>Shortcut</value>
+  </data>
+  <data name="Entity_Shortcut_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Entity_Shortcut_FormName" xml:space="preserve">
+    <value>Form Name</value>
+  </data>
+  <data name="Entity_Shortcut_ButtonName" xml:space="preserve">
+    <value>Button Name</value>
+  </data>
+  <data name="Entity_Shortcut_ShortcutKeys" xml:space="preserve">
+    <value>Shortcut Key</value>
+  </data>
+  <data name="Entity_Shortcut_ButtonDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="FormShortcut_Title" xml:space="preserve">
+    <value>Shortcut Settings</value>
+  </data>
+  <data name="FormShortcut_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="FormShortcut_PressKey" xml:space="preserve">
+    <value>Press key combination...</value>
+  </data>
+  <data name="FormShortcut_DuplicateWarning" xml:space="preserve">
+    <value>This shortcut is already assigned to another button!</value>
+  </data>
+  <data name="Form_Login_Error" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
+  <data name="Common_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Common_SavedSuccessfully" xml:space="preserve">
+    <value>Saved successfully.</value>
+  </data>
+  <data name="Common_ErrorOccurred" xml:space="preserve">
+    <value>An error occurred.</value>
+  </data>
+  <data name="Campaign_ExcelImportError" xml:space="preserve">
+    <value>Error occurred during Excel import.</value>
+  </data>
+  <data name="Campaign_ConfirmDelete" xml:space="preserve">
+    <value>Delete selected campaign?</value>
+  </data>
+  <data name="Invoice_PaymentZeroReturn" xml:space="preserve">
+    <value>Payment is equal to 0! Do you want to return to the invoice?</value>
+  </data>
+  <data name="Invoice_NoValueFoundForCodes" xml:space="preserve">
+    <value>No value found for the following codes.</value>
+  </data>
+  <data name="Common_OpenConfirmation" xml:space="preserve">
+    <value>Do you want to open it?</value>
+  </data>
+  <data name="Report_OnlyRepxAllowed" xml:space="preserve">
+    <value>You can only select .repx files.</value>
+  </data>
+  <data name="BonusCard_Cancelled" xml:space="preserve">
+    <value>Bonus Card Cancelled!</value>
+  </data>
+  <data name="BonusCard_NotFound" xml:space="preserve">
+    <value>Bonus Card not found!</value>
+  </data>
+  <data name="Campaign_NoProductInInvoice" xml:space="preserve">
+    <value>No product in invoice.</value>
+  </data>
+  <data name="Campaign_NoCampaignApplied" xml:space="preserve">
+    <value>No campaign applied.</value>
+  </data>
+  <data name="Campaign_DiscountRemoved" xml:space="preserve">
+    <value>Campaign discount removed.</value>
+  </data>
+  <data name="Campaign_NoAmountToPay" xml:space="preserve">
+    <value>No amount left to pay.</value>
+  </data>
+  <data name="Campaign_InvalidPassword" xml:space="preserve">
+    <value>Invalid password! Campaign not applied.</value>
+  </data>
+  <data name="Campaign_NotApplied" xml:space="preserve">
+    <value>Campaign not applied.</value>
+  </data>
+  <data name="Report_NotFound" xml:space="preserve">
+    <value>Report_Embedded_PaymentReport not found.</value>
+  </data>
+  <data name="Payment_ApiSettingsIncomplete" xml:space="preserve">
+    <value>API settings are incomplete. Please configure in AppSettings.</value>
+  </data>
+  <data name="Product_CannotCloneSameProduct" xml:space="preserve">
+    <value>Cannot clone from the same product.</value>
+  </data>
+  <data name="Product_FeaturesClonedSuccessfully" xml:space="preserve">
+    <value>Features cloned successfully.</value>
+  </data>
+  <data name="Auth_StoreNotActive" xml:space="preserve">
+    <value>Store is not active.</value>
+  </data>
+  <data name="Auth_UserAlreadyLoggedIn" xml:space="preserve">
+    <value>User is already logged in.</value>
+  </data>
+  <data name="Auth_InvalidUserOrPassword" xml:space="preserve">
+    <value>Invalid user or password</value>
+  </data>
+  <data name="Report_NoPermission" xml:space="preserve">
+    <value>You do not have permission!</value>
+  </data>
+  <data name="Product_CloneConfirmation" xml:space="preserve">
+    <value>Do you want to clone features of product code {0}?</value>
+  </data>
+  <data name="Salesperson_EnterCode" xml:space="preserve">
+    <value>Enter Salesman Code:</value>
+  </data>
+  <data name="Salesperson_Title" xml:space="preserve">
+    <value>Salesperson</value>
+  </data>
+  <data name="BonusCard_EnterNum" xml:space="preserve">
+    <value>Enter Bonus Card:</value>
+  </data>
+  <data name="BonusCard_Title" xml:space="preserve">
+    <value>Bonus Card</value>
+  </data>
+  <data name="Network_CannotConnect" xml:space="preserve">
+    <value>Cannot connect to {0}.</value>
+  </data>
+  <data name="ExcelExport_Filter" xml:space="preserve">
+    <value>Excel File|*.xlsx</value>
+  </data>
+  <data name="ExcelExport_SaveTitle" xml:space="preserve">
+    <value>Save Excel File</value>
+  </data>
+  <data name="Preview_VAT" xml:space="preserve">
+    <value>VAT: </value>
+  </data>
+  <data name="Preview_Barcode" xml:space="preserve">
+    <value>Barcode: </value>
+  </data>
+  <data name="Preview_PosDiscount" xml:space="preserve">
+    <value>Pos Discount: </value>
+  </data>
+  <data name="Preview_Salesperson" xml:space="preserve">
+    <value>Salesperson: </value>
+  </data>
+  <data name="Common_Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="Campaign_CannotDeleteInUse" xml:space="preserve">
+    <value>This campaign has already been used in invoices. Disable it instead of deleting.</value>
+  </data>
+  <data name="Campaign_ListTitle" xml:space="preserve">
+    <value>Campaigns</value>
+  </data>
+  <data name="Credit_Balance" xml:space="preserve">
+    <value>Balance: {0}</value>
+  </data>
+  <data name="Credit_EnterApiKey" xml:space="preserve">
+    <value>Enter API Key to add credit:</value>
+  </data>
+  <data name="Credit_AddTitle" xml:space="preserve">
+    <value>Add Credit</value>
+  </data>
+  <data name="Credit_ApiKeyAlreadyUsed" xml:space="preserve">
+    <value>This API Key has already been used!</value>
+  </data>
+  <data name="Credit_NoInternet" xml:space="preserve">
+    <value>No internet connection!</value>
+  </data>
+  <data name="Credit_ExcelLoadError" xml:space="preserve">
+    <value>Excel file could not be loaded!</value>
+  </data>
+  <data name="Credit_ApiKeyInactive" xml:space="preserve">
+    <value>Entered API Key is not active!</value>
+  </data>
+  <data name="Credit_InvalidCreditValue" xml:space="preserve">
+    <value>Credit value for API Key is incorrect!</value>
+  </data>
+  <data name="Credit_PurchaseWithApiKey" xml:space="preserve">
+    <value>Credit purchase with API Key</value>
+  </data>
+  <data name="Credit_AddedSuccessfully" xml:space="preserve">
+    <value>{0} credit added successfully!</value>
+  </data>
+  <data name="Credit_AddError" xml:space="preserve">
+    <value>Error occurred while adding credit:</value>
+  </data>
+  <data name="Credit_ExportTitle" xml:space="preserve">
+    <value>Credit Transactions</value>
+  </data>
+  <data name="Credit_Purchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="Credit_Usage" xml:space="preserve">
+    <value>Usage</value>
+  </data>
+  <data name="Campaign_DiscountDeleted" xml:space="preserve">
+    <value>Campaign discount removed.</value>
+  </data>
+  <data name="Campaign_LogTitle" xml:space="preserve">
+    <value>Campaign Log</value>
+  </data>
+  <data name="Campaign_EnterPromoCode" xml:space="preserve">
+    <value>Enter Promo Code:</value>
+  </data>
+  <data name="Campaign_PromoCodeTitle" xml:space="preserve">
+    <value>Promo Code</value>
+  </data>
+  <data name="Payment_NoRemainingAmount" xml:space="preserve">
+    <value>No remaining amount to pay.</value>
+  </data>
+  <data name="Payment_Title" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Campaign_PasswordIncorrect" xml:space="preserve">
+    <value>Campaign password incorrect!</value>
+  </data>
+  <data name="Campaign_CashOnlyAppliedDeleteWarning" xml:space="preserve">
+    <value>IsCashOnly campaign applied. Delete not allowed.</value>
+  </data>
+  <data name="Campaign_EnterPassword" xml:space="preserve">
+    <value>Enter campaign password:</value>
   </data>
 </root>

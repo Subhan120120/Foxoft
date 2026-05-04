@@ -1,4 +1,4 @@
-﻿using DevExpress.Data.Filtering;
+using DevExpress.Data.Filtering;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Utils;
@@ -42,7 +42,7 @@ namespace Foxoft
                     return file.FileName;
                 else
                 {
-                    XtraMessageBox.Show("Yalnız .repx fayl seçə bilərsiniz", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    XtraMessageBox.Show(Properties.Resources.Report_OnlyRepxAllowed, Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return "";
                 }
             }
@@ -424,7 +424,7 @@ namespace Foxoft
                     DcReport dcReport = formReport.DcReport;
                     if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString()))
                     {
-                        MessageBox.Show("Yetkiniz yoxdur! ");
+                        XtraMessageBox.Show(Properties.Resources.Report_NoPermission, Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -470,7 +470,7 @@ namespace Foxoft
 
             BarButtonItem BBI_manage = new BarButtonItem
             {
-                Caption = "İdarə Et",
+                Caption = Properties.Resources.Common_Manage,
                 ImageOptions = { SvgImage = svg["setting"] },
                 Name = "Manage"
             };

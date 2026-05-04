@@ -46,15 +46,15 @@ namespace Foxoft
         private void UpdateBalance(List<TrCredit> list)
         {
             decimal balance = list.Sum(x => x.Amount);
-            bSI_Balance.Caption = $"Balans: {balance:n2}";
+            bSI_Balance.Caption = string.Format(Properties.Resources.Credit_Balance, balance.ToString("n2"));
             bSI_Balance.ItemAppearance.Normal.ForeColor = balance >= 0 ? Color.Green : Color.Red;
         }
 
         private void AddCredit()
         {
             string apiKey = XtraInputBox.Show(
-                "Kredit əlavə etmək üçün API Key daxil edin:",
-                "Kredit Əlavə Et",
+                Properties.Resources.Credit_EnterApiKey,
+                Properties.Resources.Credit_AddTitle,
                 "");
 
             if (string.IsNullOrWhiteSpace(apiKey))
@@ -72,8 +72,8 @@ namespace Foxoft
                 if (alreadyUsed)
                 {
                     XtraMessageBox.Show(
-                        "Bu API Key artıq istifadə olunub!",
-                        "Xəta",
+                        Properties.Resources.Credit_ApiKeyAlreadyUsed,
+                        Properties.Resources.Common_Error,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                     return;
@@ -84,8 +84,8 @@ namespace Foxoft
             if (!CheckInternet())
             {
                 XtraMessageBox.Show(
-                    "İnternet bağlantısı yoxdur!",
-                    "Xəta",
+                    Properties.Resources.Credit_NoInternet,
+                    Properties.Resources.Common_Error,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
@@ -102,8 +102,8 @@ namespace Foxoft
                 if (excelStream == null || excelStream.Length == 0)
                 {
                     XtraMessageBox.Show(
-                        "Excel faylı yüklənə bilmədi!",
-                        "Xəta",
+                        Properties.Resources.Credit_ExcelLoadError,
+                        Properties.Resources.Common_Error,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -115,8 +115,8 @@ namespace Foxoft
                 if (creditValue == null)
                 {
                     XtraMessageBox.Show(
-                        "Daxil edilən API Key aktiv deyil!",
-                        "Xəta",
+                        Properties.Resources.Credit_ApiKeyInactive,
+                        Properties.Resources.Common_Error,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                     return;
@@ -125,8 +125,8 @@ namespace Foxoft
                 if (creditValue <= 0)
                 {
                     XtraMessageBox.Show(
-                        "API Key-ə aid kredit dəyəri düzgün deyil!",
-                        "Xəta",
+                        Properties.Resources.Credit_InvalidCreditValue,
+                        Properties.Resources.Common_Error,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                     return;
@@ -141,7 +141,7 @@ namespace Foxoft
                         TransactionType = CreditTransactionType.Purchase,
                         Amount = creditValue.Value,
                         ServiceType = null,
-                        Description = $"API Key ilə kredit alışı",
+                        Description = Properties.Resources.Credit_PurchaseWithApiKey,
                         ApiKeyHash = apiKeyHash
                     };
 
@@ -150,8 +150,8 @@ namespace Foxoft
                 }
 
                 XtraMessageBox.Show(
-                    $"{creditValue.Value:n2} kredit uğurla əlavə edildi!",
-                    "Uğurlu",
+                    string.Format(Properties.Resources.Credit_AddedSuccessfully, creditValue.Value.ToString("n2")),
+                    Properties.Resources.Common_Info,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
@@ -160,8 +160,8 @@ namespace Foxoft
             catch (Exception ex)
             {
                 XtraMessageBox.Show(
-                    $"Kredit əlavə edilərkən xəta baş verdi:\n{ex.Message}",
-                    "Xəta",
+                    Properties.Resources.Credit_AddError + "\n" + ex.Message,
+                    Properties.Resources.Common_Error,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -368,7 +368,7 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CustomExtensions.ExportToExcel(this, "Kredit Əməliyyatları", gC_CreditList);
+            CustomExtensions.ExportToExcel(this, Properties.Resources.Credit_ExportTitle, gC_CreditList);
         }
 
         private void gC_CreditList_ProcessGridKey(object sender, KeyEventArgs e)
@@ -386,8 +386,8 @@ namespace Foxoft
             {
                 e.DisplayText = transactionType switch
                 {
-                    CreditTransactionType.Purchase => "Satın alma",
-                    CreditTransactionType.Usage => "Xərc",
+                    CreditTransactionType.Purchase => Properties.Resources.Credit_Purchase,
+                    CreditTransactionType.Usage => Properties.Resources.Credit_Usage,
                     _ => transactionType.ToString()
                 };
             }

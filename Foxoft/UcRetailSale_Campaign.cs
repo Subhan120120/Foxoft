@@ -89,8 +89,8 @@ namespace Foxoft
             if (gV_InvoiceLine.DataRowCount <= 0)
             {
                 if (!silentIfNone)
-                    XtraMessageBox.Show("Fakturada məhsul yoxdur.",
-                        Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    XtraMessageBox.Show(Properties.Resources.Campaign_NoProductInInvoice,
+                        Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -117,7 +117,7 @@ namespace Foxoft
             if (trInvoiceHeader is null) return;
 
             if (XtraMessageBox.Show(
-                "Tətbiq edilmiş bütün kampaniya endirimi silinsin?",
+                Properties.Resources.Campaign_ConfirmDelete,
                 Resources.Common_Attention,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) != DialogResult.Yes) return;
@@ -131,7 +131,7 @@ namespace Foxoft
             gV_InvoiceLine.RefreshData();
             SaveInvoice();
 
-            XtraMessageBox.Show("Kampaniya endirimi silindi.",
+            XtraMessageBox.Show(Properties.Resources.Campaign_DiscountDeleted,
                 "Kampaniya", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -144,8 +144,8 @@ namespace Foxoft
             var logs = _campaignService.GetCampaignLogs(trInvoiceHeader.InvoiceHeaderId);
             if (!logs.Any())
             {
-                XtraMessageBox.Show("Heç bir kampaniya tətbiq edilməyib.",
-                    "Kampaniya Loqu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show(Properties.Resources.Campaign_NoCampaignApplied,
+                    Properties.Resources.Campaign_LogTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -156,14 +156,14 @@ namespace Foxoft
                     $"  Sətir sayı : {g.Count()}\n" +
                     $"  Endirim    : {g.Sum(l => l.DiscountAmount):n2}  ({g.Sum(l => l.DiscountAmountLoc):n2} AZN)"));
 
-            XtraMessageBox.Show(text, "Kampaniya Loqu",
+            XtraMessageBox.Show(text, Properties.Resources.Campaign_LogTitle,
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>"Promo Kod" düyməsi</summary>
         private void btn_PromoCode_Click(object sender, EventArgs e)
         {
-            string input = Interaction.InputBox("Promo kodu daxil edin:", "Promo Kod",
+            string input = Interaction.InputBox(Properties.Resources.Campaign_EnterPromoCode, Properties.Resources.Campaign_PromoCodeTitle,
                 _promoCode ?? "").Trim();
 
             if (string.IsNullOrEmpty(input)) return;
@@ -182,7 +182,7 @@ namespace Foxoft
             gV_InvoiceLine.RefreshData();
             if (result.Success) SaveInvoice();
 
-            XtraMessageBox.Show(result.Message, "Promo Kod",
+            XtraMessageBox.Show(result.Message, Properties.Resources.Campaign_PromoCodeTitle,
                 MessageBoxButtons.OK,
                 result.Success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
         }
@@ -303,7 +303,7 @@ namespace Foxoft
                 string pwd = Interaction.InputBox("Kampaniya şifrəsini daxil edin:", "Şifrə", "");
                 if (pwd != campaign.CampaignPassword)
                 {
-                    XtraMessageBox.Show("Şifrə yanlışdır! Kampaniya tətbiq edilmədi.",
+                    XtraMessageBox.Show(Properties.Resources.Campaign_PasswordIncorrect,
                         Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
@@ -315,7 +315,7 @@ namespace Foxoft
 
             if (!result.Success)
             {
-                XtraMessageBox.Show("Kampaniya tətbiq edilmədi.",
+                XtraMessageBox.Show(Properties.Resources.Campaign_NotApplied,
                     Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }

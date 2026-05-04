@@ -156,8 +156,49 @@ namespace Foxoft
 
         private void FormInvoice_Load(object sender, EventArgs e)
         {
-
+            LoadShortcuts();
         }
+
+        private void LoadShortcuts()
+        {
+            // Button adı → BarButtonItem referansı
+            var buttonMap = new Dictionary<string, DevExpress.XtraBars.BarButtonItem>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["bBI_Save"]              = bBI_Save,
+                ["bBI_SaveAndNew"]        = bBI_SaveAndNew,
+                ["bBI_SaveAndQuit"]       = bBI_SaveAndQuit,
+                ["bBI_Payment"]           = bBI_Payment,
+                ["bBI_New"]               = bBI_New,
+                ["bBI_reportPreview"]     = bBI_reportPreview,
+                ["bBI_DeleteInvoice"]     = bBI_DeleteInvoice,
+                ["bBI_PaymentDelete"]     = bBI_DeletePayment,
+                ["bBI_CopyInvoice"]       = bBI_CopyInvoice,
+                ["bBI_Whatsapp"]          = bBI_Whatsapp,
+                ["BBI_EditInvoice"]       = BBI_ModifyInvoice,
+                ["BBI_exportXLSX"]        = BBI_exportXLSX,
+                ["BBI_ImportExcel"]       = BBI_ImportExcel,
+                ["BBI_ReportPrintFast"]   = BBI_ReportPrintFast,
+                ["BBI_picture"]           = BBI_picture,
+                ["BBI_InvoiceExpenses"]   = BBI_InvoiceExpenses
+                // Note: Kampaniya düymələri kimi bəzi buttonlar bəlkə tam başqa yerdədir, onları tapana qədər commentdə saxlayaq.
+            };
+
+            var shortcuts = Foxoft.AppCode.ShortcutHelper.LoadShortcuts("FormInvoice");
+
+            foreach (var kvp in shortcuts)
+            {
+                if (buttonMap.TryGetValue(kvp.Key, out var item) && item != null)
+                {
+                    // DevExpress BarButtonItem üçün ItemShortcut istifadə olunur
+                    if (kvp.Value != Keys.None)
+                    {
+                        item.ItemShortcut = new DevExpress.XtraBars.BarShortcut(kvp.Value);
+                        // Text-ə əlavə etmirik çünki DevExpress özü tooltip-də göstərir (və ya ItemShortcut property özü kifayət edir)
+                    }
+                }
+            }
+        }
+
 
         private void FormInvoice_Shown(object sender, EventArgs e)
         {
@@ -1354,7 +1395,7 @@ namespace Foxoft
 
                     ClearControlsAddNew();
                 }
-                else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                else if (XtraMessageBox.Show(Properties.Resources.Invoice_PaymentZeroReturn, Properties.Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                 {
                     ClearControlsAddNew();
                 }
@@ -1670,7 +1711,7 @@ namespace Foxoft
             var apiSetting = efMethods.SelectEntityById<DcWhatsAppProviderSetting>(1);
             if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl) || string.IsNullOrEmpty(apiSetting.InstanceName) || string.IsNullOrEmpty(apiSetting.ApiKey))
             {
-                XtraMessageBox.Show("API ayarları tam deyil. Lütfən AppSetting-dən tənzimləyin.");
+                XtraMessageBox.Show(Properties.Resources.Payment_ApiSettingsIncomplete);
                 return;
             }
 
@@ -1689,7 +1730,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show($"Xəta baş verdi: {ex.Message}");
+                XtraMessageBox.Show(Properties.Resources.Common_ErrorOccurred + " " + ex.Message);
             }
         }
 
@@ -2416,7 +2457,7 @@ namespace Foxoft
             SplashScreenManager.CloseForm(false);
 
             if (!string.IsNullOrEmpty(errorCodes))
-                MessageBox.Show("Aşağıdakı kodlar üzrə Dəyər tapılmadı \n" + errorCodes, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Properties.Resources.Invoice_NoValueFoundForCodes + "\n" + errorCodes, Properties.Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
 
@@ -2594,7 +2635,7 @@ namespace Foxoft
             string updatedUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + updatedCurrAcc?.CurrAccDesc + " " + updatedCurrAcc?.FirstName;
             string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate.ToString();
 
-            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, Properties.Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BBI_picture_ItemClick(object sender, ItemClickEventArgs e)
@@ -2602,7 +2643,7 @@ namespace Foxoft
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ExpenseOfInvoice");
             if (!currAccHasClaims)
             {
-                MessageBox.Show("Yetkiniz yoxdur! ");
+                MessageBox.Show(Properties.Resources.Report_NoPermission);
                 return;
             }
 
@@ -3074,14 +3115,14 @@ namespace Foxoft
             {
                 _loyaltyService.DetachCard(trInvoiceHeader);
                 txt_LoyaltyEarn.EditValue = 0m;
-                XtraMessageBox.Show("Bonus Kart Ləğv olundu!");
+                XtraMessageBox.Show(Properties.Resources.BonusCard_Cancelled, Properties.Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             var card = efMethods.SelectLoyalityCard(bonusCardNum);
             if (card is null)
             {
-                XtraMessageBox.Show("Bonus Kartı tapılmadı!");
+                XtraMessageBox.Show(Properties.Resources.BonusCard_NotFound, Properties.Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

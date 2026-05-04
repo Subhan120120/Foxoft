@@ -491,7 +491,7 @@ namespace Foxoft
             var apiSetting = efMethods.SelectEntityById<DcWhatsAppProviderSetting>(1);
             if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl) || string.IsNullOrEmpty(apiSetting.InstanceName) || string.IsNullOrEmpty(apiSetting.ApiKey))
             {
-                XtraMessageBox.Show("API ayarları tam deyil. Lütfən AppSetting-dən tənzimləyin.");
+                XtraMessageBox.Show(Properties.Resources.Payment_ApiSettingsIncomplete);
                 return;
             }
 
@@ -509,7 +509,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show($"Xəta baş verdi: {ex.Message}");
+                XtraMessageBox.Show(Properties.Resources.Common_ErrorOccurred + " " + ex.Message);
             }
         }
 
