@@ -9739,6 +9739,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Store Description.
+        /// </summary>
+        public static string Form_Store_CurrAccDesc {
+            get {
+                return ResourceManager.GetString("Form_Store_CurrAccDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Acount Type Code.
+        /// </summary>
+        public static string Form_Store_CurrAccTypeCode {
+            get {
+                return ResourceManager.GetString("Form_Store_CurrAccTypeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default unit of measure.
         /// </summary>
         public static string Form_Store_DefaultUnitOfMeasure {
@@ -9762,6 +9780,15 @@ namespace Foxoft.Properties {
         public static string Form_Store_ImageFolder {
             get {
                 return ResourceManager.GetString("Form_Store_ImageFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Disabled.
+        /// </summary>
+        public static string Form_Store_IsDisabled {
+            get {
+                return ResourceManager.GetString("Form_Store_IsDisabled", resourceCulture);
             }
         }
         

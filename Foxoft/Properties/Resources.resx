@@ -3608,4 +3608,13 @@ To delete, cancel the receipt!</value>
   <data name="Entity_AppSetting_UseCampaign" xml:space="preserve">
     <value>Use Campaign</value>
   </data>
+  <data name="Form_Store_CurrAccDesc" xml:space="preserve">
+    <value>Store Description</value>
+  </data>
+  <data name="Form_Store_IsDisabled" xml:space="preserve">
+    <value>Is Disabled</value>
+  </data>
+  <data name="Form_Store_CurrAccTypeCode" xml:space="preserve">
+    <value>Current Acount Type Code</value>
+  </data>
 </root>

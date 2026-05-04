@@ -3608,4 +3608,13 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_AppSetting_UseCampaign" xml:space="preserve">
     <value>Kampaniya Enidirimi İstidfadə et</value>
   </data>
+  <data name="Form_Store_CurrAccDesc" xml:space="preserve">
+    <value>Mağaza Adı</value>
+  </data>
+  <data name="Form_Store_IsDisabled" xml:space="preserve">
+    <value>Qeyri-Aktiv</value>
+  </data>
+  <data name="Form_Store_CurrAccTypeCode" xml:space="preserve">
+    <value>Cari Hesab Tipi</value>
+  </data>
 </root>

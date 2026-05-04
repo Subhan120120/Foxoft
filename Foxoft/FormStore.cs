@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraDataLayout;
+using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
 using Foxoft.Models;
@@ -70,6 +70,9 @@ namespace Foxoft
             string NewDocNum = efMethods.GetNextDocNum(true, "C", nameof(DcCurrAcc.CurrAccCode), "DcCurrAccs", 4);
             dcCurrAcc.CurrAccCode = NewDocNum;
 
+            if (dcCurrAcc.CurrAccTypeCode == 4)
+                dcCurrAcc.SettingStore = new SettingStore { StoreCode = dcCurrAcc.CurrAccCode };
+
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;
         }
 
@@ -91,6 +94,9 @@ namespace Foxoft
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
+
+                if (dcCurrAcc.CurrAccTypeCode == 4 && dcCurrAcc.SettingStore == null)
+                    dcCurrAcc.SettingStore = new SettingStore { StoreCode = dcCurrAcc.CurrAccCode };
 
                 if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode))
                     efMethods.InsertEntity(dcCurrAcc);

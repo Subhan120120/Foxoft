@@ -398,7 +398,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = Resources.ERP_ACE_StoreList;
+            Text = "Store List";
             Activated += FormStoreList_Activated;
             KeyDown += FormStoreList_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_StoreList).EndInit();

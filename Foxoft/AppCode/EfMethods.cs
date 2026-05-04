@@ -1,4 +1,4 @@
-﻿using DevExpress.CodeParser;
+using DevExpress.CodeParser;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
@@ -2031,6 +2031,12 @@ namespace Foxoft
             }
 
             return db.SaveChanges();
+        }
+
+        public List<TrProductFeature> SelectProductFeatures(string productCode)
+        {
+            using subContext db = new();
+            return db.TrProductFeatures.Where(x => x.ProductCode == productCode).ToList();
         }
 
         public int UpdateDcFeature_Value(byte featureTypeId, string productCode, string value)

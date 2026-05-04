@@ -60,6 +60,7 @@ namespace Foxoft
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
                 BBI_Scales.Enabled = true;
+                BBI_ProductFeatureClone.Enabled = true;
             }
 
             LUE_ProductTypeCode.Properties.DataSource = efMethods.SelectEntities<DcProductType>();
@@ -281,8 +282,15 @@ namespace Foxoft
         private void btnEdit_Hierarchy_EditValueChanged(object sender, EventArgs e)
         {
             if (!isNew)
+            {
                 BBI_ProductFeature.Enabled = true;
-            else BBI_ProductFeature.Enabled = false;
+                BBI_ProductFeatureClone.Enabled = true;
+            }
+            else
+            {
+                BBI_ProductFeature.Enabled = false;
+                BBI_ProductFeatureClone.Enabled = false;
+            }
         }
 
         private void BBI_ProductFeature_ItemClick(object sender, ItemClickEventArgs e)
@@ -292,6 +300,30 @@ namespace Foxoft
 
             FormProductFeature frm = new(dcProduct.ProductCode);
             frm.ShowDialog();
+        }
+
+        private void BBI_ProductFeatureClone_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            using FormProductList frm = new(new byte[] { 1, 2, 3, 4 }, false);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                string sourceProductCode = frm.dcProduct.ProductCode;
+                if (sourceProductCode == dcProduct.ProductCode)
+                {
+                    XtraMessageBox.Show("Eyni məhsuldan klonlamaq olmaz.", Resources.Common_Attention);
+                    return;
+                }
+
+                if (XtraMessageBox.Show(sourceProductCode + " kodlu məhsulun özəllikləri klonlansın?", Resources.Common_Attention, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    var features = efMethods.SelectProductFeatures(sourceProductCode);
+                    foreach (var feature in features)
+                    {
+                        efMethods.UpdateDcFeature_Value((byte)feature.FeatureTypeId, dcProduct.ProductCode, feature.FeatureCode);
+                    }
+                    XtraMessageBox.Show("Özəlliklər uğurla klonlandı.", Resources.Common_Info);
+                }
+            }
         }
 
         private void BBI_ProductDiscount_ItemClick(object sender, ItemClickEventArgs e)

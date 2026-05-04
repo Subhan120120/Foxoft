@@ -190,7 +190,7 @@ namespace Foxoft
             IsDisabledCheckEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "IsDisabled", true));
             IsDisabledCheckEdit.Location = new Point(273, 156);
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
-            IsDisabledCheckEdit.Properties.Caption = Resources.Form_Store_Save;
+            IsDisabledCheckEdit.Properties.Caption = Resources.Form_Store_IsDisabled;
             IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             IsDisabledCheckEdit.Size = new Size(258, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
@@ -380,7 +380,7 @@ namespace Foxoft
             ItemForCurrAccDesc.Location = new Point(0, 24);
             ItemForCurrAccDesc.Name = "ItemForCurrAccDesc";
             ItemForCurrAccDesc.Size = new Size(261, 24);
-            ItemForCurrAccDesc.Text = Resources.Form_Store_Save;
+            ItemForCurrAccDesc.Text = Resources.Form_Store_CurrAccDesc;
             ItemForCurrAccDesc.TextSize = new Size(113, 13);
             // 
             // ItemForSalesmanContinuity
@@ -437,7 +437,7 @@ namespace Foxoft
             ItemForCurrAccTypeCode.Location = new Point(261, 0);
             ItemForCurrAccTypeCode.Name = "ItemForCurrAccTypeCode";
             ItemForCurrAccTypeCode.Size = new Size(262, 24);
-            ItemForCurrAccTypeCode.Text = Resources.Form_Store_AccountCode;
+            ItemForCurrAccTypeCode.Text = Resources.Form_Store_CurrAccTypeCode;
             ItemForCurrAccTypeCode.TextSize = new Size(113, 13);
             // 
             // ItemForAddress

@@ -69,6 +69,7 @@ namespace Foxoft
             barManager1 = new DevExpress.XtraBars.BarManager(components);
             bar1 = new DevExpress.XtraBars.Bar();
             BBI_ProductFeature = new DevExpress.XtraBars.BarButtonItem();
+            BBI_ProductFeatureClone = new DevExpress.XtraBars.BarButtonItem();
             BBI_ProductDiscount = new DevExpress.XtraBars.BarButtonItem();
             BBI_ProductBarcode = new DevExpress.XtraBars.BarButtonItem();
             BBI_ProductStaticPriceList = new DevExpress.XtraBars.BarButtonItem();
@@ -97,15 +98,15 @@ namespace Foxoft
             ProductCode2 = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_hierarchyCode = new DevExpress.XtraLayout.LayoutControlItem();
             tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
+            autoGroupForPrices = new DevExpress.XtraLayout.LayoutControlGroup();
+            ItemForPurchasePrice = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForWholesalePrice = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForRetailPrice = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
-            autoGroupForPrices = new DevExpress.XtraLayout.LayoutControlGroup();
-            ItemForPurchasePrice = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForWholesalePrice = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForRetailPrice = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -164,15 +165,15 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ProductCode2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tabbedControlGroup1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)autoGroupForPrices).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem11).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)autoGroupForPrices).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
@@ -552,8 +553,8 @@ namespace Foxoft
             barManager1.DockControls.Add(barDockControlLeft);
             barManager1.DockControls.Add(barDockControlRight);
             barManager1.Form = this;
-            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_ProductFeature, BBI_ProductDiscount, BBI_ProductBarcode, BBI_GalleryLoad, BBI_GalleryDelete, BBI_GalleryPaste, BBI_GalleryCopy, BBI_ProductStaticPriceList, BBI_Scales });
-            barManager1.MaxItemId = 11;
+            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_ProductFeature, BBI_ProductDiscount, BBI_ProductBarcode, BBI_GalleryLoad, BBI_GalleryDelete, BBI_GalleryPaste, BBI_GalleryCopy, BBI_ProductStaticPriceList, BBI_Scales, BBI_ProductFeatureClone });
+            barManager1.MaxItemId = 12;
             barManager1.StatusBar = bar3;
             // 
             // bar1
@@ -562,7 +563,7 @@ namespace Foxoft
             bar1.DockCol = 0;
             bar1.DockRow = 1;
             bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
-            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductFeature), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductDiscount), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductBarcode), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductStaticPriceList), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_Scales, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph) });
+            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductFeature), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_ProductFeatureClone, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductDiscount), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductBarcode), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductStaticPriceList), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_Scales, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph) });
             bar1.Text = "Tools";
             // 
             // BBI_ProductFeature
@@ -574,6 +575,16 @@ namespace Foxoft
             BBI_ProductFeature.Name = "BBI_ProductFeature";
             BBI_ProductFeature.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             BBI_ProductFeature.ItemClick += BBI_ProductFeature_ItemClick;
+            // 
+            // BBI_ProductFeatureClone
+            // 
+            BBI_ProductFeatureClone.Caption = "Klonla";
+            BBI_ProductFeatureClone.Enabled = false;
+            BBI_ProductFeatureClone.Id = 11;
+            BBI_ProductFeatureClone.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductFeatureClone.ImageOptions.SvgImage");
+            BBI_ProductFeatureClone.Name = "BBI_ProductFeatureClone";
+            BBI_ProductFeatureClone.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            BBI_ProductFeatureClone.ItemClick += BBI_ProductFeatureClone_ItemClick;
             // 
             // BBI_ProductDiscount
             // 
@@ -821,6 +832,39 @@ namespace Foxoft
             tabbedControlGroup1.Size = new Size(281, 143);
             tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { autoGroupForPrices, layoutControlGroup2 });
             // 
+            // autoGroupForPrices
+            // 
+            autoGroupForPrices.GroupStyle = GroupStyle.Light;
+            autoGroupForPrices.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPurchasePrice, ItemForWholesalePrice, ItemForRetailPrice });
+            autoGroupForPrices.Location = new Point(0, 0);
+            autoGroupForPrices.Name = "autoGroupForQiymətlər";
+            autoGroupForPrices.Size = new Size(257, 96);
+            autoGroupForPrices.Text = Resources.Entity_Product_Prices;
+            // 
+            // ItemForPurchasePrice
+            // 
+            ItemForPurchasePrice.Control = PurchasePriceTextEdit;
+            ItemForPurchasePrice.Location = new Point(0, 0);
+            ItemForPurchasePrice.Name = "ItemForPurchasePrice";
+            ItemForPurchasePrice.Size = new Size(257, 24);
+            ItemForPurchasePrice.TextSize = new Size(114, 13);
+            // 
+            // ItemForWholesalePrice
+            // 
+            ItemForWholesalePrice.Control = WholesalePriceTextEdit;
+            ItemForWholesalePrice.Location = new Point(0, 24);
+            ItemForWholesalePrice.Name = "ItemForWholesalePrice";
+            ItemForWholesalePrice.Size = new Size(257, 24);
+            ItemForWholesalePrice.TextSize = new Size(114, 13);
+            // 
+            // ItemForRetailPrice
+            // 
+            ItemForRetailPrice.Control = RetailPriceTextEdit;
+            ItemForRetailPrice.Location = new Point(0, 48);
+            ItemForRetailPrice.Name = "ItemForRetailPrice";
+            ItemForRetailPrice.Size = new Size(257, 48);
+            ItemForRetailPrice.TextSize = new Size(114, 13);
+            // 
             // layoutControlGroup2
             // 
             layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem6, layoutControlItem7, layoutControlItem9, layoutControlItem11 });
@@ -860,39 +904,6 @@ namespace Foxoft
             layoutControlItem11.Name = "layoutControlItem11";
             layoutControlItem11.Size = new Size(257, 24);
             layoutControlItem11.TextSize = new Size(114, 13);
-            // 
-            // autoGroupForPrices
-            // 
-            autoGroupForPrices.GroupStyle = GroupStyle.Light;
-            autoGroupForPrices.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPurchasePrice, ItemForWholesalePrice, ItemForRetailPrice });
-            autoGroupForPrices.Location = new Point(0, 0);
-            autoGroupForPrices.Name = "autoGroupForQiymətlər";
-            autoGroupForPrices.Size = new Size(257, 96);
-            autoGroupForPrices.Text = Resources.Entity_Product_Prices;
-            // 
-            // ItemForPurchasePrice
-            // 
-            ItemForPurchasePrice.Control = PurchasePriceTextEdit;
-            ItemForPurchasePrice.Location = new Point(0, 0);
-            ItemForPurchasePrice.Name = "ItemForPurchasePrice";
-            ItemForPurchasePrice.Size = new Size(257, 24);
-            ItemForPurchasePrice.TextSize = new Size(114, 13);
-            // 
-            // ItemForWholesalePrice
-            // 
-            ItemForWholesalePrice.Control = WholesalePriceTextEdit;
-            ItemForWholesalePrice.Location = new Point(0, 24);
-            ItemForWholesalePrice.Name = "ItemForWholesalePrice";
-            ItemForWholesalePrice.Size = new Size(257, 24);
-            ItemForWholesalePrice.TextSize = new Size(114, 13);
-            // 
-            // ItemForRetailPrice
-            // 
-            ItemForRetailPrice.Control = RetailPriceTextEdit;
-            ItemForRetailPrice.Location = new Point(0, 48);
-            ItemForRetailPrice.Name = "ItemForRetailPrice";
-            ItemForRetailPrice.Size = new Size(257, 48);
-            ItemForRetailPrice.TextSize = new Size(114, 13);
             // 
             // layoutControlItem2
             // 
@@ -1066,15 +1077,15 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ProductCode2).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)tabbedControlGroup1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)autoGroupForPrices).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup2).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem7).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem9).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem11).EndInit();
-            ((System.ComponentModel.ISupportInitialize)autoGroupForPrices).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
@@ -1190,5 +1201,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
         private DevExpress.XtraEditors.TextEdit BalanceWarningLevelTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForBalanceWarningLevel;
+        private DevExpress.XtraBars.BarButtonItem BBI_ProductFeatureClone;
     }
 }
