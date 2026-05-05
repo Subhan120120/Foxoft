@@ -2,6 +2,7 @@
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraPrinting;
+using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using Foxoft.AppCode;
@@ -64,9 +65,21 @@ namespace Foxoft
 
             if (xReport is not null)
             {
+                SetParameterValue(xReport, "ImageRootPath", settingStore.ImageFolder);
+                SetParameterValue(xReport, "StoreName", settingStore.DcStore.CurrAccDesc);
+
                 documentViewer1.DocumentSource = xReport;
                 xReport.CreateDocument();
                 Show();
+            }
+        }
+
+        private void SetParameterValue(XtraReport report, string parameterName, object value)
+        {
+            if (report.Parameters[parameterName] is not null)
+            {
+                report.Parameters[parameterName].Value = value ?? "";
+                report.Parameters[parameterName].Visible = false;
             }
         }
 

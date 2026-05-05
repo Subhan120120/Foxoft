@@ -2188,7 +2188,8 @@ namespace Foxoft
         public SettingStore SelectSettingStore(string StoreCode)
         {
             using subContext db = new();
-            return db.SettingStores.FirstOrDefault(x => x.StoreCode == StoreCode);
+            return db.SettingStores.Include(x => x.DcStore)
+                .FirstOrDefault(x => x.StoreCode == StoreCode);
         }
 
         public DcLoyaltyCard SelectLoyalityCard(string loaltyCardNumb)
