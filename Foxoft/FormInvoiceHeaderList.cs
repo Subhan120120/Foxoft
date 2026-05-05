@@ -25,15 +25,9 @@ namespace Foxoft
         subContext dbContext;
         public string processCode { get; set; }
 
-
         public FormInvoiceHeaderList()
         {
             InitializeComponent();
-
-            byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-            MemoryStream stream = new(byteArray);
-            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-            gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
 
             gV_InvoiceHeaderList.OptionsFind.FindMode = FindMode.Always;
         }
@@ -112,11 +106,9 @@ namespace Foxoft
 
             trInvoiceHeadersBindingSource.DataSource = headerList;
 
-            string storeCode = Authorization.StoreCode;
-            gV_InvoiceHeaderList.ActiveFilterString =
-                $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{storeCode}'";
-
             LoadGridLayout();
+
+            gV_InvoiceHeaderList.ActiveFilterString = $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{Authorization.StoreCode}'";
         }
 
         private void gV_TrInvoiceHeaderList_DoubleClick(object sender, EventArgs e)
@@ -130,7 +122,7 @@ namespace Foxoft
 
         private void ApproveInvoiceHeader()
         {
-                DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void gC_InvoiceHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
@@ -227,6 +219,13 @@ namespace Foxoft
 
             if (File.Exists(layoutFilePath))
                 gV_InvoiceHeaderList.RestoreLayoutFromXml(layoutFilePath);
+            else
+            {
+                byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
+                MemoryStream stream = new(byteArray);
+                OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+                gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
+            }
         }
 
         private void SaveGridLayout()
