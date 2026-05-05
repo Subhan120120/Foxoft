@@ -121,7 +121,7 @@
     <value>Proqramdan Çıx</value>
   </data>
   <data name="Common_Attention" xml:space="preserve">
-    <value>DiqqÉ™t</value>
+    <value>Diqqət</value>
   </data>
   <data name="ERP_OpenFormError" xml:space="preserve">
     <value>{0} açıla bilmir: {1}</value>
@@ -2637,7 +2637,7 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
     <value>Yeni Ödəniş</value>
   </data>
   <data name="Common_Info" xml:space="preserve">
-    <value>MÉ™lumat</value>
+    <value>Məlumat</value>
   </data>
   <data name="Form_MoneyTransfer_Label_CurrAccBalanceBefore" xml:space="preserve">
     <value>Cari Hesab Əvvəlki Borc: </value>
@@ -3651,88 +3651,88 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Xəta: {0}</value>
   </data>
   <data name="Common_Error" xml:space="preserve">
-    <value>XÉ™ta</value>
+    <value>Xəta</value>
   </data>
   <data name="Common_SavedSuccessfully" xml:space="preserve">
-    <value>UÄŸurla yadda saxlanÄ±ldÄ±.</value>
+    <value>Uğurla yadda saxlanıldı.</value>
   </data>
   <data name="Common_ErrorOccurred" xml:space="preserve">
-    <value>XÉ™ta baÅŸ verdi.</value>
+    <value>Xəta baş verdi.</value>
   </data>
   <data name="Campaign_ExcelImportError" xml:space="preserve">
-    <value>Excel import zamanÄ± xÉ™ta baÅŸ verdi.</value>
+    <value>Excel import zamanı xəta baş verdi.</value>
   </data>
   <data name="Invoice_PaymentZeroReturn" xml:space="preserve">
-    <value>Ã–dÉ™mÉ™ 0-a bÉ™rabÉ™rdir! Fakturaya qayÄ±tmaq istÉ™yirsiz?</value>
+    <value>Ödəmə 0-a bərabərdir! Fakturaya qayıtmaq istəyirsiz?</value>
   </data>
   <data name="Invoice_NoValueFoundForCodes" xml:space="preserve">
-    <value>AÅŸaÄŸÄ±dakÄ± kodlar Ã¼zrÉ™ dÉ™yÉ™r tapÄ±lmadÄ±.</value>
+    <value>Aşağıdakı kodlar üzrə dəyər tapılmadı.</value>
   </data>
   <data name="Common_OpenConfirmation" xml:space="preserve">
-    <value>AÃ§maq istÉ™yirsiz?</value>
+    <value>Açmaq istəyirsiz?</value>
   </data>
   <data name="Report_OnlyRepxAllowed" xml:space="preserve">
-    <value>YalnÄ±z .repx fayl seÃ§É™ bilÉ™rsiniz.</value>
+    <value>Yalnız .repx fayl seçə bilərsiniz.</value>
   </data>
   <data name="BonusCard_Cancelled" xml:space="preserve">
-    <value>Bonus Kart LÉ™ÄŸv olundu!</value>
+    <value>Bonus Kart Ləğv olundu!</value>
   </data>
   <data name="BonusCard_NotFound" xml:space="preserve">
-    <value>Bonus KartÄ± tapÄ±lmadÄ±!</value>
+    <value>Bonus Kartı tapılmadı!</value>
   </data>
   <data name="Campaign_NoProductInInvoice" xml:space="preserve">
-    <value>Fakturada mÉ™hsul yoxdur.</value>
+    <value>Fakturada məhsul yoxdur.</value>
   </data>
   <data name="Campaign_NoCampaignApplied" xml:space="preserve">
-    <value>HeÃ§ bir kampaniya tÉ™tbiq edilmÉ™yib.</value>
+    <value>Heç bir kampaniya tətbiq edilməyib.</value>
   </data>
   <data name="Campaign_DiscountRemoved" xml:space="preserve">
     <value>Kampaniya endirimi silindi.</value>
   </data>
   <data name="Campaign_NoAmountToPay" xml:space="preserve">
-    <value>Ã–dÉ™nilÉ™cÉ™k mÉ™blÉ™ÄŸ qalmayÄ±b.</value>
+    <value>Ödəniləcək məbləğ qalmayıb.</value>
   </data>
   <data name="Campaign_InvalidPassword" xml:space="preserve">
-    <value>ÅžifrÉ™ yanlÄ±ÅŸdÄ±r! Kampaniya tÉ™tbiq edilmÉ™di.</value>
+    <value>Şifrə yanlışdır! Kampaniya tətbiq edilmədi.</value>
   </data>
   <data name="Campaign_NotApplied" xml:space="preserve">
-    <value>Kampaniya tÉ™tbiq edilmÉ™di.</value>
+    <value>Kampaniya tətbiq edilmədi.</value>
   </data>
   <data name="Report_NotFound" xml:space="preserve">
-    <value>Report_Embedded_PaymentReport tapÄ±lmadÄ±.</value>
+    <value>Report_Embedded_PaymentReport tapılmadı.</value>
   </data>
   <data name="Payment_ApiSettingsIncomplete" xml:space="preserve">
-    <value>API ayarlarÄ± tam deyil. LÃ¼tfÉ™n AppSetting-dÉ™n tÉ™nzimlÉ™yin.</value>
+    <value>API ayarları tam deyil. Lütfən AppSetting-dən tənzimləyin.</value>
   </data>
   <data name="Product_CannotCloneSameProduct" xml:space="preserve">
-    <value>Eyni mÉ™hsuldan klonlamaq olmaz.</value>
+    <value>Eyni məhsuldan klonlamaq olmaz.</value>
   </data>
   <data name="Product_FeaturesClonedSuccessfully" xml:space="preserve">
-    <value>Ã–zÉ™lliklÉ™r uÄŸurla klonlandÄ±.</value>
+    <value>Özəlliklər uğurla klonlandı.</value>
   </data>
   <data name="Auth_StoreNotActive" xml:space="preserve">
-    <value>MaÄŸaza Aktiv Deyil</value>
+    <value>Mağaza Aktiv Deyil</value>
   </data>
   <data name="Auth_UserAlreadyLoggedIn" xml:space="preserve">
-    <value>Ä°stifadÉ™Ã§i artÄ±q sistemÉ™ daxil olub.</value>
+    <value>İstifadəçi artıq sistemə daxil olub.</value>
   </data>
   <data name="Auth_InvalidUserOrPassword" xml:space="preserve">
-    <value>Ä°stifadÉ™Ã§i vÉ™ ya ÅŸifrÉ™ yanlÄ±ÅŸdÄ±r</value>
+    <value>İstifadəçi və ya şifrə yanlışdır</value>
   </data>
   <data name="Report_NoPermission" xml:space="preserve">
     <value>Yetkiniz yoxdur!</value>
   </data>
   <data name="Campaign_ConfirmDelete" xml:space="preserve">
-    <value>SeÃ§ilmiÅŸ kampaniya silinsin?</value>
+    <value>Seçilmiş kampaniya silinsin?</value>
   </data>
   <data name="Product_CloneConfirmation" xml:space="preserve">
-    <value>{0} kodlu mÉ™hsulun Ã¶zÉ™lliklÉ™ri klonlansÄ±n?</value>
+    <value>{0} kodlu məhsulun Ã¶zəllikləri klonlansın?</value>
   </data>
   <data name="Salesperson_EnterCode" xml:space="preserve">
-    <value>SatÄ±cÄ± Kodu Daxil Edin:</value>
+    <value>Satıcı Kodu Daxil Edin:</value>
   </data>
   <data name="Salesperson_Title" xml:space="preserve">
-    <value>SatÄ±cÄ±</value>
+    <value>Satıcı</value>
   </data>
   <data name="BonusCard_EnterNum" xml:space="preserve">
     <value>Bonus Kart Daxil Edin:</value>
@@ -3741,16 +3741,16 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Bonus Kart</value>
   </data>
   <data name="Network_CannotConnect" xml:space="preserve">
-    <value>{0} ilÉ™ É™laqÉ™ qurula bilmir.</value>
+    <value>{0} ilə əlaqə qurula bilmir.</value>
   </data>
   <data name="ExcelExport_Filter" xml:space="preserve">
-    <value>Excel FaylÄ±|*.xlsx</value>
+    <value>Excel Faylı|*.xlsx</value>
   </data>
   <data name="ExcelExport_SaveTitle" xml:space="preserve">
-    <value>Excel FaylÄ± Yadda Saxla</value>
+    <value>Excel Faylı Yadda Saxla</value>
   </data>
   <data name="Preview_VAT" xml:space="preserve">
-    <value>ÆDV: </value>
+    <value>ƏDV: </value>
   </data>
   <data name="Preview_Barcode" xml:space="preserve">
     <value>Barkod: </value>
@@ -3759,13 +3759,13 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Pos Endirimi: </value>
   </data>
   <data name="Preview_Salesperson" xml:space="preserve">
-    <value>SatÄ±cÄ±: </value>
+    <value>Satıcı: </value>
   </data>
   <data name="Common_Manage" xml:space="preserve">
-    <value>Ä°darÉ™ Et</value>
+    <value>İdarə Et</value>
   </data>
   <data name="Campaign_CannotDeleteInUse" xml:space="preserve">
-    <value>Bu kampaniya artÄ±q fakturalarda istifadÉ™ olunub. SilmÉ™k É™vÉ™zinÉ™ deaktiv edin.</value>
+    <value>Bu kampaniya artıq fakturalarda istifadə olunub. Silmək əvəzinə deaktiv edin.</value>
   </data>
   <data name="Campaign_ListTitle" xml:space="preserve">
     <value>Kampaniyalar</value>
@@ -3774,43 +3774,43 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Balans: {0}</value>
   </data>
   <data name="Credit_EnterApiKey" xml:space="preserve">
-    <value>Kredit É™lavÉ™ etmÉ™k Ã¼Ã§Ã¼n API Key daxil edin:</value>
+    <value>Kredit əlavə etmək üçün API Key daxil edin:</value>
   </data>
   <data name="Credit_AddTitle" xml:space="preserve">
-    <value>Kredit ÆlavÉ™ Et</value>
+    <value>Kredit Əlavə Et</value>
   </data>
   <data name="Credit_ApiKeyAlreadyUsed" xml:space="preserve">
-    <value>Bu API Key artÄ±q istifadÉ™ olunub!</value>
+    <value>Bu API Key artıq istifadə olunub!</value>
   </data>
   <data name="Credit_NoInternet" xml:space="preserve">
-    <value>Ä°nternet baÄŸlantÄ±sÄ± yoxdur!</value>
+    <value>İnternet bağlantısı yoxdur!</value>
   </data>
   <data name="Credit_ExcelLoadError" xml:space="preserve">
-    <value>Excel faylÄ± yÃ¼klÉ™nÉ™ bilmÉ™di!</value>
+    <value>Excel faylı yüklənə bilmədi!</value>
   </data>
   <data name="Credit_ApiKeyInactive" xml:space="preserve">
-    <value>Daxil edilÉ™n API Key aktiv deyil!</value>
+    <value>Daxil edilən API Key aktiv deyil!</value>
   </data>
   <data name="Credit_InvalidCreditValue" xml:space="preserve">
-    <value>API Key-É™ aid kredit dÉ™yÉ™ri dÃ¼zgÃ¼n deyil!</value>
+    <value>API Key-ə aid kredit dəyəri düzgün deyil!</value>
   </data>
   <data name="Credit_PurchaseWithApiKey" xml:space="preserve">
-    <value>API Key ilÉ™ kredit alÄ±ÅŸÄ±</value>
+    <value>API Key ilə kredit alışı</value>
   </data>
   <data name="Credit_AddedSuccessfully" xml:space="preserve">
-    <value>{0} kredit uÄŸurla É™lavÉ™ edildi!</value>
+    <value>{0} kredit uğurla əlavə edildi!</value>
   </data>
   <data name="Credit_AddError" xml:space="preserve">
-    <value>Kredit É™lavÉ™ edilÉ™rkÉ™n xÉ™ta baÅŸ verdi:</value>
+    <value>Kredit əlavə edilərkən xəta baş verdi:</value>
   </data>
   <data name="Credit_ExportTitle" xml:space="preserve">
-    <value>Kredit ÆmÉ™liyyatlarÄ±</value>
+    <value>Kredit Əməliyyatları</value>
   </data>
   <data name="Credit_Purchase" xml:space="preserve">
-    <value>SatÄ±n alma</value>
+    <value>Satın alma</value>
   </data>
   <data name="Credit_Usage" xml:space="preserve">
-    <value>XÉ™rc</value>
+    <value>Xərc</value>
   </data>
   <data name="Campaign_DiscountDeleted" xml:space="preserve">
     <value>Kampaniya endirimi silindi.</value>
@@ -3825,18 +3825,18 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Promo Kod</value>
   </data>
   <data name="Payment_NoRemainingAmount" xml:space="preserve">
-    <value>Ã–dÉ™nilÉ™cÉ™k mÉ™blÉ™ÄŸ qalmayÄ±b.</value>
+    <value>Ödəniləcək məbləğ qalmayıb.</value>
   </data>
   <data name="Payment_Title" xml:space="preserve">
-    <value>Ã–dÉ™niÅŸ</value>
+    <value>Ödəniş</value>
   </data>
   <data name="Campaign_PasswordIncorrect" xml:space="preserve">
-    <value>Kampaniya ÅŸifrÉ™si yanlÄ±ÅŸdÄ±r!</value>
+    <value>Kampaniya şifrəsi yanlışdır!</value>
   </data>
   <data name="Campaign_CashOnlyAppliedDeleteWarning" xml:space="preserve">
-    <value>IsCashOnly kampaniya tÉ™tbiq edilib. SilinmÉ™yÉ™ icazÉ™ verilmir.</value>
+    <value>IsCashOnly kampaniya tətbiq edilib. Silinməyə icazə verilmir.</value>
   </data>
   <data name="Campaign_EnterPassword" xml:space="preserve">
-    <value>Kampaniya ÅŸifrÉ™sini daxil edin:</value>
+    <value>Kampaniya şifrəsini daxil edin:</value>
   </data>
 </root>
