@@ -6,11 +6,9 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
-using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -217,13 +215,14 @@ namespace Foxoft
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
 
+            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+
             if (File.Exists(layoutFilePath))
-                gV_InvoiceHeaderList.RestoreLayoutFromXml(layoutFilePath);
+                gV_InvoiceHeaderList.RestoreLayoutFromXml(layoutFilePath, option);
             else
             {
                 byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
                 MemoryStream stream = new(byteArray);
-                OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
                 gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
             }
         }
@@ -238,12 +237,13 @@ namespace Foxoft
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
 
-            gV_InvoiceHeaderList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+            gV_InvoiceHeaderList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName), option);
         }
 
-        private void gV_InvoiceHeaderList_PopupMenuShowing(object sender, DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs e)
+        private void gV_InvoiceHeaderList_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
-            if (e.MenuType == DevExpress.XtraGrid.Views.Grid.GridMenuType.Column)
+            if (e.MenuType == GridMenuType.Column)
             {
                 var menu = e.Menu as DevExpress.XtraGrid.Menu.GridViewColumnMenu;
                 if (menu != null)
