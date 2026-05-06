@@ -65,8 +65,7 @@ namespace Foxoft
 
             if (xReport is not null)
             {
-                SetParameterValue(xReport, "ImageRootPath", settingStore.ImageFolder);
-                SetParameterValue(xReport, "StoreName", settingStore.DcStore.CurrAccDesc);
+                SetReportHeaderParameters(xReport);
 
                 documentViewer1.DocumentSource = xReport;
                 xReport.CreateDocument();
@@ -74,13 +73,32 @@ namespace Foxoft
             }
         }
 
-        private void SetParameterValue(XtraReport report, string parameterName, object value)
+        private void SetReportHeaderParameters(XtraReport report)
         {
-            if (report.Parameters[parameterName] is not null)
+            if (report is null)
+                return;
+
+            AddOrSetParameter(report, "ImageRootPath", settingStore.ImageFolder);
+            AddOrSetParameter(report, "StoreName", settingStore.DcStore.CurrAccDesc);
+        }
+
+        private void AddOrSetParameter(XtraReport report, string parameterName, object value)
+        {
+            var parameter = report.Parameters[parameterName];
+
+            if (parameter is null)
             {
-                report.Parameters[parameterName].Value = value ?? "";
-                report.Parameters[parameterName].Visible = false;
+                parameter = new DevExpress.XtraReports.Parameters.Parameter()
+                {
+                    Name = parameterName,
+                    Type = typeof(string),
+                    Visible = false
+                };
+
+                report.Parameters.Add(parameter);
             }
+
+            parameter.Value = value?.ToString() ?? string.Empty;
         }
 
         private void BBI_EditDesign_ItemClick(object sender, ItemClickEventArgs e)
