@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3841,5 +3841,56 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Message_DocumentLockOwnershipLost" xml:space="preserve">
     <value>Sənəd artıq sizin deyil...</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_InstallmentId" xml:space="preserve">
+    <value>Taksit Id</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_InvoiceHeaderId" xml:space="preserve">
+    <value>Faktura Id</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_DocumentNumber" xml:space="preserve">
+    <value>Sənəd Nömrəsi</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_CurrAccDesc" xml:space="preserve">
+    <value>Müştəri</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_PhoneNum" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_InstallmentDate" xml:space="preserve">
+    <value>Taksit Tarixi</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_InstallmentAmount" xml:space="preserve">
+    <value>Taksit Məbləği</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_DurationInMonths" xml:space="preserve">
+    <value>Müddət (Ay)</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_InstallmentPaid" xml:space="preserve">
+    <value>Ödənilən Məbləğ</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_RemainingAmount" xml:space="preserve">
+    <value>Qalıq Məbləğ</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_InstallmentStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_MonthlyPayment" xml:space="preserve">
+    <value>Aylıq Ödəniş</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_PassedMonth" xml:space="preserve">
+    <value>Keçən Aylar</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_PaidMonth" xml:space="preserve">
+    <value>Ödənilən Aylar</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_DueAmount" xml:space="preserve">
+    <value>Gecikmiş Məbləğ</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_DueDate" xml:space="preserve">
+    <value>Son Ödəmə Tarixi</value>
+  </data>
+  <data name="Form_InstallmentSale_Col_OverDueDays" xml:space="preserve">
+    <value>Gecikən Günlər</value>
   </data>
 </root>

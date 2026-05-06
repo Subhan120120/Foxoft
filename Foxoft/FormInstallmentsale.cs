@@ -426,6 +426,38 @@ namespace Foxoft
 
             gridView1.BestFitColumns();
             gridView1.MakeRowVisible(gridView1.FocusedRowHandle);
+
+            LocalizeColumns();
+        }
+
+        private void LocalizeColumns()
+        {
+            var columnCaptions = new Dictionary<string, string>
+            {
+                { "InstallmentId", Resources.Form_InstallmentSale_Col_InstallmentId },
+                { "InvoiceHeaderId", Resources.Form_InstallmentSale_Col_InvoiceHeaderId },
+                { "DocumentNumber", Resources.Form_InstallmentSale_Col_DocumentNumber },
+                { "CurrAccDesc", Resources.Form_InstallmentSale_Col_CurrAccDesc },
+                { "PhoneNum", Resources.Form_InstallmentSale_Col_PhoneNum },
+                { "InstallmentDate", Resources.Form_InstallmentSale_Col_InstallmentDate },
+                { "InstallmentAmount", Resources.Form_InstallmentSale_Col_InstallmentAmount },
+                { "DurationInMonths", Resources.Form_InstallmentSale_Col_DurationInMonths },
+                { "InstallmentPaid", Resources.Form_InstallmentSale_Col_InstallmentPaid },
+                { "RemainingAmount", Resources.Form_InstallmentSale_Col_RemainingAmount },
+                { "InstallmentStatus", Resources.Form_InstallmentSale_Col_InstallmentStatus },
+                { "MonthlyPayment", Resources.Form_InstallmentSale_Col_MonthlyPayment },
+                { "PassedMonth", Resources.Form_InstallmentSale_Col_PassedMonth },
+                { "PaidMonth", Resources.Form_InstallmentSale_Col_PaidMonth },
+                { "DueAmount", Resources.Form_InstallmentSale_Col_DueAmount },
+                { "DueDate", Resources.Form_InstallmentSale_Col_DueDate },
+                { "OverDueDays", Resources.Form_InstallmentSale_Col_OverDueDays },
+            };
+
+            foreach (GridColumn col in gridView1.Columns)
+            {
+                if (columnCaptions.TryGetValue(col.FieldName, out string caption))
+                    col.Caption = caption;
+            }
         }
 
         public void RepoBtnEdit_Payment_ButtonPressed(object sender, ButtonPressedEventArgs e)
