@@ -3839,4 +3839,7 @@ To delete, cancel the receipt!</value>
   <data name="Campaign_EnterPassword" xml:space="preserve">
     <value>Enter campaign password:</value>
   </data>
+  <data name="Message_DocumentLockOwnershipLost" xml:space="preserve">
+    <value>Document is no longer yours...</value>
+  </data>
 </root>

@@ -67,8 +67,14 @@ SELECT
         WHEN COALESCE(id.InstallmentAmount,0) - COALESCE(id.InstallmentPaid,0) < 0 THEN 0
         ELSE COALESCE(id.InstallmentAmount,0) - COALESCE(id.InstallmentPaid,0)
     END,
-
-    [Aylıq Ödəniş]   = mp.MonthlyPayment,
+    
+    [Kredit Statusu] = CASE
+        WHEN COALESCE(id.InstallmentAmount, 0) - COALESCE(id.InstallmentPaid, 0) <= 0
+            THEN N'Tamamlanıb'
+        ELSE N'Davam edir'
+    END,
+    
+    [Aylıq Ödəniş] = mp.MonthlyPayment,
 
     [Keçən Aylar]    = pm.PassedMonth,
 

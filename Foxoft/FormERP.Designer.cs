@@ -129,6 +129,8 @@ namespace Foxoft
             ACE_AppSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CreditList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CurrencyList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_PaymentMethodList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_PaymentPlanList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -732,7 +734,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList });
+            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -790,6 +792,20 @@ namespace Foxoft
             ACE_CurrencyList.Name = "ACE_CurrencyList";
             ACE_CurrencyList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_CurrencyList.Text = Resources.Entity_Currency;
+            // 
+            // ACE_PaymentMethodList
+            // 
+            ACE_PaymentMethodList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CurrencyList.ImageOptions.SvgImage");
+            ACE_PaymentMethodList.Name = "ACE_PaymentMethodList";
+            ACE_PaymentMethodList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PaymentMethodList.Text = Resources.Entity_PaymentMethod;
+            // 
+            // ACE_PaymentPlanList
+            // 
+            ACE_PaymentPlanList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CurrencyList.ImageOptions.SvgImage");
+            ACE_PaymentPlanList.Name = "ACE_PaymentPlanList";
+            ACE_PaymentPlanList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PaymentPlanList.Text = Resources.Entity_PaymentPlan;
             // 
             // FormERP
             // 
@@ -919,5 +935,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CrmActivityList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CreditList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CurrencyList;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PaymentMethodList;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PaymentPlanList;
     }
 }

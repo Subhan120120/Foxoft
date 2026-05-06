@@ -196,6 +196,8 @@ namespace Foxoft
                 case "CrmActivityList": ShowExistForm<FormCrmActivityList>(); break;
                 case "CreditList": ShowExistForm<FormCreditList>(); break;
                 case "CurrencyList": ShowExistForm<FormCommonList<DcCurrency>>("", nameof(DcCurrency.CurrencyCode)); break;
+                case "PaymentMethodList": ShowExistForm<FormCommonList<DcPaymentMethod>>("", nameof(DcPaymentMethod.PaymentMethodId)); break;
+                case "PaymentPlanList": ShowExistForm<FormCommonList<DcPaymentPlan>>("", nameof(DcPaymentPlan.PaymentPlanCode)); break;
 
                 default: break;
             }
@@ -285,6 +287,8 @@ namespace Foxoft
             this.ACE_CrmActivityList.Name = "CrmActivityList";
             this.ACE_CreditList.Name = "CreditList";
             this.ACE_CurrencyList.Name = "CurrencyList";
+            this.ACE_PaymentMethodList.Name = "PaymentMethodList";
+            this.ACE_PaymentPlanList.Name = "PaymentPlanList";
         }
 
         private void InitializeReports()

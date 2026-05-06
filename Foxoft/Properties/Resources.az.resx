@@ -3839,4 +3839,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Campaign_EnterPassword" xml:space="preserve">
     <value>Kampaniya şifrəsini daxil edin:</value>
   </data>
+  <data name="Message_DocumentLockOwnershipLost" xml:space="preserve">
+    <value>Sənəd artıq sizin deyil...</value>
+  </data>
 </root>

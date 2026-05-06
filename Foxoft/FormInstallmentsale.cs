@@ -1,4 +1,4 @@
-﻿using DevExpress.Data;
+using DevExpress.Data;
 using DevExpress.Data.Filtering;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
@@ -16,6 +16,7 @@ using DevExpress.XtraReports;
 using DevExpress.XtraRichEdit.Fields;
 using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
+using Foxoft.AppCode.Service;
 using Foxoft.Migrations;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
@@ -38,11 +39,14 @@ namespace Foxoft
         DcReport dcReport;
         ReportClass reportClass;
         readonly SettingStore settingStore;
+        private readonly subContext _db = new();
+        private readonly DocumentLockService _lockService;
 
         public FormInstallmentSale()
         {
 
             InitializeComponent();
+            _lockService = new DocumentLockService(_db);
 
             ReloadData();
 
@@ -235,6 +239,79 @@ namespace Foxoft
             return isOpen;
         }
 
+        private bool TryActivateOpenInvoiceWindow(Guid invoiceHeaderId, FormERP formERP)
+        {
+            if (formERP == null)
+                return false;
+
+            foreach (Form child in formERP.MdiChildren)
+            {
+                if (child is FormInvoice frm &&
+                    frm.trInvoiceHeader is not null &&
+                    frm.trInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
+                {
+                    if (frm.WindowState == FormWindowState.Minimized)
+                        frm.WindowState = FormWindowState.Normal;
+
+                    frm.BringToFront();
+                    frm.Activate();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool TryAcquireInvoiceLockForEdit(Guid invoiceHeaderId, FormERP formERP, Guid formInstanceId)
+        {
+            if (formERP == null)
+                return false;
+
+            var res = _lockService.TryAcquireLock(
+                documentType: "Invoice",
+                documentId: invoiceHeaderId,
+                userId: Authorization.CurrAccCode,
+                machineName: Environment.MachineName,
+                appInstanceId: formERP._appInstanceId,
+                formInstanceId: formInstanceId,
+                clientProcessId: Process.GetCurrentProcess().Id,
+                timeout: TimeSpan.FromMinutes(10),
+                reason: "Edit invoice");
+
+            if (!res.Acquired)
+            {
+                if (res.LockedBy == Authorization.CurrAccCode &&
+                    res.AppInstanceId == formERP._appInstanceId)
+                {
+                    if (TryActivateOpenInvoiceWindow(invoiceHeaderId, formERP))
+                        return false;
+                }
+
+                DialogResult answer = XtraMessageBox.Show(
+                    $"Faktura hazırda {res.LockedByName} tərəfindən redaktə olunur.\n" +
+                    $"Machine: {res.MachineName}\n" +
+                    $"LockedAt: {res.LockedAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n" +
+                    $"Heartbeat: {res.LastHeartbeatAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n\n" +
+                    $"Sənəd sahibinə bağlama sorğusu göndərilsin?",
+                    "Sənəd lock olunub",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (answer == DialogResult.Yes)
+                {
+                    _lockService.RequestOwnerToClose(
+                        documentType: "Invoice",
+                        documentId: invoiceHeaderId,
+                        requestedByUserId: Authorization.CurrAccCode,
+                        note: "Another user wants to edit this invoice.");
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
         private void OpenFormInvoice(string strDocNum)
         {
             TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
@@ -251,14 +328,22 @@ namespace Foxoft
                     return;
                 }
 
+                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                if (formERP == null)
+                    return;
+
+                Guid formInstanceId = Guid.NewGuid();
                 byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
-                FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
-                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                frm.MdiParent = formERP;
-                frm.WindowState = FormWindowState.Maximized;
-                frm.Show();
-                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                if (TryAcquireInvoiceLockForEdit(trInvoiceHeader.InvoiceHeaderId, formERP, formInstanceId))
+                {
+                    FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
+                    frm._formInstanceId = formInstanceId;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
             }
             else if (trPaymentHeader is not null)
             {

@@ -11151,5 +11151,14 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Campaign_EnterPassword", resourceCulture);
             }
         }
+            
+        /// <summary>
+        ///   Looks up a localized string similar to Document is no longer yours....
+        /// </summary>
+        public static string Message_DocumentLockOwnershipLost {
+            get {
+                return ResourceManager.GetString("Message_DocumentLockOwnershipLost", resourceCulture);
+            }
+        }
     }
 }
