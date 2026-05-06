@@ -128,6 +128,7 @@ namespace Foxoft
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_AppSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CreditList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_CurrencyList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -731,7 +732,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList });
+            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -778,10 +779,17 @@ namespace Foxoft
             // 
             // ACE_CreditList
             // 
-            ACE_CreditList.ImageOptions.SvgImage = DevExpress.Utils.Svg.SvgImage.FromResources("DevExpress.XtraBars.SvgImages.Business Objects.BO_Audit.svg", typeof(DevExpress.XtraBars.BarItem).Assembly);
+            ACE_CreditList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CreditList.ImageOptions.SvgImage");
             ACE_CreditList.Name = "ACE_CreditList";
             ACE_CreditList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_CreditList.Text = "Kredit Əməliyyatları";
+            // 
+            // ACE_CurrencyList
+            // 
+            ACE_CurrencyList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CurrencyList.ImageOptions.SvgImage");
+            ACE_CurrencyList.Name = "ACE_CurrencyList";
+            ACE_CurrencyList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_CurrencyList.Text = Resources.Entity_Currency;
             // 
             // FormERP
             // 
@@ -910,5 +918,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CampaignList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CrmActivityList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CreditList;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CurrencyList;
     }
 }

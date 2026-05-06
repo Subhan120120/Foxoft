@@ -967,6 +967,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PayrollList", ClaimDesc = "Əməkhaqqı Siyahısı", ClaimTypeId = 1, CategoryId = 9 },
                 new DcClaim { ClaimCode = "LoyaltyCards", ClaimDesc = "Bonus Kartlar", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "CreditList", ClaimDesc = "Kredit Əməliyyatları", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "CurrencyList", ClaimDesc = "Valyuta Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "ChangeExchangeRate", ClaimDesc = "Məzənnə Kursu Dəyişmə", ClaimTypeId = 1, CategoryId = 2 }
                 );
 
@@ -1048,7 +1049,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 62, RoleCode = "Admin", ClaimCode = "MakePayment" },
                 new TrRoleClaim { RoleClaimId = 63, RoleCode = "Admin", ClaimCode = "ReceivePayment" },
                 new TrRoleClaim { RoleClaimId = 64, RoleCode = "Admin", ClaimCode = "DeletePayment" },
-                new TrRoleClaim { RoleClaimId = 65, RoleCode = "Admin", ClaimCode = "ChangeExchangeRate" }
+                new TrRoleClaim { RoleClaimId = 65, RoleCode = "Admin", ClaimCode = "ChangeExchangeRate" },
+                new TrRoleClaim { RoleClaimId = 66, RoleCode = "Admin", ClaimCode = "CurrencyList" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

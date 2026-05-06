@@ -195,6 +195,7 @@ namespace Foxoft
                 case "TerminalList": ShowNewForm<FormTerminalList>(); break;
                 case "CrmActivityList": ShowExistForm<FormCrmActivityList>(); break;
                 case "CreditList": ShowExistForm<FormCreditList>(); break;
+                case "CurrencyList": ShowExistForm<FormCommonList<DcCurrency>>("", nameof(DcCurrency.CurrencyCode)); break;
 
                 default: break;
             }
@@ -283,6 +284,7 @@ namespace Foxoft
             this.ACE_TerminalList.Name = "TerminalList";
             this.ACE_CrmActivityList.Name = "CrmActivityList";
             this.ACE_CreditList.Name = "CreditList";
+            this.ACE_CurrencyList.Name = "CurrencyList";
         }
 
         private void InitializeReports()
