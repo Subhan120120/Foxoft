@@ -79,6 +79,8 @@ namespace Foxoft
             }
 
             TrimNumbersFormat();
+
+            LocalizeColumns();
         }
 
         private void TrimNumbersFormat()
@@ -426,8 +428,6 @@ namespace Foxoft
 
             gridView1.BestFitColumns();
             gridView1.MakeRowVisible(gridView1.FocusedRowHandle);
-
-            LocalizeColumns();
         }
 
         private void LocalizeColumns()
