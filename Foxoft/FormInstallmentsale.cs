@@ -6,6 +6,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Frames;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
@@ -58,7 +59,7 @@ namespace Foxoft
             gridView1.Columns.Add(col_Buttons);
             col_Buttons.VisibleIndex = gridView1.Columns.Count - 1;
             gridView1.BestFitColumns();
-            ApplyConditionalFormatting();
+            //ApplyConditionalFormatting();
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             reportClass = new(settingStore.DesignFileFolder);
@@ -114,33 +115,28 @@ namespace Foxoft
             // Formatting rule for "Less than 0"
             var formatRuleLess = new GridFormatRule
             {
-                Column = gridView1.Columns[nameof(TrInstallmentViewModel.DueAmount)]
+                Column = gridView1.Columns[nameof(TrInstallmentViewModel.DueAmount)],
+                Rule = new FormatConditionRuleValue
+                {
+                    Condition = FormatCondition.Less,
+                    Value1 = 0,
+                    Appearance = { ForeColor = Color.Red }
+                }
             };
-
-            var ruleLess = new FormatConditionRuleValue
-            {
-                Condition = FormatCondition.Less,
-                Value1 = 0,
-                Appearance = { ForeColor = Color.Red }
-            };
-
-            formatRuleLess.Rule = ruleLess;
-            gridView1.FormatRules.Add(formatRuleLess);
 
             var formatRuleGreater = new GridFormatRule
             {
-                Column = gridView1.Columns[nameof(TrInstallmentViewModel.DueAmount)]
+                Column = gridView1.Columns[nameof(TrInstallmentViewModel.DueAmount)],
+                Rule = new FormatConditionRuleValue
+                {
+                    Condition = FormatCondition.Greater,
+                    Value1 = 0,
+                    Appearance = { ForeColor = Color.Green }
+                }
             };
 
-            var ruleGreater = new FormatConditionRuleValue
-            {
-                Condition = FormatCondition.Greater,
-                Value1 = 0,
-                Appearance = { ForeColor = Color.Green }
-            };
+            gridView1.FormatRules.AddRange(new GridFormatRule[] { formatRuleLess, formatRuleGreater });
 
-            formatRuleGreater.Rule = ruleGreater;
-            gridView1.FormatRules.Add(formatRuleGreater);
         }
 
         private void HyperLinkColumns()
