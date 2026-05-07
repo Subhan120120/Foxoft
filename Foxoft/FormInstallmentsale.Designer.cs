@@ -1,4 +1,4 @@
-﻿using DevExpress.Dialogs.Core.View;
+using DevExpress.Dialogs.Core.View;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using Foxoft.Models;
@@ -92,6 +92,7 @@ namespace Foxoft
             gridView1.RowHeight = 18;
             gridView1.PopupMenuShowing += gridView1_PopupMenuShowing;
             gridView1.ShowingEditor += gV_Report_ShowingEditor;
+            gridView1.RowStyle += gridView1_RowStyle;
             // 
             // repoBtnEdit_Payment
             // 

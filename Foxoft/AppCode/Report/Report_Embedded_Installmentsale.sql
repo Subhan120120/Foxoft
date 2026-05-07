@@ -81,8 +81,8 @@ SELECT
 
     CASE
         WHEN COALESCE(id.InstallmentAmount, 0) - COALESCE(id.InstallmentPaid, 0) <= 0
-            THEN N'Tamamlanıb'
-        ELSE N'Davam edir'
+            THEN 1
+        ELSE 0
     END AS InstallmentStatus,
 
     mp.MonthlyPayment,

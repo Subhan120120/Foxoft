@@ -569,6 +569,40 @@ namespace Foxoft
             }
         }
 
+        private void gridView1_RowStyle(object sender, RowStyleEventArgs e)
+        {
+            GridView view = sender as GridView;
+            if (view == null || e.RowHandle < 0)
+                return;
+
+            object statusObj = view.GetRowCellValue(e.RowHandle, "InstallmentStatus");
+            object overDueDaysObj = view.GetRowCellValue(e.RowHandle, "OverDueDays");
+
+            int installmentStatus = 0;
+            int overDueDays = 0;
+
+            if (statusObj != null && statusObj != DBNull.Value)
+                int.TryParse(statusObj.ToString(), out installmentStatus);
+
+            if (overDueDaysObj != null && overDueDaysObj != DBNull.Value)
+                int.TryParse(overDueDaysObj.ToString(), out overDueDays);
+
+            if (installmentStatus == 1)
+            {
+                // Fully paid — green tint
+                e.Appearance.BackColor = Color.FromArgb(232, 245, 233);
+                e.Appearance.ForeColor = Color.FromArgb(27, 94, 32);
+                e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Regular);
+            }
+            else if (overDueDays > 0)
+            {
+                // Overdue — red tint with bold
+                e.Appearance.BackColor = Color.FromArgb(255, 235, 238);
+                e.Appearance.ForeColor = Color.FromArgb(183, 28, 28);
+                e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+            }
+        }
+
         private void BBI_Filter_CheckedChanged(object sender, ItemClickEventArgs e)
         {
             var item = e.Item as BarCheckItem;

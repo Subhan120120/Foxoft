@@ -35,6 +35,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new SkinRibbonGalleryBarItem();
@@ -795,14 +796,14 @@ namespace Foxoft
             // 
             // ACE_PaymentMethodList
             // 
-            ACE_PaymentMethodList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CurrencyList.ImageOptions.SvgImage");
+            ACE_PaymentMethodList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PaymentMethodList.ImageOptions.SvgImage");
             ACE_PaymentMethodList.Name = "ACE_PaymentMethodList";
             ACE_PaymentMethodList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_PaymentMethodList.Text = Resources.Entity_PaymentMethod;
             // 
             // ACE_PaymentPlanList
             // 
-            ACE_PaymentPlanList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CurrencyList.ImageOptions.SvgImage");
+            ACE_PaymentPlanList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PaymentPlanList.ImageOptions.SvgImage");
             ACE_PaymentPlanList.Name = "ACE_PaymentPlanList";
             ACE_PaymentPlanList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_PaymentPlanList.Text = Resources.Entity_PaymentPlan;
