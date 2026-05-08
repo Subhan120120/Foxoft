@@ -1752,7 +1752,7 @@ namespace Foxoft
                 {
                     CreditId = Guid.NewGuid(),
                     TransactionType = CreditTransactionType.Usage,
-                    Amount = 0.05m,
+                    Amount = -0.05m,
                     ServiceType = "WhatsApp",
                     Description = $"WhatsApp {messageType} - {receiverPhone}"
                 });
