@@ -524,7 +524,8 @@ namespace Foxoft
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = receiverPhone,
                     MessageType = messageType,
-                    Sender = Authorization.CurrAccCode
+                    Sender = Authorization.CurrAccCode,
+                    ReceiverCurrAccCode = trPaymentHeader?.CurrAccCode
                 });
 
                 ctx.TrCredits.Add(new TrCredit

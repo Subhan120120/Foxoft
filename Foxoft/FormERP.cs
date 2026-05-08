@@ -198,6 +198,7 @@ namespace Foxoft
                 case "CurrencyList": ShowExistForm<FormCommonList<DcCurrency>>("", nameof(DcCurrency.CurrencyCode)); break;
                 case "PaymentMethodList": ShowExistForm<FormCommonList<DcPaymentMethod>>("", nameof(DcPaymentMethod.PaymentMethodId)); break;
                 case "PaymentPlanList": ShowExistForm<FormCommonList<DcPaymentPlan>>("", nameof(DcPaymentPlan.PaymentPlanCode)); break;
+                case "WhatsAppMessageLog": ShowExistForm<FormCommonList<TrWhatsAppMessageLog>>("", nameof(TrWhatsAppMessageLog.WhatsAppMessageLogId)); break;
 
                 default: break;
             }
@@ -289,6 +290,7 @@ namespace Foxoft
             this.ACE_CurrencyList.Name = "CurrencyList";
             this.ACE_PaymentMethodList.Name = "PaymentMethodList";
             this.ACE_PaymentPlanList.Name = "PaymentPlanList";
+            this.ACE_WhatsAppMessageLog.Name = "WhatsAppMessageLog";
         }
 
         private void InitializeReports()

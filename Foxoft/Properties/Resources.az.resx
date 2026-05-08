@@ -3893,4 +3893,10 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_InstallmentSale_Col_OverDueDays" xml:space="preserve">
     <value>Gecikən Günlər</value>
   </data>
+  <data name="Form_WhatsAppMessageLog" xml:space="preserve">
+    <value>WhatsApp Mesaj Jurnalı</value>
+  </data>
+  <data name="Entity_TrWhatsAppMessageLog_ReceiverCurrAccCode" xml:space="preserve">
+    <value>Qəbuledici Cari Hesab</value>
+  </data>
 </root>

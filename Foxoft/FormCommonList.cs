@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
@@ -181,6 +181,16 @@ namespace Foxoft
                 {
                     gridColumn.Caption = ReflectionExt.GetDisplayName<DcReport>(x => x.ReportName);
                     gridColumn.FieldName = nameof(DcReport.ReportName);
+                    gridColumn.UnboundDataType = typeof(string);
+                    gridView1.Columns.Add(gridColumn);
+                }
+            }
+            else if (column.FieldName == nameof(TrWhatsAppMessageLog.ReceiverCurrAccCode))
+            {
+                if (gridView1.Columns["ReceiverCurrAccDesc"] is null)
+                {
+                    gridColumn.Caption = Resources.Entity_CurrAcc_Desc;
+                    gridColumn.FieldName = "ReceiverCurrAccDesc";
                     gridColumn.UnboundDataType = typeof(string);
                     gridView1.Columns.Add(gridColumn);
                 }
@@ -376,6 +386,16 @@ namespace Foxoft
                 {
                     DcReport report = efMethods.SelectReport(Convert.ToInt32(value));
                     e.Value = report?.ReportName;
+                }
+            }
+            else if (e.Column.FieldName == "ReceiverCurrAccDesc" && e.IsGetData)
+            {
+                object value = view.GetRowCellValue(rowInd, nameof(TrWhatsAppMessageLog.ReceiverCurrAccCode));
+
+                if (value is not null)
+                {
+                    DcCurrAcc currAcc = efMethods.SelectEntityById<DcCurrAcc>(value.ToString());
+                    e.Value = currAcc?.CurrAccDesc;
                 }
             }
         }

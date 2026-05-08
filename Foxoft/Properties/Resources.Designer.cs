@@ -6262,6 +6262,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WhatsApp Message Log.
+        /// </summary>
+        public static string Form_WhatsAppMessageLog {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personal.
         /// </summary>
         public static string Form_CurrAcc_Group_Personal {
