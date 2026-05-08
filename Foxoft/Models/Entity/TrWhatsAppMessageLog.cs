@@ -25,6 +25,6 @@ namespace Foxoft.Models
         public string? Sender { get; set; }
 
         [StringLength(30)]
-        public string? ReceiverCurrAccCode { get; set; }
+        public string? CurrAccCode { get; set; }
     }
 }

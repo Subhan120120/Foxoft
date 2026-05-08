@@ -525,7 +525,7 @@ namespace Foxoft
                     ReceiverPhoneNumber = receiverPhone,
                     MessageType = messageType,
                     Sender = Authorization.CurrAccCode,
-                    ReceiverCurrAccCode = trPaymentHeader?.CurrAccCode
+                    CurrAccCode = trPaymentHeader?.CurrAccCode
                 });
 
                 ctx.TrCredits.Add(new TrCredit

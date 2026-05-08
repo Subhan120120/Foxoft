@@ -3896,7 +3896,7 @@ To delete, cancel the receipt!</value>
   <data name="Form_WhatsAppMessageLog" xml:space="preserve">
     <value>WhatsApp Message Log</value>
   </data>
-  <data name="Entity_TrWhatsAppMessageLog_ReceiverCurrAccCode" xml:space="preserve">
-    <value>Receiver Current Account</value>
+  <data name="Entity_TrWhatsAppMessageLog_CurrAccCode" xml:space="preserve">
+    <value>Current Account</value>
   </data>
 </root>

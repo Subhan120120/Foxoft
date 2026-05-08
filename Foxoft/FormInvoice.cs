@@ -1746,7 +1746,7 @@ namespace Foxoft
                     ReceiverPhoneNumber = receiverPhone,
                     MessageType = messageType,
                     Sender = Authorization.CurrAccCode,
-                    ReceiverCurrAccCode = trInvoiceHeader?.CurrAccCode
+                    CurrAccCode = trInvoiceHeader?.CurrAccCode
                 });
 
                 ctx.TrCredits.Add(new TrCredit

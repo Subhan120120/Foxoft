@@ -185,12 +185,12 @@ namespace Foxoft
                     gridView1.Columns.Add(gridColumn);
                 }
             }
-            else if (column.FieldName == nameof(TrWhatsAppMessageLog.ReceiverCurrAccCode))
+            else if (column.FieldName == nameof(TrWhatsAppMessageLog.CurrAccCode))
             {
-                if (gridView1.Columns["ReceiverCurrAccDesc"] is null)
+                if (gridView1.Columns["CurrAccDesc"] is null)
                 {
                     gridColumn.Caption = Resources.Entity_CurrAcc_Desc;
-                    gridColumn.FieldName = "ReceiverCurrAccDesc";
+                    gridColumn.FieldName = "CurrAccDesc";
                     gridColumn.UnboundDataType = typeof(string);
                     gridView1.Columns.Add(gridColumn);
                 }
@@ -388,9 +388,9 @@ namespace Foxoft
                     e.Value = report?.ReportName;
                 }
             }
-            else if (e.Column.FieldName == "ReceiverCurrAccDesc" && e.IsGetData)
+            else if (e.Column.FieldName == "CurrAccDesc" && e.IsGetData)
             {
-                object value = view.GetRowCellValue(rowInd, nameof(TrWhatsAppMessageLog.ReceiverCurrAccCode));
+                object value = view.GetRowCellValue(rowInd, nameof(TrWhatsAppMessageLog.CurrAccCode));
 
                 if (value is not null)
                 {

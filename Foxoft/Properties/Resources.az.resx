@@ -3896,7 +3896,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_WhatsAppMessageLog" xml:space="preserve">
     <value>WhatsApp Mesaj Jurnalı</value>
   </data>
-  <data name="Entity_TrWhatsAppMessageLog_ReceiverCurrAccCode" xml:space="preserve">
-    <value>Qəbuledici Cari Hesab</value>
+  <data name="Entity_TrWhatsAppMessageLog_CurrAccCode" xml:space="preserve">
+    <value>Cari Hesab</value>
   </data>
 </root>
