@@ -318,7 +318,7 @@ namespace Foxoft
             lblCard4Subtitle.Name = "lblCard4Subtitle";
             lblCard4Subtitle.Size = new Size(62, 13);
             lblCard4Subtitle.TabIndex = 4;
-            lblCard4Subtitle.Text = "Active Credit";
+            lblCard4Subtitle.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Remaining_Subtitle;
             // 
             // lblCard4Value
             // 
@@ -338,7 +338,7 @@ namespace Foxoft
             lblCard4Title.Name = "lblCard4Title";
             lblCard4Title.Size = new Size(89, 13);
             lblCard4Title.TabIndex = 6;
-            lblCard4Title.Text = "Remaining Amount";
+            lblCard4Title.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Remaining_Title;
             // 
             // panelCard3
             // 
@@ -374,7 +374,7 @@ namespace Foxoft
             lblCard3Subtitle.Name = "lblCard3Subtitle";
             lblCard3Subtitle.Size = new Size(62, 13);
             lblCard3Subtitle.TabIndex = 4;
-            lblCard3Subtitle.Text = "Active Credit";
+            lblCard3Subtitle.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Paid_Subtitle;
             // 
             // lblCard3Value
             // 
@@ -394,7 +394,7 @@ namespace Foxoft
             lblCard3Title.Name = "lblCard3Title";
             lblCard3Title.Size = new Size(60, 13);
             lblCard3Title.TabIndex = 6;
-            lblCard3Title.Text = "Paid Amount";
+            lblCard3Title.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Paid_Title;
             // 
             // panelCard2
             // 
@@ -430,7 +430,7 @@ namespace Foxoft
             lblCard2Subtitle.Name = "lblCard2Subtitle";
             lblCard2Subtitle.Size = new Size(62, 13);
             lblCard2Subtitle.TabIndex = 4;
-            lblCard2Subtitle.Text = "Active Credit";
+            lblCard2Subtitle.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Amount_Subtitle;
             // 
             // lblCard2Value
             // 
@@ -450,7 +450,7 @@ namespace Foxoft
             lblCard2Title.Name = "lblCard2Title";
             lblCard2Title.Size = new Size(69, 13);
             lblCard2Title.TabIndex = 6;
-            lblCard2Title.Text = "Credit Amount";
+            lblCard2Title.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Amount_Title;
             // 
             // panelCard1
             // 
@@ -486,7 +486,7 @@ namespace Foxoft
             lblCard1Subtitle.Name = "lblCard1Subtitle";
             lblCard1Subtitle.Size = new Size(62, 13);
             lblCard1Subtitle.TabIndex = 4;
-            lblCard1Subtitle.Text = "Active Credit";
+            lblCard1Subtitle.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Count_Subtitle;
             // 
             // lblCard1Value
             // 
@@ -506,7 +506,7 @@ namespace Foxoft
             lblCard1Title.Name = "lblCard1Title";
             lblCard1Title.Size = new Size(61, 13);
             lblCard1Title.TabIndex = 6;
-            lblCard1Title.Text = "Credit Count";
+            lblCard1Title.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Count_Title;
             // 
             // FormInstallmentSale
             // 

@@ -3908,21 +3908,6 @@ To delete, cancel the receipt!</value>
   <data name="Form_CreditList_Filter_Day" xml:space="preserve">
     <value>Last Day</value>
   </data>
-  <data name="Form_InstallmentSale_Summary_CreditCount" xml:space="preserve">
-    <value>Credit Count</value>
-  </data>
-  <data name="Form_InstallmentSale_Summary_CreditAmount" xml:space="preserve">
-    <value>Credit Amount</value>
-  </data>
-  <data name="Form_InstallmentSale_Summary_PaidAmount" xml:space="preserve">
-    <value>Paid Amount</value>
-  </data>
-  <data name="Form_InstallmentSale_Summary_RemainingAmount" xml:space="preserve">
-    <value>Remaining Amount</value>
-  </data>
-  <data name="Form_InstallmentSale_Summary_ActiveCredit" xml:space="preserve">
-    <value>Active Credit</value>
-  </data>
   <data name="Form_CreditList_Filter_Week" xml:space="preserve">
     <value>Last Week</value>
   </data>
@@ -3931,5 +3916,29 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Form_CreditList_RibbonGroup_Filter" xml:space="preserve">
     <value>Filter</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Count_Title" xml:space="preserve">
+    <value>Installment Sale</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Count_Subtitle" xml:space="preserve">
+    <value>Active Credit</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Amount_Title" xml:space="preserve">
+    <value>Total Amount</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Amount_Subtitle" xml:space="preserve">
+    <value>Active Credit</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Paid_Title" xml:space="preserve">
+    <value>Total Paid</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Paid_Subtitle" xml:space="preserve">
+    <value>Active Credit</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Remaining_Title" xml:space="preserve">
+    <value>Remaining Amount</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Remaining_Subtitle" xml:space="preserve">
+    <value>Active Credit</value>
   </data>
 </root>

@@ -3662,6 +3662,9 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Campaign_ExcelImportError" xml:space="preserve">
     <value>Excel import zamanı xəta baş verdi.</value>
   </data>
+  <data name="Campaign_ConfirmDelete" xml:space="preserve">
+    <value>Seçilmiş kampaniya silinsin?</value>
+  </data>
   <data name="Invoice_PaymentZeroReturn" xml:space="preserve">
     <value>Ödəmə 0-a bərabərdir! Fakturaya qayıtmaq istəyirsiz?</value>
   </data>
@@ -3721,9 +3724,6 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Report_NoPermission" xml:space="preserve">
     <value>Yetkiniz yoxdur!</value>
-  </data>
-  <data name="Campaign_ConfirmDelete" xml:space="preserve">
-    <value>Seçilmiş kampaniya silinsin?</value>
   </data>
   <data name="Product_CloneConfirmation" xml:space="preserve">
     <value>{0} kodlu məhsulun Ã¶zəllikləri klonlansın?</value>
@@ -3917,19 +3917,28 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_CreditList_RibbonGroup_Filter" xml:space="preserve">
     <value>Filtr</value>
   </data>
-  <data name="Form_InstallmentSale_Summary_CreditCount" xml:space="preserve">
-    <value>Kredit sayı</value>
+  <data name="Form_InstallmentSale_Summary_Count_Title" xml:space="preserve">
+    <value>Say</value>
   </data>
-  <data name="Form_InstallmentSale_Summary_CreditAmount" xml:space="preserve">
-    <value>Kredit məbləği</value>
-  </data>
-  <data name="Form_InstallmentSale_Summary_PaidAmount" xml:space="preserve">
-    <value>Ödəmiş məbləğ</value>
-  </data>
-  <data name="Form_InstallmentSale_Summary_RemainingAmount" xml:space="preserve">
-    <value>Ödəniləcək məbləğ</value>
-  </data>
-  <data name="Form_InstallmentSale_Summary_ActiveCredit" xml:space="preserve">
+  <data name="Form_InstallmentSale_Summary_Count_Subtitle" xml:space="preserve">
     <value>Aktiv kredit</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Amount_Title" xml:space="preserve">
+    <value>Ümumi Məbləğ</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Amount_Subtitle" xml:space="preserve">
+    <value>Aktiv kredit</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Paid_Title" xml:space="preserve">
+    <value>Cəmi Ödənilən</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Paid_Subtitle" xml:space="preserve">
+    <value>Aktiv kredit</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Remaining_Title" xml:space="preserve">
+    <value>Qalıq Məbləğ</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_Remaining_Subtitle" xml:space="preserve">
+    <value>Aktiv Kredit</value>
   </data>
 </root>

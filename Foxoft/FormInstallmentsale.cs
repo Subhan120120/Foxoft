@@ -72,6 +72,8 @@ namespace Foxoft
             reportClass.AddReports(BSI_Reports, "InstallmentSale", nameof(TrInstallment.InvoiceHeaderId), gridView1, activeFilterStr);
 
             GridLocalizer.Active = new MyGridLocalizer();
+
+            UpdateSummary();
         }
 
         private void LoadLayout()
@@ -425,13 +427,11 @@ namespace Foxoft
                     string qryMaster = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
-                    if (dt.Rows.Count > 0)
-                    {
-                        bindingSourceTrInstallmentSale.DataSource = dt;
-                        UpdateSummary();
-                    }
+                    bindingSourceTrInstallmentSale.DataSource = dt;
                 }
             }
+
+            UpdateSummary();
 
             if (gridView1.FocusedRowHandle >= 0)
                 trInstallmentViewModel = gridView1.GetFocusedRow() as TrInstallmentViewModel;
