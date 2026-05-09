@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3904,5 +3904,17 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Common_Status_Completed" xml:space="preserve">
     <value>Tamamlanıb</value>
+  </data>
+  <data name="Form_CreditList_Filter_Day" xml:space="preserve">
+    <value>Son Gün</value>
+  </data>
+  <data name="Form_CreditList_Filter_Week" xml:space="preserve">
+    <value>Son Həftə</value>
+  </data>
+  <data name="Form_CreditList_Filter_Month" xml:space="preserve">
+    <value>Son Ay</value>
+  </data>
+  <data name="Form_CreditList_RibbonGroup_Filter" xml:space="preserve">
+    <value>Filtr</value>
   </data>
 </root>
