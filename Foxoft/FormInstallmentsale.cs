@@ -472,10 +472,12 @@ namespace Foxoft
                 }
             }
 
+            string currencyCode = Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+
             lblCard1Value.Text = $"{count:N0} Ədəd";
-            lblCard2Value.Text = $"{totalAmount:N2} AZN";
-            lblCard3Value.Text = $"{totalPaid:N2} AZN";
-            lblCard4Value.Text = $"{totalRemaining:N2} AZN";
+            lblCard2Value.Text = $"{totalAmount:N2} {currencyCode}";
+            lblCard3Value.Text = $"{totalPaid:N2} {currencyCode}";
+            lblCard4Value.Text = $"{totalRemaining:N2} {currencyCode}";
         }
 
         private void LocalizeColumns()
