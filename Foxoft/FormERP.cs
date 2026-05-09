@@ -171,8 +171,8 @@ namespace Foxoft
                 case "InstallmentSaleReturn": ShowExistForm<FormReturn>("IS"); break;
 
                 case "Waybill": ShowNewForm<FormHandOver>("WO"); break;
-                case "WaybillIn": ShowNewForm<FormInvoice>("WI", false, new byte[] { 1 }, null); break;
-                case "WaybillOut": ShowNewForm<FormInvoice>("WO", false, new byte[] { 1 }, null); break;
+                case "WaybillIn": ShowNewForm<FormInvoice>("WI", false, new byte[] { 1 }, null, true); break;
+                case "WaybillOut": ShowNewForm<FormInvoice>("WO", false, new byte[] { 1 }, null, true); break;
 
                 case "PaymentDetail": ShowNewForm<FormPaymentDetail>(); break;
                 case "CashTransfer": ShowNewForm<FormMoneyTransfer>(); break;
