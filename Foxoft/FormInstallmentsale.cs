@@ -638,5 +638,19 @@ namespace Foxoft
             gridView1.ActiveFilterCriteria = criteria;
         }
 
+        private void gridView1_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
+        {
+            if (e.Column.FieldName == "InstallmentStatus")
+            {
+                if (e.Value != null && e.Value != DBNull.Value)
+                {
+                    int status = Convert.ToInt32(e.Value);
+                    if (status == 0)
+                        e.DisplayText = Resources.Common_Status_Continuing;
+                    else if (status == 1)
+                        e.DisplayText = Resources.Common_Status_Completed;
+                }
+            }
+        }
     }
 }

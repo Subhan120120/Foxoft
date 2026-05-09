@@ -3899,4 +3899,10 @@ To delete, cancel the receipt!</value>
   <data name="Entity_TrWhatsAppMessageLog_CurrAccCode" xml:space="preserve">
     <value>Current Account</value>
   </data>
+  <data name="Common_Status_Continuing" xml:space="preserve">
+    <value>In Progress</value>
+  </data>
+  <data name="Common_Status_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
 </root>

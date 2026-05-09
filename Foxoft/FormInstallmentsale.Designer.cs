@@ -93,6 +93,7 @@ namespace Foxoft
             gridView1.PopupMenuShowing += gridView1_PopupMenuShowing;
             gridView1.ShowingEditor += gV_Report_ShowingEditor;
             gridView1.RowStyle += gridView1_RowStyle;
+            gridView1.CustomColumnDisplayText += gridView1_CustomColumnDisplayText;
             // 
             // repoBtnEdit_Payment
             // 

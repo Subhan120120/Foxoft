@@ -11322,5 +11322,23 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_InstallmentSale_Col_OverDueDays", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Progress.
+        /// </summary>
+        public static string Common_Status_Continuing {
+            get {
+                return ResourceManager.GetString("Common_Status_Continuing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        public static string Common_Status_Completed {
+            get {
+                return ResourceManager.GetString("Common_Status_Completed", resourceCulture);
+            }
+        }
     }
 }

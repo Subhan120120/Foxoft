@@ -3899,4 +3899,10 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_TrWhatsAppMessageLog_CurrAccCode" xml:space="preserve">
     <value>Cari Hesab</value>
   </data>
+  <data name="Common_Status_Continuing" xml:space="preserve">
+    <value>Dəvam edir</value>
+  </data>
+  <data name="Common_Status_Completed" xml:space="preserve">
+    <value>Tamamlanıb</value>
+  </data>
 </root>
