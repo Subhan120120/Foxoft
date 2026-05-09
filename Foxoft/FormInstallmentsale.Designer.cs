@@ -282,6 +282,7 @@ namespace Foxoft
             panelSummary.Padding = new Padding(10);
             panelSummary.Size = new Size(954, 100);
             panelSummary.TabIndex = 1;
+            panelSummary.Paint += panelSummary_Paint;
             // 
             // panelCard4
             // 
@@ -296,6 +297,7 @@ namespace Foxoft
             panelCard4.Name = "panelCard4";
             panelCard4.Size = new Size(220, 80);
             panelCard4.TabIndex = 3;
+            panelCard4.Paint += panelCard_Paint;
             // 
             // svgCard4
             // 
@@ -306,6 +308,7 @@ namespace Foxoft
             svgCard4.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard4.SvgImage");
             svgCard4.TabIndex = 3;
             svgCard4.Text = "svgImageBox4";
+            svgCard4.Paint += svgCard_Paint;
             // 
             // lblCard4Subtitle
             // 
@@ -350,6 +353,7 @@ namespace Foxoft
             panelCard3.Name = "panelCard3";
             panelCard3.Size = new Size(220, 80);
             panelCard3.TabIndex = 2;
+            panelCard3.Paint += panelCard_Paint;
             // 
             // svgCard3
             // 
@@ -360,6 +364,7 @@ namespace Foxoft
             svgCard3.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard3.SvgImage");
             svgCard3.TabIndex = 3;
             svgCard3.Text = "svgImageBox3";
+            svgCard3.Paint += svgCard_Paint;
             // 
             // lblCard3Subtitle
             // 
@@ -404,6 +409,7 @@ namespace Foxoft
             panelCard2.Name = "panelCard2";
             panelCard2.Size = new Size(220, 80);
             panelCard2.TabIndex = 1;
+            panelCard2.Paint += panelCard_Paint;
             // 
             // svgCard2
             // 
@@ -414,6 +420,7 @@ namespace Foxoft
             svgCard2.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard2.SvgImage");
             svgCard2.TabIndex = 3;
             svgCard2.Text = "svgImageBox2";
+            svgCard2.Paint += svgCard_Paint;
             // 
             // lblCard2Subtitle
             // 
@@ -458,6 +465,7 @@ namespace Foxoft
             panelCard1.Name = "panelCard1";
             panelCard1.Size = new Size(220, 80);
             panelCard1.TabIndex = 0;
+            panelCard1.Paint += panelCard_Paint;
             // 
             // svgCard1
             // 
@@ -468,6 +476,7 @@ namespace Foxoft
             svgCard1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard1.SvgImage");
             svgCard1.TabIndex = 3;
             svgCard1.Text = "svgImageBox1";
+            svgCard1.Paint += svgCard_Paint;
             // 
             // lblCard1Subtitle
             // 
