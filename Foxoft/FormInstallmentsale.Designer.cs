@@ -37,14 +37,9 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInstallmentSale));
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
-            bindingSourceTrInstallmentSale = new System.Windows.Forms.BindingSource(components);
+            bindingSourceTrInstallmentSale = new BindingSource(components);
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             repoBtnEdit_Payment = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             col_Buttons = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -65,22 +60,57 @@ namespace Foxoft
             ribbonPageGroup5 = new RibbonPageGroup();
             ribbonPage2 = new RibbonPage();
             ribbonPageGroup4 = new RibbonPageGroup();
+            panelSummary = new DevExpress.XtraEditors.PanelControl();
+            panelCard4 = new DevExpress.XtraEditors.PanelControl();
+            svgCard4 = new DevExpress.XtraEditors.SvgImageBox();
+            lblCard4Subtitle = new DevExpress.XtraEditors.LabelControl();
+            lblCard4Value = new DevExpress.XtraEditors.LabelControl();
+            lblCard4Title = new DevExpress.XtraEditors.LabelControl();
+            panelCard3 = new DevExpress.XtraEditors.PanelControl();
+            svgCard3 = new DevExpress.XtraEditors.SvgImageBox();
+            lblCard3Subtitle = new DevExpress.XtraEditors.LabelControl();
+            lblCard3Value = new DevExpress.XtraEditors.LabelControl();
+            lblCard3Title = new DevExpress.XtraEditors.LabelControl();
+            panelCard2 = new DevExpress.XtraEditors.PanelControl();
+            svgCard2 = new DevExpress.XtraEditors.SvgImageBox();
+            lblCard2Subtitle = new DevExpress.XtraEditors.LabelControl();
+            lblCard2Value = new DevExpress.XtraEditors.LabelControl();
+            lblCard2Title = new DevExpress.XtraEditors.LabelControl();
+            panelCard1 = new DevExpress.XtraEditors.PanelControl();
+            svgCard1 = new DevExpress.XtraEditors.SvgImageBox();
+            lblCard1Subtitle = new DevExpress.XtraEditors.LabelControl();
+            lblCard1Value = new DevExpress.XtraEditors.LabelControl();
+            lblCard1Title = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_Payment).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelSummary).BeginInit();
+            panelSummary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)panelCard4).BeginInit();
+            panelCard4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCard4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelCard3).BeginInit();
+            panelCard3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCard3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelCard2).BeginInit();
+            panelCard2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCard2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelCard1).BeginInit();
+            panelCard1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCard1).BeginInit();
             SuspendLayout();
             // 
             // gridControl1
             // 
             gridControl1.DataSource = bindingSourceTrInstallmentSale;
             gridControl1.Dock = DockStyle.Fill;
-            gridControl1.Location = new System.Drawing.Point(0, 158);
+            gridControl1.Location = new Point(0, 258);
             gridControl1.MainView = gridView1;
             gridControl1.Name = "gridControl1";
             gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_Payment });
-            gridControl1.Size = new System.Drawing.Size(954, 368);
+            gridControl1.Size = new Size(954, 268);
             gridControl1.TabIndex = 0;
             gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
@@ -90,16 +120,15 @@ namespace Foxoft
             gridView1.Name = "gridView1";
             gridView1.OptionsView.ShowAutoFilterRow = true;
             gridView1.RowHeight = 18;
+            gridView1.RowStyle += gridView1_RowStyle;
             gridView1.PopupMenuShowing += gridView1_PopupMenuShowing;
             gridView1.ShowingEditor += gV_Report_ShowingEditor;
-            gridView1.RowStyle += gridView1_RowStyle;
             gridView1.CustomColumnDisplayText += gridView1_CustomColumnDisplayText;
             // 
             // repoBtnEdit_Payment
             // 
             repoBtnEdit_Payment.AutoHeight = false;
-            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
-            repoBtnEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+            repoBtnEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph) });
             repoBtnEdit_Payment.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             repoBtnEdit_Payment.Name = "repoBtnEdit_Payment";
             repoBtnEdit_Payment.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -124,11 +153,11 @@ namespace Foxoft
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
             ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_Refresh, BBI_GridOptions, BSI_Reports, BBI_QueryEdit, BCI_FilterDay, BBI_FilterWeek, BBI_FilterMonth });
-            ribbonControl1.Location = new System.Drawing.Point(0, 0);
+            ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 16;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new RibbonPage[] { ribbonPage1, ribbonPage2 });
-            ribbonControl1.Size = new System.Drawing.Size(954, 158);
+            ribbonControl1.Size = new Size(954, 158);
             // 
             // BBI_Refresh
             // 
@@ -238,26 +267,299 @@ namespace Foxoft
             ribbonPageGroup4.Name = "ribbonPageGroup4";
             ribbonPageGroup4.Text = Resources.Form_InstallmentSale_RibbonGroup_Query;
             // 
+            // panelSummary
+            // 
+            panelSummary.Appearance.BackColor = Color.FromArgb(240, 240, 240);
+            panelSummary.Appearance.Options.UseBackColor = true;
+            panelSummary.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            panelSummary.Controls.Add(panelCard4);
+            panelSummary.Controls.Add(panelCard3);
+            panelSummary.Controls.Add(panelCard2);
+            panelSummary.Controls.Add(panelCard1);
+            panelSummary.Dock = DockStyle.Top;
+            panelSummary.Location = new Point(0, 158);
+            panelSummary.Name = "panelSummary";
+            panelSummary.Padding = new Padding(10);
+            panelSummary.Size = new Size(954, 100);
+            panelSummary.TabIndex = 1;
+            // 
+            // panelCard4
+            // 
+            panelCard4.Appearance.BackColor = Color.White;
+            panelCard4.Appearance.Options.UseBackColor = true;
+            panelCard4.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            panelCard4.Controls.Add(svgCard4);
+            panelCard4.Controls.Add(lblCard4Subtitle);
+            panelCard4.Controls.Add(lblCard4Value);
+            panelCard4.Controls.Add(lblCard4Title);
+            panelCard4.Location = new Point(711, 10);
+            panelCard4.Name = "panelCard4";
+            panelCard4.Size = new Size(220, 80);
+            panelCard4.TabIndex = 3;
+            // 
+            // svgCard4
+            // 
+            svgCard4.BackColor = Color.FromArgb(255, 243, 224);
+            svgCard4.Location = new Point(175, 10);
+            svgCard4.Name = "svgCard4";
+            svgCard4.Size = new Size(35, 35);
+            svgCard4.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard4.SvgImage");
+            svgCard4.TabIndex = 3;
+            svgCard4.Text = "svgImageBox4";
+            // 
+            // lblCard4Subtitle
+            // 
+            lblCard4Subtitle.Appearance.ForeColor = Color.Gray;
+            lblCard4Subtitle.Appearance.Options.UseForeColor = true;
+            lblCard4Subtitle.Location = new Point(10, 58);
+            lblCard4Subtitle.Name = "lblCard4Subtitle";
+            lblCard4Subtitle.Size = new Size(62, 13);
+            lblCard4Subtitle.TabIndex = 4;
+            lblCard4Subtitle.Text = "Active Credit";
+            // 
+            // lblCard4Value
+            // 
+            lblCard4Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
+            lblCard4Value.Appearance.Options.UseFont = true;
+            lblCard4Value.Location = new Point(10, 30);
+            lblCard4Value.Name = "lblCard4Value";
+            lblCard4Value.Size = new Size(42, 23);
+            lblCard4Value.TabIndex = 5;
+            lblCard4Value.Text = "0.00";
+            // 
+            // lblCard4Title
+            // 
+            lblCard4Title.Appearance.ForeColor = Color.Gray;
+            lblCard4Title.Appearance.Options.UseForeColor = true;
+            lblCard4Title.Location = new Point(10, 10);
+            lblCard4Title.Name = "lblCard4Title";
+            lblCard4Title.Size = new Size(89, 13);
+            lblCard4Title.TabIndex = 6;
+            lblCard4Title.Text = "Remaining Amount";
+            // 
+            // panelCard3
+            // 
+            panelCard3.Appearance.BackColor = Color.White;
+            panelCard3.Appearance.Options.UseBackColor = true;
+            panelCard3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            panelCard3.Controls.Add(svgCard3);
+            panelCard3.Controls.Add(lblCard3Subtitle);
+            panelCard3.Controls.Add(lblCard3Value);
+            panelCard3.Controls.Add(lblCard3Title);
+            panelCard3.Location = new Point(478, 10);
+            panelCard3.Name = "panelCard3";
+            panelCard3.Size = new Size(220, 80);
+            panelCard3.TabIndex = 2;
+            // 
+            // svgCard3
+            // 
+            svgCard3.BackColor = Color.FromArgb(232, 245, 233);
+            svgCard3.Location = new Point(175, 10);
+            svgCard3.Name = "svgCard3";
+            svgCard3.Size = new Size(35, 35);
+            svgCard3.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard3.SvgImage");
+            svgCard3.TabIndex = 3;
+            svgCard3.Text = "svgImageBox3";
+            // 
+            // lblCard3Subtitle
+            // 
+            lblCard3Subtitle.Appearance.ForeColor = Color.Gray;
+            lblCard3Subtitle.Appearance.Options.UseForeColor = true;
+            lblCard3Subtitle.Location = new Point(10, 58);
+            lblCard3Subtitle.Name = "lblCard3Subtitle";
+            lblCard3Subtitle.Size = new Size(62, 13);
+            lblCard3Subtitle.TabIndex = 4;
+            lblCard3Subtitle.Text = "Active Credit";
+            // 
+            // lblCard3Value
+            // 
+            lblCard3Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
+            lblCard3Value.Appearance.Options.UseFont = true;
+            lblCard3Value.Location = new Point(10, 30);
+            lblCard3Value.Name = "lblCard3Value";
+            lblCard3Value.Size = new Size(42, 23);
+            lblCard3Value.TabIndex = 5;
+            lblCard3Value.Text = "0.00";
+            // 
+            // lblCard3Title
+            // 
+            lblCard3Title.Appearance.ForeColor = Color.Gray;
+            lblCard3Title.Appearance.Options.UseForeColor = true;
+            lblCard3Title.Location = new Point(10, 10);
+            lblCard3Title.Name = "lblCard3Title";
+            lblCard3Title.Size = new Size(60, 13);
+            lblCard3Title.TabIndex = 6;
+            lblCard3Title.Text = "Paid Amount";
+            // 
+            // panelCard2
+            // 
+            panelCard2.Appearance.BackColor = Color.White;
+            panelCard2.Appearance.Options.UseBackColor = true;
+            panelCard2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            panelCard2.Controls.Add(svgCard2);
+            panelCard2.Controls.Add(lblCard2Subtitle);
+            panelCard2.Controls.Add(lblCard2Value);
+            panelCard2.Controls.Add(lblCard2Title);
+            panelCard2.Location = new Point(245, 10);
+            panelCard2.Name = "panelCard2";
+            panelCard2.Size = new Size(220, 80);
+            panelCard2.TabIndex = 1;
+            // 
+            // svgCard2
+            // 
+            svgCard2.BackColor = Color.FromArgb(224, 242, 241);
+            svgCard2.Location = new Point(175, 10);
+            svgCard2.Name = "svgCard2";
+            svgCard2.Size = new Size(35, 35);
+            svgCard2.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard2.SvgImage");
+            svgCard2.TabIndex = 3;
+            svgCard2.Text = "svgImageBox2";
+            // 
+            // lblCard2Subtitle
+            // 
+            lblCard2Subtitle.Appearance.ForeColor = Color.Gray;
+            lblCard2Subtitle.Appearance.Options.UseForeColor = true;
+            lblCard2Subtitle.Location = new Point(10, 58);
+            lblCard2Subtitle.Name = "lblCard2Subtitle";
+            lblCard2Subtitle.Size = new Size(62, 13);
+            lblCard2Subtitle.TabIndex = 4;
+            lblCard2Subtitle.Text = "Active Credit";
+            // 
+            // lblCard2Value
+            // 
+            lblCard2Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
+            lblCard2Value.Appearance.Options.UseFont = true;
+            lblCard2Value.Location = new Point(10, 30);
+            lblCard2Value.Name = "lblCard2Value";
+            lblCard2Value.Size = new Size(42, 23);
+            lblCard2Value.TabIndex = 5;
+            lblCard2Value.Text = "0.00";
+            // 
+            // lblCard2Title
+            // 
+            lblCard2Title.Appearance.ForeColor = Color.Gray;
+            lblCard2Title.Appearance.Options.UseForeColor = true;
+            lblCard2Title.Location = new Point(10, 10);
+            lblCard2Title.Name = "lblCard2Title";
+            lblCard2Title.Size = new Size(69, 13);
+            lblCard2Title.TabIndex = 6;
+            lblCard2Title.Text = "Credit Amount";
+            // 
+            // panelCard1
+            // 
+            panelCard1.Appearance.BackColor = Color.White;
+            panelCard1.Appearance.Options.UseBackColor = true;
+            panelCard1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            panelCard1.Controls.Add(svgCard1);
+            panelCard1.Controls.Add(lblCard1Subtitle);
+            panelCard1.Controls.Add(lblCard1Value);
+            panelCard1.Controls.Add(lblCard1Title);
+            panelCard1.Location = new Point(12, 10);
+            panelCard1.Name = "panelCard1";
+            panelCard1.Size = new Size(220, 80);
+            panelCard1.TabIndex = 0;
+            // 
+            // svgCard1
+            // 
+            svgCard1.BackColor = Color.FromArgb(232, 244, 255);
+            svgCard1.Location = new Point(175, 10);
+            svgCard1.Name = "svgCard1";
+            svgCard1.Size = new Size(35, 35);
+            svgCard1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard1.SvgImage");
+            svgCard1.TabIndex = 3;
+            svgCard1.Text = "svgImageBox1";
+            // 
+            // lblCard1Subtitle
+            // 
+            lblCard1Subtitle.Appearance.ForeColor = Color.Gray;
+            lblCard1Subtitle.Appearance.Options.UseForeColor = true;
+            lblCard1Subtitle.Location = new Point(10, 58);
+            lblCard1Subtitle.Name = "lblCard1Subtitle";
+            lblCard1Subtitle.Size = new Size(62, 13);
+            lblCard1Subtitle.TabIndex = 4;
+            lblCard1Subtitle.Text = "Active Credit";
+            // 
+            // lblCard1Value
+            // 
+            lblCard1Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
+            lblCard1Value.Appearance.Options.UseFont = true;
+            lblCard1Value.Location = new Point(10, 30);
+            lblCard1Value.Name = "lblCard1Value";
+            lblCard1Value.Size = new Size(12, 23);
+            lblCard1Value.TabIndex = 5;
+            lblCard1Value.Text = "0";
+            // 
+            // lblCard1Title
+            // 
+            lblCard1Title.Appearance.ForeColor = Color.Gray;
+            lblCard1Title.Appearance.Options.UseForeColor = true;
+            lblCard1Title.Location = new Point(10, 10);
+            lblCard1Title.Name = "lblCard1Title";
+            lblCard1Title.Size = new Size(61, 13);
+            lblCard1Title.TabIndex = 6;
+            lblCard1Title.Text = "Credit Count";
+            // 
             // FormInstallmentSale
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(954, 526);
+            ClientSize = new Size(954, 526);
             Controls.Add(gridControl1);
+            Controls.Add(panelSummary);
             Controls.Add(ribbonControl1);
             Name = "FormInstallmentSale";
             Ribbon = ribbonControl1;
-            Text = Resources.Form_InstallmentSale_Caption;
+            Text = "Installment Sales";
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_Payment).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelSummary).EndInit();
+            panelSummary.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)panelCard4).EndInit();
+            panelCard4.ResumeLayout(false);
+            panelCard4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCard4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelCard3).EndInit();
+            panelCard3.ResumeLayout(false);
+            panelCard3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCard3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelCard2).EndInit();
+            panelCard2.ResumeLayout(false);
+            panelCard2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCard2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelCard1).EndInit();
+            panelCard1.ResumeLayout(false);
+            panelCard1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCard1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
+
+        private DevExpress.XtraEditors.PanelControl panelSummary;
+        private DevExpress.XtraEditors.PanelControl panelCard1;
+        private DevExpress.XtraEditors.LabelControl lblCard1Title;
+        private DevExpress.XtraEditors.LabelControl lblCard1Value;
+        private DevExpress.XtraEditors.LabelControl lblCard1Subtitle;
+        private DevExpress.XtraEditors.SvgImageBox svgCard1;
+        private DevExpress.XtraEditors.PanelControl panelCard2;
+        private DevExpress.XtraEditors.LabelControl lblCard2Title;
+        private DevExpress.XtraEditors.LabelControl lblCard2Value;
+        private DevExpress.XtraEditors.LabelControl lblCard2Subtitle;
+        private DevExpress.XtraEditors.SvgImageBox svgCard2;
+        private DevExpress.XtraEditors.PanelControl panelCard3;
+        private DevExpress.XtraEditors.LabelControl lblCard3Title;
+        private DevExpress.XtraEditors.LabelControl lblCard3Value;
+        private DevExpress.XtraEditors.LabelControl lblCard3Subtitle;
+        private DevExpress.XtraEditors.SvgImageBox svgCard3;
+        private DevExpress.XtraEditors.PanelControl panelCard4;
+        private DevExpress.XtraEditors.LabelControl lblCard4Title;
+        private DevExpress.XtraEditors.LabelControl lblCard4Value;
+        private DevExpress.XtraEditors.LabelControl lblCard4Subtitle;
+        private DevExpress.XtraEditors.SvgImageBox svgCard4;
 
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;

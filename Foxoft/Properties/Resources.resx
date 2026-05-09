@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3907,6 +3907,21 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Form_CreditList_Filter_Day" xml:space="preserve">
     <value>Last Day</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_CreditCount" xml:space="preserve">
+    <value>Credit Count</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_CreditAmount" xml:space="preserve">
+    <value>Credit Amount</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_PaidAmount" xml:space="preserve">
+    <value>Paid Amount</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_RemainingAmount" xml:space="preserve">
+    <value>Remaining Amount</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_ActiveCredit" xml:space="preserve">
+    <value>Active Credit</value>
   </data>
   <data name="Form_CreditList_Filter_Week" xml:space="preserve">
     <value>Last Week</value>

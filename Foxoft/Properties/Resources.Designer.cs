@@ -11340,5 +11340,35 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Common_Status_Completed", resourceCulture);
             }
         }
+
+        public static string Form_InstallmentSale_Summary_CreditCount {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Summary_CreditCount", resourceCulture);
+            }
+        }
+
+        public static string Form_InstallmentSale_Summary_CreditAmount {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Summary_CreditAmount", resourceCulture);
+            }
+        }
+
+        public static string Form_InstallmentSale_Summary_PaidAmount {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Summary_PaidAmount", resourceCulture);
+            }
+        }
+
+        public static string Form_InstallmentSale_Summary_RemainingAmount {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Summary_RemainingAmount", resourceCulture);
+            }
+        }
+
+        public static string Form_InstallmentSale_Summary_ActiveCredit {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Summary_ActiveCredit", resourceCulture);
+            }
+        }
     }
 }

@@ -49,10 +49,14 @@ namespace Foxoft
             InitializeComponent();
             _lockService = new DocumentLockService(_db);
 
+            SetSummaryIcons();
+
             ReloadData();
 
             gridView1.PopulateColumns();
             LoadLayout();
+
+            gridView1.ColumnFilterChanged += (s, e) => UpdateSummary();
 
             HyperLinkColumns();
 
@@ -397,6 +401,14 @@ namespace Foxoft
                 trInstallmentViewModel = null;
         }
 
+        private void SetSummaryIcons()
+        {
+            //svgCard1.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/icon builder/actions_user.svg");
+            //svgCard2.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/business objects/bo_sale.svg");
+            //svgCard3.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/business objects/bo_validation.svg");
+            //svgCard4.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/business objects/bo_money_report.svg");
+        }
+
         private void LoadData()
         {
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_InstallmentSale");
@@ -413,7 +425,10 @@ namespace Foxoft
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
+                    {
                         bindingSourceTrInstallmentSale.DataSource = dt;
+                        UpdateSummary();
+                    }
                 }
             }
 
@@ -424,6 +439,42 @@ namespace Foxoft
 
             gridView1.BestFitColumns();
             gridView1.MakeRowVisible(gridView1.FocusedRowHandle);
+        }
+
+        private void UpdateSummary()
+        {
+            decimal totalAmount = 0;
+            decimal totalPaid = 0;
+            decimal totalRemaining = 0;
+            int count = 0;
+
+            for (int i = 0; i < gridView1.RowCount; i++)
+            {
+                int rowHandle = gridView1.GetVisibleRowHandle(i);
+                if (rowHandle < 0) continue;
+
+                object namead = gridView1.GetRowCellValue(rowHandle, "CurrAccDesc");
+
+                // Check for Active Credits (InstallmentStatus = 0)
+                object statusObj = gridView1.GetRowCellValue(rowHandle, "InstallmentStatus");
+                if (statusObj != null && statusObj != DBNull.Value && Convert.ToInt32(statusObj) == 0)
+                {
+                    object amountObj = gridView1.GetRowCellValue(rowHandle, "InstallmentAmount");
+                    object paidObj = gridView1.GetRowCellValue(rowHandle, "InstallmentPaid");
+                    object remainingObj = gridView1.GetRowCellValue(rowHandle, "RemainingAmount");
+
+                    if (amountObj != null && amountObj != DBNull.Value) totalAmount += Convert.ToDecimal(amountObj);
+                    if (paidObj != null && paidObj != DBNull.Value) totalPaid += Convert.ToDecimal(paidObj);
+                    if (remainingObj != null && remainingObj != DBNull.Value) totalRemaining += Convert.ToDecimal(remainingObj);
+
+                    count++;
+                }
+            }
+
+            lblCard1Value.Text = $"{count:N0} Ədəd";
+            lblCard2Value.Text = $"{totalAmount:N2} AZN";
+            lblCard3Value.Text = $"{totalPaid:N2} AZN";
+            lblCard4Value.Text = $"{totalRemaining:N2} AZN";
         }
 
         private void LocalizeColumns()

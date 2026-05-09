@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3916,5 +3916,20 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Form_CreditList_RibbonGroup_Filter" xml:space="preserve">
     <value>Filtr</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_CreditCount" xml:space="preserve">
+    <value>Kredit sayı</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_CreditAmount" xml:space="preserve">
+    <value>Kredit məbləği</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_PaidAmount" xml:space="preserve">
+    <value>Ödəmiş məbləğ</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_RemainingAmount" xml:space="preserve">
+    <value>Ödəniləcək məbləğ</value>
+  </data>
+  <data name="Form_InstallmentSale_Summary_ActiveCredit" xml:space="preserve">
+    <value>Aktiv kredit</value>
   </data>
 </root>
