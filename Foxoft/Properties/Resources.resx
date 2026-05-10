@@ -3968,4 +3968,16 @@ To delete, cancel the receipt!</value>
   <data name="Common_Export" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="FormInvoice_Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="FormInvoice_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Navigate" xml:space="preserve">
+    <value>Navigate</value>
+  </data>
+  <data name="FormInvoice_NoMoreInvoice" xml:space="preserve">
+    <value>There are no more invoices.</value>
+  </data>
 </root>

@@ -11554,5 +11554,29 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Common_Export", resourceCulture);
             }
         }
+        
+        public static string FormInvoice_Previous {
+            get {
+                return ResourceManager.GetString("FormInvoice_Previous", resourceCulture);
+            }
+        }
+        
+        public static string FormInvoice_Next {
+            get {
+                return ResourceManager.GetString("FormInvoice_Next", resourceCulture);
+            }
+        }
+        
+        public static string FormInvoice_RibbonGroup_Navigate {
+            get {
+                return ResourceManager.GetString("FormInvoice_RibbonGroup_Navigate", resourceCulture);
+            }
+        }
+        
+        public static string FormInvoice_NoMoreInvoice {
+            get {
+                return ResourceManager.GetString("FormInvoice_NoMoreInvoice", resourceCulture);
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Columns;
@@ -38,6 +38,19 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInvoice));
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
+            BBI_Previous = new BarButtonItem();
+            BBI_Next = new BarButtonItem();
+            RPG_Navigate = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(components);
             trInvoiceLinesBindingSource = new BindingSource(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
@@ -84,11 +97,11 @@ namespace Foxoft
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             RPG_Invoice = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            RPG_Installment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Print = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Export = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            RPG_Installment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Tools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Campaign = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -333,6 +346,31 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
             SuspendLayout();
             // 
+            // BBI_Previous
+            // 
+            BBI_Previous.Caption = Resources.FormInvoice_Previous;
+            BBI_Previous.Id = 73;
+            BBI_Previous.ImageOptions.ImageUri.Uri = "Previous";
+            BBI_Previous.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Previous.ImageOptions.SvgImage");
+            BBI_Previous.Name = "BBI_Previous";
+            BBI_Previous.ItemClick += BBI_Previous_ItemClick;
+            // 
+            // BBI_Next
+            // 
+            BBI_Next.Caption = Resources.FormInvoice_Next;
+            BBI_Next.Id = 74;
+            BBI_Next.ImageOptions.ImageUri.Uri = "Next";
+            BBI_Next.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Next.ImageOptions.SvgImage");
+            BBI_Next.Name = "BBI_Next";
+            BBI_Next.ItemClick += BBI_Next_ItemClick;
+            // 
+            // RPG_Navigate
+            // 
+            RPG_Navigate.ItemLinks.Add(BBI_Previous);
+            RPG_Navigate.ItemLinks.Add(BBI_Next);
+            RPG_Navigate.Name = "RPG_Navigate";
+            RPG_Navigate.Text = Resources.FormInvoice_RibbonGroup_Navigate;
+            // 
             // trInvoiceLinesBindingSource
             // 
             trInvoiceLinesBindingSource.DataSource = typeof(TrInvoiceLine);
@@ -400,9 +438,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog, BBI_PromoCodeCampaign, bBI_CampaignDelete });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog, BBI_PromoCodeCampaign, bBI_CampaignDelete, BBI_Previous, BBI_Next });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 73;
+            ribbonControl1.MaxItemId = 75;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -712,7 +750,7 @@ namespace Foxoft
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RPG_Invoice, RPG_Payment, RPG_Print, RPG_Export, RPG_Control, ribbonPageGroup8, RPG_Installment, RPG_Tools, RPG_Campaign });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RPG_Invoice, RPG_Payment, RPG_Print, RPG_Export, RPG_Control, ribbonPageGroup8, RPG_Installment, RPG_Tools, RPG_Campaign, RPG_Navigate });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.FormInvoice_RibbonPage_Invoice;
             // 
@@ -730,13 +768,6 @@ namespace Foxoft
             RPG_Payment.ItemLinks.Add(bBI_PaymentDelete);
             RPG_Payment.Name = "RPG_Payment";
             RPG_Payment.Text = Resources.FormInvoice_RibbonGroup_Payment;
-            // 
-            // RPG_Installment
-            // 
-            RPG_Installment.ItemLinks.Add(BBI_InstallmentGuarantorAdd);
-            RPG_Installment.Name = "RPG_Installment";
-            RPG_Installment.Text = Resources.FormInvoice_RibbonGroup_Installment;
-            RPG_Installment.Visible = false;
             // 
             // RPG_Print
             // 
@@ -766,6 +797,13 @@ namespace Foxoft
             ribbonPageGroup8.ItemLinks.Add(btn_info);
             ribbonPageGroup8.Name = "ribbonPageGroup8";
             ribbonPageGroup8.Text = Resources.FormInvoice_RibbonGroup_Info;
+            // 
+            // RPG_Installment
+            // 
+            RPG_Installment.ItemLinks.Add(BBI_InstallmentGuarantorAdd);
+            RPG_Installment.Name = "RPG_Installment";
+            RPG_Installment.Text = Resources.FormInvoice_RibbonGroup_Installment;
+            RPG_Installment.Visible = false;
             // 
             // RPG_Tools
             // 
@@ -1179,7 +1217,7 @@ namespace Foxoft
             btnEdit_DocNum.Location = new Point(131, 12);
             btnEdit_DocNum.Name = "btnEdit_DocNum";
             btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Left, "Previous", -1, true, true, true, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Right, "Next", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton() });
             btnEdit_DocNum.Size = new Size(715, 20);
             btnEdit_DocNum.StyleController = dataLayoutControl1;
             btnEdit_DocNum.TabIndex = 0;
@@ -2453,5 +2491,8 @@ namespace Foxoft
         private BarButtonItem BBI_PromoCodeCampaign;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Campaign;
         private BarButtonItem bBI_CampaignDelete;
+        private BarButtonItem BBI_Previous;
+        private BarButtonItem BBI_Next;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Navigate;
     }
 }

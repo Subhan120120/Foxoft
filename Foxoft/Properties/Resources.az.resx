@@ -3971,4 +3971,16 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Common_SaveLayout" xml:space="preserve">
     <value>Düzəni Yadda Saxla</value>
   </data>
+  <data name="FormInvoice_Previous" xml:space="preserve">
+    <value>Əvvəlki</value>
+  </data>
+  <data name="FormInvoice_Next" xml:space="preserve">
+    <value>Sonrakı</value>
+  </data>
+  <data name="FormInvoice_RibbonGroup_Navigate" xml:space="preserve">
+    <value>Naviqasiya</value>
+  </data>
+  <data name="FormInvoice_NoMoreInvoice" xml:space="preserve">
+    <value>Daha qaimə yoxdur.</value>
+  </data>
 </root>

@@ -420,6 +420,78 @@ namespace Foxoft
             }
         }
 
+        private void BBI_Previous_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            NavigateInvoice(isPrevious: true);
+        }
+
+        private void BBI_Next_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            NavigateInvoice(isPrevious: false);
+        }
+
+        private void NavigateInvoice(bool isPrevious)
+        {
+            if (trInvoiceHeader is null)
+                return;
+
+            using var ctx = new subContext();
+
+            TrInvoiceHeader adjacent;
+
+            if (isPrevious)
+            {
+                adjacent = ctx.TrInvoiceHeaders
+                    .Where(x => x.ProcessCode == dcProcess.ProcessCode && x.IsMainTF == true)
+                    .Where(x => x.DocumentDate < trInvoiceHeader.DocumentDate
+                             || (x.DocumentDate == trInvoiceHeader.DocumentDate
+                                 && x.DocumentTime < trInvoiceHeader.DocumentTime)
+                             || (x.DocumentDate == trInvoiceHeader.DocumentDate
+                                 && x.DocumentTime == trInvoiceHeader.DocumentTime
+                                 && x.InvoiceHeaderId != trInvoiceHeader.InvoiceHeaderId
+                                 && string.Compare(x.DocumentNumber, trInvoiceHeader.DocumentNumber) < 0))
+                    .OrderByDescending(x => x.DocumentDate)
+                    .ThenByDescending(x => x.DocumentTime)
+                    .ThenByDescending(x => x.DocumentNumber)
+                    .FirstOrDefault();
+            }
+            else
+            {
+                adjacent = ctx.TrInvoiceHeaders
+                    .Where(x => x.ProcessCode == dcProcess.ProcessCode && x.IsMainTF == true)
+                    .Where(x => x.DocumentDate > trInvoiceHeader.DocumentDate
+                             || (x.DocumentDate == trInvoiceHeader.DocumentDate
+                                 && x.DocumentTime > trInvoiceHeader.DocumentTime)
+                             || (x.DocumentDate == trInvoiceHeader.DocumentDate
+                                 && x.DocumentTime == trInvoiceHeader.DocumentTime
+                                 && x.InvoiceHeaderId != trInvoiceHeader.InvoiceHeaderId
+                                 && string.Compare(x.DocumentNumber, trInvoiceHeader.DocumentNumber) > 0))
+                    .OrderBy(x => x.DocumentDate)
+                    .ThenBy(x => x.DocumentTime)
+                    .ThenBy(x => x.DocumentNumber)
+                    .FirstOrDefault();
+            }
+
+            if (adjacent is null)
+            {
+                XtraMessageBox.Show(Resources.FormInvoice_NoMoreInvoice, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (TryAcquireInvoiceLockForEdit(adjacent.InvoiceHeaderId))
+            {
+                _lockService.ReleaseLock(
+                    "Invoice",
+                    trInvoiceHeader.InvoiceHeaderId,
+                    Authorization.CurrAccCode,
+                    Environment.MachineName,
+                    _appInstanceId);
+
+                trInvoiceHeader = adjacent;
+                LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+            }
+        }
+
         private async Task LoadInvoiceAsync(Guid invoiceHeaderId)
         {
             SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
