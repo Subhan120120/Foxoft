@@ -390,7 +390,12 @@ namespace Foxoft
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            SelectDocNum();
+            if (e.Button.Kind == ButtonPredefines.Left)
+                NavigateInvoice(isPrevious: true);
+            else if (e.Button.Kind == ButtonPredefines.Right)
+                NavigateInvoice(isPrevious: false);
+            else
+                SelectDocNum();
         }
 
         private void btnEdit_DocNum_DoubleClick(object sender, EventArgs e)

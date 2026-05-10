@@ -50,7 +50,6 @@ namespace Foxoft
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
             BBI_Previous = new BarButtonItem();
             BBI_Next = new BarButtonItem();
-            RPG_Navigate = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(components);
             trInvoiceLinesBindingSource = new BindingSource(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
@@ -363,13 +362,6 @@ namespace Foxoft
             BBI_Next.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Next.ImageOptions.SvgImage");
             BBI_Next.Name = "BBI_Next";
             BBI_Next.ItemClick += BBI_Next_ItemClick;
-            // 
-            // RPG_Navigate
-            // 
-            RPG_Navigate.ItemLinks.Add(BBI_Previous);
-            RPG_Navigate.ItemLinks.Add(BBI_Next);
-            RPG_Navigate.Name = "RPG_Navigate";
-            RPG_Navigate.Text = Resources.FormInvoice_RibbonGroup_Navigate;
             // 
             // trInvoiceLinesBindingSource
             // 
@@ -750,7 +742,7 @@ namespace Foxoft
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RPG_Invoice, RPG_Payment, RPG_Print, RPG_Export, RPG_Control, ribbonPageGroup8, RPG_Installment, RPG_Tools, RPG_Campaign, RPG_Navigate });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RPG_Invoice, RPG_Payment, RPG_Print, RPG_Export, RPG_Control, ribbonPageGroup8, RPG_Installment, RPG_Tools, RPG_Campaign });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.FormInvoice_RibbonPage_Invoice;
             // 
@@ -1217,7 +1209,7 @@ namespace Foxoft
             btnEdit_DocNum.Location = new Point(131, 12);
             btnEdit_DocNum.Name = "btnEdit_DocNum";
             btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Left, "Previous", -1, true, true, true, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Right, "Next", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Left, Resources.FormInvoice_Previous, -1, true, true, true, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Right, Resources.FormInvoice_Next, -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton() });
             btnEdit_DocNum.Size = new Size(715, 20);
             btnEdit_DocNum.StyleController = dataLayoutControl1;
             btnEdit_DocNum.TabIndex = 0;
@@ -2493,6 +2485,5 @@ namespace Foxoft
         private BarButtonItem bBI_CampaignDelete;
         private BarButtonItem BBI_Previous;
         private BarButtonItem BBI_Next;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Navigate;
     }
 }
