@@ -3950,4 +3950,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_InstallmentSale_Summary_Remaining_Subtitle" xml:space="preserve">
     <value>Aktiv Taksit</value>
   </data>
+  <data name="Common_Pieces" xml:space="preserve">
+    <value>Ədəd</value>
+  </data>
 </root>

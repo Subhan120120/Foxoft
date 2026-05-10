@@ -3950,4 +3950,7 @@ To delete, cancel the receipt!</value>
   <data name="Form_InstallmentSale_RibbonGroup_Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="Common_Pieces" xml:space="preserve">
+    <value>Pieces</value>
+  </data>
 </root>

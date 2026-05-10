@@ -340,7 +340,7 @@ namespace Foxoft
             lblCard4Subtitle.Name = "lblCard4Subtitle";
             lblCard4Subtitle.Size = new Size(62, 13);
             lblCard4Subtitle.TabIndex = 4;
-            lblCard4Subtitle.Text = "Active Credit";
+            lblCard4Subtitle.Text = Resources.Form_InstallmentSale_Summary_Remaining_Subtitle;
             // 
             // lblCard4Value
             // 
@@ -360,7 +360,7 @@ namespace Foxoft
             lblCard4Title.Name = "lblCard4Title";
             lblCard4Title.Size = new Size(89, 13);
             lblCard4Title.TabIndex = 6;
-            lblCard4Title.Text = "Remaining Amount";
+            lblCard4Title.Text = Resources.Form_InstallmentSale_Summary_Remaining_Title;
             // 
             // panelCard3
             // 
@@ -396,7 +396,7 @@ namespace Foxoft
             lblCard3Subtitle.Name = "lblCard3Subtitle";
             lblCard3Subtitle.Size = new Size(62, 13);
             lblCard3Subtitle.TabIndex = 4;
-            lblCard3Subtitle.Text = "Active Credit";
+            lblCard3Subtitle.Text = Resources.Form_InstallmentSale_Summary_Paid_Subtitle;
             // 
             // lblCard3Value
             // 
@@ -416,7 +416,7 @@ namespace Foxoft
             lblCard3Title.Name = "lblCard3Title";
             lblCard3Title.Size = new Size(47, 13);
             lblCard3Title.TabIndex = 6;
-            lblCard3Title.Text = "Total Paid";
+            lblCard3Title.Text = Resources.Form_InstallmentSale_Summary_Paid_Title;
             // 
             // panelCard2
             // 
@@ -452,7 +452,7 @@ namespace Foxoft
             lblCard2Subtitle.Name = "lblCard2Subtitle";
             lblCard2Subtitle.Size = new Size(62, 13);
             lblCard2Subtitle.TabIndex = 4;
-            lblCard2Subtitle.Text = "Active Credit";
+            lblCard2Subtitle.Text = Resources.Form_InstallmentSale_Summary_Amount_Subtitle;
             // 
             // lblCard2Value
             // 
@@ -472,7 +472,7 @@ namespace Foxoft
             lblCard2Title.Name = "lblCard2Title";
             lblCard2Title.Size = new Size(64, 13);
             lblCard2Title.TabIndex = 6;
-            lblCard2Title.Text = "Total Amount";
+            lblCard2Title.Text = Resources.Form_InstallmentSale_Summary_Amount_Title;
             // 
             // panelCard1
             // 
@@ -508,7 +508,7 @@ namespace Foxoft
             lblCard1Subtitle.Name = "lblCard1Subtitle";
             lblCard1Subtitle.Size = new Size(62, 13);
             lblCard1Subtitle.TabIndex = 4;
-            lblCard1Subtitle.Text = "Active Credit";
+            lblCard1Subtitle.Text = Resources.Form_InstallmentSale_Summary_Count_Subtitle;
             // 
             // lblCard1Value
             // 
@@ -528,7 +528,7 @@ namespace Foxoft
             lblCard1Title.Name = "lblCard1Title";
             lblCard1Title.Size = new Size(76, 13);
             lblCard1Title.TabIndex = 6;
-            lblCard1Title.Text = "Installment Sale";
+            lblCard1Title.Text = Resources.Form_InstallmentSale_Summary_Count_Title;
             // 
             // FormInstallmentSale
             // 
@@ -540,7 +540,7 @@ namespace Foxoft
             Controls.Add(ribbonControl1);
             Name = "FormInstallmentSale";
             Ribbon = ribbonControl1;
-            Text = "Installment Sales";
+            Text = Resources.Form_InstallmentSale_Caption;
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
