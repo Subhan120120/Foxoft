@@ -381,7 +381,7 @@ namespace Foxoft
             }
             else
             {
-                sendWhatsApp(phoneNum, $"Ödəniş №{trPaymentHeader.DocumentNumber}");
+                sendWhatsApp(phoneNum, $"Ödəniş No: {trPaymentHeader.DocumentNumber}");
             }
         }
 
@@ -501,7 +501,7 @@ namespace Foxoft
 
                 string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
 
-                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: $"Ödəniş №{trPaymentHeader.DocumentNumber}");
+                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: $"Ödəniş No: {trPaymentHeader.DocumentNumber}");
 
                 SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, "Image");
 

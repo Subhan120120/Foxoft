@@ -1696,7 +1696,7 @@ namespace Foxoft
             }
             else
             {
-                SendWhatsApp(phoneNum, $"Faktura №{trInvoiceHeader.DocumentNumber}");
+                SendWhatsApp(phoneNum, $"Faktura No: {trInvoiceHeader.DocumentNumber}");
             }
         }
 
@@ -1721,7 +1721,7 @@ namespace Foxoft
 
                 string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
 
-                string caption = string.IsNullOrEmpty(documentNumber) ? "Faktura" : $"Faktura №{documentNumber}";
+                string caption = string.IsNullOrEmpty(documentNumber) ? "Faktura" : $"Faktura No: {documentNumber}";
                 string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: caption);
                 
                 SaveWhatsAppLog(trInvoiceHeader.InvoiceHeaderId, formattedNumber, "Image");
