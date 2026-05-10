@@ -2248,7 +2248,7 @@ namespace Foxoft
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
                 //menu.Items.Clear();
                 if (menu.Column != null)
-                    menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
+                    menu.Items.Add(CreateItem(Resources.Common_SaveLayout, menu.Column, null));
 
                 if (menu.Column == col_SalesPersonCode)
                 {

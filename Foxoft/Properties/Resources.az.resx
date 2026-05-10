@@ -3968,4 +3968,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Common_Export" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="Common_SaveLayout" xml:space="preserve">
+    <value>Düzəni Yadda Saxla</value>
+  </data>
 </root>

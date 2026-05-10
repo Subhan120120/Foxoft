@@ -1,4 +1,4 @@
-﻿using DevExpress.Data;
+using DevExpress.Data;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -555,7 +555,7 @@ namespace Foxoft
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
                 if (menu.Column != null)
                 {
-                    menu.Items.Add(CreateMenuItem("Save Layout", menu.Column, null));
+                    menu.Items.Add(CreateMenuItem(Resources.Common_SaveLayout, menu.Column, null));
                     menu.Items.Add(CreateCheckItem("Filter Column", menu.Column, null));
                 }
             }

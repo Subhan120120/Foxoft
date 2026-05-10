@@ -248,7 +248,7 @@ namespace Foxoft
                 var menu = e.Menu as DevExpress.XtraGrid.Menu.GridViewColumnMenu;
                 if (menu != null)
                 {
-                    var saveItem = new DevExpress.Utils.Menu.DXMenuItem("Save Layout", (s, args) => SaveGridLayout());
+                    var saveItem = new DevExpress.Utils.Menu.DXMenuItem(Resources.Common_SaveLayout, (s, args) => SaveGridLayout());
                     saveItem.BeginGroup = true;
                     menu.Items.Add(saveItem);
                 }

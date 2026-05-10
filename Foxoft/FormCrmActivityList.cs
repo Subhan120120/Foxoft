@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraBars;
+using DevExpress.XtraBars;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -226,7 +226,7 @@ namespace Foxoft
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
 
                 if (menu?.Column != null)
-                    menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
+                    menu.Items.Add(CreateItem(Resources.Common_SaveLayout, menu.Column, null));
             }
         }
 
