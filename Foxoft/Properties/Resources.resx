@@ -3953,4 +3953,19 @@ To delete, cancel the receipt!</value>
   <data name="Common_Pieces" xml:space="preserve">
     <value>Pieces</value>
   </data>
+  <data name="Form_WhatsAppMessageLog" xml:space="preserve">
+    <value>WhatsApp Message Log</value>
+  </data>
+  <data name="Entity_TrWhatsAppMessageLog_MessageType" xml:space="preserve">
+    <value>Message Type</value>
+  </data>
+  <data name="Common_Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Common_Sender" xml:space="preserve">
+    <value>Sender</value>
+  </data>
+  <data name="Common_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
 </root>

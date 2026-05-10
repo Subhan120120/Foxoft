@@ -26,5 +26,11 @@ namespace Foxoft.Models
 
         [StringLength(30)]
         public string? CurrAccCode { get; set; }
+
+        [ForeignKey(nameof(CurrAccCode))]
+        public virtual DcCurrAcc? DcCurrAcc { get; set; }
+
+        [ForeignKey(nameof(Sender))]
+        public virtual DcCurrAcc? DcSender { get; set; }
     }
 }
