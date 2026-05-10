@@ -467,10 +467,10 @@ namespace Foxoft
 
             string currencyCode = Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
 
-            lblCard1Value.Text = $"{count:N0} {Resources.Common_Pieces}";
-            lblCard2Value.Text = $"{totalAmount:N2} {currencyCode}";
-            lblCard3Value.Text = $"{totalPaid:N2} {currencyCode}";
-            lblCard4Value.Text = $"{totalRemaining:N2} {currencyCode}";
+            lblCardCount_Value.Text = $"{count:N0} {Resources.Common_Pieces}";
+            lblCardAmount_Value.Text = $"{totalAmount:N2} {currencyCode}";
+            lblCardPaid_Value.Text = $"{totalPaid:N2} {currencyCode}";
+            lblCardRemaining_Value.Text = $"{totalRemaining:N2} {currencyCode}";
         }
 
         private void LocalizeColumns()

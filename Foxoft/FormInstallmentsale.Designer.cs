@@ -63,26 +63,26 @@ namespace Foxoft
             ribbonPageGroupFilterStatus = new RibbonPageGroup();
             ribbonPage2 = new RibbonPage();
             panelSummary = new DevExpress.XtraEditors.PanelControl();
-            panelCard4 = new DevExpress.XtraEditors.PanelControl();
-            svgCard4 = new DevExpress.XtraEditors.SvgImageBox();
-            lblCard4Subtitle = new DevExpress.XtraEditors.LabelControl();
-            lblCard4Value = new DevExpress.XtraEditors.LabelControl();
-            lblCard4Title = new DevExpress.XtraEditors.LabelControl();
-            panelCard3 = new DevExpress.XtraEditors.PanelControl();
-            svgCard3 = new DevExpress.XtraEditors.SvgImageBox();
-            lblCard3Subtitle = new DevExpress.XtraEditors.LabelControl();
-            lblCard3Value = new DevExpress.XtraEditors.LabelControl();
-            lblCard3Title = new DevExpress.XtraEditors.LabelControl();
-            panelCard2 = new DevExpress.XtraEditors.PanelControl();
-            svgCard2 = new DevExpress.XtraEditors.SvgImageBox();
-            lblCard2Subtitle = new DevExpress.XtraEditors.LabelControl();
-            lblCard2Value = new DevExpress.XtraEditors.LabelControl();
-            lblCard2Title = new DevExpress.XtraEditors.LabelControl();
-            panelCard1 = new DevExpress.XtraEditors.PanelControl();
-            svgCard1 = new DevExpress.XtraEditors.SvgImageBox();
-            lblCard1Subtitle = new DevExpress.XtraEditors.LabelControl();
-            lblCard1Value = new DevExpress.XtraEditors.LabelControl();
-            lblCard1Title = new DevExpress.XtraEditors.LabelControl();
+            panelCardRemaining = new DevExpress.XtraEditors.PanelControl();
+            svgCardRemaining = new DevExpress.XtraEditors.SvgImageBox();
+            lblCardRemaining_Subtitle = new DevExpress.XtraEditors.LabelControl();
+            lblCardRemaining_Value = new DevExpress.XtraEditors.LabelControl();
+            lblCardRemaining_Title = new DevExpress.XtraEditors.LabelControl();
+            panelCardPaid = new DevExpress.XtraEditors.PanelControl();
+            svgCardPaid = new DevExpress.XtraEditors.SvgImageBox();
+            lblCardPaid_Subtitle = new DevExpress.XtraEditors.LabelControl();
+            lblCardPaid_Value = new DevExpress.XtraEditors.LabelControl();
+            lblCardPaid_Title = new DevExpress.XtraEditors.LabelControl();
+            panelCardAmount = new DevExpress.XtraEditors.PanelControl();
+            svgCardAmount = new DevExpress.XtraEditors.SvgImageBox();
+            lblCardAmount_Subtitle = new DevExpress.XtraEditors.LabelControl();
+            lblCardAmount_Value = new DevExpress.XtraEditors.LabelControl();
+            lblCardAmount_Title = new DevExpress.XtraEditors.LabelControl();
+            panelCardCount = new DevExpress.XtraEditors.PanelControl();
+            svgCardCount = new DevExpress.XtraEditors.SvgImageBox();
+            lblCardCount_Subtitle = new DevExpress.XtraEditors.LabelControl();
+            lblCardCount_Value = new DevExpress.XtraEditors.LabelControl();
+            lblCardCount_Title = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
@@ -90,18 +90,18 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelSummary).BeginInit();
             panelSummary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)panelCard4).BeginInit();
-            panelCard4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCard4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)panelCard3).BeginInit();
-            panelCard3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCard3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)panelCard2).BeginInit();
-            panelCard2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCard2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)panelCard1).BeginInit();
-            panelCard1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCard1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelCardRemaining).BeginInit();
+            panelCardRemaining.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCardRemaining).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelCardPaid).BeginInit();
+            panelCardPaid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCardPaid).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelCardAmount).BeginInit();
+            panelCardAmount.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCardAmount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelCardCount).BeginInit();
+            panelCardCount.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCardCount).BeginInit();
             SuspendLayout();
             // 
             // gridControl1
@@ -294,10 +294,10 @@ namespace Foxoft
             panelSummary.Appearance.BackColor = Color.FromArgb(240, 240, 240);
             panelSummary.Appearance.Options.UseBackColor = true;
             panelSummary.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelSummary.Controls.Add(panelCard4);
-            panelSummary.Controls.Add(panelCard3);
-            panelSummary.Controls.Add(panelCard2);
-            panelSummary.Controls.Add(panelCard1);
+            panelSummary.Controls.Add(panelCardRemaining);
+            panelSummary.Controls.Add(panelCardPaid);
+            panelSummary.Controls.Add(panelCardAmount);
+            panelSummary.Controls.Add(panelCardCount);
             panelSummary.Dock = DockStyle.Top;
             panelSummary.Location = new Point(0, 158);
             panelSummary.Name = "panelSummary";
@@ -306,229 +306,229 @@ namespace Foxoft
             panelSummary.TabIndex = 1;
             panelSummary.Paint += panelSummary_Paint;
             // 
-            // panelCard4
+            // panelCardRemaining
             // 
-            panelCard4.Appearance.BackColor = Color.White;
-            panelCard4.Appearance.Options.UseBackColor = true;
-            panelCard4.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelCard4.Controls.Add(svgCard4);
-            panelCard4.Controls.Add(lblCard4Subtitle);
-            panelCard4.Controls.Add(lblCard4Value);
-            panelCard4.Controls.Add(lblCard4Title);
-            panelCard4.Location = new Point(711, 10);
-            panelCard4.Name = "panelCard4";
-            panelCard4.Size = new Size(220, 80);
-            panelCard4.TabIndex = 3;
-            panelCard4.Paint += panelCard_Paint;
+            panelCardRemaining.Appearance.BackColor = Color.White;
+            panelCardRemaining.Appearance.Options.UseBackColor = true;
+            panelCardRemaining.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            panelCardRemaining.Controls.Add(svgCardRemaining);
+            panelCardRemaining.Controls.Add(lblCardRemaining_Subtitle);
+            panelCardRemaining.Controls.Add(lblCardRemaining_Value);
+            panelCardRemaining.Controls.Add(lblCardRemaining_Title);
+            panelCardRemaining.Location = new Point(711, 10);
+            panelCardRemaining.Name = "panelCardRemaining";
+            panelCardRemaining.Size = new Size(220, 80);
+            panelCardRemaining.TabIndex = 3;
+            panelCardRemaining.Paint += panelCard_Paint;
             // 
-            // svgCard4
+            // svgCardRemaining
             // 
-            svgCard4.BackColor = Color.FromArgb(255, 243, 224);
-            svgCard4.Location = new Point(175, 10);
-            svgCard4.Name = "svgCard4";
-            svgCard4.Size = new Size(35, 35);
-            svgCard4.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard4.SvgImage");
-            svgCard4.TabIndex = 3;
-            svgCard4.Text = "svgImageBox4";
-            svgCard4.Paint += svgCard_Paint;
+            svgCardRemaining.BackColor = Color.FromArgb(255, 243, 224);
+            svgCardRemaining.Location = new Point(175, 10);
+            svgCardRemaining.Name = "svgCardRemaining";
+            svgCardRemaining.Size = new Size(35, 35);
+            svgCardRemaining.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardRemaining.SvgImage");
+            svgCardRemaining.TabIndex = 3;
+            svgCardRemaining.Text = "svgImageBox4";
+            svgCardRemaining.Paint += svgCard_Paint;
             // 
-            // lblCard4Subtitle
+            // lblCardRemaining_Subtitle
             // 
-            lblCard4Subtitle.Appearance.ForeColor = Color.Gray;
-            lblCard4Subtitle.Appearance.Options.UseForeColor = true;
-            lblCard4Subtitle.Location = new Point(10, 58);
-            lblCard4Subtitle.Name = "lblCard4Subtitle";
-            lblCard4Subtitle.Size = new Size(62, 13);
-            lblCard4Subtitle.TabIndex = 4;
-            lblCard4Subtitle.Text = Resources.Form_InstallmentSale_Summary_Remaining_Subtitle;
+            lblCardRemaining_Subtitle.Appearance.ForeColor = Color.Gray;
+            lblCardRemaining_Subtitle.Appearance.Options.UseForeColor = true;
+            lblCardRemaining_Subtitle.Location = new Point(10, 58);
+            lblCardRemaining_Subtitle.Name = "lblCardRemaining_Subtitle";
+            lblCardRemaining_Subtitle.Size = new Size(62, 13);
+            lblCardRemaining_Subtitle.TabIndex = 4;
+            lblCardRemaining_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Remaining_Subtitle;
             // 
-            // lblCard4Value
+            // lblCardRemaining_Value
             // 
-            lblCard4Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
-            lblCard4Value.Appearance.Options.UseFont = true;
-            lblCard4Value.Location = new Point(10, 30);
-            lblCard4Value.Name = "lblCard4Value";
-            lblCard4Value.Size = new Size(42, 23);
-            lblCard4Value.TabIndex = 5;
-            lblCard4Value.Text = "0.00";
+            lblCardRemaining_Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
+            lblCardRemaining_Value.Appearance.Options.UseFont = true;
+            lblCardRemaining_Value.Location = new Point(10, 30);
+            lblCardRemaining_Value.Name = "lblCardRemaining_Value";
+            lblCardRemaining_Value.Size = new Size(42, 23);
+            lblCardRemaining_Value.TabIndex = 5;
+            lblCardRemaining_Value.Text = "0.00";
             // 
-            // lblCard4Title
+            // lblCardRemaining_Title
             // 
-            lblCard4Title.Appearance.ForeColor = Color.Gray;
-            lblCard4Title.Appearance.Options.UseForeColor = true;
-            lblCard4Title.Location = new Point(10, 10);
-            lblCard4Title.Name = "lblCard4Title";
-            lblCard4Title.Size = new Size(89, 13);
-            lblCard4Title.TabIndex = 6;
-            lblCard4Title.Text = Resources.Form_InstallmentSale_Summary_Remaining_Title;
+            lblCardRemaining_Title.Appearance.ForeColor = Color.Gray;
+            lblCardRemaining_Title.Appearance.Options.UseForeColor = true;
+            lblCardRemaining_Title.Location = new Point(10, 10);
+            lblCardRemaining_Title.Name = "lblCardRemaining_Title";
+            lblCardRemaining_Title.Size = new Size(89, 13);
+            lblCardRemaining_Title.TabIndex = 6;
+            lblCardRemaining_Title.Text = Resources.Form_InstallmentSale_Summary_Remaining_Title;
             // 
-            // panelCard3
+            // panelCardPaid
             // 
-            panelCard3.Appearance.BackColor = Color.White;
-            panelCard3.Appearance.Options.UseBackColor = true;
-            panelCard3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelCard3.Controls.Add(svgCard3);
-            panelCard3.Controls.Add(lblCard3Subtitle);
-            panelCard3.Controls.Add(lblCard3Value);
-            panelCard3.Controls.Add(lblCard3Title);
-            panelCard3.Location = new Point(478, 10);
-            panelCard3.Name = "panelCard3";
-            panelCard3.Size = new Size(220, 80);
-            panelCard3.TabIndex = 2;
-            panelCard3.Paint += panelCard_Paint;
+            panelCardPaid.Appearance.BackColor = Color.White;
+            panelCardPaid.Appearance.Options.UseBackColor = true;
+            panelCardPaid.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            panelCardPaid.Controls.Add(svgCardPaid);
+            panelCardPaid.Controls.Add(lblCardPaid_Subtitle);
+            panelCardPaid.Controls.Add(lblCardPaid_Value);
+            panelCardPaid.Controls.Add(lblCardPaid_Title);
+            panelCardPaid.Location = new Point(478, 10);
+            panelCardPaid.Name = "panelCardPaid";
+            panelCardPaid.Size = new Size(220, 80);
+            panelCardPaid.TabIndex = 2;
+            panelCardPaid.Paint += panelCard_Paint;
             // 
-            // svgCard3
+            // svgCardPaid
             // 
-            svgCard3.BackColor = Color.FromArgb(232, 245, 233);
-            svgCard3.Location = new Point(175, 10);
-            svgCard3.Name = "svgCard3";
-            svgCard3.Size = new Size(35, 35);
-            svgCard3.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard3.SvgImage");
-            svgCard3.TabIndex = 3;
-            svgCard3.Text = "svgImageBox3";
-            svgCard3.Paint += svgCard_Paint;
+            svgCardPaid.BackColor = Color.FromArgb(232, 245, 233);
+            svgCardPaid.Location = new Point(175, 10);
+            svgCardPaid.Name = "svgCardPaid";
+            svgCardPaid.Size = new Size(35, 35);
+            svgCardPaid.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardPaid.SvgImage");
+            svgCardPaid.TabIndex = 3;
+            svgCardPaid.Text = "svgImageBox3";
+            svgCardPaid.Paint += svgCard_Paint;
             // 
-            // lblCard3Subtitle
+            // lblCardPaid_Subtitle
             // 
-            lblCard3Subtitle.Appearance.ForeColor = Color.Gray;
-            lblCard3Subtitle.Appearance.Options.UseForeColor = true;
-            lblCard3Subtitle.Location = new Point(10, 58);
-            lblCard3Subtitle.Name = "lblCard3Subtitle";
-            lblCard3Subtitle.Size = new Size(62, 13);
-            lblCard3Subtitle.TabIndex = 4;
-            lblCard3Subtitle.Text = Resources.Form_InstallmentSale_Summary_Paid_Subtitle;
+            lblCardPaid_Subtitle.Appearance.ForeColor = Color.Gray;
+            lblCardPaid_Subtitle.Appearance.Options.UseForeColor = true;
+            lblCardPaid_Subtitle.Location = new Point(10, 58);
+            lblCardPaid_Subtitle.Name = "lblCardPaid_Subtitle";
+            lblCardPaid_Subtitle.Size = new Size(62, 13);
+            lblCardPaid_Subtitle.TabIndex = 4;
+            lblCardPaid_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Paid_Subtitle;
             // 
-            // lblCard3Value
+            // lblCardPaid_Value
             // 
-            lblCard3Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
-            lblCard3Value.Appearance.Options.UseFont = true;
-            lblCard3Value.Location = new Point(10, 30);
-            lblCard3Value.Name = "lblCard3Value";
-            lblCard3Value.Size = new Size(42, 23);
-            lblCard3Value.TabIndex = 5;
-            lblCard3Value.Text = "0.00";
+            lblCardPaid_Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
+            lblCardPaid_Value.Appearance.Options.UseFont = true;
+            lblCardPaid_Value.Location = new Point(10, 30);
+            lblCardPaid_Value.Name = "lblCardPaid_Value";
+            lblCardPaid_Value.Size = new Size(42, 23);
+            lblCardPaid_Value.TabIndex = 5;
+            lblCardPaid_Value.Text = "0.00";
             // 
-            // lblCard3Title
+            // lblCardPaid_Title
             // 
-            lblCard3Title.Appearance.ForeColor = Color.Gray;
-            lblCard3Title.Appearance.Options.UseForeColor = true;
-            lblCard3Title.Location = new Point(10, 10);
-            lblCard3Title.Name = "lblCard3Title";
-            lblCard3Title.Size = new Size(47, 13);
-            lblCard3Title.TabIndex = 6;
-            lblCard3Title.Text = Resources.Form_InstallmentSale_Summary_Paid_Title;
+            lblCardPaid_Title.Appearance.ForeColor = Color.Gray;
+            lblCardPaid_Title.Appearance.Options.UseForeColor = true;
+            lblCardPaid_Title.Location = new Point(10, 10);
+            lblCardPaid_Title.Name = "lblCardPaid_Title";
+            lblCardPaid_Title.Size = new Size(47, 13);
+            lblCardPaid_Title.TabIndex = 6;
+            lblCardPaid_Title.Text = Resources.Form_InstallmentSale_Summary_Paid_Title;
             // 
-            // panelCard2
+            // panelCardAmount
             // 
-            panelCard2.Appearance.BackColor = Color.White;
-            panelCard2.Appearance.Options.UseBackColor = true;
-            panelCard2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelCard2.Controls.Add(svgCard2);
-            panelCard2.Controls.Add(lblCard2Subtitle);
-            panelCard2.Controls.Add(lblCard2Value);
-            panelCard2.Controls.Add(lblCard2Title);
-            panelCard2.Location = new Point(245, 10);
-            panelCard2.Name = "panelCard2";
-            panelCard2.Size = new Size(220, 80);
-            panelCard2.TabIndex = 1;
-            panelCard2.Paint += panelCard_Paint;
+            panelCardAmount.Appearance.BackColor = Color.White;
+            panelCardAmount.Appearance.Options.UseBackColor = true;
+            panelCardAmount.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            panelCardAmount.Controls.Add(svgCardAmount);
+            panelCardAmount.Controls.Add(lblCardAmount_Subtitle);
+            panelCardAmount.Controls.Add(lblCardAmount_Value);
+            panelCardAmount.Controls.Add(lblCardAmount_Title);
+            panelCardAmount.Location = new Point(245, 10);
+            panelCardAmount.Name = "panelCardAmount";
+            panelCardAmount.Size = new Size(220, 80);
+            panelCardAmount.TabIndex = 1;
+            panelCardAmount.Paint += panelCard_Paint;
             // 
-            // svgCard2
+            // svgCardAmount
             // 
-            svgCard2.BackColor = Color.FromArgb(224, 242, 241);
-            svgCard2.Location = new Point(175, 10);
-            svgCard2.Name = "svgCard2";
-            svgCard2.Size = new Size(35, 35);
-            svgCard2.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard2.SvgImage");
-            svgCard2.TabIndex = 3;
-            svgCard2.Text = "svgImageBox2";
-            svgCard2.Paint += svgCard_Paint;
+            svgCardAmount.BackColor = Color.FromArgb(224, 242, 241);
+            svgCardAmount.Location = new Point(175, 10);
+            svgCardAmount.Name = "svgCardAmount";
+            svgCardAmount.Size = new Size(35, 35);
+            svgCardAmount.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardAmount.SvgImage");
+            svgCardAmount.TabIndex = 3;
+            svgCardAmount.Text = "svgImageBox2";
+            svgCardAmount.Paint += svgCard_Paint;
             // 
-            // lblCard2Subtitle
+            // lblCardAmount_Subtitle
             // 
-            lblCard2Subtitle.Appearance.ForeColor = Color.Gray;
-            lblCard2Subtitle.Appearance.Options.UseForeColor = true;
-            lblCard2Subtitle.Location = new Point(10, 58);
-            lblCard2Subtitle.Name = "lblCard2Subtitle";
-            lblCard2Subtitle.Size = new Size(62, 13);
-            lblCard2Subtitle.TabIndex = 4;
-            lblCard2Subtitle.Text = Resources.Form_InstallmentSale_Summary_Amount_Subtitle;
+            lblCardAmount_Subtitle.Appearance.ForeColor = Color.Gray;
+            lblCardAmount_Subtitle.Appearance.Options.UseForeColor = true;
+            lblCardAmount_Subtitle.Location = new Point(10, 58);
+            lblCardAmount_Subtitle.Name = "lblCardAmount_Subtitle";
+            lblCardAmount_Subtitle.Size = new Size(62, 13);
+            lblCardAmount_Subtitle.TabIndex = 4;
+            lblCardAmount_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Amount_Subtitle;
             // 
-            // lblCard2Value
+            // lblCardAmount_Value
             // 
-            lblCard2Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
-            lblCard2Value.Appearance.Options.UseFont = true;
-            lblCard2Value.Location = new Point(10, 30);
-            lblCard2Value.Name = "lblCard2Value";
-            lblCard2Value.Size = new Size(42, 23);
-            lblCard2Value.TabIndex = 5;
-            lblCard2Value.Text = "0.00";
+            lblCardAmount_Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
+            lblCardAmount_Value.Appearance.Options.UseFont = true;
+            lblCardAmount_Value.Location = new Point(10, 30);
+            lblCardAmount_Value.Name = "lblCardAmount_Value";
+            lblCardAmount_Value.Size = new Size(42, 23);
+            lblCardAmount_Value.TabIndex = 5;
+            lblCardAmount_Value.Text = "0.00";
             // 
-            // lblCard2Title
+            // lblCardAmount_Title
             // 
-            lblCard2Title.Appearance.ForeColor = Color.Gray;
-            lblCard2Title.Appearance.Options.UseForeColor = true;
-            lblCard2Title.Location = new Point(10, 10);
-            lblCard2Title.Name = "lblCard2Title";
-            lblCard2Title.Size = new Size(64, 13);
-            lblCard2Title.TabIndex = 6;
-            lblCard2Title.Text = Resources.Form_InstallmentSale_Summary_Amount_Title;
+            lblCardAmount_Title.Appearance.ForeColor = Color.Gray;
+            lblCardAmount_Title.Appearance.Options.UseForeColor = true;
+            lblCardAmount_Title.Location = new Point(10, 10);
+            lblCardAmount_Title.Name = "lblCardAmount_Title";
+            lblCardAmount_Title.Size = new Size(64, 13);
+            lblCardAmount_Title.TabIndex = 6;
+            lblCardAmount_Title.Text = Resources.Form_InstallmentSale_Summary_Amount_Title;
             // 
-            // panelCard1
+            // panelCardCount
             // 
-            panelCard1.Appearance.BackColor = Color.White;
-            panelCard1.Appearance.Options.UseBackColor = true;
-            panelCard1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelCard1.Controls.Add(svgCard1);
-            panelCard1.Controls.Add(lblCard1Subtitle);
-            panelCard1.Controls.Add(lblCard1Value);
-            panelCard1.Controls.Add(lblCard1Title);
-            panelCard1.Location = new Point(12, 10);
-            panelCard1.Name = "panelCard1";
-            panelCard1.Size = new Size(220, 80);
-            panelCard1.TabIndex = 0;
-            panelCard1.Paint += panelCard_Paint;
+            panelCardCount.Appearance.BackColor = Color.White;
+            panelCardCount.Appearance.Options.UseBackColor = true;
+            panelCardCount.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            panelCardCount.Controls.Add(svgCardCount);
+            panelCardCount.Controls.Add(lblCardCount_Subtitle);
+            panelCardCount.Controls.Add(lblCardCount_Value);
+            panelCardCount.Controls.Add(lblCardCount_Title);
+            panelCardCount.Location = new Point(12, 10);
+            panelCardCount.Name = "panelCardCount";
+            panelCardCount.Size = new Size(220, 80);
+            panelCardCount.TabIndex = 0;
+            panelCardCount.Paint += panelCard_Paint;
             // 
-            // svgCard1
+            // svgCardCount
             // 
-            svgCard1.BackColor = Color.FromArgb(232, 244, 255);
-            svgCard1.Location = new Point(175, 10);
-            svgCard1.Name = "svgCard1";
-            svgCard1.Size = new Size(35, 35);
-            svgCard1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCard1.SvgImage");
-            svgCard1.TabIndex = 3;
-            svgCard1.Text = "svgImageBox1";
-            svgCard1.Paint += svgCard_Paint;
+            svgCardCount.BackColor = Color.FromArgb(232, 244, 255);
+            svgCardCount.Location = new Point(175, 10);
+            svgCardCount.Name = "svgCardCount";
+            svgCardCount.Size = new Size(35, 35);
+            svgCardCount.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardCount.SvgImage");
+            svgCardCount.TabIndex = 3;
+            svgCardCount.Text = "svgImageBox1";
+            svgCardCount.Paint += svgCard_Paint;
             // 
-            // lblCard1Subtitle
+            // lblCardCount_Subtitle
             // 
-            lblCard1Subtitle.Appearance.ForeColor = Color.Gray;
-            lblCard1Subtitle.Appearance.Options.UseForeColor = true;
-            lblCard1Subtitle.Location = new Point(10, 58);
-            lblCard1Subtitle.Name = "lblCard1Subtitle";
-            lblCard1Subtitle.Size = new Size(62, 13);
-            lblCard1Subtitle.TabIndex = 4;
-            lblCard1Subtitle.Text = Resources.Form_InstallmentSale_Summary_Count_Subtitle;
+            lblCardCount_Subtitle.Appearance.ForeColor = Color.Gray;
+            lblCardCount_Subtitle.Appearance.Options.UseForeColor = true;
+            lblCardCount_Subtitle.Location = new Point(10, 58);
+            lblCardCount_Subtitle.Name = "lblCardCount_Subtitle";
+            lblCardCount_Subtitle.Size = new Size(62, 13);
+            lblCardCount_Subtitle.TabIndex = 4;
+            lblCardCount_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Count_Subtitle;
             // 
-            // lblCard1Value
+            // lblCardCount_Value
             // 
-            lblCard1Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
-            lblCard1Value.Appearance.Options.UseFont = true;
-            lblCard1Value.Location = new Point(10, 30);
-            lblCard1Value.Name = "lblCard1Value";
-            lblCard1Value.Size = new Size(12, 23);
-            lblCard1Value.TabIndex = 5;
-            lblCard1Value.Text = "0";
+            lblCardCount_Value.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
+            lblCardCount_Value.Appearance.Options.UseFont = true;
+            lblCardCount_Value.Location = new Point(10, 30);
+            lblCardCount_Value.Name = "lblCardCount_Value";
+            lblCardCount_Value.Size = new Size(12, 23);
+            lblCardCount_Value.TabIndex = 5;
+            lblCardCount_Value.Text = "0";
             // 
-            // lblCard1Title
+            // lblCardCount_Title
             // 
-            lblCard1Title.Appearance.ForeColor = Color.Gray;
-            lblCard1Title.Appearance.Options.UseForeColor = true;
-            lblCard1Title.Location = new Point(10, 10);
-            lblCard1Title.Name = "lblCard1Title";
-            lblCard1Title.Size = new Size(76, 13);
-            lblCard1Title.TabIndex = 6;
-            lblCard1Title.Text = Resources.Form_InstallmentSale_Summary_Count_Title;
+            lblCardCount_Title.Appearance.ForeColor = Color.Gray;
+            lblCardCount_Title.Appearance.Options.UseForeColor = true;
+            lblCardCount_Title.Location = new Point(10, 10);
+            lblCardCount_Title.Name = "lblCardCount_Title";
+            lblCardCount_Title.Size = new Size(76, 13);
+            lblCardCount_Title.TabIndex = 6;
+            lblCardCount_Title.Text = Resources.Form_InstallmentSale_Summary_Count_Title;
             // 
             // FormInstallmentSale
             // 
@@ -548,22 +548,22 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelSummary).EndInit();
             panelSummary.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)panelCard4).EndInit();
-            panelCard4.ResumeLayout(false);
-            panelCard4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCard4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)panelCard3).EndInit();
-            panelCard3.ResumeLayout(false);
-            panelCard3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCard3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)panelCard2).EndInit();
-            panelCard2.ResumeLayout(false);
-            panelCard2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCard2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)panelCard1).EndInit();
-            panelCard1.ResumeLayout(false);
-            panelCard1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCard1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelCardRemaining).EndInit();
+            panelCardRemaining.ResumeLayout(false);
+            panelCardRemaining.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCardRemaining).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelCardPaid).EndInit();
+            panelCardPaid.ResumeLayout(false);
+            panelCardPaid.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCardPaid).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelCardAmount).EndInit();
+            panelCardAmount.ResumeLayout(false);
+            panelCardAmount.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCardAmount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelCardCount).EndInit();
+            panelCardCount.ResumeLayout(false);
+            panelCardCount.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)svgCardCount).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -571,26 +571,26 @@ namespace Foxoft
         #endregion
 
         private DevExpress.XtraEditors.PanelControl panelSummary;
-        private DevExpress.XtraEditors.PanelControl panelCard1;
-        private DevExpress.XtraEditors.LabelControl lblCard1Title;
-        private DevExpress.XtraEditors.LabelControl lblCard1Value;
-        private DevExpress.XtraEditors.LabelControl lblCard1Subtitle;
-        private DevExpress.XtraEditors.SvgImageBox svgCard1;
-        private DevExpress.XtraEditors.PanelControl panelCard2;
-        private DevExpress.XtraEditors.LabelControl lblCard2Title;
-        private DevExpress.XtraEditors.LabelControl lblCard2Value;
-        private DevExpress.XtraEditors.LabelControl lblCard2Subtitle;
-        private DevExpress.XtraEditors.SvgImageBox svgCard2;
-        private DevExpress.XtraEditors.PanelControl panelCard3;
-        private DevExpress.XtraEditors.LabelControl lblCard3Title;
-        private DevExpress.XtraEditors.LabelControl lblCard3Value;
-        private DevExpress.XtraEditors.LabelControl lblCard3Subtitle;
-        private DevExpress.XtraEditors.SvgImageBox svgCard3;
-        private DevExpress.XtraEditors.PanelControl panelCard4;
-        private DevExpress.XtraEditors.LabelControl lblCard4Title;
-        private DevExpress.XtraEditors.LabelControl lblCard4Value;
-        private DevExpress.XtraEditors.LabelControl lblCard4Subtitle;
-        private DevExpress.XtraEditors.SvgImageBox svgCard4;
+        private DevExpress.XtraEditors.PanelControl panelCardCount;
+        private DevExpress.XtraEditors.LabelControl lblCardCount_Title;
+        private DevExpress.XtraEditors.LabelControl lblCardCount_Value;
+        private DevExpress.XtraEditors.LabelControl lblCardCount_Subtitle;
+        private DevExpress.XtraEditors.SvgImageBox svgCardCount;
+        private DevExpress.XtraEditors.PanelControl panelCardAmount;
+        private DevExpress.XtraEditors.LabelControl lblCardAmount_Title;
+        private DevExpress.XtraEditors.LabelControl lblCardAmount_Value;
+        private DevExpress.XtraEditors.LabelControl lblCardAmount_Subtitle;
+        private DevExpress.XtraEditors.SvgImageBox svgCardAmount;
+        private DevExpress.XtraEditors.PanelControl panelCardPaid;
+        private DevExpress.XtraEditors.LabelControl lblCardPaid_Title;
+        private DevExpress.XtraEditors.LabelControl lblCardPaid_Value;
+        private DevExpress.XtraEditors.LabelControl lblCardPaid_Subtitle;
+        private DevExpress.XtraEditors.SvgImageBox svgCardPaid;
+        private DevExpress.XtraEditors.PanelControl panelCardRemaining;
+        private DevExpress.XtraEditors.LabelControl lblCardRemaining_Title;
+        private DevExpress.XtraEditors.LabelControl lblCardRemaining_Value;
+        private DevExpress.XtraEditors.LabelControl lblCardRemaining_Subtitle;
+        private DevExpress.XtraEditors.SvgImageBox svgCardRemaining;
 
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
