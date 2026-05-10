@@ -23,40 +23,34 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new Container();
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(FormWhatsAppMessageLog));
             gC_WhatsAppMessageLogList = new DevExpress.XtraGrid.GridControl();
             trWhatsAppMessageLogBindingSource = new BindingSource(components);
             gV_WhatsAppMessageLogList = new DevExpress.XtraGrid.Views.Grid.GridView();
-            colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colWhatsAppMessageLogId = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             colReceiverPhoneNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colMessageType = new DevExpress.XtraGrid.Columns.GridColumn();
             colMessage = new DevExpress.XtraGrid.Columns.GridColumn();
             colSender = new DevExpress.XtraGrid.Columns.GridColumn();
             colSenderName = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
+            svgImageCollection1 = new SvgImageCollection(components);
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            svgImageCollection1 = new SvgImageCollection(components);
             ((ISupportInitialize)gC_WhatsAppMessageLogList).BeginInit();
             ((ISupportInitialize)trWhatsAppMessageLogBindingSource).BeginInit();
             ((ISupportInitialize)gV_WhatsAppMessageLogList).BeginInit();
             ((ISupportInitialize)ribbonControl1).BeginInit();
             ((ISupportInitialize)svgImageCollection1).BeginInit();
             SuspendLayout();
-            // 
-            // svgImageCollection1
-            // 
-            svgImageCollection1.Add("Refresh", "image://svgimages/actions/refresh.svg");
-            svgImageCollection1.Add("Export", "image://svgimages/export/exporttoxlsx.svg");
             // 
             // gC_WhatsAppMessageLogList
             // 
@@ -84,6 +78,7 @@ namespace Foxoft
             gV_WhatsAppMessageLogList.OptionsFind.FindDelay = 100;
             gV_WhatsAppMessageLogList.OptionsView.ShowAutoFilterRow = true;
             gV_WhatsAppMessageLogList.OptionsView.ShowGroupPanel = false;
+            gV_WhatsAppMessageLogList.PopupMenuShowing += gV_WhatsAppMessageLogList_PopupMenuShowing;
             // 
             // colWhatsAppMessageLogId
             // 
@@ -95,65 +90,21 @@ namespace Foxoft
             colDocumentHeaderId.FieldName = "DocumentHeaderId";
             colDocumentHeaderId.Name = "colDocumentHeaderId";
             // 
-            // colCreatedUserName
-            // 
-            colCreatedUserName.Caption = Resources.Entity_Base_CreatedUserName;
-            colCreatedUserName.FieldName = "CreatedUserName";
-            colCreatedUserName.Name = "colCreatedUserName";
-            colCreatedUserName.Visible = true;
-            colCreatedUserName.VisibleIndex = 1;
-            // 
             // colCreatedDate
             // 
-            colCreatedDate.Caption = Resources.Entity_Base_CreatedDate;
+            colCreatedDate.Caption = "Created Date";
             colCreatedDate.FieldName = "CreatedDate";
             colCreatedDate.Name = "colCreatedDate";
-            colCreatedDate.Visible = true;
-            colCreatedDate.VisibleIndex = 0;
             // 
-            // colReceiverPhoneNumber
+            // colCreatedUserName
             // 
-            colReceiverPhoneNumber.Caption = Resources.Common_Phone;
-            colReceiverPhoneNumber.FieldName = "ReceiverPhoneNumber";
-            colReceiverPhoneNumber.Name = "colReceiverPhoneNumber";
-            colReceiverPhoneNumber.Visible = true;
-            colReceiverPhoneNumber.VisibleIndex = 3;
-            // 
-            // colMessageType
-            // 
-            colMessageType.Caption = Resources.Entity_TrWhatsAppMessageLog_MessageType;
-            colMessageType.FieldName = "MessageType";
-            colMessageType.Name = "colMessageType";
-            colMessageType.Visible = true;
-            colMessageType.VisibleIndex = 4;
-            // 
-            // colMessage
-            // 
-            colMessage.Caption = Resources.Common_Message;
-            colMessage.FieldName = "Message";
-            colMessage.Name = "colMessage";
-            colMessage.Visible = true;
-            colMessage.VisibleIndex = 5;
-            // 
-            // colSender
-            // 
-            colSender.Caption = Resources.Common_Sender;
-            colSender.FieldName = "Sender";
-            colSender.Name = "colSender";
-            colSender.Visible = true;
-            colSender.VisibleIndex = 6;
-            // 
-            // colSenderName
-            // 
-            colSenderName.Caption = Resources.Common_Sender + " " + Resources.Entity_CurrAcc_FirstName;
-            colSenderName.FieldName = "DcSender.CurrAccDesc";
-            colSenderName.Name = "colSenderName";
-            colSenderName.Visible = true;
-            colSenderName.VisibleIndex = 7;
+            colCreatedUserName.Caption = "Created User";
+            colCreatedUserName.FieldName = "CreatedUserName";
+            colCreatedUserName.Name = "colCreatedUserName";
             // 
             // colCurrAccCode
             // 
-            colCurrAccCode.Caption = Resources.Entity_CurrAcc_CurrAccCode;
+            colCurrAccCode.Caption = "Current Account Code";
             colCurrAccCode.FieldName = "CurrAccCode";
             colCurrAccCode.Name = "colCurrAccCode";
             colCurrAccCode.Visible = true;
@@ -161,11 +112,51 @@ namespace Foxoft
             // 
             // colCurrAccDesc
             // 
-            colCurrAccDesc.Caption = Resources.Entity_CurrAcc_CurrAccDesc;
+            colCurrAccDesc.Caption = "Current Account Name";
             colCurrAccDesc.FieldName = "DcCurrAcc.CurrAccDesc";
             colCurrAccDesc.Name = "colCurrAccDesc";
             colCurrAccDesc.Visible = true;
             colCurrAccDesc.VisibleIndex = 3;
+            // 
+            // colReceiverPhoneNumber
+            // 
+            colReceiverPhoneNumber.Caption = "Phone";
+            colReceiverPhoneNumber.FieldName = "ReceiverPhoneNumber";
+            colReceiverPhoneNumber.Name = "colReceiverPhoneNumber";
+            colReceiverPhoneNumber.Visible = true;
+            colReceiverPhoneNumber.VisibleIndex = 4;
+            // 
+            // colMessageType
+            // 
+            colMessageType.Caption = "Message Type";
+            colMessageType.FieldName = "MessageType";
+            colMessageType.Name = "colMessageType";
+            colMessageType.Visible = true;
+            colMessageType.VisibleIndex = 5;
+            // 
+            // colMessage
+            // 
+            colMessage.Caption = "Message";
+            colMessage.FieldName = "Message";
+            colMessage.Name = "colMessage";
+            colMessage.Visible = true;
+            colMessage.VisibleIndex = 6;
+            // 
+            // colSender
+            // 
+            colSender.Caption = "Sender";
+            colSender.FieldName = "Sender";
+            colSender.Name = "colSender";
+            colSender.Visible = true;
+            colSender.VisibleIndex = 0;
+            // 
+            // colSenderName
+            // 
+            colSenderName.Caption = "Sender First Name";
+            colSenderName.FieldName = "DcSender.CurrAccDesc";
+            colSenderName.Name = "colSenderName";
+            colSenderName.Visible = true;
+            colSenderName.VisibleIndex = 1;
             // 
             // ribbonControl1
             // 
@@ -182,15 +173,17 @@ namespace Foxoft
             // 
             bBI_ExportXlsx.Caption = Resources.Common_ExportToExcel;
             bBI_ExportXlsx.Id = 1;
-            bBI_ExportXlsx.ImageOptions.SvgImage = svgImageCollection1["Export"];
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
             bBI_ExportXlsx.ItemClick += bBI_ExportXlsx_ItemClick;
+            // 
+            // svgImageCollection1
+            // 
+            svgImageCollection1.Add("Export", "image://svgimages/export/exporttoxlsx.svg");
             // 
             // bBI_Refresh
             // 
             bBI_Refresh.Caption = Resources.Common_Refresh;
             bBI_Refresh.Id = 2;
-            bBI_Refresh.ImageOptions.SvgImage = svgImageCollection1["Refresh"];
             bBI_Refresh.Name = "bBI_Refresh";
             bBI_Refresh.ItemClick += bBI_Refresh_ItemClick;
             // 
@@ -231,7 +224,8 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = Resources.Form_WhatsAppMessageLog;
+            Text = "WhatsApp Message Log";
+            FormClosed += FormWhatsAppMessageLog_FormClosed;
             Load += FormWhatsAppMessageLog_Load;
             ((ISupportInitialize)gC_WhatsAppMessageLogList).EndInit();
             ((ISupportInitialize)trWhatsAppMessageLogBindingSource).EndInit();
