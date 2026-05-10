@@ -38,6 +38,7 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInstallmentSale));
+            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             bindingSourceTrInstallmentSale = new BindingSource(components);
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -64,25 +65,26 @@ namespace Foxoft
             ribbonPage2 = new RibbonPage();
             panelSummary = new DevExpress.XtraEditors.PanelControl();
             panelCardRemaining = new DevExpress.XtraEditors.PanelControl();
-            svgCardRemaining = new DevExpress.XtraEditors.SvgImageBox();
+            svgCardRemaining_ImageBox = new DevExpress.XtraEditors.SvgImageBox();
             lblCardRemaining_Subtitle = new DevExpress.XtraEditors.LabelControl();
             lblCardRemaining_Value = new DevExpress.XtraEditors.LabelControl();
             lblCardRemaining_Title = new DevExpress.XtraEditors.LabelControl();
             panelCardPaid = new DevExpress.XtraEditors.PanelControl();
-            svgCardPaid = new DevExpress.XtraEditors.SvgImageBox();
+            svgCardPaid_ImageBox = new DevExpress.XtraEditors.SvgImageBox();
             lblCardPaid_Subtitle = new DevExpress.XtraEditors.LabelControl();
             lblCardPaid_Value = new DevExpress.XtraEditors.LabelControl();
             lblCardPaid_Title = new DevExpress.XtraEditors.LabelControl();
             panelCardAmount = new DevExpress.XtraEditors.PanelControl();
-            svgCardAmount = new DevExpress.XtraEditors.SvgImageBox();
+            svgCardAmount_ImageBox = new DevExpress.XtraEditors.SvgImageBox();
             lblCardAmount_Subtitle = new DevExpress.XtraEditors.LabelControl();
             lblCardAmount_Value = new DevExpress.XtraEditors.LabelControl();
             lblCardAmount_Title = new DevExpress.XtraEditors.LabelControl();
             panelCardCount = new DevExpress.XtraEditors.PanelControl();
-            svgCardCount = new DevExpress.XtraEditors.SvgImageBox();
+            svgCardCount_ImageBox = new DevExpress.XtraEditors.SvgImageBox();
             lblCardCount_Subtitle = new DevExpress.XtraEditors.LabelControl();
             lblCardCount_Value = new DevExpress.XtraEditors.LabelControl();
             lblCardCount_Title = new DevExpress.XtraEditors.LabelControl();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
@@ -92,17 +94,24 @@ namespace Foxoft
             panelSummary.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panelCardRemaining).BeginInit();
             panelCardRemaining.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCardRemaining).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgCardRemaining_ImageBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelCardPaid).BeginInit();
             panelCardPaid.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCardPaid).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgCardPaid_ImageBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelCardAmount).BeginInit();
             panelCardAmount.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCardAmount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgCardAmount_ImageBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelCardCount).BeginInit();
             panelCardCount.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCardCount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgCardCount_ImageBox).BeginInit();
             SuspendLayout();
+            // 
+            // svgImageCollection1
+            // 
+            svgImageCollection1.Add("Count", "image://svgimages/richedit/insertpagecount.svg");
+            svgImageCollection1.Add("Remaining", "image://svgimages/icon builder/business_calculator.svg");
+            svgImageCollection1.Add("Amount", "image://svgimages/icon builder/actions_calendar.svg");
+            svgImageCollection1.Add("Paid", "image://svgimages/business objects/bo_invoice.svg");
             // 
             // gridControl1
             // 
@@ -311,7 +320,7 @@ namespace Foxoft
             panelCardRemaining.Appearance.BackColor = Color.White;
             panelCardRemaining.Appearance.Options.UseBackColor = true;
             panelCardRemaining.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelCardRemaining.Controls.Add(svgCardRemaining);
+            panelCardRemaining.Controls.Add(svgCardRemaining_ImageBox);
             panelCardRemaining.Controls.Add(lblCardRemaining_Subtitle);
             panelCardRemaining.Controls.Add(lblCardRemaining_Value);
             panelCardRemaining.Controls.Add(lblCardRemaining_Title);
@@ -321,16 +330,16 @@ namespace Foxoft
             panelCardRemaining.TabIndex = 3;
             panelCardRemaining.Paint += panelCard_Paint;
             // 
-            // svgCardRemaining
+            // svgCardRemaining_ImageBox
             // 
-            svgCardRemaining.BackColor = Color.FromArgb(255, 243, 224);
-            svgCardRemaining.Location = new Point(175, 10);
-            svgCardRemaining.Name = "svgCardRemaining";
-            svgCardRemaining.Size = new Size(35, 35);
-            svgCardRemaining.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardRemaining.SvgImage");
-            svgCardRemaining.TabIndex = 3;
-            svgCardRemaining.Text = "svgImageBox4";
-            svgCardRemaining.Paint += svgCard_Paint;
+            svgCardRemaining_ImageBox.BackColor = Color.FromArgb(255, 243, 224);
+            svgCardRemaining_ImageBox.Location = new Point(175, 10);
+            svgCardRemaining_ImageBox.Name = "svgCardRemaining_ImageBox";
+            svgCardRemaining_ImageBox.Size = new Size(35, 35);
+            svgCardRemaining_ImageBox.SvgImage = svgImageCollection1["Remaining"];
+            svgCardRemaining_ImageBox.TabIndex = 3;
+            svgCardRemaining_ImageBox.Text = "svgImageBox4";
+            svgCardRemaining_ImageBox.Paint += svgCard_Paint;
             // 
             // lblCardRemaining_Subtitle
             // 
@@ -367,7 +376,7 @@ namespace Foxoft
             panelCardPaid.Appearance.BackColor = Color.White;
             panelCardPaid.Appearance.Options.UseBackColor = true;
             panelCardPaid.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelCardPaid.Controls.Add(svgCardPaid);
+            panelCardPaid.Controls.Add(svgCardPaid_ImageBox);
             panelCardPaid.Controls.Add(lblCardPaid_Subtitle);
             panelCardPaid.Controls.Add(lblCardPaid_Value);
             panelCardPaid.Controls.Add(lblCardPaid_Title);
@@ -377,16 +386,16 @@ namespace Foxoft
             panelCardPaid.TabIndex = 2;
             panelCardPaid.Paint += panelCard_Paint;
             // 
-            // svgCardPaid
+            // svgCardPaid_ImageBox
             // 
-            svgCardPaid.BackColor = Color.FromArgb(232, 245, 233);
-            svgCardPaid.Location = new Point(175, 10);
-            svgCardPaid.Name = "svgCardPaid";
-            svgCardPaid.Size = new Size(35, 35);
-            svgCardPaid.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardPaid.SvgImage");
-            svgCardPaid.TabIndex = 3;
-            svgCardPaid.Text = "svgImageBox3";
-            svgCardPaid.Paint += svgCard_Paint;
+            svgCardPaid_ImageBox.BackColor = Color.FromArgb(232, 245, 233);
+            svgCardPaid_ImageBox.Location = new Point(175, 10);
+            svgCardPaid_ImageBox.Name = "svgCardPaid_ImageBox";
+            svgCardPaid_ImageBox.Size = new Size(35, 35);
+            svgCardPaid_ImageBox.SvgImage = svgImageCollection1["Paid"];
+            svgCardPaid_ImageBox.TabIndex = 3;
+            svgCardPaid_ImageBox.Text = "svgImageBox3";
+            svgCardPaid_ImageBox.Paint += svgCard_Paint;
             // 
             // lblCardPaid_Subtitle
             // 
@@ -423,7 +432,7 @@ namespace Foxoft
             panelCardAmount.Appearance.BackColor = Color.White;
             panelCardAmount.Appearance.Options.UseBackColor = true;
             panelCardAmount.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelCardAmount.Controls.Add(svgCardAmount);
+            panelCardAmount.Controls.Add(svgCardAmount_ImageBox);
             panelCardAmount.Controls.Add(lblCardAmount_Subtitle);
             panelCardAmount.Controls.Add(lblCardAmount_Value);
             panelCardAmount.Controls.Add(lblCardAmount_Title);
@@ -433,16 +442,16 @@ namespace Foxoft
             panelCardAmount.TabIndex = 1;
             panelCardAmount.Paint += panelCard_Paint;
             // 
-            // svgCardAmount
+            // svgCardAmount_ImageBox
             // 
-            svgCardAmount.BackColor = Color.FromArgb(224, 242, 241);
-            svgCardAmount.Location = new Point(175, 10);
-            svgCardAmount.Name = "svgCardAmount";
-            svgCardAmount.Size = new Size(35, 35);
-            svgCardAmount.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardAmount.SvgImage");
-            svgCardAmount.TabIndex = 3;
-            svgCardAmount.Text = "svgImageBox2";
-            svgCardAmount.Paint += svgCard_Paint;
+            svgCardAmount_ImageBox.BackColor = Color.FromArgb(224, 242, 241);
+            svgCardAmount_ImageBox.Location = new Point(175, 10);
+            svgCardAmount_ImageBox.Name = "svgCardAmount_ImageBox";
+            svgCardAmount_ImageBox.Size = new Size(35, 35);
+            svgCardAmount_ImageBox.SvgImage = svgImageCollection1["Amount"];
+            svgCardAmount_ImageBox.TabIndex = 3;
+            svgCardAmount_ImageBox.Text = "svgImageBox2";
+            svgCardAmount_ImageBox.Paint += svgCard_Paint;
             // 
             // lblCardAmount_Subtitle
             // 
@@ -479,7 +488,7 @@ namespace Foxoft
             panelCardCount.Appearance.BackColor = Color.White;
             panelCardCount.Appearance.Options.UseBackColor = true;
             panelCardCount.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelCardCount.Controls.Add(svgCardCount);
+            panelCardCount.Controls.Add(svgCardCount_ImageBox);
             panelCardCount.Controls.Add(lblCardCount_Subtitle);
             panelCardCount.Controls.Add(lblCardCount_Value);
             panelCardCount.Controls.Add(lblCardCount_Title);
@@ -489,16 +498,16 @@ namespace Foxoft
             panelCardCount.TabIndex = 0;
             panelCardCount.Paint += panelCard_Paint;
             // 
-            // svgCardCount
+            // svgCardCount_ImageBox
             // 
-            svgCardCount.BackColor = Color.FromArgb(232, 244, 255);
-            svgCardCount.Location = new Point(175, 10);
-            svgCardCount.Name = "svgCardCount";
-            svgCardCount.Size = new Size(35, 35);
-            svgCardCount.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardCount.SvgImage");
-            svgCardCount.TabIndex = 3;
-            svgCardCount.Text = "svgImageBox1";
-            svgCardCount.Paint += svgCard_Paint;
+            svgCardCount_ImageBox.BackColor = Color.FromArgb(232, 244, 255);
+            svgCardCount_ImageBox.Location = new Point(175, 10);
+            svgCardCount_ImageBox.Name = "svgCardCount_ImageBox";
+            svgCardCount_ImageBox.Size = new Size(35, 35);
+            svgCardCount_ImageBox.SvgImage = svgImageCollection1["Count"];
+            svgCardCount_ImageBox.TabIndex = 3;
+            svgCardCount_ImageBox.Text = "svgImageBox1";
+            svgCardCount_ImageBox.Paint += svgCard_Paint;
             // 
             // lblCardCount_Subtitle
             // 
@@ -541,6 +550,7 @@ namespace Foxoft
             Name = "FormInstallmentSale";
             Ribbon = ribbonControl1;
             Text = Resources.Form_InstallmentSale_Caption;
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
@@ -551,19 +561,19 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelCardRemaining).EndInit();
             panelCardRemaining.ResumeLayout(false);
             panelCardRemaining.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCardRemaining).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgCardRemaining_ImageBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelCardPaid).EndInit();
             panelCardPaid.ResumeLayout(false);
             panelCardPaid.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCardPaid).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgCardPaid_ImageBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelCardAmount).EndInit();
             panelCardAmount.ResumeLayout(false);
             panelCardAmount.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCardAmount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgCardAmount_ImageBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelCardCount).EndInit();
             panelCardCount.ResumeLayout(false);
             panelCardCount.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)svgCardCount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgCardCount_ImageBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -575,23 +585,24 @@ namespace Foxoft
         private DevExpress.XtraEditors.LabelControl lblCardCount_Title;
         private DevExpress.XtraEditors.LabelControl lblCardCount_Value;
         private DevExpress.XtraEditors.LabelControl lblCardCount_Subtitle;
-        private DevExpress.XtraEditors.SvgImageBox svgCardCount;
+        private DevExpress.XtraEditors.SvgImageBox svgCardCount_ImageBox;
         private DevExpress.XtraEditors.PanelControl panelCardAmount;
         private DevExpress.XtraEditors.LabelControl lblCardAmount_Title;
         private DevExpress.XtraEditors.LabelControl lblCardAmount_Value;
         private DevExpress.XtraEditors.LabelControl lblCardAmount_Subtitle;
-        private DevExpress.XtraEditors.SvgImageBox svgCardAmount;
+        private DevExpress.XtraEditors.SvgImageBox svgCardAmount_ImageBox;
         private DevExpress.XtraEditors.PanelControl panelCardPaid;
         private DevExpress.XtraEditors.LabelControl lblCardPaid_Title;
         private DevExpress.XtraEditors.LabelControl lblCardPaid_Value;
         private DevExpress.XtraEditors.LabelControl lblCardPaid_Subtitle;
-        private DevExpress.XtraEditors.SvgImageBox svgCardPaid;
+        private DevExpress.XtraEditors.SvgImageBox svgCardPaid_ImageBox;
         private DevExpress.XtraEditors.PanelControl panelCardRemaining;
         private DevExpress.XtraEditors.LabelControl lblCardRemaining_Title;
         private DevExpress.XtraEditors.LabelControl lblCardRemaining_Value;
         private DevExpress.XtraEditors.LabelControl lblCardRemaining_Subtitle;
-        private DevExpress.XtraEditors.SvgImageBox svgCardRemaining;
+        private DevExpress.XtraEditors.SvgImageBox svgCardRemaining_ImageBox;
 
+        private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private System.Windows.Forms.BindingSource bindingSourceTrInstallmentSale;

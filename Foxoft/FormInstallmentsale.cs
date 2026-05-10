@@ -406,10 +406,10 @@ namespace Foxoft
 
         private void SetSummaryIcons()
         {
-            //svgCard1.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/icon builder/actions_user.svg");
-            //svgCard2.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/business objects/bo_sale.svg");
-            //svgCard3.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/business objects/bo_validation.svg");
-            //svgCard4.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/business objects/bo_money_report.svg");
+            //svgCardCount_ImageBox.SvgImage = svgImageCollection1["Count"];
+            //svgCardAmount_ImageBox.SvgImage = svgImageCollection1["Amount"];
+            //svgCardPaid_ImageBox.SvgImage = svgImageCollection1["Paid"];
+            //svgCardRemaining_ImageBox.SvgImage = svgImageCollection1["Remaining"];
         }
 
         private void LoadData()

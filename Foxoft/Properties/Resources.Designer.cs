@@ -727,6 +727,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pieces.
+        /// </summary>
+        public static string Common_Pieces {
+            get {
+                return ResourceManager.GetString("Common_Pieces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PriceList.
         /// </summary>
         public static string Common_PriceList {
