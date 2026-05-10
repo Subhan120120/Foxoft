@@ -454,22 +454,15 @@ namespace Foxoft
                 int rowHandle = gridView1.GetVisibleRowHandle(i);
                 if (rowHandle < 0) continue;
 
-                object namead = gridView1.GetRowCellValue(rowHandle, "CurrAccDesc");
+                object amountObj = gridView1.GetRowCellValue(rowHandle, "InstallmentAmount");
+                object paidObj = gridView1.GetRowCellValue(rowHandle, "InstallmentPaid");
+                object remainingObj = gridView1.GetRowCellValue(rowHandle, "RemainingAmount");
 
-                // Check for Active Credits (InstallmentStatus = 0)
-                object statusObj = gridView1.GetRowCellValue(rowHandle, "InstallmentStatus");
-                if (statusObj != null && statusObj != DBNull.Value && Convert.ToInt32(statusObj) == 0)
-                {
-                    object amountObj = gridView1.GetRowCellValue(rowHandle, "InstallmentAmount");
-                    object paidObj = gridView1.GetRowCellValue(rowHandle, "InstallmentPaid");
-                    object remainingObj = gridView1.GetRowCellValue(rowHandle, "RemainingAmount");
+                if (amountObj != null && amountObj != DBNull.Value) totalAmount += Convert.ToDecimal(amountObj);
+                if (paidObj != null && paidObj != DBNull.Value) totalPaid += Convert.ToDecimal(paidObj);
+                if (remainingObj != null && remainingObj != DBNull.Value) totalRemaining += Convert.ToDecimal(remainingObj);
 
-                    if (amountObj != null && amountObj != DBNull.Value) totalAmount += Convert.ToDecimal(amountObj);
-                    if (paidObj != null && paidObj != DBNull.Value) totalPaid += Convert.ToDecimal(paidObj);
-                    if (remainingObj != null && remainingObj != DBNull.Value) totalRemaining += Convert.ToDecimal(remainingObj);
-
-                    count++;
-                }
+                count++;
             }
 
             string currencyCode = Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
@@ -655,41 +648,22 @@ namespace Foxoft
 
         private void BBI_Filter_CheckedChanged(object sender, ItemClickEventArgs e)
         {
-            var item = e.Item as BarCheckItem;
-            if (item == null) return;
+            CriteriaOperator dateCriteria = null;
+            if (BCI_FilterDay.Checked)
+                dateCriteria = new BinaryOperator("InstallmentDate", DateTime.Today, BinaryOperatorType.GreaterOrEqual);
+            else if (BBI_FilterWeek.Checked)
+                dateCriteria = new BinaryOperator("InstallmentDate", DateTime.Today.AddDays(-7), BinaryOperatorType.GreaterOrEqual);
+            else if (BBI_FilterMonth.Checked)
+                dateCriteria = new BinaryOperator("InstallmentDate", DateTime.Today.AddMonths(-1), BinaryOperatorType.GreaterOrEqual);
 
-            if (!item.Checked)
-            {
-                gridView1.ActiveFilterCriteria = null;
-                return;
-            }
+            CriteriaOperator statusCriteria = null;
+            if (BCI_FilterContinuing.Checked)
+                statusCriteria = new BinaryOperator("InstallmentStatus", 0, BinaryOperatorType.Equal);
+            else if (BCI_FilterCompleted.Checked)
+                statusCriteria = new BinaryOperator("InstallmentStatus", 1, BinaryOperatorType.Equal);
 
-            DateTime cutoff;
-
-            if (item == BCI_FilterDay)
-            {
-                cutoff = DateTime.Today;
-            }
-            else if (item == BBI_FilterWeek)
-            {
-                cutoff = DateTime.Today.AddDays(-7);
-            }
-            else if (item == BBI_FilterMonth)
-            {
-                cutoff = DateTime.Today.AddMonths(-1);
-            }
-            else
-            {
-                return;
-            }
-
-            var criteria = new BinaryOperator(
-                new OperandProperty(nameof(TrInstallment.InstallmentDate)),
-                new OperandValue(cutoff),
-                BinaryOperatorType.GreaterOrEqual
-            );
-
-            gridView1.ActiveFilterCriteria = criteria;
+            gridView1.ActiveFilterCriteria = GroupOperator.Combine(GroupOperatorType.And, dateCriteria, statusCriteria);
+            UpdateSummary();
         }
 
         private void gridView1_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
@@ -733,7 +707,7 @@ namespace Foxoft
                 using (GraphicsPath path = GetRoundedPath(shadowRect, radius))
                 {
                     // Very low alpha for "very little shade"
-                    int alpha = 10 / i; 
+                    int alpha = 10 / i;
                     using (SolidBrush brush = new SolidBrush(Color.FromArgb(alpha, Color.Black)))
                     {
                         g.FillPath(brush, path);

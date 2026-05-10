@@ -53,13 +53,15 @@ namespace Foxoft
             BCI_FilterDay = new BarCheckItem();
             BBI_FilterWeek = new BarCheckItem();
             BBI_FilterMonth = new BarCheckItem();
+            BCI_FilterContinuing = new BarCheckItem();
+            BCI_FilterCompleted = new BarCheckItem();
             ribbonPage1 = new RibbonPage();
             ribbonPageGroup1 = new RibbonPageGroup();
             ribbonPageGroup2 = new RibbonPageGroup();
             ribbonPageGroup3 = new RibbonPageGroup();
-            ribbonPageGroup5 = new RibbonPageGroup();
+            ribbonPageGroupFilterDateRange = new RibbonPageGroup();
+            ribbonPageGroupFilterStatus = new RibbonPageGroup();
             ribbonPage2 = new RibbonPage();
-            ribbonPageGroup4 = new RibbonPageGroup();
             panelSummary = new DevExpress.XtraEditors.PanelControl();
             panelCard4 = new DevExpress.XtraEditors.PanelControl();
             svgCard4 = new DevExpress.XtraEditors.SvgImageBox();
@@ -152,9 +154,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_Refresh, BBI_GridOptions, BSI_Reports, BBI_QueryEdit, BCI_FilterDay, BBI_FilterWeek, BBI_FilterMonth });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_Refresh, BBI_GridOptions, BSI_Reports, BBI_QueryEdit, BCI_FilterDay, BBI_FilterWeek, BBI_FilterMonth, BCI_FilterContinuing, BCI_FilterCompleted });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 16;
+            ribbonControl1.MaxItemId = 18;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new RibbonPage[] { ribbonPage1, ribbonPage2 });
             ribbonControl1.Size = new Size(954, 158);
@@ -223,9 +225,29 @@ namespace Foxoft
             BBI_FilterMonth.Name = "BBI_FilterMonth";
             BBI_FilterMonth.CheckedChanged += BBI_Filter_CheckedChanged;
             // 
+            // BCI_FilterContinuing
+            // 
+            BCI_FilterContinuing.AllowAllUp = true;
+            BCI_FilterContinuing.Caption = Resources.Form_InstallmentSale_Filter_Continuing;
+            BCI_FilterContinuing.GroupIndex = 2;
+            BCI_FilterContinuing.Id = 16;
+            BCI_FilterContinuing.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BCI_FilterContinuing.ImageOptions.SvgImage");
+            BCI_FilterContinuing.Name = "BCI_FilterContinuing";
+            BCI_FilterContinuing.CheckedChanged += BBI_Filter_CheckedChanged;
+            // 
+            // BCI_FilterCompleted
+            // 
+            BCI_FilterCompleted.AllowAllUp = true;
+            BCI_FilterCompleted.Caption = Resources.Form_InstallmentSale_Filter_Completed;
+            BCI_FilterCompleted.GroupIndex = 2;
+            BCI_FilterCompleted.Id = 17;
+            BCI_FilterCompleted.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BCI_FilterCompleted.ImageOptions.SvgImage");
+            BCI_FilterCompleted.Name = "BCI_FilterCompleted";
+            BCI_FilterCompleted.CheckedChanged += BBI_Filter_CheckedChanged;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3, ribbonPageGroup5 });
+            ribbonPage1.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3, ribbonPageGroupFilterDateRange, ribbonPageGroupFilterStatus });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.Form_InstallmentSale_RibbonPage_Main;
             // 
@@ -247,25 +269,25 @@ namespace Foxoft
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = Resources.Common_Print;
             // 
-            // ribbonPageGroup5
+            // ribbonPageGroupFilterDateRange
             // 
-            ribbonPageGroup5.ItemLinks.Add(BCI_FilterDay);
-            ribbonPageGroup5.ItemLinks.Add(BBI_FilterWeek);
-            ribbonPageGroup5.ItemLinks.Add(BBI_FilterMonth);
-            ribbonPageGroup5.Name = "ribbonPageGroup5";
-            ribbonPageGroup5.Text = Resources.Form_InstallmentSale_RibbonGroup_Filter;
+            ribbonPageGroupFilterDateRange.ItemLinks.Add(BCI_FilterDay);
+            ribbonPageGroupFilterDateRange.ItemLinks.Add(BBI_FilterWeek);
+            ribbonPageGroupFilterDateRange.ItemLinks.Add(BBI_FilterMonth);
+            ribbonPageGroupFilterDateRange.Name = "ribbonPageGroupFilterDateRange";
+            ribbonPageGroupFilterDateRange.Text = Resources.Form_InstallmentSale_RibbonGroup_DateRange;
+            // 
+            // ribbonPageGroupFilterStatus
+            // 
+            ribbonPageGroupFilterStatus.ItemLinks.Add(BCI_FilterContinuing);
+            ribbonPageGroupFilterStatus.ItemLinks.Add(BCI_FilterCompleted);
+            ribbonPageGroupFilterStatus.Name = "ribbonPageGroupFilterStatus";
+            ribbonPageGroupFilterStatus.Text = Resources.Form_InstallmentSale_RibbonGroup_Status;
             // 
             // ribbonPage2
             // 
-            ribbonPage2.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup4 });
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = Resources.Form_InstallmentSale_RibbonPage_Settings;
-            // 
-            // ribbonPageGroup4
-            // 
-            ribbonPageGroup4.ItemLinks.Add(BBI_QueryEdit);
-            ribbonPageGroup4.Name = "ribbonPageGroup4";
-            ribbonPageGroup4.Text = Resources.Form_InstallmentSale_RibbonGroup_Query;
             // 
             // panelSummary
             // 
@@ -318,7 +340,7 @@ namespace Foxoft
             lblCard4Subtitle.Name = "lblCard4Subtitle";
             lblCard4Subtitle.Size = new Size(62, 13);
             lblCard4Subtitle.TabIndex = 4;
-            lblCard4Subtitle.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Remaining_Subtitle;
+            lblCard4Subtitle.Text = "Active Credit";
             // 
             // lblCard4Value
             // 
@@ -338,7 +360,7 @@ namespace Foxoft
             lblCard4Title.Name = "lblCard4Title";
             lblCard4Title.Size = new Size(89, 13);
             lblCard4Title.TabIndex = 6;
-            lblCard4Title.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Remaining_Title;
+            lblCard4Title.Text = "Remaining Amount";
             // 
             // panelCard3
             // 
@@ -374,7 +396,7 @@ namespace Foxoft
             lblCard3Subtitle.Name = "lblCard3Subtitle";
             lblCard3Subtitle.Size = new Size(62, 13);
             lblCard3Subtitle.TabIndex = 4;
-            lblCard3Subtitle.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Paid_Subtitle;
+            lblCard3Subtitle.Text = "Active Credit";
             // 
             // lblCard3Value
             // 
@@ -392,9 +414,9 @@ namespace Foxoft
             lblCard3Title.Appearance.Options.UseForeColor = true;
             lblCard3Title.Location = new Point(10, 10);
             lblCard3Title.Name = "lblCard3Title";
-            lblCard3Title.Size = new Size(60, 13);
+            lblCard3Title.Size = new Size(47, 13);
             lblCard3Title.TabIndex = 6;
-            lblCard3Title.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Paid_Title;
+            lblCard3Title.Text = "Total Paid";
             // 
             // panelCard2
             // 
@@ -430,7 +452,7 @@ namespace Foxoft
             lblCard2Subtitle.Name = "lblCard2Subtitle";
             lblCard2Subtitle.Size = new Size(62, 13);
             lblCard2Subtitle.TabIndex = 4;
-            lblCard2Subtitle.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Amount_Subtitle;
+            lblCard2Subtitle.Text = "Active Credit";
             // 
             // lblCard2Value
             // 
@@ -448,9 +470,9 @@ namespace Foxoft
             lblCard2Title.Appearance.Options.UseForeColor = true;
             lblCard2Title.Location = new Point(10, 10);
             lblCard2Title.Name = "lblCard2Title";
-            lblCard2Title.Size = new Size(69, 13);
+            lblCard2Title.Size = new Size(64, 13);
             lblCard2Title.TabIndex = 6;
-            lblCard2Title.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Amount_Title;
+            lblCard2Title.Text = "Total Amount";
             // 
             // panelCard1
             // 
@@ -486,7 +508,7 @@ namespace Foxoft
             lblCard1Subtitle.Name = "lblCard1Subtitle";
             lblCard1Subtitle.Size = new Size(62, 13);
             lblCard1Subtitle.TabIndex = 4;
-            lblCard1Subtitle.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Count_Subtitle;
+            lblCard1Subtitle.Text = "Active Credit";
             // 
             // lblCard1Value
             // 
@@ -504,9 +526,9 @@ namespace Foxoft
             lblCard1Title.Appearance.Options.UseForeColor = true;
             lblCard1Title.Location = new Point(10, 10);
             lblCard1Title.Name = "lblCard1Title";
-            lblCard1Title.Size = new Size(61, 13);
+            lblCard1Title.Size = new Size(76, 13);
             lblCard1Title.TabIndex = 6;
-            lblCard1Title.Text = global::Foxoft.Properties.Resources.Form_InstallmentSale_Summary_Count_Title;
+            lblCard1Title.Text = "Installment Sale";
             // 
             // FormInstallmentSale
             // 
@@ -585,12 +607,14 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_GridOptions;
         private BarSubItem BSI_Reports;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
-        private BarButtonItem BBI_QueryEdit;
+        private DevExpress.XtraBars.BarButtonItem BBI_QueryEdit;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupFilterDateRange;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupFilterStatus;
         private BarCheckItem BCI_FilterDay;
         private BarCheckItem BBI_FilterWeek;
         private BarCheckItem BBI_FilterMonth;
+        private BarCheckItem BCI_FilterContinuing;
+        private BarCheckItem BCI_FilterCompleted;
     }
 }

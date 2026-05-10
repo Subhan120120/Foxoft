@@ -7379,6 +7379,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        public static string Form_InstallmentSale_Filter_Completed {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Filter_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continuing.
+        /// </summary>
+        public static string Form_InstallmentSale_Filter_Continuing {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Filter_Continuing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Day.
         /// </summary>
         public static string Form_InstallmentSale_Filter_Day {
@@ -7424,20 +7442,20 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date Range.
+        /// </summary>
+        public static string Form_InstallmentSale_RibbonGroup_DateRange {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_RibbonGroup_DateRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Design.
         /// </summary>
         public static string Form_InstallmentSale_RibbonGroup_Design {
             get {
                 return ResourceManager.GetString("Form_InstallmentSale_RibbonGroup_Design", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filter.
-        /// </summary>
-        public static string Form_InstallmentSale_RibbonGroup_Filter {
-            get {
-                return ResourceManager.GetString("Form_InstallmentSale_RibbonGroup_Filter", resourceCulture);
             }
         }
         
@@ -7456,6 +7474,15 @@ namespace Foxoft.Properties {
         public static string Form_InstallmentSale_RibbonGroup_Query {
             get {
                 return ResourceManager.GetString("Form_InstallmentSale_RibbonGroup_Query", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Form_InstallmentSale_RibbonGroup_Status {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_RibbonGroup_Status", resourceCulture);
             }
         }
         

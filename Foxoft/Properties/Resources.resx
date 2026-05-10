@@ -2220,8 +2220,8 @@
   <data name="Form_InstallmentSale_RibbonGroup_Design" xml:space="preserve">
     <value>Design</value>
   </data>
-  <data name="Form_InstallmentSale_RibbonGroup_Filter" xml:space="preserve">
-    <value>Filter</value>
+  <data name="Form_InstallmentSale_RibbonGroup_DateRange" xml:space="preserve">
+    <value>Date Range</value>
   </data>
   <data name="Form_InstallmentSale_RibbonGroup_Query" xml:space="preserve">
     <value>Query</value>
@@ -3940,5 +3940,14 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Remaining_Subtitle" xml:space="preserve">
     <value>Active Credit</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Continuing" xml:space="preserve">
+    <value>Continuing</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Status" xml:space="preserve">
+    <value>Status</value>
   </data>
 </root>

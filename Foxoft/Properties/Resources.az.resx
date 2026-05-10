@@ -190,7 +190,7 @@
     <value>Topdan Satış Fakturası</value>
   </data>
   <data name="ERP_ACE_InstallmentsaleInvoice" xml:space="preserve">
-    <value>Kredit Satış Fakturası</value>
+    <value>Taksit Satış Fakturası</value>
   </data>
   <data name="ERP_ACE_RetailPurchaseReturn" xml:space="preserve">
     <value>Alışın Qaytarılması</value>
@@ -202,7 +202,7 @@
     <value>Topdan Satış. Qaytarılması</value>
   </data>
   <data name="ERP_ACE_InstallmentsaleReturn" xml:space="preserve">
-    <value>Kredit Satış. Qaytarılması</value>
+    <value>Taksit Satış. Qaytarılması</value>
   </data>
   <data name="ERP_ACE_RetailPurchaseReturnCustom" xml:space="preserve">
     <value>Alış. Xüsusi Qaytarılması</value>
@@ -214,7 +214,7 @@
     <value>Top. Sat. Xüsusi Qaytarılması</value>
   </data>
   <data name="ERP_ACE_InstallmentSaleReturnCustom" xml:space="preserve">
-    <value>Kresit Satış. Xüsusi Qaytarılması</value>
+    <value>Taksit Satış. Xüsusi Qaytarılması</value>
   </data>
   <data name="ERP_ACE_InventoryTransfers" xml:space="preserve">
     <value>Anbarlar Arası Transfer</value>
@@ -229,7 +229,7 @@
     <value>Ödəniş Qəbzi</value>
   </data>
   <data name="ERP_ACE_InstallmentSales" xml:space="preserve">
-    <value>Kredit Satışlar</value>
+    <value>Taksit Satışlar</value>
   </data>
   <data name="ERP_ACE_InventoryCount" xml:space="preserve">
     <value>Sayım</value>
@@ -1537,16 +1537,16 @@
     <value>İyerarxiya Özəllik Tipi</value>
   </data>
   <data name="Entity_Installment" xml:space="preserve">
-    <value>Kredit</value>
+    <value>Taksit</value>
   </data>
   <data name="Entity_Installment_Id" xml:space="preserve">
-    <value>Kredit Id</value>
+    <value>Taksit Id</value>
   </data>
   <data name="Entity_Installment_InvoiceHeaderId" xml:space="preserve">
     <value>Faktura Id</value>
   </data>
   <data name="Entity_Installment_Date" xml:space="preserve">
-    <value>Kredit Tarixi</value>
+    <value>Taksit Tarixi</value>
   </data>
   <data name="Entity_Installment_PlanCode" xml:space="preserve">
     <value>Ödəmə Planı Kodu</value>
@@ -1576,16 +1576,16 @@
     <value>Gecikmə Tarixi</value>
   </data>
   <data name="Entity_InstallmentGuarantor" xml:space="preserve">
-    <value>Kredit Zamini</value>
+    <value>Taksit Zamini</value>
   </data>
   <data name="Entity_InstallmentGuarantor_Id" xml:space="preserve">
-    <value>Kredit Zamini Id</value>
+    <value>Taksit Zamini Id</value>
   </data>
   <data name="Entity_InstallmentGuarantor_CurrAccCode" xml:space="preserve">
     <value>Cari Hesab</value>
   </data>
   <data name="Entity_InstallmentGuarantor_InstallmentId" xml:space="preserve">
-    <value>Kredit Id</value>
+    <value>Taksit Id</value>
   </data>
   <data name="Entity_InvoiceHeader" xml:space="preserve">
     <value>Faktura Başlığı</value>
@@ -2206,10 +2206,10 @@
     <value>Dəyər 0 ilə {0} arasında olmalıdır</value>
   </data>
   <data name="Form_InstallmentSale_Caption" xml:space="preserve">
-    <value>Kredit Satışları</value>
+    <value>Taksit Satışları</value>
   </data>
   <data name="Form_InstallmentSale_RibbonPage_Main" xml:space="preserve">
-    <value>Kredit</value>
+    <value>Taksit</value>
   </data>
   <data name="Form_InstallmentSale_RibbonPage_Settings" xml:space="preserve">
     <value>Ayarlar</value>
@@ -2220,8 +2220,8 @@
   <data name="Form_InstallmentSale_RibbonGroup_Design" xml:space="preserve">
     <value>Dizayn</value>
   </data>
-  <data name="Form_InstallmentSale_RibbonGroup_Filter" xml:space="preserve">
-    <value>Filter</value>
+  <data name="Form_InstallmentSale_RibbonGroup_DateRange" xml:space="preserve">
+    <value>Tarix Aralığı</value>
   </data>
   <data name="Form_InstallmentSale_RibbonGroup_Query" xml:space="preserve">
     <value>Sorğu</value>
@@ -2335,7 +2335,7 @@
     <value>Ödəmə</value>
   </data>
   <data name="FormInvoice_RibbonGroup_Installment" xml:space="preserve">
-    <value>Kredit</value>
+    <value>Taksit</value>
   </data>
   <data name="FormInvoice_RibbonGroup_Print" xml:space="preserve">
     <value>Print</value>
@@ -2374,22 +2374,22 @@
     <value>Ödənilib: </value>
   </data>
   <data name="FormInvoice_InstallmentSum" xml:space="preserve">
-    <value>Kredit: </value>
+    <value>Taksit: </value>
   </data>
   <data name="FormInvoice_InstallmentCommissionSum" xml:space="preserve">
     <value>Komissiya: </value>
   </data>
   <data name="FormInvoice_InstallmentTotalSum" xml:space="preserve">
-    <value>Toplam Kredit: </value>
+    <value>Toplam Taksit: </value>
   </data>
   <data name="FormInvoice_Group_InstallmentInfo" xml:space="preserve">
-    <value>Kredit</value>
+    <value>Taksit</value>
   </data>
   <data name="FormInvoice_Group_PaymentInfo" xml:space="preserve">
     <value>Ödəniş</value>
   </data>
   <data name="FormInvoice_Group_Installment" xml:space="preserve">
-    <value>Kredit</value>
+    <value>Taksit</value>
   </data>
   <data name="FormInvoice_InstallmentGuarantors" xml:space="preserve">
     <value>Zaminlər</value>
@@ -3872,6 +3872,15 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_InstallmentSale_Col_RemainingAmount" xml:space="preserve">
     <value>Qalıq Məbləğ</value>
   </data>
+  <data name="Form_InstallmentSale_Filter_Continuing" xml:space="preserve">
+    <value>Dəvam edir</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Completed" xml:space="preserve">
+    <value>Tamamlanıb</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Form_InstallmentSale_Col_InstallmentStatus" xml:space="preserve">
     <value>Status</value>
   </data>
@@ -3921,24 +3930,24 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Say</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Count_Subtitle" xml:space="preserve">
-    <value>Aktiv kredit</value>
+    <value>Aktiv taksit</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Amount_Title" xml:space="preserve">
     <value>Ümumi Məbləğ</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Amount_Subtitle" xml:space="preserve">
-    <value>Aktiv kredit</value>
+    <value>Aktiv taksit</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Paid_Title" xml:space="preserve">
     <value>Cəmi Ödənilən</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Paid_Subtitle" xml:space="preserve">
-    <value>Aktiv kredit</value>
+    <value>Aktiv taksit</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Remaining_Title" xml:space="preserve">
     <value>Qalıq Məbləğ</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Remaining_Subtitle" xml:space="preserve">
-    <value>Aktiv Kredit</value>
+    <value>Aktiv Taksit</value>
   </data>
 </root>

@@ -8,7 +8,7 @@ namespace Foxoft.Models
     [Keyless]
     public class TrInstallmentViewModel
     {
-        [Display(Name = "Kredit ID")]
+        [Display(Name = "Taksit ID")]
         public int InstallmentId { get; set; }
 
         [Display(Name = "Faktura Başlıq ID")]
