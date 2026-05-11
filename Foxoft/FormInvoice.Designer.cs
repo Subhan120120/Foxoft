@@ -1187,7 +1187,7 @@ namespace Foxoft
             DocumentTimeTimeSpanEdit.Name = "DocumentTimeTimeSpanEdit";
             DocumentTimeTimeSpanEdit.Properties.AllowMouseWheel = false;
             DocumentTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            DocumentTimeTimeSpanEdit.Size = new Size(285, 20);
+            DocumentTimeTimeSpanEdit.Size = new Size(284, 20);
             DocumentTimeTimeSpanEdit.StyleController = dataLayoutControl1;
             DocumentTimeTimeSpanEdit.TabIndex = 6;
             DocumentTimeTimeSpanEdit.KeyDown += dataLayoutControls_KeyDown;
@@ -1248,7 +1248,7 @@ namespace Foxoft
             // lUE_StoreCode
             // 
             lUE_StoreCode.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "StoreCode", true));
-            lUE_StoreCode.Location = new Point(970, 60);
+            lUE_StoreCode.Location = new Point(969, 60);
             lUE_StoreCode.Name = "lUE_StoreCode";
             lUE_StoreCode.Properties.AllowMouseWheel = false;
             lUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
@@ -1258,7 +1258,7 @@ namespace Foxoft
             lUE_StoreCode.Properties.NullText = "";
             lUE_StoreCode.Properties.ShowHeader = false;
             lUE_StoreCode.Properties.ValueMember = "CurrAccCode";
-            lUE_StoreCode.Size = new Size(716, 20);
+            lUE_StoreCode.Size = new Size(717, 20);
             lUE_StoreCode.StyleController = dataLayoutControl1;
             lUE_StoreCode.TabIndex = 7;
             lUE_StoreCode.PopupFilter += lUE_StoreCode_PopupFilter;
@@ -1975,9 +1975,9 @@ namespace Foxoft
             // ItemForStoreCode
             // 
             ItemForStoreCode.Control = lUE_StoreCode;
-            ItemForStoreCode.Location = new Point(839, 48);
+            ItemForStoreCode.Location = new Point(838, 48);
             ItemForStoreCode.Name = "ItemForStoreCode";
-            ItemForStoreCode.Size = new Size(839, 24);
+            ItemForStoreCode.Size = new Size(840, 24);
             ItemForStoreCode.TextSize = new Size(107, 13);
             // 
             // ItemForCustomsDocumentNumber
@@ -2001,7 +2001,7 @@ namespace Foxoft
             ItemForDocumentTime.Control = DocumentTimeTimeSpanEdit;
             ItemForDocumentTime.Location = new Point(550, 48);
             ItemForDocumentTime.Name = "ItemForDocumentTime";
-            ItemForDocumentTime.Size = new Size(289, 24);
+            ItemForDocumentTime.Size = new Size(288, 24);
             ItemForDocumentTime.TextVisible = false;
             // 
             // ItemForToWarehouseCode
