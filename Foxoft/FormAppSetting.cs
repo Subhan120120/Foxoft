@@ -89,6 +89,8 @@ namespace Foxoft
                 dbContext.DcWhatsAppProviderSettings.Add(WhatsAppProviderSetting);
             }
 
+            dcWhatsAppProviderSettingBindingSource.DataSource = WhatsAppProviderSetting;
+
             dbContext.AppSettings
                 .Where(x => x.Id == 1)
                 .LoadAsync()
@@ -123,6 +125,8 @@ namespace Foxoft
 
             if (OverpaymentModeImageComboBoxEdit.EditValue is int modeVal)
                 AppSetting.OverpaymentMode = (OverpaymentMode)modeVal;
+
+            dcWhatsAppProviderSettingBindingSource.EndEdit();
 
             dbContext.SaveChanges();
 

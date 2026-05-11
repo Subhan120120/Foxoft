@@ -40,6 +40,7 @@ namespace Foxoft
             btn_Save = new DevExpress.XtraEditors.SimpleButton();
             GridViewLayoutTextEdit = new DevExpress.XtraEditors.TextEdit();
             appSettingBindingSource = new BindingSource(components);
+            dcWhatsAppProviderSettingBindingSource = new BindingSource(components);
             AutoPrintCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             PrintCountSpinEdit = new DevExpress.XtraEditors.SpinEdit();
             PrintDesignPathButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
@@ -103,6 +104,7 @@ namespace Foxoft
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)GridViewLayoutTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)appSettingBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dcWhatsAppProviderSettingBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AutoPrintCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PrintCountSpinEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PrintDesignPathButtonEdit.Properties).BeginInit();
@@ -260,9 +262,11 @@ namespace Foxoft
             GridViewLayoutTextEdit.StyleController = dataLayoutControl1;
             GridViewLayoutTextEdit.TabIndex = 21;
             // 
-            // appSettingBindingSource
-            // 
             appSettingBindingSource.DataSource = typeof(AppSetting);
+            // 
+            // dcWhatsAppProviderSettingBindingSource
+            // 
+            dcWhatsAppProviderSettingBindingSource.DataSource = typeof(DcWhatsAppProviderSetting);
             // 
             // AutoPrintCheckEdit
             // 
@@ -507,6 +511,7 @@ namespace Foxoft
             // 
             // ServerUrlTextEdit
             // 
+            ServerUrlTextEdit.DataBindings.Add(new Binding("EditValue", dcWhatsAppProviderSettingBindingSource, "ServerUrl", true));
             ServerUrlTextEdit.Location = new Point(188, 459);
             ServerUrlTextEdit.Name = "ServerUrlTextEdit";
             ServerUrlTextEdit.Size = new Size(205, 20);
@@ -516,6 +521,7 @@ namespace Foxoft
             // 
             // InstanceNameTextEdit
             // 
+            InstanceNameTextEdit.DataBindings.Add(new Binding("EditValue", dcWhatsAppProviderSettingBindingSource, "InstanceName", true));
             InstanceNameTextEdit.Location = new Point(188, 435);
             InstanceNameTextEdit.Name = "InstanceNameTextEdit";
             InstanceNameTextEdit.Size = new Size(205, 20);
@@ -524,6 +530,7 @@ namespace Foxoft
             // 
             // ApiKeyTextEdit
             // 
+            ApiKeyTextEdit.DataBindings.Add(new Binding("EditValue", dcWhatsAppProviderSettingBindingSource, "ApiKey", true));
             ApiKeyTextEdit.Location = new Point(188, 411);
             ApiKeyTextEdit.Name = "ApiKeyTextEdit";
             ApiKeyTextEdit.Size = new Size(205, 20);
@@ -808,6 +815,7 @@ namespace Foxoft
             dataLayoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)GridViewLayoutTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)appSettingBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dcWhatsAppProviderSettingBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)AutoPrintCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PrintCountSpinEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PrintDesignPathButtonEdit.Properties).EndInit();
@@ -874,6 +882,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.SimpleButton btn_OptimizeDatabaseIndexes;
         private DevExpress.XtraEditors.TextEdit GridViewLayoutTextEdit;
         private BindingSource appSettingBindingSource;
+        private BindingSource dcWhatsAppProviderSettingBindingSource;
         private DevExpress.XtraEditors.CheckEdit AutoPrintCheckEdit;
         private DevExpress.XtraEditors.SpinEdit PrintCountSpinEdit;
         private DevExpress.XtraEditors.ButtonEdit PrintDesignPathButtonEdit;

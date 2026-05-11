@@ -37,7 +37,12 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInstallmentSale));
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             bindingSourceTrInstallmentSale = new BindingSource(components);
@@ -56,6 +61,7 @@ namespace Foxoft
             BBI_FilterMonth = new BarCheckItem();
             BCI_FilterContinuing = new BarCheckItem();
             BCI_FilterCompleted = new BarCheckItem();
+            BCI_FilterOverdue = new BarCheckItem();
             ribbonPage1 = new RibbonPage();
             ribbonPageGroup1 = new RibbonPageGroup();
             ribbonPageGroup2 = new RibbonPageGroup();
@@ -140,7 +146,8 @@ namespace Foxoft
             // repoBtnEdit_Payment
             // 
             repoBtnEdit_Payment.AutoHeight = false;
-            repoBtnEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph) });
+            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
+            repoBtnEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
             repoBtnEdit_Payment.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             repoBtnEdit_Payment.Name = "repoBtnEdit_Payment";
             repoBtnEdit_Payment.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -164,9 +171,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_Refresh, BBI_GridOptions, BSI_Reports, BBI_QueryEdit, BCI_FilterDay, BBI_FilterWeek, BBI_FilterMonth, BCI_FilterContinuing, BCI_FilterCompleted });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_Refresh, BBI_GridOptions, BSI_Reports, BBI_QueryEdit, BCI_FilterDay, BBI_FilterWeek, BBI_FilterMonth, BCI_FilterContinuing, BCI_FilterCompleted, BCI_FilterOverdue });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 18;
+            ribbonControl1.MaxItemId = 19;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new RibbonPage[] { ribbonPage1, ribbonPage2 });
             ribbonControl1.Size = new Size(954, 158);
@@ -255,6 +262,16 @@ namespace Foxoft
             BCI_FilterCompleted.Name = "BCI_FilterCompleted";
             BCI_FilterCompleted.CheckedChanged += BBI_Filter_CheckedChanged;
             // 
+            // BCI_FilterOverdue
+            // 
+            BCI_FilterOverdue.AllowAllUp = true;
+            BCI_FilterOverdue.Caption = Resources.Form_InstallmentSale_Filter_Overdue;
+            BCI_FilterOverdue.GroupIndex = 2;
+            BCI_FilterOverdue.Id = 18;
+            BCI_FilterOverdue.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BCI_FilterOverdue.ImageOptions.SvgImage");
+            BCI_FilterOverdue.Name = "BCI_FilterOverdue";
+            BCI_FilterOverdue.CheckedChanged += BBI_Filter_CheckedChanged;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3, ribbonPageGroupFilterDateRange, ribbonPageGroupFilterStatus });
@@ -289,6 +306,7 @@ namespace Foxoft
             // 
             // ribbonPageGroupFilterStatus
             // 
+            ribbonPageGroupFilterStatus.ItemLinks.Add(BCI_FilterOverdue);
             ribbonPageGroupFilterStatus.ItemLinks.Add(BCI_FilterContinuing);
             ribbonPageGroupFilterStatus.ItemLinks.Add(BCI_FilterCompleted);
             ribbonPageGroupFilterStatus.Name = "ribbonPageGroupFilterStatus";
@@ -628,5 +646,6 @@ namespace Foxoft
         private BarCheckItem BBI_FilterMonth;
         private BarCheckItem BCI_FilterContinuing;
         private BarCheckItem BCI_FilterCompleted;
+        private BarCheckItem BCI_FilterOverdue;
     }
 }

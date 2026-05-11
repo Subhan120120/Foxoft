@@ -2235,6 +2235,12 @@
   <data name="Form_InstallmentSale_Button_QueryEdit" xml:space="preserve">
     <value>Edit Query</value>
   </data>
+  <data name="Form_InstallmentSale_Filter_Continuing" xml:space="preserve">
+    <value>Continuing</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Overdue" xml:space="preserve">
+    <value>Overdue</value>
+  </data>
   <data name="Form_InstallmentSale_Filter_Day" xml:space="preserve">
     <value>Last Day</value>
   </data>

@@ -3881,6 +3881,9 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_InstallmentSale_Filter_Completed" xml:space="preserve">
     <value>Tamamlanıb</value>
   </data>
+  <data name="Form_InstallmentSale_Filter_Overdue" xml:space="preserve">
+    <value>Gecikən</value>
+  </data>
   <data name="Form_InstallmentSale_RibbonGroup_Status" xml:space="preserve">
     <value>Status</value>
   </data>

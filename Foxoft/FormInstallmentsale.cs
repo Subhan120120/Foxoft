@@ -661,6 +661,8 @@ namespace Foxoft
                 statusCriteria = new BinaryOperator("InstallmentStatus", 0, BinaryOperatorType.Equal);
             else if (BCI_FilterCompleted.Checked)
                 statusCriteria = new BinaryOperator("InstallmentStatus", 1, BinaryOperatorType.Equal);
+            else if (BCI_FilterOverdue.Checked)
+                statusCriteria = new BinaryOperator("OverDueDays", 0, BinaryOperatorType.Greater);
 
             gridView1.ActiveFilterCriteria = GroupOperator.Combine(GroupOperatorType.And, dateCriteria, statusCriteria);
             UpdateSummary();

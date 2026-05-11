@@ -7451,6 +7451,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overdue.
+        /// </summary>
+        public static string Form_InstallmentSale_Filter_Overdue {
+            get {
+                return ResourceManager.GetString("Form_InstallmentSale_Filter_Overdue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Day.
         /// </summary>
         public static string Form_InstallmentSale_Filter_Day {
