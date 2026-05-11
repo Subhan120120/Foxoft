@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3993,7 +3993,7 @@ To delete, cancel the receipt!</value>
     <value>Available Balance</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Balance_Title" xml:space="preserve">
-    <value>Credit Balance</value>
+    <value>SMS Balance</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Last30Days_Subtitle" xml:space="preserve">
     <value>Sent in last 30 days</value>

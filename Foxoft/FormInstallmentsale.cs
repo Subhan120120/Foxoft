@@ -46,8 +46,10 @@ namespace Foxoft
 
         public FormInstallmentSale()
         {
-
             InitializeComponent();
+
+            DesignComponentNames();
+
             _lockService = new DocumentLockService(_db);
 
             SetSummaryIcons();
@@ -74,6 +76,23 @@ namespace Foxoft
             GridLocalizer.Active = new MyGridLocalizer();
 
             UpdateSummary();
+        }
+
+        private void DesignComponentNames()
+        {
+            Text = Resources.ERP_ACE_InstallmentSales;
+
+            lblCardCount_Title.Text = Resources.Form_InstallmentSale_Summary_Count_Title;
+            lblCardCount_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Count_Subtitle;
+
+            lblCardAmount_Title.Text = Resources.Form_InstallmentSale_Summary_Amount_Title;
+            lblCardAmount_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Amount_Subtitle;
+
+            lblCardPaid_Title.Text = Resources.Form_InstallmentSale_Summary_Paid_Title;
+            lblCardPaid_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Paid_Subtitle;
+
+            lblCardRemaining_Title.Text = Resources.Form_InstallmentSale_Summary_Remaining_Title;
+            lblCardRemaining_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Remaining_Subtitle;
         }
 
         private void LoadLayout()

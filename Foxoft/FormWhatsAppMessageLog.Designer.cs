@@ -301,7 +301,7 @@ namespace Foxoft
             lblCardBalance_Subtitle.Name = "lblCardBalance_Subtitle";
             lblCardBalance_Subtitle.Size = new Size(83, 13);
             lblCardBalance_Subtitle.TabIndex = 4;
-            lblCardBalance_Subtitle.Text = "Available Balance";
+
             // 
             // lblCardBalance_Value
             // 
@@ -321,7 +321,7 @@ namespace Foxoft
             lblCardBalance_Title.Name = "lblCardBalance_Title";
             lblCardBalance_Title.Size = new Size(69, 13);
             lblCardBalance_Title.TabIndex = 6;
-            lblCardBalance_Title.Text = "Credit Balance";
+
             // 
             // panelCardToday
             // 
@@ -356,7 +356,7 @@ namespace Foxoft
             lblCardToday_Subtitle.Name = "lblCardToday_Subtitle";
             lblCardToday_Subtitle.Size = new Size(59, 13);
             lblCardToday_Subtitle.TabIndex = 4;
-            lblCardToday_Subtitle.Text = "Current Day";
+
             // 
             // lblCardToday_Value
             // 
@@ -376,7 +376,7 @@ namespace Foxoft
             lblCardToday_Title.Name = "lblCardToday_Title";
             lblCardToday_Title.Size = new Size(55, 13);
             lblCardToday_Title.TabIndex = 6;
-            lblCardToday_Title.Text = "Sent Today";
+
             // 
             // panelCardLast30Days
             // 
@@ -411,7 +411,7 @@ namespace Foxoft
             lblCardLast30Days_Subtitle.Name = "lblCardLast30Days_Subtitle";
             lblCardLast30Days_Subtitle.Size = new Size(94, 13);
             lblCardLast30Days_Subtitle.TabIndex = 4;
-            lblCardLast30Days_Subtitle.Text = "Sent in last 30 days";
+
             // 
             // lblCardLast30Days_Value
             // 
@@ -431,7 +431,7 @@ namespace Foxoft
             lblCardLast30Days_Title.Name = "lblCardLast30Days_Title";
             lblCardLast30Days_Title.Size = new Size(62, 13);
             lblCardLast30Days_Title.TabIndex = 6;
-            lblCardLast30Days_Title.Text = "Last 30 Days";
+
             // 
             // panelCardTotal
             // 
@@ -466,7 +466,7 @@ namespace Foxoft
             lblCardTotal_Subtitle.Name = "lblCardTotal_Subtitle";
             lblCardTotal_Subtitle.Size = new Size(71, 13);
             lblCardTotal_Subtitle.TabIndex = 4;
-            lblCardTotal_Subtitle.Text = "Total SMS sent";
+
             // 
             // lblCardTotal_Value
             // 
@@ -486,7 +486,7 @@ namespace Foxoft
             lblCardTotal_Title.Name = "lblCardTotal_Title";
             lblCardTotal_Title.Size = new Size(49, 13);
             lblCardTotal_Title.TabIndex = 6;
-            lblCardTotal_Title.Text = "Total Sent";
+
             // 
             // FormWhatsAppMessageLog
             // 
@@ -501,7 +501,6 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = "WhatsApp Message Log";
             FormClosed += FormWhatsAppMessageLog_FormClosed;
             Load += FormWhatsAppMessageLog_Load;
             ((ISupportInitialize)gC_WhatsAppMessageLogList).EndInit();

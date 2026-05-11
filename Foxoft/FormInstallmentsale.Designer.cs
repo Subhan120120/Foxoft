@@ -368,7 +368,7 @@ namespace Foxoft
             lblCardRemaining_Subtitle.Name = "lblCardRemaining_Subtitle";
             lblCardRemaining_Subtitle.Size = new Size(62, 13);
             lblCardRemaining_Subtitle.TabIndex = 4;
-            lblCardRemaining_Subtitle.Text = "Active Credit";
+
             // 
             // lblCardRemaining_Value
             // 
@@ -388,7 +388,7 @@ namespace Foxoft
             lblCardRemaining_Title.Name = "lblCardRemaining_Title";
             lblCardRemaining_Title.Size = new Size(89, 13);
             lblCardRemaining_Title.TabIndex = 6;
-            lblCardRemaining_Title.Text = "Remaining Amount";
+
             // 
             // panelCardPaid
             // 
@@ -424,7 +424,7 @@ namespace Foxoft
             lblCardPaid_Subtitle.Name = "lblCardPaid_Subtitle";
             lblCardPaid_Subtitle.Size = new Size(62, 13);
             lblCardPaid_Subtitle.TabIndex = 4;
-            lblCardPaid_Subtitle.Text = "Active Credit";
+
             // 
             // lblCardPaid_Value
             // 
@@ -444,7 +444,7 @@ namespace Foxoft
             lblCardPaid_Title.Name = "lblCardPaid_Title";
             lblCardPaid_Title.Size = new Size(47, 13);
             lblCardPaid_Title.TabIndex = 6;
-            lblCardPaid_Title.Text = "Total Paid";
+
             // 
             // panelCardAmount
             // 
@@ -480,7 +480,7 @@ namespace Foxoft
             lblCardAmount_Subtitle.Name = "lblCardAmount_Subtitle";
             lblCardAmount_Subtitle.Size = new Size(62, 13);
             lblCardAmount_Subtitle.TabIndex = 4;
-            lblCardAmount_Subtitle.Text = "Active Credit";
+
             // 
             // lblCardAmount_Value
             // 
@@ -500,7 +500,7 @@ namespace Foxoft
             lblCardAmount_Title.Name = "lblCardAmount_Title";
             lblCardAmount_Title.Size = new Size(64, 13);
             lblCardAmount_Title.TabIndex = 6;
-            lblCardAmount_Title.Text = "Total Amount";
+
             // 
             // panelCardCount
             // 
@@ -536,7 +536,7 @@ namespace Foxoft
             lblCardCount_Subtitle.Name = "lblCardCount_Subtitle";
             lblCardCount_Subtitle.Size = new Size(62, 13);
             lblCardCount_Subtitle.TabIndex = 4;
-            lblCardCount_Subtitle.Text = "Active Credit";
+
             // 
             // lblCardCount_Value
             // 
@@ -556,7 +556,7 @@ namespace Foxoft
             lblCardCount_Title.Name = "lblCardCount_Title";
             lblCardCount_Title.Size = new Size(76, 13);
             lblCardCount_Title.TabIndex = 6;
-            lblCardCount_Title.Text = "Installment Sale";
+
             // 
             // FormInstallmentSale
             // 
@@ -568,7 +568,7 @@ namespace Foxoft
             Controls.Add(ribbonControl1);
             Name = "FormInstallmentSale";
             Ribbon = ribbonControl1;
-            Text = "Installment Sales";
+
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).EndInit();

@@ -22,6 +22,25 @@ namespace Foxoft
         public FormWhatsAppMessageLog()
         {
             InitializeComponent();
+
+            DesignComponentNames();
+        }
+
+        private void DesignComponentNames()
+        {
+            Text = Resources.Form_WhatsAppMessageLog;
+
+            lblCardBalance_Title.Text = Resources.Form_WhatsAppMessageLog_Summary_Balance_Title;
+            lblCardBalance_Subtitle.Text = Resources.Form_WhatsAppMessageLog_Summary_Balance_Subtitle;
+
+            lblCardToday_Title.Text = Resources.Form_WhatsAppMessageLog_Summary_Today_Title;
+            lblCardToday_Subtitle.Text = Resources.Form_WhatsAppMessageLog_Summary_Today_Subtitle;
+
+            lblCardLast30Days_Title.Text = Resources.Form_WhatsAppMessageLog_Summary_Last30Days_Title;
+            lblCardLast30Days_Subtitle.Text = Resources.Form_WhatsAppMessageLog_Summary_Last30Days_Subtitle;
+
+            lblCardTotal_Title.Text = Resources.Form_WhatsAppMessageLog_Summary_Total_Title;
+            lblCardTotal_Subtitle.Text = Resources.Form_WhatsAppMessageLog_Summary_Total_Subtitle;
         }
 
         private void FormWhatsAppMessageLog_Load(object sender, EventArgs e)

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3933,28 +3933,28 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Filtr</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Count_Title" xml:space="preserve">
-    <value>Say</value>
+    <value>Taksit Satış</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Count_Subtitle" xml:space="preserve">
-    <value>Aktiv taksit</value>
+    <value>Aktiv Kredit</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Amount_Title" xml:space="preserve">
     <value>Ümumi Məbləğ</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Amount_Subtitle" xml:space="preserve">
-    <value>Aktiv taksit</value>
+    <value>Aktiv Kredit</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Paid_Title" xml:space="preserve">
-    <value>Cəmi Ödənilən</value>
+    <value>Ümumi Ödənilən</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Paid_Subtitle" xml:space="preserve">
-    <value>Aktiv taksit</value>
+    <value>Aktiv Kredit</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Remaining_Title" xml:space="preserve">
     <value>Qalıq Məbləğ</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Remaining_Subtitle" xml:space="preserve">
-    <value>Aktiv Taksit</value>
+    <value>Aktiv Kredit</value>
   </data>
   <data name="Common_Pieces" xml:space="preserve">
     <value>Ədəd</value>
@@ -3990,27 +3990,27 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Daha qaimə yoxdur.</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Balance_Subtitle" xml:space="preserve">
-    <value>Mövcud balans</value>
+    <value>Mövcud Balans</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Balance_Title" xml:space="preserve">
-    <value>Kredit Balansı</value>
+    <value>SMS Balansı</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Last30Days_Subtitle" xml:space="preserve">
-    <value>Son 30 gün ərzində</value>
+    <value>Son 30 gündə göndərildi</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Last30Days_Title" xml:space="preserve">
-    <value>Son 30 gün göndərilən</value>
+    <value>Son 30 Gün</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Today_Subtitle" xml:space="preserve">
-    <value>Cari gün ərzində</value>
+    <value>Bugünkü Gün</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Today_Title" xml:space="preserve">
-    <value>Cari gün göndərilən</value>
+    <value>Bu gün göndərildi</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Total_Subtitle" xml:space="preserve">
-    <value>Ümumi göndərilən</value>
+    <value>Cəmi SMS göndərildi</value>
   </data>
   <data name="Form_WhatsAppMessageLog_Summary_Total_Title" xml:space="preserve">
-    <value>Göndərilən SMS sayı</value>
+    <value>Cəmi Göndərilən</value>
   </data>
 </root>
