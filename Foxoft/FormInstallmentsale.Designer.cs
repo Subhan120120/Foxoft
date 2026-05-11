@@ -337,6 +337,7 @@ namespace Foxoft
             svgCardRemaining_ImageBox.Location = new Point(175, 10);
             svgCardRemaining_ImageBox.Name = "svgCardRemaining_ImageBox";
             svgCardRemaining_ImageBox.Size = new Size(35, 35);
+            svgCardRemaining_ImageBox.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardRemaining_ImageBox.SvgImage");
             svgCardRemaining_ImageBox.TabIndex = 3;
             svgCardRemaining_ImageBox.Text = "svgImageBox4";
             svgCardRemaining_ImageBox.Paint += svgCard_Paint;
@@ -392,6 +393,7 @@ namespace Foxoft
             svgCardPaid_ImageBox.Location = new Point(175, 10);
             svgCardPaid_ImageBox.Name = "svgCardPaid_ImageBox";
             svgCardPaid_ImageBox.Size = new Size(35, 35);
+            svgCardPaid_ImageBox.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardPaid_ImageBox.SvgImage");
             svgCardPaid_ImageBox.TabIndex = 3;
             svgCardPaid_ImageBox.Text = "svgImageBox3";
             svgCardPaid_ImageBox.Paint += svgCard_Paint;
@@ -447,6 +449,7 @@ namespace Foxoft
             svgCardAmount_ImageBox.Location = new Point(175, 10);
             svgCardAmount_ImageBox.Name = "svgCardAmount_ImageBox";
             svgCardAmount_ImageBox.Size = new Size(35, 35);
+            svgCardAmount_ImageBox.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardAmount_ImageBox.SvgImage");
             svgCardAmount_ImageBox.TabIndex = 3;
             svgCardAmount_ImageBox.Text = "svgImageBox2";
             svgCardAmount_ImageBox.Paint += svgCard_Paint;
@@ -502,6 +505,7 @@ namespace Foxoft
             svgCardCount_ImageBox.Location = new Point(175, 10);
             svgCardCount_ImageBox.Name = "svgCardCount_ImageBox";
             svgCardCount_ImageBox.Size = new Size(35, 35);
+            svgCardCount_ImageBox.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgCardCount_ImageBox.SvgImage");
             svgCardCount_ImageBox.TabIndex = 3;
             svgCardCount_ImageBox.Text = "svgImageBox1";
             svgCardCount_ImageBox.Paint += svgCard_Paint;
