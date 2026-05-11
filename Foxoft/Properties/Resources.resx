@@ -3980,4 +3980,28 @@ To delete, cancel the receipt!</value>
   <data name="FormInvoice_NoMoreInvoice" xml:space="preserve">
     <value>There are no more invoices.</value>
   </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Balance_Subtitle" xml:space="preserve">
+    <value>Available Balance</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Balance_Title" xml:space="preserve">
+    <value>Credit Balance</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Last30Days_Subtitle" xml:space="preserve">
+    <value>Sent in last 30 days</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Last30Days_Title" xml:space="preserve">
+    <value>Last 30 Days</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Today_Subtitle" xml:space="preserve">
+    <value>Current Day</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Today_Title" xml:space="preserve">
+    <value>Sent Today</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Total_Subtitle" xml:space="preserve">
+    <value>Total SMS sent</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Total_Title" xml:space="preserve">
+    <value>Total Sent</value>
+  </data>
 </root>

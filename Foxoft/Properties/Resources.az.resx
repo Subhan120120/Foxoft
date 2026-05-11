@@ -3983,4 +3983,28 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="FormInvoice_NoMoreInvoice" xml:space="preserve">
     <value>Daha qaimə yoxdur.</value>
   </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Balance_Subtitle" xml:space="preserve">
+    <value>Mövcud balans</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Balance_Title" xml:space="preserve">
+    <value>Kredit Balansı</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Last30Days_Subtitle" xml:space="preserve">
+    <value>Son 30 gün ərzində</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Last30Days_Title" xml:space="preserve">
+    <value>Son 30 gün göndərilən</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Today_Subtitle" xml:space="preserve">
+    <value>Cari gün ərzində</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Today_Title" xml:space="preserve">
+    <value>Cari gün göndərilən</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Total_Subtitle" xml:space="preserve">
+    <value>Ümumi göndərilən</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Summary_Total_Title" xml:space="preserve">
+    <value>Göndərilən SMS sayı</value>
+  </data>
 </root>

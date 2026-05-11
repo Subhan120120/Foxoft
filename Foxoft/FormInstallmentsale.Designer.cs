@@ -130,6 +130,7 @@ namespace Foxoft
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
             gridView1.OptionsView.ShowAutoFilterRow = true;
+            gridView1.OptionsView.ShowGroupPanel = false;
             gridView1.RowHeight = 18;
             gridView1.RowStyle += gridView1_RowStyle;
             gridView1.PopupMenuShowing += gridView1_PopupMenuShowing;
@@ -336,7 +337,6 @@ namespace Foxoft
             svgCardRemaining_ImageBox.Location = new Point(175, 10);
             svgCardRemaining_ImageBox.Name = "svgCardRemaining_ImageBox";
             svgCardRemaining_ImageBox.Size = new Size(35, 35);
-            svgCardRemaining_ImageBox.SvgImage = svgImageCollection1["Remaining"];
             svgCardRemaining_ImageBox.TabIndex = 3;
             svgCardRemaining_ImageBox.Text = "svgImageBox4";
             svgCardRemaining_ImageBox.Paint += svgCard_Paint;
@@ -349,7 +349,7 @@ namespace Foxoft
             lblCardRemaining_Subtitle.Name = "lblCardRemaining_Subtitle";
             lblCardRemaining_Subtitle.Size = new Size(62, 13);
             lblCardRemaining_Subtitle.TabIndex = 4;
-            lblCardRemaining_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Remaining_Subtitle;
+            lblCardRemaining_Subtitle.Text = "Active Credit";
             // 
             // lblCardRemaining_Value
             // 
@@ -369,7 +369,7 @@ namespace Foxoft
             lblCardRemaining_Title.Name = "lblCardRemaining_Title";
             lblCardRemaining_Title.Size = new Size(89, 13);
             lblCardRemaining_Title.TabIndex = 6;
-            lblCardRemaining_Title.Text = Resources.Form_InstallmentSale_Summary_Remaining_Title;
+            lblCardRemaining_Title.Text = "Remaining Amount";
             // 
             // panelCardPaid
             // 
@@ -392,7 +392,6 @@ namespace Foxoft
             svgCardPaid_ImageBox.Location = new Point(175, 10);
             svgCardPaid_ImageBox.Name = "svgCardPaid_ImageBox";
             svgCardPaid_ImageBox.Size = new Size(35, 35);
-            svgCardPaid_ImageBox.SvgImage = svgImageCollection1["Paid"];
             svgCardPaid_ImageBox.TabIndex = 3;
             svgCardPaid_ImageBox.Text = "svgImageBox3";
             svgCardPaid_ImageBox.Paint += svgCard_Paint;
@@ -405,7 +404,7 @@ namespace Foxoft
             lblCardPaid_Subtitle.Name = "lblCardPaid_Subtitle";
             lblCardPaid_Subtitle.Size = new Size(62, 13);
             lblCardPaid_Subtitle.TabIndex = 4;
-            lblCardPaid_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Paid_Subtitle;
+            lblCardPaid_Subtitle.Text = "Active Credit";
             // 
             // lblCardPaid_Value
             // 
@@ -425,7 +424,7 @@ namespace Foxoft
             lblCardPaid_Title.Name = "lblCardPaid_Title";
             lblCardPaid_Title.Size = new Size(47, 13);
             lblCardPaid_Title.TabIndex = 6;
-            lblCardPaid_Title.Text = Resources.Form_InstallmentSale_Summary_Paid_Title;
+            lblCardPaid_Title.Text = "Total Paid";
             // 
             // panelCardAmount
             // 
@@ -448,7 +447,6 @@ namespace Foxoft
             svgCardAmount_ImageBox.Location = new Point(175, 10);
             svgCardAmount_ImageBox.Name = "svgCardAmount_ImageBox";
             svgCardAmount_ImageBox.Size = new Size(35, 35);
-            svgCardAmount_ImageBox.SvgImage = svgImageCollection1["Amount"];
             svgCardAmount_ImageBox.TabIndex = 3;
             svgCardAmount_ImageBox.Text = "svgImageBox2";
             svgCardAmount_ImageBox.Paint += svgCard_Paint;
@@ -461,7 +459,7 @@ namespace Foxoft
             lblCardAmount_Subtitle.Name = "lblCardAmount_Subtitle";
             lblCardAmount_Subtitle.Size = new Size(62, 13);
             lblCardAmount_Subtitle.TabIndex = 4;
-            lblCardAmount_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Amount_Subtitle;
+            lblCardAmount_Subtitle.Text = "Active Credit";
             // 
             // lblCardAmount_Value
             // 
@@ -481,7 +479,7 @@ namespace Foxoft
             lblCardAmount_Title.Name = "lblCardAmount_Title";
             lblCardAmount_Title.Size = new Size(64, 13);
             lblCardAmount_Title.TabIndex = 6;
-            lblCardAmount_Title.Text = Resources.Form_InstallmentSale_Summary_Amount_Title;
+            lblCardAmount_Title.Text = "Total Amount";
             // 
             // panelCardCount
             // 
@@ -504,7 +502,6 @@ namespace Foxoft
             svgCardCount_ImageBox.Location = new Point(175, 10);
             svgCardCount_ImageBox.Name = "svgCardCount_ImageBox";
             svgCardCount_ImageBox.Size = new Size(35, 35);
-            svgCardCount_ImageBox.SvgImage = svgImageCollection1["Count"];
             svgCardCount_ImageBox.TabIndex = 3;
             svgCardCount_ImageBox.Text = "svgImageBox1";
             svgCardCount_ImageBox.Paint += svgCard_Paint;
@@ -517,7 +514,7 @@ namespace Foxoft
             lblCardCount_Subtitle.Name = "lblCardCount_Subtitle";
             lblCardCount_Subtitle.Size = new Size(62, 13);
             lblCardCount_Subtitle.TabIndex = 4;
-            lblCardCount_Subtitle.Text = Resources.Form_InstallmentSale_Summary_Count_Subtitle;
+            lblCardCount_Subtitle.Text = "Active Credit";
             // 
             // lblCardCount_Value
             // 
@@ -537,7 +534,7 @@ namespace Foxoft
             lblCardCount_Title.Name = "lblCardCount_Title";
             lblCardCount_Title.Size = new Size(76, 13);
             lblCardCount_Title.TabIndex = 6;
-            lblCardCount_Title.Text = Resources.Form_InstallmentSale_Summary_Count_Title;
+            lblCardCount_Title.Text = "Installment Sale";
             // 
             // FormInstallmentSale
             // 
@@ -549,7 +546,7 @@ namespace Foxoft
             Controls.Add(ribbonControl1);
             Name = "FormInstallmentSale";
             Ribbon = ribbonControl1;
-            Text = Resources.Form_InstallmentSale_Caption;
+            Text = "Installment Sales";
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).EndInit();

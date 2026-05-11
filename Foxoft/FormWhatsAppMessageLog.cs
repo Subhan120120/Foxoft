@@ -1,3 +1,5 @@
+using DevExpress.XtraEditors;
+using System.Drawing.Drawing2D;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -44,6 +46,8 @@ namespace Foxoft
 
             if (!layoutLoaded)
                 gV_WhatsAppMessageLogList.BestFitColumns();
+
+            UpdateSummary();
         }
 
         private void LoadLayout()
@@ -140,6 +144,109 @@ namespace Foxoft
         private void FormWhatsAppMessageLog_FormClosed(object sender, FormClosedEventArgs e)
         {
             dbContext?.Dispose();
+        }
+
+        private void UpdateSummary()
+        {
+            int countToday = 0;
+            int countLast30Days = 0;
+            int countTotal = 0;
+
+            if (trWhatsAppMessageLogBindingSource.DataSource is List<TrWhatsAppMessageLog> list)
+            {
+                foreach (var log in list)
+                {
+                    if (log.CreatedDate.Date == DateTime.Today) countToday++;
+                    if (log.CreatedDate.Date >= DateTime.Today.AddDays(-30)) countLast30Days++;
+                    countTotal++;
+                }
+            }
+
+            lblCardToday_Value.Text = countToday.ToString("N0");
+            lblCardLast30Days_Value.Text = countLast30Days.ToString("N0");
+            lblCardTotal_Value.Text = countTotal.ToString("N0");
+
+            decimal balance = dbContext.TrCredits
+                .AsEnumerable()
+                .Sum(x => x.Amount);
+
+            lblCardBalance_Value.Text = balance.ToString("N2");
+        }
+
+        private void panelSummary_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            foreach (Control card in panelSummary.Controls)
+            {
+                if (card is PanelControl && card.Name.StartsWith("panelCard"))
+                {
+                    DrawCardShadow(e.Graphics, card.Bounds, 15);
+                }
+            }
+        }
+
+        private void DrawCardShadow(Graphics g, Rectangle bounds, int radius)
+        {
+            int shadowOffset = 2; // Subtle shift
+            int shadowBlur = 3;   // Subtle blur layers
+
+            for (int i = 1; i <= shadowBlur; i++)
+            {
+                Rectangle shadowRect = new Rectangle(bounds.X + shadowOffset, bounds.Y + shadowOffset, bounds.Width, bounds.Height);
+                using (GraphicsPath path = GetRoundedPath(shadowRect, radius))
+                {
+                    int alpha = 10 / i;
+                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(alpha, Color.Black)))
+                    {
+                        g.FillPath(brush, path);
+                    }
+                }
+            }
+        }
+
+        private void panelCard_Paint(object sender, PaintEventArgs e)
+        {
+            PanelControl panel = sender as PanelControl;
+            if (panel == null) return;
+
+            int radius = 10;
+            using (GraphicsPath path = GetRoundedPath(panel.ClientRectangle, radius))
+            {
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                panel.Region = new Region(path);
+
+                using (Pen pen = new Pen(Color.FromArgb(230, 230, 230), 1))
+                {
+                    e.Graphics.DrawPath(pen, path);
+                }
+            }
+        }
+
+        private void svgCard_Paint(object sender, PaintEventArgs e)
+        {
+            Control control = sender as Control;
+            if (control == null) return;
+
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                path.AddEllipse(control.ClientRectangle);
+                control.Region = new Region(path);
+            }
+        }
+
+        private GraphicsPath GetRoundedPath(Rectangle rect, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+            float r2 = radius * 2f;
+            RectangleF rectF = new RectangleF(rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
+
+            path.AddArc(rectF.X, rectF.Y, r2, r2, 180, 90);
+            path.AddArc(rectF.Right - r2, rectF.Y, r2, r2, 270, 90);
+            path.AddArc(rectF.Right - r2, rectF.Bottom - r2, r2, r2, 0, 90);
+            path.AddArc(rectF.X, rectF.Bottom - r2, r2, r2, 90, 90);
+            path.CloseFigure();
+            return path;
         }
     }
 }
