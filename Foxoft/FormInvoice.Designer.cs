@@ -53,6 +53,8 @@ namespace Foxoft
             behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(components);
             trInvoiceLinesBindingSource = new BindingSource(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            DeliveryDateDateEdit = new DevExpress.XtraEditors.DateEdit();
+            trInvoiceHeadersBindingSource = new BindingSource(components);
             txt_LoyaltyEarn = new DevExpress.XtraEditors.TextEdit();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_Save = new BarButtonItem();
@@ -120,7 +122,6 @@ namespace Foxoft
             colInstallmentGarantorDelete = new GridColumn();
             repoBtnEdit_InstallmentGarantorDelete = new RepositoryItemButtonEdit();
             txtEdit_Installment_Commission = new DevExpress.XtraEditors.TextEdit();
-            trInvoiceHeadersBindingSource = new BindingSource(components);
             LUE_InstallmentPlan = new DevExpress.XtraEditors.LookUpEdit();
             lbl_InvoicePaidLoyaltySum = new DevExpress.XtraEditors.LabelControl();
             lbl_InvoicePaidCashlessSum = new DevExpress.XtraEditors.LabelControl();
@@ -242,6 +243,7 @@ namespace Foxoft
             LCI_InterestRate = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_CashRegCode = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_LoyaltyEarn = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDeliveryDate = new DevExpress.XtraLayout.LayoutControlItem();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
@@ -250,6 +252,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DeliveryDateDateEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DeliveryDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txt_LoyaltyEarn.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
@@ -263,7 +268,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gV_InstallmentGarantor).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_InstallmentGarantorDelete).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Installment_Commission.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LUE_InstallmentPlan.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsSent.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsReturn.Properties).BeginInit();
@@ -340,6 +344,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)LCI_InterestRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_CashRegCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_LoyaltyEarn).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDeliveryDate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
@@ -369,6 +374,7 @@ namespace Foxoft
             // 
             // dataLayoutControl1
             // 
+            dataLayoutControl1.Controls.Add(DeliveryDateDateEdit);
             dataLayoutControl1.Controls.Add(txt_LoyaltyEarn);
             dataLayoutControl1.Controls.Add(gC_InstallmentGarantor);
             dataLayoutControl1.Controls.Add(txtEdit_Installment_Commission);
@@ -416,6 +422,27 @@ namespace Foxoft
             dataLayoutControl1.TabIndex = 4;
             dataLayoutControl1.Text = "dataLayoutControl1";
             dataLayoutControl1.Changed += dataLayoutControl1_Changed;
+            // 
+            // DeliveryDateDateEdit
+            // 
+            DeliveryDateDateEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DeliveryDate", true));
+            DeliveryDateDateEdit.EditValue = null;
+            DeliveryDateDateEdit.Location = new Point(969, 132);
+            DeliveryDateDateEdit.Name = "DeliveryDateDateEdit";
+            DeliveryDateDateEdit.Properties.AllowMouseWheel = false;
+            DeliveryDateDateEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            DeliveryDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DeliveryDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DeliveryDateDateEdit.Size = new Size(717, 20);
+            DeliveryDateDateEdit.StyleController = dataLayoutControl1;
+            DeliveryDateDateEdit.TabIndex = 20;
+            DeliveryDateDateEdit.KeyDown += dataLayoutControls_KeyDown;
+            // 
+            // trInvoiceHeadersBindingSource
+            // 
+            trInvoiceHeadersBindingSource.DataSource = typeof(TrInvoiceHeader);
+            trInvoiceHeadersBindingSource.AddingNew += trInvoiceHeadersBindingSource_AddingNew;
+            trInvoiceHeadersBindingSource.CurrentItemChanged += trInvoiceHeadersBindingSource_CurrentItemChanged;
             // 
             // txt_LoyaltyEarn
             // 
@@ -870,7 +897,7 @@ namespace Foxoft
             // gC_InstallmentGarantor
             // 
             gC_InstallmentGarantor.DataSource = trInstallmentGuarantorsBindingSource;
-            gC_InstallmentGarantor.Location = new Point(969, 144);
+            gC_InstallmentGarantor.Location = new Point(969, 168);
             gC_InstallmentGarantor.MainView = gV_InstallmentGarantor;
             gC_InstallmentGarantor.MenuManager = ribbonControl1;
             gC_InstallmentGarantor.Name = "gC_InstallmentGarantor";
@@ -941,23 +968,17 @@ namespace Foxoft
             // txtEdit_Installment_Commission
             // 
             txtEdit_Installment_Commission.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "TrInstallment.Commission", true));
-            txtEdit_Installment_Commission.Location = new Point(143, 192);
+            txtEdit_Installment_Commission.Location = new Point(143, 216);
             txtEdit_Installment_Commission.MenuManager = ribbonControl1;
             txtEdit_Installment_Commission.Name = "txtEdit_Installment_Commission";
             txtEdit_Installment_Commission.Size = new Size(703, 20);
             txtEdit_Installment_Commission.StyleController = dataLayoutControl1;
             txtEdit_Installment_Commission.TabIndex = 13;
             // 
-            // trInvoiceHeadersBindingSource
-            // 
-            trInvoiceHeadersBindingSource.DataSource = typeof(TrInvoiceHeader);
-            trInvoiceHeadersBindingSource.AddingNew += trInvoiceHeadersBindingSource_AddingNew;
-            trInvoiceHeadersBindingSource.CurrentItemChanged += trInvoiceHeadersBindingSource_CurrentItemChanged;
-            // 
             // LUE_InstallmentPlan
             // 
             LUE_InstallmentPlan.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "TrInstallment.InstallmentPlanCode", true));
-            LUE_InstallmentPlan.Location = new Point(143, 144);
+            LUE_InstallmentPlan.Location = new Point(143, 168);
             LUE_InstallmentPlan.MenuManager = ribbonControl1;
             LUE_InstallmentPlan.Name = "LUE_InstallmentPlan";
             LUE_InstallmentPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -1223,7 +1244,7 @@ namespace Foxoft
             memoEdit_Desc.Location = new Point(131, 84);
             memoEdit_Desc.Name = "memoEdit_Desc";
             memoEdit_Desc.Properties.AllowMouseWheel = false;
-            memoEdit_Desc.Size = new Size(715, 44);
+            memoEdit_Desc.Size = new Size(715, 68);
             memoEdit_Desc.StyleController = dataLayoutControl1;
             memoEdit_Desc.TabIndex = 8;
             memoEdit_Desc.KeyDown += dataLayoutControls_KeyDown;
@@ -1322,11 +1343,11 @@ namespace Foxoft
             // gC_InvoiceLine
             // 
             gC_InvoiceLine.DataSource = trInvoiceLinesBindingSource;
-            gC_InvoiceLine.Location = new Point(12, 252);
+            gC_InvoiceLine.Location = new Point(12, 276);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
             gC_InvoiceLine.RepositoryItems.AddRange(new RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode, repoBtnEdit_UnitOfMeasure, repoLUE_UnitOfMeasure, repoBtnEdit_WorkerCode });
-            gC_InvoiceLine.Size = new Size(1674, 106);
+            gC_InvoiceLine.Size = new Size(1674, 82);
             gC_InvoiceLine.TabIndex = 15;
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
             gC_InvoiceLine.EditorKeyDown += gC_InvoiceLine_KeyDown;
@@ -1689,7 +1710,7 @@ namespace Foxoft
             // 
             DateEdit_InstallmentDate.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "TrInstallment.InstallmentDate", true));
             DateEdit_InstallmentDate.EditValue = null;
-            DateEdit_InstallmentDate.Location = new Point(143, 168);
+            DateEdit_InstallmentDate.Location = new Point(143, 192);
             DateEdit_InstallmentDate.MenuManager = ribbonControl1;
             DateEdit_InstallmentDate.Name = "DateEdit_InstallmentDate";
             DateEdit_InstallmentDate.Properties.AllowMouseWheel = false;
@@ -1713,7 +1734,7 @@ namespace Foxoft
             // txtEdit_Installment_InterestRate
             // 
             txtEdit_Installment_InterestRate.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "TrInstallment.InterestRate", true));
-            txtEdit_Installment_InterestRate.Location = new Point(143, 216);
+            txtEdit_Installment_InterestRate.Location = new Point(143, 240);
             txtEdit_Installment_InterestRate.MenuManager = ribbonControl1;
             txtEdit_Installment_InterestRate.Name = "txtEdit_Installment_InterestRate";
             txtEdit_Installment_InterestRate.Size = new Size(703, 20);
@@ -1755,7 +1776,7 @@ namespace Foxoft
             // 
             LCG_Invoice.AllowDrawBackground = false;
             LCG_Invoice.GroupBordersVisible = false;
-            LCG_Invoice.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_GvProductList, ItemForDocumentNumber, ItemForCurrAccCode, splitterItem1, splitterItem2, emptySpaceItem3, emptySpaceItem4, LCG_InfoInstallment, LCG_InfoPayment, LCI_CurrAccDesc, ItemForStoreCode, ItemForCustomsDocumentNumber, ItemForDocumentDate, ItemForDocumentTime, ItemForToWarehouseCode, ItemForWarehouseCode, ItemForDescription, ItemForIsReturn, lCI_printCount, lCI_IsSent, emptySpaceItem2, LCG_Installment, LCI_CashRegCode, LCI_LoyaltyEarn });
+            LCG_Invoice.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_GvProductList, ItemForDocumentNumber, ItemForCurrAccCode, splitterItem1, splitterItem2, emptySpaceItem3, emptySpaceItem4, LCG_InfoInstallment, LCG_InfoPayment, LCI_CurrAccDesc, ItemForStoreCode, ItemForCustomsDocumentNumber, ItemForDocumentDate, ItemForDocumentTime, ItemForToWarehouseCode, ItemForWarehouseCode, ItemForDescription, ItemForIsReturn, lCI_printCount, lCI_IsSent, emptySpaceItem2, LCG_Installment, LCI_CashRegCode, LCI_LoyaltyEarn, ItemForDeliveryDate });
             LCG_Invoice.Location = new Point(0, 0);
             LCG_Invoice.Name = "LCG_Invoice";
             LCG_Invoice.Size = new Size(1678, 454);
@@ -1763,9 +1784,9 @@ namespace Foxoft
             // LCI_GvProductList
             // 
             LCI_GvProductList.Control = gC_InvoiceLine;
-            LCI_GvProductList.Location = new Point(0, 240);
+            LCI_GvProductList.Location = new Point(0, 264);
             LCI_GvProductList.Name = "LCI_GvProductList";
-            LCI_GvProductList.Size = new Size(1678, 110);
+            LCI_GvProductList.Size = new Size(1678, 86);
             LCI_GvProductList.TextVisible = false;
             // 
             // ItemForDocumentNumber
@@ -2025,7 +2046,7 @@ namespace Foxoft
             ItemForDescription.Control = memoEdit_Desc;
             ItemForDescription.Location = new Point(0, 72);
             ItemForDescription.Name = "ItemForDescription";
-            ItemForDescription.Size = new Size(838, 48);
+            ItemForDescription.Size = new Size(838, 72);
             ItemForDescription.TextSize = new Size(107, 13);
             // 
             // ItemForIsReturn
@@ -2064,7 +2085,7 @@ namespace Foxoft
             // 
             LCG_Installment.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             LCG_Installment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_InstallmentPlan, LCI_InstallmentDate, LCI_InstallmentGarantors, LCI_InstallmentCommission, LCI_InterestRate });
-            LCG_Installment.Location = new Point(0, 120);
+            LCG_Installment.Location = new Point(0, 144);
             LCG_Installment.Name = "LCG_Installment";
             LCG_Installment.Size = new Size(1678, 120);
             LCG_Installment.Text = Resources.FormInvoice_Group_Installment;
@@ -2136,6 +2157,14 @@ namespace Foxoft
             LCI_LoyaltyEarn.Text = "Qazanilan Bonus";
             LCI_LoyaltyEarn.TextSize = new Size(107, 13);
             // 
+            // ItemForDeliveryDate
+            // 
+            ItemForDeliveryDate.Control = DeliveryDateDateEdit;
+            ItemForDeliveryDate.Location = new Point(838, 120);
+            ItemForDeliveryDate.Name = "ItemForDeliveryDate";
+            ItemForDeliveryDate.Size = new Size(840, 24);
+            ItemForDeliveryDate.TextSize = new Size(107, 13);
+            // 
             // svgImageCollection1
             // 
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
@@ -2178,6 +2207,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)DeliveryDateDateEdit.Properties.CalendarTimeProperties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DeliveryDateDateEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)txt_LoyaltyEarn.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
@@ -2191,7 +2223,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gV_InstallmentGarantor).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_InstallmentGarantorDelete).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Installment_Commission.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)LUE_InstallmentPlan.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsSent.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsReturn.Properties).EndInit();
@@ -2268,6 +2299,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)LCI_InterestRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_CashRegCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_LoyaltyEarn).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDeliveryDate).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
@@ -2485,5 +2517,7 @@ namespace Foxoft
         private BarButtonItem bBI_CampaignDelete;
         private BarButtonItem BBI_Previous;
         private BarButtonItem BBI_Next;
+        private DevExpress.XtraEditors.DateEdit DeliveryDateDateEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForDeliveryDate;
     }
 }

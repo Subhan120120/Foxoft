@@ -1668,6 +1668,9 @@
   <data name="Entity_InvoiceHeader_TotalNetAmount" xml:space="preserve">
     <value>Total</value>
   </data>
+  <data name="Entity_InvoiceHeader_DeliveryDate" xml:space="preserve">
+    <value>Delivery Date</value>
+  </data>
   <data name="Entity_ProductDiscount" xml:space="preserve">
     <value>Product Discount</value>
   </data>

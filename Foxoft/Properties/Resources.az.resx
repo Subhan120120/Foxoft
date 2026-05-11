@@ -1668,6 +1668,9 @@
   <data name="Entity_InvoiceHeader_TotalNetAmount" xml:space="preserve">
     <value>Tutar</value>
   </data>
+  <data name="Entity_InvoiceHeader_DeliveryDate" xml:space="preserve">
+    <value>Çatdırılma Tarixi</value>
+  </data>
   <data name="Entity_ProductDiscount" xml:space="preserve">
     <value>Məhsul Endirimi</value>
   </data>

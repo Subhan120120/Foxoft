@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -146,6 +146,10 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsMainTF), ResourceType = typeof(Resources))]
         public bool IsMainTF { get; set; }
+
+        [Column(TypeName = "date")]
+        [Display(Name = nameof(Resources.Entity_InvoiceHeader_DeliveryDate), ResourceType = typeof(Resources))]
+        public DateTime? DeliveryDate { get; set; }
 
         [NotMapped]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_CurrAccDesc), ResourceType = typeof(Resources))]
