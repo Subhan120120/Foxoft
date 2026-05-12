@@ -1371,6 +1371,33 @@ namespace Foxoft
             if (new[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && trInvoiceHeader.TrInstallment is not null)
                 SaveInstallmentGarantors();
 
+            // Send WhatsApp product purchase notification for IS process
+            if (new[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && !string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode))
+            {
+                string phoneNum = trInvoiceHeader.DcCurrAcc?.PhoneNum;
+                if (string.IsNullOrEmpty(phoneNum))
+                {
+                    using var tempDb = new subContext();
+                    phoneNum = tempDb.DcCurrAccs
+                        .Where(c => c.CurrAccCode == trInvoiceHeader.CurrAccCode)
+                        .Select(c => c.PhoneNum)
+                        .FirstOrDefault();
+                }
+
+                if (!string.IsNullOrEmpty(phoneNum))
+                {
+                    _ = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            var notifService = new AppCode.Service.NotificationService();
+                            await notifService.SendProductPurchaseNotificationAsync(trInvoiceHeader.CurrAccCode, phoneNum);
+                        }
+                        catch (Exception ex) { System.Diagnostics.Debug.Print($"ProductPurchase notification error: {ex.Message}"); }
+                    });
+                }
+            }
+
             SaveSession();
             Tag = btnEdit_DocNum.EditValue;
 

@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.AppCode.Service;
@@ -485,6 +485,8 @@ namespace Foxoft
         private decimal TotalPaidLoc()
             => trPaymentLineCash.PaymentLoc + trPaymentLineCashless.PaymentLoc + trPaymentLineBonus.PaymentLoc;
 
+        public decimal ConfirmedPaymentLoc { get; private set; }
+
         private void SavePaymentAsync()
         {
             dxErrorProvider1.ClearErrors();
@@ -508,6 +510,7 @@ namespace Foxoft
 
             }
 
+            ConfirmedPaymentLoc = TotalPaidLoc();
             DialogResult = DialogResult.OK;
         }
 

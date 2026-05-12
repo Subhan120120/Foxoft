@@ -118,6 +118,7 @@ namespace Foxoft.Models
         public DbSet<TrWhatsAppMessageLog> TrWhatsAppMessageLogs { get; set; }
         public DbSet<TrCredit> TrCredits { get; set; }
         public DbSet<DcShortcut> DcShortcuts { get; set; }
+        public DbSet<DcNotificationSetting> DcNotificationSettings { get; set; }
 
         //CRM Model
         public DbSet<TrCrmActivity> TrCrmActivities { get; set; }
@@ -716,6 +717,16 @@ namespace Foxoft.Models
                 new DcWhatsAppProviderSetting { Id = 1, ServerUrl = "https://evolution.tokla.az", InstanceName = "tokla", ApiKey = "2fdqo0JtF6dnG23N7JbnZ9wMoVMRvRkh" }
             );
 
+            // --- DcNotificationSetting Seed Data ---
+            modelBuilder.Entity<DcNotificationSetting>().HasData(
+                new DcNotificationSetting { Id = 1, NotificationType = "InstallmentReminder", IsEnabled = false, DaysBefore = 2, MessageTemplate = "Hörmətli müştəri! {StoreDesc} mağazasından götürdüyünüz məhsulun aylıq ödənişinə {day} gün qalıb. Əlaqə nömrəsi: {StorePhone}" },
+                new DcNotificationSetting { Id = 2, NotificationType = "InstallmentDueDay", IsEnabled = false, MessageTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun ödənişinin bu gün vaxtıdır. Xahiş edirik, ödənişinizi vaxtında ödəyəsiniz. Əlaqə nömrəsi: {StorePhone}" },
+                new DcNotificationSetting { Id = 3, NotificationType = "ProductPurchase", IsEnabled = false, MessageTemplate = "Yeni cihazınız xeyirli olsun. Bizi seçdiyiniz üçün təşəkkür edirik." },
+                new DcNotificationSetting { Id = 4, NotificationType = "CreditClosed", IsEnabled = false, MessageTemplate = "Hörmətli müştəri, sizin kreditiniz tam bağlandı. Bizi seçdiyiniz üçün təşəkkürlər! {StorePhone}" },
+                new DcNotificationSetting { Id = 5, NotificationType = "CreditPayment", IsEnabled = false, MessageTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun {paid} AZN aylıq krediti ödəndi. Qalıq borcunuz {debit} AZN-dir." },
+                new DcNotificationSetting { Id = 6, NotificationType = "Birthday", IsEnabled = false, MessageTemplate = "Dəyərli müştərimiz, sizi ad günü münasibətilə {StoreDesc} adından təbrik edirik." }
+            );
+
             // --- DcShortcut Seed Data ---
             modelBuilder.Entity<DcShortcut>().HasData(
                 // UcRetailSale buttons
@@ -971,7 +982,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PaymentMethodList", ClaimDesc = "Ödəniş Üsulları Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "PaymentPlanList", ClaimDesc = "Ödəniş Planları Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "ChangeExchangeRate", ClaimDesc = "Məzənnə Kursu Dəyişmə", ClaimTypeId = 1, CategoryId = 2 },
-                new DcClaim { ClaimCode = "WhatsAppMessageLog", ClaimDesc = "WhatsApp Mesaj Jurnalı", ClaimTypeId = 1, CategoryId = 15 }
+                new DcClaim { ClaimCode = "WhatsAppMessageLog", ClaimDesc = "WhatsApp Mesaj Jurnalı", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "NotificationSettings", ClaimDesc = "Bildiriş Tənzimləmələri", ClaimTypeId = 1, CategoryId = 15 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(

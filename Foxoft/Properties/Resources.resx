@@ -4013,4 +4013,55 @@ To delete, cancel the receipt!</value>
   <data name="Form_WhatsAppMessageLog_Summary_Total_Title" xml:space="preserve">
     <value>Total Sent</value>
   </data>
+  <data name="Form_NotificationSettings" xml:space="preserve">
+    <value>Notification Settings</value>
+  </data>
+  <data name="Form_NotificationSettings_NotificationType" xml:space="preserve">
+    <value>Notification Type</value>
+  </data>
+  <data name="Form_NotificationSettings_IsEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Form_NotificationSettings_DaysBefore" xml:space="preserve">
+    <value>Days before</value>
+  </data>
+  <data name="Form_NotificationSettings_MessageTemplate" xml:space="preserve">
+    <value>SMS text</value>
+  </data>
+  <data name="Form_NotificationSettings_InstallmentReminder" xml:space="preserve">
+    <value>Pre-installment reminder</value>
+  </data>
+  <data name="Form_NotificationSettings_InstallmentDueDay" xml:space="preserve">
+    <value>Due day notification</value>
+  </data>
+  <data name="Form_NotificationSettings_ProductPurchase" xml:space="preserve">
+    <value>Product purchase notification</value>
+  </data>
+  <data name="Form_NotificationSettings_CreditClosed" xml:space="preserve">
+    <value>Credit closed notification</value>
+  </data>
+  <data name="Form_NotificationSettings_CreditPayment" xml:space="preserve">
+    <value>Credit payment notification</value>
+  </data>
+  <data name="Form_NotificationSettings_Birthday" xml:space="preserve">
+    <value>Birthday notification</value>
+  </data>
+  <data name="Form_NotificationSettings_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Form_NotificationSettings_SendNow" xml:space="preserve">
+    <value>Send notifications</value>
+  </data>
+  <data name="Form_NotificationSettings_SendSuccess" xml:space="preserve">
+    <value>Notifications sent successfully</value>
+  </data>
+  <data name="Form_NotificationSettings_SendFailed" xml:space="preserve">
+    <value>Failed to send notification: {0}</value>
+  </data>
+  <data name="Form_NotificationSettings_Sending" xml:space="preserve">
+    <value>Sending notifications...</value>
+  </data>
+  <data name="Form_NotificationSettings_SendResult" xml:space="preserve">
+    <value>Sent: {0}, Failed: {1}</value>
+  </data>
 </root>

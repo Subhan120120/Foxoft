@@ -547,7 +547,61 @@ namespace Foxoft
             else
             {
                 if (formPayment.ShowDialog(this) == DialogResult.OK)
+                {
+                    decimal confirmedPay = formPayment.ConfirmedPaymentLoc;
+
                     ReloadData();
+
+                    // Send WhatsApp payment notification
+                    _ = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            // Recalculate remaining amount from DB
+                            using var tempDb = new subContext();
+                            var installment = tempDb.TrInstallments.FirstOrDefault(i => i.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
+                            if (installment != null)
+                            {
+                                var notifService = new AppCode.Service.NotificationService();
+                                // Get remaining: we use the paid amount and query the remaining from the DB
+                                decimal remaining = 0;
+                                // Find remaining from grid data after reload - use DB query instead
+                                var adoMethods = new AdoMethods();
+                                string query = @"
+                                    SELECT 
+                                        CASE WHEN COALESCE(ia.InstallmentAmount, 0) - COALESCE(ia.InstallmentPaid, 0) < 0 THEN 0
+                                             ELSE COALESCE(ia.InstallmentAmount, 0) - COALESCE(ia.InstallmentPaid, 0) END AS RemainingAmount
+                                    FROM (
+                                        SELECT 
+                                            (SUM(il.NetAmountLoc) + i.Commission) + COALESCE(SUM(ril.NetAmountLoc), 0)
+                                              - COALESCE(dps.DownPaymentSum, 0) AS InstallmentAmount,
+                                            COALESCE(psum.InstallmentPaymentSum, 0) AS InstallmentPaid
+                                        FROM TrInstallments i
+                                        JOIN TrInvoiceHeaders ih ON i.InvoiceHeaderId = ih.InvoiceHeaderId
+                                        LEFT JOIN TrInvoiceLines il ON il.InvoiceHeaderId = ih.InvoiceHeaderId
+                                        LEFT JOIN (SELECT ph2.InvoiceHeaderId, SUM(pl2.PaymentLoc) AS InstallmentPaymentSum
+                                                   FROM TrPaymentLines pl2 JOIN TrPaymentHeaders ph2 ON pl2.PaymentHeaderId = ph2.PaymentHeaderId
+                                                   WHERE ph2.PaymentKindId = 3 GROUP BY ph2.InvoiceHeaderId) psum ON i.InvoiceHeaderId = psum.InvoiceHeaderId
+                                        LEFT JOIN (SELECT i2.InvoiceHeaderId, SUM(pl3.PaymentLoc) AS DownPaymentSum
+                                                   FROM TrInstallments i2 JOIN TrInvoiceHeaders ih2 ON ih2.InvoiceHeaderId = i2.InvoiceHeaderId
+                                                   JOIN TrPaymentHeaders ph3 ON ih2.InvoiceHeaderId = ph3.InvoiceHeaderId AND ih2.CurrAccCode = ph3.CurrAccCode
+                                                   JOIN TrPaymentLines pl3 ON ph3.PaymentHeaderId = pl3.PaymentHeaderId
+                                                   WHERE ph3.PaymentKindId != 3 GROUP BY i2.InvoiceHeaderId) dps ON i.InvoiceHeaderId = dps.InvoiceHeaderId
+                                        LEFT JOIN TrInvoiceHeaders rih ON rih.RelatedInvoiceId = i.InvoiceHeaderId AND rih.IsReturn = 1
+                                        LEFT JOIN TrInvoiceLines ril ON ril.InvoiceHeaderId = rih.InvoiceHeaderId AND ril.RelatedLineId = il.InvoiceLineId
+                                        WHERE i.InvoiceHeaderId = @InvoiceHeaderId
+                                        GROUP BY i.Commission, psum.InstallmentPaymentSum, dps.DownPaymentSum
+                                    ) ia";
+                                var dt = adoMethods.SqlGetDt(query, new[] { new Microsoft.Data.SqlClient.SqlParameter("@InvoiceHeaderId", trInvoiceHeader.InvoiceHeaderId) });
+                                if (dt.Rows.Count > 0 && dt.Rows[0]["RemainingAmount"] != DBNull.Value)
+                                    remaining = Convert.ToDecimal(dt.Rows[0]["RemainingAmount"]);
+
+                                await notifService.SendPaymentNotificationAsync(trInvoiceHeader.InvoiceHeaderId, confirmedPay, remaining);
+                            }
+                        }
+                        catch (Exception ex) { System.Diagnostics.Debug.Print($"CreditPayment notification error: {ex.Message}"); }
+                    });
+                }
             }
         }
 

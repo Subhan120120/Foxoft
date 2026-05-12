@@ -58,6 +58,30 @@ namespace Foxoft.AppCode
             return body;
         }
 
+        public async Task<string> SendTextAsync(string to, string message, CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(to)) throw new ArgumentNullException(nameof(to));
+            if (string.IsNullOrWhiteSpace(message)) throw new ArgumentNullException(nameof(message));
+
+            string url = $"{_serverUrl}/message/sendText/{_instanceName}";
+
+            var payload = new
+            {
+                number = to,
+                text = message
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+
+            using var resp = await _http.PostAsync(url, content, ct);
+            var body = await resp.Content.ReadAsStringAsync();
+
+            if (!resp.IsSuccessStatusCode)
+                throw new HttpRequestException($"Send failed ({(int)resp.StatusCode}): {body}");
+
+            return body;
+        }
+
         private static async Task<byte[]> ReadAllBytesAsync(Stream stream, CancellationToken ct)
         {
             using var ms = new MemoryStream();

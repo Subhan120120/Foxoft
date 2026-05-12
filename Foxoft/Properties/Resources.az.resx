@@ -4013,4 +4013,55 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_WhatsAppMessageLog_Summary_Total_Title" xml:space="preserve">
     <value>Cəmi Göndərilən</value>
   </data>
+  <data name="Form_NotificationSettings" xml:space="preserve">
+    <value>Bildiriş tənzimləmələri</value>
+  </data>
+  <data name="Form_NotificationSettings_NotificationType" xml:space="preserve">
+    <value>Bildiriş növü</value>
+  </data>
+  <data name="Form_NotificationSettings_IsEnabled" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="Form_NotificationSettings_DaysBefore" xml:space="preserve">
+    <value>Gün qalmış</value>
+  </data>
+  <data name="Form_NotificationSettings_MessageTemplate" xml:space="preserve">
+    <value>SMS mətni</value>
+  </data>
+  <data name="Form_NotificationSettings_InstallmentReminder" xml:space="preserve">
+    <value>Kreditdə əvvəl bildiriş</value>
+  </data>
+  <data name="Form_NotificationSettings_InstallmentDueDay" xml:space="preserve">
+    <value>Ödəniş günü bildiriş</value>
+  </data>
+  <data name="Form_NotificationSettings_ProductPurchase" xml:space="preserve">
+    <value>Məhsul alarkən bildiriş</value>
+  </data>
+  <data name="Form_NotificationSettings_CreditClosed" xml:space="preserve">
+    <value>Kredit bağlandığı zaman</value>
+  </data>
+  <data name="Form_NotificationSettings_CreditPayment" xml:space="preserve">
+    <value>Kredit ödənişi zaman</value>
+  </data>
+  <data name="Form_NotificationSettings_Birthday" xml:space="preserve">
+    <value>Doğum günü bildiriş</value>
+  </data>
+  <data name="Form_NotificationSettings_Save" xml:space="preserve">
+    <value>Saxla</value>
+  </data>
+  <data name="Form_NotificationSettings_SendNow" xml:space="preserve">
+    <value>Bildirişləri göndər</value>
+  </data>
+  <data name="Form_NotificationSettings_SendSuccess" xml:space="preserve">
+    <value>Bildirişlər uğurla göndərildi</value>
+  </data>
+  <data name="Form_NotificationSettings_SendFailed" xml:space="preserve">
+    <value>Bildiriş göndərilmədi: {0}</value>
+  </data>
+  <data name="Form_NotificationSettings_Sending" xml:space="preserve">
+    <value>Bildirişlər göndərilir...</value>
+  </data>
+  <data name="Form_NotificationSettings_SendResult" xml:space="preserve">
+    <value>Göndərildi: {0}, Uğursuz: {1}</value>
+  </data>
 </root>
