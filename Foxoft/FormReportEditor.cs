@@ -1,4 +1,4 @@
-﻿using DevExpress.Mvvm.Native;
+using DevExpress.Mvvm.Native;
 using DevExpress.Xpo.Helpers;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -300,19 +300,17 @@ namespace Foxoft
         {
             AdoMethods adoMethods = new();
 
-            DcReport? clonedEntity = CustomExtensions.Clone(dcReport);
-
             SqlParameter[] sqlParameters;
             string query = reportClass.ApplyFilter(
-                clonedEntity,
-                clonedEntity.ReportQuery,
+                dcReport,
+                dcReport.ReportQuery,
                 null,
                 out sqlParameters,
                 1);
 
             DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // check query is correct 
 
-            ICollection<TrReportSubQuery> subQueries = clonedEntity.TrReportSubQueries;
+            ICollection<TrReportSubQuery> subQueries = dcReport.TrReportSubQueries;
 
             TrReportSubQueryRelationColumn[] entities =
                 relationColumnBindingSource.List
@@ -326,16 +324,16 @@ namespace Foxoft
                 subQuery.TrReportSubQueryRelationColumns =
                     entities.Where(x => x.SubQueryId == subQuery.SubQueryId).ToList();
 
-                subQuery.SubQueryText = reportClass.ApplyFilter(
+                string subQueryText = reportClass.ApplyFilter(
                     dcReport,
                     subQuery.SubQueryText,
                     null,
                     out sqlParameters1,
                     1);
 
-                subQuery.SubQueryText = this.reportClass.AddRelation(query, subQuery);
+                subQueryText = this.reportClass.AddRelation(query, subQuery);
 
-                DataTable dt2 = adoMethods.SqlGetDt(subQuery.SubQueryText, sqlParameters1); // check sub query
+                DataTable dt2 = adoMethods.SqlGetDt(subQueryText, sqlParameters1); // check sub query
             }
         }
 
