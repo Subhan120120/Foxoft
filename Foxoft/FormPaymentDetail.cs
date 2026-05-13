@@ -159,7 +159,12 @@ namespace Foxoft
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            SelectDocNum();
+            if (e.Button.Kind == ButtonPredefines.Left)
+                NavigateToAdjacentPayment(isPrevious: true);
+            else if (e.Button.Kind == ButtonPredefines.Right)
+                NavigateToAdjacentPayment(isPrevious: false);
+            else
+                SelectDocNum();
         }
 
         private void CurrAccCodeButtonEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -737,6 +742,59 @@ namespace Foxoft
                 LCG_Payment.Enabled = false;
             else
                 LCG_Payment.Enabled = true;
+        }
+
+        private void BBI_Previous_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            NavigateToAdjacentPayment(isPrevious: true);
+        }
+
+        private void BBI_Next_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            NavigateToAdjacentPayment(isPrevious: false);
+        }
+
+        private void NavigateToAdjacentPayment(bool isPrevious)
+        {
+            if (trPaymentHeader == null)
+                return;
+
+            using var ctx = new subContext();
+
+            TrPaymentHeader adjacent;
+
+            if (isPrevious)
+            {
+                adjacent = ctx.TrPaymentHeaders
+                    .Where(x => x.ProcessCode == "PA" &&
+                        (x.DocumentDate < trPaymentHeader.DocumentDate ||
+                         (x.DocumentDate == trPaymentHeader.DocumentDate && x.DocumentTime < trPaymentHeader.DocumentTime) ||
+                         (x.DocumentDate == trPaymentHeader.DocumentDate && x.DocumentTime == trPaymentHeader.DocumentTime && x.PaymentHeaderId.CompareTo(trPaymentHeader.PaymentHeaderId) < 0)))
+                    .OrderByDescending(x => x.DocumentDate)
+                    .ThenByDescending(x => x.DocumentTime)
+                    .ThenByDescending(x => x.PaymentHeaderId)
+                    .FirstOrDefault();
+            }
+            else
+            {
+                adjacent = ctx.TrPaymentHeaders
+                    .Where(x => x.ProcessCode == "PA" &&
+                        (x.DocumentDate > trPaymentHeader.DocumentDate ||
+                         (x.DocumentDate == trPaymentHeader.DocumentDate && x.DocumentTime > trPaymentHeader.DocumentTime) ||
+                         (x.DocumentDate == trPaymentHeader.DocumentDate && x.DocumentTime == trPaymentHeader.DocumentTime && x.PaymentHeaderId.CompareTo(trPaymentHeader.PaymentHeaderId) > 0)))
+                    .OrderBy(x => x.DocumentDate)
+                    .ThenBy(x => x.DocumentTime)
+                    .ThenBy(x => x.PaymentHeaderId)
+                    .FirstOrDefault();
+            }
+
+            if (adjacent == null)
+            {
+                XtraMessageBox.Show(Resources.Common_NoMoreRecords, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            LoadPayment(adjacent.PaymentHeaderId);
         }
     }
 }

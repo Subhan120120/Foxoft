@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4063,5 +4063,26 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Form_NotificationSettings_SendResult" xml:space="preserve">
     <value>Sent: {0}, Failed: {1}</value>
+  </data>
+  <data name="Entity_TrWhatsAppMessageLog_IsSuccessful" xml:space="preserve">
+    <value>Successful</value>
+  </data>
+  <data name="Common_InsufficientBalance" xml:space="preserve">
+    <value>Insufficient balance</value>
+  </data>
+  <data name="Common_WhatsAppSendError" xml:space="preserve">
+    <value>Failed to send WhatsApp message: {0}</value>
+  </data>
+  <data name="Common_Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Common_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Common_Navigate" xml:space="preserve">
+    <value>Navigate</value>
+  </data>
+  <data name="Common_NoMoreRecords" xml:space="preserve">
+    <value>There are no more records.</value>
   </data>
 </root>

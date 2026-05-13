@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3989,6 +3989,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="FormInvoice_NoMoreInvoice" xml:space="preserve">
     <value>Daha qaimə yoxdur.</value>
   </data>
+
   <data name="Form_WhatsAppMessageLog_Summary_Balance_Subtitle" xml:space="preserve">
     <value>Mövcud Balans</value>
   </data>
@@ -4063,5 +4064,26 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Form_NotificationSettings_SendResult" xml:space="preserve">
     <value>Göndərildi: {0}, Uğursuz: {1}</value>
+  </data>
+  <data name="Entity_TrWhatsAppMessageLog_IsSuccessful" xml:space="preserve">
+    <value>Uğurludur</value>
+  </data>
+  <data name="Common_InsufficientBalance" xml:space="preserve">
+    <value>Balansınızda kifayət qədər vəsait yoxdur</value>
+  </data>
+  <data name="Common_WhatsAppSendError" xml:space="preserve">
+    <value>WhatsApp mesajı göndərilərkən xəta baş verdi: {0}</value>
+  </data>
+  <data name="Common_Previous" xml:space="preserve">
+    <value>Əvvəlki</value>
+  </data>
+  <data name="Common_Next" xml:space="preserve">
+    <value>Sonrakı</value>
+  </data>
+  <data name="Common_Navigate" xml:space="preserve">
+    <value>Naviqasiya</value>
+  </data>
+  <data name="Common_NoMoreRecords" xml:space="preserve">
+    <value>Daha qeyd yoxdur.</value>
   </data>
 </root>

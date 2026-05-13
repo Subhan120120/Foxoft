@@ -370,9 +370,11 @@ namespace Foxoft
             LUE_ProductTypeCode.Properties.Appearance.Options.UseTextOptions = true;
             LUE_ProductTypeCode.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
             LUE_ProductTypeCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_ProductTypeCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ProductTypeCode", Resources.Entity_ProductType_Code), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ProductTypeDesc", Resources.Entity_ProductType_Desc) });
             LUE_ProductTypeCode.Properties.DisplayMember = "ProductTypeDesc";
             LUE_ProductTypeCode.Properties.NullText = "";
             LUE_ProductTypeCode.Properties.ValueMember = "ProductTypeCode";
+            LUE_ProductTypeCode.Properties.ShowHeader = false;
             LUE_ProductTypeCode.Size = new Size(108, 20);
             LUE_ProductTypeCode.StyleController = dataLayoutControl1;
             LUE_ProductTypeCode.TabIndex = 2;

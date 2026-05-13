@@ -1,4 +1,5 @@
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,7 @@ namespace Foxoft.AppCode.Service
             string message = ApplyPlaceholders(setting.MessageTemplate, currAcc, store, null);
             message = message.Replace("{paid}", paid.ToString("N2"))
                              .Replace("{debit}", remaining.ToString("N2"));
+
 
             await SendAndLogAsync(apiSetting, currAcc.PhoneNum, message, "CreditPayment",
                                   currAcc.CurrAccCode, invoiceHeaderId);
@@ -365,12 +367,8 @@ namespace Foxoft.AppCode.Service
         {
             string formattedNumber = phoneNum.Trim().Replace("+", "").Replace(" ", "");
 
-            using var client = new EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
-            await client.SendTextAsync(formattedNumber, message);
-
-            // Log the message
             using var db = new subContext();
-            db.TrWhatsAppMessageLogs.Add(new TrWhatsAppMessageLog
+            var logEntry = new TrWhatsAppMessageLog
             {
                 WhatsAppMessageLogId = Guid.NewGuid(),
                 DocumentHeaderId = documentHeaderId,
@@ -379,18 +377,51 @@ namespace Foxoft.AppCode.Service
                 Message = message,
                 Sender = Authorization.CurrAccCode,
                 CurrAccCode = currAccCode
-            });
-
-            db.TrCredits.Add(new TrCredit
+            };
+            decimal currentBalance = db.TrCredits.Sum(x => (decimal?)x.Amount) ?? 0m;
+            if (currentBalance < 0.05m)
             {
-                CreditId = Guid.NewGuid(),
-                TransactionType = CreditTransactionType.Usage,
-                Amount = -0.05m,
-                ServiceType = "WhatsApp",
-                Description = $"WhatsApp {messageType} - {formattedNumber}"
-            });
+                logEntry.IsSuccessful = false;
+                logEntry.Message = Resources.Common_InsufficientBalance;
 
-            db.SaveChanges();
+                db.TrWhatsAppMessageLogs.Add(logEntry);
+                db.SaveChanges();
+                return;
+            }
+
+            try
+            {
+                using var client = new EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
+                await client.SendTextAsync(formattedNumber, message);
+
+                logEntry.IsSuccessful = true;
+
+                db.TrCredits.Add(new TrCredit
+                {
+                    CreditId = Guid.NewGuid(),
+                    TransactionType = CreditTransactionType.Usage,
+                    Amount = -0.05m,
+                    ServiceType = "WhatsApp",
+                    Description = $"WhatsApp {messageType} - {formattedNumber}"
+                });
+
+                db.TrWhatsAppMessageLogs.Add(logEntry);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                var mainForm = System.Windows.Forms.Application.OpenForms.OfType<System.Windows.Forms.Form>().FirstOrDefault();
+                if (mainForm != null)
+                {
+                    mainForm.Invoke((Action)(() =>
+                    {
+                        var alertControl = new DevExpress.XtraBars.Alerter.AlertControl();
+                        alertControl.AutoFormDelay = 4000;
+                        alertControl.FormDisplaySpeed = DevExpress.XtraBars.Alerter.AlertFormDisplaySpeed.Fast;
+                        alertControl.Show(mainForm, Resources.Common_ErrorTitle, string.Format(Resources.Common_WhatsAppSendError, ex.Message));
+                    }));
+                }
+            }
         }
     }
 }

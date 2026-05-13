@@ -37,6 +37,7 @@ namespace Foxoft
             colMessage = new DevExpress.XtraGrid.Columns.GridColumn();
             colSender = new DevExpress.XtraGrid.Columns.GridColumn();
             colSenderName = new DevExpress.XtraGrid.Columns.GridColumn();
+            colIsSuccessful = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
@@ -106,7 +107,7 @@ namespace Foxoft
             // 
             // gV_WhatsAppMessageLogList
             // 
-            gV_WhatsAppMessageLogList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colWhatsAppMessageLogId, colDocumentHeaderId, colCreatedDate, colCreatedUserName, colCurrAccCode, colCurrAccDesc, colReceiverPhoneNumber, colMessageType, colMessage, colSender, colSenderName });
+            gV_WhatsAppMessageLogList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colWhatsAppMessageLogId, colDocumentHeaderId, colCreatedDate, colCreatedUserName, colCurrAccCode, colCurrAccDesc, colReceiverPhoneNumber, colMessageType, colMessage, colIsSuccessful, colSender, colSenderName });
             gV_WhatsAppMessageLogList.GridControl = gC_WhatsAppMessageLogList;
             gV_WhatsAppMessageLogList.Name = "gV_WhatsAppMessageLogList";
             gV_WhatsAppMessageLogList.OptionsBehavior.Editable = false;
@@ -177,6 +178,13 @@ namespace Foxoft
             colMessage.Name = "colMessage";
             colMessage.Visible = true;
             colMessage.VisibleIndex = 6;
+            // 
+            // colIsSuccessful
+            // 
+            colIsSuccessful.FieldName = "IsSuccessful";
+            colIsSuccessful.Name = "colIsSuccessful";
+            colIsSuccessful.Visible = true;
+            colIsSuccessful.VisibleIndex = 7;
             // 
             // colSender
             // 
@@ -553,6 +561,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colSenderName;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn colIsSuccessful;
         private SvgImageCollection svgImageCollection1;
 
         private DevExpress.XtraEditors.PanelControl panelSummary;

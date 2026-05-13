@@ -33,6 +33,16 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPaymentDetail));
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
             bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
@@ -43,12 +53,15 @@ namespace Foxoft
             BSI_Reports = new DevExpress.XtraBars.BarSubItem();
             BBI_EditPayment = new DevExpress.XtraBars.BarButtonItem();
             bBI_reportPreview = new DevExpress.XtraBars.BarButtonItem();
+            BBI_Previous = new DevExpress.XtraBars.BarButtonItem();
+            BBI_Next = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Report = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            RPG_Navigate = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
@@ -136,9 +149,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Reports, BBI_EditPayment, bBI_reportPreview });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Reports, BBI_EditPayment, bBI_reportPreview, BBI_Previous, BBI_Next });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 18;
+            ribbonControl1.MaxItemId = 20;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(899, 158);
@@ -217,9 +230,25 @@ namespace Foxoft
             bBI_reportPreview.Name = "bBI_reportPreview";
             bBI_reportPreview.ItemClick += bBI_reportPreview_ItemClick;
             // 
+            // BBI_Previous
+            // 
+            BBI_Previous.Caption = Resources.Common_Previous;
+            BBI_Previous.Id = 18;
+            BBI_Previous.ImageOptions.ImageUri.Uri = "Previous";
+            BBI_Previous.Name = "BBI_Previous";
+            BBI_Previous.ItemClick += BBI_Previous_ItemClick;
+            // 
+            // BBI_Next
+            // 
+            BBI_Next.Caption = Resources.Common_Next;
+            BBI_Next.Id = 19;
+            BBI_Next.ImageOptions.ImageUri.Uri = "Next";
+            BBI_Next.Name = "BBI_Next";
+            BBI_Next.ItemClick += BBI_Next_ItemClick;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup4, ribbonPageGroup2, RPG_Report, ribbonPageGroup3 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, RPG_Navigate, ribbonPageGroup4, ribbonPageGroup2, RPG_Report, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.Form_PaymentDetail_RibbonPage_Main;
             // 
@@ -257,6 +286,13 @@ namespace Foxoft
             ribbonPageGroup4.ItemLinks.Add(BBI_EditPayment);
             ribbonPageGroup4.Name = "ribbonPageGroup4";
             ribbonPageGroup4.Text = Resources.Form_PaymentDetail_RibbonGroup_Control;
+            // 
+            // RPG_Navigate
+            // 
+            RPG_Navigate.ItemLinks.Add(BBI_Previous);
+            RPG_Navigate.ItemLinks.Add(BBI_Next);
+            RPG_Navigate.Name = "RPG_Navigate";
+            RPG_Navigate.Text = Resources.Common_Navigate;
             // 
             // ribbonStatusBar
             // 
@@ -590,7 +626,7 @@ namespace Foxoft
             btnEdit_DocNum.MenuManager = ribbonControl1;
             btnEdit_DocNum.Name = "btnEdit_DocNum";
             btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Left, Resources.Common_Previous, -1, true, true, true, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Right, Resources.Common_Next, -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton() });
             btnEdit_DocNum.Size = new Size(300, 20);
             btnEdit_DocNum.StyleController = dataLayoutControl1;
             btnEdit_DocNum.TabIndex = 0;
@@ -813,5 +849,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansAfter;
         private DevExpress.XtraBars.BarButtonItem bBI_reportPreview;
         private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
+        private DevExpress.XtraBars.BarButtonItem BBI_Previous;
+        private DevExpress.XtraBars.BarButtonItem BBI_Next;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Navigate;
     }
 }

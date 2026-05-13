@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
@@ -20,6 +21,9 @@ namespace Foxoft.Models
 
         [StringLength(1000)]
         public string? Message { get; set; }
+
+        [Display(Name = nameof(Resources.Entity_TrWhatsAppMessageLog_IsSuccessful), ResourceType = typeof(Resources))]
+        public bool IsSuccessful { get; set; }
 
         [StringLength(30)]
         public string? Sender { get; set; }

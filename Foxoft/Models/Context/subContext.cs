@@ -443,9 +443,16 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrCredit>(entity =>
             {
+                entity.ToTable(tb => tb.UseSqlOutputClause(false));
+
                 entity.Property(x => x.TransactionType)
                       .HasConversion<byte>()
                       .HasColumnType("tinyint");
+            });
+
+            modelBuilder.Entity<TrWhatsAppMessageLog>(entity =>
+            {
+                entity.ToTable(tb => tb.UseSqlOutputClause(false));
             });
 
 

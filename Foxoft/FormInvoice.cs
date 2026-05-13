@@ -1295,7 +1295,6 @@ namespace Foxoft
             {
                 MessageBox.Show(ex.ToString());
             }
-
         }
 
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
@@ -1815,7 +1814,7 @@ namespace Foxoft
             var apiSetting = efMethods.SelectEntityById<DcWhatsAppProviderSetting>(1);
             if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl) || string.IsNullOrEmpty(apiSetting.InstanceName) || string.IsNullOrEmpty(apiSetting.ApiKey))
             {
-                XtraMessageBox.Show(Properties.Resources.Payment_ApiSettingsIncomplete);
+                XtraMessageBox.Show(Resources.Payment_ApiSettingsIncomplete);
                 return;
             }
 
