@@ -237,26 +237,124 @@ namespace Foxoft
             DcReport? currentReport = dcReportsBindingSource.Current as DcReport;
             currentReport?.TrReportSubQueries.Add(newSubQuery);
 
-            BindingSource? subQueryBinding = new() { DataSource = newSubQuery };
+            BindingSource subQueryBinding = new() { DataSource = newSubQuery };
 
-            MemoEdit? memoEdit = new()
-            {
-                Dock = DockStyle.Fill,
-                EditValue = newSubQuery.SubQueryText
-            };
+            TextEdit txtEdit = new();
+            MemoEdit memoEdit = new();
+            GridControl GC = new();
+            GridView GV = new();
+            LayoutControlGroup LCG = new();
+            LayoutControl LC = new();
+            LayoutControlItem LCI_TXTEDIT = new();
+            LayoutControlItem LCI_GC = new();
+            LayoutControlItem LCI_ME = new();
+            SplitterItem splitterItem = new();
+            GridColumn colId = new();
+            GridColumn colParent = new();
+            GridColumn colSub = new();
+            GridColumn colSubQueryId = new();
+
+            colId.FieldName = nameof(TrReportSubQueryRelationColumn.Id);
+            colId.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.Id);
+
+            colParent.FieldName = nameof(TrReportSubQueryRelationColumn.ParentColumnName);
+            colParent.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.ParentColumnName);
+            colParent.Visible = true;
+
+            colSub.FieldName = nameof(TrReportSubQueryRelationColumn.SubColumnName);
+            colSub.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.SubColumnName);
+            colSub.Visible = true;
+
+            colSubQueryId.FieldName = nameof(TrReportSubQueryRelationColumn.SubQueryId);
+            colSubQueryId.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.SubQueryId);
+
+            memoEdit.Dock = DockStyle.Fill;
+            memoEdit.Properties.WordWrap = false;
+            memoEdit.Properties.ScrollBars = ScrollBars.Both;
             memoEdit.DataBindings.Add(
                 "EditValue",
                 subQueryBinding,
                 "SubQueryText",
                 true,
                 DataSourceUpdateMode.OnPropertyChanged);
+            memoEdit.StyleController = layoutControl1;
 
             XtraTabPage newPage = new()
             {
                 Text = newSubQuery.SubQueryName,
                 Tag = newSubQuery.SubQueryId
             };
-            newPage.Controls.Add(memoEdit);
+
+            txtEdit.DataBindings.Add(
+                "EditValue",
+                subQueryBinding,
+                "SubQueryName",
+                true,
+                DataSourceUpdateMode.OnPropertyChanged);
+            txtEdit.EditValueChanged += (s, e) =>
+            {
+                newPage.Text = txtEdit.EditValue?.ToString();
+            };
+
+            GC.MainView = GV;
+            GC.ViewCollection.Add(GV);
+            GC.DataSource = relationColumnBindingSource;
+
+            GV.GridControl = GC;
+            GV.OptionsView.ShowGroupPanel = false;
+            GV.Columns.AddRange(new[] { colId, colParent, colSub, colSubQueryId });
+            GV.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+            GV.OptionsBehavior.EditingMode = GridEditingMode.Inplace;
+            GV.OptionsNavigation.AutoFocusNewRow = true;
+            GV.OptionsView.NewItemRowPosition = NewItemRowPosition.Bottom;
+            GV.ActiveFilterString = $"[{nameof(TrReportSubQueryRelationColumn.SubQueryId)}] = {newSubQuery.SubQueryId}";
+            GV.OptionsView.ShowFilterPanelMode = ShowFilterPanelMode.Never;
+
+            GV.InitNewRow += (s, e) =>
+            {
+                GV.SetRowCellValue(e.RowHandle, colSubQueryId, newSubQuery.SubQueryId);
+            };
+
+            GV.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode == Keys.Delete && GV != null && !GV.IsNewItemRow(GV.FocusedRowHandle))
+                {
+                    if (MessageBox.Show(
+                            Resources.Form_ReportEditor_Message_DeleteRow,
+                            Resources.Common_Attention,
+                            MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        GV.DeleteSelectedRows();
+                    }
+                }
+            };
+
+            LC.Controls.Add(memoEdit);
+            LC.Controls.Add(GC);
+            LC.Dock = DockStyle.Fill;
+            LC.Root = LCG;
+
+            LCI_GC.Control = GC;
+            LCI_GC.TextVisible = false;
+            LCI_GC.SizeConstraintsType = SizeConstraintsType.Custom;
+            LCI_GC.MaxSize = new Size(1000, 100);
+
+            LCI_TXTEDIT.Control = txtEdit;
+            LCI_TXTEDIT.Text = Resources.Entity_ReportSubQuery_Name;
+
+            LCI_ME.Control = memoEdit;
+            LCI_ME.TextVisible = false;
+
+            LCG.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            LCG.GroupBordersVisible = false;
+            LCG.TextVisible = false;
+
+            LCG.AddItem(LCI_TXTEDIT);
+            LCG.AddItem(LCI_GC);
+            LCG.AddItem(splitterItem);
+            LCG.AddItem(LCI_ME);
+
+            newPage.Controls.Add(LC);
 
             // "+" tabından əvvəl insert
             xtraTabControl1.TabPages.Insert(xtraTabControl1.TabPages.Count - 1, newPage);
