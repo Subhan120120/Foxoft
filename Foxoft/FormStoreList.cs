@@ -1,4 +1,4 @@
-﻿using DevExpress.Data.Mask;
+using DevExpress.Data.Mask;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -182,7 +182,7 @@ namespace Foxoft
         private void bBI_CurrAccNew_ItemClick(object sender, ItemClickEventArgs e)
         {
             dcCurrAcc = new DcCurrAcc();
-            FormStore form = new(4);
+            FormStore form = new(CurrAccType.Store);
             if (form.ShowDialog(this) == DialogResult.OK)
                 UpdateGridViewData();
         }

@@ -1,4 +1,4 @@
-﻿
+
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using Foxoft.Models;
@@ -38,7 +38,7 @@ namespace Foxoft
             dcCurrAcc.CurrAccCode = currAccCode;
         }
 
-        public FormCashRegister(byte currAccTypeCode)
+        public FormCashRegister(CurrAccType currAccTypeCode)
             : this()
         {
             dcCurrAcc.CurrAccTypeCode = currAccTypeCode;
@@ -65,7 +65,7 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
-            byte temp = dcCurrAcc.CurrAccTypeCode;
+            CurrAccType temp = dcCurrAcc.CurrAccTypeCode;
             dcCurrAcc = dcCurrAccsBindingSource.AddNew() as DcCurrAcc;
             dcCurrAcc.CurrAccTypeCode = temp;
 

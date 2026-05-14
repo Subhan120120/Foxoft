@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using Foxoft.Models;
 using System;
 using System.Windows.Forms;
@@ -39,7 +39,7 @@ namespace Foxoft
                 DcCurrAcc = new DcCurrAcc();
 
             DcCurrAcc.CurrAccCode = txtEdit_CurrAccCode.Text;
-            DcCurrAcc.CurrAccTypeCode = 2;
+            DcCurrAcc.CurrAccTypeCode = CurrAccType.Supplier;
             DcCurrAcc.Address = memoEdit_Address.Text;
             DcCurrAcc.BonusCardNum = txtEdit_BonusCard.Text;
             DcCurrAcc.FirstName = txtEdit_FirstName.Text;

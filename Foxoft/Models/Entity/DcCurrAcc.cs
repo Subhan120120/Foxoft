@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -49,7 +49,8 @@ namespace Foxoft.Models
         [Range(1, int.MaxValue,
             ErrorMessageResourceType = typeof(Resources),
             ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
-        public byte CurrAccTypeCode { get; set; }
+        [Column(TypeName = "tinyint")]
+        public CurrAccType CurrAccTypeCode { get; set; }
 
         // Reuse existing "Company" label from Resources (already added previously)
         [Display(Name = nameof(Resources.Entity_Company), ResourceType = typeof(Resources))]

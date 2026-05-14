@@ -32,7 +32,7 @@ namespace Foxoft
             dcCurrAcc.CurrAccCode = currAccCode;
         }
 
-        public FormStore(byte currAccTypeCode)
+        public FormStore(CurrAccType currAccTypeCode)
             : this()
         {
             dcCurrAcc.CurrAccTypeCode = currAccTypeCode;
@@ -61,7 +61,7 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
-            byte temp = dcCurrAcc.CurrAccTypeCode;
+            CurrAccType temp = dcCurrAcc.CurrAccTypeCode;
             dcCurrAcc = dcCurrAccsBindingSource.AddNew() as DcCurrAcc;
             dcCurrAcc.CurrAccTypeCode = temp;
 
@@ -70,7 +70,7 @@ namespace Foxoft
             string NewDocNum = efMethods.GetNextDocNum(true, "C", nameof(DcCurrAcc.CurrAccCode), "DcCurrAccs", 4);
             dcCurrAcc.CurrAccCode = NewDocNum;
 
-            if (dcCurrAcc.CurrAccTypeCode == 4)
+            if (dcCurrAcc.CurrAccTypeCode == CurrAccType.Store)
                 dcCurrAcc.SettingStore = new SettingStore { StoreCode = dcCurrAcc.CurrAccCode };
 
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;
@@ -95,7 +95,7 @@ namespace Foxoft
             {
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
 
-                if (dcCurrAcc.CurrAccTypeCode == 4 && dcCurrAcc.SettingStore == null)
+                if (dcCurrAcc.CurrAccTypeCode == CurrAccType.Store && dcCurrAcc.SettingStore == null)
                     dcCurrAcc.SettingStore = new SettingStore { StoreCode = dcCurrAcc.CurrAccCode };
 
                 if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode))

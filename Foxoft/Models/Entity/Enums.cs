@@ -1,6 +1,15 @@
 // File: Models/HrEnums.cs
 namespace Foxoft.Models
 {
+    public enum CurrAccType : int
+    {
+        Customer = 1,
+        Supplier = 2,
+        Personnel = 3,
+        Store = 4,
+        CashRegister = 5
+    }
+
     public enum OverpaymentMode : byte
     {
         AskEachTime = 0,

@@ -812,21 +812,21 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcCurrAcc>().HasData(
-                new DcCurrAcc { CurrAccCode = "C-000001", CurrAccDesc = "Administrator", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "C-000002", CurrAccDesc = "Mudir", LastName = "Mudir", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "C-000003", CurrAccDesc = "Operator", LastName = "Operator", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "C-000004", CurrAccDesc = "Satici", LastName = "Satici", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "C-000005", CurrAccDesc = "Ümumi Müştəri", NewPassword = "123", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" },
-                new DcCurrAcc { CurrAccCode = "C-000006", CurrAccDesc = "Birbank", NewPassword = "", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" },
-                new DcCurrAcc { CurrAccCode = "MGZ01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = 4, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "MGZ01" },
-                new DcCurrAcc { CurrAccCode = "KASSA01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", CurrAccTypeCode = 5, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" });
+                new DcCurrAcc { CurrAccCode = "C-000001", CurrAccDesc = "Administrator", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = CurrAccType.Personnel, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000002", CurrAccDesc = "Mudir", LastName = "Mudir", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = CurrAccType.Personnel, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000003", CurrAccDesc = "Operator", LastName = "Operator", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = CurrAccType.Personnel, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000004", CurrAccDesc = "Satici", LastName = "Satici", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = CurrAccType.Personnel, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000005", CurrAccDesc = "Ümumi Müştəri", NewPassword = "123", CurrAccTypeCode = CurrAccType.Customer, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" },
+                new DcCurrAcc { CurrAccCode = "C-000006", CurrAccDesc = "Birbank", NewPassword = "", CurrAccTypeCode = CurrAccType.Customer, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" },
+                new DcCurrAcc { CurrAccCode = "MGZ01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = CurrAccType.Store, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "MGZ01" },
+                new DcCurrAcc { CurrAccCode = "KASSA01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", CurrAccTypeCode = CurrAccType.CashRegister, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" });
 
             modelBuilder.Entity<DcCurrAccType>().HasData(
-                new DcCurrAccType { CurrAccTypeCode = 1, CurrAccTypeDesc = "Müştəri" },
-                new DcCurrAccType { CurrAccTypeCode = 2, CurrAccTypeDesc = "Tədarikçi" },
-                new DcCurrAccType { CurrAccTypeCode = 3, CurrAccTypeDesc = "Personal" },
-                new DcCurrAccType { CurrAccTypeCode = 4, CurrAccTypeDesc = "Mağaza" },
-                new DcCurrAccType { CurrAccTypeCode = 5, CurrAccTypeDesc = "Kassa" }
+                new DcCurrAccType { CurrAccTypeCode = CurrAccType.Customer, CurrAccTypeDesc = "Müştəri" },
+                new DcCurrAccType { CurrAccTypeCode = CurrAccType.Supplier, CurrAccTypeDesc = "Tədarikçi" },
+                new DcCurrAccType { CurrAccTypeCode = CurrAccType.Personnel, CurrAccTypeDesc = "Personal" },
+                new DcCurrAccType { CurrAccTypeCode = CurrAccType.Store, CurrAccTypeDesc = "Mağaza" },
+                new DcCurrAccType { CurrAccTypeCode = CurrAccType.CashRegister, CurrAccTypeDesc = "Kassa" }
                 );
 
             modelBuilder.Entity<DcContactType>().HasData(

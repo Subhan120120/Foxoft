@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraDataLayout;
+using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraLayout.Utils;
@@ -51,13 +51,13 @@ namespace Foxoft
             this.isCustomer = isCustomer;
         }
 
-        public FormCurrAcc(byte currAccTypeCode)
+        public FormCurrAcc(CurrAccType currAccTypeCode)
             : this()
         {
             dcCurrAcc.CurrAccTypeCode = currAccTypeCode;
         }
 
-        public FormCurrAcc(byte currAccTypeCode, bool isCustomer)
+        public FormCurrAcc(CurrAccType currAccTypeCode, bool isCustomer)
             : this(currAccTypeCode)
         {
             this.isCustomer = isCustomer;
@@ -98,7 +98,7 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
-            byte temp = dcCurrAcc.CurrAccTypeCode;
+            CurrAccType temp = dcCurrAcc.CurrAccTypeCode;
             dcCurrAcc = dcCurrAccsBindingSource.AddNew() as DcCurrAcc;
             dcCurrAcc.CurrAccTypeCode = temp;
 

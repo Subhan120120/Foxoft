@@ -1,4 +1,4 @@
-﻿// File: Forms/Hr/FormEmployeeContractEdit.cs
+// File: Forms/Hr/FormEmployeeContractEdit.cs
 using DevExpress.XtraEditors;
 using DevExpress.XtraLayout;
 using Foxoft.AppCode;
@@ -78,7 +78,7 @@ namespace Foxoft
         {
             var employees = db.DcCurrAccs.AsNoTracking()
                 .Where(x => !x.IsDisabled)
-                .Where(x => x.CurrAccTypeCode == 3)
+                .Where(x => x.CurrAccTypeCode == CurrAccType.Personnel)
                 .OrderBy(x => x.CurrAccCode)
                 .Select(x => new { x.CurrAccCode, Text = x.CurrAccCode + " - " + x.FirstName + " " + x.LastName })
                 .ToList();

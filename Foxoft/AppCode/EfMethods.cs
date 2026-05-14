@@ -1430,11 +1430,11 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            //byte[] byteArr = new byte[] { 1, 2, 3, 4 };
+            CurrAccType[] types = currAccTypeArr.Select(x => (CurrAccType)x).ToArray();
 
             List<DcCurrAcc> asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false
-                                              && currAccTypeArr.Contains(x.CurrAccTypeCode)
-                                              && x.CurrAccTypeCode != 5) // kassanin balansi ayri hesablanir , ona gore yazilib
+                                              && types.Contains(x.CurrAccTypeCode)
+                                              && x.CurrAccTypeCode != CurrAccType.CashRegister) // kassanin balansi ayri hesablanir , ona gore yazilib
                        .OrderBy(x => x.CreatedDate)
                        .Select(x => new DcCurrAcc
                        {
@@ -1463,8 +1463,8 @@ namespace Foxoft
                        .ToList();
 
             List<DcCurrAcc> asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false
-                                                && x.CurrAccTypeCode == 5 // kassanin balansi ayri hesablanir , ona gore yazilib
-                                                && currAccTypeArr.Contains(x.CurrAccTypeCode))
+                                                && x.CurrAccTypeCode == CurrAccType.CashRegister // kassanin balansi ayri hesablanir , ona gore yazilib
+                                                && types.Contains(x.CurrAccTypeCode))
                        .OrderBy(x => x.CreatedDate)
                        .Select(x => new DcCurrAcc
                        {
@@ -1498,7 +1498,7 @@ namespace Foxoft
             using subContext db = new();
             return db.DcCurrAccs
                 .Where(x => x.IsDisabled == false)
-                .Where(x => new[] { 1, 2, 3 }.Contains(x.CurrAccTypeCode))
+                .Where(x => new[] { CurrAccType.Customer, CurrAccType.Supplier, CurrAccType.Personnel }.Contains(x.CurrAccTypeCode))
                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
@@ -1507,7 +1507,7 @@ namespace Foxoft
             using subContext db = new();
             return db.DcCurrAccs
                 .Where(x => x.IsDisabled == true)
-                .Where(x => new[] { 1, 2, 3 }.Contains(x.CurrAccTypeCode))
+                .Where(x => new[] { CurrAccType.Customer, CurrAccType.Supplier, CurrAccType.Personnel }.Contains(x.CurrAccTypeCode))
                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
@@ -1516,7 +1516,7 @@ namespace Foxoft
             using subContext db = new();
             return db.DcCurrAccs
                 .Where(x => x.IsDisabled == true)
-                .Where(x => new[] { 4 }.Contains(x.CurrAccTypeCode))
+                .Where(x => new[] { CurrAccType.Store }.Contains(x.CurrAccTypeCode))
                 .FirstOrDefault(x => x.CurrAccCode == storeCode);
         }
 
@@ -1525,7 +1525,7 @@ namespace Foxoft
             using subContext db = new();
             return db.DcCurrAccs
                 .Where(x => x.IsDisabled == false)
-                .Where(x => new[] { 5 }.Contains(x.CurrAccTypeCode))
+                .Where(x => new[] { CurrAccType.CashRegister }.Contains(x.CurrAccTypeCode))
                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
@@ -1674,7 +1674,7 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
-                       .Where(x => x.CurrAccTypeCode == 4)
+                       .Where(x => x.CurrAccTypeCode == CurrAccType.Store)
                        .OrderBy(x => x.CreatedDate)
                        .ToList();
         }
@@ -1683,7 +1683,7 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
-                       .Where(x => x.CurrAccTypeCode == 4)
+                       .Where(x => x.CurrAccTypeCode == CurrAccType.Store)
                        .Where(x => x.CurrAccCode == storeCode)
                        .FirstOrDefault();
         }
@@ -1691,7 +1691,7 @@ namespace Foxoft
         public List<DcCurrAcc> SelectStoresIncludeDisabled()
         {
             using subContext db = new();
-            return db.DcCurrAccs.Where(x => x.CurrAccTypeCode == 4)
+            return db.DcCurrAccs.Where(x => x.CurrAccTypeCode == CurrAccType.Store)
                                 .OrderBy(x => x.CreatedDate)
                                 .ToList();
         }
@@ -1740,7 +1740,7 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefault == true && x.CurrAccTypeCode == 5)
+            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefault == true && x.CurrAccTypeCode == CurrAccType.CashRegister)
                                   .FirstOrDefault(x => x.StoreCode == storeCode);
 
             if (dcCurrAcc is not null)
@@ -1753,7 +1753,7 @@ namespace Foxoft
             using subContext db = new();
             string cashRegCode = "";
 
-            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefault == true && x.CurrAccTypeCode == 5)
+            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefault == true && x.CurrAccTypeCode == CurrAccType.CashRegister)
                                   .FirstOrDefault(x => x.StoreCode == storeCode);
 
             if (dcCurrAcc is not null)
@@ -1780,7 +1780,7 @@ namespace Foxoft
             using subContext db = new();
 
             string defCustomer = "";
-            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDefault == true && x.CurrAccTypeCode == 1)
+            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDefault == true && x.CurrAccTypeCode == CurrAccType.Customer)
                                                .FirstOrDefault(x => x.IsDisabled == false && x.StoreCode == storeCode);
 
             if (dcCurrAcc is not null)

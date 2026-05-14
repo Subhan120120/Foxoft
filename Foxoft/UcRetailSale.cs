@@ -952,7 +952,7 @@ namespace Foxoft
 
         private void btn_CustomerAdd_Click(object sender, EventArgs e)
         {
-            using (FormCurrAcc formCustomer = new((byte)1, true))
+            using (FormCurrAcc formCustomer = new(CurrAccType.Customer, true))
             {
                 if (formCustomer.ShowDialog(this) == DialogResult.OK)
                 {

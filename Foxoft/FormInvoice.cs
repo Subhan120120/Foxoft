@@ -990,7 +990,7 @@ namespace Foxoft
             if (column == col_SalesPersonCode)
             {
                 var acc = efMethods.SelectSalesPerson(input);
-                if (acc == null || acc.CurrAccTypeCode != 3)
+                if (acc == null || acc.CurrAccTypeCode != CurrAccType.Personnel)
                 {
                     SetError(Resources.Form_Invoice_SalesPersonNotFound);
                     return;
@@ -1002,7 +1002,7 @@ namespace Foxoft
             if (column == colWorkerCode)
             {
                 var acc = efMethods.SelectWorker(input);
-                if (acc == null || acc.CurrAccTypeCode != 3)
+                if (acc == null || acc.CurrAccTypeCode != CurrAccType.Personnel)
                 {
                     SetError(Resources.Form_Invoice_WorkerNotFound);
                     return;

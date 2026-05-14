@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,7 +16,8 @@ namespace Foxoft.Models
 
         [Key]
         [Display(Name = nameof(Resources.Entity_CurrAccType_Code), ResourceType = typeof(Resources))]
-        public byte CurrAccTypeCode { get; set; }
+        [Column(TypeName = "tinyint")]
+        public CurrAccType CurrAccTypeCode { get; set; }
 
         [Display(Name = nameof(Resources.Entity_CurrAccType_Desc), ResourceType = typeof(Resources))]
         [Required(
