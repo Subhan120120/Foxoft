@@ -399,14 +399,14 @@ namespace Foxoft
             AdoMethods adoMethods = new();
 
             SqlParameter[] sqlParameters;
-            string query = reportClass.ApplyFilter(
+            string queryTxt = reportClass.ApplyFilter(
                 dcReport,
                 dcReport.ReportQuery,
                 null,
                 out sqlParameters,
                 1);
 
-            DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // check query is correct 
+            DataTable dt = adoMethods.SqlGetDt(queryTxt, sqlParameters); // check query is correct 
 
             ICollection<TrReportSubQuery> subQueries = dcReport.TrReportSubQueries;
 
@@ -429,7 +429,7 @@ namespace Foxoft
                     out sqlParameters1,
                     1);
 
-                subQueryText = this.reportClass.AddRelation(query, subQuery);
+                subQueryText = this.reportClass.AddRelation(queryTxt, subQuery, subQueryText);
 
                 DataTable dt2 = adoMethods.SqlGetDt(subQueryText, sqlParameters1); // check sub query
             }

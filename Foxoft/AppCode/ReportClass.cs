@@ -248,9 +248,10 @@ namespace Foxoft
             return sqlQuery;
         }
 
-        public string AddRelation(string mainQuery, TrReportSubQuery reportSubQuery)
+        public string AddRelation(string mainQuery, TrReportSubQuery reportSubQuery, string subQueryText = null)
         {
-            string subQueryTxt = $"select * from ({reportSubQuery.SubQueryText} \n ) as [{reportSubQuery.SubQueryName}] where 1=1";
+            string actualSubQueryText = subQueryText ?? reportSubQuery.SubQueryText;
+            string subQueryTxt = $"select * from ({actualSubQueryText} \n ) as [{reportSubQuery.SubQueryName}] where 1=1";
 
             foreach (TrReportSubQueryRelationColumn relationColumn in reportSubQuery.TrReportSubQueryRelationColumns)
             {
