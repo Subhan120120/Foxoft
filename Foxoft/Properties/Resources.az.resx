@@ -4086,4 +4086,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Common_NoMoreRecords" xml:space="preserve">
     <value>Daha qeyd yoxdur.</value>
   </data>
+  <data name="Form_Invoice_UnsavedChangesQuestion" xml:space="preserve">
+    <value>Yadda saxlanmamış dəyişikliklər var. Yadda saxlamaq istəyirsiniz?</value>
+  </data>
 </root>

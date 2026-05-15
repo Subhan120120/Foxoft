@@ -7984,6 +7984,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are unsaved changes. Do you want to save?.
+        /// </summary>
+        public static string Form_Invoice_UnsavedChangesQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_UnsavedChangesQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to open link: {0}.
         /// </summary>
         public static string Form_Invoice_Whatsapp_FailedToOpenLink {

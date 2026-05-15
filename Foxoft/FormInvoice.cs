@@ -78,6 +78,7 @@ namespace Foxoft
         private System.Windows.Forms.Timer? _hbTimer;
 
         public bool isNew = false;
+        private bool _isSaved = false;
         private bool IsCampaignEnabled
             => Settings.Default.AppSetting != null
             && Settings.Default.AppSetting.UseCampaign;
@@ -211,6 +212,48 @@ namespace Foxoft
             gC_InvoiceLine.Focus();
         }
 
+        private bool HasUnsavedChanges()
+        {
+            if (Settings.Default.AppSetting.AutoSave)
+                return false;
+
+            if (dbContext == null || trInvoiceHeader == null)
+                return false;
+
+            return dbContext.ChangeTracker.HasChanges();
+        }
+
+        /// <summary>
+        /// Prompts the user to save unsaved changes when AutoSave is off.
+        /// Returns true if the caller should proceed, false if the action was cancelled.
+        /// </summary>
+        private bool PromptSaveChanges()
+        {
+            if (!HasUnsavedChanges())
+                return true;
+
+            var result = XtraMessageBox.Show(
+                Resources.Form_Invoice_UnsavedChangesQuestion,
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                if (dataLayoutControl1.IsValid(out _))
+                {
+                    SaveInvoice();
+                    return true;
+                }
+                return false; // validation failed, cancel the action
+            }
+
+            if (result == DialogResult.No)
+                return true; // discard changes, proceed
+
+            return false; // Cancel
+        }
+
         private void InitializeColumnName()
         {
             colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
@@ -220,6 +263,9 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
+            if (!PromptSaveChanges())
+                return;
+
             if (trInvoiceHeader is not null)
             {
                 _lockService.ReleaseLock(
@@ -302,6 +348,7 @@ namespace Foxoft
             }
 
             Tag = btnEdit_DocNum.EditValue;
+            _isSaved = false;
 
 
             SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
@@ -405,6 +452,9 @@ namespace Foxoft
 
         private void SelectDocNum()
         {
+            if (!PromptSaveChanges())
+                return;
+
             using FormInvoiceHeaderList form = new(dcProcess.ProcessCode, relatedInvoiceId);
 
             if (form.ShowDialog(this) == DialogResult.OK)
@@ -438,6 +488,9 @@ namespace Foxoft
         private void NavigateInvoice(bool isPrevious)
         {
             if (trInvoiceHeader is null)
+                return;
+
+            if (!PromptSaveChanges())
                 return;
 
             using var ctx = new subContext();
@@ -1351,6 +1404,7 @@ namespace Foxoft
             }
 
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
+            _isSaved = true;
 
             if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode))
                 InitilizeTransfer();
@@ -3405,6 +3459,32 @@ namespace Foxoft
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            if (!_isClosingByLockEvent && HasUnsavedChanges())
+            {
+                var result = XtraMessageBox.Show(
+                    Resources.Form_Invoice_UnsavedChangesQuestion,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    if (dataLayoutControl1.IsValid(out _))
+                        SaveInvoice();
+                    else
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                // DialogResult.No => discard, proceed closing
+            }
+
             _lockHeartbeatTimer?.Stop();
             _lockHeartbeatTimer?.Dispose();
             _lockHeartbeatTimer = null;
@@ -3432,6 +3512,386 @@ namespace Foxoft
             decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
 
             return Math.Max(Math.Round(Math.Abs(invoiceSum) - Math.Abs(prePaid), 4), 0);
+        }
+
+        // ══════════════════════════════════════════════════════
+        //  KAMPANİYA İNTEQRASİYASI
+        // ══════════════════════════════════════════════════════
+
+        private CampaignService _campaignService = null!;
+        private bool _cashOnlyCampaignApplied = false;
+        private string? _appliedPromoCode = null;
+
+        private void InitCampaignIfEnabled()
+        {
+            if (!IsCampaignEnabled)
+            {
+                _cashOnlyCampaignApplied = false;
+                _appliedPromoCode = null;
+                return;
+            }
+
+            _campaignService = new CampaignService(dbContext);
+        }
+
+        private List<TrInvoiceLine> GetInvoiceLines()
+        {
+            var lines = new List<TrInvoiceLine>();
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                if (gV_InvoiceLine.GetRow(i) is TrInvoiceLine line)
+                    lines.Add(line);
+            return lines;
+        }
+
+        /// <summary>"Kampaniya Tətbiq Et" düyməsi</summary>
+        private void bBI_CampaignApply_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (!IsCampaignEnabled)
+                return;
+
+            ApplyRegularCampaigns();
+        }
+
+        private void ApplyRegularCampaigns()
+        {
+            if (trInvoiceHeader is null) return;
+            if (gV_InvoiceLine.DataRowCount <= 0)
+            {
+                XtraMessageBox.Show(Properties.Resources.Campaign_NoProductInInvoice,
+                    Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            gV_InvoiceLine.CloseEditor();
+            gV_InvoiceLine.UpdateCurrentRow();
+
+            InitCampaignIfEnabled();
+            var result = _campaignService.ApplyCampaigns(
+                trInvoiceHeader, GetInvoiceLines(), _appliedPromoCode, CampaignFilter.RegularOnly);
+
+            gV_InvoiceLine.RefreshData();
+            if (result.Success) SaveInvoice();
+
+            XtraMessageBox.Show(result.Message, "Kampaniya",
+                MessageBoxButtons.OK,
+                result.Success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+        }
+
+        /// <summary>"Kampaniya Log" düyməsi – tətbiq edilmiş kampaniyaları göstər</summary>
+        private void bBI_CampaignLog_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (trInvoiceHeader is null) return;
+            InitCampaignIfEnabled();
+
+            var logs = _campaignService.GetCampaignLogs(trInvoiceHeader.InvoiceHeaderId);
+            if (!logs.Any())
+            {
+                XtraMessageBox.Show(Properties.Resources.Campaign_NoCampaignApplied,
+                    Properties.Resources.Campaign_LogTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var grouped = logs
+                .GroupBy(l => new { l.CampaignCode, l.CampaignDesc })
+                .Select(g => new
+                {
+                    g.Key.CampaignCode,
+                    g.Key.CampaignDesc,
+                    TotalDiscount = g.Sum(l => l.DiscountAmount),
+                    TotalDiscountLoc = g.Sum(l => l.DiscountAmountLoc),
+                    Lines = g.Count()
+                });
+
+            string text = string.Join("\n\n", grouped.Select(g =>
+                $"{g.CampaignCode} – {g.CampaignDesc}\n" +
+                $"  Sətir sayı : {g.Lines}\n" +
+                $"  Endirim    : {g.TotalDiscount:n2}  ({g.TotalDiscountLoc:n2} AZN)"));
+
+            XtraMessageBox.Show(text, Properties.Resources.Campaign_LogTitle,
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        /// <summary>"Promo Kod" düyməsi</summary>
+        private void BBI_PromoCodeCampaign_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var input = XtraInputBox.Show(Properties.Resources.Campaign_EnterPromoCode, Properties.Resources.Campaign_PromoCodeTitle,
+                _appliedPromoCode ?? "");
+            if (input == null) return;
+
+            string code = input.ToString()?.Trim() ?? "";
+            if (string.IsNullOrEmpty(code)) return;
+
+            InitCampaignIfEnabled();
+            var lines = GetInvoiceLines();
+
+            // Mövcud endirimləri sil
+            _campaignService.RemoveAllCampaigns(trInvoiceHeader, lines);
+            _cashOnlyCampaignApplied = false;
+            _appliedPromoCode = code;
+
+            var result = _campaignService.ApplyCampaigns(
+                trInvoiceHeader, lines, _appliedPromoCode, CampaignFilter.RegularOnly);
+
+            gV_InvoiceLine.RefreshData();
+            if (result.Success) SaveInvoice();
+
+            XtraMessageBox.Show(result.Message, Properties.Resources.Campaign_PromoCodeTitle,
+                MessageBoxButtons.OK,
+                result.Success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+        }
+
+        /// <summary>"Kampaniyaları Sil" düyməsi</summary>
+        private void bBI_CampaignDelete_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (trInvoiceHeader is null) return;
+
+            if (XtraMessageBox.Show(
+                Properties.Resources.Campaign_ConfirmDelete,
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            InitCampaignIfEnabled();
+            var lines = GetInvoiceLines();
+            _campaignService.RemoveAllCampaigns(trInvoiceHeader, lines);
+            _cashOnlyCampaignApplied = false;
+            _appliedPromoCode = null;
+
+            gV_InvoiceLine.RefreshData();
+            SaveInvoice();
+
+            XtraMessageBox.Show(Properties.Resources.Campaign_DiscountDeleted,
+                "Kampaniya", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // ── ÖDƏNİŞ DÜYMƏSİ (kampaniya ilə) ─────────────────
+        private void bBI_Payment_ItemClick_WithCampaign(object sender, ItemClickEventArgs e)
+        {
+            if (trInvoiceHeader is null) return;
+
+            gV_InvoiceLine.CloseEditor();
+            gV_InvoiceLine.UpdateCurrentRow();
+            dataLayoutControl1.Validate();
+
+            if (!dataLayoutControl1.IsValid(out _)) return;
+            if (gV_InvoiceLine.DataRowCount <= 0) return;
+
+            SaveInvoice();
+
+            decimal pay = GetRemainingPaymentAmount();
+            if (pay <= 0)
+            {
+                XtraMessageBox.Show(Properties.Resources.Payment_NoRemainingAmount, Properties.Resources.Payment_Title,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            IEnumerable<int>? allowedPaymentMethodIds = null;
+            if (IsCampaignEnabled)
+            {
+                // IsCashOnly kampaniya yoxlaması
+                TryApplyCashOnlyCampaign(ref pay, out allowedPaymentMethodIds);
+            }
+
+            // FormPayment açılır
+            using FormPayment form = new(PaymentType.Cash, pay, trInvoiceHeader, allowedPaymentMethodIds);
+
+            if (form.ShowDialog(this) != DialogResult.OK)
+            {
+                if (IsCampaignEnabled)
+                    if (_cashOnlyCampaignApplied)
+                    {
+                        // İstifadəçi ödənişi ləğv etdi → IsCashOnly geri al
+                        RollbackCashOnlyCampaign();
+                    }
+
+                return;
+            }
+
+            UpdatePaidLabels();
+        }
+
+        // ── IsCashOnly kampaniya sihirbazı ──────────────────────────────
+        private bool TryApplyCashOnlyCampaign(
+            ref decimal remainingPay,
+            out IEnumerable<int>? allowedPaymentMethodIds)
+        {
+            allowedPaymentMethodIds = null;
+
+            InitCampaignIfEnabled();
+            var lines = GetInvoiceLines();
+            var cashOnlyCampaigns = _campaignService.GetEligibleCampaigns(
+                trInvoiceHeader, lines, null, CampaignFilter.CashOnlyOnly);
+
+            if (!cashOnlyCampaigns.Any()) return false;
+
+            var campaign = cashOnlyCampaigns.First(); // ən yüksək prioritet
+
+            // 1) İstifadəçiyə soruş
+            string discountStr = campaign.DiscountTypeCode == DiscountTypeCode.Percent
+                ? $"{campaign.DiscountValue}%"
+                : $"{campaign.DiscountValue:n2} AZN";
+
+            var answer = XtraMessageBox.Show(
+                $"«{campaign.CampaignDesc}» kampaniyası tətbiq edilə bilər.\n\n" +
+                $"Endirim: {discountStr}\n" +
+                "⚠  Bu kampaniya yalnız nağd ödənişdə keçərlidir.\n\n" +
+                "Tətbiq edilsin?",
+                "Kampaniya",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (answer != DialogResult.Yes) return false;
+
+            // 2) Şifrə yoxla
+            if (!string.IsNullOrEmpty(campaign.CampaignPassword))
+            {
+                var pwd = XtraInputBox.Show("Kampaniya şifrəsini daxil edin:", "Şifrə", "");
+                if (pwd?.ToString() != campaign.CampaignPassword)
+                {
+                    XtraMessageBox.Show(Properties.Resources.Campaign_PasswordIncorrect,
+                        Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+
+            // 3) Tətbiq et
+            var result = _campaignService.ApplyCampaigns(
+                trInvoiceHeader, lines, null, CampaignFilter.CashOnlyOnly);
+
+            if (!result.Success)
+            {
+                XtraMessageBox.Show(Properties.Resources.Campaign_NotApplied,
+                    Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            gV_InvoiceLine.RefreshData();
+            SaveInvoice();
+            _cashOnlyCampaignApplied = true;
+
+            // Yenilənmiş ödəniləcək məbləğ
+            remainingPay = GetRemainingPaymentAmount();
+
+            // Yalnız nağd ödəniş metodlarını icazəli et
+            allowedPaymentMethodIds = efMethods
+                .SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cash })
+                .Select(m => m.PaymentMethodId);
+
+            return true;
+        }
+
+        // ── IsCashOnly geri alma ─────────────────────────────────────────
+        private void RollbackCashOnlyCampaign()
+        {
+            try
+            {
+                // CashOnly logları tap
+                var cashOnlyLogs = dbContext.TrInvoiceCampaignLogs
+                    .Include(l => l.DcCampaign)
+                    .Where(l => l.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId
+                                && l.DcCampaign.IsCashOnly)
+                    .ToList();
+
+                // Hər sətirdəki CashOnly endirimi geri al
+                foreach (var log in cashOnlyLogs)
+                {
+                    var line = GetInvoiceLines()
+                        .FirstOrDefault(l => l.InvoiceLineId == log.InvoiceLineId);
+                    if (line != null)
+                        line.DiscountCampaign = Math.Max(0, line.DiscountCampaign - log.DiscountAmount);
+                }
+
+                dbContext.TrInvoiceCampaignLogs.RemoveRange(cashOnlyLogs);
+
+                gV_InvoiceLine.RefreshData();
+                SaveInvoice();
+                _cashOnlyCampaignApplied = false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"RollbackCashOnlyCampaign: {ex.Message}");
+            }
+        }
+
+        // ── ÖDƏNİŞ SİLMƏ (kampaniya ilə) ────────────────────
+        private void bBI_PaymentDelete_ItemClick_WithCampaign(object sender, ItemClickEventArgs e)
+        {
+            if (trInvoiceHeader is null) return;
+
+            if (IsCampaignEnabled)
+            {
+                // IsCashOnly kampaniya tətbiq edilibsə – silinməyə icazə verma
+                InitCampaignIfEnabled();
+
+                if (_campaignService.HasCashOnlyCampaignApplied(trInvoiceHeader.InvoiceHeaderId))
+                {
+                    XtraMessageBox.Show(
+                        Properties.Resources.Campaign_CashOnlyAppliedDeleteWarning,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
+            }
+            if (MessageBox.Show(
+                Resources.Form_Invoice_DeletePaymentsQuestion,
+                Resources.Common_Attention,
+                MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                UpdatePaidLabels();
+            }
+        }
+
+        /// <summary>
+        /// Kampaniya tətbiq edilmişsə sətir dəyişikliyindən sonra yenidən hesabla.
+        /// </summary>
+        private void RecalcCampaignsIfNeeded()
+        {
+            if (!IsCampaignEnabled)
+                return;
+
+            if (trInvoiceHeader is null) return;
+            InitCampaignIfEnabled();
+
+            if (!_campaignService.HasCampaignApplied(trInvoiceHeader.InvoiceHeaderId))
+                return;
+
+            var recalcResult = _campaignService.RecalculateCampaigns(
+                trInvoiceHeader,
+                GetInvoiceLines(),
+                _appliedPromoCode,
+                _cashOnlyCampaignApplied);
+
+            gV_InvoiceLine.RefreshData();
+
+            if (recalcResult.Success)
+                SaveInvoice();
+        }
+
+        /// <summary>
+        /// IsAutoApply=true olan kampaniyaları məhsul əlavə edildikdə avtomatik tətbiq edir.
+        /// Kampaniya artıq tətbiq edilibsə yenidən tətbiq etmir.
+        /// </summary>
+        private void AutoApplyCampaignsIfConfigured()
+        {
+            if (trInvoiceHeader is null) return;
+            InitCampaignIfEnabled();
+
+            var lines = GetInvoiceLines();
+            var eligible = _campaignService.GetEligibleCampaigns(
+                trInvoiceHeader, lines, _appliedPromoCode, CampaignFilter.RegularOnly);
+
+            if (!eligible.Any(c => c.IsAutoApply)) return;
+
+            var result = _campaignService.ApplyCampaigns(
+                trInvoiceHeader, lines, _appliedPromoCode, CampaignFilter.RegularOnly);
+
+            if (result.Success)
+                gV_InvoiceLine.RefreshData();
         }
 
     }

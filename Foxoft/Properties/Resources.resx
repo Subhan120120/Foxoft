@@ -4085,4 +4085,7 @@ To delete, cancel the receipt!</value>
   <data name="Common_NoMoreRecords" xml:space="preserve">
     <value>There are no more records.</value>
   </data>
+  <data name="Form_Invoice_UnsavedChangesQuestion" xml:space="preserve">
+    <value>There are unsaved changes. Do you want to save?</value>
+  </data>
 </root>
