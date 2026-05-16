@@ -238,6 +238,38 @@ namespace Foxoft.AppCode.Services
                   .OrderBy(l => l.DcCampaign.Priority)
                   .ToList();
 
+        /// <summary>
+        /// CashOnly kampaniya endirimlərini geri alır: logları silir, sətirlərdən endirimi çıxarır.
+        /// </summary>
+        public void RollbackCashOnlyCampaigns(Guid invoiceHeaderId, List<TrInvoiceLine> lines)
+        {
+            var cashOnlyLogs = _db.TrInvoiceCampaignLogs
+                .Include(l => l.DcCampaign)
+                .Where(l => l.InvoiceHeaderId == invoiceHeaderId
+                            && l.DcCampaign.IsCashOnly)
+                .ToList();
+
+            foreach (var log in cashOnlyLogs)
+            {
+                var line = lines.FirstOrDefault(l => l.InvoiceLineId == log.InvoiceLineId);
+                if (line != null)
+                    line.DiscountCampaign = Math.Max(0, line.DiscountCampaign - log.DiscountAmount);
+            }
+
+            _db.TrInvoiceCampaignLogs.RemoveRange(cashOnlyLogs);
+        }
+
+        /// <summary>
+        /// Fakturaya aid PromoCode-u TrInvoiceCampaignHeaders cədvəlindən qaytarır.
+        /// </summary>
+        public string? GetPromoCode(Guid invoiceHeaderId)
+        {
+            return _db.TrInvoiceCampaignHeaders
+                .AsNoTracking()
+                .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId)
+                ?.PromoCode;
+        }
+
         // ─────────────────────────────────────────────────────────────────
         // PRIVATE helpers
         // ─────────────────────────────────────────────────────────────────

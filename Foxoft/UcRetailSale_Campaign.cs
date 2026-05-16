@@ -338,21 +338,9 @@ namespace Foxoft
         {
             try
             {
-                var cashOnlyLogs = dbContext.TrInvoiceCampaignLogs
-                    .Include(l => l.DcCampaign)
-                    .Where(l => l.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId
-                                && l.DcCampaign.IsCashOnly)
-                    .ToList();
-
-                foreach (var log in cashOnlyLogs)
-                {
-                    var line = GetInvoiceLines()
-                        .FirstOrDefault(l => l.InvoiceLineId == log.InvoiceLineId);
-                    if (line != null)
-                        line.DiscountCampaign = Math.Max(0, line.DiscountCampaign - log.DiscountAmount);
-                }
-
-                dbContext.TrInvoiceCampaignLogs.RemoveRange(cashOnlyLogs);
+                InitCampaignService();
+                _campaignService.RollbackCashOnlyCampaigns(
+                    trInvoiceHeader.InvoiceHeaderId, GetInvoiceLines());
 
                 gV_InvoiceLine.RefreshData();
                 SaveInvoice();

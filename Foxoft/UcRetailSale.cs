@@ -325,13 +325,8 @@ namespace Foxoft
                 return;
             }
 
-            using var db = new subContext();
-
-            TrInvoiceCampaignHeader? campaignHeader = db.TrInvoiceCampaignHeaders
-                .AsNoTracking()
-                .FirstOrDefault(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
-
-            _promoCode = campaignHeader?.PromoCode;
+            InitCampaignService();
+            _promoCode = _campaignService.GetPromoCode(trInvoiceHeader.InvoiceHeaderId);
         }
 
         //private void ReloadInvoiceCampaignValues()
