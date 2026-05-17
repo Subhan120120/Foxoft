@@ -47,4 +47,13 @@ namespace Foxoft.Models
         Usage = 2      // Xərc (-)
     }
 
+    public enum TransferApprovalStatus : byte
+    {
+        Pending = 0,       // Gözləmədə (hələ hədəf anbara yazılmayıb)
+        Approved = 1,      // Təsdiq olunub (2-ci sətir yaradılıb)
+        AutoApproved = 2,  // Avtomatik təsdiq (TransferAutoApprove=true ilə)
+        Rejected = 3       // Rədd edilib
+    }
+
 }
+

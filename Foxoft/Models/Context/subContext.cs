@@ -947,6 +947,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "InstallmentPurchaseReturnCustom", ClaimDesc = "Taksit Alış Xüsusi Geri Qaytarması", ClaimTypeId = 1, CategoryId = 7 },
                 new DcClaim { ClaimCode = "InstallmentSaleReturnCustom", ClaimDesc = "Taksit Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1, CategoryId = 8 },
                 new DcClaim { ClaimCode = "InventoryTransferReturnCustom", ClaimDesc = "Məhsul Transferi Xüsusi Qaytarması", ClaimTypeId = 1, CategoryId = 14 },
+                new DcClaim { ClaimCode = "TransferApproval", ClaimDesc = "Transfer Təsdiqi", ClaimTypeId = 1, CategoryId = 14 },
                 new DcClaim { ClaimCode = "Column_ProductCost", ClaimDesc = "Maya Dəyəri", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "ProductDiscountList", ClaimDesc = "Endirim Siyahısı", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "CampaignList", ClaimDesc = "Endirim Kampaniyası Siyahısı", ClaimTypeId = 1, CategoryId = 18 },

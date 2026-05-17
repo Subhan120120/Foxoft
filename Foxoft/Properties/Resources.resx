@@ -4088,4 +4088,40 @@ To delete, cancel the receipt!</value>
   <data name="Form_Invoice_UnsavedChangesQuestion" xml:space="preserve">
     <value>There are unsaved changes. Do you want to save?</value>
   </data>
+  <data name="Entity_AppSetting_TransferAutoApprove" xml:space="preserve">
+    <value>Transfer Auto Approve</value>
+  </data>
+  <data name="Entity_InvoiceHeader_TransferApprovalStatus" xml:space="preserve">
+    <value>Transfer Approval Status</value>
+  </data>
+  <data name="Form_TransferApproval_Caption" xml:space="preserve">
+    <value>Transfer Approval</value>
+  </data>
+  <data name="Form_TransferApproval_Button_Approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="Form_TransferApproval_Button_Reject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="Form_TransferApproval_Button_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Form_TransferApproval_ApproveConfirm" xml:space="preserve">
+    <value>Are you sure you want to approve this transfer?</value>
+  </data>
+  <data name="Form_TransferApproval_RejectConfirm" xml:space="preserve">
+    <value>Are you sure you want to reject this transfer?</value>
+  </data>
+  <data name="Form_TransferApproval_NoSelection" xml:space="preserve">
+    <value>Please select a transfer</value>
+  </data>
+  <data name="Form_TransferApproval_Success" xml:space="preserve">
+    <value>Transfer approved successfully</value>
+  </data>
+  <data name="Form_TransferApproval_RejectedSuccess" xml:space="preserve">
+    <value>Transfer rejected successfully</value>
+  </data>
+  <data name="ERP_ACE_TransferApproval" xml:space="preserve">
+    <value>Transfer Approval</value>
+  </data>
 </root>

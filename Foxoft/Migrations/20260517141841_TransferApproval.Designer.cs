@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260517141841_TransferApproval")]
+    partial class TransferApproval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4538,14 +4541,6 @@ namespace Foxoft.Migrations
                             ClaimCode = "InventoryTransferReturnCustom",
                             CategoryId = 14,
                             ClaimDesc = "Məhsul Transferi Xüsusi Qaytarması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
-                        },
-                        new
-                        {
-                            ClaimCode = "TransferApproval",
-                            CategoryId = 14,
-                            ClaimDesc = "Transfer Təsdiqi",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         },

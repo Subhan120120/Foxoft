@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260517111459_fdgh")]
+    partial class fdgh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4543,14 +4546,6 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            ClaimCode = "TransferApproval",
-                            CategoryId = 14,
-                            ClaimDesc = "Transfer Təsdiqi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
-                        },
-                        new
-                        {
                             ClaimCode = "Column_ProductCost",
                             CategoryId = 18,
                             ClaimDesc = "Maya Dəyəri",
@@ -4898,6 +4893,14 @@ namespace Foxoft.Migrations
                             ClaimCode = "NotificationSettings",
                             CategoryId = 15,
                             ClaimDesc = "Bildiriş Tənzimləmələri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "TransferApproval",
+                            CategoryId = 14,
+                            ClaimDesc = "Transfer Təsdiqi",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         });

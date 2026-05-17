@@ -4089,4 +4089,40 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_Invoice_UnsavedChangesQuestion" xml:space="preserve">
     <value>Yadda saxlanmamış dəyişikliklər var. Yadda saxlamaq istəyirsiniz?</value>
   </data>
+  <data name="Entity_AppSetting_TransferAutoApprove" xml:space="preserve">
+    <value>Avtomatik Transfer Təsdiqi</value>
+  </data>
+  <data name="Entity_InvoiceHeader_TransferApprovalStatus" xml:space="preserve">
+    <value>Transfer Təsdiq Statusu</value>
+  </data>
+  <data name="Form_TransferApproval_Caption" xml:space="preserve">
+    <value>Transfer Təsdiqi</value>
+  </data>
+  <data name="Form_TransferApproval_Button_Approve" xml:space="preserve">
+    <value>Təsdiq Et</value>
+  </data>
+  <data name="Form_TransferApproval_Button_Reject" xml:space="preserve">
+    <value>Rədd Et</value>
+  </data>
+  <data name="Form_TransferApproval_Button_Refresh" xml:space="preserve">
+    <value>Yenilə</value>
+  </data>
+  <data name="Form_TransferApproval_ApproveConfirm" xml:space="preserve">
+    <value>Bu transferi təsdiq etmək istədiyinizə əminsiniz?</value>
+  </data>
+  <data name="Form_TransferApproval_RejectConfirm" xml:space="preserve">
+    <value>Bu transferi rədd etmək istədiyinizə əminsiniz?</value>
+  </data>
+  <data name="Form_TransferApproval_NoSelection" xml:space="preserve">
+    <value>Zəhmət olmasa bir transfer seçin</value>
+  </data>
+  <data name="Form_TransferApproval_Success" xml:space="preserve">
+    <value>Transfer uğurla təsdiqləndi</value>
+  </data>
+  <data name="Form_TransferApproval_RejectedSuccess" xml:space="preserve">
+    <value>Transfer uğurla rədd edildi</value>
+  </data>
+  <data name="ERP_ACE_TransferApproval" xml:space="preserve">
+    <value>Transfer Təsdiqi</value>
+  </data>
 </root>

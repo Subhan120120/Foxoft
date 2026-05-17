@@ -1403,10 +1403,19 @@ namespace Foxoft
                 return;
             }
 
+            if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode))
+            {
+                if (Settings.Default.AppSetting.TransferAutoApprove)
+                    trInvoiceHeader.TransferApprovalStatus = TransferApprovalStatus.AutoApproved;
+                else
+                    trInvoiceHeader.TransferApprovalStatus = TransferApprovalStatus.Pending;
+            }
+
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
             _isSaved = true;
 
-            if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode))
+            if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode)
+                && Settings.Default.AppSetting.TransferAutoApprove)
                 InitilizeTransfer();
 
             dbContext.ChangeTracker.AcceptAllChanges();

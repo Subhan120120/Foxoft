@@ -200,6 +200,7 @@ namespace Foxoft
                 case "PaymentPlanList": ShowExistForm<FormCommonList<DcPaymentPlan>>("", nameof(DcPaymentPlan.PaymentPlanCode)); break;
                 case "WhatsAppMessageLog": ShowExistForm<FormWhatsAppMessageLog>(); break;
                 case "NotificationSettings": ShowExistForm<FormNotificationSettings>(); break;
+                case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
 
                 default: break;
             }
@@ -293,6 +294,7 @@ namespace Foxoft
             this.ACE_PaymentPlanList.Name = "PaymentPlanList";
             this.ACE_WhatsAppMessageLog.Name = "WhatsAppMessageLog";
             this.ACE_NotificationSettings.Name = "NotificationSettings";
+            this.ACE_TransferApproval.Name = "TransferApproval";
         }
 
         private void InitializeReports()

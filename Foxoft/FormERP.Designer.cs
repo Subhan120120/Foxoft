@@ -133,6 +133,7 @@ namespace Foxoft
             ACE_PaymentPlanList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_WhatsAppMessageLog = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_NotificationSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_TransferApproval = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -736,7 +737,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_WhatsAppMessageLog, ACE_NotificationSettings });
+            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_WhatsAppMessageLog, ACE_NotificationSettings, ACE_TransferApproval });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -821,6 +822,13 @@ namespace Foxoft
             ACE_NotificationSettings.Name = "ACE_NotificationSettings";
             ACE_NotificationSettings.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_NotificationSettings.Text = Resources.Form_NotificationSettings;
+            // 
+            // ACE_TransferApproval
+            // 
+            ACE_TransferApproval.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_InventoryTransfer.ImageOptions.SvgImage");
+            ACE_TransferApproval.Name = "ACE_TransferApproval";
+            ACE_TransferApproval.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_TransferApproval.Text = Resources.ERP_ACE_TransferApproval;
             // 
             // FormERP
             // 
@@ -954,5 +962,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PaymentPlanList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WhatsAppMessageLog;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationSettings;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_TransferApproval;
     }
 }

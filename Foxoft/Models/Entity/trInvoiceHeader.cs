@@ -147,6 +147,10 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsMainTF), ResourceType = typeof(Resources))]
         public bool IsMainTF { get; set; }
 
+        [DefaultValueSql("0")]
+        [Display(Name = nameof(Resources.Entity_InvoiceHeader_TransferApprovalStatus), ResourceType = typeof(Resources))]
+        public TransferApprovalStatus TransferApprovalStatus { get; set; }
+
         [Column(TypeName = "date")]
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_DeliveryDate), ResourceType = typeof(Resources))]
         public DateTime? DeliveryDate { get; set; }

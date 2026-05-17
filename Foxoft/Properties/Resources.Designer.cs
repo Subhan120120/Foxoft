@@ -11920,5 +11920,113 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Common_NoMoreRecords", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer Auto Approve.
+        /// </summary>
+        public static string Entity_AppSetting_TransferAutoApprove {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_TransferAutoApprove", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer Approval Status.
+        /// </summary>
+        public static string Entity_InvoiceHeader_TransferApprovalStatus {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_TransferApprovalStatus", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer Approval.
+        /// </summary>
+        public static string Form_TransferApproval_Caption {
+            get {
+                return ResourceManager.GetString("Form_TransferApproval_Caption", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Approve.
+        /// </summary>
+        public static string Form_TransferApproval_Button_Approve {
+            get {
+                return ResourceManager.GetString("Form_TransferApproval_Button_Approve", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Reject.
+        /// </summary>
+        public static string Form_TransferApproval_Button_Reject {
+            get {
+                return ResourceManager.GetString("Form_TransferApproval_Button_Reject", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string Form_TransferApproval_Button_Refresh {
+            get {
+                return ResourceManager.GetString("Form_TransferApproval_Button_Refresh", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to approve this transfer?.
+        /// </summary>
+        public static string Form_TransferApproval_ApproveConfirm {
+            get {
+                return ResourceManager.GetString("Form_TransferApproval_ApproveConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to reject this transfer?.
+        /// </summary>
+        public static string Form_TransferApproval_RejectConfirm {
+            get {
+                return ResourceManager.GetString("Form_TransferApproval_RejectConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a transfer.
+        /// </summary>
+        public static string Form_TransferApproval_NoSelection {
+            get {
+                return ResourceManager.GetString("Form_TransferApproval_NoSelection", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer approved successfully.
+        /// </summary>
+        public static string Form_TransferApproval_Success {
+            get {
+                return ResourceManager.GetString("Form_TransferApproval_Success", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer rejected successfully.
+        /// </summary>
+        public static string Form_TransferApproval_RejectedSuccess {
+            get {
+                return ResourceManager.GetString("Form_TransferApproval_RejectedSuccess", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer Approval.
+        /// </summary>
+        public static string ERP_ACE_TransferApproval {
+            get {
+                return ResourceManager.GetString("ERP_ACE_TransferApproval", resourceCulture);
+            }
+        }
     }
 }

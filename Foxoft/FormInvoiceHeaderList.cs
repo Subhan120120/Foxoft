@@ -98,7 +98,8 @@ namespace Foxoft
                             StoreCode = x.StoreCode,
                             WarehouseCode = x.WarehouseCode,
                             ToWarehouseCode = x.ToWarehouseCode,
-                            IsMainTF = x.IsMainTF
+                            IsMainTF = x.IsMainTF,
+                            TransferApprovalStatus = x.TransferApprovalStatus
                         })
                         .ToList();
 
@@ -180,6 +181,22 @@ namespace Foxoft
                 {
                     //e.Appearance.ForeColor = Color.Red;
                     e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+                }
+
+                // Highlight transfer approvals based on status
+                object processCodeObj = view.GetRowCellValue(e.RowHandle, "ProcessCode");
+                if (processCodeObj?.ToString() == "IT" && view.Columns["TransferApprovalStatus"] != null)
+                {
+                    object approvalStatusObj = view.GetRowCellValue(e.RowHandle, "TransferApprovalStatus");
+                    if (approvalStatusObj is TransferApprovalStatus status)
+                    {
+                        if (status == TransferApprovalStatus.Pending)
+                            e.Appearance.BackColor = Color.NavajoWhite;
+                        else if (status == TransferApprovalStatus.Rejected)
+                            e.Appearance.BackColor = Color.LightPink;
+                        else if (status == TransferApprovalStatus.Approved || status == TransferApprovalStatus.AutoApproved)
+                            e.Appearance.BackColor = Color.Honeydew;
+                    }
                 }
             }
         }

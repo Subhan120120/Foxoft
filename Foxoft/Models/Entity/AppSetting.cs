@@ -89,6 +89,10 @@ namespace Foxoft.Models
         [Display(Name = "Qaytarılan Formu Kilidlə")]
         public bool LockReturnDocument { get; set; }
 
+        [DefaultValueSql("1")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_TransferAutoApprove), ResourceType = typeof(Resources))]
+        public bool TransferAutoApprove { get; set; } = true;
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }
