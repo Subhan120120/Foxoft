@@ -18,6 +18,7 @@ namespace Foxoft.Models
         [Display(Name = "Kateqoriya")]
         public string HierarchyCode { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcCampaign DcCampaign { get; set; }
         public virtual DcHierarchy DcHierarchy { get; set; }
     }

@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -20,6 +21,8 @@ namespace Foxoft.Models
         public int InstallmentId { get; set; }
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
+
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrInstallment TrInstallment { get; set; }
     }
 }

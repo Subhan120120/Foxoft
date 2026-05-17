@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models.Entity.Report
 {
@@ -54,6 +55,7 @@ namespace Foxoft.Models.Entity.Report
                            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string Representative { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcReport DcReport { get; set; }
         public virtual DcReportVariableType DcReportVariableType { get; set; }
     }

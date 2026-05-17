@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models.Entity.Report
 {
@@ -28,7 +29,10 @@ namespace Foxoft.Models.Entity.Report
         [Display(Name = nameof(Resources.Entity_ReportCustomization_CurrAccCode), ResourceType = typeof(Resources))]
         public string CurrAccCode { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcReport DcReport { get; set; }
+
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcCurrAcc DcCurrAcc { get; set; }
     }
 }

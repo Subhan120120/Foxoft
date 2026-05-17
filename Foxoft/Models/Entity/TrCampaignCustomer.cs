@@ -18,6 +18,7 @@ namespace Foxoft.Models
         [Display(Name = "Müştəri")]
         public string CurrAccCode { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcCampaign DcCampaign { get; set; }
         public virtual DcCurrAcc DcCurrAcc { get; set; }
     }

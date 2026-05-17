@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -27,6 +28,7 @@ namespace Foxoft.Models
         [Column(TypeName = "money")]
         public decimal? LineExpences { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrInvoiceLine TrInvoiceLine { get; set; }
     }
 }

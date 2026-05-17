@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -92,6 +93,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_PaymentLine_BalanceAfter), ResourceType = typeof(Resources))]
         public decimal BalanceAfter { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrPaymentHeader TrPaymentHeader { get; set; }
         public virtual DcPaymentType DcPaymentType { get; set; }
         public virtual DcPaymentMethod DcPaymentMethod { get; set; }

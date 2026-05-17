@@ -18,6 +18,7 @@ namespace Foxoft.Models
         [Display(Name = "Depo")]
         public string WarehouseCode { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcCampaign DcCampaign { get; set; }
         public virtual DcWarehouse DcWarehouse { get; set; }
     }

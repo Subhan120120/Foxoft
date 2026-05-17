@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -44,6 +45,8 @@ namespace Foxoft.Models
         public bool UseInSite { get; set; }
 
         [ForeignKey(nameof(ProductCode))]
+
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcProduct DcProduct { get; set; }
     }
 }

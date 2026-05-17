@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -20,6 +21,7 @@ namespace Foxoft.Models
         [ForeignKey(nameof(DcProduct))]
         public string ProductCode { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcProduct DcProduct { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
     }

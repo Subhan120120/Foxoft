@@ -61,7 +61,9 @@ namespace Foxoft.Models
         public string? Note { get; set; }
 
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrInvoiceLine? TrInvoiceLine { get; set; }
+        [DeleteBehavior(DeleteBehavior.Restrict)]
         public virtual DcCampaign DcCampaign { get; set; }
         public virtual DcPaymentMethod? DcPaymentMethod { get; set; }
     }

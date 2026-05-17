@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -28,6 +29,7 @@ namespace Foxoft.Models
         public int IdentityColumn { get; set; }
 
         [ForeignKey("ProductCode")]
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcProduct DcProduct { get; set; }
         [ForeignKey("FeatureTypeId")]
         public virtual DcFeatureType DcFeatureType { get; set; }

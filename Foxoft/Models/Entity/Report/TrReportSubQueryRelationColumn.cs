@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models.Entity.Report
 {
@@ -23,6 +24,7 @@ namespace Foxoft.Models.Entity.Report
         [ForeignKey(nameof(TrReportSubQuery))]
         public int SubQueryId { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrReportSubQuery TrReportSubQuery { get; set; }
     }
 }

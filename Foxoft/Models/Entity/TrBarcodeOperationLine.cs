@@ -1,7 +1,8 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -40,6 +41,8 @@ namespace Foxoft.Models
         public virtual DcProduct DcProduct { get; set; }
 
         [ForeignKey(nameof(BarcodeOperationHeaderId))]
+
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrBarcodeOperationHeader TrBarcodeOperationHeader { get; set; }
     }
 }

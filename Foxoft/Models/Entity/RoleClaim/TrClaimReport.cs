@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models.Entity.RoleClaim
 {
@@ -24,6 +25,7 @@ namespace Foxoft.Models.Entity.RoleClaim
         [ForeignKey(nameof(DcReport))]
         public int ReportId { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcReport DcReport { get; set; }
         public virtual DcClaim DcClaim { get; set; }
     }

@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -29,6 +30,8 @@ namespace Foxoft.Models
         public int IdentityColumn { get; set; }
 
         [ForeignKey(nameof(CurrAccCode))]
+
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         [ForeignKey(nameof(CurrAccFeatureTypeId))]
         public virtual DcCurrAccFeatureType DcCurrAccFeatureType { get; set; }

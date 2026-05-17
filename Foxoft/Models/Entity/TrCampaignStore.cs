@@ -18,6 +18,7 @@ namespace Foxoft.Models
         [Display(Name = "Store")]
         public string StoreCode { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcCampaign DcCampaign { get; set; }
         public virtual DcCurrAcc? DcStore { get; set; }
     }

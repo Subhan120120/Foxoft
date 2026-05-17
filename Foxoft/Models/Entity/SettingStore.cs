@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -32,6 +33,8 @@ namespace Foxoft.Models
         public int DefaultUnitOfMeasureId { get; set; }
 
         [ForeignKey(nameof(StoreCode))]
+
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcCurrAcc DcStore { get; set; }
         public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
     }

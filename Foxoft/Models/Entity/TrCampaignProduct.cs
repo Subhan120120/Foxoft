@@ -18,6 +18,7 @@ namespace Foxoft.Models
         [Display(Name = "Məhsul")]
         public string ProductCode { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcCampaign DcCampaign { get; set; }
         public virtual DcProduct DcProduct { get; set; }
     }

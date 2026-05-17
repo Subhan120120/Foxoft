@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models.Entity.RoleClaim
 {
@@ -21,6 +22,7 @@ namespace Foxoft.Models.Entity.RoleClaim
         [Display(Name = nameof(Resources.Entity_RoleClaim_ClaimCode), ResourceType = typeof(Resources))]
         public string ClaimCode { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual DcRole DcRole { get; set; }
         public virtual DcClaim DcClaim { get; set; }
     }

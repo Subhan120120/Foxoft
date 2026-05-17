@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -62,6 +63,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_Installment_OverdueDate), ResourceType = typeof(Resources))]
         public DateTime? OverdueDate { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcInstallmentPlan DcInstallmentPlan { get; set; }
         public virtual ICollection<TrInstallmentGuarantor> TrInstallmentGuarantors { get; set; }

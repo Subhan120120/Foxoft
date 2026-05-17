@@ -1,4 +1,4 @@
-﻿// File: Models/Tr/TrLoyaltyTxn.cs
+// File: Models/Tr/TrLoyaltyTxn.cs
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -23,21 +23,21 @@ namespace Foxoft.Models
         [Required]
         public LoyaltyTxnType TxnType { get; set; }
 
-        // + Earn, - Redeem, Reverse/Adjust/Expire də +/- ola bilər
+        // + Earn, - Redeem, Reverse/Adjust/Expire d? +/- ola bil?r
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
 
         public DateTime DocumentDate { get; set; } = DateTime.Now;
 
-        // Qazanılan bonusun yanma tarixi (Earn üçün)
+        // Qazanilan bonusun yanma tarixi (Earn ���n)
         public DateTime? ExpireAt { get; set; }
 
-        // Mənbə sənədlər (səndə bu entity-lər var deyə yalnız FK saxlayırıq)
+        // M?nb? s?n?dl?r (s?nd? bu entity-l?r var dey? yalniz FK saxlayiriq)
         public Guid? InvoiceHeaderId { get; set; }
 
         public Guid? PaymentLineId { get; set; }
 
-        // Reverse əməliyyatlar üçün əlaqə (məs: hansı txn-i geri çevirdi)
+        // Reverse ?m?liyyatlar ���n ?laq? (m?s: hansi txn-i geri �evirdi)
         public Guid? RelatedLoyaltyTxnId { get; set; }
 
         [StringLength(200)]
@@ -54,9 +54,13 @@ namespace Foxoft.Models
         public virtual TrLoyaltyTxn RelatedLoyaltyTxn { get; set; }
 
         [ForeignKey(nameof(PaymentLineId))]
+
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrPaymentLine TrPaymentLine { get; set; }
 
         [ForeignKey(nameof(InvoiceHeaderId))]
+
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
 
         [ForeignKey(nameof(CurrAccCode))]

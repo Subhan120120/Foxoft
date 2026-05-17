@@ -17,6 +17,7 @@ namespace Foxoft.Models
         [Display(Name = "Promo code")]
         public string? PromoCode { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
     }
 }

@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft.Models
 {
@@ -32,6 +33,7 @@ namespace Foxoft.Models
         [StringLength(100, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string LineDescription { get; set; }
 
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrPriceListHeader TrPriceListHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
