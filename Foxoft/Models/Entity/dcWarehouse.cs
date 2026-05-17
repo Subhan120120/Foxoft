@@ -1,7 +1,8 @@
-﻿using Foxoft.Models.Entity;
+using Foxoft.Models.Entity;
 using Foxoft.Properties;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
@@ -31,11 +32,10 @@ namespace Foxoft.Models
                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string OfficeCode { get; set; }
 
+        [ForeignKey(nameof(DcStore))]
         [Display(Name = nameof(Resources.Entity_Warehouse_StoreCode), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources),
                   ErrorMessageResourceName = nameof(Resources.Validation_Required))]
-        [StringLength(50, ErrorMessageResourceType = typeof(Resources),
-                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string StoreCode { get; set; }
 
         [Display(Name = nameof(Resources.Entity_Warehouse_PermitNegativeStock), ResourceType = typeof(Resources))]
@@ -61,5 +61,6 @@ namespace Foxoft.Models
 
         
         public virtual ICollection<TrCampaignWarehouse> TrCampaignWarehouses { get; set; }
+        public virtual DcCurrAcc DcStore { get; set; }
     }
 }

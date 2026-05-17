@@ -64,6 +64,7 @@ namespace Foxoft.Models
             ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string OfficeCode { get; set; }
 
+        [ForeignKey(nameof(DcStore))]
         [Display(Name = nameof(Resources.Entity_CurrAcc_StoreCode), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources),
             ErrorMessageResourceName = nameof(Resources.Validation_Required))]
@@ -220,5 +221,6 @@ namespace Foxoft.Models
         public virtual ICollection<TrInstallmentGuarantor> TrInstallmentGuarantors { get; set; }
         public virtual ICollection<DcTerminal> DcCashRegDcTerminals { get; set; }
         public virtual ICollection<DcTerminal> DcStoreDcTerminals { get; set; }
+        public virtual DcCurrAcc DcStore { get; set; }
     }
 }
