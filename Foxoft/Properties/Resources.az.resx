@@ -3729,7 +3729,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Yetkiniz yoxdur!</value>
   </data>
   <data name="Product_CloneConfirmation" xml:space="preserve">
-    <value>{0} kodlu məhsulun Ã¶zəllikləri klonlansın?</value>
+    <value>{0} kodlu məhsulun özəllikləri klonlansın?</value>
   </data>
   <data name="Salesperson_EnterCode" xml:space="preserve">
     <value>Satıcı Kodu Daxil Edin:</value>

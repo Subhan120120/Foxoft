@@ -57,11 +57,10 @@ namespace Foxoft
             BBI_Next = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Report = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            RPG_Navigate = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
@@ -248,7 +247,7 @@ namespace Foxoft
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, RPG_Navigate, ribbonPageGroup4, ribbonPageGroup2, RPG_Report, ribbonPageGroup3 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup4, ribbonPageGroup2, RPG_Report, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.Form_PaymentDetail_RibbonPage_Main;
             // 
@@ -259,6 +258,12 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_DeletePayment);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = Resources.Form_PaymentDetail_RibbonGroup_Payment;
+            // 
+            // ribbonPageGroup4
+            // 
+            ribbonPageGroup4.ItemLinks.Add(BBI_EditPayment);
+            ribbonPageGroup4.Name = "ribbonPageGroup4";
+            ribbonPageGroup4.Text = Resources.Form_PaymentDetail_RibbonGroup_Control;
             // 
             // ribbonPageGroup2
             // 
@@ -280,19 +285,6 @@ namespace Foxoft
             ribbonPageGroup3.ItemLinks.Add(BBI_Info);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = Resources.Form_PaymentDetail_RibbonGroup_Info;
-            // 
-            // ribbonPageGroup4
-            // 
-            ribbonPageGroup4.ItemLinks.Add(BBI_EditPayment);
-            ribbonPageGroup4.Name = "ribbonPageGroup4";
-            ribbonPageGroup4.Text = Resources.Form_PaymentDetail_RibbonGroup_Control;
-            // 
-            // RPG_Navigate
-            // 
-            RPG_Navigate.ItemLinks.Add(BBI_Previous);
-            RPG_Navigate.ItemLinks.Add(BBI_Next);
-            RPG_Navigate.Name = "RPG_Navigate";
-            RPG_Navigate.Text = Resources.Common_Navigate;
             // 
             // ribbonStatusBar
             // 
@@ -851,6 +843,5 @@ namespace Foxoft
         private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
         private DevExpress.XtraBars.BarButtonItem BBI_Previous;
         private DevExpress.XtraBars.BarButtonItem BBI_Next;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Navigate;
     }
 }
