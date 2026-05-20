@@ -3308,7 +3308,7 @@ Error: {1}</value>
     <value>Starting...</value>
   </data>
   <data name="Form_Splash_Copyright" xml:space="preserve">
-    <value>Copyright Ã‚Â© 2021 Subhan Huseynzade</value>
+    <value>Copyright © 2021 Subhan Huseynzade</value>
   </data>
   <data name="Form_Splash_Title_ERP" xml:space="preserve">
     <value>ERP</value>
@@ -3950,9 +3950,6 @@ To delete, cancel the receipt!</value>
   <data name="Form_InstallmentSale_Summary_Remaining_Subtitle" xml:space="preserve">
     <value>Active Credit</value>
   </data>
-  <data name="Form_InstallmentSale_Filter_Continuing" xml:space="preserve">
-    <value>Continuing</value>
-  </data>
   <data name="Form_InstallmentSale_Filter_Completed" xml:space="preserve">
     <value>Completed</value>
   </data>
@@ -3961,9 +3958,6 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Common_Pieces" xml:space="preserve">
     <value>Pieces</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog" xml:space="preserve">
-    <value>WhatsApp Message Log</value>
   </data>
   <data name="Entity_TrWhatsAppMessageLog_MessageType" xml:space="preserve">
     <value>Message Type</value>
@@ -4468,5 +4462,11 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Entity_DcShift_IsActive" xml:space="preserve">
     <value>Active</value>
+  </data>
+  <data name="ERP_ACE_Campaigns" xml:space="preserve">
+    <value>Campaigns</value>
+  </data>
+  <data name="ERP_ACE_Credits" xml:space="preserve">
+    <value>Credits</value>
   </data>
 </root>

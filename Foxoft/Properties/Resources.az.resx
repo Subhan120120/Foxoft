@@ -1879,7 +1879,7 @@
     <value>Test</value>
   </data>
   <data name="Common_SaveLayout" xml:space="preserve">
-    <value>Quruluşu yadda saxla</value>
+    <value>Düzəni Yadda Saxla</value>
   </data>
   <data name="Common_OpenQuestion" xml:space="preserve">
     <value>Açmaq istəyirsiniz?</value>
@@ -2234,6 +2234,12 @@
   </data>
   <data name="Form_InstallmentSale_Button_QueryEdit" xml:space="preserve">
     <value>Sorğunu Dəyiş</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Continuing" xml:space="preserve">
+    <value>Dəvam edir</value>
+  </data>
+  <data name="Form_InstallmentSale_Filter_Overdue" xml:space="preserve">
+    <value>Gecikən</value>
   </data>
   <data name="Form_InstallmentSale_Filter_Day" xml:space="preserve">
     <value>Son Gün</value>
@@ -3875,18 +3881,6 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_InstallmentSale_Col_RemainingAmount" xml:space="preserve">
     <value>Qalıq Məbləğ</value>
   </data>
-  <data name="Form_InstallmentSale_Filter_Continuing" xml:space="preserve">
-    <value>Dəvam edir</value>
-  </data>
-  <data name="Form_InstallmentSale_Filter_Completed" xml:space="preserve">
-    <value>Tamamlanıb</value>
-  </data>
-  <data name="Form_InstallmentSale_Filter_Overdue" xml:space="preserve">
-    <value>Gecikən</value>
-  </data>
-  <data name="Form_InstallmentSale_RibbonGroup_Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
   <data name="Form_InstallmentSale_Col_InstallmentStatus" xml:space="preserve">
     <value>Status</value>
   </data>
@@ -3909,7 +3903,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Gecikən Günlər</value>
   </data>
   <data name="Form_WhatsAppMessageLog" xml:space="preserve">
-    <value>WhatsApp Mesaj Jurnalı</value>
+    <value>WhatsApp Logu</value>
   </data>
   <data name="Entity_TrWhatsAppMessageLog_CurrAccCode" xml:space="preserve">
     <value>Cari Hesab</value>
@@ -3956,11 +3950,14 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_InstallmentSale_Summary_Remaining_Subtitle" xml:space="preserve">
     <value>Aktiv Kredit</value>
   </data>
+  <data name="Form_InstallmentSale_Filter_Completed" xml:space="preserve">
+    <value>Tamamlanıb</value>
+  </data>
+  <data name="Form_InstallmentSale_RibbonGroup_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Common_Pieces" xml:space="preserve">
     <value>Ədəd</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog" xml:space="preserve">
-    <value>WhatsApp Logu</value>
   </data>
   <data name="Entity_TrWhatsAppMessageLog_MessageType" xml:space="preserve">
     <value>Mesaj Növü</value>
@@ -3973,9 +3970,6 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Common_Export" xml:space="preserve">
     <value>Export</value>
-  </data>
-  <data name="Common_SaveLayout" xml:space="preserve">
-    <value>Düzəni Yadda Saxla</value>
   </data>
   <data name="FormInvoice_Previous" xml:space="preserve">
     <value>Əvvəlki</value>
@@ -4395,43 +4389,43 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Maaş Dövrü</value>
   </data>
   <data name="Common_EmployeeName" xml:space="preserve">
-    <value>ÆmÉ™kdaÅŸ AdÄ±</value>
+    <value>Əməkdaş Adı</value>
   </data>
   <data name="Validation_EndDateBeforeStartDate" xml:space="preserve">
-    <value>BitmÉ™ tarixi baÅŸlama tarixindÉ™n É™vvÉ™l ola bilmÉ™z.</value>
+    <value>Bitmə tarixi başlama tarixindən əvvəl ola bilməz.</value>
   </data>
   <data name="Validation_CheckOutBeforeCheckIn" xml:space="preserve">
-    <value>Ã‡Ä±xÄ±ÅŸ vaxtÄ± giriÅŸ vaxtÄ±ndan É™vvÉ™l ola bilmÉ™z.</value>
+    <value>Çıxış vaxtı giriş vaxtından əvvəl ola bilməz.</value>
   </data>
   <data name="Validation_ParentDepartmentSelf" xml:space="preserve">
-    <value>Ãœst departament Ã¶zÃ¼ ola bilmÉ™z.</value>
+    <value>Üst departament özü ola bilməz.</value>
   </data>
   <data name="Form_PayrollEdit_RemoveLineConfirm" xml:space="preserve">
-    <value>SeÃ§ilmiÅŸ sÉ™tir silinsin?</value>
+    <value>Seçilmiş sətir silinsin?</value>
   </data>
   <data name="Form_PayrollEdit_BaseSalaryFromContract" xml:space="preserve">
-    <value>MÃ¼qavilÉ™dÉ™n Baza MaaÅŸ</value>
+    <value>Müqavilədən Baza Maaş</value>
   </data>
   <data name="Form_PayrollEdit_Lines" xml:space="preserve">
-    <value>SÉ™tirlÉ™r</value>
+    <value>Sətirlər</value>
   </data>
   <data name="Form_PayrollEdit_Totals" xml:space="preserve">
     <value>Yekunlar</value>
   </data>
   <data name="Entity_TrPayrollPeriod_PeriodYear" xml:space="preserve">
-    <value>Ä°l</value>
+    <value>İl</value>
   </data>
   <data name="Entity_TrPayrollPeriod_PeriodMonth" xml:space="preserve">
     <value>Ay</value>
   </data>
   <data name="Entity_TrPayrollLine_PayrollItemType" xml:space="preserve">
-    <value>NÃ¶v</value>
+    <value>Növ</value>
   </data>
   <data name="Entity_TrPayrollLine_Description" xml:space="preserve">
-    <value>AÃ§Ä±qlama</value>
+    <value>Açıqlama</value>
   </data>
   <data name="Entity_TrPayrollLine_Amount" xml:space="preserve">
-    <value>MÉ™blÉ™ÄŸ</value>
+    <value>Məbləğ</value>
   </data>
   <data name="ERP_ACE_PayrollList" xml:space="preserve">
     <value>Maaş Hesablamaları</value>
@@ -4468,5 +4462,11 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Entity_DcShift_IsActive" xml:space="preserve">
     <value>Aktiv</value>
+  </data>
+  <data name="ERP_ACE_Campaigns" xml:space="preserve">
+    <value>Endirim Kampaniyaları</value>
+  </data>
+  <data name="ERP_ACE_Credits" xml:space="preserve">
+    <value>Kredit Əməliyatları</value>
   </data>
 </root>

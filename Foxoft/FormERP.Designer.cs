@@ -721,7 +721,7 @@ namespace Foxoft
             ACE_CampaignList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CampaignList.ImageOptions.SvgImage");
             ACE_CampaignList.Name = "ACE_CampaignList";
             ACE_CampaignList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_CampaignList.Text = "Endirim KampaniyasÄ± SiyahÄ±sÄ±";
+            ACE_CampaignList.Text = Resources.ERP_ACE_Campaigns;
             // 
             // ACE_CrmActivityList
             // 
@@ -846,7 +846,7 @@ namespace Foxoft
             ACE_CreditList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CreditList.ImageOptions.SvgImage");
             ACE_CreditList.Name = "ACE_CreditList";
             ACE_CreditList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_CreditList.Text = "Kredit Æ\u008fmÉ™liyyatlarÄ±";
+            ACE_CreditList.Text = Resources.ERP_ACE_Credits;
             // 
             // ACE_CurrencyList
             // 
