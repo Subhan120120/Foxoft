@@ -1,4 +1,4 @@
-﻿using Foxoft.AppCode;
+using Foxoft.AppCode;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Models.Entity.RoleClaim;
@@ -100,6 +100,9 @@ namespace Foxoft.Models
         public DbSet<DcPayrollPeriod> DcPayrollPeriods { get; set; }
         public DbSet<TrPayrollHeader> TrPayrollHeaders { get; set; }
         public DbSet<TrPayrollLine> TrPayrollLines { get; set; }
+        public DbSet<TrLeave> TrLeaves { get; set; }
+        public DbSet<DcShift> DcShifts { get; set; }
+        public DbSet<TrEmployeeShift> TrEmployeeShifts { get; set; }
         public DbSet<DcLoyaltyCard> DcLoyaltyCards { get; set; }
         public DbSet<DcLoyaltyProgram> DcLoyaltyPrograms { get; set; }
         public DbSet<TrLoyaltyTxn> TrLoyaltyTxns { get; set; }
@@ -789,7 +792,10 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "Waybill", ClaimDesc = "Qaimə", ClaimTypeId = 1, CategoryId = 14 },
                 new DcClaim { ClaimCode = "PaymentDetail", ClaimDesc = "Ödəniş Detalı", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "CrmActivityList", ClaimDesc = "CRM Fəaliyyət Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
-                new DcClaim { ClaimCode = "Attendances", ClaimDesc = "Davamiyyət", ClaimTypeId = 1, CategoryId = 23 }
+                new DcClaim { ClaimCode = "Attendances", ClaimDesc = "Davamiyyət", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "Leaves", ClaimDesc = "Məzuniyyətlər", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "Shifts", ClaimDesc = "Növbələr", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "EmployeeShifts", ClaimDesc = "İşçi Növbələri", ClaimTypeId = 1, CategoryId = 23 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -817,6 +823,9 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 75, RoleCode = "Admin", ClaimCode = "PayrollPeriods" },
                 new TrRoleClaim { RoleClaimId = 76, RoleCode = "Admin", ClaimCode = "PayrollList" },
                 new TrRoleClaim { RoleClaimId = 77, RoleCode = "Admin", ClaimCode = "Attendances" },
+                new TrRoleClaim { RoleClaimId = 201, RoleCode = "Admin", ClaimCode = "Leaves" },
+                new TrRoleClaim { RoleClaimId = 202, RoleCode = "Admin", ClaimCode = "Shifts" },
+                new TrRoleClaim { RoleClaimId = 203, RoleCode = "Admin", ClaimCode = "EmployeeShifts" },
                 new TrRoleClaim { RoleClaimId = 78, RoleCode = "Admin", ClaimCode = "Waybill" },
                 new TrRoleClaim { RoleClaimId = 79, RoleCode = "Admin", ClaimCode = "PaymentDetail" },
                 new TrRoleClaim { RoleClaimId = 80, RoleCode = "Admin", ClaimCode = "CrmActivityList" },

@@ -4436,4 +4436,37 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="ERP_ACE_PayrollList" xml:space="preserve">
     <value>Maaş Hesablamaları</value>
   </data>
+  <data name="ERP_ACE_Leaves" xml:space="preserve">
+    <value>Məzuniyyətlər</value>
+  </data>
+  <data name="ERP_ACE_Shifts" xml:space="preserve">
+    <value>Növbələr</value>
+  </data>
+  <data name="ERP_ACE_EmployeeShifts" xml:space="preserve">
+    <value>İşçi Növbələri</value>
+  </data>
+  <data name="Entity_TrLeave_LeaveType" xml:space="preserve">
+    <value>Məzuniyyət Növü</value>
+  </data>
+  <data name="Entity_TrLeave_LeaveStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Entity_TrLeave_Reason" xml:space="preserve">
+    <value>Səbəb</value>
+  </data>
+  <data name="Entity_DcShift_ShiftCode" xml:space="preserve">
+    <value>Növbə Kodu</value>
+  </data>
+  <data name="Entity_DcShift_ShiftName" xml:space="preserve">
+    <value>Növbə Adı</value>
+  </data>
+  <data name="Entity_DcShift_StartTime" xml:space="preserve">
+    <value>Başlama Vaxtı</value>
+  </data>
+  <data name="Entity_DcShift_EndTime" xml:space="preserve">
+    <value>Bitiş Vaxtı</value>
+  </data>
+  <data name="Entity_DcShift_IsActive" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
 </root>

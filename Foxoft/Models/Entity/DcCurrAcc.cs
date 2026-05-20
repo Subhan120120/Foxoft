@@ -28,6 +28,8 @@ namespace Foxoft.Models
             TrEmployeeContracts = new HashSet<TrEmployeeContract>();
             TrAttendances = new HashSet<TrAttendance>();
             TrPayrollHeaders = new HashSet<TrPayrollHeader>();
+            TrLeaves = new HashSet<TrLeave>();
+            TrEmployeeShifts = new HashSet<TrEmployeeShift>();
         }
 
         [Key]
@@ -197,6 +199,8 @@ namespace Foxoft.Models
         public virtual ICollection<TrEmployeePosition> TrEmployeePositions { get; set; }
         public virtual ICollection<TrEmployeeContract> TrEmployeeContracts { get; set; }
         public virtual ICollection<TrAttendance> TrAttendances { get; set; }
+        public virtual ICollection<TrLeave> TrLeaves { get; set; }
+        public virtual ICollection<TrEmployeeShift> TrEmployeeShifts { get; set; }
 
         public virtual ICollection<TrPayrollHeader> TrPayrollHeaders { get; set; }
         public virtual DcCurrAccType DcCurrAccType { get; set; }

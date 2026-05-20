@@ -1,4 +1,4 @@
-﻿// File: Models/HrEnums.cs
+// File: Models/HrEnums.cs
 namespace Foxoft.Models
 {
     public enum Gender : byte
@@ -24,6 +24,15 @@ namespace Foxoft.Models
         Approved = 2,
         Rejected = 3,
         Cancelled = 4
+    }
+
+    public enum LeaveType : byte
+    {
+        Annual = 1,
+        Sick = 2,
+        Unpaid = 3,
+        Maternity = 4,
+        Other = 99
     }
 
     public enum PayrollItemType : byte

@@ -4436,4 +4436,37 @@ To delete, cancel the receipt!</value>
   <data name="ERP_ACE_PayrollList" xml:space="preserve">
     <value>Payroll List</value>
   </data>
+  <data name="ERP_ACE_Leaves" xml:space="preserve">
+    <value>Leaves</value>
+  </data>
+  <data name="ERP_ACE_Shifts" xml:space="preserve">
+    <value>Shifts</value>
+  </data>
+  <data name="ERP_ACE_EmployeeShifts" xml:space="preserve">
+    <value>Employee Shifts</value>
+  </data>
+  <data name="Entity_TrLeave_LeaveType" xml:space="preserve">
+    <value>Leave Type</value>
+  </data>
+  <data name="Entity_TrLeave_LeaveStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Entity_TrLeave_Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="Entity_DcShift_ShiftCode" xml:space="preserve">
+    <value>Shift Code</value>
+  </data>
+  <data name="Entity_DcShift_ShiftName" xml:space="preserve">
+    <value>Shift Name</value>
+  </data>
+  <data name="Entity_DcShift_StartTime" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
+  <data name="Entity_DcShift_EndTime" xml:space="preserve">
+    <value>End Time</value>
+  </data>
+  <data name="Entity_DcShift_IsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
 </root>
