@@ -190,6 +190,13 @@ namespace Foxoft
                 case "StoreList": ShowExistForm<FormStoreList>(); break;
                 case "WarehouseList": ShowExistForm<FormWarehouseList>(); break;
                 case "BarcodeOperations": ShowNewForm<FormBarcodeOperations>(); break;
+                case "Departments": ShowExistForm<FormDepartmentList>(); break;
+                case "Positions": ShowExistForm<FormPositionList>(); break;
+                case "EmploymentTypes": ShowExistForm<FormEmploymentTypeList>(); break;
+                case "EmployeePositions": ShowExistForm<FormEmployeePositionList>(); break;
+                case "EmployeeContracts": ShowExistForm<FormEmployeeContractList>(); break;
+                case "PayrollPeriods": ShowExistForm<FormPayrollPeriodList>(); break;
+                case "Attendances": ShowExistForm<FormAttendanceList>(); break;
                 case "PayrollList": ShowNewForm<FormPayrollList>(); break;
                 case "LoyaltyCards": ShowNewForm<FormLoyaltyCards>(); break;
                 case "TerminalList": ShowNewForm<FormTerminalList>(); break;
@@ -284,6 +291,13 @@ namespace Foxoft
             this.ACE_StoreList.Name = "StoreList";
             this.ACE_WarehouseList.Name = "WarehouseList";
             this.ACE_BarcodeOperations.Name = "BarcodeOperations";
+            this.ACE_Departments.Name = "Departments";
+            this.ACE_Positions.Name = "Positions";
+            this.ACE_EmploymentTypes.Name = "EmploymentTypes";
+            this.ACE_EmployeePositions.Name = "EmployeePositions";
+            this.ACE_EmployeeContracts.Name = "EmployeeContracts";
+            this.ACE_PayrollPeriods.Name = "PayrollPeriods";
+            this.ACE_Attendances.Name = "Attendances";
             this.ACE_PayrollList.Name = "PayrollList";
             this.ACE_LoyaltyCards.Name = "LoyaltyCards";
             this.ACE_TerminalList.Name = "TerminalList";

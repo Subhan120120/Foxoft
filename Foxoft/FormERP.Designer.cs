@@ -1,4 +1,4 @@
-
+﻿
 using DevExpress.XtraBars;
 using DevExpress.XtraReports.Serialization;
 using DevExpress.XtraScheduler;
@@ -34,6 +34,7 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -115,10 +116,17 @@ namespace Foxoft
             ACE_ProductDiscounts = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_ProductFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CurrAccFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_PayrollList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_LoyaltyCards = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CampaignList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CrmActivityList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_Departments = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_Positions = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_EmploymentTypes = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_EmployeePositions = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_EmployeeContracts = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_PayrollPeriods = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_Attendances = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -134,6 +142,7 @@ namespace Foxoft
             ACE_WhatsAppMessageLog = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_NotificationSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_TransferApproval = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_PayrollList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -363,7 +372,7 @@ namespace Foxoft
             // aC_Root
             // 
             aC_Root.Dock = DockStyle.Left;
-            aC_Root.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACG_Favorites, aCE_Invoices, ACE_Group_InventoryCount, aCE_Operation, aCE_Reports, aCE_Setting });
+            aC_Root.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACG_Favorites, aCE_Invoices, ACE_Group_InventoryCount, aCE_Operation, aCE_HumanResource, aCE_Reports, aCE_Setting });
             aC_Root.Location = new Point(0, 158);
             aC_Root.Name = "aC_Root";
             aC_Root.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.True;
@@ -648,7 +657,7 @@ namespace Foxoft
             // 
             // aCE_Operation
             // 
-            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_PayrollList, ACE_LoyaltyCards, ACE_CampaignList, ACE_CrmActivityList });
+            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_LoyaltyCards, ACE_CampaignList, ACE_CrmActivityList });
             aCE_Operation.Expanded = true;
             aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
             aCE_Operation.Name = "aCE_Operation";
@@ -700,13 +709,6 @@ namespace Foxoft
             ACE_CurrAccFeatureType.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_CurrAccFeatureType.Text = Resources.ERP_ACE_CurrAccFeatureType;
             // 
-            // ACE_PayrollList
-            // 
-            ACE_PayrollList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollList.ImageOptions.SvgImage");
-            ACE_PayrollList.Name = "ACE_PayrollList";
-            ACE_PayrollList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_PayrollList.Text = "PayrollList";
-            // 
             // ACE_LoyaltyCards
             // 
             ACE_LoyaltyCards.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_LoyaltyCards.ImageOptions.SvgImage");
@@ -719,7 +721,7 @@ namespace Foxoft
             ACE_CampaignList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CampaignList.ImageOptions.SvgImage");
             ACE_CampaignList.Name = "ACE_CampaignList";
             ACE_CampaignList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_CampaignList.Text = "Endirim Kampaniyası Siyahısı";
+            ACE_CampaignList.Text = "Endirim KampaniyasÄ± SiyahÄ±sÄ±";
             // 
             // ACE_CrmActivityList
             // 
@@ -727,6 +729,63 @@ namespace Foxoft
             ACE_CrmActivityList.Name = "ACE_CrmActivityList";
             ACE_CrmActivityList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_CrmActivityList.Text = "CRM Activity List";
+            // 
+            // aCE_HumanResource
+            // 
+            aCE_HumanResource.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances });
+            aCE_HumanResource.Expanded = true;
+            aCE_HumanResource.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage");
+            aCE_HumanResource.Name = "aCE_HumanResource";
+            aCE_HumanResource.Text = Resources.ERP_ACE_HumanResource;
+            // 
+            // ACE_Departments
+            // 
+            ACE_Departments.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Departments.ImageOptions.SvgImage");
+            ACE_Departments.Name = "ACE_Departments";
+            ACE_Departments.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Departments.Text = Resources.ERP_ACE_Departments;
+            // 
+            // ACE_Positions
+            // 
+            ACE_Positions.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Positions.ImageOptions.SvgImage");
+            ACE_Positions.Name = "ACE_Positions";
+            ACE_Positions.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Positions.Text = Resources.ERP_ACE_Positions;
+            // 
+            // ACE_EmploymentTypes
+            // 
+            ACE_EmploymentTypes.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_EmploymentTypes.ImageOptions.SvgImage");
+            ACE_EmploymentTypes.Name = "ACE_EmploymentTypes";
+            ACE_EmploymentTypes.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_EmploymentTypes.Text = Resources.ERP_ACE_EmploymentTypes;
+            // 
+            // ACE_EmployeePositions
+            // 
+            ACE_EmployeePositions.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_EmployeePositions.ImageOptions.SvgImage");
+            ACE_EmployeePositions.Name = "ACE_EmployeePositions";
+            ACE_EmployeePositions.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_EmployeePositions.Text = Resources.ERP_ACE_EmployeePositions;
+            // 
+            // ACE_EmployeeContracts
+            // 
+            ACE_EmployeeContracts.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_EmployeeContracts.ImageOptions.SvgImage");
+            ACE_EmployeeContracts.Name = "ACE_EmployeeContracts";
+            ACE_EmployeeContracts.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_EmployeeContracts.Text = Resources.ERP_ACE_EmployeeContracts;
+            // 
+            // ACE_PayrollPeriods
+            // 
+            ACE_PayrollPeriods.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollPeriods.ImageOptions.SvgImage");
+            ACE_PayrollPeriods.Name = "ACE_PayrollPeriods";
+            ACE_PayrollPeriods.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PayrollPeriods.Text = Resources.ERP_ACE_PayrollPeriods;
+            // 
+            // ACE_Attendances
+            // 
+            ACE_Attendances.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Attendances.ImageOptions.SvgImage");
+            ACE_Attendances.Name = "ACE_Attendances";
+            ACE_Attendances.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Attendances.Text = Resources.ERP_ACE_Attendances;
             // 
             // aCE_Reports
             // 
@@ -787,7 +846,7 @@ namespace Foxoft
             ACE_CreditList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CreditList.ImageOptions.SvgImage");
             ACE_CreditList.Name = "ACE_CreditList";
             ACE_CreditList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_CreditList.Text = "Kredit Əməliyyatları";
+            ACE_CreditList.Text = "Kredit Æ\u008fmÉ™liyyatlarÄ±";
             // 
             // ACE_CurrencyList
             // 
@@ -825,10 +884,17 @@ namespace Foxoft
             // 
             // ACE_TransferApproval
             // 
-            ACE_TransferApproval.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_InventoryTransfer.ImageOptions.SvgImage");
+            ACE_TransferApproval.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_TransferApproval.ImageOptions.SvgImage");
             ACE_TransferApproval.Name = "ACE_TransferApproval";
             ACE_TransferApproval.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_TransferApproval.Text = Resources.ERP_ACE_TransferApproval;
+            // 
+            // ACE_PayrollList
+            // 
+            ACE_PayrollList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollList.ImageOptions.SvgImage");
+            ACE_PayrollList.Name = "ACE_PayrollList";
+            ACE_PayrollList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PayrollList.Text = "PayrollList";
             // 
             // FormERP
             // 
@@ -962,6 +1028,15 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PaymentPlanList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WhatsAppMessageLog;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationSettings;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_TransferApproval;
+                private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Departments;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Positions;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_EmploymentTypes;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_EmployeePositions;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_EmployeeContracts;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PayrollPeriods;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Attendances;
+private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_TransferApproval;
     }
 }
+
+

@@ -657,7 +657,8 @@ namespace Foxoft.Models
                 new DcClaimCategory { CategoryId = 19,/*dəyişmə olmaz*/ CategoryDesc = "Cari Hesab", CategoryLevel = 0, CategoryParentId = null },
                 new DcClaimCategory { CategoryId = 20,/*dəyişmə olmaz*/ CategoryDesc = "Kassa", CategoryLevel = 0, CategoryParentId = null },
                 new DcClaimCategory { CategoryId = 21,/*dəyişmə olmaz*/ CategoryDesc = "Ödəniş", CategoryLevel = 0, CategoryParentId = null },
-                new DcClaimCategory { CategoryId = 22,/*dəyişmə olmaz*/ CategoryDesc = "Mağaza", CategoryLevel = 0, CategoryParentId = null }
+                new DcClaimCategory { CategoryId = 22,/*dəyişmə olmaz*/ CategoryDesc = "Mağaza", CategoryLevel = 0, CategoryParentId = null },
+                new DcClaimCategory { CategoryId = 23,/*dəyişmə olmaz*/ CategoryDesc = "İnsan Resursları", CategoryLevel = 0, CategoryParentId = null }
                 );
 
             modelBuilder.Entity<DcClaim>().HasData(
@@ -778,7 +779,15 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PaymentPlanList", ClaimDesc = "Ödəniş Planları Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "ChangeExchangeRate", ClaimDesc = "Məzənnə Kursu Dəyişmə", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "WhatsAppMessageLog", ClaimDesc = "WhatsApp Mesaj Jurnalı", ClaimTypeId = 1, CategoryId = 15 },
-                new DcClaim { ClaimCode = "NotificationSettings", ClaimDesc = "Bildiriş Tənzimləmələri", ClaimTypeId = 1, CategoryId = 15 }
+                new DcClaim { ClaimCode = "NotificationSettings", ClaimDesc = "Bildiriş Tənzimləmələri", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "Departments", ClaimDesc = "Şöbələr", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "Positions", ClaimDesc = "Vəzifələr", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "EmploymentTypes", ClaimDesc = "Məşğulluq Növləri", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "EmployeePositions", ClaimDesc = "İşçi Vəzifələri", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "EmployeeContracts", ClaimDesc = "İşçi Müqavilələri", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "PayrollPeriods", ClaimDesc = "Əməkhaqqı Dövrləri", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "Payrolls", ClaimDesc = "Əməkhaqqı Siyahısı", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "Attendances", ClaimDesc = "Davamiyyət", ClaimTypeId = 1, CategoryId = 23 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -798,6 +807,14 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrRoleClaim>().HasData(
                 new TrRoleClaim { RoleClaimId = 1, RoleCode = "Admin", ClaimCode = "ButunHesabatlar" },
                 new TrRoleClaim { RoleClaimId = 2, RoleCode = "Admin", ClaimCode = "CashRegs" },
+                new TrRoleClaim { RoleClaimId = 70, RoleCode = "Admin", ClaimCode = "Departments" },
+                new TrRoleClaim { RoleClaimId = 71, RoleCode = "Admin", ClaimCode = "Positions" },
+                new TrRoleClaim { RoleClaimId = 72, RoleCode = "Admin", ClaimCode = "EmploymentTypes" },
+                new TrRoleClaim { RoleClaimId = 73, RoleCode = "Admin", ClaimCode = "EmployeePositions" },
+                new TrRoleClaim { RoleClaimId = 74, RoleCode = "Admin", ClaimCode = "EmployeeContracts" },
+                new TrRoleClaim { RoleClaimId = 75, RoleCode = "Admin", ClaimCode = "PayrollPeriods" },
+                new TrRoleClaim { RoleClaimId = 76, RoleCode = "Admin", ClaimCode = "Payrolls" },
+                new TrRoleClaim { RoleClaimId = 77, RoleCode = "Admin", ClaimCode = "Attendances" },
                 new TrRoleClaim { RoleClaimId = 3, RoleCode = "Admin", ClaimCode = "CashTransfer" },
                 new TrRoleClaim { RoleClaimId = 4, RoleCode = "Admin", ClaimCode = "Column_ProductCost" },
                 new TrRoleClaim { RoleClaimId = 5, RoleCode = "Admin", ClaimCode = "CountIn" },
