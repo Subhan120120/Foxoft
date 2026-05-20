@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20260517172942_asddfd3")]
-    partial class asddfd3
+    [Migration("20260520190112_sdf")]
+    partial class sdf
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -4903,6 +4903,70 @@ namespace Foxoft.Migrations
                             ClaimDesc = "Bildiriş Tənzimləmələri",
                             ClaimTypeId = (byte)1,
                             Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Departments",
+                            CategoryId = 23,
+                            ClaimDesc = "Şöbələr",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Positions",
+                            CategoryId = 23,
+                            ClaimDesc = "Vəzifələr",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "EmploymentTypes",
+                            CategoryId = 23,
+                            ClaimDesc = "Məşğulluq Növləri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "EmployeePositions",
+                            CategoryId = 23,
+                            ClaimDesc = "İşçi Vəzifələri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "EmployeeContracts",
+                            CategoryId = 23,
+                            ClaimDesc = "İşçi Müqavilələri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "PayrollPeriods",
+                            CategoryId = 23,
+                            ClaimDesc = "Əməkhaqqı Dövrləri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Payrolls",
+                            CategoryId = 23,
+                            ClaimDesc = "Əməkhaqqı Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Attendances",
+                            CategoryId = 23,
+                            ClaimDesc = "Davamiyyət",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         });
                 });
 
@@ -5131,6 +5195,15 @@ namespace Foxoft.Migrations
                         {
                             CategoryId = 22,
                             CategoryDesc = "Mağaza",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 23,
+                            CategoryDesc = "İnsan Resursları",
                             CategoryLevel = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -5490,6 +5563,70 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 2,
                             ClaimCode = "CashRegs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 70,
+                            ClaimCode = "Departments",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 71,
+                            ClaimCode = "Positions",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 72,
+                            ClaimCode = "EmploymentTypes",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 73,
+                            ClaimCode = "EmployeePositions",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 74,
+                            ClaimCode = "EmployeeContracts",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 75,
+                            ClaimCode = "PayrollPeriods",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 76,
+                            ClaimCode = "Payrolls",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 77,
+                            ClaimCode = "Attendances",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

@@ -83,7 +83,7 @@ namespace Foxoft
             ACE_InstallmentSaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator10 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_RetailPurchaseReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_RetailsaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_RetailSaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_WholesaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_InstallmentSaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_InventoryTransferReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -394,7 +394,7 @@ namespace Foxoft
             // 
             // aCE_Invoices
             // 
-            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentSaleInvoice, accordionControlSeparator6, ACE_RetailPurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentSaleReturn, accordionControlSeparator10, ACE_RetailPurchaseReturnCustom, ACE_RetailsaleReturnCustom, ACE_WholesaleReturnCustom, ACE_InstallmentSaleReturnCustom, ACE_InventoryTransferReturnCustom, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1, ACE_InstallmentSales });
+            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentSaleInvoice, accordionControlSeparator6, ACE_RetailPurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentSaleReturn, accordionControlSeparator10, ACE_RetailPurchaseReturnCustom, ACE_RetailSaleReturnCustom, ACE_WholesaleReturnCustom, ACE_InstallmentSaleReturnCustom, ACE_InventoryTransferReturnCustom, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1, ACE_InstallmentSales });
             aCE_Invoices.Expanded = true;
             aCE_Invoices.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Invoices.ImageOptions.SvgImage");
             aCE_Invoices.Name = "aCE_Invoices";
@@ -496,12 +496,12 @@ namespace Foxoft
             ACE_RetailPurchaseReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_RetailPurchaseReturnCustom.Text = Resources.ERP_ACE_RetailPurchaseReturnCustom;
             // 
-            // ACE_RetailsaleReturnCustom
+            // ACE_RetailSaleReturnCustom
             // 
-            ACE_RetailsaleReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailsaleReturnCustom.ImageOptions.SvgImage");
-            ACE_RetailsaleReturnCustom.Name = "ACE_RetailsaleReturnCustom";
-            ACE_RetailsaleReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_RetailsaleReturnCustom.Text = Resources.ERP_ACE_RetailSaleReturnCustom;
+            ACE_RetailSaleReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailSaleReturnCustom.ImageOptions.SvgImage");
+            ACE_RetailSaleReturnCustom.Name = "ACE_RetailSaleReturnCustom";
+            ACE_RetailSaleReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_RetailSaleReturnCustom.Text = Resources.ERP_ACE_RetailSaleReturnCustom;
             // 
             // ACE_WholesaleReturnCustom
             // 
@@ -732,7 +732,7 @@ namespace Foxoft
             // 
             // aCE_HumanResource
             // 
-            aCE_HumanResource.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances });
+            aCE_HumanResource.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances, ACE_PayrollList });
             aCE_HumanResource.Expanded = true;
             aCE_HumanResource.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage");
             aCE_HumanResource.Name = "aCE_HumanResource";
@@ -894,7 +894,7 @@ namespace Foxoft
             ACE_PayrollList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollList.ImageOptions.SvgImage");
             ACE_PayrollList.Name = "ACE_PayrollList";
             ACE_PayrollList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_PayrollList.Text = "PayrollList";
+            ACE_PayrollList.Text = Resources.ERP_ACE_PayrollList;
             // 
             // FormERP
             // 
@@ -998,7 +998,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InstallmentSales;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailPurchaseReturnCustom;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator10;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailsaleReturnCustom;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailSaleReturnCustom;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WholesaleReturnCustom;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InstallmentSaleReturnCustom;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CurrAccFeatureType;

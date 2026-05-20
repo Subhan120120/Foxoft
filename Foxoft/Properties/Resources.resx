@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4432,5 +4432,8 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Entity_TrPayrollLine_Amount" xml:space="preserve">
     <value>Amount</value>
+  </data>
+  <data name="ERP_ACE_PayrollList" xml:space="preserve">
+    <value>Payroll List</value>
   </data>
 </root>

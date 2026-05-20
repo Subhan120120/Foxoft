@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20260517175244_sdfga")]
-    partial class sdfga
+    [Migration("20260520192237_sdf3")]
+    partial class sdf3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -4834,14 +4834,6 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            ClaimCode = "PayrollList",
-                            CategoryId = 9,
-                            ClaimDesc = "Əməkhaqqı Siyahısı",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
-                        },
-                        new
-                        {
                             ClaimCode = "LoyaltyCards",
                             CategoryId = 19,
                             ClaimDesc = "Bonus Kartlar",
@@ -4901,6 +4893,94 @@ namespace Foxoft.Migrations
                             ClaimCode = "NotificationSettings",
                             CategoryId = 15,
                             ClaimDesc = "Bildiriş Tənzimləmələri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Departments",
+                            CategoryId = 23,
+                            ClaimDesc = "Şöbələr",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Positions",
+                            CategoryId = 23,
+                            ClaimDesc = "Vəzifələr",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "EmploymentTypes",
+                            CategoryId = 23,
+                            ClaimDesc = "Məşğulluq Növləri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "EmployeePositions",
+                            CategoryId = 23,
+                            ClaimDesc = "İşçi Vəzifələri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "EmployeeContracts",
+                            CategoryId = 23,
+                            ClaimDesc = "İşçi Müqavilələri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "PayrollPeriods",
+                            CategoryId = 23,
+                            ClaimDesc = "Əməkhaqqı Dövrləri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "PayrollList",
+                            CategoryId = 23,
+                            ClaimDesc = "Əməkhaqqı Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Waybill",
+                            CategoryId = 14,
+                            ClaimDesc = "Qaimə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "PaymentDetail",
+                            CategoryId = 21,
+                            ClaimDesc = "Ödəniş Detalı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "CrmActivityList",
+                            CategoryId = 15,
+                            ClaimDesc = "CRM Fəaliyyət Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Attendances",
+                            CategoryId = 23,
+                            ClaimDesc = "Davamiyyət",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         });
@@ -5131,6 +5211,15 @@ namespace Foxoft.Migrations
                         {
                             CategoryId = 22,
                             CategoryDesc = "Mağaza",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 23,
+                            CategoryDesc = "İnsan Resursları",
                             CategoryLevel = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -5496,6 +5585,94 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
+                            RoleClaimId = 70,
+                            ClaimCode = "Departments",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 71,
+                            ClaimCode = "Positions",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 72,
+                            ClaimCode = "EmploymentTypes",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 73,
+                            ClaimCode = "EmployeePositions",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 74,
+                            ClaimCode = "EmployeeContracts",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 75,
+                            ClaimCode = "PayrollPeriods",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 76,
+                            ClaimCode = "PayrollList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 77,
+                            ClaimCode = "Attendances",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 78,
+                            ClaimCode = "Waybill",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 79,
+                            ClaimCode = "PaymentDetail",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 80,
+                            ClaimCode = "CrmActivityList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
                             RoleClaimId = 3,
                             ClaimCode = "CashTransfer",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -5801,7 +5978,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             RoleClaimId = 42,
-                            ClaimCode = "RetailsaleReturnCustom",
+                            ClaimCode = "RetailSaleReturnCustom",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

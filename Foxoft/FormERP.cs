@@ -197,7 +197,7 @@ namespace Foxoft
                 case "EmployeeContracts": ShowExistForm<FormEmployeeContractList>(); break;
                 case "PayrollPeriods": ShowExistForm<FormPayrollPeriodList>(); break;
                 case "Attendances": ShowExistForm<FormAttendanceList>(); break;
-                case "PayrollList": ShowNewForm<FormPayrollList>(); break;
+                case "PayrollList": ShowExistForm<FormPayrollList>(); break;
                 case "LoyaltyCards": ShowNewForm<FormLoyaltyCards>(); break;
                 case "TerminalList": ShowNewForm<FormTerminalList>(); break;
                 case "CrmActivityList": ShowExistForm<FormCrmActivityList>(); break;
@@ -257,7 +257,7 @@ namespace Foxoft
             this.ACE_InstallmentSaleReturn.Name = "InstallmentSaleReturn";
 
             this.ACE_RetailPurchaseReturnCustom.Name = "RetailPurchaseReturnCustom";
-            this.ACE_RetailsaleReturnCustom.Name = "RetailsaleReturnCustom";
+            this.ACE_RetailSaleReturnCustom.Name = "RetailSaleReturnCustom";
             this.ACE_WholesaleReturnCustom.Name = "WholesaleReturnCustom";
             this.ACE_InstallmentSaleReturnCustom.Name = "InstallmentSaleReturnCustom";
             this.ACE_InventoryTransferReturnCustom.Name = "InventoryTransferReturnCustom";

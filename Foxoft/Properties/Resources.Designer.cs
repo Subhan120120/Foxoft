@@ -12092,6 +12092,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payroll List.
+        /// </summary>
+        internal static string ERP_ACE_PayrollList {
+            get {
+                return ResourceManager.GetString("ERP_ACE_PayrollList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Davamiyyət.
         /// </summary>
         internal static string ERP_ACE_Attendances {

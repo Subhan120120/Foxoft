@@ -1,4 +1,4 @@
-using Foxoft.AppCode;
+﻿using Foxoft.AppCode;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Models.Entity.RoleClaim;
@@ -771,7 +771,6 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ChangePriceCN", ClaimDesc = "Sayım Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "ChangePriceCI", ClaimDesc = "Sayım Artırma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
-                new DcClaim { ClaimCode = "PayrollList", ClaimDesc = "Əməkhaqqı Siyahısı", ClaimTypeId = 1, CategoryId = 9 },
                 new DcClaim { ClaimCode = "LoyaltyCards", ClaimDesc = "Bonus Kartlar", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "CreditList", ClaimDesc = "Kredit Əməliyyatları", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "CurrencyList", ClaimDesc = "Valyuta Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
@@ -786,7 +785,10 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "EmployeePositions", ClaimDesc = "İşçi Vəzifələri", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "EmployeeContracts", ClaimDesc = "İşçi Müqavilələri", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "PayrollPeriods", ClaimDesc = "Əməkhaqqı Dövrləri", ClaimTypeId = 1, CategoryId = 23 },
-                new DcClaim { ClaimCode = "Payrolls", ClaimDesc = "Əməkhaqqı Siyahısı", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "PayrollList", ClaimDesc = "Əməkhaqqı Siyahısı", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "Waybill", ClaimDesc = "Qaimə", ClaimTypeId = 1, CategoryId = 14 },
+                new DcClaim { ClaimCode = "PaymentDetail", ClaimDesc = "Ödəniş Detalı", ClaimTypeId = 1, CategoryId = 21 },
+                new DcClaim { ClaimCode = "CrmActivityList", ClaimDesc = "CRM Fəaliyyət Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "Attendances", ClaimDesc = "Davamiyyət", ClaimTypeId = 1, CategoryId = 23 }
                 );
 
@@ -813,8 +815,11 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 73, RoleCode = "Admin", ClaimCode = "EmployeePositions" },
                 new TrRoleClaim { RoleClaimId = 74, RoleCode = "Admin", ClaimCode = "EmployeeContracts" },
                 new TrRoleClaim { RoleClaimId = 75, RoleCode = "Admin", ClaimCode = "PayrollPeriods" },
-                new TrRoleClaim { RoleClaimId = 76, RoleCode = "Admin", ClaimCode = "Payrolls" },
+                new TrRoleClaim { RoleClaimId = 76, RoleCode = "Admin", ClaimCode = "PayrollList" },
                 new TrRoleClaim { RoleClaimId = 77, RoleCode = "Admin", ClaimCode = "Attendances" },
+                new TrRoleClaim { RoleClaimId = 78, RoleCode = "Admin", ClaimCode = "Waybill" },
+                new TrRoleClaim { RoleClaimId = 79, RoleCode = "Admin", ClaimCode = "PaymentDetail" },
+                new TrRoleClaim { RoleClaimId = 80, RoleCode = "Admin", ClaimCode = "CrmActivityList" },
                 new TrRoleClaim { RoleClaimId = 3, RoleCode = "Admin", ClaimCode = "CashTransfer" },
                 new TrRoleClaim { RoleClaimId = 4, RoleCode = "Admin", ClaimCode = "Column_ProductCost" },
                 new TrRoleClaim { RoleClaimId = 5, RoleCode = "Admin", ClaimCode = "CountIn" },
@@ -853,7 +858,7 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 39, RoleCode = "Admin", ClaimCode = "DeleteLineEX" },
                 new TrRoleClaim { RoleClaimId = 40, RoleCode = "Admin", ClaimCode = "InstallmentSaleReturn" },
                 new TrRoleClaim { RoleClaimId = 41, RoleCode = "Admin", ClaimCode = "RetailPurchaseReturnCustom" },
-                new TrRoleClaim { RoleClaimId = 42, RoleCode = "Admin", ClaimCode = "RetailsaleReturnCustom" },
+                new TrRoleClaim { RoleClaimId = 42, RoleCode = "Admin", ClaimCode = "RetailSaleReturnCustom" },
                 new TrRoleClaim { RoleClaimId = 43, RoleCode = "Admin", ClaimCode = "WholesaleReturnCustom" },
                 new TrRoleClaim { RoleClaimId = 44, RoleCode = "Admin", ClaimCode = "InstallmentSaleReturnCustom" },
                 new TrRoleClaim { RoleClaimId = 45, RoleCode = "Admin", ClaimCode = "InstallmentSales" },
