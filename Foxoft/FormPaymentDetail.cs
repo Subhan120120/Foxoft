@@ -508,7 +508,7 @@ namespace Foxoft
 
                 string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: $"Ödəniş No: {trPaymentHeader.DocumentNumber}");
 
-                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, "Image");
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, "Image", memoryStream);
 
                 alertControl1.Show(this, "WhatsApp mesajı", "Uğurla göndərildi.", "", (Image)null, null);
             }
@@ -518,10 +518,17 @@ namespace Foxoft
             }
         }
 
-        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, string messageType)
+        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, string messageType, MemoryStream imageStream = null)
         {
             try
             {
+                string imageFilePath = null;
+
+                if (imageStream != null && imageStream.Length > 0)
+                {
+                    imageFilePath = SaveWhatsAppImageToDisk(imageStream);
+                }
+
                 using var ctx = new subContext();
                 ctx.TrWhatsAppMessageLogs.Add(new TrWhatsAppMessageLog
                 {
@@ -530,7 +537,8 @@ namespace Foxoft
                     ReceiverPhoneNumber = receiverPhone,
                     MessageType = messageType,
                     Sender = Authorization.CurrAccCode,
-                    CurrAccCode = trPaymentHeader?.CurrAccCode
+                    CurrAccCode = trPaymentHeader?.CurrAccCode,
+                    ImageFilePath = imageFilePath
                 });
 
                 ctx.TrCredits.Add(new TrCredit
@@ -547,6 +555,30 @@ namespace Foxoft
             catch (Exception ex)
             {
                 Debug.Print($"WhatsApp log save error: {ex.Message}");
+            }
+        }
+
+        private string SaveWhatsAppImageToDisk(MemoryStream imageStream)
+        {
+            try
+            {
+                string whatsAppFolder = Path.Combine(settingStore.ImageFolder, "WhatsApp");
+
+                if (!Directory.Exists(whatsAppFolder))
+                    Directory.CreateDirectory(whatsAppFolder);
+
+                string fileName = $"{Guid.NewGuid()}.png";
+                string filePath = Path.Combine(whatsAppFolder, fileName);
+
+                if (imageStream.CanSeek) imageStream.Position = 0;
+                File.WriteAllBytes(filePath, imageStream.ToArray());
+
+                return filePath;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"WhatsApp image save error: {ex.Message}");
+                return null;
             }
         }
 

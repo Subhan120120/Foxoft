@@ -31,6 +31,9 @@ namespace Foxoft.Models
         [StringLength(30)]
         public string? CurrAccCode { get; set; }
 
+        [StringLength(500)]
+        public string? ImageFilePath { get; set; }
+
         [ForeignKey(nameof(CurrAccCode))]
         public virtual DcCurrAcc? DcCurrAcc { get; set; }
 

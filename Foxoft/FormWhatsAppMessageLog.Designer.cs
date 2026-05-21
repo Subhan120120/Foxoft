@@ -26,6 +26,9 @@ namespace Foxoft
             gC_WhatsAppMessageLogList = new DevExpress.XtraGrid.GridControl();
             trWhatsAppMessageLogBindingSource = new BindingSource(components);
             gV_WhatsAppMessageLogList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            colImagePreview = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoPictureEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
+            colImageFilePath = new DevExpress.XtraGrid.Columns.GridColumn();
             colWhatsAppMessageLogId = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -70,6 +73,7 @@ namespace Foxoft
             ((ISupportInitialize)gC_WhatsAppMessageLogList).BeginInit();
             ((ISupportInitialize)trWhatsAppMessageLogBindingSource).BeginInit();
             ((ISupportInitialize)gV_WhatsAppMessageLogList).BeginInit();
+            ((ISupportInitialize)repoPictureEdit).BeginInit();
             ((ISupportInitialize)ribbonControl1).BeginInit();
             ((ISupportInitialize)svgImageCollection1).BeginInit();
             ((ISupportInitialize)panelSummary).BeginInit();
@@ -96,6 +100,7 @@ namespace Foxoft
             gC_WhatsAppMessageLogList.MainView = gV_WhatsAppMessageLogList;
             gC_WhatsAppMessageLogList.MenuManager = ribbonControl1;
             gC_WhatsAppMessageLogList.Name = "gC_WhatsAppMessageLogList";
+            gC_WhatsAppMessageLogList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoPictureEdit });
             gC_WhatsAppMessageLogList.Size = new Size(1100, 362);
             gC_WhatsAppMessageLogList.TabIndex = 0;
             gC_WhatsAppMessageLogList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_WhatsAppMessageLogList });
@@ -107,14 +112,18 @@ namespace Foxoft
             // 
             // gV_WhatsAppMessageLogList
             // 
-            gV_WhatsAppMessageLogList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colWhatsAppMessageLogId, colDocumentHeaderId, colCreatedDate, colCreatedUserName, colCurrAccCode, colCurrAccDesc, colReceiverPhoneNumber, colMessageType, colMessage, colIsSuccessful, colSender, colSenderName });
+            gV_WhatsAppMessageLogList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colWhatsAppMessageLogId, colDocumentHeaderId, colCreatedDate, colCreatedUserName, colCurrAccCode, colCurrAccDesc, colReceiverPhoneNumber, colMessageType, colMessage, colIsSuccessful, colSender, colSenderName, colImagePreview, colImageFilePath });
             gV_WhatsAppMessageLogList.GridControl = gC_WhatsAppMessageLogList;
             gV_WhatsAppMessageLogList.Name = "gV_WhatsAppMessageLogList";
             gV_WhatsAppMessageLogList.OptionsBehavior.Editable = false;
             gV_WhatsAppMessageLogList.OptionsFind.FindDelay = 100;
+            gV_WhatsAppMessageLogList.OptionsView.RowAutoHeight = true;
             gV_WhatsAppMessageLogList.OptionsView.ShowAutoFilterRow = true;
             gV_WhatsAppMessageLogList.OptionsView.ShowFooter = true;
             gV_WhatsAppMessageLogList.OptionsView.ShowGroupPanel = false;
+            gV_WhatsAppMessageLogList.RowHeight = 60;
+            gV_WhatsAppMessageLogList.CustomUnboundColumnData += gV_WhatsAppMessageLogList_CustomUnboundColumnData;
+            gV_WhatsAppMessageLogList.DoubleClick += gV_WhatsAppMessageLogList_DoubleClick;
             gV_WhatsAppMessageLogList.PopupMenuShowing += gV_WhatsAppMessageLogList_PopupMenuShowing;
             // 
             // colWhatsAppMessageLogId
@@ -201,6 +210,30 @@ namespace Foxoft
             colSenderName.Name = "colSenderName";
             colSenderName.Visible = true;
             colSenderName.VisibleIndex = 1;
+            // 
+            // colImagePreview
+            // 
+            colImagePreview.Caption = Resources.Form_WhatsAppMessageLog_ImagePreview;
+            colImagePreview.ColumnEdit = repoPictureEdit;
+            colImagePreview.FieldName = "colImagePreview";
+            colImagePreview.Name = "colImagePreview";
+            colImagePreview.UnboundDataType = typeof(object);
+            colImagePreview.Visible = true;
+            colImagePreview.VisibleIndex = 8;
+            colImagePreview.Width = 80;
+            // 
+            // repoPictureEdit
+            // 
+            repoPictureEdit.Name = "repoPictureEdit";
+            repoPictureEdit.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
+            repoPictureEdit.NullText = " ";
+            repoPictureEdit.ReadOnly = true;
+            // 
+            // colImageFilePath
+            // 
+            colImageFilePath.Caption = "Image File Path";
+            colImageFilePath.FieldName = "ImageFilePath";
+            colImageFilePath.Name = "colImageFilePath";
             // 
             // ribbonControl1
             // 
@@ -514,6 +547,7 @@ namespace Foxoft
             ((ISupportInitialize)gC_WhatsAppMessageLogList).EndInit();
             ((ISupportInitialize)trWhatsAppMessageLogBindingSource).EndInit();
             ((ISupportInitialize)gV_WhatsAppMessageLogList).EndInit();
+            ((ISupportInitialize)repoPictureEdit).EndInit();
             ((ISupportInitialize)ribbonControl1).EndInit();
             ((ISupportInitialize)svgImageCollection1).EndInit();
             ((ISupportInitialize)panelSummary).EndInit();
@@ -562,6 +596,9 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colIsSuccessful;
+        private DevExpress.XtraGrid.Columns.GridColumn colImagePreview;
+        private DevExpress.XtraGrid.Columns.GridColumn colImageFilePath;
+        private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit repoPictureEdit;
         private SvgImageCollection svgImageCollection1;
 
         private DevExpress.XtraEditors.PanelControl panelSummary;

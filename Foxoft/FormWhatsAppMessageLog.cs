@@ -254,6 +254,74 @@ namespace Foxoft
             }
         }
 
+        private readonly Dictionary<string, Image> _imageCache = new();
+
+        private void gV_WhatsAppMessageLogList_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
+        {
+            if (e.Column.FieldName != "colImagePreview" || !e.IsGetData)
+                return;
+
+            var view = sender as GridView;
+            if (view == null) return;
+
+            string filePath = view.GetListSourceRowCellValue(e.ListSourceRowIndex, colImageFilePath)?.ToString();
+
+            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+            {
+                e.Value = null;
+                return;
+            }
+
+            if (_imageCache.TryGetValue(filePath, out Image cached))
+            {
+                e.Value = cached;
+                return;
+            }
+
+            try
+            {
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    Image original = Image.FromStream(fs);
+                    Image thumbnail = original.GetThumbnailImage(80, 60, () => false, IntPtr.Zero);
+                    original.Dispose();
+                    _imageCache[filePath] = thumbnail;
+                    e.Value = thumbnail;
+                }
+            }
+            catch
+            {
+                e.Value = null;
+            }
+        }
+
+        private void gV_WhatsAppMessageLogList_DoubleClick(object sender, EventArgs e)
+        {
+            var view = sender as GridView;
+            if (view == null) return;
+
+            var hitInfo = view.CalcHitInfo(gC_WhatsAppMessageLogList.PointToClient(Control.MousePosition));
+            if (!hitInfo.InRow) return;
+
+            string filePath = view.GetRowCellValue(hitInfo.RowHandle, colImageFilePath)?.ToString();
+
+            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+                return;
+
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = filePath,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print($"Image open error: {ex.Message}");
+            }
+        }
+
         private GraphicsPath GetRoundedPath(Rectangle rect, int radius)
         {
             GraphicsPath path = new GraphicsPath();
