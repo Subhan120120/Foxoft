@@ -206,7 +206,7 @@ namespace Foxoft
                 case "PaymentMethodList": ShowExistForm<FormCommonList<DcPaymentMethod>>("", nameof(DcPaymentMethod.PaymentMethodId)); break;
                 case "PaymentPlanList": ShowExistForm<FormCommonList<DcPaymentPlan>>("", nameof(DcPaymentPlan.PaymentPlanCode)); break;
                 case "WhatsAppMessageLog": ShowExistForm<FormWhatsAppMessageLog>(); break;
-                case "NotificationSettings": ShowExistForm<FormNotificationSettings>(); break;
+                case "NotificationSettings": ShowExistForm<FormAppSetting>(); break;
                 case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
 
                 default: break;

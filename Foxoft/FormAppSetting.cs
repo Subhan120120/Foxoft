@@ -29,6 +29,7 @@ namespace Foxoft
             FillDataLayout();
         }
 
+
         private void BindCheckedCombo()
         {
             List<FindBy> list = new()

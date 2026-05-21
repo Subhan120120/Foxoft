@@ -98,6 +98,8 @@ namespace Foxoft
             ItemForTransferAutoApprove = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsappChromeProfileName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsAppProvider = new DevExpress.XtraLayout.LayoutControlItem();
+            tabPageNotification = new DevExpress.XtraTab.XtraTabPage();
+            ucNotificationSetting1 = new Foxoft.UcNotificationSetting();
             ((System.ComponentModel.ISupportInitialize)tabControl1).BeginInit();
             tabControl1.SuspendLayout();
             tabPageSettings.SuspendLayout();
@@ -163,6 +165,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForTransferAutoApprove).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).BeginInit();
+            tabPageNotification.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -173,7 +176,7 @@ namespace Foxoft
             tabControl1.SelectedTabPage = tabPageSettings;
             tabControl1.Size = new Size(434, 581);
             tabControl1.TabIndex = 1;
-            tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts });
+            tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts, tabPageNotification });
             // 
             // tabPageSettings
             // 
@@ -822,6 +825,21 @@ namespace Foxoft
             ItemForWhatsAppProvider.Text = "WhatsApp Provider";
             ItemForWhatsAppProvider.TextSize = new Size(152, 13);
             // 
+            // tabPageNotification
+            // 
+            tabPageNotification.Controls.Add(ucNotificationSetting1);
+            tabPageNotification.Name = "tabPageNotification";
+            tabPageNotification.Size = new Size(432, 556);
+            tabPageNotification.Text = Resources.Form_NotificationSettings;
+            // 
+            // ucNotificationSetting1
+            // 
+            ucNotificationSetting1.Dock = DockStyle.Fill;
+            ucNotificationSetting1.Location = new Point(0, 0);
+            ucNotificationSetting1.Name = "ucNotificationSetting1";
+            ucNotificationSetting1.Size = new Size(432, 556);
+            ucNotificationSetting1.TabIndex = 0;
+            // 
             // FormAppSetting
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -896,6 +914,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForTransferAutoApprove).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).EndInit();
+            tabPageNotification.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -971,5 +990,8 @@ namespace Foxoft
         private DevExpress.XtraTab.XtraTabPage tabPageSettings;
         private DevExpress.XtraTab.XtraTabPage tabPageShortcuts;
         private Foxoft.UcShortcutSetting ucShortcutSetting1;
+        // Notification tab
+        private DevExpress.XtraTab.XtraTabPage tabPageNotification;
+        private Foxoft.UcNotificationSetting ucNotificationSetting1;
     }
 }

@@ -4,25 +4,25 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormNotificationSettings : XtraForm
+    public partial class UcNotificationSetting : XtraUserControl
     {
-        public FormNotificationSettings()
+        public UcNotificationSetting()
         {
             InitializeComponent();
-            DesignComponentNames();
-            LoadSettings();
+            DesignNotificationComponentNames();
         }
 
-        private void DesignComponentNames()
+        private void UcNotificationSetting_Load(object sender, EventArgs e)
         {
-            Text = Resources.Form_NotificationSettings;
+            LoadNotificationSettings();
+        }
 
-            // Row labels
+        private void DesignNotificationComponentNames()
+        {
             lblReminder.Text = Resources.Form_NotificationSettings_InstallmentReminder;
             lblDueDay.Text = Resources.Form_NotificationSettings_InstallmentDueDay;
             lblPurchase.Text = Resources.Form_NotificationSettings_ProductPurchase;
@@ -30,10 +30,8 @@ namespace Foxoft
             lblPayment.Text = Resources.Form_NotificationSettings_CreditPayment;
             lblBirthday.Text = Resources.Form_NotificationSettings_Birthday;
 
-            // Days before label
             lblDaysBefore.Text = Resources.Form_NotificationSettings_DaysBefore;
 
-            // SMS labels
             string smsLabel = Resources.Form_NotificationSettings_MessageTemplate;
             lblSmsReminder.Text = smsLabel;
             lblSmsDueDay.Text = smsLabel;
@@ -42,12 +40,11 @@ namespace Foxoft
             lblSmsPayment.Text = smsLabel;
             lblSmsBirthday.Text = smsLabel;
 
-            // Buttons
-            btnSave.Text = Resources.Form_NotificationSettings_Save;
+            btnSaveNotification.Text = Resources.Form_NotificationSettings_Save;
             btnSendNow.Text = Resources.Form_NotificationSettings_SendNow;
         }
 
-        private void LoadSettings()
+        public void LoadNotificationSettings()
         {
             using var db = new subContext();
             var settings = db.DcNotificationSettings.ToList();
@@ -96,28 +93,22 @@ namespace Foxoft
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            SaveSettings();
-            XtraMessageBox.Show(Resources.Common_Save, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void SaveSettings()
+        public void SaveNotificationSettings()
         {
             using var db = new subContext();
             var settings = db.DcNotificationSettings.ToList();
 
-            UpdateSetting(settings, "InstallmentReminder", toggleReminder.IsOn, memoReminder.Text, (int)spinDaysBefore.Value);
-            UpdateSetting(settings, "InstallmentDueDay", toggleDueDay.IsOn, memoDueDay.Text, null);
-            UpdateSetting(settings, "ProductPurchase", togglePurchase.IsOn, memoPurchase.Text, null);
-            UpdateSetting(settings, "CreditClosed", toggleClosed.IsOn, memoClosed.Text, null);
-            UpdateSetting(settings, "CreditPayment", togglePayment.IsOn, memoPayment.Text, null);
-            UpdateSetting(settings, "Birthday", toggleBirthday.IsOn, memoBirthday.Text, null);
+            UpdateNotificationSetting(settings, "InstallmentReminder", toggleReminder.IsOn, memoReminder.Text, (int)spinDaysBefore.Value);
+            UpdateNotificationSetting(settings, "InstallmentDueDay", toggleDueDay.IsOn, memoDueDay.Text, null);
+            UpdateNotificationSetting(settings, "ProductPurchase", togglePurchase.IsOn, memoPurchase.Text, null);
+            UpdateNotificationSetting(settings, "CreditClosed", toggleClosed.IsOn, memoClosed.Text, null);
+            UpdateNotificationSetting(settings, "CreditPayment", togglePayment.IsOn, memoPayment.Text, null);
+            UpdateNotificationSetting(settings, "Birthday", toggleBirthday.IsOn, memoBirthday.Text, null);
 
             db.SaveChanges();
         }
 
-        private void UpdateSetting(System.Collections.Generic.List<DcNotificationSetting> settings,
+        private void UpdateNotificationSetting(System.Collections.Generic.List<DcNotificationSetting> settings,
             string type, bool isEnabled, string messageTemplate, int? daysBefore)
         {
             var setting = settings.FirstOrDefault(s => s.NotificationType == type);
@@ -130,9 +121,15 @@ namespace Foxoft
             }
         }
 
+        private void btnSaveNotification_Click(object sender, EventArgs e)
+        {
+            SaveNotificationSettings();
+            XtraMessageBox.Show(Resources.Common_Save, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         private async void btnSendNow_Click(object sender, EventArgs e)
         {
-            SaveSettings();
+            SaveNotificationSettings();
 
             btnSendNow.Enabled = false;
             btnSendNow.Text = Resources.Form_NotificationSettings_Sending;
