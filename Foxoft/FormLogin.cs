@@ -1,4 +1,4 @@
-﻿using DevExpress.Office.NumberConverters;
+using DevExpress.Office.NumberConverters;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.ToolbarForm;
@@ -234,7 +234,7 @@ namespace Foxoft
                 builder.InitialCatalog = company.CompanyCode;
 
                 var optionsBuilder = new DbContextOptionsBuilder<subContext>();
-                optionsBuilder.UseSqlServer(builder.ConnectionString);
+                optionsBuilder.UseSqlServer(SqlLanguageHelper.GetLocalizedConnectionString(builder.ConnectionString));
 
                 using (var context = new subContext(optionsBuilder.Options))
                 {

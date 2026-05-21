@@ -2166,7 +2166,7 @@ namespace Foxoft
             var builder = new SqlConnectionStringBuilder(connString);
             builder.InitialCatalog = databaseName;
 
-            using (db = new subContext(new DbContextOptionsBuilder<subContext>().UseSqlServer(builder.ConnectionString).Options))
+            using (db = new subContext(new DbContextOptionsBuilder<subContext>().UseSqlServer(Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(builder.ConnectionString)).Options))
             {
                 if (db.Database.CanConnect())
                 {

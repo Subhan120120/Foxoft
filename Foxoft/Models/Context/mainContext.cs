@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -26,7 +26,7 @@ namespace Foxoft.Models
                 //                    .ConnectionStrings["subConnString"]
                 //                    .ConnectionString;
 
-                optionsBuilder.UseSqlServer(mainConnString);
+                optionsBuilder.UseSqlServer(Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(mainConnString));
             }
         }
 

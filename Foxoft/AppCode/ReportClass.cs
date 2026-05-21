@@ -19,7 +19,7 @@ namespace Foxoft
         EfMethods efMethods = new();
 
         string designFolder;
-        private string subConnString = Properties.Settings.Default.SubConnString;
+        private string subConnString = Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(Properties.Settings.Default.SubConnString);
 
         public ReportClass()
         {

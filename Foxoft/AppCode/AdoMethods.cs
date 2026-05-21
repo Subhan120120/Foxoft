@@ -1,11 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace Foxoft
 {
     public class AdoMethods
     {
-        private string subConnString = Properties.Settings.Default.SubConnString;
+        private string subConnString = Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(Properties.Settings.Default.SubConnString);
 
 
         private SqlParameter[] paramArray = Array.Empty<SqlParameter>();

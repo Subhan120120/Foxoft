@@ -254,7 +254,7 @@ namespace Foxoft.Models
             if (!optionsBuilder.IsConfigured)
             {
                 string subConnString = Properties.Settings.Default.SubConnString;
-                optionsBuilder.UseSqlServer(subConnString);
+                optionsBuilder.UseSqlServer(Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(subConnString));
             }
         }
 

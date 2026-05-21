@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
 using System.IO;
@@ -54,7 +54,7 @@ namespace Foxoft
         {
             string connectionString = txtConnectionString.Text.Trim();
 
-            DbContext dbContext = new DbContext(new DbContextOptionsBuilder().UseSqlServer(connectionString).Options);
+            DbContext dbContext = new DbContext(new DbContextOptionsBuilder().UseSqlServer(Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(connectionString)).Options);
 
             try
             {

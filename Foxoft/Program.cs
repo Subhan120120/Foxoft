@@ -70,7 +70,7 @@ namespace Foxoft
                 builder.InitialCatalog = string.Empty;
 
                 DbContextOptionsBuilder<subContext> optionsBuilder = new();
-                optionsBuilder.UseSqlServer(builder.ConnectionString);
+                optionsBuilder.UseSqlServer(SqlLanguageHelper.GetLocalizedConnectionString(builder.ConnectionString));
 
                 using (subContext db = new(optionsBuilder.Options))
                 {
