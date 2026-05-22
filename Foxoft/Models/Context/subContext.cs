@@ -87,6 +87,9 @@ namespace Foxoft.Models
         public DbSet<DcCurrAccFeature> DcCurrAccFeatures { get; set; }
         public DbSet<DcCurrAccFeatureType> DcCurrAccFeatureTypes { get; set; }
         public DbSet<TrCurrAccFeature> TrCurrAccFeatures { get; set; }
+        public DbSet<DcInvoiceLineFeature> DcInvoiceLineFeatures { get; set; }
+        public DbSet<DcInvoiceLineFeatureType> DcInvoiceLineFeatureTypes { get; set; }
+        public DbSet<TrInvoiceLineFeature> TrInvoiceLineFeatures { get; set; }
         public DbSet<DcPriceType> DcPriceTypes { get; set; }
         public DbSet<TrProcessPriceType> TrProcessPriceTypes { get; set; }
         public DbSet<TrPriceListHeader> TrPriceListHeaders { get; set; }
@@ -382,6 +385,17 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrCurrAccFeature>()
                         .HasKey(bc => new { bc.CurrAccCode, bc.CurrAccFeatureTypeId, bc.CurrAccFeatureCode });
+
+            modelBuilder.Entity<DcInvoiceLineFeature>()
+                        .HasKey(bc => new { bc.InvoiceLineFeatureCode, bc.InvoiceLineFeatureTypeId });
+
+            modelBuilder.Entity<DcInvoiceLineFeature>()
+                        .HasMany(e => e.TrInvoiceLineFeatures)
+                        .WithOne(e => e.DcInvoiceLineFeature)
+                        .HasForeignKey(e => new { e.InvoiceLineFeatureCode, e.InvoiceLineFeatureTypeId });
+
+            modelBuilder.Entity<TrInvoiceLineFeature>()
+                        .HasKey(bc => new { bc.InvoiceLineId, bc.InvoiceLineFeatureTypeId, bc.InvoiceLineFeatureCode });
 
             modelBuilder.Entity<DcProductStaticPrice>()
                         .HasKey(bc => new { bc.ProductCode, bc.PriceTypeCode });
@@ -751,6 +765,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PosNewInvoice", ClaimDesc = "POS Yeni Faktura", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "AllowPaymentDifference", ClaimDesc = "Faktura ilə ödəniş arasında fərqə icazə", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "CurrAccFeatureType", ClaimDesc = "Cari Hesab Özəlliyi", ClaimTypeId = 1, CategoryId = 19 },
+                new DcClaim { ClaimCode = "InvoiceLineFeatureType", ClaimDesc = "Faktura Sətiri Özəlliyi", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "CurrAccCreditLimit", ClaimDesc = "Cari Hesab Taksit Limiti", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəllik Tipləri", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "CurrAccClaim", ClaimDesc = "Cari hesab yetkisi", ClaimTypeId = 1, CategoryId = 15 },
@@ -894,7 +909,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 66, RoleCode = "Admin", ClaimCode = "CurrencyList" },
                 new TrRoleClaim { RoleClaimId = 67, RoleCode = "Admin", ClaimCode = "PaymentMethodList" },
                 new TrRoleClaim { RoleClaimId = 68, RoleCode = "Admin", ClaimCode = "PaymentPlanList" },
-                new TrRoleClaim { RoleClaimId = 69, RoleCode = "Admin", ClaimCode = "WhatsAppMessageLog" }
+                new TrRoleClaim { RoleClaimId = 69, RoleCode = "Admin", ClaimCode = "WhatsAppMessageLog" },
+                new TrRoleClaim { RoleClaimId = 204, RoleCode = "Admin", ClaimCode = "InvoiceLineFeatureType" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

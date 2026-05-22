@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260522071913_invFea")]
+    partial class invFea
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4723,14 +4726,6 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            ClaimCode = "InvoiceLineFeatureType",
-                            CategoryId = 2,
-                            ClaimDesc = "Faktura Sətiri Özəlliyi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
-                        },
-                        new
-                        {
                             ClaimCode = "CurrAccCreditLimit",
                             CategoryId = 19,
                             ClaimDesc = "Cari Hesab Taksit Limiti",
@@ -6324,14 +6319,6 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 69,
                             ClaimCode = "WhatsAppMessageLog",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleCode = "Admin"
-                        },
-                        new
-                        {
-                            RoleClaimId = 204,
-                            ClaimCode = "InvoiceLineFeatureType",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

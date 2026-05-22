@@ -13117,5 +13117,104 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Entity_TrWhatsAppMessageLog_ImageData", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line Feature Type.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Id.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType_Id {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Name.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType_Name {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType_Order {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filterable.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType_Filterable {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Filterable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line Feature.
+        /// </summary>
+        public static string Entity_InvoiceLineFeature {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Code.
+        /// </summary>
+        public static string Entity_InvoiceLineFeature_Code {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeature_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Id.
+        /// </summary>
+        public static string Entity_InvoiceLineFeature_TypeId {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeature_TypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Description.
+        /// </summary>
+        public static string Entity_InvoiceLineFeature_Desc {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeature_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line Feature.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureLink {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line Feature Type.
+        /// </summary>
+        public static string ERP_ACE_InvoiceLineFeatureType {
+            get {
+                return ResourceManager.GetString("ERP_ACE_InvoiceLineFeatureType", resourceCulture);
+            }
+        }
     }
 }

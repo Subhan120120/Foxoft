@@ -224,5 +224,6 @@ namespace Foxoft.Models
 
         public virtual TrInvoiceLine RelatedLine { get; set; } // Navigation property to the related line
         public virtual ICollection<TrInvoiceLine> InverseRelatedLines { get; set; } // Navigation property for the inverse relationship
+        public virtual ICollection<TrInvoiceLineFeature> TrInvoiceLineFeatures { get; set; }
     }
 }

@@ -2097,6 +2097,44 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public TrInvoiceLineFeature SelectInvoiceLineFeature(Guid invoiceLineId, int featureTypeId)
+        {
+            using subContext db = new();
+
+            TrInvoiceLineFeature dc = db.TrInvoiceLineFeatures
+                     .Where(x => x.InvoiceLineFeatureTypeId == featureTypeId)
+                     .FirstOrDefault(x => x.InvoiceLineId == invoiceLineId);
+            return dc;
+        }
+
+        public int UpdateDcFeatureInvoiceLine_Value(int featureTypeId, Guid invoiceLineId, string value)
+        {
+            using subContext db = new();
+            TrInvoiceLineFeature pf = db.TrInvoiceLineFeatures.FirstOrDefault(x => x.InvoiceLineFeatureTypeId == featureTypeId && x.InvoiceLineId == invoiceLineId);
+
+            if (pf is not null) // update
+            {
+                if (pf.InvoiceLineFeatureCode != value)
+                {
+                    db.TrInvoiceLineFeatures.Remove(pf);
+                    db.SaveChanges();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(value) && pf?.InvoiceLineFeatureCode != value)
+            {
+                pf = new TrInvoiceLineFeature()
+                {
+                    InvoiceLineFeatureTypeId = featureTypeId,
+                    InvoiceLineId = invoiceLineId,
+                    InvoiceLineFeatureCode = value
+                };
+                db.TrInvoiceLineFeatures.Add(pf);
+            }
+
+            return db.SaveChanges();
+        }
+
         public int UpdateReportVariableValue(int id, string prop, string value)
         {
             using subContext db = new();

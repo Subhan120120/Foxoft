@@ -4481,4 +4481,37 @@ To delete, cancel the receipt!</value>
   <data name="Entity_TrWhatsAppMessageLog_ImageData" xml:space="preserve">
     <value>Image</value>
   </data>
+  <data name="Entity_InvoiceLineFeatureType" xml:space="preserve">
+    <value>Invoice Line Feature Type</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureType_Id" xml:space="preserve">
+    <value>Feature Type Id</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureType_Name" xml:space="preserve">
+    <value>Feature Type Name</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureType_Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureType_Filterable" xml:space="preserve">
+    <value>Filterable</value>
+  </data>
+  <data name="Entity_InvoiceLineFeature" xml:space="preserve">
+    <value>Invoice Line Feature</value>
+  </data>
+  <data name="Entity_InvoiceLineFeature_Code" xml:space="preserve">
+    <value>Feature Code</value>
+  </data>
+  <data name="Entity_InvoiceLineFeature_TypeId" xml:space="preserve">
+    <value>Feature Type Id</value>
+  </data>
+  <data name="Entity_InvoiceLineFeature_Desc" xml:space="preserve">
+    <value>Feature Description</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureLink" xml:space="preserve">
+    <value>Invoice Line Feature</value>
+  </data>
+  <data name="ERP_ACE_InvoiceLineFeatureType" xml:space="preserve">
+    <value>Invoice Line Feature Type</value>
+  </data>
 </root>

@@ -1,4 +1,4 @@
-﻿
+
 using DevExpress.XtraBars;
 using DevExpress.XtraReports.Serialization;
 using DevExpress.XtraScheduler;
@@ -116,6 +116,7 @@ namespace Foxoft
             ACE_ProductDiscounts = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_ProductFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CurrAccFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_InvoiceLineFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_LoyaltyCards = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CampaignList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CrmActivityList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -657,7 +658,7 @@ namespace Foxoft
             // 
             // aCE_Operation
             // 
-            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_LoyaltyCards, ACE_CampaignList, ACE_CrmActivityList });
+            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_InvoiceLineFeatureType, ACE_LoyaltyCards, ACE_CampaignList, ACE_CrmActivityList });
             aCE_Operation.Expanded = true;
             aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
             aCE_Operation.Name = "aCE_Operation";
@@ -708,6 +709,13 @@ namespace Foxoft
             ACE_CurrAccFeatureType.Name = "ACE_CurrAccFeatureType";
             ACE_CurrAccFeatureType.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_CurrAccFeatureType.Text = Resources.ERP_ACE_CurrAccFeatureType;
+            // 
+            // ACE_InvoiceLineFeatureType
+            // 
+            ACE_InvoiceLineFeatureType.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CurrAccFeatureType.ImageOptions.SvgImage");
+            ACE_InvoiceLineFeatureType.Name = "ACE_InvoiceLineFeatureType";
+            ACE_InvoiceLineFeatureType.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_InvoiceLineFeatureType.Text = Resources.ERP_ACE_InvoiceLineFeatureType;
             // 
             // ACE_LoyaltyCards
             // 
@@ -1002,6 +1010,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WholesaleReturnCustom;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InstallmentSaleReturnCustom;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CurrAccFeatureType;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InvoiceLineFeatureType;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ProductFeatureType;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_AppSettings;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_StoreList;

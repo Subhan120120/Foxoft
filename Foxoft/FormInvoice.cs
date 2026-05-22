@@ -2454,6 +2454,28 @@ namespace Foxoft
                     menu.Items.Add(CreateCheckItem(columnName, menu.Column, null));
                 }
             }
+            else if (e.MenuType == GridMenuType.Row)
+            {
+                DevExpress.Utils.Menu.DXMenuItem itemFeature = new DevExpress.Utils.Menu.DXMenuItem(Resources.Entity_InvoiceLineFeature, new EventHandler(DXMenuItem_Features_Click), null);
+                e.Menu.Items.Add(itemFeature);
+            }
+        }
+
+        private void DXMenuItem_Features_Click(object sender, EventArgs e)
+        {
+            if (gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId) is Guid invoiceLineId && invoiceLineId != Guid.Empty)
+            {
+                // Ensure the row is saved to database if possible
+                if (dbContext.ChangeTracker.HasChanges())
+                    dbContext.SaveChanges(false, Authorization.CurrAccCode);
+
+                FormInvoiceLineFeature frm = new(invoiceLineId);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show(Resources.Message_NoRowSelected);
+            }
         }
 
         DXMenuCheckItem CreateCheckItem(string caption, GridColumn column, Image image)

@@ -185,6 +185,7 @@ namespace Foxoft
                 case "Session": ShowExistForm<FormDocumentLock>(); break;
                 case "ProductFeatureType": ShowExistForm<FormHierarchyFeatureType>(); break;
                 case "CurrAccFeatureType": ShowExistForm<FormCommonList<DcCurrAccFeatureType>>("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId)); break;
+                case "InvoiceLineFeatureType": ShowExistForm<FormCommonList<DcInvoiceLineFeatureType>>("", nameof(DcInvoiceLineFeatureType.InvoiceLineFeatureTypeId)); break;
                 case "CurrAccClaim": ShowExistForm<FormCurrAccProfile>(); break;
                 case "Parameters": ShowExistForm<FormAppSetting>(); break;
                 case "StoreList": ShowExistForm<FormStoreList>(); break;
@@ -285,6 +286,7 @@ namespace Foxoft
             this.ACE_CampaignList.Name = "CampaignList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
             this.ACE_CurrAccFeatureType.Name = "CurrAccFeatureType";
+            this.ACE_InvoiceLineFeatureType.Name = "InvoiceLineFeatureType";
             this.aCE_CurrAccRole.Name = "CurrAccClaim";
             this.bBI_Session.Name = "Session";
             this.ACE_InstallmentSales.Name = "InstallmentSales";

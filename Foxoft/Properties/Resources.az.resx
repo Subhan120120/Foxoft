@@ -4481,4 +4481,37 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_WhatsAppMessageLog_ImagePreview" xml:space="preserve">
     <value>Şəkil önizləmə</value>
   </data>
+  <data name="Entity_InvoiceLineFeatureType" xml:space="preserve">
+    <value>Faktura Sətiri Özəllik Tipi</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureType_Id" xml:space="preserve">
+    <value>Özəllik Tipi Kodu</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureType_Name" xml:space="preserve">
+    <value>Özəllik Tipi Adı</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureType_Order" xml:space="preserve">
+    <value>Sıra</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureType_Filterable" xml:space="preserve">
+    <value>Filtirlənir</value>
+  </data>
+  <data name="Entity_InvoiceLineFeature" xml:space="preserve">
+    <value>Faktura Sətiri Özəlliyi</value>
+  </data>
+  <data name="Entity_InvoiceLineFeature_Code" xml:space="preserve">
+    <value>Özəllik Kodu</value>
+  </data>
+  <data name="Entity_InvoiceLineFeature_TypeId" xml:space="preserve">
+    <value>Özəllik Tipi Kodu</value>
+  </data>
+  <data name="Entity_InvoiceLineFeature_Desc" xml:space="preserve">
+    <value>Özəllik Açıqlaması</value>
+  </data>
+  <data name="Entity_InvoiceLineFeatureLink" xml:space="preserve">
+    <value>Faktura Sətiri Özəlliyi</value>
+  </data>
+  <data name="ERP_ACE_InvoiceLineFeatureType" xml:space="preserve">
+    <value>F. Sətiri Özəllik Tipləri</value>
+  </data>
 </root>
