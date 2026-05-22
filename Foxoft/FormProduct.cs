@@ -60,7 +60,6 @@ namespace Foxoft
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
                 BBI_Scales.Enabled = true;
-                BBI_ProductFeatureClone.Enabled = true;
             }
 
             LUE_ProductTypeCode.Properties.DataSource = efMethods.SelectEntities<DcProductType>();
@@ -668,6 +667,7 @@ namespace Foxoft
 
                 isNew = false;
                 BBI_ProductFeature.Enabled = true;
+                BBI_ProductFeatureClone.Enabled = true;
                 BBI_ProductDiscount.Enabled = true;
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
