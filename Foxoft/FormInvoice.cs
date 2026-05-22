@@ -114,6 +114,9 @@ namespace Foxoft
             }
 
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
+
+            bool canChangeStore = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ChangeStore");
+            lUE_StoreCode.ReadOnly = !canChangeStore;
             LUE_InstallmentPlan.Properties.DataSource = efMethods.SelectEntities<DcInstallmentPlan>();
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";

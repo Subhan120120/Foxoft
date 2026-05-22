@@ -72,6 +72,9 @@ namespace Foxoft
 
             if (!currAccHasReceivePaymentClaims)
                 colReceivePayment.Visible = false;
+
+            bool currAccHasChangeStoreClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ChangeStore");
+            LUE_StoreCode.ReadOnly = !currAccHasChangeStoreClaim;
         }
 
         public FormPaymentDetail(Guid paymentHeaderId)
