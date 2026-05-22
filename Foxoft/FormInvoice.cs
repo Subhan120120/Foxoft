@@ -2322,23 +2322,6 @@ namespace Foxoft
             }
         }
 
-
-        private void gC_InvoiceLine_EditorKeyPress(object sender, KeyPressEventArgs e)
-        {
-            GridControl gc = sender as GridControl;
-            GridView gv = gc.FocusedView as GridView;
-
-            //if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
-            //    e.Handled = true;
-        }
-
-        private void gC_InvoiceLine_EditorKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Return) // Barcode Scan Device 
-            {
-            }
-        }
-
         private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
         {
             GridView view = sender as GridView;
@@ -2604,7 +2587,7 @@ namespace Foxoft
         private void BBI_ImportExcel_ItemClick(object sender, ItemClickEventArgs e)
         {
             string captionProductCode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ProductCode);
-            string captionBarcode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Barcode); // <-- property adını sizdəki kimi edin
+            string captionBarcode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Barcode);
             string captionQty = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Qty);
             string captionLineDesc = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.LineDescription);
             string captionPrice = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Price);
@@ -2689,10 +2672,8 @@ namespace Foxoft
                     {
                         if (column.ColumnName == captionProductCode || column.ColumnName == captionBarcode)
                         {
-                            // Hər iki halda məhsul tapılıbsa ProductCode yazırıq
                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_ProductCode, product.ProductCode);
 
-                            // Əgər grid-də ayrıca barcode sütununuz varsa, onu da doldurun:
                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colBarcode, barcode);
                         }
                         else if (column.ColumnName == captionQty)

@@ -1351,8 +1351,6 @@ namespace Foxoft
             gC_InvoiceLine.TabIndex = 15;
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
             gC_InvoiceLine.EditorKeyDown += gC_InvoiceLine_KeyDown;
-            gC_InvoiceLine.EditorKeyUp += gC_InvoiceLine_EditorKeyUp;
-            gC_InvoiceLine.EditorKeyPress += gC_InvoiceLine_EditorKeyPress;
             gC_InvoiceLine.KeyDown += gC_InvoiceLine_KeyDown;
             // 
             // gV_InvoiceLine

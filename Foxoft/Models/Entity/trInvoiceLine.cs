@@ -209,9 +209,9 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductDesc), ResourceType = typeof(Resources))]
         public string ProductDesc { get; set; }
 
-        [NotMapped]
+        [StringLength(100)]
         [Display(Name = nameof(Resources.Entity_ProductBarcode_Barcode), ResourceType = typeof(Resources))]
-        public string Barcode { get; set; }
+        public string? Barcode { get; set; }
 
         [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
