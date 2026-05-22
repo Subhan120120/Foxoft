@@ -4514,4 +4514,7 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="ERP_ACE_InvoiceLineFeatureType" xml:space="preserve">
     <value>F. Sətiri Özəllik Tipləri</value>
   </data>
+  <data name="Common_InvalidValue" xml:space="preserve">
+    <value>Daxil edilən dəyər yanlışdır</value>
+  </data>
 </root>

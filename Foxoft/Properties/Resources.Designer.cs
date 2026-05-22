@@ -610,6 +610,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid value.
+        /// </summary>
+        public static string Common_InvalidValue {
+            get {
+                return ResourceManager.GetString("Common_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Disabled.
         /// </summary>
         public static string Common_IsDisabled {

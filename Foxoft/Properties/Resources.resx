@@ -4514,4 +4514,7 @@ To delete, cancel the receipt!</value>
   <data name="ERP_ACE_InvoiceLineFeatureType" xml:space="preserve">
     <value>Invoice Line Feature Type</value>
   </data>
+  <data name="Common_InvalidValue" xml:space="preserve">
+    <value>Invalid value</value>
+  </data>
 </root>

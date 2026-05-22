@@ -131,6 +131,7 @@ namespace Foxoft
             }
             catch (Exception) { }
 
+            LoadInvoiceLineFeaturesColumns();
             LoadLayout();
 
             if (settingStore is not null)
@@ -197,6 +198,54 @@ namespace Foxoft
                         // Text-ə əlavə etmirik çünki DevExpress özü tooltip-də göstərir (və ya ItemShortcut property özü kifayət edir)
                     }
                 }
+            }
+        }
+
+        private void LoadInvoiceLineFeaturesColumns()
+        {
+            List<DcInvoiceLineFeatureType> dcFeatures = efMethods.SelectEntities<DcInvoiceLineFeatureType>();
+            if (dcFeatures == null) return;
+
+            foreach (DcInvoiceLineFeatureType feature in dcFeatures)
+            {
+                string fieldName = "Feature_" + feature.InvoiceLineFeatureTypeId;
+
+                if (gV_InvoiceLine.Columns[fieldName] != null) continue;
+
+                GridColumn col = new GridColumn();
+                col.FieldName = fieldName;
+                col.Caption = feature.FeatureTypeName;
+                col.Name = "col" + fieldName;
+                col.UnboundDataType = typeof(string);
+                col.Visible = true;
+                col.Tag = feature.InvoiceLineFeatureTypeId;
+                col.OptionsColumn.AllowEdit = true;
+
+                DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtn = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+                repoBtn.Name = "repoBtn" + fieldName;
+                repoBtn.Tag = feature.InvoiceLineFeatureTypeId;
+                repoBtn.ButtonPressed += RepoBtnFeature_ButtonPressed;
+
+                gC_InvoiceLine.RepositoryItems.Add(repoBtn);
+                col.ColumnEdit = repoBtn;
+
+                gV_InvoiceLine.Columns.Add(col);
+            }
+        }
+
+        private void RepoBtnFeature_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            GridColumn column = gV_InvoiceLine.FocusedColumn;
+            if (column == null || column.Tag == null) return;
+
+            int featureTypeId = Convert.ToInt32(column.Tag);
+
+            using FormCommonList<DcInvoiceLineFeature> frm = new("F", nameof(DcInvoiceLineFeature.InvoiceLineFeatureCode), editor.EditValue?.ToString(), nameof(DcInvoiceLineFeature.InvoiceLineFeatureTypeId), featureTypeId);
+            if (DialogResult.OK == frm.ShowDialog(this))
+            {
+                editor.EditValue = frm.Value_Id;
+                gV_InvoiceLine.PostEditor();
             }
         }
 
@@ -321,6 +370,7 @@ namespace Foxoft
             dbContext.TrInvoiceLines.Include(x => x.DcProduct)
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                     .Include(x => x.DcUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure)
+                                    .Include(x => x.TrInvoiceLineFeatures)
                                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync();
 
@@ -580,6 +630,7 @@ namespace Foxoft
                     .Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                     .Include(x => x.DcUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure)
+                    .Include(x => x.TrInvoiceLineFeatures)
                     .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                     .OrderBy(x => x.CreatedDate)
                     .LoadAsync();
@@ -896,6 +947,23 @@ namespace Foxoft
             }
 
             // -------------------------------------------------------------------------
+
+            if (column.FieldName.StartsWith("Feature_"))
+            {
+                if (column.Tag == null) return;
+                int featureTypeId = Convert.ToInt32(column.Tag);
+
+                bool isValid = dbContext.DcInvoiceLineFeatures
+                    .AsNoTracking()
+                    .Any(x => x.InvoiceLineFeatureTypeId == featureTypeId && x.InvoiceLineFeatureCode == input);
+
+                if (!isValid)
+                {
+                    SetError(Resources.Common_InvalidValue);
+                    return;
+                }
+                return;
+            }
 
             if (IsProductIdentityColumn())
             {
@@ -2879,6 +2947,59 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
+            if (e.Column.FieldName.StartsWith("Feature_"))
+            {
+                if (e.Column.Tag == null) return;
+                int featureTypeId = Convert.ToInt32(e.Column.Tag);
+                int rowHnd = gV_InvoiceLine.GetRowHandle(e.ListSourceRowIndex);
+                TrInvoiceLine rowLine = gV_InvoiceLine.GetRow(rowHnd) as TrInvoiceLine;
+
+                if (rowLine == null) return;
+
+                if (e.IsGetData)
+                {
+                    var feature = rowLine.TrInvoiceLineFeatures?.FirstOrDefault(x => x.InvoiceLineFeatureTypeId == featureTypeId);
+                    e.Value = feature?.InvoiceLineFeatureCode;
+                }
+                else if (e.IsSetData)
+                {
+                    string newVal = e.Value?.ToString()?.Trim();
+                    var existingFeature = rowLine.TrInvoiceLineFeatures?.FirstOrDefault(x => x.InvoiceLineFeatureTypeId == featureTypeId);
+
+                    if (existingFeature != null)
+                    {
+                        if (existingFeature.InvoiceLineFeatureCode != newVal)
+                        {
+                            if (dbContext.Entry(existingFeature).State != EntityState.Detached)
+                                dbContext.TrInvoiceLineFeatures.Remove(existingFeature);
+                            
+                            rowLine.TrInvoiceLineFeatures.Remove(existingFeature);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(newVal))
+                    {
+                        var newFeature = new TrInvoiceLineFeature()
+                        {
+                            InvoiceLineId = rowLine.InvoiceLineId,
+                            InvoiceLineFeatureTypeId = featureTypeId,
+                            InvoiceLineFeatureCode = newVal
+                        };
+
+                        if (rowLine.TrInvoiceLineFeatures == null)
+                            rowLine.TrInvoiceLineFeatures = new List<TrInvoiceLineFeature>();
+
+                        rowLine.TrInvoiceLineFeatures.Add(newFeature);
+                        dbContext.TrInvoiceLineFeatures.Add(newFeature);
+                    }
+                }
+                return;
+            }
+
             if (!e.IsGetData)
                 return;
 
