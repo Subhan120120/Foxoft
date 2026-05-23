@@ -309,7 +309,6 @@ namespace Foxoft
             this.ACE_PaymentMethodList.Name = "PaymentMethodList";
             this.ACE_PaymentPlanList.Name = "PaymentPlanList";
             this.ACE_WhatsAppMessageLog.Name = "WhatsAppMessageLog";
-            this.ACE_NotificationSettings.Name = "NotificationSettings";
             this.ACE_TransferApproval.Name = "TransferApproval";
         }
 
