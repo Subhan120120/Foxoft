@@ -209,6 +209,13 @@ namespace Foxoft
                 case "WhatsAppMessageLog": ShowExistForm<FormWhatsAppMessageLog>(); break;
                 case "NotificationSettings": ShowExistForm<FormAppSetting>(); break;
                 case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
+                case "ReportNew": 
+                    FormReportEditor formQueryEditor = new(0);
+                    if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
+                    {
+                        InitializeReports();
+                    }
+                    break;
 
                 default: break;
             }
@@ -314,6 +321,8 @@ namespace Foxoft
 
         private void InitializeReports()
         {
+            aCE_Reports.Elements.Clear();
+
             List<DcReport> dcReports = efMethods.SelectReportsByType(new byte[] { 1, 2 });
 
             foreach (DcReport dcReport in dcReports)
@@ -328,6 +337,13 @@ namespace Foxoft
 
                 aCE_Reports.Elements.Add(aCE);
             }
+
+            AccordionControlElement aCENewReport = new();
+            aCENewReport.ImageOptions.SvgImage = svgImageCollection1["add"];
+            aCENewReport.Name = "ReportNew";
+            aCENewReport.Style = ElementStyle.Item;
+            aCENewReport.Text = Resources.Common_New;
+            aCE_Reports.Elements.Add(aCENewReport);
         }
 
         private void InitializeFavorites()

@@ -1,4 +1,4 @@
-﻿using DevExpress.Data.Filtering;
+using DevExpress.Data.Filtering;
 using DevExpress.Data.Filtering.Helpers;
 using DevExpress.DataAccess.Excel;
 using DevExpress.Utils.Svg;
@@ -243,13 +243,7 @@ namespace Foxoft
                 dcReport.ReportQuery = formQueryEditor.dcReport.ReportQuery;
         }
 
-        private void bBI_ReportNew_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            FormReportEditor formQueryEditor = new(0);
-            if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
-            {
-            }
-        }
+
 
         private void bBI_ReportDelete_ItemClick(object sender, ItemClickEventArgs e)
         {

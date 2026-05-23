@@ -370,6 +370,11 @@ namespace Foxoft
         {
             EfMethods efMethods = new();
 
+            Validate();
+            dcReportsBindingSource.EndEdit();
+            GV_ReportVariables.CloseEditor();
+            GV_ReportVariables.UpdateCurrentRow();
+
             dcReport = dcReportsBindingSource.Current as DcReport;
 
             if (!string.IsNullOrEmpty(dcReport?.ReportQuery))

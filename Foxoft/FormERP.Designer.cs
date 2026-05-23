@@ -1,5 +1,7 @@
 
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Navigation;
+using DevExpress.XtraEditors;
 using DevExpress.XtraReports.Serialization;
 using DevExpress.XtraScheduler;
 using Foxoft.Properties;
@@ -359,6 +361,7 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("properties", "image://svgimages/setup/properties.svg");
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
+            svgImageCollection1.Add("add", "image://svgimages/icon builder/actions_add.svg");
             // 
             // popupMenuAccordian
             // 

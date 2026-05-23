@@ -1,4 +1,4 @@
-﻿using Foxoft.AppCode;
+using Foxoft.AppCode;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -37,7 +37,7 @@ namespace Foxoft
             LUE_ReportCustomization = new DevExpress.XtraEditors.LookUpEdit();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_ReportEdit = new DevExpress.XtraBars.BarButtonItem();
-            bBI_ReportNew = new DevExpress.XtraBars.BarButtonItem();
+
             bBI_ReportDelete = new DevExpress.XtraBars.BarButtonItem();
             BBI_ReportCustomAdd = new DevExpress.XtraBars.BarButtonItem();
             BBI_ReportCustomSave = new DevExpress.XtraBars.BarButtonItem();
@@ -116,7 +116,7 @@ namespace Foxoft
             ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
                 ribbonControl1.ExpandCollapseItem,
                 bBI_ReportEdit,
-                bBI_ReportNew,
+
                 bBI_ReportDelete,
                 BBI_ReportCustomAdd,
                 BBI_ReportCustomSave,
@@ -137,15 +137,7 @@ namespace Foxoft
                 (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReportEdit.ImageOptions.SvgImage");
             bBI_ReportEdit.Name = "bBI_ReportEdit";
             bBI_ReportEdit.ItemClick += bBI_ReportEdit_ItemClick;
-            // 
-            // bBI_ReportNew
-            // 
-            bBI_ReportNew.Caption = Resources.Common_New;
-            bBI_ReportNew.Id = 5;
-            bBI_ReportNew.ImageOptions.SvgImage =
-                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReportNew.ImageOptions.SvgImage");
-            bBI_ReportNew.Name = "bBI_ReportNew";
-            bBI_ReportNew.ItemClick += bBI_ReportNew_ItemClick;
+
             // 
             // bBI_ReportDelete
             // 
@@ -191,7 +183,7 @@ namespace Foxoft
             // 
             // Hesaba
             // 
-            Hesaba.ItemLinks.Add(bBI_ReportNew);
+
             Hesaba.ItemLinks.Add(bBI_ReportEdit);
             Hesaba.ItemLinks.Add(bBI_ReportDelete);
             Hesaba.Name = "Hesaba";
@@ -385,7 +377,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraBars.BarButtonItem bBI_ReportEdit;
-        private DevExpress.XtraBars.BarButtonItem bBI_ReportNew;
+
         private DevExpress.XtraBars.BarButtonItem bBI_ReportDelete;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private NotEditableFilterControl filterControl_Inner;

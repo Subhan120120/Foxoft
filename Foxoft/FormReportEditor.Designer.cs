@@ -428,7 +428,7 @@ namespace Foxoft
             ReportTypeIdLookUpEdit.DataBindings.Add(new Binding(
                 "EditValue",
                 dcReportsBindingSource,
-                "ReportName",
+                "ReportTypeId",
                 true));
             ReportTypeIdLookUpEdit.Location = new Point(126, 36);
             ReportTypeIdLookUpEdit.Name = "ReportTypeIdLookUpEdit";
@@ -457,7 +457,7 @@ namespace Foxoft
             ReportCategoryIdLookUpEdit.DataBindings.Add(new Binding(
                 "EditValue",
                 dcReportsBindingSource,
-                "ReportName",
+                "ReportCategoryId",
                 true));
             ReportCategoryIdLookUpEdit.Location = new Point(373, 36);
             ReportCategoryIdLookUpEdit.Name = "ReportCategoryIdLookUpEdit";
