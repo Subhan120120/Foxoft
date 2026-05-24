@@ -2011,7 +2011,7 @@ namespace Foxoft
             }
         }
 
-        private string? SaveWhatsAppImageToDisk(MemoryStream imageStream)
+        private string? SaveWhatsAppImageToDisk(MemoryStream imageStream) 
         {
             try
             {
@@ -2032,7 +2032,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                Debug.Print($"WhatsApp image save error: {ex.Message}");
+                Debug.Print($"WhatsApp Image save error: {ex.Message}");
                 return null;
             }
         }
