@@ -154,8 +154,26 @@ namespace Foxoft
             };
         }
 
-        public static bool DirectoryExist(string path)
+        public static string CombinePath(string? rootPath, params string[] paths)
         {
+            if (string.IsNullOrWhiteSpace(rootPath))
+                return string.Empty;
+
+            if (paths.Any(string.IsNullOrWhiteSpace))
+                return string.Empty;
+
+            string[] allPaths = new string[paths.Length + 1];
+            allPaths[0] = rootPath;
+            Array.Copy(paths, 0, allPaths, 1, paths.Length);
+
+            return Path.Combine(allPaths);
+        }
+
+        public static bool DirectoryExist(string? path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return false;
+
             string IPAddress = ExtractIPAddressFromUrl(path);
 
             Ping pingSender = new();
@@ -175,7 +193,7 @@ namespace Foxoft
                 return false;
         }
 
-        private static string ExtractIPAddressFromUrl(string remoteAddress)
+        private static string ExtractIPAddressFromUrl(string? remoteAddress)
         {
             string ipHost = string.Empty;
 

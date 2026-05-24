@@ -45,7 +45,7 @@ namespace Foxoft
         GridColumn colProductCost = new();
         GridColumn colBalance = new();
 
-        string productsFolder;
+        string productsFolder = string.Empty;
 
         public FormProductList()
         {
@@ -59,13 +59,14 @@ namespace Foxoft
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-            productsFolder = Path.Combine(settingStore.ImageFolder, "Products");
+            productsFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "Products");
             reportClass = new ReportClass(settingStore.DesignFileFolder);
 
             string activeFilterStr = $"[{nameof(SettingStore.StoreCode)}] = '" + settingStore.StoreCode + "'";
             reportClass.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_ProductList);
 
-            AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore?.ImageFolder);
+            if (!string.IsNullOrWhiteSpace(settingStore?.ImageFolder))
+                AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
 
             LoadLayout();
 

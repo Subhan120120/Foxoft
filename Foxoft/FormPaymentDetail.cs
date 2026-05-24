@@ -528,7 +528,7 @@ namespace Foxoft
         {
             try
             {
-                string imageFilePath = null;
+                string? imageFilePath = null;
 
                 if (imageStream != null && imageStream.Length > 0)
                 {
@@ -564,11 +564,13 @@ namespace Foxoft
             }
         }
 
-        private string SaveWhatsAppImageToDisk(MemoryStream imageStream)
+        private string? SaveWhatsAppImageToDisk(MemoryStream imageStream)
         {
             try
             {
-                string whatsAppFolder = Path.Combine(settingStore.ImageFolder, "WhatsApp");
+                string whatsAppFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "WhatsApp");
+                if (string.IsNullOrWhiteSpace(whatsAppFolder))
+                    return null;
 
                 if (!Directory.Exists(whatsAppFolder))
                     Directory.CreateDirectory(whatsAppFolder);

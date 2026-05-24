@@ -54,7 +54,7 @@ namespace Foxoft
         subContext dbContext = new();
 
         string ReportQuery = "select 0 Nothing";
-        string ProductsFolder;
+        string ProductsFolder = string.Empty;
 
         RepositoryItemPictureEdit riPictureEdit = new();
         private DocumentLockService _lockService;
@@ -71,12 +71,12 @@ namespace Foxoft
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             try
             {
-                if (!CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+                if (!string.IsNullOrWhiteSpace(settingStore?.ImageFolder) && !CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                     Directory.CreateDirectory(settingStore.ImageFolder);
             }
             catch (UnauthorizedAccessException) { }
 
-            ProductsFolder = Path.Combine(settingStore.ImageFolder, "Products");
+            ProductsFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "Products");
 
             GridLocalizer.Active = new MyGridLocalizer();
         }
@@ -114,11 +114,16 @@ namespace Foxoft
         {
             if (e.Column == colImage && e.IsGetData)
             {
+                if (string.IsNullOrWhiteSpace(ProductsFolder))
+                    return;
+
                 GridView gV = sender as GridView;
                 int rowInd = gV.GetRowHandle(e.ListSourceRowIndex);
-                string fileName = gV.GetRowCellValue(rowInd, nameof(DcProduct.ProductCode)) as string ?? string.Empty;
-                fileName += @"\" + fileName + ".jpg";
-                string path = ProductsFolder + @"\" + fileName;
+                string productCode = gV.GetRowCellValue(rowInd, nameof(DcProduct.ProductCode)) as string ?? string.Empty;
+                string path = CustomExtensions.CombinePath(ProductsFolder, productCode, productCode + ".jpg");
+                if (string.IsNullOrWhiteSpace(path))
+                    return;
+
                 if (!imageCache.TryGetValue(path, out var img))
                 {
                     img = GetImage(path);
@@ -683,9 +688,9 @@ namespace Foxoft
             {
                 if (formProduct.ShowDialog(this) == DialogResult.OK)
                 {
-                    string path = Path.Combine(ProductsFolder, productCode, productCode + ".jpg");
+                    string path = CustomExtensions.CombinePath(ProductsFolder, productCode, productCode + ".jpg");
 
-                    if (imageCache.TryGetValue(path, out var oldImg))
+                    if (!string.IsNullOrWhiteSpace(path) && imageCache.TryGetValue(path, out var oldImg))
                     {
                         oldImg?.Dispose();      // dispose FIRST
                         imageCache.Remove(path); // then remove

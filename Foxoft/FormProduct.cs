@@ -27,8 +27,8 @@ namespace Foxoft
         EfMethods efMethods = new();
         public DcProduct dcProduct = new();
         GalleryItemGroup galleryItemGroup1 = new(); // designtime yaratmaq olmur
-        string productFolder;
-        string imageFilePath;
+        string productFolder = string.Empty;
+        string imageFilePath = string.Empty;
         private byte productTypeCode;
         private bool isNew;
 
@@ -102,15 +102,15 @@ namespace Foxoft
             LoadProduct();
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            if (!CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
+            if (!string.IsNullOrWhiteSpace(settingStore?.ImageFolder) && !CustomExtensions.DirectoryExist(settingStore.ImageFolder))
             {
-                try { Directory.CreateDirectory(settingStore?.ImageFolder); }
+                try { Directory.CreateDirectory(settingStore.ImageFolder); }
                 catch (UnauthorizedAccessException) { }
                 catch (DirectoryNotFoundException) { }
             }
 
-            productFolder = Path.Combine(settingStore.ImageFolder, "Products", dcProduct.ProductCode);
-            imageFilePath = Path.Combine(productFolder, dcProduct.ProductCode + ".jpg");
+            productFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "Products", dcProduct.ProductCode);
+            imageFilePath = CustomExtensions.CombinePath(productFolder, dcProduct.ProductCode + ".jpg");
 
             LoadPictureBoxImage();
             LoadGalleryImages();
@@ -186,6 +186,9 @@ namespace Foxoft
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(productFolder) || string.IsNullOrWhiteSpace(imageFilePath))
+                    return;
+
                 if (pictureEdit.Image is not null)
                 {
                     if (!Directory.Exists(productFolder))
@@ -196,7 +199,7 @@ namespace Foxoft
                 }
                 else
                 {
-                    if (File.Exists(productFolder))
+                    if (File.Exists(imageFilePath))
                         File.Delete(imageFilePath);
                 }
             }
@@ -434,6 +437,9 @@ namespace Foxoft
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                if (string.IsNullOrWhiteSpace(productFolder))
+                    return;
+
                 Image loadedImage = Image.FromFile(openFileDialog.FileName);
 
                 if (!Directory.Exists(productFolder))
@@ -459,9 +465,6 @@ namespace Foxoft
 
         private void BBI_GalleryCopy_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string caption = galleryControl1.Gallery.GetCheckedItem()?.Caption;
-            string imagePath = Path.Combine(productFolder, caption);
-
             try
             {
                 GalleryItem galleryItem = galleryControl1.Gallery.GetCheckedItem();
@@ -492,6 +495,9 @@ namespace Foxoft
 
                 if (clipboardImage != null)
                 {
+                    if (string.IsNullOrWhiteSpace(productFolder))
+                        return;
+
                     if (!Directory.Exists(productFolder))
                         Directory.CreateDirectory(productFolder);
 
@@ -519,6 +525,9 @@ namespace Foxoft
 
         private void BBI_GalleryDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(productFolder))
+                return;
+
             if (XtraMessageBox.Show(
                 Resources.Common_DeleteConfirm,
                 Resources.Common_Attention,

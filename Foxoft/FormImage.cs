@@ -30,10 +30,10 @@ namespace Foxoft
             InitializeComponent();
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-            if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+            if (!string.IsNullOrWhiteSpace(settingStore?.ImageFolder) && !CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                 Directory.CreateDirectory(settingStore.ImageFolder);
 
-            InvoiceFolder = Path.Combine(settingStore.ImageFolder, "Invoices");
+            InvoiceFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "Invoices");
 
             galleryControl1.Gallery.Groups.Add(galleryItemGroup1);
         }
@@ -45,7 +45,7 @@ namespace Foxoft
             LoadGallaryImages();
         }
 
-        private string CurrentFolderPath => Path.Combine(InvoiceFolder, code);
+        private string CurrentFolderPath => CustomExtensions.CombinePath(InvoiceFolder, code);
 
         private void FormImage_Load(object sender, EventArgs e)
         {
@@ -135,6 +135,8 @@ namespace Foxoft
                 return;
 
             string folderPath = CurrentFolderPath;
+            if (string.IsNullOrWhiteSpace(folderPath))
+                return;
 
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
@@ -173,6 +175,8 @@ namespace Foxoft
                 return;
 
             string folderPath = CurrentFolderPath;
+            if (string.IsNullOrWhiteSpace(folderPath))
+                return;
 
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
