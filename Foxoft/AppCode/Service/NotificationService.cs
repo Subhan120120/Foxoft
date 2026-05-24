@@ -1,5 +1,6 @@
 using Foxoft.Models;
 using Foxoft.Properties;
+using Foxoft.AppCode;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -378,8 +379,7 @@ namespace Foxoft.AppCode.Service
                 Sender = Authorization.CurrAccCode,
                 CurrAccCode = currAccCode
             };
-            decimal currentBalance = db.TrCredits.Sum(x => (decimal?)x.Amount) ?? 0m;
-            if (currentBalance < 0.05m)
+            if (!WhatsAppCreditService.HasEnoughBalance(db))
             {
                 logEntry.IsSuccessful = false;
                 logEntry.Message = Resources.Common_InsufficientBalance;
@@ -396,14 +396,7 @@ namespace Foxoft.AppCode.Service
 
                 logEntry.IsSuccessful = true;
 
-                db.TrCredits.Add(new TrCredit
-                {
-                    CreditId = Guid.NewGuid(),
-                    TransactionType = CreditTransactionType.Usage,
-                    Amount = -0.05m,
-                    ServiceType = "WhatsApp",
-                    Description = $"WhatsApp {messageType} - {formattedNumber}"
-                });
+                db.TrCredits.Add(WhatsAppCreditService.CreateUsage(messageType, formattedNumber));
 
                 db.TrWhatsAppMessageLogs.Add(logEntry);
                 db.SaveChanges();

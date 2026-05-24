@@ -8,6 +8,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -454,6 +455,12 @@ namespace Foxoft
             if (String.IsNullOrEmpty(number))
             {
                 MessageBox.Show(Resources.Form_MoneyTransfer_NumberNotDefined);
+                return;
+            }
+
+            if (!WhatsAppCreditService.HasEnoughBalance())
+            {
+                MessageBox.Show(Resources.Common_InsufficientBalance);
                 return;
             }
 

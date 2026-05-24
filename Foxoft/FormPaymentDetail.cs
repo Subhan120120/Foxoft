@@ -431,6 +431,12 @@ namespace Foxoft
                 return;
             }
 
+            if (!WhatsAppCreditService.HasEnoughBalance())
+            {
+                MessageBox.Show(Resources.Common_InsufficientBalance);
+                return;
+            }
+
             string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
 
             Process myProcess = new();
@@ -506,6 +512,12 @@ namespace Foxoft
                 return;
             }
 
+            if (!WhatsAppCreditService.HasEnoughBalance())
+            {
+                XtraMessageBox.Show(Properties.Resources.Common_InsufficientBalance);
+                return;
+            }
+
             try
             {
                 using var client = new Foxoft.AppCode.EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
@@ -547,14 +559,7 @@ namespace Foxoft
                     ImageFilePath = imageFilePath
                 });
 
-                ctx.TrCredits.Add(new TrCredit
-                {
-                    CreditId = Guid.NewGuid(),
-                    TransactionType = CreditTransactionType.Usage,
-                    Amount = -0.05m,
-                    ServiceType = "WhatsApp",
-                    Description = $"WhatsApp {messageType} - {receiverPhone}"
-                });
+                ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(messageType, receiverPhone));
 
                 ctx.SaveChanges();
             }
