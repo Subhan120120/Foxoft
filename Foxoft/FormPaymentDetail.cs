@@ -642,8 +642,10 @@ namespace Foxoft
             }
 
             PaymentType paymentTypeCode = cashReg.CashRegPaymentTypeCode ?? PaymentType.Cash;
+            int paymentMethodId = efMethods.SelectDefaultPaymentMethodId(paymentTypeCode);
+
             view.SetRowCellValue(rowHandle, colPaymentTypeCode, paymentTypeCode);
-            view.SetRowCellValue(rowHandle, colPaymentMethodId, efMethods.SelectDefaultPaymentMethodId(paymentTypeCode));
+            view.SetRowCellValue(rowHandle, colPaymentMethodId, paymentMethodId);
         }
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)

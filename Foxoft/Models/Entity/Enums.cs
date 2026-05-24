@@ -27,7 +27,7 @@ namespace Foxoft.Models
         Expire = 6    // müddəti bitdi (-)
     }
 
-    public enum PaymentType : byte
+    public enum PaymentType
     {
         Cash = 1,        // Nağd
         Cashless = 2,    // Nağdsız

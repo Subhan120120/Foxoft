@@ -283,6 +283,8 @@ namespace Foxoft.Models
 
             base.OnModelCreating(modelBuilder);
 
+            ConfigurePaymentTypeMappings(modelBuilder);
+
             InitializeHasData(modelBuilder);
 
             InitializeDeleteBehaviour(modelBuilder);
@@ -1125,5 +1127,28 @@ namespace Foxoft.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        private static void ConfigurePaymentTypeMappings(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DcPaymentType>()
+                .Property(x => x.PaymentTypeCode)
+                .HasConversion<byte>()
+                .HasColumnType("tinyint");
+
+            modelBuilder.Entity<DcPaymentMethod>()
+                .Property(x => x.PaymentTypeCode)
+                .HasConversion<byte>()
+                .HasColumnType("tinyint");
+
+            modelBuilder.Entity<TrPaymentLine>()
+                .Property(x => x.PaymentTypeCode)
+                .HasConversion<byte>()
+                .HasColumnType("tinyint");
+
+            modelBuilder.Entity<DcCurrAcc>()
+                .Property(x => x.CashRegPaymentTypeCode)
+                .HasConversion<byte>()
+                .HasColumnType("tinyint");
+        }
     }
 }
