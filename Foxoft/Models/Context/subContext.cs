@@ -623,7 +623,7 @@ namespace Foxoft.Models
                 new DcCurrAcc { CurrAccCode = "C-000005", CurrAccDesc = "Ümumi Müştəri", NewPassword = "123", CurrAccTypeCode = CurrAccType.Customer, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" },
                 new DcCurrAcc { CurrAccCode = "C-000006", CurrAccDesc = "Birbank", NewPassword = "", CurrAccTypeCode = CurrAccType.Customer, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" },
                 new DcCurrAcc { CurrAccCode = "MGZ01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = CurrAccType.Store, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "MGZ01" },
-                new DcCurrAcc { CurrAccCode = "KASSA01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", CurrAccTypeCode = CurrAccType.CashRegister, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" });
+                new DcCurrAcc { CurrAccCode = "KASSA01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", CurrAccTypeCode = CurrAccType.CashRegister, CashRegPaymentTypeCode = PaymentType.Cash, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "MGZ01" });
 
             modelBuilder.Entity<DcCurrAccType>().HasData(
                 new DcCurrAccType { CurrAccTypeCode = CurrAccType.Customer, CurrAccTypeDesc = "Müştəri" },

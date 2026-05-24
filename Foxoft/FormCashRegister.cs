@@ -27,6 +27,9 @@ namespace Foxoft
             CurrAccTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcCurrAccType>();
             OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
+            cashRegPaymentTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcPaymentType>()
+                .Where(x => x.PaymentTypeCode == PaymentType.Cash || x.PaymentTypeCode == PaymentType.Cashless)
+                .ToList();
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
@@ -66,8 +69,10 @@ namespace Foxoft
         private void ClearControlsAddNew()
         {
             CurrAccType temp = dcCurrAcc.CurrAccTypeCode;
+            PaymentType? paymentType = dcCurrAcc.CashRegPaymentTypeCode ?? PaymentType.Cash;
             dcCurrAcc = dcCurrAccsBindingSource.AddNew() as DcCurrAcc;
             dcCurrAcc.CurrAccTypeCode = temp;
+            dcCurrAcc.CashRegPaymentTypeCode = paymentType;
 
             dcCurrAcc.StoreCode = Authorization.StoreCode;
             dcCurrAcc.OfficeCode = Authorization.OfficeCode;

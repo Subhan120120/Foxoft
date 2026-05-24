@@ -381,7 +381,7 @@ namespace Foxoft
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
             {
-                trInvoiceHeader.CashRegisterCode = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
+                trInvoiceHeader.CashRegisterCode = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId, GetInvoiceCashRegPaymentTypeFilter());
                 btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
             }
 
@@ -3370,7 +3370,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string storeCode = lUE_StoreCode.EditValue?.ToString();
 
-            using (FormCashRegisterList form = new(editor.EditValue?.ToString(), storeCode))
+            using (FormCashRegisterList form = new(editor.EditValue?.ToString(), storeCode, GetInvoiceCashRegPaymentTypeFilter()))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -3381,7 +3381,7 @@ namespace Foxoft
 
         private void Btn_CashRegCode_EditValueChanged(object sender, EventArgs e)
         {
-            DcCurrAcc curr = efMethods.SelectCashReg(btn_CashRegCode.EditValue?.ToString());
+            DcCurrAcc curr = efMethods.SelectCashReg(btn_CashRegCode.EditValue?.ToString(), GetInvoiceCashRegPaymentTypeFilter());
             if (trInvoiceHeader is null || curr is null)
                 return;
 
@@ -3410,7 +3410,7 @@ namespace Foxoft
             if (string.IsNullOrEmpty(value))
                 return;
 
-            DcCurrAcc curr = efMethods.SelectCashReg(value);
+            DcCurrAcc curr = efMethods.SelectCashReg(value, GetInvoiceCashRegPaymentTypeFilter());
 
             if (curr is null)
             {
@@ -3421,6 +3421,11 @@ namespace Foxoft
             trInvoiceHeader.CashRegisterCode = curr.CurrAccCode;
 
             dxErrorProvider1.SetError(editor, string.Empty);
+        }
+
+        private PaymentType? GetInvoiceCashRegPaymentTypeFilter()
+        {
+            return dcProcess?.ProcessCode == "EX" ? null : PaymentType.Cash;
         }
 
         private void Btn_CashRegCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)

@@ -134,7 +134,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string storeCode = StoreCodeLookUpEdit.EditValue?.ToString();
 
-            using (FormCashRegisterList form = new(editor.EditValue?.ToString(), storeCode))
+            using (FormCashRegisterList form = new(editor.EditValue?.ToString(), storeCode, PaymentType.Cash))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -155,7 +155,7 @@ namespace Foxoft
             if (string.IsNullOrEmpty(value))
                 return;
 
-            DcCurrAcc curr = efMethods.SelectCashReg(value);
+            DcCurrAcc curr = efMethods.SelectCashReg(value, PaymentType.Cash);
 
             if (curr is null)
             {

@@ -15,10 +15,12 @@ using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Foxoft
@@ -31,6 +33,7 @@ namespace Foxoft
         public DcCurrAcc dcCurrAcc { get; set; }
         public string cashRegCode;
         public string storeCode;
+        private PaymentType? cashRegPaymentTypeCode;
 
         public FormCashRegisterList()
         {
@@ -48,10 +51,22 @@ namespace Foxoft
             this.cashRegCode = cashRegCode; // Focus Selected currAccCode
         }
 
+        public FormCashRegisterList(string cashRegCode, PaymentType? cashRegPaymentTypeCode)
+            : this(cashRegCode)
+        {
+            this.cashRegPaymentTypeCode = cashRegPaymentTypeCode;
+        }
+
         public FormCashRegisterList(string cashRegCode, string storeCode)
             : this(cashRegCode)
         {
             this.storeCode = storeCode;
+        }
+
+        public FormCashRegisterList(string cashRegCode, string storeCode, PaymentType? cashRegPaymentTypeCode)
+            : this(cashRegCode, storeCode)
+        {
+            this.cashRegPaymentTypeCode = cashRegPaymentTypeCode;
         }
 
         private void FormCashRegisterList_Load(object sender, EventArgs e)
@@ -97,23 +112,69 @@ namespace Foxoft
                     string qryMaster = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, clause, out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
-                    if (dt.Rows.Count > 0)
-                        dcCurrAccsBindingSource.DataSource = dt;
+                    dcCurrAccsBindingSource.DataSource = ApplyCashRegPaymentTypeFilter(dt);
                 }
             }
             else XtraMessageBox.Show(Resources.Form_CashRegisterList_NotFoundReport);
 
             if (gV_CashRegList.FocusedRowHandle >= 0)
             {
-                object cashRegCode = gV_CashRegList.GetFocusedRowCellValue("CurrAccCode");
-                if (cashRegCode is not null)
-                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode.ToString());
+                string cashRegCode = GetFocusedCashRegCode();
+                if (!string.IsNullOrWhiteSpace(cashRegCode))
+                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode, cashRegPaymentTypeCode);
             }
             else
                 dcCurrAcc = null;
 
             gV_CashRegList.BestFitColumns();
             gV_CashRegList.MakeRowVisible(gV_CashRegList.FocusedRowHandle);
+        }
+
+        private DataTable ApplyCashRegPaymentTypeFilter(DataTable dt)
+        {
+            if (!cashRegPaymentTypeCode.HasValue || dt is null)
+                return dt;
+
+            string codeColumn = dt.Columns.Contains("CashRegisterCode")
+                ? "CashRegisterCode"
+                : dt.Columns.Contains(nameof(DcCurrAcc.CurrAccCode))
+                    ? nameof(DcCurrAcc.CurrAccCode)
+                    : null;
+
+            if (string.IsNullOrWhiteSpace(codeColumn))
+                return dt;
+
+            HashSet<string> allowedCashRegCodes = efMethods
+                .SelectCashRegs(cashRegPaymentTypeCode.Value)
+                .Select(x => x.CurrAccCode)
+                .ToHashSet();
+
+            DataTable filtered = dt.Clone();
+            foreach (DataRow row in dt.Rows)
+            {
+                string code = row[codeColumn]?.ToString();
+                if (!string.IsNullOrWhiteSpace(code) && allowedCashRegCodes.Contains(code))
+                    filtered.ImportRow(row);
+            }
+
+            return filtered;
+        }
+
+        private string GetFocusedCashRegCode()
+        {
+            return GetFocusedCashRegCode(gV_CashRegList);
+        }
+
+        private static string GetFocusedCashRegCode(GridView view)
+        {
+            object cashRegCode = null;
+            if (view.Columns["CashRegisterCode"] is not null)
+                cashRegCode = view.GetFocusedRowCellValue("CashRegisterCode");
+
+            if (cashRegCode is null && view.Columns[nameof(DcCurrAcc.CurrAccCode)] is not null)
+                cashRegCode = view.GetFocusedRowCellValue(nameof(DcCurrAcc.CurrAccCode));
+
+            return cashRegCode?.ToString();
         }
 
         private void SaveLayout()
@@ -161,9 +222,9 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object cashRegCode = view.GetFocusedRowCellValue("CashRegisterCode");
-                if (cashRegCode is not null)
-                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode.ToString());
+                string cashRegCode = GetFocusedCashRegCode(view);
+                if (!string.IsNullOrWhiteSpace(cashRegCode))
+                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode, cashRegPaymentTypeCode);
             }
             else
                 dcCurrAcc = null;
@@ -184,6 +245,9 @@ namespace Foxoft
         {
             dcCurrAcc = new DcCurrAcc();
             FormCashRegister form = new(CurrAccType.CashRegister);
+            if (cashRegPaymentTypeCode.HasValue)
+                form.dcCurrAcc.CashRegPaymentTypeCode = cashRegPaymentTypeCode.Value;
+
             if (form.ShowDialog(this) == DialogResult.OK)
                 UpdateGridViewData();
         }
@@ -211,9 +275,9 @@ namespace Foxoft
 
             if (gV_CashRegList.FocusedRowHandle >= 0)
             {
-                object cashRegCode = gV_CashRegList.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
-                if (cashRegCode is not null)
-                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode.ToString());
+                string cashRegCode = GetFocusedCashRegCode();
+                if (!string.IsNullOrWhiteSpace(cashRegCode))
+                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode, cashRegPaymentTypeCode);
             }
             else
                 dcCurrAcc = null;
@@ -251,9 +315,9 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object cashRegCode = view.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
-                if (cashRegCode is not null)
-                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode.ToString());
+                string cashRegCode = GetFocusedCashRegCode(view);
+                if (!string.IsNullOrWhiteSpace(cashRegCode))
+                    dcCurrAcc = efMethods.SelectCashReg(cashRegCode, cashRegPaymentTypeCode);
             }
             else
                 dcCurrAcc = null;

@@ -6,10 +6,11 @@
 	, PhoneNum
 	, IsVIP
 	, CurrAccTypeCode
+	, CashRegPaymentTypeCode
 	, StoreCode
 	from 
 	DcCurrAccs 
-	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1
+	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = ISNULL(DcCurrAccs.CashRegPaymentTypeCode, 1)
 	where CurrAccTypeCode = 5 and IsDisabled = 0
 		--and DcCurrAccs.IsVIP = 1 
 		--and balance.CurrAccCode = '1403'
@@ -18,6 +19,7 @@
 	, PhoneNum
 	, IsVIP
 	, CurrAccTypeCode
+	, CashRegPaymentTypeCode
 	, CashRegisterCode 
 	, StoreCode
 	order by CurrAccDesc

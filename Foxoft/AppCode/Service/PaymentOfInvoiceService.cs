@@ -62,7 +62,7 @@ namespace Foxoft.AppCode.Services
             {
                 if (il.NetAmount == 0) continue;
 
-                TrPaymentLine line = BuildPaymentLineDefaults(invoice, Authorization.CurrAccCode);
+                TrPaymentLine line = BuildPaymentLineDefaults(invoice, Authorization.CurrAccCode, cashRegisterCode);
 
                 line.PaymentHeaderId = paymentHeader.PaymentHeaderId;
                 line.PaymentLineId = il.InvoiceLineId;
@@ -71,7 +71,6 @@ namespace Foxoft.AppCode.Services
                 line.CurrencyCode = il.CurrencyCode;
                 line.ExchangeRate = il.ExchangeRate;
 
-                line.CashRegisterCode = cashRegisterCode;
                 line.LineDescription = il.LineDescription;
 
                 line.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
@@ -124,19 +123,30 @@ namespace Foxoft.AppCode.Services
             return ph;
         }
 
-        private TrPaymentLine BuildPaymentLineDefaults(TrInvoiceHeader invoice, string userName)
+        private TrPaymentLine BuildPaymentLineDefaults(TrInvoiceHeader invoice, string userName, string? cashRegisterCode)
         {
+            PaymentType paymentTypeCode = GetPaymentTypeByCashRegister(cashRegisterCode);
+
             var pl = new TrPaymentLine
             {
-                PaymentTypeCode = PaymentType.Cash,
-                PaymentMethodId = 1,
+                PaymentTypeCode = paymentTypeCode,
+                PaymentMethodId = _ef.SelectDefaultPaymentMethodId(paymentTypeCode),
                 CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode,
                 ExchangeRate = 1f,
-                CashRegisterCode = _ef.SelectCashRegisterByTerminal(Settings.Default.TerminalId),
+                CashRegisterCode = cashRegisterCode,
                 CreatedUserName = userName
             };
 
             return pl;
+        }
+
+        private PaymentType GetPaymentTypeByCashRegister(string? cashRegisterCode)
+        {
+            if (string.IsNullOrWhiteSpace(cashRegisterCode))
+                return PaymentType.Cash;
+
+            DcCurrAcc cashReg = _ef.SelectCashReg(cashRegisterCode);
+            return cashReg?.CashRegPaymentTypeCode ?? PaymentType.Cash;
         }
     }
 

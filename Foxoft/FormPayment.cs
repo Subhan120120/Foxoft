@@ -200,12 +200,13 @@ namespace Foxoft
             trPaymentLineCommission.PaymentMethodId = 3;
             trPaymentLineCommission.CreatedUserName = Authorization.CurrAccCode;
 
-            var cashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
+            var cashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId, PaymentType.Cash);
             if (!string.IsNullOrWhiteSpace(cashReg))
-            {
                 trPaymentLineCash.CashRegisterCode = cashReg;
-                trPaymentLineCashless.CashRegisterCode = cashReg;
-            }
+
+            var bankAccount = efMethods.SelectDefaultCashRegister(header?.StoreCode ?? Authorization.StoreCode, PaymentType.Cashless);
+            if (!string.IsNullOrWhiteSpace(bankAccount))
+                trPaymentLineCashless.CashRegisterCode = bankAccount;
         }
 
         private void InitLineDefaults(TrPaymentLine line, PaymentType type, int paymentMethodId)
@@ -322,9 +323,10 @@ namespace Foxoft
             }
             else
             {
-                var cashReg = string.IsNullOrWhiteSpace(dcPaymentMethod.DefaultCashRegCode)
-                    ? efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId)
-                    : dcPaymentMethod.DefaultCashRegCode;
+                var cashReg = !string.IsNullOrWhiteSpace(dcPaymentMethod.DefaultCashRegCode)
+                              && efMethods.SelectCashReg(dcPaymentMethod.DefaultCashRegCode, PaymentType.Cashless) is not null
+                    ? dcPaymentMethod.DefaultCashRegCode
+                    : efMethods.SelectDefaultCashRegister(trPaymentHeader.StoreCode, PaymentType.Cashless);
 
                 btnEdit_BankAccout.EditValue = cashReg;
                 trPaymentLineCashless.CashRegisterCode = cashReg;
@@ -374,7 +376,7 @@ namespace Foxoft
             object row = lUE_PaymentMethod.Properties.GetDataSourceRowByKeyValue(lUE_PaymentMethod.EditValue);
             if (row is not null)
             {
-                SelectCashRegister(sender);
+                SelectCashRegister(sender, PaymentType.Cashless);
             }
         }
 
@@ -409,14 +411,14 @@ namespace Foxoft
 
         private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            SelectCashRegister(sender);
+            SelectCashRegister(sender, PaymentType.Cash);
         }
 
-        private void SelectCashRegister(object sender)
+        private void SelectCashRegister(object sender, PaymentType paymentTypeCode)
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormCashRegisterList form = new(trInvoiceHeader.CurrAccCode))
+            using (FormCashRegisterList form = new(buttonEdit.EditValue?.ToString(), paymentTypeCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                     buttonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
@@ -430,12 +432,19 @@ namespace Foxoft
 
         private void btnEdit_CashRegister_Validating(object sender, CancelEventArgs e)
         {
-            var code = btnEdit_CashRegister.EditValue?.ToString();
+            if (sender is not ButtonEdit editor)
+                return;
+
+            var code = editor.EditValue?.ToString();
             if (string.IsNullOrWhiteSpace(code)) return;
 
-            var cashReg = efMethods.SelectCashReg(code);
+            PaymentType paymentTypeCode = editor == btnEdit_BankAccout ? PaymentType.Cashless : PaymentType.Cash;
+            var cashReg = efMethods.SelectCashReg(code, paymentTypeCode);
             if (cashReg is null) e.Cancel = true;
-            else trPaymentLineCash.CashRegisterCode = code;
+            else if (paymentTypeCode == PaymentType.Cashless)
+                trPaymentLineCashless.CashRegisterCode = code;
+            else
+                trPaymentLineCash.CashRegisterCode = code;
         }
 
         private void btnEdit_CashRegister_InvalidValue(object sender, InvalidValueExceptionEventArgs e)

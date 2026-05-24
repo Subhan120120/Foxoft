@@ -264,7 +264,10 @@ namespace Foxoft
             string cashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
 
             if (!String.IsNullOrEmpty(cashReg))
+            {
                 gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, cashReg);
+                ApplyCashRegisterPaymentType(gV_PaymentLine, e.RowHandle, cashReg);
+            }
 
             string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             DcProcess dcProcess = efMethods.SelectEntityById<DcProcess>("PA");
@@ -606,13 +609,41 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            using (FormCashRegisterList form = new(trPaymentHeader.CurrAccCode))
+            using (FormCashRegisterList form = new(editor.EditValue?.ToString(), trPaymentHeader.StoreCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    editor.EditValue = form.dcCurrAcc.CurrAccCode;
+                    string cashRegCode = form.dcCurrAcc.CurrAccCode;
+                    editor.EditValue = cashRegCode;
+                    gV_PaymentLine.SetFocusedRowCellValue(colCashRegisterCode, cashRegCode);
+                    ApplyCashRegisterPaymentType(gV_PaymentLine, gV_PaymentLine.FocusedRowHandle, cashRegCode);
                 }
             }
+        }
+
+        private void ApplyCashRegisterPaymentType(GridView view, int rowHandle, string? cashRegCode = null, bool showMessage = false)
+        {
+            if (rowHandle < 0)
+                return;
+
+            cashRegCode ??= view.GetRowCellValue(rowHandle, colCashRegisterCode)?.ToString();
+            if (string.IsNullOrWhiteSpace(cashRegCode))
+                return;
+
+            DcCurrAcc cashReg = efMethods.SelectCashReg(cashRegCode);
+            if (cashReg is null)
+            {
+                view.SetRowCellValue(rowHandle, colCashRegisterCode, null);
+
+                if (showMessage)
+                    XtraMessageBox.Show(Resources.Form_Payment_CashRegisterNotFound);
+
+                return;
+            }
+
+            PaymentType paymentTypeCode = cashReg.CashRegPaymentTypeCode ?? PaymentType.Cash;
+            view.SetRowCellValue(rowHandle, colPaymentTypeCode, paymentTypeCode);
+            view.SetRowCellValue(rowHandle, colPaymentMethodId, efMethods.SelectDefaultPaymentMethodId(paymentTypeCode));
         }
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
@@ -672,6 +703,9 @@ namespace Foxoft
                         gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
                     }
                 }
+
+                if (e.Column == colCashRegisterCode)
+                    ApplyCashRegisterPaymentType(gV, e.RowHandle, showMessage: true);
             }
         }
 

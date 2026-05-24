@@ -1522,11 +1522,37 @@ namespace Foxoft
 
         public DcCurrAcc? SelectCashReg(string currAccCode)
         {
+            return SelectCashReg(currAccCode, null);
+        }
+
+        public DcCurrAcc? SelectCashReg(string currAccCode, PaymentType? paymentTypeCode)
+        {
             using subContext db = new();
-            return db.DcCurrAccs
+            IQueryable<DcCurrAcc> query = CashRegQuery(db, paymentTypeCode);
+
+            return query.FirstOrDefault(x => x.CurrAccCode == currAccCode);
+        }
+
+        public List<DcCurrAcc> SelectCashRegs(PaymentType? paymentTypeCode = null)
+        {
+            using subContext db = new();
+            return CashRegQuery(db, paymentTypeCode)
+                .OrderBy(x => x.CurrAccDesc)
+                .ToList();
+        }
+
+        private static IQueryable<DcCurrAcc> CashRegQuery(subContext db, PaymentType? paymentTypeCode)
+        {
+            IQueryable<DcCurrAcc> query = db.DcCurrAccs
                 .Where(x => x.IsDisabled == false)
-                .Where(x => new[] { CurrAccType.CashRegister }.Contains(x.CurrAccTypeCode))
-                .FirstOrDefault(x => x.CurrAccCode == currAccCode);
+                .Where(x => x.CurrAccTypeCode == CurrAccType.CashRegister);
+
+            if (paymentTypeCode == PaymentType.Cash)
+                query = query.Where(x => x.CashRegPaymentTypeCode == PaymentType.Cash || x.CashRegPaymentTypeCode == null);
+            else if (paymentTypeCode.HasValue)
+                query = query.Where(x => x.CashRegPaymentTypeCode == paymentTypeCode.Value);
+
+            return query;
         }
 
         public DcCurrAcc SelectSalesPerson(string currAccCode)
@@ -1634,6 +1660,20 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcPaymentMethods.Where(x => paymentTypes.Contains(x.PaymentTypeCode)).ToList();
+        }
+
+        public int SelectDefaultPaymentMethodId(PaymentType paymentTypeCode)
+        {
+            using subContext db = new();
+            int? paymentMethodId = db.DcPaymentMethods
+                .Where(x => x.IsDisabled == false)
+                .Where(x => x.PaymentTypeCode == paymentTypeCode)
+                .OrderByDescending(x => x.IsDefault)
+                .ThenBy(x => x.PaymentMethodId)
+                .Select(x => (int?)x.PaymentMethodId)
+                .FirstOrDefault();
+
+            return paymentMethodId ?? (paymentTypeCode == PaymentType.Cashless ? 4 : 1);
         }
 
         public List<DcPaymentPlan> SelectPaymentPlans(int paymentMethodId)
@@ -1762,17 +1802,40 @@ namespace Foxoft
             return cashRegCode;
         }
 
+        public string? SelectDefaultCashRegister(string storeCode, PaymentType? paymentTypeCode)
+        {
+            using subContext db = new();
+            IQueryable<DcCurrAcc> query = CashRegQuery(db, paymentTypeCode)
+                .Where(x => x.IsDefault == true);
+
+            if (!string.IsNullOrWhiteSpace(storeCode))
+                query = query.Where(x => x.StoreCode == storeCode);
+
+            return query
+                .OrderBy(x => x.CreatedDate)
+                .Select(x => x.CurrAccCode)
+                .FirstOrDefault();
+        }
+
         public string? SelectCashRegisterByTerminal(int terminaId)
+        {
+            return SelectCashRegisterByTerminal(terminaId, null);
+        }
+
+        public string? SelectCashRegisterByTerminal(int terminaId, PaymentType? paymentTypeCode)
         {
             using subContext db = new();
 
-            DcCurrAcc dcCashReg = db.DcTerminals.Where(x => x.TerminalId == terminaId)
-                                  .Select(x => x.DcCashRegister)
-                                  .FirstOrDefault();
+            IQueryable<string> terminalCashRegCodes = db.DcTerminals
+                .Where(x => x.TerminalId == terminaId)
+                .Select(x => x.CashRegisterCode);
 
-            if (dcCashReg is not null)
-                return dcCashReg.CurrAccCode;
-            else return null;
+            IQueryable<DcCurrAcc> query = CashRegQuery(db, paymentTypeCode)
+                .Where(x => terminalCashRegCodes.Contains(x.CurrAccCode));
+
+            return query
+                .Select(x => x.CurrAccCode)
+                .FirstOrDefault();
         }
 
         public string SelectDefaultCustomerByStore(string storeCode)
