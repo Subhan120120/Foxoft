@@ -2010,7 +2010,7 @@ namespace Foxoft
                 Debug.Print($"WhatsApp log save error: {ex.Message}");
             }
         }
-
+         
         private string? SaveWhatsAppImageToDisk(MemoryStream imageStream) 
         {
             try
