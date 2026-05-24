@@ -2023,7 +2023,7 @@ namespace Foxoft
                     Directory.CreateDirectory(whatsAppFolder);
 
                 string fileName = $"{Guid.NewGuid()}.png";
-                string filePath = Path.Combine(whatsAppFolder, fileName);
+                string filePath = Path.Combine(whatsAppFolder, fileName); 
 
                 if (imageStream.CanSeek) imageStream.Position = 0;
                 File.WriteAllBytes(filePath, imageStream.ToArray());
