@@ -14,6 +14,11 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_GridViewLayout), ResourceType = typeof(Resources))]
         public string? GridViewLayout { get; set; }
 
+        [DefaultValueSql("10")]
+        [Column(TypeName = "decimal(4,1)")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_AppFontSize), ResourceType = typeof(Resources))]
+        public decimal AppFontSize { get; set; } = 10M;
+
         [Display(Name = nameof(Resources.Entity_AppSetting_AutoPrint), ResourceType = typeof(Resources))]
         public bool AutoPrint { get; set; }
 

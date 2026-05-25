@@ -1089,7 +1089,7 @@ namespace Foxoft.Models
             string gvListDefault = customMethods.GetDataFromFile("Foxoft.AppCode.GvListDefaultLayout.xml");
 
             modelBuilder.Entity<AppSetting>().HasData(
-                new AppSetting { Id = 1, GridViewLayout = gvListDefault, DefaultUnitOfMeasureId = 1 });
+                new AppSetting { Id = 1, GridViewLayout = gvListDefault, AppFontSize = AppFontSettings.DefaultFontSize, DefaultUnitOfMeasureId = 1 });
 
             modelBuilder.Entity<DcVariable>().HasData(
                 new DcVariable { VariableCode = "20", VariableDesc = "Barkod" },

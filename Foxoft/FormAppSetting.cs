@@ -1,4 +1,5 @@
 using DevExpress.XtraEditors;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -106,6 +107,8 @@ namespace Foxoft
 
                     // Get the loaded entity (or create it if not exists)
                     AppSetting = dbContext.AppSettings.Local.FirstOrDefault(x => x.Id == 1);
+                    if (AppSetting is not null)
+                        AppSetting.AppFontSize = AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize);
 
                     OverpaymentModeImageComboBoxEdit.EditValue = (int)AppSetting.OverpaymentMode;
                     // Now safe
@@ -122,7 +125,11 @@ namespace Foxoft
             AppSetting ??= dbContext.AppSettings.Local.FirstOrDefault(x => x.Id == 1)
                         ?? dbContext.AppSettings.FirstOrDefault(x => x.Id == 1);
 
+            decimal previousFontSize = AppFontSettings.NormalizeFontSize(Settings.Default.AppSetting?.AppFontSize);
+
+            appSettingBindingSource.EndEdit();
             AppSetting.POSFindProductBy = POSFindProductByCheckedComboBoxEdit.EditValue?.ToString()?.Trim() ?? "";
+            AppSetting.AppFontSize = AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize);
 
             if (OverpaymentModeImageComboBoxEdit.EditValue is int modeVal)
                 AppSetting.OverpaymentMode = (OverpaymentMode)modeVal;
@@ -133,8 +140,10 @@ namespace Foxoft
 
             Settings.Default.AppSetting = AppSetting;
             Settings.Default.Save();
-        }
 
+            if (AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize) != previousFontSize)
+                XtraMessageBox.Show(Resources.Message_AppFontSizeRestartRequired, Resources.Common_Attention);
+        }
 
         private void Btn_OptimizeDatabaseIndexes_Click(object sender, EventArgs e)
         {

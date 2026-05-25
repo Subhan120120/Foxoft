@@ -50,6 +50,7 @@ namespace Foxoft
             AutoSaveCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             InvoiceEditGraceDaysSpinEdit = new DevExpress.XtraEditors.SpinEdit();
             PaymentEditGraceDaysSpinEdit = new DevExpress.XtraEditors.SpinEdit();
+            AppFontSizeSpinEdit = new DevExpress.XtraEditors.SpinEdit();
             btn_ClearMemory = new DevExpress.XtraEditors.SimpleButton();
             POSShowQuantityDialogCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             POSShowSalesmanCodeDialogCheckEdit = new DevExpress.XtraEditors.CheckEdit();
@@ -76,6 +77,7 @@ namespace Foxoft
             ItemForAutoSave = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForInvoiceEditGraceDays = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPaymentEditGraceDays = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForAppFontSize = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -118,6 +120,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)AutoSaveCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)InvoiceEditGraceDaysSpinEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PaymentEditGraceDaysSpinEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)AppFontSizeSpinEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)POSShowQuantityDialogCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)POSShowSalesmanCodeDialogCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).BeginInit();
@@ -143,6 +146,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForAutoSave).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForInvoiceEditGraceDays).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPaymentEditGraceDays).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForAppFontSize).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
@@ -214,6 +218,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(AutoSaveCheckEdit);
             dataLayoutControl1.Controls.Add(InvoiceEditGraceDaysSpinEdit);
             dataLayoutControl1.Controls.Add(PaymentEditGraceDaysSpinEdit);
+            dataLayoutControl1.Controls.Add(AppFontSizeSpinEdit);
             dataLayoutControl1.Controls.Add(btn_ClearMemory);
             dataLayoutControl1.Controls.Add(POSShowQuantityDialogCheckEdit);
             dataLayoutControl1.Controls.Add(POSShowSalesmanCodeDialogCheckEdit);
@@ -384,6 +389,24 @@ namespace Foxoft
             PaymentEditGraceDaysSpinEdit.Size = new Size(229, 20);
             PaymentEditGraceDaysSpinEdit.StyleController = dataLayoutControl1;
             PaymentEditGraceDaysSpinEdit.TabIndex = 13;
+            // 
+            // AppFontSizeSpinEdit
+            // 
+            AppFontSizeSpinEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "AppFontSize", true, DataSourceUpdateMode.OnPropertyChanged));
+            AppFontSizeSpinEdit.Location = new Point(176, 66);
+            AppFontSizeSpinEdit.Name = "AppFontSizeSpinEdit";
+            AppFontSizeSpinEdit.Properties.Appearance.Options.UseTextOptions = true;
+            AppFontSizeSpinEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            AppFontSizeSpinEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            AppFontSizeSpinEdit.Properties.Increment = new decimal(new int[] { 5, 0, 0, 65536 });
+            AppFontSizeSpinEdit.Properties.IsFloatValue = true;
+            AppFontSizeSpinEdit.Properties.Mask.EditMask = "N1";
+            AppFontSizeSpinEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            AppFontSizeSpinEdit.Properties.MaxValue = Foxoft.AppCode.AppFontSettings.MaxFontSize;
+            AppFontSizeSpinEdit.Properties.MinValue = Foxoft.AppCode.AppFontSettings.MinFontSize;
+            AppFontSizeSpinEdit.Size = new Size(229, 20);
+            AppFontSizeSpinEdit.StyleController = dataLayoutControl1;
+            AppFontSizeSpinEdit.TabIndex = 14;
             // 
             // btn_ClearMemory
             // 
@@ -569,7 +592,7 @@ namespace Foxoft
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSFindProductBy, ItemForPOSMergeSameProducts, ItemForOverpaymentMode, ItemForUseBarcode, ItemForUseScales, ItemForUseCampaign, layoutControlGroupWhatsApp, ItemForNotifyBalanceWarningLevel, ItemForLockReturnDocument, ItemForTransferAutoApprove });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, ItemForAppFontSize, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSFindProductBy, ItemForPOSMergeSameProducts, ItemForOverpaymentMode, ItemForUseBarcode, ItemForUseScales, ItemForUseCampaign, layoutControlGroupWhatsApp, ItemForNotifyBalanceWarningLevel, ItemForLockReturnDocument, ItemForTransferAutoApprove });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
             layoutControlGroup1.Size = new Size(397, 699);
@@ -642,6 +665,15 @@ namespace Foxoft
             ItemForPaymentEditGraceDays.Size = new Size(397, 24);
             ItemForPaymentEditGraceDays.Text = Resources.Entity_AppSetting_PaymentEditGraceDays;
             ItemForPaymentEditGraceDays.TextSize = new Size(152, 13);
+            // 
+            // ItemForAppFontSize
+            // 
+            ItemForAppFontSize.Control = AppFontSizeSpinEdit;
+            ItemForAppFontSize.Location = new Point(0, 192);
+            ItemForAppFontSize.Name = "ItemForAppFontSize";
+            ItemForAppFontSize.Size = new Size(397, 24);
+            ItemForAppFontSize.Text = Resources.Entity_AppSetting_AppFontSize;
+            ItemForAppFontSize.TextSize = new Size(152, 13);
             // 
             // emptySpaceItem1
             // 
@@ -867,6 +899,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)AutoSaveCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)InvoiceEditGraceDaysSpinEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PaymentEditGraceDaysSpinEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)AppFontSizeSpinEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)POSShowQuantityDialogCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)POSShowSalesmanCodeDialogCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).EndInit();
@@ -892,6 +925,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForAutoSave).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForInvoiceEditGraceDays).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPaymentEditGraceDays).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForAppFontSize).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
@@ -937,6 +971,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.CheckEdit AutoSaveCheckEdit;
         private DevExpress.XtraEditors.SpinEdit InvoiceEditGraceDaysSpinEdit;
         private DevExpress.XtraEditors.SpinEdit PaymentEditGraceDaysSpinEdit;
+        private DevExpress.XtraEditors.SpinEdit AppFontSizeSpinEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForGetPrint;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPrintCount;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPrintDesignPath;
@@ -946,6 +981,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForAutoSave;
         private DevExpress.XtraLayout.LayoutControlItem ItemForInvoiceEditGraceDays;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPaymentEditGraceDays;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForAppFontSize;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;

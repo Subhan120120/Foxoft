@@ -22,6 +22,7 @@ namespace Foxoft
         {
             EfMethods efMethods = new();
 
+            AppFontSettings.Apply();
             SplashScreenManager.ShowForm(typeof(SplashScreenStartup));
 
             //if (Debugger.IsAttached)
@@ -31,7 +32,6 @@ namespace Foxoft
             //}
 
             ExportSettings.DefaultExportType = ExportType.WYSIWYG;
-            WindowsFormsSettings.DefaultFont = new Font("Tahoma", 10);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -53,6 +53,7 @@ namespace Foxoft
                     UpdateLicense();
 
                     SplashScreenManager.CloseForm();
+                    AppFontSettings.ApplyFromDatabase();
                     Application.Run(new FormLogin());
                 }
                 else

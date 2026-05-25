@@ -952,6 +952,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Font size was saved. Restart the application to apply it everywhere..
+        /// </summary>
+        public static string Message_AppFontSizeRestartRequired {
+            get {
+                return ResourceManager.GetString("Message_AppFontSizeRestartRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save Layout.
         /// </summary>
         public static string Common_SaveLayout {
@@ -1299,6 +1308,15 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_GridViewLayout {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_GridViewLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global Font Size.
+        /// </summary>
+        public static string Entity_AppSetting_AppFontSize {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AppFontSize", resourceCulture);
             }
         }
         

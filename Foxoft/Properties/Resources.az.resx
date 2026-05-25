@@ -333,6 +333,9 @@
   <data name="Entity_AppSetting_GridViewLayout" xml:space="preserve">
     <value>GridView Quruluşu</value>
   </data>
+  <data name="Entity_AppSetting_AppFontSize" xml:space="preserve">
+    <value>Qlobal şrift ölçüsü</value>
+  </data>
   <data name="Entity_AppSetting_InvoiceEditGraceDays" xml:space="preserve">
     <value>Faktura düzəliş limiti (gün)</value>
   </data>
@@ -3664,6 +3667,9 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Common_SavedSuccessfully" xml:space="preserve">
     <value>Uğurla yadda saxlanıldı.</value>
+  </data>
+  <data name="Message_AppFontSizeRestartRequired" xml:space="preserve">
+    <value>Şrift ölçüsü yadda saxlanıldı. Bütün pəncərələrdə tətbiq olunması üçün proqramı yenidən açın.</value>
   </data>
   <data name="Common_ErrorOccurred" xml:space="preserve">
     <value>Xəta baş verdi.</value>

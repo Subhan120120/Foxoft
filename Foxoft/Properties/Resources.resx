@@ -333,6 +333,9 @@
   <data name="Entity_AppSetting_GridViewLayout" xml:space="preserve">
     <value>GridView Layout</value>
   </data>
+  <data name="Entity_AppSetting_AppFontSize" xml:space="preserve">
+    <value>Global Font Size</value>
+  </data>
   <data name="Entity_AppSetting_InvoiceEditGraceDays" xml:space="preserve">
     <value>Invoice Edit Grace Days</value>
   </data>
@@ -3664,6 +3667,9 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Common_SavedSuccessfully" xml:space="preserve">
     <value>Saved successfully.</value>
+  </data>
+  <data name="Message_AppFontSizeRestartRequired" xml:space="preserve">
+    <value>Font size was saved. Restart the application to apply it everywhere.</value>
   </data>
   <data name="Common_ErrorOccurred" xml:space="preserve">
     <value>An error occurred.</value>

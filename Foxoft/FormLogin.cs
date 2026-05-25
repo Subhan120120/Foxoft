@@ -42,6 +42,7 @@ namespace Foxoft
             AppSetting appSetting = efMethods.SelectEntityById<AppSetting>(1);
             Settings.Default.AppSetting = appSetting;
             Settings.Default.Save();
+            AppFontSettings.Apply(appSetting?.AppFontSize);
             LUE_Terminal.Properties.DataSource = efMethods.SelectEntities<DcTerminal>();
 
             LUE_Terminal.EditValue = Settings.Default.TerminalId;
