@@ -307,6 +307,33 @@ namespace Foxoft
             return false; // Cancel
         }
 
+        private bool EnsureInvoiceSaved()
+        {
+            if (Settings.Default.AppSetting.AutoSave)
+            {
+                SaveInvoice();
+                return true;
+            }
+
+            if (!HasUnsavedChanges())
+                return true;
+
+            var result = XtraMessageBox.Show(
+                Resources.Form_Invoice_UnsavedChangesQuestion,
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes)
+                return false;
+
+            if (!dataLayoutControl1.IsValid(out _))
+                return false;
+
+            SaveInvoice();
+            return true;
+        }
+
         private void InitializeColumnName()
         {
             colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
@@ -1625,18 +1652,9 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                decimal summaryInvoice = CalcNetAmountSummmaryValue();
+                SaveInvoice();
 
-                if (summaryInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
-                {
-                    SaveInvoice();
-
-                    ClearControlsAddNew();
-                }
-                else if (XtraMessageBox.Show(Properties.Resources.Invoice_PaymentZeroReturn, Properties.Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.Cancel)
-                {
-                    ClearControlsAddNew();
-                }
+                ClearControlsAddNew();
             }
             else
             {
@@ -1682,10 +1700,7 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                decimal summaryInvoice = CalcNetAmountSummmaryValue();
-
-                if (summaryInvoice != 0)
-                    SaveInvoice();
+                SaveInvoice();
             }
             else
             {
@@ -1830,20 +1845,8 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                decimal summInvoice = CalcNetAmountSummmaryValue();
-
-                if (summInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
-                {
-                    SaveInvoice();
-                    Close();
-                }
-                else if (XtraMessageBox.Show(
-                             Resources.Form_Invoice_PaymentIsZeroReturnToInvoice,
-                             Resources.Common_Attention,
-                             MessageBoxButtons.OKCancel) == DialogResult.Cancel)
-                {
-                    Close();
-                }
+                SaveInvoice();
+                Close();
             }
             else
             {
@@ -3885,7 +3888,7 @@ namespace Foxoft
             if (!dataLayoutControl1.IsValid(out _)) return;
             if (gV_InvoiceLine.DataRowCount <= 0) return;
 
-            SaveInvoice();
+            if (!EnsureInvoiceSaved()) return;
 
             decimal pay = GetRemainingPaymentAmount();
             if (pay <= 0)
