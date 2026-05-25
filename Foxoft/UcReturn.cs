@@ -1,5 +1,6 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.AppCode.Service;
 using Foxoft.Models;
@@ -148,15 +149,18 @@ namespace Foxoft
 
                     btnEdit_InvoiceHeader.EditValue = trInvoiceHeader.DocumentNumber;
 
-                    LoadInvoice(trInvoiceHeader);
+                    LoadInvoice(trInvoiceHeader, form.trInvoiceLine.InvoiceLineId);
                 }
             }
         }
 
-        private void LoadInvoice(TrInvoiceHeader invoiceHeader)
+        private void LoadInvoice(TrInvoiceHeader invoiceHeader, Guid? focusedInvoiceLineId = null)
         {
             gC_InvoiceLine.DataSource = efMethods.SelectReturnLineVMs(invoiceHeader.InvoiceHeaderId);
             gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeader.InvoiceHeaderId);
+
+            if (focusedInvoiceLineId.HasValue)
+                FocusInvoiceLine(focusedInvoiceLineId.Value);
 
             if (invoiceHeader.DcCurrAcc is not null)
                 txt_CurrAccDesc.Text = invoiceHeader.DcCurrAcc.CurrAccDesc;
@@ -164,6 +168,20 @@ namespace Foxoft
             CalcPaidAmount();
 
             Tag = invoiceHeader.DocumentNumber;
+        }
+
+        private void FocusInvoiceLine(Guid invoiceLineId)
+        {
+            //gC_InvoiceLine.ForceInitialize();
+
+            int rowHandle = gV_InvoiceLine.LocateByValue(0, col_InvoiceLineId, invoiceLineId);
+            if (rowHandle == GridControl.InvalidRowHandle)
+                return;
+
+            gV_InvoiceLine.FocusedRowHandle = rowHandle;
+            //gV_InvoiceLine.FocusedColumn = col_ProductCode;
+            gV_InvoiceLine.MakeRowVisible(rowHandle);
+            gV_InvoiceLine.Focus();
         }
 
         private void CalcPaidAmount()
