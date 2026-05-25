@@ -66,84 +66,84 @@ namespace Foxoft
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             popupMenuAccordian = new PopupMenu(components);
-            aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
-            ACG_Favorites = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_Products = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_CashRegs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator3 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            aCE_RetailPurchaseInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_WholesaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_InstallmentSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator6 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            ACE_RetailPurchaseReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_RetailSaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_WholesaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_InstallmentSaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator10 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            ACE_RetailPurchaseReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_RetailSaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_WholesaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_InstallmentSaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_InventoryTransferReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator5 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            aCE_InventoryTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_CashTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator7 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_PaymentDetail = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator1 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            ACE_InstallmentSales = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_Group_InventoryCount = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_Count = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator9 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            ACE_RetailPurchaseOrder = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_RetailSaleOrder = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator4 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            ACE_Waybill = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_WaybillIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_WaybillOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator11 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            ACE_BarcodeOperations = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_Operation = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_PriceList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_ProductsDisabled = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_CurrAccsDisabled = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator8 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            ACE_ProductDiscounts = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_ProductFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_CurrAccFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_InvoiceLineFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_LoyaltyCards = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_CampaignList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_CrmActivityList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_Departments = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_Positions = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_EmploymentTypes = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_EmployeePositions = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_EmployeeContracts = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_PayrollPeriods = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_Attendances = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_PayrollList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_StoreList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_WarehouseList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_TerminalList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            ACE_AppSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_CreditList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_CurrencyList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_PaymentMethodList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_PaymentPlanList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_WhatsAppMessageLog = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_TransferApproval = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            aC_Root = new AccordionControl();
+            ACG_Favorites = new AccordionControlElement();
+            aCE_Invoices = new AccordionControlElement();
+            aCE_Products = new AccordionControlElement();
+            aCE_CurrAccs = new AccordionControlElement();
+            ACE_CashRegs = new AccordionControlElement();
+            accordionControlSeparator3 = new AccordionControlSeparator();
+            aCE_RetailPurchaseInvoice = new AccordionControlElement();
+            aCE_RetailSaleInvoice = new AccordionControlElement();
+            aCE_WholesaleInvoice = new AccordionControlElement();
+            aCE_InstallmentSaleInvoice = new AccordionControlElement();
+            accordionControlSeparator6 = new AccordionControlSeparator();
+            ACE_RetailPurchaseReturn = new AccordionControlElement();
+            ACE_RetailSaleReturn = new AccordionControlElement();
+            aCE_WholesaleReturn = new AccordionControlElement();
+            ACE_InstallmentSaleReturn = new AccordionControlElement();
+            accordionControlSeparator10 = new AccordionControlSeparator();
+            ACE_RetailPurchaseReturnCustom = new AccordionControlElement();
+            ACE_RetailSaleReturnCustom = new AccordionControlElement();
+            ACE_WholesaleReturnCustom = new AccordionControlElement();
+            ACE_InstallmentSaleReturnCustom = new AccordionControlElement();
+            ACE_InventoryTransferReturnCustom = new AccordionControlElement();
+            accordionControlSeparator5 = new AccordionControlSeparator();
+            aCE_InventoryTransfer = new AccordionControlElement();
+            ACE_CashTransfer = new AccordionControlElement();
+            accordionControlSeparator7 = new AccordionControlSeparator();
+            aCE_Expense = new AccordionControlElement();
+            aCE_PaymentDetail = new AccordionControlElement();
+            accordionControlSeparator1 = new AccordionControlSeparator();
+            ACE_InstallmentSales = new AccordionControlElement();
+            ACE_Group_InventoryCount = new AccordionControlElement();
+            aCE_Count = new AccordionControlElement();
+            aCE_CountIn = new AccordionControlElement();
+            aCE_CountOut = new AccordionControlElement();
+            accordionControlSeparator9 = new AccordionControlSeparator();
+            ACE_RetailPurchaseOrder = new AccordionControlElement();
+            ACE_RetailSaleOrder = new AccordionControlElement();
+            accordionControlSeparator4 = new AccordionControlSeparator();
+            ACE_Waybill = new AccordionControlElement();
+            ACE_WaybillIn = new AccordionControlElement();
+            ACE_WaybillOut = new AccordionControlElement();
+            accordionControlSeparator11 = new AccordionControlSeparator();
+            ACE_BarcodeOperations = new AccordionControlElement();
+            aCE_Operation = new AccordionControlElement();
+            ACE_PriceList = new AccordionControlElement();
+            aCE_ProductsDisabled = new AccordionControlElement();
+            aCE_CurrAccsDisabled = new AccordionControlElement();
+            accordionControlSeparator8 = new AccordionControlSeparator();
+            ACE_ProductDiscounts = new AccordionControlElement();
+            ACE_ProductFeatureType = new AccordionControlElement();
+            ACE_CurrAccFeatureType = new AccordionControlElement();
+            ACE_InvoiceLineFeatureType = new AccordionControlElement();
+            ACE_LoyaltyCards = new AccordionControlElement();
+            ACE_CampaignList = new AccordionControlElement();
+            ACE_CrmActivityList = new AccordionControlElement();
+            aCE_HumanResource = new AccordionControlElement();
+            ACE_Departments = new AccordionControlElement();
+            ACE_Positions = new AccordionControlElement();
+            ACE_EmploymentTypes = new AccordionControlElement();
+            ACE_EmployeePositions = new AccordionControlElement();
+            ACE_EmployeeContracts = new AccordionControlElement();
+            ACE_PayrollPeriods = new AccordionControlElement();
+            ACE_Attendances = new AccordionControlElement();
+            ACE_PayrollList = new AccordionControlElement();
+            aCE_Reports = new AccordionControlElement();
+            aCE_Setting = new AccordionControlElement();
+            aCE_CurrAccRole = new AccordionControlElement();
+            ACE_StoreList = new AccordionControlElement();
+            ACE_WarehouseList = new AccordionControlElement();
+            ACE_TerminalList = new AccordionControlElement();
+            accordionControlSeparator2 = new AccordionControlSeparator();
+            ACE_AppSettings = new AccordionControlElement();
+            ACE_CreditList = new AccordionControlElement();
+            ACE_CurrencyList = new AccordionControlElement();
+            ACE_PaymentMethodList = new AccordionControlElement();
+            ACE_PaymentPlanList = new AccordionControlElement();
+            ACE_WhatsAppMessageLog = new AccordionControlElement();
+            ACE_TransferApproval = new AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -374,14 +374,14 @@ namespace Foxoft
             // aC_Root
             // 
             aC_Root.Dock = DockStyle.Left;
-            aC_Root.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACG_Favorites, aCE_Invoices, ACE_Group_InventoryCount, aCE_Operation, aCE_HumanResource, aCE_Reports, aCE_Setting });
+            aC_Root.Elements.AddRange(new AccordionControlElement[] { ACG_Favorites, aCE_Invoices, ACE_Group_InventoryCount, aCE_Operation, aCE_HumanResource, aCE_Reports, aCE_Setting });
             aC_Root.Location = new Point(0, 158);
             aC_Root.Name = "aC_Root";
             aC_Root.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.True;
-            aC_Root.ResizeMode = DevExpress.XtraBars.Navigation.AccordionControlResizeMode.InnerResizeZone;
-            aC_Root.RootDisplayMode = DevExpress.XtraBars.Navigation.AccordionControlRootDisplayMode.Footer;
-            aC_Root.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
-            aC_Root.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
+            aC_Root.ResizeMode = AccordionControlResizeMode.InnerResizeZone;
+            aC_Root.RootDisplayMode = AccordionControlRootDisplayMode.Footer;
+            aC_Root.ScrollBarMode = ScrollBarMode.Touch;
+            aC_Root.ShowFilterControl = ShowFilterControl.Always;
             aC_Root.Size = new Size(314, 433);
             aC_Root.TabIndex = 2;
             aC_Root.MouseDown += aC_Root_MouseDown;
@@ -396,7 +396,7 @@ namespace Foxoft
             // 
             // aCE_Invoices
             // 
-            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentSaleInvoice, accordionControlSeparator6, ACE_RetailPurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentSaleReturn, accordionControlSeparator10, ACE_RetailPurchaseReturnCustom, ACE_RetailSaleReturnCustom, ACE_WholesaleReturnCustom, ACE_InstallmentSaleReturnCustom, ACE_InventoryTransferReturnCustom, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1, ACE_InstallmentSales });
+            aCE_Invoices.Elements.AddRange(new AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentSaleInvoice, accordionControlSeparator6, ACE_RetailPurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentSaleReturn, accordionControlSeparator10, ACE_RetailPurchaseReturnCustom, ACE_RetailSaleReturnCustom, ACE_WholesaleReturnCustom, ACE_InstallmentSaleReturnCustom, ACE_InventoryTransferReturnCustom, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1, ACE_InstallmentSales });
             aCE_Invoices.Expanded = true;
             aCE_Invoices.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Invoices.ImageOptions.SvgImage");
             aCE_Invoices.Name = "aCE_Invoices";
@@ -406,21 +406,21 @@ namespace Foxoft
             // 
             aCE_Products.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Products.ImageOptions.SvgImage");
             aCE_Products.Name = "aCE_Products";
-            aCE_Products.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_Products.Style = ElementStyle.Item;
             aCE_Products.Text = Resources.ERP_ACE_Products;
             // 
             // aCE_CurrAccs
             // 
             aCE_CurrAccs.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccs.ImageOptions.SvgImage");
             aCE_CurrAccs.Name = "aCE_CurrAccs";
-            aCE_CurrAccs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_CurrAccs.Style = ElementStyle.Item;
             aCE_CurrAccs.Text = Resources.ERP_ACE_CurrAccs;
             // 
             // ACE_CashRegs
             // 
             ACE_CashRegs.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CashRegs.ImageOptions.SvgImage");
             ACE_CashRegs.Name = "ACE_CashRegs";
-            ACE_CashRegs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_CashRegs.Style = ElementStyle.Item;
             ACE_CashRegs.Text = Resources.ERP_CashRegs;
             // 
             // accordionControlSeparator3
@@ -431,28 +431,28 @@ namespace Foxoft
             // 
             aCE_RetailPurchaseInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_RetailPurchaseInvoice.ImageOptions.SvgImage");
             aCE_RetailPurchaseInvoice.Name = "aCE_RetailPurchaseInvoice";
-            aCE_RetailPurchaseInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_RetailPurchaseInvoice.Style = ElementStyle.Item;
             aCE_RetailPurchaseInvoice.Text = Resources.ERP_ACE_RetailPurchaseInvoice;
             // 
             // aCE_RetailSaleInvoice
             // 
             aCE_RetailSaleInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_RetailSaleInvoice.ImageOptions.SvgImage");
             aCE_RetailSaleInvoice.Name = "aCE_RetailSaleInvoice";
-            aCE_RetailSaleInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_RetailSaleInvoice.Style = ElementStyle.Item;
             aCE_RetailSaleInvoice.Text = Resources.ERP_ACE_RetailSaleInvoice;
             // 
             // aCE_WholesaleInvoice
             // 
             aCE_WholesaleInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_WholesaleInvoice.ImageOptions.SvgImage");
             aCE_WholesaleInvoice.Name = "aCE_WholesaleInvoice";
-            aCE_WholesaleInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_WholesaleInvoice.Style = ElementStyle.Item;
             aCE_WholesaleInvoice.Text = Resources.ERP_ACE_WholeSaleInvoice;
             // 
             // aCE_InstallmentSaleInvoice
             // 
             aCE_InstallmentSaleInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_InstallmentSaleInvoice.ImageOptions.SvgImage");
             aCE_InstallmentSaleInvoice.Name = "aCE_InstallmentSaleInvoice";
-            aCE_InstallmentSaleInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_InstallmentSaleInvoice.Style = ElementStyle.Item;
             aCE_InstallmentSaleInvoice.Text = Resources.ERP_ACE_InstallmentsaleInvoice;
             // 
             // accordionControlSeparator6
@@ -463,28 +463,28 @@ namespace Foxoft
             // 
             ACE_RetailPurchaseReturn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailPurchaseReturn.ImageOptions.SvgImage");
             ACE_RetailPurchaseReturn.Name = "ACE_RetailPurchaseReturn";
-            ACE_RetailPurchaseReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_RetailPurchaseReturn.Style = ElementStyle.Item;
             ACE_RetailPurchaseReturn.Text = Resources.ERP_ACE_RetailPurchaseReturn;
             // 
             // ACE_RetailSaleReturn
             // 
             ACE_RetailSaleReturn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailSaleReturn.ImageOptions.SvgImage");
             ACE_RetailSaleReturn.Name = "ACE_RetailSaleReturn";
-            ACE_RetailSaleReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_RetailSaleReturn.Style = ElementStyle.Item;
             ACE_RetailSaleReturn.Text = Resources.ERP_ACE_RetailSaleReturn;
             // 
             // aCE_WholesaleReturn
             // 
             aCE_WholesaleReturn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_WholesaleReturn.ImageOptions.SvgImage");
             aCE_WholesaleReturn.Name = "aCE_WholesaleReturn";
-            aCE_WholesaleReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_WholesaleReturn.Style = ElementStyle.Item;
             aCE_WholesaleReturn.Text = Resources.ERP_ACE_WholeSaleReturn;
             // 
             // ACE_InstallmentSaleReturn
             // 
             ACE_InstallmentSaleReturn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_InstallmentSaleReturn.ImageOptions.SvgImage");
             ACE_InstallmentSaleReturn.Name = "ACE_InstallmentSaleReturn";
-            ACE_InstallmentSaleReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_InstallmentSaleReturn.Style = ElementStyle.Item;
             ACE_InstallmentSaleReturn.Text = Resources.ERP_ACE_InstallmentsaleReturn;
             // 
             // accordionControlSeparator10
@@ -495,34 +495,35 @@ namespace Foxoft
             // 
             ACE_RetailPurchaseReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailPurchaseReturnCustom.ImageOptions.SvgImage");
             ACE_RetailPurchaseReturnCustom.Name = "ACE_RetailPurchaseReturnCustom";
-            ACE_RetailPurchaseReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_RetailPurchaseReturnCustom.Style = ElementStyle.Item;
             ACE_RetailPurchaseReturnCustom.Text = Resources.ERP_ACE_RetailPurchaseReturnCustom;
             // 
             // ACE_RetailSaleReturnCustom
             // 
+            ACE_RetailSaleReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailSaleReturnCustom.ImageOptions.SvgImage");
             ACE_RetailSaleReturnCustom.Name = "ACE_RetailSaleReturnCustom";
-            ACE_RetailSaleReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_RetailSaleReturnCustom.Style = ElementStyle.Item;
             ACE_RetailSaleReturnCustom.Text = Resources.ERP_ACE_RetailSaleReturnCustom;
             // 
             // ACE_WholesaleReturnCustom
             // 
             ACE_WholesaleReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WholesaleReturnCustom.ImageOptions.SvgImage");
             ACE_WholesaleReturnCustom.Name = "ACE_WholesaleReturnCustom";
-            ACE_WholesaleReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WholesaleReturnCustom.Style = ElementStyle.Item;
             ACE_WholesaleReturnCustom.Text = Resources.ERP_ACE_WholeSaleReturnCustom;
             // 
             // ACE_InstallmentSaleReturnCustom
             // 
             ACE_InstallmentSaleReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_InstallmentSaleReturnCustom.ImageOptions.SvgImage");
             ACE_InstallmentSaleReturnCustom.Name = "ACE_InstallmentSaleReturnCustom";
-            ACE_InstallmentSaleReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_InstallmentSaleReturnCustom.Style = ElementStyle.Item;
             ACE_InstallmentSaleReturnCustom.Text = Resources.ERP_ACE_InstallmentSaleReturnCustom;
             // 
             // ACE_InventoryTransferReturnCustom
             // 
             ACE_InventoryTransferReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_InventoryTransferReturnCustom.ImageOptions.SvgImage");
             ACE_InventoryTransferReturnCustom.Name = "ACE_InventoryTransferReturnCustom";
-            ACE_InventoryTransferReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_InventoryTransferReturnCustom.Style = ElementStyle.Item;
             ACE_InventoryTransferReturnCustom.Text = Resources.Form_ERP_ACE_InventoryTransferReturnCustom;
             // 
             // accordionControlSeparator5
@@ -533,14 +534,14 @@ namespace Foxoft
             // 
             aCE_InventoryTransfer.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_InventoryTransfer.ImageOptions.SvgImage");
             aCE_InventoryTransfer.Name = "aCE_InventoryTransfer";
-            aCE_InventoryTransfer.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_InventoryTransfer.Style = ElementStyle.Item;
             aCE_InventoryTransfer.Text = Resources.ERP_ACE_InventoryTransfers;
             // 
             // ACE_CashTransfer
             // 
             ACE_CashTransfer.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CashTransfer.ImageOptions.SvgImage");
             ACE_CashTransfer.Name = "ACE_CashTransfer";
-            ACE_CashTransfer.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_CashTransfer.Style = ElementStyle.Item;
             ACE_CashTransfer.Text = Resources.ERP_ACE_CashTransfers;
             // 
             // accordionControlSeparator7
@@ -551,14 +552,14 @@ namespace Foxoft
             // 
             aCE_Expense.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Expense.ImageOptions.SvgImage");
             aCE_Expense.Name = "aCE_Expense";
-            aCE_Expense.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_Expense.Style = ElementStyle.Item;
             aCE_Expense.Text = Resources.ERP_ACE_Expenses;
             // 
             // aCE_PaymentDetail
             // 
             aCE_PaymentDetail.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_PaymentDetail.ImageOptions.SvgImage");
             aCE_PaymentDetail.Name = "aCE_PaymentDetail";
-            aCE_PaymentDetail.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_PaymentDetail.Style = ElementStyle.Item;
             aCE_PaymentDetail.Text = Resources.ERP_ACE_PaymentDetail;
             // 
             // accordionControlSeparator1
@@ -569,12 +570,12 @@ namespace Foxoft
             // 
             ACE_InstallmentSales.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_InstallmentSales.ImageOptions.SvgImage");
             ACE_InstallmentSales.Name = "ACE_InstallmentSales";
-            ACE_InstallmentSales.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_InstallmentSales.Style = ElementStyle.Item;
             ACE_InstallmentSales.Text = Resources.ERP_ACE_InstallmentSales;
             // 
             // ACE_Group_InventoryCount
             // 
-            ACE_Group_InventoryCount.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Count, aCE_CountIn, aCE_CountOut, accordionControlSeparator9, ACE_RetailPurchaseOrder, ACE_RetailSaleOrder, accordionControlSeparator4, ACE_Waybill, ACE_WaybillIn, ACE_WaybillOut, accordionControlSeparator11, ACE_BarcodeOperations });
+            ACE_Group_InventoryCount.Elements.AddRange(new AccordionControlElement[] { aCE_Count, aCE_CountIn, aCE_CountOut, accordionControlSeparator9, ACE_RetailPurchaseOrder, ACE_RetailSaleOrder, accordionControlSeparator4, ACE_Waybill, ACE_WaybillIn, ACE_WaybillOut, accordionControlSeparator11, ACE_BarcodeOperations });
             ACE_Group_InventoryCount.Expanded = true;
             ACE_Group_InventoryCount.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Group_InventoryCount.ImageOptions.SvgImage");
             ACE_Group_InventoryCount.Name = "ACE_Group_InventoryCount";
@@ -584,21 +585,21 @@ namespace Foxoft
             // 
             aCE_Count.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Count.ImageOptions.SvgImage");
             aCE_Count.Name = "aCE_Count";
-            aCE_Count.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_Count.Style = ElementStyle.Item;
             aCE_Count.Text = Resources.Form_ERP_ACE_InvertoryCount;
             // 
             // aCE_CountIn
             // 
             aCE_CountIn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CountIn.ImageOptions.SvgImage");
             aCE_CountIn.Name = "aCE_CountIn";
-            aCE_CountIn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_CountIn.Style = ElementStyle.Item;
             aCE_CountIn.Text = Resources.ERP_ACE_CountInInvoice;
             // 
             // aCE_CountOut
             // 
             aCE_CountOut.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CountOut.ImageOptions.SvgImage");
             aCE_CountOut.Name = "aCE_CountOut";
-            aCE_CountOut.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_CountOut.Style = ElementStyle.Item;
             aCE_CountOut.Text = Resources.ERP_ACE_CountOutInvoice;
             // 
             // accordionControlSeparator9
@@ -609,14 +610,14 @@ namespace Foxoft
             // 
             ACE_RetailPurchaseOrder.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailPurchaseOrder.ImageOptions.SvgImage");
             ACE_RetailPurchaseOrder.Name = "ACE_RetailPurchaseOrder";
-            ACE_RetailPurchaseOrder.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_RetailPurchaseOrder.Style = ElementStyle.Item;
             ACE_RetailPurchaseOrder.Text = Resources.ERP_ACE_RetailPurchaseOrder;
             // 
             // ACE_RetailSaleOrder
             // 
             ACE_RetailSaleOrder.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailSaleOrder.ImageOptions.SvgImage");
             ACE_RetailSaleOrder.Name = "ACE_RetailSaleOrder";
-            ACE_RetailSaleOrder.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_RetailSaleOrder.Style = ElementStyle.Item;
             ACE_RetailSaleOrder.Text = Resources.ERP_ACE_RetailSaleOrder;
             // 
             // accordionControlSeparator4
@@ -627,21 +628,21 @@ namespace Foxoft
             // 
             ACE_Waybill.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Waybill.ImageOptions.SvgImage");
             ACE_Waybill.Name = "ACE_Waybill";
-            ACE_Waybill.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Waybill.Style = ElementStyle.Item;
             ACE_Waybill.Text = Resources.ERP_ACE_Waybill;
             // 
             // ACE_WaybillIn
             // 
             ACE_WaybillIn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WaybillIn.ImageOptions.SvgImage");
             ACE_WaybillIn.Name = "ACE_WaybillIn";
-            ACE_WaybillIn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WaybillIn.Style = ElementStyle.Item;
             ACE_WaybillIn.Text = Resources.ERP_ACE_WaybillIn;
             // 
             // ACE_WaybillOut
             // 
             ACE_WaybillOut.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WaybillOut.ImageOptions.SvgImage");
             ACE_WaybillOut.Name = "ACE_WaybillOut";
-            ACE_WaybillOut.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WaybillOut.Style = ElementStyle.Item;
             ACE_WaybillOut.Text = Resources.ERP_ACE_WaybillOut;
             // 
             // accordionControlSeparator11
@@ -652,13 +653,13 @@ namespace Foxoft
             // 
             ACE_BarcodeOperations.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_BarcodeOperations.ImageOptions.SvgImage");
             ACE_BarcodeOperations.Name = "ACE_BarcodeOperations";
-            ACE_BarcodeOperations.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_BarcodeOperations.Style = ElementStyle.Item;
             ACE_BarcodeOperations.Text = "Barcode Operations";
             ACE_BarcodeOperations.Click += ACE_BarcodeOperations_Click;
             // 
             // aCE_Operation
             // 
-            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_InvoiceLineFeatureType, ACE_LoyaltyCards, ACE_CampaignList, ACE_CrmActivityList });
+            aCE_Operation.Elements.AddRange(new AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_InvoiceLineFeatureType, ACE_LoyaltyCards, ACE_CampaignList, ACE_CrmActivityList });
             aCE_Operation.Expanded = true;
             aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
             aCE_Operation.Name = "aCE_Operation";
@@ -668,21 +669,21 @@ namespace Foxoft
             // 
             ACE_PriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PriceList.ImageOptions.SvgImage");
             ACE_PriceList.Name = "ACE_PriceList";
-            ACE_PriceList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PriceList.Style = ElementStyle.Item;
             ACE_PriceList.Text = Resources.ERP_ACE_PriceList;
             // 
             // aCE_ProductsDisabled
             // 
             aCE_ProductsDisabled.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_ProductsDisabled.ImageOptions.SvgImage");
             aCE_ProductsDisabled.Name = "aCE_ProductsDisabled";
-            aCE_ProductsDisabled.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_ProductsDisabled.Style = ElementStyle.Item;
             aCE_ProductsDisabled.Text = Resources.ERP_ACE_ProductsDisabled;
             // 
             // aCE_CurrAccsDisabled
             // 
             aCE_CurrAccsDisabled.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccsDisabled.ImageOptions.SvgImage");
             aCE_CurrAccsDisabled.Name = "aCE_CurrAccsDisabled";
-            aCE_CurrAccsDisabled.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_CurrAccsDisabled.Style = ElementStyle.Item;
             aCE_CurrAccsDisabled.Text = Resources.ERP_ACE_CurrAccsDisabled;
             // 
             // accordionControlSeparator8
@@ -693,54 +694,54 @@ namespace Foxoft
             // 
             ACE_ProductDiscounts.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_ProductDiscounts.ImageOptions.SvgImage");
             ACE_ProductDiscounts.Name = "ACE_ProductDiscounts";
-            ACE_ProductDiscounts.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_ProductDiscounts.Style = ElementStyle.Item;
             ACE_ProductDiscounts.Text = Resources.ERP_ACE_ProductDiscounts;
             // 
             // ACE_ProductFeatureType
             // 
             ACE_ProductFeatureType.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_ProductFeatureType.ImageOptions.SvgImage");
             ACE_ProductFeatureType.Name = "ACE_ProductFeatureType";
-            ACE_ProductFeatureType.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_ProductFeatureType.Style = ElementStyle.Item;
             ACE_ProductFeatureType.Text = Resources.ERP_ACE_ProductFeatureType;
             // 
             // ACE_CurrAccFeatureType
             // 
             ACE_CurrAccFeatureType.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CurrAccFeatureType.ImageOptions.SvgImage");
             ACE_CurrAccFeatureType.Name = "ACE_CurrAccFeatureType";
-            ACE_CurrAccFeatureType.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_CurrAccFeatureType.Style = ElementStyle.Item;
             ACE_CurrAccFeatureType.Text = Resources.ERP_ACE_CurrAccFeatureType;
             // 
             // ACE_InvoiceLineFeatureType
             // 
             ACE_InvoiceLineFeatureType.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_InvoiceLineFeatureType.ImageOptions.SvgImage");
             ACE_InvoiceLineFeatureType.Name = "ACE_InvoiceLineFeatureType";
-            ACE_InvoiceLineFeatureType.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_InvoiceLineFeatureType.Style = ElementStyle.Item;
             ACE_InvoiceLineFeatureType.Text = Resources.ERP_ACE_InvoiceLineFeatureType;
             // 
             // ACE_LoyaltyCards
             // 
             ACE_LoyaltyCards.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_LoyaltyCards.ImageOptions.SvgImage");
             ACE_LoyaltyCards.Name = "ACE_LoyaltyCards";
-            ACE_LoyaltyCards.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_LoyaltyCards.Style = ElementStyle.Item;
             ACE_LoyaltyCards.Text = "Bonus Kartlar";
             // 
             // ACE_CampaignList
             // 
             ACE_CampaignList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CampaignList.ImageOptions.SvgImage");
             ACE_CampaignList.Name = "ACE_CampaignList";
-            ACE_CampaignList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_CampaignList.Style = ElementStyle.Item;
             ACE_CampaignList.Text = Resources.ERP_ACE_Campaigns;
             // 
             // ACE_CrmActivityList
             // 
             ACE_CrmActivityList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CrmActivityList.ImageOptions.SvgImage");
             ACE_CrmActivityList.Name = "ACE_CrmActivityList";
-            ACE_CrmActivityList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_CrmActivityList.Style = ElementStyle.Item;
             ACE_CrmActivityList.Text = "CRM Activity List";
             // 
             // aCE_HumanResource
             // 
-            aCE_HumanResource.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances, ACE_PayrollList });
+            aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances, ACE_PayrollList });
             aCE_HumanResource.Expanded = true;
             aCE_HumanResource.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage");
             aCE_HumanResource.Name = "aCE_HumanResource";
@@ -750,56 +751,56 @@ namespace Foxoft
             // 
             ACE_Departments.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Departments.ImageOptions.SvgImage");
             ACE_Departments.Name = "ACE_Departments";
-            ACE_Departments.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Departments.Style = ElementStyle.Item;
             ACE_Departments.Text = Resources.ERP_ACE_Departments;
             // 
             // ACE_Positions
             // 
             ACE_Positions.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Positions.ImageOptions.SvgImage");
             ACE_Positions.Name = "ACE_Positions";
-            ACE_Positions.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Positions.Style = ElementStyle.Item;
             ACE_Positions.Text = Resources.ERP_ACE_Positions;
             // 
             // ACE_EmploymentTypes
             // 
             ACE_EmploymentTypes.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_EmploymentTypes.ImageOptions.SvgImage");
             ACE_EmploymentTypes.Name = "ACE_EmploymentTypes";
-            ACE_EmploymentTypes.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_EmploymentTypes.Style = ElementStyle.Item;
             ACE_EmploymentTypes.Text = Resources.ERP_ACE_EmploymentTypes;
             // 
             // ACE_EmployeePositions
             // 
             ACE_EmployeePositions.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_EmployeePositions.ImageOptions.SvgImage");
             ACE_EmployeePositions.Name = "ACE_EmployeePositions";
-            ACE_EmployeePositions.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_EmployeePositions.Style = ElementStyle.Item;
             ACE_EmployeePositions.Text = Resources.ERP_ACE_EmployeePositions;
             // 
             // ACE_EmployeeContracts
             // 
             ACE_EmployeeContracts.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_EmployeeContracts.ImageOptions.SvgImage");
             ACE_EmployeeContracts.Name = "ACE_EmployeeContracts";
-            ACE_EmployeeContracts.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_EmployeeContracts.Style = ElementStyle.Item;
             ACE_EmployeeContracts.Text = Resources.ERP_ACE_EmployeeContracts;
             // 
             // ACE_PayrollPeriods
             // 
             ACE_PayrollPeriods.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollPeriods.ImageOptions.SvgImage");
             ACE_PayrollPeriods.Name = "ACE_PayrollPeriods";
-            ACE_PayrollPeriods.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PayrollPeriods.Style = ElementStyle.Item;
             ACE_PayrollPeriods.Text = Resources.ERP_ACE_PayrollPeriods;
             // 
             // ACE_Attendances
             // 
             ACE_Attendances.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Attendances.ImageOptions.SvgImage");
             ACE_Attendances.Name = "ACE_Attendances";
-            ACE_Attendances.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Attendances.Style = ElementStyle.Item;
             ACE_Attendances.Text = Resources.ERP_ACE_Attendances;
             // 
             // ACE_PayrollList
             // 
             ACE_PayrollList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollList.ImageOptions.SvgImage");
             ACE_PayrollList.Name = "ACE_PayrollList";
-            ACE_PayrollList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PayrollList.Style = ElementStyle.Item;
             ACE_PayrollList.Text = Resources.ERP_ACE_PayrollList;
             // 
             // aCE_Reports
@@ -811,7 +812,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_WhatsAppMessageLog, ACE_TransferApproval });
+            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_WhatsAppMessageLog, ACE_TransferApproval });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -821,28 +822,28 @@ namespace Foxoft
             // 
             aCE_CurrAccRole.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccRole.ImageOptions.SvgImage");
             aCE_CurrAccRole.Name = "aCE_CurrAccRole";
-            aCE_CurrAccRole.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_CurrAccRole.Style = ElementStyle.Item;
             aCE_CurrAccRole.Text = Resources.ERP_ACE_Users;
             // 
             // ACE_StoreList
             // 
             ACE_StoreList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_StoreList.ImageOptions.SvgImage");
             ACE_StoreList.Name = "ACE_StoreList";
-            ACE_StoreList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_StoreList.Style = ElementStyle.Item;
             ACE_StoreList.Text = Resources.ERP_ACE_StoreList;
             // 
             // ACE_WarehouseList
             // 
             ACE_WarehouseList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WarehouseList.ImageOptions.SvgImage");
             ACE_WarehouseList.Name = "ACE_WarehouseList";
-            ACE_WarehouseList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WarehouseList.Style = ElementStyle.Item;
             ACE_WarehouseList.Text = Resources.Form_WarehouseList_Caption;
             // 
             // ACE_TerminalList
             // 
             ACE_TerminalList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_TerminalList.ImageOptions.SvgImage");
             ACE_TerminalList.Name = "ACE_TerminalList";
-            ACE_TerminalList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_TerminalList.Style = ElementStyle.Item;
             ACE_TerminalList.Text = Resources.ERP_ACE_Terminals;
             // 
             // accordionControlSeparator2
@@ -853,49 +854,49 @@ namespace Foxoft
             // 
             ACE_AppSettings.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_AppSettings.ImageOptions.SvgImage");
             ACE_AppSettings.Name = "ACE_AppSettings";
-            ACE_AppSettings.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_AppSettings.Style = ElementStyle.Item;
             ACE_AppSettings.Text = Resources.ERP_ACE_AppSettings;
             // 
             // ACE_CreditList
             // 
             ACE_CreditList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CreditList.ImageOptions.SvgImage");
             ACE_CreditList.Name = "ACE_CreditList";
-            ACE_CreditList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_CreditList.Style = ElementStyle.Item;
             ACE_CreditList.Text = Resources.ERP_ACE_Credits;
             // 
             // ACE_CurrencyList
             // 
             ACE_CurrencyList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CurrencyList.ImageOptions.SvgImage");
             ACE_CurrencyList.Name = "ACE_CurrencyList";
-            ACE_CurrencyList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_CurrencyList.Style = ElementStyle.Item;
             ACE_CurrencyList.Text = Resources.Entity_Currency;
             // 
             // ACE_PaymentMethodList
             // 
             ACE_PaymentMethodList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PaymentMethodList.ImageOptions.SvgImage");
             ACE_PaymentMethodList.Name = "ACE_PaymentMethodList";
-            ACE_PaymentMethodList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PaymentMethodList.Style = ElementStyle.Item;
             ACE_PaymentMethodList.Text = Resources.Entity_PaymentMethod;
             // 
             // ACE_PaymentPlanList
             // 
             ACE_PaymentPlanList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PaymentPlanList.ImageOptions.SvgImage");
             ACE_PaymentPlanList.Name = "ACE_PaymentPlanList";
-            ACE_PaymentPlanList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PaymentPlanList.Style = ElementStyle.Item;
             ACE_PaymentPlanList.Text = Resources.Entity_PaymentPlan;
             // 
             // ACE_WhatsAppMessageLog
             // 
             ACE_WhatsAppMessageLog.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WhatsAppMessageLog.ImageOptions.SvgImage");
             ACE_WhatsAppMessageLog.Name = "ACE_WhatsAppMessageLog";
-            ACE_WhatsAppMessageLog.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WhatsAppMessageLog.Style = ElementStyle.Item;
             ACE_WhatsAppMessageLog.Text = Resources.Form_WhatsAppMessageLog;
             // 
             // ACE_TransferApproval
             // 
             ACE_TransferApproval.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_TransferApproval.ImageOptions.SvgImage");
             ACE_TransferApproval.Name = "ACE_TransferApproval";
-            ACE_TransferApproval.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_TransferApproval.Style = ElementStyle.Item;
             ACE_TransferApproval.Text = Resources.ERP_ACE_TransferApproval;
             // 
             // FormERP
