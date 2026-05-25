@@ -184,7 +184,12 @@ namespace Foxoft
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            SelectDocNum();
+            if (e.Button.Kind == ButtonPredefines.Left)
+                NavigateToAdjacentMoneyTransfer(isPrevious: true);
+            else if (e.Button.Kind == ButtonPredefines.Right)
+                NavigateToAdjacentMoneyTransfer(isPrevious: false);
+            else
+                SelectDocNum();
         }
 
         private void CurrAccCodeButtonEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -219,20 +224,23 @@ namespace Foxoft
 
             LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
 
-            lV_paymentHeader.ForEach(x =>
-            {
-                if (lV_paymentHeader.Any(x => x.DcCurrAcc is not null) || lV_paymentHeader.Any(x => x.ToCashReg is not null))
-                {
-                    lbl_FromCashRegDesc.Text = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
-
-                    if (x.ToCashReg is not null)
-                        lbl_ToCashRegDesc.Text = x.ToCashReg.CurrAccDesc + " " + x.ToCashReg.FirstName + " " + x.ToCashReg.LastName;
-
-                }
-            });
-
             trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
             trPaymentHeader = trPaymentHeadersBindingSource.Current as TrPaymentHeader;
+
+            lbl_FromCashRegDesc.Text = GetCurrAccDisplayName(trPaymentHeader?.DcCurrAcc);
+            lbl_ToCashRegDesc.Text = GetCurrAccDisplayName(trPaymentHeader?.ToCashReg);
+
+            if (trPaymentHeader is null)
+            {
+                trPaymentLinesBindingSource.DataSource = null;
+                BalanceBefore = 0;
+                CalcCashRegBalance();
+                return;
+            }
+
+            BalanceBefore = string.IsNullOrWhiteSpace(trPaymentHeader.CurrAccCode)
+                ? 0
+                : Math.Round(efMethods.SelectCashRegBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
 
             dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == paymentHeaderId)
                                     .OrderBy(x => x.CreatedDate)
@@ -245,8 +253,14 @@ namespace Foxoft
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
+        }
 
-            BalanceBefore = Math.Round(efMethods.SelectCashRegBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+        private static string GetCurrAccDisplayName(DcCurrAcc currAcc)
+        {
+            if (currAcc is null)
+                return string.Empty;
+
+            return $"{currAcc.CurrAccDesc} {currAcc.FirstName} {currAcc.LastName}".Trim();
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
@@ -582,6 +596,57 @@ namespace Foxoft
             string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
 
             XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void NavigateToAdjacentMoneyTransfer(bool isPrevious)
+        {
+            if (trPaymentHeader is null)
+                return;
+
+            using var ctx = new subContext();
+
+            TrPaymentHeader adjacent;
+
+            if (isPrevious)
+            {
+                adjacent = ctx.TrPaymentHeaders
+                    .Where(x => x.ProcessCode == "CT" && x.IsMainTF == true)
+                    .Where(x => x.OperationDate < trPaymentHeader.OperationDate
+                             || (x.OperationDate == trPaymentHeader.OperationDate
+                                 && x.OperationTime < trPaymentHeader.OperationTime)
+                             || (x.OperationDate == trPaymentHeader.OperationDate
+                                 && x.OperationTime == trPaymentHeader.OperationTime
+                                 && x.PaymentHeaderId != trPaymentHeader.PaymentHeaderId
+                                 && string.Compare(x.DocumentNumber, trPaymentHeader.DocumentNumber) < 0))
+                    .OrderByDescending(x => x.OperationDate)
+                    .ThenByDescending(x => x.OperationTime)
+                    .ThenByDescending(x => x.DocumentNumber)
+                    .FirstOrDefault();
+            }
+            else
+            {
+                adjacent = ctx.TrPaymentHeaders
+                    .Where(x => x.ProcessCode == "CT" && x.IsMainTF == true)
+                    .Where(x => x.OperationDate > trPaymentHeader.OperationDate
+                             || (x.OperationDate == trPaymentHeader.OperationDate
+                                 && x.OperationTime > trPaymentHeader.OperationTime)
+                             || (x.OperationDate == trPaymentHeader.OperationDate
+                                 && x.OperationTime == trPaymentHeader.OperationTime
+                                 && x.PaymentHeaderId != trPaymentHeader.PaymentHeaderId
+                                 && string.Compare(x.DocumentNumber, trPaymentHeader.DocumentNumber) > 0))
+                    .OrderBy(x => x.OperationDate)
+                    .ThenBy(x => x.OperationTime)
+                    .ThenBy(x => x.DocumentNumber)
+                    .FirstOrDefault();
+            }
+
+            if (adjacent is null)
+            {
+                XtraMessageBox.Show(Resources.Common_NoMoreRecords, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            LoadPayment(adjacent.PaymentHeaderId);
         }
 
         private void gV_PaymentLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
