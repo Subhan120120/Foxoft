@@ -3668,6 +3668,9 @@ To delete, cancel the receipt!</value>
   <data name="Common_SavedSuccessfully" xml:space="preserve">
     <value>Saved successfully.</value>
   </data>
+  <data name="Common_SentSuccessfully" xml:space="preserve">
+    <value>Sent successfully.</value>
+  </data>
   <data name="Message_AppFontSizeRestartRequired" xml:space="preserve">
     <value>Font size was saved. Restart the application to apply it everywhere.</value>
   </data>

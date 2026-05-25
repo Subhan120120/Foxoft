@@ -952,6 +952,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sent successfully..
+        /// </summary>
+        public static string Common_SentSuccessfully {
+            get {
+                return ResourceManager.GetString("Common_SentSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Font size was saved. Restart the application to apply it everywhere..
         /// </summary>
         public static string Message_AppFontSizeRestartRequired {

@@ -29,6 +29,5 @@ select ph.*
 	left join DcCurrAccs store on store.CurrAccCode = ph.StoreCode
 	left join DcCurrencies on DcCurrencies.CurrencyCode = pl.CurrencyCode
 
-	where ph.ProcessCode = 'PA' AND ph.PaymentHeaderId = @PaymentHeaderId
+	where ph.PaymentHeaderId = @PaymentHeaderId
 	order by DocumentDate
-

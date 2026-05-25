@@ -3668,6 +3668,9 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Common_SavedSuccessfully" xml:space="preserve">
     <value>Uğurla yadda saxlanıldı.</value>
   </data>
+  <data name="Common_SentSuccessfully" xml:space="preserve">
+    <value>Uğurla göndərildi.</value>
+  </data>
   <data name="Message_AppFontSizeRestartRequired" xml:space="preserve">
     <value>Şrift ölçüsü yadda saxlanıldı. Bütün pəncərələrdə tətbiq olunması üçün proqramı yenidən açın.</value>
   </data>

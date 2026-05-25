@@ -1,5 +1,6 @@
 ﻿using DevExpress.Data;
 using DevExpress.Utils.Extensions;
+using DevExpress.DataAccess.Sql;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -8,14 +9,20 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraPrinting;
+using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace Foxoft
 {
@@ -23,6 +30,8 @@ namespace Foxoft
     {
         private TrPaymentHeader trPaymentHeader;
         private EfMethods efMethods = new();
+        private readonly ReportClass reportClass;
+        private readonly SettingStore settingStore;
         private subContext dbContext;
         private Guid paymentHeaderId;
         private decimal BalanceBefore;
@@ -30,6 +39,9 @@ namespace Foxoft
         public FormMoneyTransfer()
         {
             InitializeComponent();
+
+            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            reportClass = new(settingStore?.DesignFileFolder ?? string.Empty);
 
             repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectEntities<DcPaymentType>();
@@ -403,23 +415,33 @@ namespace Foxoft
             this.Close();
         }
 
-        private void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
+        private async void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!String.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
+            if (trPaymentHeader is null || string.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
             {
-                string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
-
-                if (!string.IsNullOrEmpty(phoneNum))
-                {
-                    string copyText = PaymentText("%0A");
-
-                    sendWhatsApp(phoneNum, copyText);
-                }
-                else
-                    MessageBox.Show(Resources.Form_MoneyTransfer_PhoneNotDefined);
-            }
-            else
                 MessageBox.Show(Resources.Form_MoneyTransfer_CurrAccNotDefined);
+                return;
+            }
+
+            string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode)?.PhoneNum;
+
+            if (string.IsNullOrEmpty(phoneNum))
+            {
+                MessageBox.Show(Resources.Form_MoneyTransfer_PhoneNotDefined);
+                return;
+            }
+
+            MemoryStream? memoryStream = GetPaymentReportImg();
+            if (memoryStream == null) return;
+
+            if (memoryStream.CanSeek) memoryStream.Position = 0;
+            Clipboard.SetImage(Image.FromStream(memoryStream));
+            if (memoryStream.CanSeek) memoryStream.Position = 0;
+
+            if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
+                await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream);
+            else
+                sendWhatsApp(phoneNum, GetWhatsAppCaption());
         }
 
         private string PaymentText(string newLine)
@@ -445,6 +467,147 @@ namespace Foxoft
             string balanceTxt = Resources.Form_MoneyTransfer_Balance + balanceAfter.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             return paidTxt + balanceTxt;
+        }
+
+        private string GetWhatsAppCaption()
+        {
+            return $"{Resources.Form_MoneyTransfer_Caption} {Resources.Entity_PaymentHeader_DocumentNumber}: {trPaymentHeader.DocumentNumber}";
+        }
+
+        private MemoryStream? GetPaymentReportImg()
+        {
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_PaymentReport");
+
+            if (dcReport == null)
+            {
+                XtraMessageBox.Show(Resources.Report_NotFound);
+                return null;
+            }
+
+            // Older seeded report queries are PA-only; money transfers need the embedded CT-compatible query.
+            if (dcReport.ReportQuery?.IndexOf("ph.ProcessCode = 'PA'", StringComparison.OrdinalIgnoreCase) >= 0)
+                dcReport.ReportQuery = new CustomMethods().GetDataFromFile("Foxoft.AppCode.Report.Report_Embedded_PaymentReport.sql");
+
+            foreach (var item in dcReport.DcReportVariables)
+                if (item.VariableProperty == nameof(TrPaymentHeader.PaymentHeaderId))
+                    item.VariableValue = trPaymentHeader.PaymentHeaderId.ToString();
+
+            SqlParameter[] sqlParameters;
+            dcReport.ReportQuery = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
+            List<QueryParameter> qryParams = reportClass.ConvertSqlParametersToQueryParameters(sqlParameters);
+            CustomSqlQuery mainQuery = new("Main", dcReport.ReportQuery);
+            mainQuery.Parameters.AddRange(qryParams);
+            List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
+            XtraReport xtraReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
+
+            if (xtraReport == null)
+                return null;
+
+            MemoryStream ms = new();
+            xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 240 });
+
+            if (ms.CanSeek) ms.Position = 0;
+
+            return ms;
+        }
+
+        private async Task SendWhatsAppViaEvolutionApi(string number, MemoryStream memoryStream)
+        {
+            if (string.IsNullOrEmpty(number))
+            {
+                MessageBox.Show(Resources.Form_MoneyTransfer_PhoneNotDefined);
+                return;
+            }
+
+            var apiSetting = efMethods.SelectEntityById<DcWhatsAppProviderSetting>(1);
+            if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl) || string.IsNullOrEmpty(apiSetting.InstanceName) || string.IsNullOrEmpty(apiSetting.ApiKey))
+            {
+                XtraMessageBox.Show(Resources.Payment_ApiSettingsIncomplete);
+                return;
+            }
+
+            if (!WhatsAppCreditService.HasEnoughBalance())
+            {
+                XtraMessageBox.Show(Resources.Common_InsufficientBalance);
+                return;
+            }
+
+            try
+            {
+                using var client = new EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
+
+                string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
+
+                await client.SendImageBase64Async(formattedNumber, memoryStream, caption: GetWhatsAppCaption());
+
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, "Image", memoryStream);
+
+                XtraMessageBox.Show(Resources.Common_SentSuccessfully, Resources.Form_MoneyTransfer_Button_SendWhatsapp, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(Resources.Common_ErrorOccurred + " " + ex.Message);
+            }
+        }
+
+        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, string messageType, MemoryStream? imageStream = null)
+        {
+            try
+            {
+                string? imageFilePath = null;
+
+                if (imageStream != null && imageStream.Length > 0)
+                {
+                    imageFilePath = SaveWhatsAppImageToDisk(imageStream);
+                }
+
+                using var ctx = new subContext();
+                ctx.TrWhatsAppMessageLogs.Add(new TrWhatsAppMessageLog
+                {
+                    WhatsAppMessageLogId = Guid.NewGuid(),
+                    DocumentHeaderId = documentHeaderId,
+                    ReceiverPhoneNumber = receiverPhone,
+                    MessageType = messageType,
+                    Sender = Authorization.CurrAccCode,
+                    CurrAccCode = trPaymentHeader?.CurrAccCode,
+                    ImageFilePath = imageFilePath,
+                    IsSuccessful = true
+                });
+
+                ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(messageType, receiverPhone));
+
+                ctx.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"WhatsApp log save error: {ex.Message}");
+            }
+        }
+
+        private string? SaveWhatsAppImageToDisk(MemoryStream imageStream)
+        {
+            try
+            {
+                string? whatsAppFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "WhatsApp");
+                if (string.IsNullOrWhiteSpace(whatsAppFolder))
+                    return null;
+
+                if (!Directory.Exists(whatsAppFolder))
+                    Directory.CreateDirectory(whatsAppFolder);
+
+                string fileName = $"{Guid.NewGuid()}.png";
+                string filePath = Path.Combine(whatsAppFolder, fileName);
+
+                if (imageStream.CanSeek) imageStream.Position = 0;
+                File.WriteAllBytes(filePath, imageStream.ToArray());
+
+                return filePath;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"WhatsApp image save error: {ex.Message}");
+                return null;
+            }
         }
 
         private decimal CalcSummaryValue()
@@ -478,7 +641,7 @@ namespace Foxoft
                 return;
             }
 
-            string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
+            string link = $"https://web.whatsapp.com/send?phone={number}&text={Uri.EscapeDataString(message)}";
 
             Process myProcess = new();
             myProcess.StartInfo.UseShellExecute = true;
