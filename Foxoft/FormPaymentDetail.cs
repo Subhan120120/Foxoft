@@ -845,11 +845,11 @@ namespace Foxoft
             {
                 adjacent = ctx.TrPaymentHeaders
                     .Where(x => x.ProcessCode == "PA" &&
-                        (x.DocumentDate < trPaymentHeader.DocumentDate ||
-                         (x.DocumentDate == trPaymentHeader.DocumentDate && x.DocumentTime < trPaymentHeader.DocumentTime) ||
-                         (x.DocumentDate == trPaymentHeader.DocumentDate && x.DocumentTime == trPaymentHeader.DocumentTime && x.PaymentHeaderId.CompareTo(trPaymentHeader.PaymentHeaderId) < 0)))
-                    .OrderByDescending(x => x.DocumentDate)
-                    .ThenByDescending(x => x.DocumentTime)
+                        (x.OperationDate < trPaymentHeader.OperationDate ||
+                         (x.OperationDate == trPaymentHeader.OperationDate && x.OperationTime < trPaymentHeader.OperationTime) ||
+                         (x.OperationDate == trPaymentHeader.OperationDate && x.OperationTime == trPaymentHeader.OperationTime && x.PaymentHeaderId.CompareTo(trPaymentHeader.PaymentHeaderId) < 0)))
+                    .OrderByDescending(x => x.OperationDate)
+                    .ThenByDescending(x => x.OperationTime)
                     .ThenByDescending(x => x.PaymentHeaderId)
                     .FirstOrDefault();
             }
@@ -857,11 +857,11 @@ namespace Foxoft
             {
                 adjacent = ctx.TrPaymentHeaders
                     .Where(x => x.ProcessCode == "PA" &&
-                        (x.DocumentDate > trPaymentHeader.DocumentDate ||
-                         (x.DocumentDate == trPaymentHeader.DocumentDate && x.DocumentTime > trPaymentHeader.DocumentTime) ||
-                         (x.DocumentDate == trPaymentHeader.DocumentDate && x.DocumentTime == trPaymentHeader.DocumentTime && x.PaymentHeaderId.CompareTo(trPaymentHeader.PaymentHeaderId) > 0)))
-                    .OrderBy(x => x.DocumentDate)
-                    .ThenBy(x => x.DocumentTime)
+                        (x.OperationDate > trPaymentHeader.OperationDate ||
+                         (x.OperationDate == trPaymentHeader.OperationDate && x.OperationTime > trPaymentHeader.OperationTime) ||
+                         (x.OperationDate == trPaymentHeader.OperationDate && x.OperationTime == trPaymentHeader.OperationTime && x.PaymentHeaderId.CompareTo(trPaymentHeader.PaymentHeaderId) > 0)))
+                    .OrderBy(x => x.OperationDate)
+                    .ThenBy(x => x.OperationTime)
                     .ThenBy(x => x.PaymentHeaderId)
                     .FirstOrDefault();
             }
