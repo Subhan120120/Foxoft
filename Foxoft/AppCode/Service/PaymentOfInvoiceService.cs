@@ -49,6 +49,7 @@ namespace Foxoft.AppCode.Services
 
                 paymentHeader.DocumentNumber = newDocNum;
                 paymentHeader.Description = invoice.Description;
+                paymentHeader.TerminalId = invoice.TerminalId;
 
                 _ef.InsertEntity(paymentHeader);
             }
