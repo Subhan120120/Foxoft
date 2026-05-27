@@ -8666,6 +8666,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The invoice edit grace period has expired. This invoice cannot be changed or deleted..
+        /// </summary>
+        public static string Form_Invoice_GracePeriodExpired {
+            get {
+                return ResourceManager.GetString("Form_Invoice_GracePeriodExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you also want to delete payments for this invoice?.
         /// </summary>
         public static string Form_Invoice_DeletePaymentsForInvoiceQuestion {
@@ -9845,6 +9854,15 @@ namespace Foxoft.Properties {
         public static string Form_PaymentDetail_NoPaymentToDelete {
             get {
                 return ResourceManager.GetString("Form_PaymentDetail_NoPaymentToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The invoice or payment edit grace period has expired. This payment cannot be changed or deleted..
+        /// </summary>
+        public static string Form_PaymentDetail_GracePeriodExpired {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_GracePeriodExpired", resourceCulture);
             }
         }
         

@@ -2481,6 +2481,9 @@
   <data name="Form_Invoice_DeleteInvoiceQuestion" xml:space="preserve">
     <value>Do you want to delete the invoice?</value>
   </data>
+  <data name="Form_Invoice_GracePeriodExpired" xml:space="preserve">
+    <value>The invoice edit grace period has expired. This invoice cannot be changed or deleted.</value>
+  </data>
   <data name="Form_Invoice_DeletePaymentsForInvoiceQuestion" xml:space="preserve">
     <value>Do you also want to delete payments for this invoice?</value>
   </data>
@@ -2802,6 +2805,9 @@ Do you want to return to the invoice?</value>
   </data>
   <data name="Form_PaymentDetail_NoPaymentToDelete" xml:space="preserve">
     <value>There is no payment to delete.</value>
+  </data>
+  <data name="Form_PaymentDetail_GracePeriodExpired" xml:space="preserve">
+    <value>The invoice or payment edit grace period has expired. This payment cannot be changed or deleted.</value>
   </data>
   <data name="Form_PaymentDetail_PhoneNotFound" xml:space="preserve">
     <value>Phone number is not specified.</value>

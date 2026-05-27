@@ -2481,6 +2481,9 @@
   <data name="Form_Invoice_DeleteInvoiceQuestion" xml:space="preserve">
     <value>Silmək istəyirsiniz?</value>
   </data>
+  <data name="Form_Invoice_GracePeriodExpired" xml:space="preserve">
+    <value>Qaimə üzrə dəyişiklik müddəti bitib. Qaimə dəyişdirilə və ya silinə bilməz.</value>
+  </data>
   <data name="Form_Invoice_DeletePaymentsForInvoiceQuestion" xml:space="preserve">
     <value>Qaimə üzrə olan ödənişləri də silirsiniz?</value>
   </data>
@@ -2802,6 +2805,9 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_PaymentDetail_NoPaymentToDelete" xml:space="preserve">
     <value>Silinməli olan ödəniş yoxdur.</value>
+  </data>
+  <data name="Form_PaymentDetail_GracePeriodExpired" xml:space="preserve">
+    <value>Qaimə və ya ödəniş üzrə dəyişiklik müddəti bitib. Ödəniş dəyişdirilə və ya silinə bilməz.</value>
   </data>
   <data name="Form_PaymentDetail_PhoneNotFound" xml:space="preserve">
     <value>Nömrə qeyd olunmayıb.</value>

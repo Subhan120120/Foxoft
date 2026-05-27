@@ -148,15 +148,23 @@ namespace Foxoft
             }
         }
 
-        private void SavePayment()
+        private bool SavePayment()
         {
+            if (trPaymentHeader is null || dbContext is null)
+                return false;
+
+            if (dbContext.ChangeTracker.HasChanges() && !EnsurePaymentCanBeChanged())
+                return false;
+
             try
             {
                 dbContext.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{Resources.Form_PaymentDetail_InvalidData} \n \n {ex}");
+                return false;
             }
         }
 
@@ -214,21 +222,84 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            if (!trPaymentHeader.IsLocked)
-            {
-                bool locked = (DateTime.Now - trPaymentHeader.DocumentDate).Days > Settings.Default.AppSetting.InvoiceEditGraceDays;
-                trPaymentHeader.IsLocked = locked;
-            }
+            ApplyPaymentGracePeriodLock(updateLayout: false);
 
             LCG_Payment.Enabled = !trPaymentHeader.IsLocked;
+        }
 
-            efMethods.UpdatePaymentIsLocked(trPaymentHeader.PaymentHeaderId, trPaymentHeader.IsLocked);
+        private bool IsPaymentGracePeriodExpired()
+        {
+            if (trPaymentHeader is null)
+                return false;
+
+            return GracePeriodHelper.IsExpired(
+                    trPaymentHeader.DocumentDate,
+                    Settings.Default.AppSetting?.PaymentEditGraceDays)
+                || IsRelatedInvoiceGracePeriodExpired();
+        }
+
+        private bool IsRelatedInvoiceGracePeriodExpired()
+        {
+            if (trPaymentHeader?.InvoiceHeaderId is not Guid invoiceHeaderId)
+                return false;
+
+            using subContext context = new();
+            DateTime? invoiceDocumentDate = context.TrInvoiceHeaders
+                .AsNoTracking()
+                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                .Select(x => (DateTime?)x.DocumentDate)
+                .FirstOrDefault();
+
+            return invoiceDocumentDate.HasValue
+                && GracePeriodHelper.IsExpired(
+                    invoiceDocumentDate.Value,
+                    Settings.Default.AppSetting?.InvoiceEditGraceDays);
+        }
+
+        private void ApplyPaymentGracePeriodLock(bool updateLayout)
+        {
+            if (!IsPaymentGracePeriodExpired())
+                return;
+
+            trPaymentHeader.IsLocked = true;
+
+            if (updateLayout)
+                LCG_Payment.Enabled = false;
+
+            if (efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
+                efMethods.UpdatePaymentIsLocked(trPaymentHeader.PaymentHeaderId, true);
+
+            if (dbContext is not null)
+            {
+                EntityEntry<TrPaymentHeader> entry = dbContext.Entry(trPaymentHeader);
+                if (entry.State == EntityState.Modified)
+                    entry.Property(x => x.IsLocked).IsModified = false;
+            }
+        }
+
+        private bool EnsurePaymentCanBeChanged()
+        {
+            if (!IsPaymentGracePeriodExpired())
+                return true;
+
+            ApplyPaymentGracePeriodLock(updateLayout: true);
+
+            XtraMessageBox.Show(
+                Resources.Form_PaymentDetail_GracePeriodExpired,
+                Resources.Common_Attention,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+
+            return false;
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
             {
+                if (!EnsurePaymentCanBeChanged())
+                    return;
+
                 if (MessageBox.Show(Resources.Common_DeleteConfirm, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     efMethods.DeleteEntityById<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId);
@@ -293,6 +364,9 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.Delete)
             {
+                if (!EnsurePaymentCanBeChanged())
+                    return;
+
                 if (MessageBox.Show(Resources.Common_DeleteConfirm, Resources.Common_Attention, MessageBoxButtons.YesNo) != DialogResult.Yes)
                     return;
 
@@ -366,7 +440,8 @@ namespace Foxoft
             {
                 int count = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).Count;
                 if (count > 0)
-                    SavePayment();
+                    if (!SavePayment())
+                        return;
             }
             this.Close();
         }
@@ -819,7 +894,12 @@ namespace Foxoft
             if (LCG_Payment.Enabled)
                 LCG_Payment.Enabled = false;
             else
+            {
+                if (!EnsurePaymentCanBeChanged())
+                    return;
+
                 LCG_Payment.Enabled = true;
+            }
         }
 
         private void BBI_Previous_ItemClick(object sender, ItemClickEventArgs e)

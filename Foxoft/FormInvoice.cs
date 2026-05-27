@@ -295,8 +295,7 @@ namespace Foxoft
             {
                 if (dataLayoutControl1.IsValid(out _))
                 {
-                    SaveInvoice();
-                    return true;
+                    return SaveInvoice();
                 }
                 return false; // validation failed, cancel the action
             }
@@ -311,8 +310,10 @@ namespace Foxoft
         {
             if (Settings.Default.AppSetting.AutoSave)
             {
-                SaveInvoice();
-                return true;
+                if (!HasUnsavedChanges())
+                    return true;
+
+                return SaveInvoice();
             }
 
             if (!HasUnsavedChanges())
@@ -330,8 +331,7 @@ namespace Foxoft
             if (!dataLayoutControl1.IsValid(out _))
                 return false;
 
-            SaveInvoice();
-            return true;
+            return SaveInvoice();
         }
 
         private void InitializeColumnName()
@@ -676,15 +676,9 @@ namespace Foxoft
 
                 Tag = btnEdit_DocNum.EditValue;
 
-                if (!trInvoiceHeader.IsLocked)
-                {
-                    bool locked = (DateTime.Now - trInvoiceHeader.DocumentDate).Days > Settings.Default.AppSetting.InvoiceEditGraceDays;
-                    trInvoiceHeader.IsLocked = locked;
-                }
+                ApplyInvoiceGracePeriodLock(updateLayout: false);
 
                 SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
-
-                efMethods.UpdateInvoiceIsLocked(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.IsLocked);
 
                 trInvoiceHeader.CashRegisterCode = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId);
                 btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
@@ -709,6 +703,53 @@ namespace Foxoft
             {
                 SplashScreenManager.CloseForm(false);
             }
+        }
+
+        private bool IsInvoiceGracePeriodExpired()
+        {
+            if (trInvoiceHeader is null)
+                return false;
+
+            return GracePeriodHelper.IsExpired(
+                trInvoiceHeader.DocumentDate,
+                Settings.Default.AppSetting?.InvoiceEditGraceDays);
+        }
+
+        private void ApplyInvoiceGracePeriodLock(bool updateLayout)
+        {
+            if (!IsInvoiceGracePeriodExpired())
+                return;
+
+            trInvoiceHeader.IsLocked = true;
+
+            if (updateLayout)
+                SetLayoutGroupReadOnly(LCG_Invoice, true);
+
+            if (efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
+                efMethods.UpdateInvoiceIsLocked(trInvoiceHeader.InvoiceHeaderId, true);
+
+            if (dbContext is not null)
+            {
+                EntityEntry<TrInvoiceHeader> entry = dbContext.Entry(trInvoiceHeader);
+                if (entry.State == EntityState.Modified)
+                    entry.Property(x => x.IsLocked).IsModified = false;
+            }
+        }
+
+        private bool EnsureInvoiceCanBeChanged()
+        {
+            if (!IsInvoiceGracePeriodExpired())
+                return true;
+
+            ApplyInvoiceGracePeriodLock(updateLayout: true);
+
+            XtraMessageBox.Show(
+                Resources.Form_Invoice_GracePeriodExpired,
+                Resources.Common_Attention,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+
+            return false;
         }
 
         private void UpdatePaidLabels()
@@ -802,6 +843,9 @@ namespace Foxoft
             {
                 if (e.KeyCode == Keys.Delete && gV.ActiveEditor == null)
                 {
+                    if (!EnsureInvoiceCanBeChanged())
+                        return;
+
                     string claim = "DeleteLine" + dcProcess.ProcessCode;
                     bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                     if (!currAccHasClaims)
@@ -1469,6 +1513,12 @@ namespace Foxoft
 
         private void gV_InvoiceLine_RowDeleting(object sender, RowDeletingEventArgs e)
         {
+            if (!EnsureInvoiceCanBeChanged())
+            {
+                e.Cancel = true;
+                return;
+            }
+
             GridView view = sender as GridView;
             Guid invoiceLineId = (Guid)view.GetRowCellValue(e.RowHandle, col_InvoiceLineId);
 
@@ -1492,14 +1542,20 @@ namespace Foxoft
             }
         }
 
-        private void SaveInvoice()
+        private bool SaveInvoice()
         {
+            if (trInvoiceHeader is null)
+                return false;
+
+            if (!EnsureInvoiceCanBeChanged())
+                return false;
+
             if (!_lockService.IsLockOwnedByMe("Invoice", trInvoiceHeader.InvoiceHeaderId,
                 Authorization.CurrAccCode, _appInstanceId, _formInstanceId))
             {
                 XtraMessageBox.Show("Sənəd artıq sizin deyil...");
                 Close();
-                return;
+                return false;
             }
 
             if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode))
@@ -1567,6 +1623,8 @@ namespace Foxoft
                 RecalcCampaignsIfNeeded();
                 AutoApplyCampaignsIfConfigured();
             }
+
+            return true;
         }
 
 
@@ -1743,6 +1801,9 @@ namespace Foxoft
                 XtraMessageBox.Show(Resources.Form_Invoice_NoInvoiceToDelete);
                 return;
             }
+
+            if (!EnsureInvoiceCanBeChanged())
+                return;
 
             string claim = "DeleteInvoice" + dcProcess.ProcessCode;
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
@@ -2300,6 +2361,9 @@ namespace Foxoft
         {
             if (btnEdit_DocNum.Properties.ReadOnly)
             {
+                if (!EnsureInvoiceCanBeChanged())
+                    return;
+
                 SetLayoutGroupReadOnly(LCG_Invoice, false);
             }
 
@@ -3169,6 +3233,8 @@ namespace Foxoft
 
         private void gV_InvoiceLine_ShowingEditor(object sender, CancelEventArgs e)
         {
+            if (!EnsureInvoiceCanBeChanged())
+                e.Cancel = true;
         }
 
         private void gV_InvoiceLine_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
@@ -3657,7 +3723,13 @@ namespace Foxoft
                 if (result == DialogResult.Yes)
                 {
                     if (dataLayoutControl1.IsValid(out _))
-                        SaveInvoice();
+                    {
+                        if (!SaveInvoice())
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
+                    }
                     else
                     {
                         e.Cancel = true;
@@ -3884,6 +3956,9 @@ namespace Foxoft
         {
             if (trInvoiceHeader is null) return;
 
+            if (!EnsureInvoiceCanBeChanged())
+                return;
+
             gV_InvoiceLine.CloseEditor();
             gV_InvoiceLine.UpdateCurrentRow();
             dataLayoutControl1.Validate();
@@ -4032,6 +4107,9 @@ namespace Foxoft
         private void bBI_PaymentDelete_ItemClick_WithCampaign(object sender, ItemClickEventArgs e)
         {
             if (trInvoiceHeader is null) return;
+
+            if (!EnsureInvoiceCanBeChanged())
+                return;
 
             if (IsCampaignEnabled)
             {
