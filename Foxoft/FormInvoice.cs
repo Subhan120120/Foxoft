@@ -1680,6 +1680,9 @@ namespace Foxoft
 
         private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (!EnsureInvoiceSaved())
+                return;
+
             ShowReportPreview();
         }
 
