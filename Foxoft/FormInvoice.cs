@@ -273,7 +273,31 @@ namespace Foxoft
             if (dbContext == null || trInvoiceHeader == null)
                 return false;
 
+            if (!HasInvoiceProductLines())
+                return false;
+
             return dbContext.ChangeTracker.HasChanges();
+        }
+
+        private bool HasInvoiceProductLines()
+        {
+            if (trInvoiceHeader is null)
+                return false;
+
+            if (trInvoiceLinesBindingSource?.List is IEnumerable invoiceLines)
+            {
+                foreach (object item in invoiceLines)
+                    if (item is TrInvoiceLine line
+                        && line.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId
+                        && !string.IsNullOrWhiteSpace(line.ProductCode))
+                        return true;
+            }
+
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                if (!string.IsNullOrWhiteSpace(gV_InvoiceLine.GetRowCellValue(i, col_ProductCode)?.ToString()))
+                    return true;
+
+            return false;
         }
 
         /// <summary>
