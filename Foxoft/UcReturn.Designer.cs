@@ -61,6 +61,7 @@ namespace Foxoft
             gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
             col_InvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_Barcode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_Qty = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ReturnQty = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -343,7 +344,7 @@ namespace Foxoft
             gV_InvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
             gV_InvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
             gV_InvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_Return, col_SerialNumberCode, col_DeliveredQty });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_Barcode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_Return, col_SerialNumberCode, col_DeliveredQty });
             gV_InvoiceLine.DetailHeight = 404;
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -355,6 +356,7 @@ namespace Foxoft
             gV_InvoiceLine.OptionsView.ShowPreview = true;
             gV_InvoiceLine.PreviewIndent = 12;
             gV_InvoiceLine.CalcPreviewText += gV_ReturnInvoiceLine_CalcPreviewText;
+            gV_InvoiceLine.PopupMenuShowing += gV_InvoiceLine_PopupMenuShowing;
             // 
             // col_InvoiceLineId
             // 
@@ -374,6 +376,17 @@ namespace Foxoft
             col_ProductCode.VisibleIndex = 0;
             col_ProductCode.Width = 59;
             // 
+            // col_Barcode
+            // 
+            col_Barcode.Caption = Resources.Entity_InvoiceLine_Barcode;
+            col_Barcode.FieldName = "Barcode";
+            col_Barcode.MinWidth = 23;
+            col_Barcode.Name = "col_Barcode";
+            col_Barcode.OptionsColumn.AllowEdit = false;
+            col_Barcode.Visible = true;
+            col_Barcode.VisibleIndex = 1;
+            col_Barcode.Width = 87;
+            // 
             // col_ProductDesc
             // 
             col_ProductDesc.Caption = Resources.Entity_Product_Desc;
@@ -381,7 +394,7 @@ namespace Foxoft
             col_ProductDesc.MinWidth = 23;
             col_ProductDesc.Name = "col_ProductDesc";
             col_ProductDesc.Visible = true;
-            col_ProductDesc.VisibleIndex = 1;
+            col_ProductDesc.VisibleIndex = 2;
             col_ProductDesc.Width = 139;
             // 
             // col_Qty
@@ -393,7 +406,7 @@ namespace Foxoft
             col_Qty.Name = "col_Qty";
             col_Qty.OptionsColumn.AllowEdit = false;
             col_Qty.Visible = true;
-            col_Qty.VisibleIndex = 2;
+            col_Qty.VisibleIndex = 3;
             col_Qty.Width = 58;
             // 
             // col_ReturnQty
@@ -406,7 +419,7 @@ namespace Foxoft
             col_ReturnQty.OptionsColumn.AllowEdit = false;
             col_ReturnQty.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             col_ReturnQty.Visible = true;
-            col_ReturnQty.VisibleIndex = 3;
+            col_ReturnQty.VisibleIndex = 4;
             col_ReturnQty.Width = 68;
             // 
             // col_RemainingQty
@@ -418,7 +431,7 @@ namespace Foxoft
             col_RemainingQty.Name = "col_RemainingQty";
             col_RemainingQty.OptionsColumn.AllowEdit = false;
             col_RemainingQty.Visible = true;
-            col_RemainingQty.VisibleIndex = 7;
+            col_RemainingQty.VisibleIndex = 8;
             col_RemainingQty.Width = 53;
             // 
             // col_Price
@@ -428,7 +441,7 @@ namespace Foxoft
             col_Price.Name = "col_Price";
             col_Price.OptionsColumn.AllowEdit = false;
             col_Price.Visible = true;
-            col_Price.VisibleIndex = 4;
+            col_Price.VisibleIndex = 5;
             col_Price.Width = 97;
             // 
             // col_Amount
@@ -462,7 +475,7 @@ namespace Foxoft
             col_NetAmount.Name = "col_NetAmount";
             col_NetAmount.OptionsColumn.AllowEdit = false;
             col_NetAmount.Visible = true;
-            col_NetAmount.VisibleIndex = 5;
+            col_NetAmount.VisibleIndex = 6;
             col_NetAmount.Width = 116;
             // 
             // col_LineDesc
@@ -497,7 +510,7 @@ namespace Foxoft
             col_Return.MinWidth = 23;
             col_Return.Name = "col_Return";
             col_Return.Visible = true;
-            col_Return.VisibleIndex = 6;
+            col_Return.VisibleIndex = 7;
             col_Return.Width = 43;
             // 
             // repoBtn_ReturnLine
@@ -515,7 +528,7 @@ namespace Foxoft
             col_SerialNumberCode.FieldName = "SerialNumberCode";
             col_SerialNumberCode.Name = "col_SerialNumberCode";
             col_SerialNumberCode.Visible = true;
-            col_SerialNumberCode.VisibleIndex = 8;
+            col_SerialNumberCode.VisibleIndex = 9;
             col_SerialNumberCode.Width = 100;
             // 
             // col_DeliveredQty
@@ -523,7 +536,7 @@ namespace Foxoft
             col_DeliveredQty.FieldName = "DeliveredQty";
             col_DeliveredQty.Name = "col_DeliveredQty";
             col_DeliveredQty.Visible = true;
-            col_DeliveredQty.VisibleIndex = 9;
+            col_DeliveredQty.VisibleIndex = 10;
             // 
             // btn_Ok
             // 
@@ -750,6 +763,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlGroup lCG_InvoiceHeader;
         private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceLineId;
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_Barcode;
         private DevExpress.XtraGrid.Columns.GridColumn col_Qty;
         private DevExpress.XtraGrid.Columns.GridColumn col_Price;
         private DevExpress.XtraGrid.Columns.GridColumn col_Amount;

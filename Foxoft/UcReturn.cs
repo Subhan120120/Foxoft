@@ -1,5 +1,8 @@
+using DevExpress.Utils.Menu;
+using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.AppCode.Service;
@@ -7,6 +10,8 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 
 
 namespace Foxoft
@@ -44,6 +49,58 @@ namespace Foxoft
         private void UcReturn_Load(object sender, EventArgs e)
         {
             ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
+            LoadInvoiceLineLayout();
+            ApplyBarcodeColumnVisibility();
+        }
+
+        private static string GetLayoutFileDir()
+        {
+            return Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Foxoft",
+                Settings.Default.CompanyCode,
+                "Layout Xml Files");
+        }
+
+        private string GetInvoiceLineLayoutFileName()
+        {
+            return "ReturnInvoiceLine" + processCode + "Layout.xml";
+        }
+
+        private string GetInvoiceLineLayoutFilePath()
+        {
+            return Path.Combine(GetLayoutFileDir(), GetInvoiceLineLayoutFileName());
+        }
+
+        private void LoadInvoiceLineLayout()
+        {
+            string layoutFilePath = GetInvoiceLineLayoutFilePath();
+
+            if (File.Exists(layoutFilePath))
+            {
+                OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+                gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath, option);
+            }
+        }
+
+        private void SaveLayout()
+        {
+            string layoutFileDir = GetLayoutFileDir();
+
+            if (!Directory.Exists(layoutFileDir))
+                Directory.CreateDirectory(layoutFileDir);
+
+            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+            gV_InvoiceLine.SaveLayoutToXml(GetInvoiceLineLayoutFilePath(), option);
+        }
+
+        private void ApplyBarcodeColumnVisibility()
+        {
+            bool useBarcode = Settings.Default.AppSetting?.UseBarcode == true;
+
+            col_Barcode.OptionsColumn.ShowInCustomizationForm = useBarcode;
+            if (!useBarcode)
+                col_Barcode.Visible = false;
         }
 
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -407,6 +464,27 @@ namespace Foxoft
                 vatRate,
                 string.Empty,
                 salesPersonCode);
+        }
+
+        private void gV_InvoiceLine_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        {
+            if (e.MenuType == GridMenuType.Column)
+            {
+                GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
+                if (menu?.Column != null)
+                    menu.Items.Add(CreateMenuItem(Resources.Common_SaveLayout, null));
+            }
+        }
+
+        DXMenuItem CreateMenuItem(string caption, Image? image)
+        {
+            DXMenuItem item = new(caption, new EventHandler(DXMenuItem_Click), image);
+            return item;
+        }
+
+        void DXMenuItem_Click(object? sender, EventArgs e)
+        {
+            SaveLayout();
         }
 
         private void btn_Cancel_Click(object sender, EventArgs e)

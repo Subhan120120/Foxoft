@@ -32,6 +32,10 @@ namespace Foxoft.Models.ViewModel
         [StringLength(30, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string ProductCode { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_Barcode), ResourceType = typeof(Resources))]
+        [StringLength(100, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
+        public string? Barcode { get; set; }
+
         [NotMapped]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_Qty), ResourceType = typeof(Resources))]
         [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
