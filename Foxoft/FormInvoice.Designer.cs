@@ -1115,7 +1115,7 @@ namespace Foxoft
             lbl_InstallmentSumTxt.Size = new Size(72, 16);
             lbl_InstallmentSumTxt.StyleController = dataLayoutControl1;
             lbl_InstallmentSumTxt.TabIndex = 1;
-            lbl_InstallmentSumTxt.Text = "Installment: ";
+            lbl_InstallmentSumTxt.Text = Resources.FormInvoice_InstallmentSum;
             // 
             // lbl_InstallmentCommissionSumTxt
             // 
@@ -1126,7 +1126,7 @@ namespace Foxoft
             lbl_InstallmentCommissionSumTxt.Size = new Size(78, 16);
             lbl_InstallmentCommissionSumTxt.StyleController = dataLayoutControl1;
             lbl_InstallmentCommissionSumTxt.TabIndex = 1;
-            lbl_InstallmentCommissionSumTxt.Text = "Commission: ";
+            lbl_InstallmentCommissionSumTxt.Text = Resources.FormInvoice_InstallmentCommissionSum;
             // 
             // lbl_CurrAccDesc
             // 
@@ -1145,7 +1145,7 @@ namespace Foxoft
             lbl_InstallmentTotalSumTxt.Size = new Size(105, 16);
             lbl_InstallmentTotalSumTxt.StyleController = dataLayoutControl1;
             lbl_InstallmentTotalSumTxt.TabIndex = 1;
-            lbl_InstallmentTotalSumTxt.Text = "Total Installment: ";
+            lbl_InstallmentTotalSumTxt.Text = Resources.FormInvoice_InstallmentTotalSum;
             // 
             // lbl_InvoicePaidTotalSumTxt
             // 

@@ -416,7 +416,7 @@ namespace Foxoft
             this.Text = $"{dcProcess.ProcessDesc} - ({btnEdit_DocNum.EditValue})";
 
             UpdatePaidLabels();
-            //CalcInstallmentAmount();
+            UpdateInstallmentLabels();
 
             lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
 
@@ -437,7 +437,7 @@ namespace Foxoft
                 btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
             }
 
-            if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
+            if (IsInstallmentProcess())
                 ClearInstallmentGarantorsAddNew();
 
             dataLayoutControl1.IsValid(out List<string> errorList);
@@ -462,9 +462,10 @@ namespace Foxoft
         private void ClearInstallmentGarantorsAddNew()
         {
             dbContext2 = new subContext();
+            int installmentId = EnsureInstallment().InstallmentId;
 
             dbContext2.TrInstallmentGuarantors.Include(x => x.DcCurrAcc)
-                                              .Where(x => x.InstallmentId == trInvoiceHeader.TrInstallment.InstallmentId)
+                                              .Where(x => x.InstallmentId == installmentId)
                                               .Load();
 
             trInstallmentGuarantorsBindingSource.DataSource = dbContext2.TrInstallmentGuarantors.Local.ToBindingList();
@@ -499,13 +500,8 @@ namespace Foxoft
                     invoiceHeader.CurrAccDesc = efMethods.SelectCurrAcc(defaultCustomer).CurrAccDesc;
             }
 
-            if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
-                invoiceHeader.TrInstallment = new TrInstallment
-                {
-                    InvoiceHeaderId = invoiceHeader.InvoiceHeaderId,
-                    InstallmentPlanCode = "I00",
-                    InstallmentDate = DateTime.Now
-                };
+            if (dcProcess.ProcessCode == "IS")
+                invoiceHeader.TrInstallment = CreateInstallment(invoiceHeader.InvoiceHeaderId);
 
             e.NewObject = invoiceHeader;
         }
@@ -519,15 +515,19 @@ namespace Foxoft
             if (trInvoiceHeader is null)
                 return;
 
-            if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
+            if (IsInstallmentProcess())
             {
+                TrInstallment installment = EnsureInstallment();
+
                 if (sender as LookUpEdit == LUE_InstallmentPlan
                 && !string.IsNullOrEmpty(LUE_InstallmentPlan.EditValue?.ToString()))
-                    trInvoiceHeader.TrInstallment.InstallmentPlanCode = LUE_InstallmentPlan.EditValue?.ToString();
+                    ApplySelectedInstallmentPlan(installment);
 
                 if (sender as DateEdit == DateEdit_InstallmentDate
                 && !string.IsNullOrEmpty(DateEdit_InstallmentDate.EditValue?.ToString()))
-                    trInvoiceHeader.TrInstallment.InstallmentDate = (DateTime)DateEdit_InstallmentDate.EditValue;
+                    installment.InstallmentDate = (DateTime)DateEdit_InstallmentDate.EditValue;
+
+                UpdateInstallmentLabels();
             }
 
             if (dbContext != null && dataLayoutControl1.IsValid(out _))
@@ -708,6 +708,7 @@ namespace Foxoft
                 btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
 
                 UpdatePaidLabels();
+                UpdateInstallmentLabels();
 
                 txt_LoyaltyEarn.EditValue = await efMethods.SelectEarnedLoyaltyByInvoiceAsync(invoiceHeaderId);
 
@@ -787,6 +788,91 @@ namespace Foxoft
             lbl_InvoicePaidCashlessSum.Text = $"{s.Cashless:n2} {s.CurrencyCode}";
             lbl_InvoicePaidLoyaltySum.Text = $"{s.Loyalty:n2} {s.CurrencyCode}";
             lbl_InvoicePaidTotalSum.Text = $"{s.Total:n2} {s.CurrencyCode}";
+        }
+
+        private bool IsInstallmentProcess()
+            => string.Equals(trInvoiceHeader?.ProcessCode ?? dcProcess?.ProcessCode, "IS", StringComparison.OrdinalIgnoreCase);
+
+        private TrInstallment CreateInstallment(Guid invoiceHeaderId)
+        {
+            DcInstallmentPlan? installmentPlan = GetDefaultInstallmentPlan();
+
+            return new TrInstallment
+            {
+                InvoiceHeaderId = invoiceHeaderId,
+                InstallmentPlanCode = installmentPlan?.InstallmentPlanCode ?? "I00",
+                InstallmentDate = DateTime.Now,
+                InterestRate = installmentPlan?.InterestRate ?? 0
+            };
+        }
+
+        private TrInstallment EnsureInstallment()
+        {
+            if (trInvoiceHeader.TrInstallment is null)
+                trInvoiceHeader.TrInstallment = CreateInstallment(trInvoiceHeader.InvoiceHeaderId);
+
+            return trInvoiceHeader.TrInstallment;
+        }
+
+        private DcInstallmentPlan? GetDefaultInstallmentPlan()
+        {
+            IEnumerable<DcInstallmentPlan> installmentPlans =
+                (LUE_InstallmentPlan.Properties.DataSource as IEnumerable)?.OfType<DcInstallmentPlan>()
+                ?? Enumerable.Empty<DcInstallmentPlan>();
+
+            return installmentPlans.FirstOrDefault(x => x.IsDefault)
+                ?? installmentPlans.FirstOrDefault();
+        }
+
+        private void ApplySelectedInstallmentPlan(TrInstallment installment)
+        {
+            string? installmentPlanCode = LUE_InstallmentPlan.EditValue?.ToString();
+            if (!string.IsNullOrWhiteSpace(installmentPlanCode))
+                installment.InstallmentPlanCode = installmentPlanCode;
+
+            object? interestRateValue = LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate));
+            if (TryConvertToSingle(interestRateValue, out float interestRate))
+            {
+                installment.InterestRate = interestRate;
+                txtEdit_Installment_InterestRate.EditValue = interestRate;
+            }
+        }
+
+        private bool TryConvertToSingle(object? value, out float result)
+        {
+            try
+            {
+                result = Convert.ToSingle(value, CultureInfo.InvariantCulture);
+                return true;
+            }
+            catch
+            {
+                result = 0;
+                return false;
+            }
+        }
+
+        private void UpdateInstallmentLabels()
+        {
+            if (!IsInstallmentProcess())
+                return;
+
+            decimal installmentSum = Math.Abs(CalcNetAmountSummmaryValue());
+            decimal commission = Math.Abs(trInvoiceHeader?.TrInstallment?.Commission ?? 0);
+            decimal total = installmentSum + commission;
+
+            lbl_InstallmentSum.Text = FormatLocalCurrency(installmentSum);
+            lbl_InstallmentCommissionSum.Text = FormatLocalCurrency(commission);
+            lbl_InstallmentTotalSum.Text = FormatLocalCurrency(total);
+        }
+
+        private string FormatLocalCurrency(decimal amount)
+        {
+            string currencyCode = Settings.Default.AppSetting?.LocalCurrencyCode ?? string.Empty;
+
+            return string.IsNullOrWhiteSpace(currencyCode)
+                ? $"{amount:n2}"
+                : $"{amount:n2} {currencyCode}";
         }
 
         private void ShowPrintCount()
@@ -1521,6 +1607,8 @@ namespace Foxoft
         {
             if (Settings.Default.AppSetting.AutoSave)
                 SaveInvoice();
+
+            UpdateInstallmentLabels();
         }
 
         private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -1533,6 +1621,7 @@ namespace Foxoft
             if (Settings.Default.AppSetting.AutoSave)
                 SaveInvoice();
 
+            UpdateInstallmentLabels();
         }
 
         private void gV_InvoiceLine_RowDeleting(object sender, RowDeletingEventArgs e)
@@ -1590,6 +1679,9 @@ namespace Foxoft
                     trInvoiceHeader.TransferApprovalStatus = TransferApprovalStatus.Pending;
             }
 
+            if (IsInstallmentProcess())
+                EnsureInstallment();
+
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
             _isSaved = true;
 
@@ -1609,8 +1701,12 @@ namespace Foxoft
             var result = _loyaltyService.SyncInvoiceEarn(trInvoiceHeader);
             txt_LoyaltyEarn.EditValue = result.EarnAmount;
 
-            if (new[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && trInvoiceHeader.TrInstallment is not null)
+            if (IsInstallmentProcess())
+            {
+                EnsureInstallment();
                 SaveInstallmentGarantors();
+                UpdateInstallmentLabels();
+            }
 
             // Send WhatsApp product purchase notification for IS process
             if (new[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && !string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode))
@@ -1718,13 +1814,20 @@ namespace Foxoft
 
         private void SaveInstallmentGarantors()
         {
+            if (dbContext2 is null)
+                return;
+
+            TrInstallment installment = EnsureInstallment();
+            if (installment.InstallmentId <= 0)
+                return;
+
             var trInstallmentGuarantors = trInstallmentGuarantorsBindingSource.DataSource as BindingList<TrInstallmentGuarantor>;
 
-            if (trInstallmentGuarantors != null && trInvoiceHeader.TrInstallment.InstallmentId > 0)
+            if (trInstallmentGuarantors != null)
             {
                 foreach (var garantor in trInstallmentGuarantors)
                     if (garantor.InstallmentId == 0)
-                        garantor.InstallmentId = trInvoiceHeader.TrInstallment.InstallmentId;
+                        garantor.InstallmentId = installment.InstallmentId;
             }
 
             dbContext2.SaveChanges();
@@ -2511,6 +2614,9 @@ namespace Foxoft
                 LCG_InfoInstallment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
                 LCG_Installment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
                 RPG_Installment.Visible = true;
+
+                bool canChangeInstallmentCommission = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "InstallmentCommissionChange");
+                txtEdit_Installment_Commission.ReadOnly = !canChangeInstallmentCommission;
             }
 
             string layoutHeaderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", "InvoiceHeader" + dcProcess.ProcessCode + "Layout.xml");
@@ -3267,6 +3373,9 @@ namespace Foxoft
 
         private void repoBtnEdit_InstallmentGarantorDelete_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
+            if (!EnsureInvoiceCanBeChanged())
+                return;
+
             if (gV_InstallmentGarantor.FocusedRowHandle >= 0)
             {
                 DialogResult result = XtraMessageBox.Show(
@@ -3287,21 +3396,21 @@ namespace Foxoft
 
         private void BBI_InstallmentGuarantorAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (!EnsureInvoiceCanBeChanged())
+                return;
+
+            TrInstallment installment = EnsureInstallment();
+            if (dbContext2 is null)
+                LoadInstallmentGarantors();
+
             FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false);
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-                var newGuarantor = new TrInstallmentGuarantor
-                {
-                    CurrAccCode = form.dcCurrAcc.CurrAccCode,
-                    DcCurrAcc = form.dcCurrAcc,
-                    InstallmentId = trInvoiceHeader.TrInstallment.InstallmentId
-                };
+                var trInstallmentGuarantors = trInstallmentGuarantorsBindingSource.DataSource as BindingList<TrInstallmentGuarantor>;
+                bool guarantorAlreadyAdded = trInstallmentGuarantors?.Any(x => x.CurrAccCode == form.dcCurrAcc.CurrAccCode) == true;
 
-                var existingEntity = dbContext2.ChangeTracker.Entries<DcCurrAcc>()
-                    .FirstOrDefault(en => en.Entity.CurrAccCode == form.dcCurrAcc.CurrAccCode);
-
-                if (existingEntity != null)
+                if (guarantorAlreadyAdded)
                 {
                     XtraMessageBox.Show(
                         Resources.Form_Invoice_GuarantorAlreadyAdded,
@@ -3311,7 +3420,20 @@ namespace Foxoft
                     return;
                 }
 
-                dbContext2.Attach(form.dcCurrAcc);
+                var newGuarantor = new TrInstallmentGuarantor
+                {
+                    CurrAccCode = form.dcCurrAcc.CurrAccCode,
+                    DcCurrAcc = form.dcCurrAcc,
+                    InstallmentId = installment.InstallmentId
+                };
+
+                var existingEntity = dbContext2.ChangeTracker.Entries<DcCurrAcc>()
+                    .FirstOrDefault(en => en.Entity.CurrAccCode == form.dcCurrAcc.CurrAccCode);
+
+                if (existingEntity != null)
+                    newGuarantor.DcCurrAcc = existingEntity.Entity;
+                else
+                    dbContext2.Attach(form.dcCurrAcc);
 
                 trInstallmentGuarantorsBindingSource.Add(newGuarantor);
 
@@ -3326,7 +3448,7 @@ namespace Foxoft
         {
             dbContext2 = new subContext();
 
-            int installmentId = trInvoiceHeader.TrInstallment?.InstallmentId ?? 0;
+            int installmentId = EnsureInstallment().InstallmentId;
 
             dbContext2.TrInstallmentGuarantors.Include(x => x.DcCurrAcc)
                                               .Where(x => x.InstallmentId == installmentId)
@@ -3350,9 +3472,9 @@ namespace Foxoft
         private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
         {
             if (trInvoiceHeader is null) return;
-            if (trInvoiceHeader.ProcessCode == "IS" && trInvoiceHeader?.TrInstallment is not null)
-                if (LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate)) is float interestRate)
-                    trInvoiceHeader.TrInstallment.InterestRate = interestRate;
+            if (!IsInstallmentProcess()) return;
+
+            ApplySelectedInstallmentPlan(EnsureInstallment());
         }
 
         private void BBI_InvoiceDiscount_ItemClick(object sender, ItemClickEventArgs e)
@@ -3378,6 +3500,7 @@ namespace Foxoft
                         for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                             gV_InvoiceLine.SetRowCellValue(i, col_PosDiscount, formPosDiscount.DiscountPercent);
                         gV_InvoiceLine.RefreshData();//update footer summary
+                        UpdateInstallmentLabels();
                     }
                 }
             }
