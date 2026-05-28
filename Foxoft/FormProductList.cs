@@ -52,6 +52,7 @@ namespace Foxoft
             InitializeComponent();
 
             RegisterEvents();
+            UpdateBarcodeSearchButtons();
 
             this.Width = (int)(Screen.PrimaryScreen.Bounds.Width * 0.9);  // 80% of screen width
             this.Height = (int)(Screen.PrimaryScreen.Bounds.Height * 0.9); // 80% of screen height
@@ -653,36 +654,26 @@ namespace Foxoft
                 Close();
         }
 
-        private void btnEdit_BarcodeSearch_Layout()
+        private void btnEdit_BarcodeSearch_EditValueChanged(object sender, EventArgs e)
         {
-            if (!Settings.Default.AppSetting.UseBarcode || !gV_ProductList.IsFindPanelVisible)
+            string barcode = btnEdit_BarcodeSearch.EditValue?.ToString()?.Trim() ?? string.Empty;
+            UpdateBarcodeSearchButtons();
+
+            if (string.IsNullOrWhiteSpace(barcode))
             {
-                btnEdit_BarcodeSearch.Visible = false;
+                gV_ProductList.SetAutoFilterValue(colProductCode, null, AutoFilterCondition.Default);
                 return;
             }
 
-            int findPanelHeight = 54; // typical height of DevExpress FindPanel (default)
-            int paddingLeft = 8;       // typical left padding/margin of the FindPanel
-            int defaultSearchWidth = 562; // approximate width of the default search box
+            DcProduct? product = efMethods.SelectProductByBarcode(barcode);
 
-            Point gridControlScreenPoint = gC_ProductList.PointToScreen(Point.Empty);
-            Rectangle findPanelRect = new Rectangle(gridControlScreenPoint.X, gridControlScreenPoint.Y, gC_ProductList.Width, findPanelHeight);
-            Point additionalEditorScreenPoint = new Point(findPanelRect.Left + paddingLeft + defaultSearchWidth + 6, findPanelRect.Top + (findPanelRect.Height - btnEdit_BarcodeSearch.Height) / 2);
-            Point additionalEditorFormPoint = this.PointToClient(additionalEditorScreenPoint);
-
-            btnEdit_BarcodeSearch.Location = additionalEditorFormPoint;
-            btnEdit_BarcodeSearch.Visible = true;
-            btnEdit_BarcodeSearch.BringToFront();
-        }
-
-        private void btnEdit_BarcodeSearch_EditValueChanged(object sender, EventArgs e)
-        {
-            DcProduct? asd = efMethods.SelectProductByBarcode(btnEdit_BarcodeSearch.EditValue?.ToString());
-
-            if (asd != null)
+            if (product != null)
             {
-                gV_ProductList.SetAutoFilterValue(colProductCode, asd.ProductCode, AutoFilterCondition.Default);
-                gV_ProductList.FocusedRowHandle = gV_ProductList.GetVisibleRowHandle(0);
+                gV_ProductList.SetAutoFilterValue(colProductCode, product.ProductCode, AutoFilterCondition.Default);
+
+                int firstRowHandle = gV_ProductList.GetVisibleRowHandle(0);
+                if (firstRowHandle != GridControl.InvalidRowHandle)
+                    gV_ProductList.FocusedRowHandle = firstRowHandle;
             }
             else
             {

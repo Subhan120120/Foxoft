@@ -83,11 +83,6 @@ namespace Foxoft
             SerializableAppearanceObject serializableAppearanceObject14 = new SerializableAppearanceObject();
             SerializableAppearanceObject serializableAppearanceObject15 = new SerializableAppearanceObject();
             SerializableAppearanceObject serializableAppearanceObject16 = new SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions5 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            SerializableAppearanceObject serializableAppearanceObject17 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject18 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject19 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject20 = new SerializableAppearanceObject();
             gC_ProductList = new MyGridControl();
             dcProductsBindingSource = new BindingSource(components);
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -351,12 +346,10 @@ namespace Foxoft
             btnEdit_BarcodeSearch.Location = new Point(374, 164);
             btnEdit_BarcodeSearch.MenuManager = ribbonControl1;
             btnEdit_BarcodeSearch.Name = "btnEdit_BarcodeSearch";
-            editorButtonImageOptions5.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions5.SvgImage");
-            editorButtonImageOptions5.SvgImageSize = new Size(16, 16);
-            btnEdit_BarcodeSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions5, new KeyShortcut(Keys.None), serializableAppearanceObject17, serializableAppearanceObject18, serializableAppearanceObject19, serializableAppearanceObject20, "", null, null, ToolTipAnchor.Default) });
-            btnEdit_BarcodeSearch.Size = new Size(150, 24);
+            btnEdit_BarcodeSearch.Size = new Size(260, 24);
             btnEdit_BarcodeSearch.TabIndex = 6;
             btnEdit_BarcodeSearch.EditValueChanged += btnEdit_BarcodeSearch_EditValueChanged;
+            InitializeBarcodeSearchDesign();
             // 
             // FormProductList
             // 
@@ -372,7 +365,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterParent;
             StatusBar = ribbonStatusBar1;
-            Text = "Product List";
+            Text = Resources.Form_ProductList_Caption;
             KeyDown += FormProductList_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).EndInit();

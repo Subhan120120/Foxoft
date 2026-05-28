@@ -10761,6 +10761,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search by barcode....
+        /// </summary>
+        public static string Form_ProductList_BarcodeSearchPrompt {
+            get {
+                return ResourceManager.GetString("Form_ProductList_BarcodeSearchPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan or enter a barcode..
+        /// </summary>
+        public static string Form_ProductList_BarcodeSearchTooltip {
+            get {
+                return ResourceManager.GetString("Form_ProductList_BarcodeSearchTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product List.
         /// </summary>
         public static string Form_ProductList_Caption {

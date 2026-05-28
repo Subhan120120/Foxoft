@@ -3049,6 +3049,12 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_ProductList_Caption" xml:space="preserve">
     <value>Məhsul Siyahısı</value>
   </data>
+  <data name="Form_ProductList_BarcodeSearchPrompt" xml:space="preserve">
+    <value>Barkodla axtarın...</value>
+  </data>
+  <data name="Form_ProductList_BarcodeSearchTooltip" xml:space="preserve">
+    <value>Barkodu skan edin və ya daxil edin.</value>
+  </data>
   <data name="Form_ProductList_RibbonPage_Main" xml:space="preserve">
     <value>Məhsul</value>
   </data>

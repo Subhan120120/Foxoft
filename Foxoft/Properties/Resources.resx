@@ -3049,6 +3049,12 @@ Do you want to return to the invoice?</value>
   <data name="Form_ProductList_Caption" xml:space="preserve">
     <value>Product List</value>
   </data>
+  <data name="Form_ProductList_BarcodeSearchPrompt" xml:space="preserve">
+    <value>Search by barcode...</value>
+  </data>
+  <data name="Form_ProductList_BarcodeSearchTooltip" xml:space="preserve">
+    <value>Scan or enter a barcode.</value>
+  </data>
   <data name="Form_ProductList_RibbonPage_Main" xml:space="preserve">
     <value>Product</value>
   </data>
