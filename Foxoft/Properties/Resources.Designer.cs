@@ -142,6 +142,20 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} campaign can be applied.
+        ///
+        ///Discount: {1}
+        ///This campaign is valid for cash payment only.
+        ///
+        ///Apply it?.
+        /// </summary>
+        public static string Campaign_CashOnlyPrompt {
+            get {
+                return ResourceManager.GetString("Campaign_CashOnlyPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete selected campaign?.
         /// </summary>
         public static string Campaign_ConfirmDelete {
@@ -219,6 +233,15 @@ namespace Foxoft.Properties {
         public static string Campaign_LogTitle {
             get {
                 return ResourceManager.GetString("Campaign_LogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line count.
+        /// </summary>
+        public static string Campaign_LogLineCount {
+            get {
+                return ResourceManager.GetString("Campaign_LogLineCount", resourceCulture);
             }
         }
         

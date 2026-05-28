@@ -3848,6 +3848,9 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Campaign_LogTitle" xml:space="preserve">
     <value>Kampaniya Loqu</value>
   </data>
+  <data name="Campaign_LogLineCount" xml:space="preserve">
+    <value>Sətir sayı</value>
+  </data>
   <data name="Campaign_EnterPromoCode" xml:space="preserve">
     <value>Promo Kod Daxil Edin:</value>
   </data>
@@ -3865,6 +3868,14 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Campaign_CashOnlyAppliedDeleteWarning" xml:space="preserve">
     <value>IsCashOnly kampaniya tətbiq edilib. Silinməyə icazə verilmir.</value>
+  </data>
+  <data name="Campaign_CashOnlyPrompt" xml:space="preserve">
+    <value>{0} kampaniyası tətbiq edilə bilər.
+
+Endirim: {1}
+Bu kampaniya yalnız nağd ödənişdə keçərlidir.
+
+Tətbiq edilsin?</value>
   </data>
   <data name="Campaign_EnterPassword" xml:space="preserve">
     <value>Kampaniya şifrəsini daxil edin:</value>

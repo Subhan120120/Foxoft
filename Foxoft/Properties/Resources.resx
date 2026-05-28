@@ -3848,6 +3848,9 @@ To delete, cancel the receipt!</value>
   <data name="Campaign_LogTitle" xml:space="preserve">
     <value>Campaign Log</value>
   </data>
+  <data name="Campaign_LogLineCount" xml:space="preserve">
+    <value>Line count</value>
+  </data>
   <data name="Campaign_EnterPromoCode" xml:space="preserve">
     <value>Enter Promo Code:</value>
   </data>
@@ -3865,6 +3868,14 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Campaign_CashOnlyAppliedDeleteWarning" xml:space="preserve">
     <value>IsCashOnly campaign applied. Delete not allowed.</value>
+  </data>
+  <data name="Campaign_CashOnlyPrompt" xml:space="preserve">
+    <value>{0} campaign can be applied.
+
+Discount: {1}
+This campaign is valid for cash payment only.
+
+Apply it?</value>
   </data>
   <data name="Campaign_EnterPassword" xml:space="preserve">
     <value>Enter campaign password:</value>

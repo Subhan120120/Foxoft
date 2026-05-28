@@ -7,6 +7,7 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
 using Foxoft.AppCode.Service;
+using Foxoft.AppCode.Services;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
@@ -38,6 +39,11 @@ namespace Foxoft
         private bool IsCampaignEnabled
             => Settings.Default.AppSetting != null
             && Settings.Default.AppSetting.UseCampaign;
+
+        private CampaignService _campaignService = null!;
+        private string? _promoCode = null;
+        private bool _cashOnlyCampaignApplied = false;
+        private bool _isApplyingCampaign = false;
 
         public UcRetailSale()
         {
@@ -327,6 +333,402 @@ namespace Foxoft
 
             InitCampaignService();
             _promoCode = _campaignService.GetPromoCode(trInvoiceHeader.InvoiceHeaderId);
+        }
+
+        private void InitCampaignService()
+        {
+            _campaignService = new CampaignService(dbContext);
+        }
+
+        private List<TrInvoiceLine> GetInvoiceLines()
+        {
+            var lines = new List<TrInvoiceLine>();
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                if (gV_InvoiceLine.GetRow(i) is TrInvoiceLine line)
+                    lines.Add(line);
+            return lines;
+        }
+
+        private void btn_CampaignApply_Click(object sender, EventArgs e)
+            => ApplyRegularCampaigns();
+
+        private void ApplyRegularCampaigns(bool silentIfNone = false)
+        {
+            if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            if (gV_InvoiceLine.DataRowCount <= 0)
+            {
+                if (!silentIfNone)
+                    XtraMessageBox.Show(
+                        Resources.Campaign_NoProductInInvoice,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                return;
+            }
+
+            gV_InvoiceLine.CloseEditor();
+            gV_InvoiceLine.UpdateCurrentRow();
+            trInvoiceLinesBindingSource.EndEdit();
+
+            InitCampaignService();
+            var result = _campaignService.ApplyCampaigns(
+                trInvoiceHeader,
+                GetInvoiceLines(),
+                _promoCode,
+                CampaignFilter.RegularOnly);
+
+            gV_InvoiceLine.RefreshData();
+            if (result.Success)
+                SaveInvoice();
+
+            if (!silentIfNone || result.Success)
+                XtraMessageBox.Show(
+                    result.Message,
+                    Resources.Campaign_ListTitle,
+                    MessageBoxButtons.OK,
+                    result.Success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+        }
+
+        private void btn_CampaignDelete_Click(object sender, EventArgs e)
+        {
+            if (trInvoiceHeader is null)
+                return;
+
+            if (XtraMessageBox.Show(
+                Resources.Campaign_ConfirmDelete,
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            InitCampaignService();
+            var lines = GetInvoiceLines();
+            _campaignService.RemoveAllCampaigns(trInvoiceHeader, lines);
+            _cashOnlyCampaignApplied = false;
+            _promoCode = null;
+
+            gV_InvoiceLine.RefreshData();
+            SaveInvoice();
+
+            XtraMessageBox.Show(
+                Resources.Campaign_DiscountDeleted,
+                Resources.Campaign_ListTitle,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        private void btn_CampaignLog_Click(object sender, EventArgs e)
+        {
+            if (trInvoiceHeader is null)
+                return;
+
+            InitCampaignService();
+
+            var logs = _campaignService.GetCampaignLogs(trInvoiceHeader.InvoiceHeaderId);
+            if (!logs.Any())
+            {
+                XtraMessageBox.Show(
+                    Resources.Campaign_NoCampaignApplied,
+                    Resources.Campaign_LogTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+            string text = string.Join(
+                Environment.NewLine + Environment.NewLine,
+                logs
+                    .GroupBy(l => new { l.CampaignCode, l.CampaignDesc })
+                    .Select(g =>
+                        $"{g.Key.CampaignCode} - {g.Key.CampaignDesc}{Environment.NewLine}" +
+                        $"  {Resources.Campaign_LogLineCount}: {g.Count()}{Environment.NewLine}" +
+                        $"  {Resources.Common_Discount}: {g.Sum(l => l.DiscountAmount):n2} ({g.Sum(l => l.DiscountAmountLoc):n2} {currencyCode})"));
+
+            XtraMessageBox.Show(
+                text,
+                Resources.Campaign_LogTitle,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        private void btn_PromoCode_Click(object sender, EventArgs e)
+        {
+            string input = Interaction.InputBox(
+                Resources.Campaign_EnterPromoCode,
+                Resources.Campaign_PromoCodeTitle,
+                _promoCode ?? string.Empty).Trim();
+
+            if (string.IsNullOrEmpty(input))
+                return;
+
+            InitCampaignService();
+            var lines = GetInvoiceLines();
+
+            _campaignService.RemoveAllCampaigns(trInvoiceHeader, lines);
+            _cashOnlyCampaignApplied = false;
+            _promoCode = input;
+
+            var result = _campaignService.ApplyCampaigns(
+                trInvoiceHeader,
+                lines,
+                _promoCode,
+                CampaignFilter.RegularOnly);
+
+            gV_InvoiceLine.RefreshData();
+            if (result.Success)
+                SaveInvoice();
+
+            XtraMessageBox.Show(
+                result.Message,
+                Resources.Campaign_PromoCodeTitle,
+                MessageBoxButtons.OK,
+                result.Success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+        }
+
+        private void btn_Payment_Click(object sender, EventArgs e)
+        {
+            if (trInvoiceHeader is null)
+                return;
+
+            gV_InvoiceLine.CloseEditor();
+            gV_InvoiceLine.UpdateCurrentRow();
+            trInvoiceLinesBindingSource.EndEdit();
+
+            if (gV_InvoiceLine.DataRowCount <= 0)
+                return;
+
+            SaveInvoice();
+
+            PaymentType paymentType = PaymentType.Cash;
+            if (sender == btn_Cashless)
+                paymentType = PaymentType.Cashless;
+            else if (sender == btn_CustomerBonus)
+                paymentType = PaymentType.Bonus;
+
+            IEnumerable<int>? allowedPaymentMethodIds = null;
+
+            bool cashOnlyApplied = false;
+            if (IsCampaignEnabled)
+                cashOnlyApplied = TryApplyCashOnlyCampaign(ref paymentType, out allowedPaymentMethodIds);
+
+            decimal pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+
+            using FormPayment formPayment = allowedPaymentMethodIds != null
+                ? new FormPayment(paymentType, pay, trInvoiceHeader, allowedPaymentMethodIds)
+                : new FormPayment(paymentType, pay, trInvoiceHeader);
+
+            if (formPayment.ShowDialog(this) == DialogResult.OK)
+            {
+                if (IsCampaignEnabled)
+                    ReloadInvoiceCampaignValues();
+
+                trInvoiceHeader.IsCompleted = true;
+                dbContext.SaveChanges();
+
+                CalcPaidAmount();
+                ClearControlsAddNew();
+            }
+            else if (IsCampaignEnabled && cashOnlyApplied)
+            {
+                RollbackCashOnlyCampaign();
+            }
+
+            ActiveControl = txtEdit_Barcode;
+        }
+
+        private bool TryApplyCashOnlyCampaign(
+            ref PaymentType paymentType,
+            out IEnumerable<int>? allowedPaymentMethodIds)
+        {
+            allowedPaymentMethodIds = null;
+
+            InitCampaignService();
+            var lines = GetInvoiceLines();
+            var cashOnlyCampaigns = _campaignService.GetEligibleCampaigns(
+                trInvoiceHeader,
+                lines,
+                null,
+                CampaignFilter.CashOnlyOnly);
+
+            if (!cashOnlyCampaigns.Any())
+                return false;
+
+            var campaign = cashOnlyCampaigns.First();
+            string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+            string discountText = campaign.DiscountTypeCode == DiscountTypeCode.Percent
+                ? $"{campaign.DiscountValue}%"
+                : $"{campaign.DiscountValue:n2} {currencyCode}";
+
+            var answer = XtraMessageBox.Show(
+                string.Format(Resources.Campaign_CashOnlyPrompt, campaign.CampaignDesc, discountText),
+                Resources.Campaign_ListTitle,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (answer != DialogResult.Yes)
+                return false;
+
+            if (!string.IsNullOrEmpty(campaign.CampaignPassword))
+            {
+                string password = Interaction.InputBox(
+                    Resources.Campaign_EnterPassword,
+                    Resources.Common_Password,
+                    string.Empty);
+
+                if (password != campaign.CampaignPassword)
+                {
+                    XtraMessageBox.Show(
+                        Resources.Campaign_PasswordIncorrect,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+
+            var result = _campaignService.ApplyCampaigns(
+                trInvoiceHeader,
+                lines,
+                null,
+                CampaignFilter.CashOnlyOnly);
+
+            if (!result.Success)
+            {
+                XtraMessageBox.Show(
+                    Resources.Campaign_NotApplied,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return false;
+            }
+
+            gV_InvoiceLine.RefreshData();
+            SaveInvoice();
+            _cashOnlyCampaignApplied = true;
+
+            paymentType = PaymentType.Cash;
+            allowedPaymentMethodIds = efMethods
+                .SelectPaymentMethodsByPaymentTypes(new[] { PaymentType.Cash })
+                .Select(m => m.PaymentMethodId);
+
+            return true;
+        }
+
+        private void RollbackCashOnlyCampaign()
+        {
+            try
+            {
+                InitCampaignService();
+                _campaignService.RollbackCashOnlyCampaigns(
+                    trInvoiceHeader.InvoiceHeaderId,
+                    GetInvoiceLines());
+
+                gV_InvoiceLine.RefreshData();
+                SaveInvoice();
+                _cashOnlyCampaignApplied = false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"RollbackCashOnlyCampaign: {ex.Message}");
+            }
+        }
+
+        private void RecalcCampaignsIfNeeded()
+        {
+            if (_isApplyingCampaign)
+                return;
+
+            if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            InitCampaignService();
+            if (!_campaignService.HasCampaignApplied(trInvoiceHeader.InvoiceHeaderId))
+                return;
+
+            _isApplyingCampaign = true;
+            try
+            {
+                var recalcResult = _campaignService.RecalculateCampaigns(
+                    trInvoiceHeader,
+                    GetInvoiceLines(),
+                    _promoCode,
+                    _cashOnlyCampaignApplied);
+
+                gV_InvoiceLine.RefreshData();
+                if (recalcResult.Success)
+                    SaveInvoice();
+            }
+            finally
+            {
+                _isApplyingCampaign = false;
+            }
+        }
+
+        private void AutoApplyCampaignsIfConfigured()
+        {
+            if (_isApplyingCampaign)
+                return;
+
+            if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            InitCampaignService();
+            var lines = GetInvoiceLines();
+            var eligible = _campaignService.GetEligibleCampaigns(
+                trInvoiceHeader,
+                lines,
+                _promoCode,
+                CampaignFilter.RegularOnly);
+
+            if (!eligible.Any(c => c.IsAutoApply))
+                return;
+
+            _isApplyingCampaign = true;
+            try
+            {
+                var result = _campaignService.ApplyCampaigns(
+                    trInvoiceHeader,
+                    lines,
+                    _promoCode,
+                    CampaignFilter.RegularOnly);
+
+                if (result.Success)
+                {
+                    gV_InvoiceLine.RefreshData();
+                    SaveInvoice();
+                }
+            }
+            finally
+            {
+                _isApplyingCampaign = false;
+            }
+        }
+
+        private void ReloadInvoiceCampaignValues()
+        {
+            if (dbContext is null || trInvoiceHeader is null)
+                return;
+
+            var trackedLines = dbContext.TrInvoiceLines
+                .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                .ToList();
+
+            foreach (var line in trackedLines)
+            {
+                try
+                {
+                    dbContext.Entry(line).Reload();
+                }
+                catch
+                {
+                }
+            }
+
+            trInvoiceLinesBindingSource?.ResetBindings(false);
+            gV_InvoiceLine.RefreshData();
         }
 
         //private void ReloadInvoiceCampaignValues()
