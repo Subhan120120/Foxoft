@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Foxoft.Properties;
 
 namespace Foxoft.AppCode
 {
@@ -53,7 +54,7 @@ namespace Foxoft.AppCode
             var body = await resp.Content.ReadAsStringAsync();
 
             if (!resp.IsSuccessStatusCode)
-                throw new HttpRequestException($"Send failed ({(int)resp.StatusCode}): {body}");
+                throw CreateSendException(resp, body);
 
             return body;
         }
@@ -77,9 +78,56 @@ namespace Foxoft.AppCode
             var body = await resp.Content.ReadAsStringAsync();
 
             if (!resp.IsSuccessStatusCode)
-                throw new HttpRequestException($"Send failed ({(int)resp.StatusCode}): {body}");
+                throw CreateSendException(resp, body);
 
             return body;
+        }
+
+        private static HttpRequestException CreateSendException(HttpResponseMessage response, string body)
+        {
+            string? missingNumber = TryGetMissingWhatsAppNumber(body);
+            if (!string.IsNullOrWhiteSpace(missingNumber))
+                return new HttpRequestException(string.Format(Resources.Common_WhatsAppNumberNotFound, missingNumber), null, response.StatusCode);
+
+            return new HttpRequestException(string.Format(Resources.Common_WhatsAppApiSendFailed, body), null, response.StatusCode);
+        }
+
+        private static string? TryGetMissingWhatsAppNumber(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body))
+                return null;
+
+            try
+            {
+                using JsonDocument document = JsonDocument.Parse(body);
+                if (!document.RootElement.TryGetProperty("response", out JsonElement response) ||
+                    !response.TryGetProperty("message", out JsonElement messages) ||
+                    messages.ValueKind != JsonValueKind.Array)
+                    return null;
+
+                foreach (JsonElement message in messages.EnumerateArray())
+                {
+                    if (message.ValueKind != JsonValueKind.Object ||
+                        !message.TryGetProperty("exists", out JsonElement exists) ||
+                        exists.ValueKind != JsonValueKind.False)
+                        continue;
+
+                    if (message.TryGetProperty("number", out JsonElement number) &&
+                        number.ValueKind == JsonValueKind.String &&
+                        !string.IsNullOrWhiteSpace(number.GetString()))
+                        return number.GetString();
+
+                    if (message.TryGetProperty("jid", out JsonElement jid) &&
+                        jid.ValueKind == JsonValueKind.String &&
+                        !string.IsNullOrWhiteSpace(jid.GetString()))
+                        return jid.GetString()?.Split('@')[0];
+                }
+            }
+            catch (JsonException)
+            {
+            }
+
+            return null;
         }
 
         private static async Task<byte[]> ReadAllBytesAsync(Stream stream, CancellationToken ct)

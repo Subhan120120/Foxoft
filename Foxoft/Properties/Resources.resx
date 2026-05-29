@@ -4099,6 +4099,12 @@ Apply it?</value>
   <data name="Common_WhatsAppSendError" xml:space="preserve">
     <value>Failed to send WhatsApp message: {0}</value>
   </data>
+  <data name="Common_WhatsAppNumberNotFound" xml:space="preserve">
+    <value>WhatsApp account was not found for this number: {0}</value>
+  </data>
+  <data name="Common_WhatsAppApiSendFailed" xml:space="preserve">
+    <value>WhatsApp message could not be sent. Server response: {0}</value>
+  </data>
   <data name="Common_Previous" xml:space="preserve">
     <value>Previous</value>
   </data>

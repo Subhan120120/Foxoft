@@ -4099,6 +4099,12 @@ Tətbiq edilsin?</value>
   <data name="Common_WhatsAppSendError" xml:space="preserve">
     <value>WhatsApp mesajı göndərilərkən xəta baş verdi: {0}</value>
   </data>
+  <data name="Common_WhatsAppNumberNotFound" xml:space="preserve">
+    <value>Bu nömrə üzrə WhatsApp hesabı tapılmadı: {0}</value>
+  </data>
+  <data name="Common_WhatsAppApiSendFailed" xml:space="preserve">
+    <value>WhatsApp mesajı göndərilmədi. Server cavabı: {0}</value>
+  </data>
   <data name="Common_Previous" xml:space="preserve">
     <value>Əvvəlki</value>
   </data>

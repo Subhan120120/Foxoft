@@ -1164,6 +1164,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WhatsApp account was not found for this number: {0}.
+        /// </summary>
+        public static string Common_WhatsAppNumberNotFound {
+            get {
+                return ResourceManager.GetString("Common_WhatsAppNumberNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WhatsApp message could not be sent. Server response: {0}.
+        /// </summary>
+        public static string Common_WhatsAppApiSendFailed {
+            get {
+                return ResourceManager.GetString("Common_WhatsAppApiSendFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} credit added successfully!.
         /// </summary>
         public static string Credit_AddedSuccessfully {
