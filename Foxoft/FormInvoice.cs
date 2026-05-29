@@ -433,6 +433,8 @@ namespace Foxoft
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
             {
+                ApplyExpenseDefaultCashRegisterByStore(trInvoiceHeader.StoreCode);
+
                 trInvoiceHeader.CashRegisterCode = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId, GetInvoiceCashRegPaymentTypeFilter());
                 btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
             }
@@ -3003,6 +3005,8 @@ namespace Foxoft
 
             trInvoiceHeader.StoreCode = storeCode;
 
+            ApplyExpenseDefaultCashRegisterByStore(storeCode);
+
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
             lUE_WarehouseCode.Properties.DataSource = dcWarehouses;
 
@@ -3648,6 +3652,15 @@ namespace Foxoft
             trInvoiceHeader.CashRegisterCode = curr.CurrAccCode;
 
             dxErrorProvider1.SetError(editor, string.Empty);
+        }
+
+        private void ApplyExpenseDefaultCashRegisterByStore(string storeCode)
+        {
+            if (dcProcess?.ProcessCode != "EX" || trInvoiceHeader is null || string.IsNullOrWhiteSpace(storeCode))
+                return;
+
+            trInvoiceHeader.CashRegisterCode = efMethods.SelectDefaultCashRegister(storeCode, GetInvoiceCashRegPaymentTypeFilter());
+            btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
         }
 
         private PaymentType? GetInvoiceCashRegPaymentTypeFilter()
