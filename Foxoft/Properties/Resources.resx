@@ -3593,6 +3593,9 @@ To delete, cancel the receipt!</value>
   <data name="Entity_AppSetting_POSMergeSameProducts" xml:space="preserve">
     <value>Merge Same Products on POS</value>
   </data>
+  <data name="Entity_AppSetting_ProductsFormKeepActive" xml:space="preserve">
+    <value>Keep Products Window Open</value>
+  </data>
   <data name="Form_RetailSale_Button_AddBasket" xml:space="preserve">
     <value>Add Basket</value>
   </data>

@@ -68,6 +68,7 @@ namespace Foxoft
         private decimal CurrAccBalanceBefore;
         ReportClass reportClass;
         private string salesPersonCode;
+        private FormProductList? productsForm;
 
         private readonly DocumentLockService _lockService;
         private LoyaltyService _loyaltyService;
@@ -1581,7 +1582,11 @@ namespace Foxoft
             if (gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode) != null)
                 productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode).ToString();
 
-            ButtonEdit editor = (ButtonEdit)sender;
+            if (Settings.Default.AppSetting?.ProductsFormKeepActive == true)
+            {
+                ShowProductsFormKeepActive(productCode);
+                return;
+            }
 
             using FormProductList form = new(productTypeArr, false, productCode);
 
@@ -1589,13 +1594,7 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    editor.EditValue = form.dcProduct?.ProductCode;
-
-                    if (!gV_InvoiceLine.PostEditor()) // 🔹 Post editor to trigger ValidatingEditor for the ProductCode cell
-                        return; // validation failed in ValidatingEditor
-
-                    gV_InvoiceLine.FocusedColumn = colQty;
-                    gV_InvoiceLine.ShowEditor();
+                    ApplySelectedProduct(form.dcProduct?.ProductCode);
                 }
 
             }
@@ -1603,6 +1602,64 @@ namespace Foxoft
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void ShowProductsFormKeepActive(string productCode)
+        {
+            if (productsForm is null || productsForm.IsDisposed)
+            {
+                productsForm = new FormProductList(productTypeArr, false, productCode);
+                productsForm.ProductSelected += ProductsForm_ProductSelected;
+                productsForm.FormClosed += ProductsForm_FormClosed;
+                productsForm.Show(this);
+                return;
+            }
+
+            productsForm.FocusProduct(productCode);
+            if (productsForm.WindowState == FormWindowState.Minimized)
+                productsForm.WindowState = FormWindowState.Normal;
+
+            productsForm.Activate();
+            productsForm.BringToFront();
+        }
+
+        private void ProductsForm_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            if (ReferenceEquals(sender, productsForm))
+                productsForm = null;
+        }
+
+        private void ProductsForm_ProductSelected(object? sender, EventArgs e)
+        {
+            if (sender is FormProductList form)
+                ApplySelectedProduct(form.dcProduct?.ProductCode);
+        }
+
+        private bool ApplySelectedProduct(string? productCode)
+        {
+            if (string.IsNullOrWhiteSpace(productCode))
+                return false;
+
+            gC_InvoiceLine.Focus();
+            gV_InvoiceLine.FocusedColumn = col_ProductCode;
+            gV_InvoiceLine.ShowEditor();
+
+            if (gV_InvoiceLine.ActiveEditor is BaseEdit editor)
+            {
+                editor.EditValue = productCode;
+
+                if (!gV_InvoiceLine.PostEditor())
+                    return false;
+            }
+            else
+            {
+                gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, productCode);
+            }
+
+            gV_InvoiceLine.FocusedColumn = colQty;
+            gV_InvoiceLine.ShowEditor();
+
+            return true;
         }
 
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)

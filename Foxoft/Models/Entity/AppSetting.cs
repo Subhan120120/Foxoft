@@ -79,6 +79,10 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_POSMergeSameProducts), ResourceType = typeof(Resources))]
         public bool POSMergeSameProducts { get; set; }
 
+        [DefaultValueSql("0")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_ProductsFormKeepActive), ResourceType = typeof(Resources))]
+        public bool ProductsFormKeepActive { get; set; }
+
         [Display(Name = nameof(Resources.Entity_AppSetting_OverpaymentMode), ResourceType = typeof(Resources))]
         public OverpaymentMode OverpaymentMode { get; set; } = OverpaymentMode.AskEachTime;
 

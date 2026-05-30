@@ -39,6 +39,7 @@ namespace Foxoft
         public string focusedProductCode { get; set; }
         public string[] productCodes { get; set; }
         public bool? isDisabled { get; set; }
+        public event EventHandler? ProductSelected;
 
         GridColumn colImage = new();
         GridColumn colProductCode = new();
@@ -141,11 +142,22 @@ namespace Foxoft
             gV_ProductList.Layout += (s, e) => btnEdit_BarcodeSearch_Layout();
         }
 
+        public void FocusProduct(string productCode) => FocusValue(productCode);
+
         private void FocusValue(string productCode)
         {
             int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
             if (rowHandle != GridControl.InvalidRowHandle)
                 gV_ProductList.FocusedRowHandle = rowHandle;
+        }
+
+        private void SelectFocusedProduct()
+        {
+            if (dcProduct is not null)
+                ProductSelected?.Invoke(this, EventArgs.Empty);
+
+            if (Modal)
+                DialogResult = DialogResult.OK;
         }
 
         private void FormProductList_Activated(object sender, EventArgs e)
@@ -341,7 +353,7 @@ namespace Foxoft
 
         private void gV_ProductList_DoubleClick(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
+            SelectFocusedProduct();
         }
 
         private void BBI_ProductNew_ItemClick(object sender, ItemClickEventArgs e)
@@ -393,7 +405,7 @@ namespace Foxoft
             {
                 if (gC_ProductList.ContainsFocus)// Optional: ensure Find Panel has focus
                 {
-                    DialogResult = DialogResult.OK;
+                    SelectFocusedProduct();
                     return true; // prevent GridView default behavior
                 }
             }
@@ -408,7 +420,8 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.Enter && dcProduct is not null)
             {
-                DialogResult = DialogResult.OK;
+                SelectFocusedProduct();
+                e.Handled = true;
             }
 
             if (view.SelectedRowsCount > 0)

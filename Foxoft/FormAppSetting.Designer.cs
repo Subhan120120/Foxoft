@@ -56,6 +56,7 @@ namespace Foxoft
             POSShowSalesmanCodeDialogCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             POSFindProductByCheckedComboBoxEdit = new DevExpress.XtraEditors.CheckedComboBoxEdit();
             POSMergeSameProductsCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            ProductsFormKeepActiveCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             OverpaymentModeImageComboBoxEdit = new DevExpress.XtraEditors.ImageComboBoxEdit();
             UseBarcodeCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             UseScalesCheckEdit = new DevExpress.XtraEditors.CheckEdit();
@@ -87,6 +88,7 @@ namespace Foxoft
             ItemForPOSShowSalesmanCodeDialog = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPOSFindProductBy = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPOSMergeSameProducts = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForProductsFormKeepActive = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForOverpaymentMode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForUseBarcode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForUseScales = new DevExpress.XtraLayout.LayoutControlItem();
@@ -125,6 +127,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)POSShowSalesmanCodeDialogCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)POSMergeSameProductsCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ProductsFormKeepActiveCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)OverpaymentModeImageComboBoxEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UseBarcodeCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UseScalesCheckEdit.Properties).BeginInit();
@@ -156,6 +159,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowSalesmanCodeDialog).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSFindProductBy).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSMergeSameProducts).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductsFormKeepActive).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForOverpaymentMode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseBarcode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseScales).BeginInit();
@@ -224,6 +228,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(POSShowSalesmanCodeDialogCheckEdit);
             dataLayoutControl1.Controls.Add(POSFindProductByCheckedComboBoxEdit);
             dataLayoutControl1.Controls.Add(POSMergeSameProductsCheckEdit);
+            dataLayoutControl1.Controls.Add(ProductsFormKeepActiveCheckEdit);
             dataLayoutControl1.Controls.Add(OverpaymentModeImageComboBoxEdit);
             dataLayoutControl1.Controls.Add(UseBarcodeCheckEdit);
             dataLayoutControl1.Controls.Add(UseScalesCheckEdit);
@@ -269,7 +274,7 @@ namespace Foxoft
             // GridViewLayoutTextEdit
             // 
             GridViewLayoutTextEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "GridViewLayout", true));
-            GridViewLayoutTextEdit.Location = new Point(176, 234);
+            GridViewLayoutTextEdit.Location = new Point(176, 258);
             GridViewLayoutTextEdit.Name = "GridViewLayoutTextEdit";
             GridViewLayoutTextEdit.Size = new Size(229, 20);
             GridViewLayoutTextEdit.StyleController = dataLayoutControl1;
@@ -443,7 +448,7 @@ namespace Foxoft
             // POSFindProductByCheckedComboBoxEdit
             // 
             POSFindProductByCheckedComboBoxEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "POSFindProductBy", true));
-            POSFindProductByCheckedComboBoxEdit.Location = new Point(176, 210);
+            POSFindProductByCheckedComboBoxEdit.Location = new Point(176, 234);
             POSFindProductByCheckedComboBoxEdit.Name = "POSFindProductByCheckedComboBoxEdit";
             POSFindProductByCheckedComboBoxEdit.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
             POSFindProductByCheckedComboBoxEdit.Size = new Size(229, 20);
@@ -461,9 +466,20 @@ namespace Foxoft
             POSMergeSameProductsCheckEdit.StyleController = dataLayoutControl1;
             POSMergeSameProductsCheckEdit.TabIndex = 16;
             // 
+            // ProductsFormKeepActiveCheckEdit
+            // 
+            ProductsFormKeepActiveCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "ProductsFormKeepActive", true));
+            ProductsFormKeepActiveCheckEdit.Location = new Point(12, 138);
+            ProductsFormKeepActiveCheckEdit.Name = "ProductsFormKeepActiveCheckEdit";
+            ProductsFormKeepActiveCheckEdit.Properties.Caption = Resources.Entity_AppSetting_ProductsFormKeepActive;
+            ProductsFormKeepActiveCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            ProductsFormKeepActiveCheckEdit.Size = new Size(393, 20);
+            ProductsFormKeepActiveCheckEdit.StyleController = dataLayoutControl1;
+            ProductsFormKeepActiveCheckEdit.TabIndex = 17;
+            // 
             // OverpaymentModeImageComboBoxEdit
             // 
-            OverpaymentModeImageComboBoxEdit.Location = new Point(176, 258);
+            OverpaymentModeImageComboBoxEdit.Location = new Point(176, 282);
             OverpaymentModeImageComboBoxEdit.Name = "OverpaymentModeImageComboBoxEdit";
             OverpaymentModeImageComboBoxEdit.Properties.Appearance.Options.UseTextOptions = true;
             OverpaymentModeImageComboBoxEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
@@ -477,35 +493,35 @@ namespace Foxoft
             // UseBarcodeCheckEdit
             // 
             UseBarcodeCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UseBarcode", true));
-            UseBarcodeCheckEdit.Location = new Point(12, 138);
+            UseBarcodeCheckEdit.Location = new Point(12, 162);
             UseBarcodeCheckEdit.Name = "UseBarcodeCheckEdit";
             UseBarcodeCheckEdit.Properties.Caption = "Use Barcode";
             UseBarcodeCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             UseBarcodeCheckEdit.Size = new Size(393, 20);
             UseBarcodeCheckEdit.StyleController = dataLayoutControl1;
-            UseBarcodeCheckEdit.TabIndex = 17;
+            UseBarcodeCheckEdit.TabIndex = 18;
             // 
             // UseScalesCheckEdit
             // 
             UseScalesCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UseScales", true));
-            UseScalesCheckEdit.Location = new Point(12, 162);
+            UseScalesCheckEdit.Location = new Point(12, 186);
             UseScalesCheckEdit.Name = "UseScalesCheckEdit";
             UseScalesCheckEdit.Properties.Caption = "Use Scales";
             UseScalesCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             UseScalesCheckEdit.Size = new Size(393, 20);
             UseScalesCheckEdit.StyleController = dataLayoutControl1;
-            UseScalesCheckEdit.TabIndex = 18;
+            UseScalesCheckEdit.TabIndex = 19;
             // 
             // UseCampaignCheckEdit
             // 
             UseCampaignCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UseCampaign", true));
-            UseCampaignCheckEdit.Location = new Point(12, 186);
+            UseCampaignCheckEdit.Location = new Point(12, 210);
             UseCampaignCheckEdit.Name = "UseCampaignCheckEdit";
             UseCampaignCheckEdit.Properties.Caption = "Use Campaign";
             UseCampaignCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             UseCampaignCheckEdit.Size = new Size(393, 20);
             UseCampaignCheckEdit.StyleController = dataLayoutControl1;
-            UseCampaignCheckEdit.TabIndex = 19;
+            UseCampaignCheckEdit.TabIndex = 20;
             // 
             // WhatsAppProviderImageComboBoxEdit
             // 
@@ -585,17 +601,17 @@ namespace Foxoft
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
             Root.Name = "Root";
-            Root.Size = new Size(417, 719);
+            Root.Size = new Size(417, 767);
             Root.TextVisible = false;
             // 
             // layoutControlGroup1
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, ItemForAppFontSize, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSFindProductBy, ItemForPOSMergeSameProducts, ItemForOverpaymentMode, ItemForUseBarcode, ItemForUseScales, ItemForUseCampaign, layoutControlGroupWhatsApp, ItemForNotifyBalanceWarningLevel, ItemForLockReturnDocument, ItemForTransferAutoApprove });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, ItemForAppFontSize, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory, ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSFindProductBy, ItemForPOSMergeSameProducts, ItemForProductsFormKeepActive, ItemForOverpaymentMode, ItemForUseBarcode, ItemForUseScales, ItemForUseCampaign, layoutControlGroupWhatsApp, ItemForNotifyBalanceWarningLevel, ItemForLockReturnDocument, ItemForTransferAutoApprove });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new Size(397, 699);
+            layoutControlGroup1.Size = new Size(397, 747);
             // 
             // ItemForGetPrint
             // 
@@ -677,14 +693,14 @@ namespace Foxoft
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.Location = new Point(0, 673);
+            emptySpaceItem1.Location = new Point(0, 721);
             emptySpaceItem1.Name = "emptySpaceItem1";
             emptySpaceItem1.Size = new Size(198, 26);
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Save;
-            layoutControlItem1.Location = new Point(198, 673);
+            layoutControlItem1.Location = new Point(198, 721);
             layoutControlItem1.MinSize = new Size(70, 26);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(199, 26);
@@ -694,7 +710,7 @@ namespace Foxoft
             // layoutControlItem2
             // 
             layoutControlItem2.Control = btn_OptimizeDatabaseIndexes;
-            layoutControlItem2.Location = new Point(0, 621);
+            layoutControlItem2.Location = new Point(0, 669);
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(397, 26);
             layoutControlItem2.TextVisible = false;
@@ -702,7 +718,7 @@ namespace Foxoft
             // ItemForGridViewLayout
             // 
             ItemForGridViewLayout.Control = GridViewLayoutTextEdit;
-            ItemForGridViewLayout.Location = new Point(0, 384);
+            ItemForGridViewLayout.Location = new Point(0, 432);
             ItemForGridViewLayout.Name = "ItemForGridViewLayout";
             ItemForGridViewLayout.Size = new Size(397, 24);
             ItemForGridViewLayout.Text = Resources.Entity_AppSetting_GridViewLayout;
@@ -711,7 +727,7 @@ namespace Foxoft
             // LCI_ClearMemory
             // 
             LCI_ClearMemory.Control = btn_ClearMemory;
-            LCI_ClearMemory.Location = new Point(0, 647);
+            LCI_ClearMemory.Location = new Point(0, 695);
             LCI_ClearMemory.Name = "LCI_ClearMemory";
             LCI_ClearMemory.Size = new Size(397, 26);
             LCI_ClearMemory.TextVisible = false;
@@ -735,7 +751,7 @@ namespace Foxoft
             // ItemForPOSFindProductBy
             // 
             ItemForPOSFindProductBy.Control = POSFindProductByCheckedComboBoxEdit;
-            ItemForPOSFindProductBy.Location = new Point(0, 384);
+            ItemForPOSFindProductBy.Location = new Point(0, 456);
             ItemForPOSFindProductBy.Name = "ItemForPOSFindProductBy";
             ItemForPOSFindProductBy.Size = new Size(397, 24);
             ItemForPOSFindProductBy.TextSize = new Size(152, 13);
@@ -748,10 +764,18 @@ namespace Foxoft
             ItemForPOSMergeSameProducts.Size = new Size(397, 24);
             ItemForPOSMergeSameProducts.TextVisible = false;
             // 
+            // ItemForProductsFormKeepActive
+            // 
+            ItemForProductsFormKeepActive.Control = ProductsFormKeepActiveCheckEdit;
+            ItemForProductsFormKeepActive.Location = new Point(0, 264);
+            ItemForProductsFormKeepActive.Name = "ItemForProductsFormKeepActive";
+            ItemForProductsFormKeepActive.Size = new Size(397, 24);
+            ItemForProductsFormKeepActive.TextVisible = false;
+            // 
             // ItemForOverpaymentMode
             // 
             ItemForOverpaymentMode.Control = OverpaymentModeImageComboBoxEdit;
-            ItemForOverpaymentMode.Location = new Point(0, 432);
+            ItemForOverpaymentMode.Location = new Point(0, 480);
             ItemForOverpaymentMode.Name = "ItemForOverpaymentMode";
             ItemForOverpaymentMode.Size = new Size(397, 24);
             ItemForOverpaymentMode.TextSize = new Size(152, 13);
@@ -759,7 +783,7 @@ namespace Foxoft
             // ItemForUseBarcode
             // 
             ItemForUseBarcode.Control = UseBarcodeCheckEdit;
-            ItemForUseBarcode.Location = new Point(0, 264);
+            ItemForUseBarcode.Location = new Point(0, 288);
             ItemForUseBarcode.Name = "ItemForUseBarcode";
             ItemForUseBarcode.Size = new Size(397, 24);
             ItemForUseBarcode.TextVisible = false;
@@ -767,7 +791,7 @@ namespace Foxoft
             // ItemForUseScales
             // 
             ItemForUseScales.Control = UseScalesCheckEdit;
-            ItemForUseScales.Location = new Point(0, 288);
+            ItemForUseScales.Location = new Point(0, 312);
             ItemForUseScales.Name = "ItemForUseScales";
             ItemForUseScales.Size = new Size(397, 24);
             ItemForUseScales.TextVisible = false;
@@ -775,7 +799,7 @@ namespace Foxoft
             // ItemForUseCampaign
             // 
             ItemForUseCampaign.Control = UseCampaignCheckEdit;
-            ItemForUseCampaign.Location = new Point(0, 312);
+            ItemForUseCampaign.Location = new Point(0, 336);
             ItemForUseCampaign.Name = "ItemForUseCampaign";
             ItemForUseCampaign.Size = new Size(397, 24);
             ItemForUseCampaign.TextVisible = false;
@@ -783,7 +807,7 @@ namespace Foxoft
             // ItemForNotifyBalanceWarningLevel
             // 
             ItemForNotifyBalanceWarningLevel.Control = NotifyBalanceWarningLevelCheckEdit;
-            ItemForNotifyBalanceWarningLevel.Location = new Point(0, 336);
+            ItemForNotifyBalanceWarningLevel.Location = new Point(0, 360);
             ItemForNotifyBalanceWarningLevel.Name = "ItemForNotifyBalanceWarningLevel";
             ItemForNotifyBalanceWarningLevel.Size = new Size(397, 24);
             ItemForNotifyBalanceWarningLevel.TextVisible = false;
@@ -791,7 +815,7 @@ namespace Foxoft
             // ItemForLockReturnDocument
             // 
             ItemForLockReturnDocument.Control = LockReturnDocumentCheckEdit;
-            ItemForLockReturnDocument.Location = new Point(0, 360);
+            ItemForLockReturnDocument.Location = new Point(0, 384);
             ItemForLockReturnDocument.Name = "ItemForLockReturnDocument";
             ItemForLockReturnDocument.Size = new Size(397, 24);
             ItemForLockReturnDocument.TextVisible = false;
@@ -799,7 +823,7 @@ namespace Foxoft
             // ItemForTransferAutoApprove
             // 
             ItemForTransferAutoApprove.Control = TransferAutoApproveCheckEdit;
-            ItemForTransferAutoApprove.Location = new Point(0, 384);
+            ItemForTransferAutoApprove.Location = new Point(0, 408);
             ItemForTransferAutoApprove.Name = "ItemForTransferAutoApprove";
             ItemForTransferAutoApprove.Size = new Size(397, 24);
             ItemForTransferAutoApprove.TextVisible = false;
@@ -807,7 +831,7 @@ namespace Foxoft
             // layoutControlGroupWhatsApp
             // 
             layoutControlGroupWhatsApp.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForServerUrl, ItemForInstanceName, ItemForApiKey, ItemForWhatsappChromeProfileName, ItemForWhatsAppProvider });
-            layoutControlGroupWhatsApp.Location = new Point(0, 456);
+            layoutControlGroupWhatsApp.Location = new Point(0, 504);
             layoutControlGroupWhatsApp.Name = "layoutControlGroupWhatsApp";
             layoutControlGroupWhatsApp.Size = new Size(397, 165);
             layoutControlGroupWhatsApp.Text = "Whatsapp Provider";
@@ -904,6 +928,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)POSShowSalesmanCodeDialogCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)POSFindProductByCheckedComboBoxEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)POSMergeSameProductsCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ProductsFormKeepActiveCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)OverpaymentModeImageComboBoxEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)UseBarcodeCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)UseScalesCheckEdit.Properties).EndInit();
@@ -935,6 +960,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowSalesmanCodeDialog).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSFindProductBy).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSMergeSameProducts).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductsFormKeepActive).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForOverpaymentMode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseScales).EndInit();
@@ -1000,6 +1026,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.CheckedComboBoxEdit POSFindProductByCheckedComboBoxEdit;
         private DevExpress.XtraEditors.CheckEdit POSMergeSameProductsCheckEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPOSMergeSameProducts;
+        private DevExpress.XtraEditors.CheckEdit ProductsFormKeepActiveCheckEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForProductsFormKeepActive;
         private DevExpress.XtraLayout.LayoutControlItem ItemForOverpaymentMode;
         private DevExpress.XtraEditors.ImageComboBoxEdit OverpaymentModeImageComboBoxEdit;
         private DevExpress.XtraEditors.CheckEdit UseBarcodeCheckEdit;

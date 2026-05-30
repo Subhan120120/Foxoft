@@ -1452,6 +1452,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keep Products Window Open.
+        /// </summary>
+        public static string Entity_AppSetting_ProductsFormKeepActive {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_ProductsFormKeepActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Quantity Dialog on POS.
         /// </summary>
         public static string Entity_AppSetting_POSShowQuantityDialog {

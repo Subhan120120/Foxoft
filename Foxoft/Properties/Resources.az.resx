@@ -3593,6 +3593,9 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Entity_AppSetting_POSMergeSameProducts" xml:space="preserve">
     <value>POSda Eyni Məhsulları Birləşdir</value>
   </data>
+  <data name="Entity_AppSetting_ProductsFormKeepActive" xml:space="preserve">
+    <value>Məhsullar pəncərəsini açıq saxla</value>
+  </data>
   <data name="Form_RetailSale_Button_AddBasket" xml:space="preserve">
     <value>Səbətə At</value>
   </data>
