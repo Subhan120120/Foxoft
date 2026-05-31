@@ -640,7 +640,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem lCI_Cash;
         private DevExpress.XtraLayout.LayoutControlItem lCI_Cashless;
         private DevExpress.XtraLayout.LayoutControlItem lCI_CustomerBonus;
-        private DevExpress.XtraEditors.TextEdit txtEdit_CustomerBonus;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraLayout.LayoutControlItem lCI_LoyaltyBalance;
         private DevExpress.XtraEditors.SimpleButton btn_Cancel;

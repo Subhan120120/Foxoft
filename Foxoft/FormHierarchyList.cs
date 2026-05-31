@@ -14,7 +14,6 @@ namespace Foxoft
     public partial class FormHierarchyList : XtraForm
     {
         private EfMethods efMethods = new();
-        private subContext dbContext;
 
         public DcHierarchy DcHierarchy;
 

@@ -77,7 +77,6 @@ namespace Foxoft
         public Guid _formInstanceId;
         private bool _closingByLock = false;
         private int _pid => Process.GetCurrentProcess().Id;
-        private System.Windows.Forms.Timer? _hbTimer;
 
         public bool isNew = false;
         private bool _isSaved = false;

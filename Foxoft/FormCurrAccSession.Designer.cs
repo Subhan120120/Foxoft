@@ -203,8 +203,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colChildPID;
         private DevExpress.XtraGrid.Columns.GridColumn colChildTitle;
-        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit1;
-        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_DeleteUserWindow;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit2;
     }
 }

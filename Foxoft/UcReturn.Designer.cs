@@ -810,6 +810,5 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_RProductDesc;
         private DevExpress.XtraGrid.Columns.GridColumn col_SerialNumberCode;
         private DevExpress.XtraGrid.Columns.GridColumn col_DeliveredQty;
-        private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
     }
 }

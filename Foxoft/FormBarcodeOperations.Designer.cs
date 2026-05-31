@@ -384,7 +384,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
-        private DevExpress.XtraEditors.TextEdit IdTextEdit;
         private BindingSource trBarcodeOperationHeaderBindingSource;
         private DevExpress.XtraEditors.TextEdit NameTextEdit;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;

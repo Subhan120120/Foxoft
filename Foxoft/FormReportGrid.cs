@@ -430,9 +430,6 @@ namespace Foxoft
             return false;
         }
 
-        private System.Windows.Forms.Timer? _lockHeartbeatTimer;
-        private bool _isClosingByLockEvent;
-        private bool _closeRequestDialogOpen;
 
         private bool TryAcquireInvoiceLockForEdit(Guid invoiceHeaderId, FormERP formERP, Guid formInstanceId)
         {

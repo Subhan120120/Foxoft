@@ -494,23 +494,14 @@ namespace Foxoft
         private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceLine;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceLineId;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
-        private DevExpress.XtraGrid.Columns.GridColumn colRelatedLineId;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colQty;
         private DevExpress.XtraGrid.Columns.GridColumn colPrice;
         private DevExpress.XtraGrid.Columns.GridColumn colAmount;
-        private DevExpress.XtraGrid.Columns.GridColumn colPosDiscount;
-        private DevExpress.XtraGrid.Columns.GridColumn colDiscountCampaign;
         private DevExpress.XtraGrid.Columns.GridColumn colNetAmount;
-        private DevExpress.XtraGrid.Columns.GridColumn colVatRate;
         private DevExpress.XtraGrid.Columns.GridColumn colLineDescription;
         private DevExpress.XtraGrid.Columns.GridColumn colSalesPersonCode;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
         private DevExpress.XtraGrid.Columns.GridColumn colExchangeRate;
-        private DevExpress.XtraGrid.Columns.GridColumn colReturnQty;
-        private DevExpress.XtraGrid.Columns.GridColumn colRemainingQty;
-        private DevExpress.XtraGrid.Columns.GridColumn colTrInvoiceHeader;
-        private DevExpress.XtraGrid.Columns.GridColumn colDcProduct;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
@@ -524,11 +515,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.MemoEdit memoEdit_InvoiceDesc;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_CurrAccCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_ProductCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colUnitOfMeasureId;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyIn;
-        private DevExpress.XtraGrid.Columns.GridColumn colQtyOut;
         private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
     }

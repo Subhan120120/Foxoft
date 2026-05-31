@@ -366,9 +366,7 @@ namespace Foxoft
 
         private DevExpress.XtraWizard.WizardControl wizardControl1;
         private DevExpress.XtraWizard.WelcomeWizardPage welcomeWizardPage1;
-        private DevExpress.XtraWizard.WizardPage wizardPage1;
         private DevExpress.XtraWizard.CompletionWizardPage completionWizardPage1;
-        private DevExpress.XtraEditors.CheckEdit checkEdit1;
         private DevExpress.XtraEditors.CheckEdit checkEdit_ResetUncountedProductBalance;
         private DevExpress.XtraWizard.WizardPage wizardPage2;
         private DevExpress.XtraGrid.GridControl gridControl1;
@@ -395,14 +393,9 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
         private DevExpress.XtraGrid.Columns.GridColumn colExchangeRate;
         private DevExpress.XtraGrid.Columns.GridColumn colPosDiscount;
-        private DevExpress.XtraEditors.LookUpEdit lookUpEdit1;
         private DevExpress.XtraEditors.LookUpEdit LUE_WarehouseCode;
         private DevExpress.XtraEditors.LookUpEdit LUE_StoreCode;
         private DevExpress.XtraGrid.Columns.GridColumn colDifference;
-        private DevExpress.XtraGrid.GridFormatRule ruleNegative;
-        private DevExpress.XtraGrid.GridFormatRule rulePositive;
-        private DevExpress.XtraEditors.FormatConditionRuleValue conditionNegative;
-        private DevExpress.XtraEditors.FormatConditionRuleValue conditionPositive;
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
     }
 }

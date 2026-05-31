@@ -401,13 +401,9 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
         private DevExpress.XtraBars.BarButtonItem BBI_query;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
-        private DevExpress.XtraBars.BarButtonItem BBI_ReportProduct;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem5;
         private DevExpress.XtraBars.BarButtonItem BBI_Save;
         private DevExpress.XtraBars.PopupMenu popupMenu1;
-        private DevExpress.XtraBars.BarListItem barListItem1;
-        private DevExpress.XtraBars.BarSubItem barSubItem1;
         private DevExpress.XtraBars.BarEditItem txtEdit_filtercolumns;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;

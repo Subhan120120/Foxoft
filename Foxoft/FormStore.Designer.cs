@@ -17,7 +17,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit DesignFileFolderTextEdit;
         private DevExpress.XtraEditors.CheckEdit SalesmanContinuityCheckEdit;
         private DevExpress.XtraEditors.TextEdit ImageFolderTextEdit;
-        private DevExpress.XtraEditors.TextEdit PrinterNameTextEdit;
         private DevExpress.XtraEditors.LookUpEdit DefaultUnitOfMeasureIdLookUpEdit;
         private DevExpress.XtraEditors.TextEdit PhoneNumTextEdit;
         private DevExpress.XtraEditors.TextEdit textEdit2;
@@ -30,7 +29,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForOfficeCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDesc;
         private DevExpress.XtraLayout.LayoutControlItem ItemForSalesmanContinuity;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForPrinterName;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDesignFileFolder;
         private DevExpress.XtraLayout.LayoutControlItem ItemForImageFolder;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDefaultUnitOfMeasureId;

@@ -294,19 +294,16 @@ namespace Foxoft
 
         #endregion
 
-        private MyGridControl myGridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_ProductBarcode;
         private System.Windows.Forms.BindingSource bindingSourceProductBarcode;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcodeTypeCode;
-        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit1;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit RepoBtnEdit_BarcodeType;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
-        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit RepoBtnEdit_Barcode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit RepoBtnEdit_ProductCode;
         private DevExpress.XtraGrid.Columns.GridColumn colId;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;

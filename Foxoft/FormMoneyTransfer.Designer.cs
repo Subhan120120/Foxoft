@@ -832,8 +832,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.XtraBars.BarButtonItem bBI_SendWhatsapp;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
-        private DevExpress.XtraGrid.Columns.GridColumn colBalanceBefor;
-        private DevExpress.XtraGrid.Columns.GridColumn colBalanceAfter;
         private DevExpress.XtraBars.BarButtonItem bBI_NewPayment;
         private DevExpress.XtraBars.BarButtonItem bBI_CopyPayment;
         private DevExpress.XtraEditors.LabelControl lbl_FromCashRegDesc;

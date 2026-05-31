@@ -454,8 +454,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
         private DevExpress.XtraLayout.LayoutControlItem LCI_lang;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
-        private DevExpress.XtraEditors.SimpleButton btn_ConStringSave;
         private DevExpress.XtraBars.BarButtonItem BBI_GetKey;
         private DevExpress.XtraEditors.LookUpEdit LUE_Terminal;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
@@ -465,7 +463,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraBars.BarButtonItem bbi_test;
         private DevExpress.XtraEditors.LookUpEdit LUE_Language;
-        private DevExpress.XtraBars.BarEditItem barEditItem1;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
     }
 }

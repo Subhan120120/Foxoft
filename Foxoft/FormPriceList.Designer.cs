@@ -689,7 +689,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraBars.BarButtonItem bBI_DeletePriceList;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_CurrencyCode;
-        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_CashregisterCode;
         private DevExpress.XtraBars.BarButtonItem bBI_SaveAndClose;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_ReceivePriceList;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_MakePriceList;
@@ -713,7 +712,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForIsDisabled;
         private DevExpress.XtraLayout.LayoutControlItem ItemForIsConfirmed;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
-        private DevExpress.XtraEditors.ButtonEdit DocumentNumberButtonEdit;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_DocNum;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_PriceTypeCode;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;

@@ -1015,14 +1015,11 @@ namespace Foxoft
         private DevExpress.XtraEditors.SimpleButton btn_ClearMemory;
         private DevExpress.XtraLayout.LayoutControlItem LCI_ClearMemory;
         private DevExpress.XtraEditors.CheckEdit UseScalesCheckEdit;
-        private DevExpress.XtraEditors.CheckEdit CheckEdit_POSShowQtyDialog;
         private DevExpress.XtraEditors.CheckEdit POSShowQuantityDialogCheckEdit;
         private DevExpress.XtraEditors.CheckEdit POSShowSalesmanCodeDialogCheckEdit;
-        private DevExpress.XtraEditors.CheckEdit POSFindProductByCheckEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPOSShowQuantityDialog;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPOSShowSalesmanCodeDialog;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPOSFindProductBy;
-        private DevExpress.XtraEditors.LookUpEdit POSFindProductByLookUpEdit;
         private DevExpress.XtraEditors.CheckedComboBoxEdit POSFindProductByCheckedComboBoxEdit;
         private DevExpress.XtraEditors.CheckEdit POSMergeSameProductsCheckEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPOSMergeSameProducts;

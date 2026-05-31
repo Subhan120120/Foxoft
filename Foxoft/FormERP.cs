@@ -27,7 +27,6 @@ namespace Foxoft
 
         public readonly Guid _appInstanceId = Guid.NewGuid();
         private AccordionControlElement aCE_Active;
-        private ContextMenuStrip _cms;
 
         public FormERP()
         {

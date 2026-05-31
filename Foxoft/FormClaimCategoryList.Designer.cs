@@ -148,15 +148,12 @@ namespace Foxoft
 
         #endregion
         private DevExpress.XtraTreeList.TreeList treeList1;
-        private DevExpress.Utils.ImageCollection ımageCollection1;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_CategoryId;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_CategoryDesc;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_CategoryParentId;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private Button btn_Clear;
-        private DevExpress.XtraTreeList.Columns.TreeListColumn treeListColumn1;
         private DevExpress.XtraEditors.SimpleButton btn_Save;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
         private DevExpress.XtraEditors.SimpleButton btn_Claims;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_ClaimDesc;
     }

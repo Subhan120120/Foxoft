@@ -837,8 +837,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
         private DevExpress.XtraBars.BarButtonItem BBI_EditPayment;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
-        private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansBefore;
-        private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansAfter;
         private DevExpress.XtraBars.BarButtonItem bBI_reportPreview;
         private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
         private DevExpress.XtraBars.BarButtonItem BBI_Previous;

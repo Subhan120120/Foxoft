@@ -278,14 +278,10 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private BindingSource bindingSource1;
-        private DevExpress.XtraGrid.Columns.GridColumn colDcHierarchy;
-        private DevExpress.XtraGrid.Columns.GridColumn colDcFeatureType;
         private DevExpress.XtraBars.BarButtonItem BBI_Delete;
         private DevExpress.XtraBars.BarButtonItem BBI_Add;
         private DevExpress.XtraGrid.Columns.GridColumn colFeatureTypeId;
         private DevExpress.XtraGrid.Columns.GridColumn colFeatureTypeName;
-        private DevExpress.XtraGrid.Columns.GridColumn colFilterable;
-        private DevExpress.XtraGrid.Columns.GridColumn colOrder;
         private DevExpress.XtraGrid.Columns.GridColumn colHierarchyDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colHierarchyCode;
         private DevExpress.XtraBars.BarButtonItem BBI_Update;

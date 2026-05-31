@@ -964,15 +964,10 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailPurchaseReturn;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailSaleReturn;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator6;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailSalesOrder;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CashRegs;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator7;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem4;
         private DevExpress.XtraBars.BarStaticItem BSI_StoreDesc;
         private DevExpress.XtraBars.BarButtonItem BBI_ChangeUser;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Operation;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PriceList;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator8;

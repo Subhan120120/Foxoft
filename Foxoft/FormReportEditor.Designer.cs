@@ -646,16 +646,11 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit ReportNameTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForReportId;
         private DevExpress.XtraLayout.LayoutControlItem ItemForReportName;
-        private DevExpress.XtraGrid.GridControl DcReportFiltersGridControl;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForDcReportFilters;
         private DevExpress.XtraGrid.GridControl GC_ReportVariables;
         private GridView GV_ReportVariables;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDcReportVariables;
-        private DevExpress.XtraEditors.ComboBoxEdit DcReportTypeComboBoxEdit;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForDcReportType;
         private DevExpress.XtraLayout.LayoutControlItem ItemForReportTypeId;
         private DevExpress.XtraEditors.LookUpEdit ReportTypeIdLookUpEdit;
-        private DevExpress.XtraEditors.TextEdit ReportCategoryIdTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForReportCategoryId;
         private DevExpress.XtraEditors.LookUpEdit ReportCategoryIdLookUpEdit;
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;

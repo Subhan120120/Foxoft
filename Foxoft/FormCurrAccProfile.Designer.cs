@@ -609,19 +609,12 @@ namespace Foxoft
         private DevExpress.XtraEditors.SplitterControl splitterControl1;
         private DevExpress.XtraLayout.LayoutControl layoutControl2;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gv_RoleClaim;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_RoleCode;
         private DevExpress.XtraLayout.LayoutControlItem Rol;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private BindingSource bindingSource2;
-        private DevExpress.XtraGrid.Columns.GridColumn colRoleClaimId;
-        private DevExpress.XtraGrid.Columns.GridColumn colClaimCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colRoleCode1;
         private DevExpress.XtraBars.BarButtonItem BBI_EditCurrAccRole;
-        private DevExpress.XtraBars.BarButtonItem BBI_AddRoleClaim;
-        private DevExpress.XtraBars.BarButtonItem BBI_EditRoleClaim;
-        private DevExpress.XtraBars.BarButtonItem BBI_DeleteRoleClaim;
         private DevExpress.XtraEditors.TextEdit txtEdit_ConfirmPassword;
         private DevExpress.XtraEditors.TextEdit txtEdit_NewPassword;
         private DevExpress.XtraLayout.LayoutControlItem LCI_NewPassword;
@@ -631,8 +624,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
         private DevExpress.XtraEditors.SimpleButton btn_ClaimReportSave;
-        private FormClaimCategoryList UcClaimCategory;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
         private DevExpress.XtraEditors.SimpleButton btn_ClaimCategoryList;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_ClaimReport;

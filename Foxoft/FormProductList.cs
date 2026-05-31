@@ -143,7 +143,7 @@ namespace Foxoft
         }
 
 
-        private void FocusProduct(string productCode)
+        public void FocusProduct(string productCode)
         {
             int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
             if (rowHandle != GridControl.InvalidRowHandle)

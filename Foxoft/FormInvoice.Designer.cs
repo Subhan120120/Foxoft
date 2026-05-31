@@ -2352,7 +2352,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SalesPersonCode;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Print;
         private DevExpress.XtraBars.BarButtonItem bBI_Payment;
-        private DevExpress.XtraEditors.LabelControl lbl_InvoicePaidSum;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InvoicePaidSum;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyIn;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyOut;
@@ -2418,9 +2417,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarCheckItem BCI_ShowCopy;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SerialNumberCode;
         private DevExpress.XtraGrid.Columns.GridColumn colSerialNumberCode;
-        private DevExpress.XtraEditors.LabelControl LBL_SalesPersonDesc;
         private DevExpress.XtraBars.BarButtonItem barButtonItem6;
-        private DevExpress.XtraBars.BarButtonItem BBI_Reports;
         private BarSubItem BSI_Reports;
         private PopupMenu popupMenuPrinters;
         private DevExpress.XtraGrid.Columns.GridColumn colUnitOfMeasureId;
@@ -2433,9 +2430,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem LCI_InstallmentSumTxt;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InstallmentSum;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InstallmentCommissionSum;
-        private DevExpress.XtraEditors.LabelControl labelControl5;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InstallmentTotalSum;
-        private DevExpress.XtraEditors.LabelControl labelControl6;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InvoicePaidSumTxt;
         private DevExpress.XtraEditors.LabelControl lbl_InstallmentTotalSum;
         private DevExpress.XtraEditors.LabelControl lbl_InstallmentCommissionSum;
@@ -2459,7 +2454,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlGroup LCG_InfoPayment;
         private GridColumn col_TotalBenefit;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Installment;
-        private BarButtonItem BBI_InstallmentDelete;
         private BarButtonItem bBI_PaymentDelete;
         private BarButtonItem barButtonItem4;
         private PopupMenu popupMenu1;
@@ -2494,7 +2488,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
         private BarButtonItem BBI_SumSameProducts;
         private BarButtonItem BBI_CountingStock;
-        private DevExpress.XtraEditors.ButtonEdit buttonEdit1;
         private DevExpress.XtraLayout.LayoutControlItem LCI_CashRegCode;
         private DevExpress.XtraEditors.ButtonEdit btn_CashRegCode;
         private BarButtonItem BBI_LoyaltyCardInput;
@@ -2502,7 +2495,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.LabelControl lbl_InvoicePaidLoyaltySumTxt;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraLayout.LayoutControlItem LCI_LoyaltySumTxt;
-        private DevExpress.XtraEditors.TextEdit textEdit1;
         private DevExpress.XtraLayout.LayoutControlItem LCI_LoyaltyEarn;
         private DevExpress.XtraEditors.TextEdit txt_LoyaltyEarn;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Export;

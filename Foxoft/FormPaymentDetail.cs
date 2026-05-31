@@ -37,7 +37,6 @@ namespace Foxoft
         private subContext dbContext;
         private Guid paymentHeaderId;
         private decimal BalanceBefore;
-        readonly DcTerminal dcTerminal;
         readonly SettingStore settingStore;
 
         public FormPaymentDetail()

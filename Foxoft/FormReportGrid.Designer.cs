@@ -400,7 +400,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.BarButtonItem bBI_Refresh;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
-        private DevExpress.XtraBars.BarButtonItem BBI_AddColumn;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraBars.BarButtonItem BBI_ExportExcel;
