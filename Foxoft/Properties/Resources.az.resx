@@ -1827,6 +1827,18 @@
   <data name="Form_AppSetting_Caption" xml:space="preserve">
     <value>Tətbiq Ayarları</value>
   </data>
+  <data name="Form_AppSetting_Group_General" xml:space="preserve">
+    <value>Ümumi</value>
+  </data>
+  <data name="Form_AppSetting_Group_POS" xml:space="preserve">
+    <value>POS</value>
+  </data>
+  <data name="Form_AppSetting_Group_System" xml:space="preserve">
+    <value>Sistem</value>
+  </data>
+  <data name="Form_AppSetting_Group_WhatsApp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
   <data name="Entity_AppSetting_ClearMemory" xml:space="preserve">
     <value>RAM-ı təmizlə</value>
   </data>
@@ -3601,6 +3613,33 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Entity_AppSetting_OverpaymentMode" xml:space="preserve">
     <value>Artıq Ödəniş Modu</value>
+  </data>
+  <data name="Entity_AppSetting_LockReturnDocument" xml:space="preserve">
+    <value>Qaytarılan sənədi kilidlə</value>
+  </data>
+  <data name="Entity_AppSetting_NotifyBalanceWarningLevel" xml:space="preserve">
+    <value>Stok xəbərdarlığı</value>
+  </data>
+  <data name="Entity_AppSetting_OverpaymentMode_AcceptAllAsAdvance" xml:space="preserve">
+    <value>Hamısını avans kimi qəbul et</value>
+  </data>
+  <data name="Entity_AppSetting_OverpaymentMode_AcceptExactAndReturnChange" xml:space="preserve">
+    <value>Dəqiq məbləği qəbul et, qalığı qaytar</value>
+  </data>
+  <data name="Entity_AppSetting_OverpaymentMode_AskEachTime" xml:space="preserve">
+    <value>Hər dəfə soruş</value>
+  </data>
+  <data name="Entity_AppSetting_WhatsAppProvider" xml:space="preserve">
+    <value>WhatsApp provayderi</value>
+  </data>
+  <data name="Entity_DcWhatsAppProviderSetting_ApiKey" xml:space="preserve">
+    <value>API açarı</value>
+  </data>
+  <data name="Entity_DcWhatsAppProviderSetting_InstanceName" xml:space="preserve">
+    <value>İnstansiya adı</value>
+  </data>
+  <data name="Entity_DcWhatsAppProviderSetting_ServerUrl" xml:space="preserve">
+    <value>Server URL</value>
   </data>
   <data name="Validation_Range_Max" xml:space="preserve">
     <value>{0} {1}dan kiçik olmalıdır</value>

@@ -1827,6 +1827,18 @@
   <data name="Form_AppSetting_Caption" xml:space="preserve">
     <value>Application Settings</value>
   </data>
+  <data name="Form_AppSetting_Group_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Form_AppSetting_Group_POS" xml:space="preserve">
+    <value>POS</value>
+  </data>
+  <data name="Form_AppSetting_Group_System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="Form_AppSetting_Group_WhatsApp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
   <data name="Entity_AppSetting_ClearMemory" xml:space="preserve">
     <value>Clear RAM</value>
   </data>
@@ -3601,6 +3613,33 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Entity_AppSetting_OverpaymentMode" xml:space="preserve">
     <value>Overpayment Mode</value>
+  </data>
+  <data name="Entity_AppSetting_LockReturnDocument" xml:space="preserve">
+    <value>Lock Return Document</value>
+  </data>
+  <data name="Entity_AppSetting_NotifyBalanceWarningLevel" xml:space="preserve">
+    <value>Stock Warning</value>
+  </data>
+  <data name="Entity_AppSetting_OverpaymentMode_AcceptAllAsAdvance" xml:space="preserve">
+    <value>Accept all as advance</value>
+  </data>
+  <data name="Entity_AppSetting_OverpaymentMode_AcceptExactAndReturnChange" xml:space="preserve">
+    <value>Accept exact amount and return change</value>
+  </data>
+  <data name="Entity_AppSetting_OverpaymentMode_AskEachTime" xml:space="preserve">
+    <value>Ask every time</value>
+  </data>
+  <data name="Entity_AppSetting_WhatsAppProvider" xml:space="preserve">
+    <value>WhatsApp Provider</value>
+  </data>
+  <data name="Entity_DcWhatsAppProviderSetting_ApiKey" xml:space="preserve">
+    <value>API Key</value>
+  </data>
+  <data name="Entity_DcWhatsAppProviderSetting_InstanceName" xml:space="preserve">
+    <value>Instance Name</value>
+  </data>
+  <data name="Entity_DcWhatsAppProviderSetting_ServerUrl" xml:space="preserve">
+    <value>Server URL</value>
   </data>
   <data name="Validation_Range_Max" xml:space="preserve">
     <value>{0} must be less than {1}</value>

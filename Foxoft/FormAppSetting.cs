@@ -35,9 +35,9 @@ namespace Foxoft
         {
             List<FindBy> list = new()
             {
-                new() { Id = 1, Name = "ProductCode" },
-                new() { Id = 2, Name = "Barcode" },
-                new() { Id = 3, Name = "SerialNumber" }
+                new() { Id = 1, Name = Resources.Entity_ProductBarcode_ProductCode },
+                new() { Id = 2, Name = Resources.Common_Barcode },
+                new() { Id = 3, Name = Resources.Entity_SerialNumber }
             };
 
             POSFindProductByCheckedComboBoxEdit.Properties.DataSource = list;

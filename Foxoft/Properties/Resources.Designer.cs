@@ -1398,6 +1398,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lock Return Document.
+        /// </summary>
+        public static string Entity_AppSetting_LockReturnDocument {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_LockReturnDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stock Warning.
+        /// </summary>
+        public static string Entity_AppSetting_NotifyBalanceWarningLevel {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_NotifyBalanceWarningLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Optimize Database Indexes ({0}%).
         /// </summary>
         public static string Entity_AppSetting_OptimizeDatabaseIndexes {
@@ -1421,6 +1439,33 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_OverpaymentMode {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_OverpaymentMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accept all as advance.
+        /// </summary>
+        public static string Entity_AppSetting_OverpaymentMode_AcceptAllAsAdvance {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_OverpaymentMode_AcceptAllAsAdvance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accept exact amount and return change.
+        /// </summary>
+        public static string Entity_AppSetting_OverpaymentMode_AcceptExactAndReturnChange {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_OverpaymentMode_AcceptExactAndReturnChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ask every time.
+        /// </summary>
+        public static string Entity_AppSetting_OverpaymentMode_AskEachTime {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_OverpaymentMode_AskEachTime", resourceCulture);
             }
         }
         
@@ -1551,11 +1596,47 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WhatsApp Provider.
+        /// </summary>
+        public static string Entity_AppSetting_WhatsAppProvider {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_WhatsAppProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Whatsapp Chrome Profile Name.
         /// </summary>
         public static string Entity_AppSetting_WhatsappChromeProfileName {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_WhatsappChromeProfileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to API Key.
+        /// </summary>
+        public static string Entity_DcWhatsAppProviderSetting_ApiKey {
+            get {
+                return ResourceManager.GetString("Entity_DcWhatsAppProviderSetting_ApiKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instance Name.
+        /// </summary>
+        public static string Entity_DcWhatsAppProviderSetting_InstanceName {
+            get {
+                return ResourceManager.GetString("Entity_DcWhatsAppProviderSetting_InstanceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server URL.
+        /// </summary>
+        public static string Entity_DcWhatsAppProviderSetting_ServerUrl {
+            get {
+                return ResourceManager.GetString("Entity_DcWhatsAppProviderSetting_ServerUrl", resourceCulture);
             }
         }
         
@@ -7181,6 +7262,42 @@ namespace Foxoft.Properties {
         public static string Form_AppSetting_Caption {
             get {
                 return ResourceManager.GetString("Form_AppSetting_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string Form_AppSetting_Group_General {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_Group_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POS.
+        /// </summary>
+        public static string Form_AppSetting_Group_POS {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_Group_POS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string Form_AppSetting_Group_System {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_Group_System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WhatsApp.
+        /// </summary>
+        public static string Form_AppSetting_Group_WhatsApp {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_Group_WhatsApp", resourceCulture);
             }
         }
         
