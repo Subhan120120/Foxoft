@@ -291,6 +291,7 @@ namespace Foxoft
             svgImageCollection1.Add("Balance", "image://svgimages/business objects/bo_sale.svg");
             svgImageCollection1.Add("Today", "image://svgimages/richedit/insertpagecount.svg");
             svgImageCollection1.Add("Last30Days", "image://svgimages/icon builder/actions_calendar.svg");
+            svgImageCollection1.Add("Total", "image://svgimages/data/summary.svg");
             // 
             // panelSummary
             // 
@@ -330,6 +331,7 @@ namespace Foxoft
             svgCardBalance_ImageBox.Location = new Point(175, 10);
             svgCardBalance_ImageBox.Name = "svgCardBalance_ImageBox";
             svgCardBalance_ImageBox.Size = new Size(35, 35);
+            svgCardBalance_ImageBox.SvgImage = svgImageCollection1["Balance"];
             svgCardBalance_ImageBox.TabIndex = 3;
             svgCardBalance_ImageBox.Text = "svgImageBox1";
             svgCardBalance_ImageBox.Paint += svgCard_Paint;
@@ -385,6 +387,7 @@ namespace Foxoft
             svgCardToday_ImageBox.Location = new Point(175, 10);
             svgCardToday_ImageBox.Name = "svgCardToday_ImageBox";
             svgCardToday_ImageBox.Size = new Size(35, 35);
+            svgCardToday_ImageBox.SvgImage = svgImageCollection1["Today"];
             svgCardToday_ImageBox.TabIndex = 3;
             svgCardToday_ImageBox.Text = "svgImageBox2";
             svgCardToday_ImageBox.Paint += svgCard_Paint;
@@ -440,6 +443,7 @@ namespace Foxoft
             svgCardLast30Days_ImageBox.Location = new Point(175, 10);
             svgCardLast30Days_ImageBox.Name = "svgCardLast30Days_ImageBox";
             svgCardLast30Days_ImageBox.Size = new Size(35, 35);
+            svgCardLast30Days_ImageBox.SvgImage = svgImageCollection1["Last30Days"];
             svgCardLast30Days_ImageBox.TabIndex = 3;
             svgCardLast30Days_ImageBox.Text = "svgImageBox3";
             svgCardLast30Days_ImageBox.Paint += svgCard_Paint;
@@ -495,6 +499,7 @@ namespace Foxoft
             svgCardTotal_ImageBox.Location = new Point(175, 10);
             svgCardTotal_ImageBox.Name = "svgCardTotal_ImageBox";
             svgCardTotal_ImageBox.Size = new Size(35, 35);
+            svgCardTotal_ImageBox.SvgImage = svgImageCollection1["Total"];
             svgCardTotal_ImageBox.TabIndex = 3;
             svgCardTotal_ImageBox.Text = "svgImageBox4";
             svgCardTotal_ImageBox.Paint += svgCard_Paint;
