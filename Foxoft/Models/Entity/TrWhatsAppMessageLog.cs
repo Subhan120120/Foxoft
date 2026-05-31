@@ -17,6 +17,7 @@ namespace Foxoft.Models
 
 
         [StringLength(50)]
+        [Display(Name = nameof(Resources.Entity_TrWhatsAppMessageLog_MessageType), ResourceType = typeof(Resources))]
         public string? MessageType { get; set; }
 
         [StringLength(1000)]

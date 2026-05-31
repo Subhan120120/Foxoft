@@ -600,7 +600,7 @@ namespace Foxoft
 
                 string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: $"Ödəniş No: {trPaymentHeader.DocumentNumber}");
 
-                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, "Image", memoryStream);
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream);
 
                 alertControl1.Show(this, "WhatsApp mesajı", "Uğurla göndərildi.", "", (Image)null, null);
             }
@@ -610,7 +610,7 @@ namespace Foxoft
             }
         }
 
-        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, string messageType, MemoryStream imageStream = null)
+        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, MemoryStream? imageStream = null)
         {
             try
             {
@@ -622,18 +622,19 @@ namespace Foxoft
                 }
 
                 using var ctx = new subContext();
+
                 ctx.TrWhatsAppMessageLogs.Add(new TrWhatsAppMessageLog
                 {
                     WhatsAppMessageLogId = Guid.NewGuid(),
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = receiverPhone,
-                    MessageType = messageType,
+                    MessageType = trPaymentHeader?.DcProcess?.ProcessDesc,
                     Sender = Authorization.CurrAccCode,
                     CurrAccCode = trPaymentHeader?.CurrAccCode,
                     ImageFilePath = imageFilePath
                 });
 
-                ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(messageType, receiverPhone));
+                ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(trPaymentHeader?.DcProcess?.ProcessDesc, receiverPhone));
 
                 ctx.SaveChanges();
             }

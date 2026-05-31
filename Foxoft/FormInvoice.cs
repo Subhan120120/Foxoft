@@ -2220,7 +2220,7 @@ namespace Foxoft
                 string caption = string.IsNullOrEmpty(documentNumber) ? "Faktura" : $"Faktura No: {documentNumber}";
                 string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: caption);
                 
-                SaveWhatsAppLog(trInvoiceHeader.InvoiceHeaderId, formattedNumber, "Image", memoryStream);
+                SaveWhatsAppLog(trInvoiceHeader.InvoiceHeaderId, formattedNumber, memoryStream);
 
                 alertControl1.Show(this, "WhatsApp mesajı", "Uğurla göndərildi.", "", (Image)null, null);
             }
@@ -2230,7 +2230,7 @@ namespace Foxoft
             }
         }
 
-        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, string messageType, MemoryStream imageStream = null)
+        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, MemoryStream? imageStream = null)
         {
             try
             {
@@ -2242,18 +2242,19 @@ namespace Foxoft
                 }
 
                 using var ctx = new subContext();
+
                 ctx.TrWhatsAppMessageLogs.Add(new TrWhatsAppMessageLog
                 {
                     WhatsAppMessageLogId = Guid.NewGuid(),
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = receiverPhone,
-                    MessageType = messageType,
+                    MessageType = dcProcess?.ProcessDesc,
                     Sender = Authorization.CurrAccCode,
                     CurrAccCode = trInvoiceHeader?.CurrAccCode,
                     ImageFilePath = imageFilePath
                 });
 
-                ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(messageType, receiverPhone));
+                ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(dcProcess?.ProcessDesc, receiverPhone));
 
                 ctx.SaveChanges();
             }
@@ -2262,7 +2263,7 @@ namespace Foxoft
                 Debug.Print($"WhatsApp log save error: {ex.Message}");
             }
         }
-         
+                 
         private string? SaveWhatsAppImageToDisk(MemoryStream imageStream) 
         {
             try
