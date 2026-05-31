@@ -18,7 +18,6 @@ namespace Foxoft
         protected override void Dispose(bool disposing)
         {
             Load -= FormProductList_Load;
-            Activated -= FormProductList_Activated;
             BBI_Save.ItemClick -= BBI_Save_ItemClick;
             BBI_Show.ItemClick -= BBI_Show_ItemClick;
             BBI_ProductNew.ItemClick -= BBI_ProductNew_ItemClick;

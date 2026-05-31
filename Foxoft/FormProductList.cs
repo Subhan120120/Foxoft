@@ -112,7 +112,7 @@ namespace Foxoft
 
         private void FormProductList_Load(object sender, EventArgs e)
         {
-            FocusValue(focusedProductCode);
+            FocusProduct(focusedProductCode);
 
             //this.StartPosition = FormStartPosition.CenterScreen;
         }
@@ -142,9 +142,8 @@ namespace Foxoft
             gV_ProductList.Layout += (s, e) => btnEdit_BarcodeSearch_Layout();
         }
 
-        public void FocusProduct(string productCode) => FocusValue(productCode);
 
-        private void FocusValue(string productCode)
+        private void FocusProduct(string productCode)
         {
             int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
             if (rowHandle != GridControl.InvalidRowHandle)
@@ -362,7 +361,7 @@ namespace Foxoft
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
                 LoadProducts(productTypeArr);
-                FocusValue(formProduct.dcProduct.ProductCode);
+                FocusProduct(formProduct.dcProduct.ProductCode);
             }
         }
 
