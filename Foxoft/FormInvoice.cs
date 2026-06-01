@@ -2177,7 +2177,6 @@ namespace Foxoft
         private async void bBI_Whatsapp_ItemClick(object sender, ItemClickEventArgs e)
         {
             MemoryStream memoryStream = GetInvoiceReportImg();
-            Clipboard.SetImage(Image.FromStream(memoryStream));
             string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
             if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
@@ -2186,6 +2185,8 @@ namespace Foxoft
             }
             else
             {
+                if (memoryStream.CanSeek) memoryStream.Position = 0;
+                Clipboard.SetImage(Image.FromStream(memoryStream));
                 SendWhatsApp(phoneNum, $"Faktura No: {trInvoiceHeader.DocumentNumber}");
             }
         }

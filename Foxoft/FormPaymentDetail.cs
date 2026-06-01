@@ -458,14 +458,14 @@ namespace Foxoft
             MemoryStream memoryStream = GetPaymentReportImg();
             if (memoryStream == null) return;
 
-            Clipboard.SetImage(Image.FromStream(memoryStream));
-
             if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
             {
                 await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream);
             }
             else
             {
+                if (memoryStream.CanSeek) memoryStream.Position = 0;
+                Clipboard.SetImage(Image.FromStream(memoryStream));
                 sendWhatsApp(phoneNum, $"Ödəniş No: {trPaymentHeader.DocumentNumber}");
             }
         }

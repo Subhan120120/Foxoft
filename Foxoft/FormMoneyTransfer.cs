@@ -434,14 +434,16 @@ namespace Foxoft
             MemoryStream? memoryStream = GetPaymentReportImg();
             if (memoryStream == null) return;
 
-            if (memoryStream.CanSeek) memoryStream.Position = 0;
-            Clipboard.SetImage(Image.FromStream(memoryStream));
-            if (memoryStream.CanSeek) memoryStream.Position = 0;
-
             if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
+            {
                 await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream);
+            }
             else
+            {
+                if (memoryStream.CanSeek) memoryStream.Position = 0;
+                Clipboard.SetImage(Image.FromStream(memoryStream));
                 sendWhatsApp(phoneNum, GetWhatsAppCaption());
+            }
         }
 
         private string PaymentText(string newLine)
