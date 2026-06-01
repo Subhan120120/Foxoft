@@ -57,6 +57,7 @@ namespace Foxoft
             colCustomsDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colProcessCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colTransferApprovalStatus = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCashRegisterCode = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceHeaderList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceHeaderList).BeginInit();
@@ -81,7 +82,7 @@ namespace Foxoft
             // 
             // gV_InvoiceHeaderList
             // 
-            gV_InvoiceHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colDocumentNumber, colIsReturn, colDocumentDate, colCurrAccCode, colDocumentTime, colOperationDate, colOperationTime, colStoreCode, colTotalNetAmount, colCurrAccDesc, colWarehouseCode, colToWarehouseCode, colPrintCount, colDescription, colIsOpen, colIsMainTF, colInvoiceHeaderId, colIsSent, colCustomsDocumentNumber, colProcessCode, colTransferApprovalStatus });
+            gV_InvoiceHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colDocumentNumber, colIsReturn, colDocumentDate, colCurrAccCode, colDocumentTime, colOperationDate, colOperationTime, colStoreCode, colTotalNetAmount, colCurrAccDesc, colWarehouseCode, colToWarehouseCode, colPrintCount, colDescription, colIsOpen, colIsMainTF, colInvoiceHeaderId, colIsSent, colCustomsDocumentNumber, colProcessCode, colTransferApprovalStatus, colCashRegisterCode });
             gV_InvoiceHeaderList.CustomizationFormBounds = new Rectangle(622, 285, 264, 272);
             gV_InvoiceHeaderList.GridControl = gC_InvoiceHeaderList;
             gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
@@ -223,6 +224,11 @@ namespace Foxoft
             colTransferApprovalStatus.Visible = true;
             colTransferApprovalStatus.VisibleIndex = 7;
             // 
+            // colCashRegisterCode
+            // 
+            colCashRegisterCode.FieldName = "CashRegisterCode";
+            colCashRegisterCode.Name = "colCashRegisterCode";
+            // 
             // FormInvoiceHeaderList
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -265,5 +271,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCustomsDocumentNumber;
         private DevExpress.XtraGrid.Columns.GridColumn colProcessCode;
         private DevExpress.XtraGrid.Columns.GridColumn colTransferApprovalStatus;
+        private DevExpress.XtraGrid.Columns.GridColumn colCashRegisterCode;
     }
 }

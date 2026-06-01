@@ -2649,6 +2649,9 @@ namespace Foxoft
                     colQty.OptionsColumn.ReadOnly = true;
                     ItemForWarehouseCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
                     LCI_CashRegCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
+
+                    if (dcProcess.ProcessCode == "EX")
+                        ItemForDeliveryDate.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
                 }
 
                 if (new string[] { "CI", "CO", "IT", "CN" }.Contains(dcProcess.ProcessCode))

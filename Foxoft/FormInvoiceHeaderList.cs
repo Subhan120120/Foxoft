@@ -99,13 +99,16 @@ namespace Foxoft
                             WarehouseCode = x.WarehouseCode,
                             ToWarehouseCode = x.ToWarehouseCode,
                             IsMainTF = x.IsMainTF,
-                            TransferApprovalStatus = x.TransferApprovalStatus
+                            TransferApprovalStatus = x.TransferApprovalStatus,
+                            CashRegisterCode = x.CashRegisterCode
                         })
                         .ToList();
 
             trInvoiceHeadersBindingSource.DataSource = headerList;
 
-            LoadGridLayout();
+            LoadLayout();
+
+
 
             gV_InvoiceHeaderList.ActiveFilterString = $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{Authorization.StoreCode}'";
         }
@@ -225,7 +228,7 @@ namespace Foxoft
             }
         }
 
-        private void LoadGridLayout()
+        private void LoadLayout()
         {
             string fileName = "InvoiceHeaderList_" + processCode + ".xml";
             string layoutFilePath = Path.Combine(
@@ -241,6 +244,14 @@ namespace Foxoft
                 byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
                 MemoryStream stream = new(byteArray);
                 gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
+            }
+
+            if (new[] { "EX" }.Contains(processCode))
+            {
+                colWarehouseCode.Visible = false;
+                colToWarehouseCode.Visible = false;
+                colCashRegisterCode.Visible = true;
+                colCashRegisterCode.VisibleIndex = 5;
             }
         }
 
