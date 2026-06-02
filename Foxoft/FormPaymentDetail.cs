@@ -866,13 +866,17 @@ namespace Foxoft
             CultureInfo customCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
 
-            if (gV_PaymentLine.FocusedColumn == colExchangeRate)
+            if (gV_PaymentLine.ActiveEditor is TextEdit activeEditor &&
+                (gV_PaymentLine.FocusedColumn == colExchangeRate ||
+                 gV_PaymentLine.FocusedColumn == colReceivePayment ||
+                 gV_PaymentLine.FocusedColumn == colMakePayment ||
+                 gV_PaymentLine.FocusedColumn == colPayment ||
+                 gV_PaymentLine.FocusedColumn == colPaymentLoc))
             {
-                var editor = gV_PaymentLine.ActiveEditor as TextEdit;
-                if (editor != null)
+                if (activeEditor != null)
                 {
-                    editor.Properties.Mask.MaskType = MaskType.Numeric;
-                    editor.Properties.Mask.Culture = customCulture; ; // Ensure '.' is used
+                    activeEditor.Properties.Mask.MaskType = MaskType.Numeric;
+                    activeEditor.Properties.Mask.Culture = customCulture; ; // Ensure '.' is used
                 }
             }
         }
