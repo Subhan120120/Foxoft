@@ -1587,13 +1587,20 @@ namespace Foxoft
                 return;
             }
 
+            ButtonEdit editor = (ButtonEdit)sender;
             using FormProductList form = new(productTypeArr, false, productCode);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    ApplySelectedProduct(form.dcProduct?.ProductCode);
+                    editor.EditValue = form.dcProduct?.ProductCode;
+
+                    if (!gV_InvoiceLine.PostEditor()) // 🔹 Post editor to trigger ValidatingEditor for the ProductCode cell
+                        return; // validation failed in ValidatingEditor
+
+                    gV_InvoiceLine.FocusedColumn = colQty;
+                    gV_InvoiceLine.ShowEditor();
                 }
 
             }
