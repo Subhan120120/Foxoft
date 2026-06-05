@@ -1094,13 +1094,13 @@ namespace Foxoft
 
             bool ShouldCheckStock()
             {
-                // NOTE: your original condition had the same expression in both branches.
-                // Keeping intent: check stock only for stock-sensitive processes.
+                // Stock check only for stock-sensitive processes.
                 if (!IsStockSensitiveProcess()) return false;
 
                 bool dirIn = Convert.ToBoolean(CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode));
-                // If you actually intended different behavior for return/non-return, adjust here.
-                return (!trInvoiceHeader.IsReturn && !dirIn) || (trInvoiceHeader.IsReturn && !dirIn);
+                // Check stock only when the effective direction is OUT (depleting stock).
+                // For returns the direction is flipped: a sale-return brings goods IN → skip stock check.
+                return (!trInvoiceHeader.IsReturn && !dirIn) || (trInvoiceHeader.IsReturn && dirIn);
             }
 
             string ResolveWarehouse()
