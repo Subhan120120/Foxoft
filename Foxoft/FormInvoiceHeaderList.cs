@@ -58,12 +58,11 @@ namespace Foxoft
 
             IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
             IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
-
-            List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
-                        .Include(x => x.DcCurrAcc)
-                        .Where(x => RelatedInvoiceId == null ? true : x.RelatedInvoiceId == RelatedInvoiceId)
-                        .Where(x => isComplated == null ? true : x.IsCompleted == isComplated)
-                        .Where(x => x.ProcessCode == processCode && x.IsMainTF == true)
+            List<TrInvoiceHeader> headerList = filteredData
+                        .AsNoTracking()
+                        .Where(x => RelatedInvoiceId == null || x.RelatedInvoiceId == RelatedInvoiceId)
+                        .Where(x => isComplated == null || x.IsCompleted == isComplated)
+                        .Where(x => x.ProcessCode == processCode && x.IsMainTF)
                         .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
                         .Select(x => new TrInvoiceHeader
                         {
@@ -105,11 +104,7 @@ namespace Foxoft
                         .ToList();
 
             trInvoiceHeadersBindingSource.DataSource = headerList;
-
             LoadLayout();
-
-
-
             gV_InvoiceHeaderList.ActiveFilterString = $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{Authorization.StoreCode}'";
         }
 
