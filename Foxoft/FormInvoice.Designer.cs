@@ -1235,7 +1235,6 @@ namespace Foxoft
             btnEdit_DocNum.StyleController = dataLayoutControl1;
             btnEdit_DocNum.TabIndex = 0;
             btnEdit_DocNum.ButtonPressed += btnEdit_DocNum_ButtonPressed;
-            btnEdit_DocNum.DoubleClick += btnEdit_DocNum_DoubleClick;
             btnEdit_DocNum.KeyDown += dataLayoutControls_KeyDown;
             // 
             // memoEdit_Desc
@@ -1262,7 +1261,6 @@ namespace Foxoft
             btnEdit_CurrAccCode.InvalidValue += btnEdit_CurrAccCode_InvalidValue;
             btnEdit_CurrAccCode.EditValueChanged += btnEdit_CurrAccCode_EditValueChanged;
             btnEdit_CurrAccCode.EditValueChanging += btnEdit_CurrAccCode_EditValueChanging;
-            btnEdit_CurrAccCode.DoubleClick += btnEdit_CurrAccCode_DoubleClick;
             btnEdit_CurrAccCode.KeyDown += dataLayoutControls_KeyDown;
             btnEdit_CurrAccCode.Validating += btnEdit_CurrAccCode_Validating;
             // 

@@ -552,10 +552,10 @@ namespace Foxoft
                 SelectDocNum();
         }
 
-        private void btnEdit_DocNum_DoubleClick(object sender, EventArgs e)
-        {
-            SelectDocNum();
-        }
+        //private void btnEdit_DocNum_DoubleClick(object sender, EventArgs e)
+        //{
+        //    SelectDocNum();
+        //}
 
         private void SelectDocNum()
         {
@@ -889,10 +889,10 @@ namespace Foxoft
             SelectCurrAccAsync();
         }
 
-        private void btnEdit_CurrAccCode_DoubleClick(object sender, EventArgs e)
-        {
-            SelectCurrAccAsync();
-        }
+        //private void btnEdit_CurrAccCode_DoubleClick(object sender, EventArgs e)
+        //{
+        //    SelectCurrAccAsync();
+        //}
 
         private async Task SelectCurrAccAsync()
         {
@@ -1499,7 +1499,8 @@ namespace Foxoft
             }
         }
 
-        BaseEdit editorCustom;
+        // Double-click lookup shortcut is disabled for now. Keep this block for future use.
+        //BaseEdit editorCustom;
         private void gV_InvoiceLine_ShownEditor(object sender, EventArgs e)
         {
             if (new Type[] { typeof(decimal), typeof(float), typeof(Single) }.Contains(gV_InvoiceLine.FocusedColumn.ColumnType))
@@ -1514,38 +1515,41 @@ namespace Foxoft
                 }
             }
 
-            GridView view = sender as GridView;
-            editorCustom = view.ActiveEditor;
-            editorCustom.DoubleClick += editor_DoubleClick;
+            // Double-click lookup shortcut is disabled for now. Keep this block for future use.
+            //GridView view = sender as GridView;
+            //editorCustom = view.ActiveEditor;
+            //editorCustom.DoubleClick += editor_DoubleClick;
         }
 
         void gV_InvoiceLine_HiddenEditor(object sender, EventArgs e)
         {
-            editorCustom.DoubleClick -= editor_DoubleClick;
-            editorCustom = null;
+            // Double-click lookup shortcut is disabled for now. Keep this block for future use.
+            //editorCustom.DoubleClick -= editor_DoubleClick;
+            //editorCustom = null;
         }
 
         private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
         {
         }
 
-        void editor_DoubleClick(object sender, EventArgs e)
-        {
-            BaseEdit editor = (BaseEdit)sender;
-            GridControl grid = editor.Parent as GridControl;
-            GridView view = grid.FocusedView as GridView;
-            Point pt = grid.PointToClient(Control.MousePosition);
-            GridHitInfo info = view.CalcHitInfo(pt);
-            if (info.InRow || info.InRowCell)
-            {
-                if (info.Column == col_ProductCode)
-                    SelectProduct(sender);
-                else if (info.Column == col_SalesPersonCode)
-                    SelectSalesPerson(sender);
-                else if (info.Column == colWorkerCode)
-                    SelectWorker(sender);
-            }
-        }
+        // Double-click lookup shortcut is disabled for now. Keep this method for future use.
+        //void editor_DoubleClick(object sender, EventArgs e)
+        //{
+        //    BaseEdit editor = (BaseEdit)sender;
+        //    GridControl grid = editor.Parent as GridControl;
+        //    GridView view = grid.FocusedView as GridView;
+        //    Point pt = grid.PointToClient(Control.MousePosition);
+        //    GridHitInfo info = view.CalcHitInfo(pt);
+        //    if (info.InRow || info.InRowCell)
+        //    {
+        //        if (info.Column == col_ProductCode)
+        //            SelectProduct(sender);
+        //        else if (info.Column == col_SalesPersonCode)
+        //            SelectSalesPerson(sender);
+        //        else if (info.Column == colWorkerCode)
+        //            SelectWorker(sender);
+        //    }
+        //}
 
         private void SelectSalesPerson(object sender)
         {
