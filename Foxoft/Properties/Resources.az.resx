@@ -1839,6 +1839,15 @@
   <data name="Form_AppSetting_Group_WhatsApp" xml:space="preserve">
     <value>WhatsApp</value>
   </data>
+  <data name="Form_AppSetting_WhatsAppGetQrCode" xml:space="preserve">
+    <value>WhatsApp QR kodunu al</value>
+  </data>
+  <data name="Form_AppSetting_WhatsAppLogout" xml:space="preserve">
+    <value>WhatsApp-dan çıxış et</value>
+  </data>
+  <data name="Form_AppSetting_WhatsAppQrCode" xml:space="preserve">
+    <value>WhatsApp QR kodu</value>
+  </data>
   <data name="Entity_AppSetting_ClearMemory" xml:space="preserve">
     <value>RAM-ı təmizlə</value>
   </data>
@@ -3728,6 +3737,21 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Message_AppFontSizeRestartRequired" xml:space="preserve">
     <value>Şrift ölçüsü yadda saxlanıldı. Bütün pəncərələrdə tətbiq olunması üçün proqramı yenidən açın.</value>
   </data>
+  <data name="Message_WhatsAppQrCodeSettingsRequired" xml:space="preserve">
+    <value>WhatsApp QR kodunu almaq üçün server URL, instans adı və API açarı mütləqdir.</value>
+  </data>
+  <data name="Message_WhatsAppQrCodeNotFound" xml:space="preserve">
+    <value>Evolution WhatsApp QR kodu qaytarmadı. Server cavabı: {0}</value>
+  </data>
+  <data name="Message_WhatsAppLogoutSettingsRequired" xml:space="preserve">
+    <value>WhatsApp-dan çıxış etmək üçün server URL, instans adı və API açarı mütləqdir.</value>
+  </data>
+  <data name="Message_WhatsAppLogoutConfirm" xml:space="preserve">
+    <value>Bu WhatsApp instansından çıxış etmək istəyirsiniz?</value>
+  </data>
+  <data name="Message_WhatsAppLogoutSucceeded" xml:space="preserve">
+    <value>WhatsApp instansından uğurla çıxış edildi.</value>
+  </data>
   <data name="Common_ErrorOccurred" xml:space="preserve">
     <value>Xəta baş verdi.</value>
   </data>
@@ -4146,6 +4170,12 @@ Tətbiq edilsin?</value>
   </data>
   <data name="Common_WhatsAppApiSendFailed" xml:space="preserve">
     <value>WhatsApp mesajı göndərilmədi. Server cavabı: {0}</value>
+  </data>
+  <data name="Common_WhatsAppApiConnectFailed" xml:space="preserve">
+    <value>WhatsApp QR kodu alınmadı. Server cavabı: {0}</value>
+  </data>
+  <data name="Common_WhatsAppApiLogoutFailed" xml:space="preserve">
+    <value>WhatsApp logout əməliyyatı uğursuz oldu. Server cavabı: {0}</value>
   </data>
   <data name="Common_Previous" xml:space="preserve">
     <value>Əvvəlki</value>

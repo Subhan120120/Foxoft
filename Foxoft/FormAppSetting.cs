@@ -4,6 +4,8 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Drawing;
+using System.IO;
 
 
 namespace Foxoft
@@ -155,6 +157,148 @@ namespace Foxoft
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        private async void Btn_WhatsAppQrCode_Click(object sender, EventArgs e)
+        {
+            if (!TryGetWhatsAppProviderSettings(out string serverUrl, out string instanceName, out string apiKey))
+            {
+                XtraMessageBox.Show(Resources.Message_WhatsAppQrCodeSettingsRequired, Resources.Common_Attention);
+                return;
+            }
+
+            btn_WhatsAppQrCode.Enabled = false;
+            try
+            {
+                using EvolutionApiClient client = new(serverUrl, instanceName, apiKey);
+                EvolutionQrCodeResult qrCode = await client.GetConnectionQrCodeAsync();
+                ShowWhatsAppQrCode(qrCode);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_Attention);
+            }
+            finally
+            {
+                btn_WhatsAppQrCode.Enabled = true;
+            }
+        }
+
+        private async void Btn_WhatsAppLogout_Click(object sender, EventArgs e)
+        {
+            if (!TryGetWhatsAppProviderSettings(out string serverUrl, out string instanceName, out string apiKey))
+            {
+                XtraMessageBox.Show(Resources.Message_WhatsAppLogoutSettingsRequired, Resources.Common_Attention);
+                return;
+            }
+
+            DialogResult result = XtraMessageBox.Show(
+                Resources.Message_WhatsAppLogoutConfirm,
+                Resources.Common_Confirm,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            btn_WhatsAppLogout.Enabled = false;
+            try
+            {
+                using EvolutionApiClient client = new(serverUrl, instanceName, apiKey);
+                await client.LogoutAsync();
+                ClearWhatsAppQrCode();
+                XtraMessageBox.Show(Resources.Message_WhatsAppLogoutSucceeded, Resources.Common_Attention);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_Attention);
+            }
+            finally
+            {
+                btn_WhatsAppLogout.Enabled = true;
+            }
+        }
+
+        private bool TryGetWhatsAppProviderSettings(out string serverUrl, out string instanceName, out string apiKey)
+        {
+            dcWhatsAppProviderSettingBindingSource.EndEdit();
+
+            serverUrl = ServerUrlTextEdit.EditValue?.ToString()?.Trim() ?? "";
+            instanceName = InstanceNameTextEdit.EditValue?.ToString()?.Trim() ?? "";
+            apiKey = ApiKeyTextEdit.EditValue?.ToString()?.Trim() ?? "";
+
+            return !string.IsNullOrWhiteSpace(serverUrl) &&
+                   !string.IsNullOrWhiteSpace(instanceName) &&
+                   !string.IsNullOrWhiteSpace(apiKey);
+        }
+
+        private void ShowWhatsAppQrCode(EvolutionQrCodeResult qrCode)
+        {
+            if (!qrCode.HasQrCode)
+            {
+                XtraMessageBox.Show(string.Format(Resources.Message_WhatsAppQrCodeNotFound, qrCode.Body), Resources.Common_Attention);
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(qrCode.Base64) && TryShowWhatsAppQrCodeImage(qrCode.Base64))
+                return;
+
+            if (string.IsNullOrWhiteSpace(qrCode.Code))
+            {
+                XtraMessageBox.Show(string.Format(Resources.Message_WhatsAppQrCodeNotFound, qrCode.Body), Resources.Common_Attention);
+                return;
+            }
+
+            WhatsAppQrCodeBarCodeControl.Text = qrCode.Code ?? "";
+            WhatsAppQrCodePictureEdit.Visible = false;
+            WhatsAppQrCodeBarCodeControl.Visible = true;
+        }
+
+        private void ClearWhatsAppQrCode()
+        {
+            Image? oldImage = WhatsAppQrCodePictureEdit.Image;
+            WhatsAppQrCodePictureEdit.Image = null;
+            oldImage?.Dispose();
+            WhatsAppQrCodePictureEdit.Visible = false;
+            WhatsAppQrCodeBarCodeControl.Text = "";
+            WhatsAppQrCodeBarCodeControl.Visible = false;
+        }
+
+        private bool TryShowWhatsAppQrCodeImage(string base64)
+        {
+            try
+            {
+                Image image = CreateImageFromBase64(base64);
+                Image? oldImage = WhatsAppQrCodePictureEdit.Image;
+                WhatsAppQrCodePictureEdit.Image = image;
+                oldImage?.Dispose();
+                WhatsAppQrCodeBarCodeControl.Visible = false;
+                WhatsAppQrCodePictureEdit.Visible = true;
+
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+
+        private static Image CreateImageFromBase64(string base64)
+        {
+            string imageBase64 = base64.Trim();
+            int commaIndex = imageBase64.IndexOf(',');
+            if (commaIndex >= 0)
+                imageBase64 = imageBase64[(commaIndex + 1)..];
+
+            byte[] bytes = Convert.FromBase64String(imageBase64);
+            using MemoryStream stream = new(bytes);
+            using Image image = Image.FromStream(stream);
+
+            return new Bitmap(image);
         }
 
         private void ServerUrlTextEdit_EditValueChanged(object sender, EventArgs e)

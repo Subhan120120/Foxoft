@@ -1839,6 +1839,15 @@
   <data name="Form_AppSetting_Group_WhatsApp" xml:space="preserve">
     <value>WhatsApp</value>
   </data>
+  <data name="Form_AppSetting_WhatsAppGetQrCode" xml:space="preserve">
+    <value>Get WhatsApp QR Code</value>
+  </data>
+  <data name="Form_AppSetting_WhatsAppLogout" xml:space="preserve">
+    <value>WhatsApp Logout</value>
+  </data>
+  <data name="Form_AppSetting_WhatsAppQrCode" xml:space="preserve">
+    <value>WhatsApp QR Code</value>
+  </data>
   <data name="Entity_AppSetting_ClearMemory" xml:space="preserve">
     <value>Clear RAM</value>
   </data>
@@ -3728,6 +3737,21 @@ To delete, cancel the receipt!</value>
   <data name="Message_AppFontSizeRestartRequired" xml:space="preserve">
     <value>Font size was saved. Restart the application to apply it everywhere.</value>
   </data>
+  <data name="Message_WhatsAppQrCodeSettingsRequired" xml:space="preserve">
+    <value>Server URL, instance name and API key are required to get the WhatsApp QR code.</value>
+  </data>
+  <data name="Message_WhatsAppQrCodeNotFound" xml:space="preserve">
+    <value>Evolution did not return a WhatsApp QR code. Server response: {0}</value>
+  </data>
+  <data name="Message_WhatsAppLogoutSettingsRequired" xml:space="preserve">
+    <value>Server URL, instance name and API key are required to logout from WhatsApp.</value>
+  </data>
+  <data name="Message_WhatsAppLogoutConfirm" xml:space="preserve">
+    <value>Do you want to logout this WhatsApp instance?</value>
+  </data>
+  <data name="Message_WhatsAppLogoutSucceeded" xml:space="preserve">
+    <value>WhatsApp instance logged out successfully.</value>
+  </data>
   <data name="Common_ErrorOccurred" xml:space="preserve">
     <value>An error occurred.</value>
   </data>
@@ -4146,6 +4170,12 @@ Apply it?</value>
   </data>
   <data name="Common_WhatsAppApiSendFailed" xml:space="preserve">
     <value>WhatsApp message could not be sent. Server response: {0}</value>
+  </data>
+  <data name="Common_WhatsAppApiConnectFailed" xml:space="preserve">
+    <value>WhatsApp QR code could not be retrieved. Server response: {0}</value>
+  </data>
+  <data name="Common_WhatsAppApiLogoutFailed" xml:space="preserve">
+    <value>WhatsApp logout failed. Server response: {0}</value>
   </data>
   <data name="Common_Previous" xml:space="preserve">
     <value>Previous</value>

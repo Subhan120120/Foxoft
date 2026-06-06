@@ -1155,6 +1155,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WhatsApp QR code could not be retrieved. Server response: {0}.
+        /// </summary>
+        public static string Common_WhatsAppApiConnectFailed {
+            get {
+                return ResourceManager.GetString("Common_WhatsAppApiConnectFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WhatsApp logout failed. Server response: {0}.
+        /// </summary>
+        public static string Common_WhatsAppApiLogoutFailed {
+            get {
+                return ResourceManager.GetString("Common_WhatsAppApiLogoutFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to WhatsApp account was not found for this number: {0}.
         /// </summary>
         public static string Common_WhatsAppNumberNotFound {
@@ -7419,6 +7437,33 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get WhatsApp QR Code.
+        /// </summary>
+        public static string Form_AppSetting_WhatsAppGetQrCode {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_WhatsAppGetQrCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WhatsApp Logout.
+        /// </summary>
+        public static string Form_AppSetting_WhatsAppLogout {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_WhatsAppLogout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WhatsApp QR Code.
+        /// </summary>
+        public static string Form_AppSetting_WhatsAppQrCode {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_WhatsAppQrCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Attendance.
         /// </summary>
         public static string Form_AttendanceEdit_Caption_Edit {
@@ -13214,6 +13259,51 @@ namespace Foxoft.Properties {
         public static string Message_AppFontSizeRestartRequired {
             get {
                 return ResourceManager.GetString("Message_AppFontSizeRestartRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server URL, instance name and API key are required to get the WhatsApp QR code..
+        /// </summary>
+        public static string Message_WhatsAppQrCodeSettingsRequired {
+            get {
+                return ResourceManager.GetString("Message_WhatsAppQrCodeSettingsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evolution did not return a WhatsApp QR code. Server response: {0}.
+        /// </summary>
+        public static string Message_WhatsAppQrCodeNotFound {
+            get {
+                return ResourceManager.GetString("Message_WhatsAppQrCodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server URL, instance name and API key are required to logout from WhatsApp..
+        /// </summary>
+        public static string Message_WhatsAppLogoutSettingsRequired {
+            get {
+                return ResourceManager.GetString("Message_WhatsAppLogoutSettingsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to logout this WhatsApp instance?.
+        /// </summary>
+        public static string Message_WhatsAppLogoutConfirm {
+            get {
+                return ResourceManager.GetString("Message_WhatsAppLogoutConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WhatsApp instance logged out successfully..
+        /// </summary>
+        public static string Message_WhatsAppLogoutSucceeded {
+            get {
+                return ResourceManager.GetString("Message_WhatsAppLogoutSucceeded", resourceCulture);
             }
         }
         

@@ -65,6 +65,11 @@ namespace Foxoft
             ServerUrlTextEdit = new DevExpress.XtraEditors.TextEdit();
             InstanceNameTextEdit = new DevExpress.XtraEditors.TextEdit();
             ApiKeyTextEdit = new DevExpress.XtraEditors.TextEdit();
+            btn_WhatsAppQrCode = new DevExpress.XtraEditors.SimpleButton();
+            btn_WhatsAppLogout = new DevExpress.XtraEditors.SimpleButton();
+            WhatsAppQrCodePanelControl = new DevExpress.XtraEditors.PanelControl();
+            WhatsAppQrCodePictureEdit = new DevExpress.XtraEditors.PictureEdit();
+            WhatsAppQrCodeBarCodeControl = new DevExpress.XtraEditors.BarCodeControl();
             NotifyBalanceWarningLevelCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             LockReturnDocumentCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             TransferAutoApproveCheckEdit = new DevExpress.XtraEditors.CheckEdit();
@@ -105,6 +110,9 @@ namespace Foxoft
             ItemForTransferAutoApprove = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsappChromeProfileName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsAppProvider = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_WhatsAppQrCodeButton = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_WhatsAppLogoutButton = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForWhatsAppQrCode = new DevExpress.XtraLayout.LayoutControlItem();
             tabPageNotification = new DevExpress.XtraTab.XtraTabPage();
             ucNotificationSetting1 = new Foxoft.UcNotificationSetting();
             ((System.ComponentModel.ISupportInitialize)tabControl1).BeginInit();
@@ -139,6 +147,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ServerUrlTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)InstanceNameTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ApiKeyTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)WhatsAppQrCodePanelControl).BeginInit();
+            WhatsAppQrCodePanelControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)WhatsAppQrCodePictureEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NotifyBalanceWarningLevelCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LockReturnDocumentCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TransferAutoApproveCheckEdit.Properties).BeginInit();
@@ -179,6 +190,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForTransferAutoApprove).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_WhatsAppQrCodeButton).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_WhatsAppLogoutButton).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppQrCode).BeginInit();
             tabPageNotification.SuspendLayout();
             SuspendLayout();
             // 
@@ -188,7 +202,7 @@ namespace Foxoft
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedTabPage = tabPageSettings;
-            tabControl1.Size = new Size(800, 650);
+            tabControl1.Size = new Size(800, 720);
             tabControl1.TabIndex = 1;
             tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts, tabPageNotification });
             // 
@@ -196,14 +210,14 @@ namespace Foxoft
             // 
             tabPageSettings.Controls.Add(dataLayoutControl1);
             tabPageSettings.Name = "tabPageSettings";
-            tabPageSettings.Size = new Size(798, 625);
+            tabPageSettings.Size = new Size(798, 695);
             tabPageSettings.Text = Resources.Form_AppSetting_Caption;
             // 
             // tabPageShortcuts
             // 
             tabPageShortcuts.Controls.Add(ucShortcutSetting1);
             tabPageShortcuts.Name = "tabPageShortcuts";
-            tabPageShortcuts.Size = new Size(798, 625);
+            tabPageShortcuts.Size = new Size(798, 695);
             tabPageShortcuts.Text = Resources.FormShortcut_Title;
             // 
             // ucShortcutSetting1
@@ -211,7 +225,7 @@ namespace Foxoft
             ucShortcutSetting1.Dock = DockStyle.Fill;
             ucShortcutSetting1.Location = new Point(0, 0);
             ucShortcutSetting1.Name = "ucShortcutSetting1";
-            ucShortcutSetting1.Size = new Size(798, 625);
+            ucShortcutSetting1.Size = new Size(798, 695);
             ucShortcutSetting1.TabIndex = 0;
             // 
             // dataLayoutControl1
@@ -243,6 +257,9 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(ServerUrlTextEdit);
             dataLayoutControl1.Controls.Add(InstanceNameTextEdit);
             dataLayoutControl1.Controls.Add(ApiKeyTextEdit);
+            dataLayoutControl1.Controls.Add(btn_WhatsAppQrCode);
+            dataLayoutControl1.Controls.Add(btn_WhatsAppLogout);
+            dataLayoutControl1.Controls.Add(WhatsAppQrCodePanelControl);
             dataLayoutControl1.Controls.Add(NotifyBalanceWarningLevelCheckEdit);
             dataLayoutControl1.Controls.Add(LockReturnDocumentCheckEdit);
             dataLayoutControl1.Controls.Add(TransferAutoApproveCheckEdit);
@@ -251,7 +268,7 @@ namespace Foxoft
             dataLayoutControl1.Location = new Point(0, 0);
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new Size(798, 625);
+            dataLayoutControl1.Size = new Size(798, 695);
             dataLayoutControl1.TabIndex = 0;
             dataLayoutControl1.Text = "dataLayoutControl1";
             // 
@@ -268,7 +285,7 @@ namespace Foxoft
             // btn_Save
             // 
             btn_Save.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Save.ImageOptions.SvgImage");
-            btn_Save.Location = new Point(591, 589);
+            btn_Save.Location = new Point(591, 659);
             btn_Save.Name = "btn_Save";
             btn_Save.Size = new Size(175, 22);
             btn_Save.StyleController = dataLayoutControl1;
@@ -600,13 +617,69 @@ namespace Foxoft
             ApiKeyTextEdit.StyleController = dataLayoutControl1;
             ApiKeyTextEdit.TabIndex = 2;
             // 
+            // btn_WhatsAppQrCode
+            // 
+            btn_WhatsAppQrCode.Location = new Point(24, 426);
+            btn_WhatsAppQrCode.Name = "btn_WhatsAppQrCode";
+            btn_WhatsAppQrCode.Size = new Size(353, 22);
+            btn_WhatsAppQrCode.StyleController = dataLayoutControl1;
+            btn_WhatsAppQrCode.TabIndex = 29;
+            btn_WhatsAppQrCode.Text = Resources.Form_AppSetting_WhatsAppGetQrCode;
+            btn_WhatsAppQrCode.Click += Btn_WhatsAppQrCode_Click;
+            // 
+            // btn_WhatsAppLogout
+            // 
+            btn_WhatsAppLogout.Location = new Point(24, 452);
+            btn_WhatsAppLogout.Name = "btn_WhatsAppLogout";
+            btn_WhatsAppLogout.Size = new Size(353, 22);
+            btn_WhatsAppLogout.StyleController = dataLayoutControl1;
+            btn_WhatsAppLogout.TabIndex = 31;
+            btn_WhatsAppLogout.Text = Resources.Form_AppSetting_WhatsAppLogout;
+            btn_WhatsAppLogout.Click += Btn_WhatsAppLogout_Click;
+            // 
+            // WhatsAppQrCodePanelControl
+            // 
+            WhatsAppQrCodePanelControl.Controls.Add(WhatsAppQrCodePictureEdit);
+            WhatsAppQrCodePanelControl.Controls.Add(WhatsAppQrCodeBarCodeControl);
+            WhatsAppQrCodePanelControl.Location = new Point(24, 478);
+            WhatsAppQrCodePanelControl.Name = "WhatsAppQrCodePanelControl";
+            WhatsAppQrCodePanelControl.Size = new Size(353, 156);
+            WhatsAppQrCodePanelControl.TabIndex = 32;
+            // 
+            // WhatsAppQrCodePictureEdit
+            // 
+            WhatsAppQrCodePictureEdit.Dock = DockStyle.Fill;
+            WhatsAppQrCodePictureEdit.Location = new Point(2, 2);
+            WhatsAppQrCodePictureEdit.Name = "WhatsAppQrCodePictureEdit";
+            WhatsAppQrCodePictureEdit.Properties.ShowCameraMenuItem = CameraMenuItemVisibility.Auto;
+            WhatsAppQrCodePictureEdit.Properties.SizeMode = PictureSizeMode.Zoom;
+            WhatsAppQrCodePictureEdit.Size = new Size(349, 152);
+            WhatsAppQrCodePictureEdit.TabIndex = 1;
+            WhatsAppQrCodePictureEdit.Visible = false;
+            // 
+            // WhatsAppQrCodeBarCodeControl
+            // 
+            WhatsAppQrCodeBarCodeControl.AutoModule = true;
+            WhatsAppQrCodeBarCodeControl.Dock = DockStyle.Fill;
+            WhatsAppQrCodeBarCodeControl.HorizontalAlignment = DevExpress.Utils.HorzAlignment.Center;
+            WhatsAppQrCodeBarCodeControl.Location = new Point(2, 2);
+            WhatsAppQrCodeBarCodeControl.Name = "WhatsAppQrCodeBarCodeControl";
+            WhatsAppQrCodeBarCodeControl.Padding = new Padding(10);
+            WhatsAppQrCodeBarCodeControl.ShowText = false;
+            WhatsAppQrCodeBarCodeControl.Size = new Size(349, 152);
+            WhatsAppQrCodeBarCodeControl.Symbology = new DevExpress.XtraPrinting.BarCode.QRCodeGenerator();
+            WhatsAppQrCodeBarCodeControl.TabIndex = 0;
+            WhatsAppQrCodeBarCodeControl.Text = "";
+            WhatsAppQrCodeBarCodeControl.VerticalAlignment = DevExpress.Utils.VertAlignment.Center;
+            WhatsAppQrCodeBarCodeControl.Visible = false;
+            // 
             // Root
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
             Root.Name = "Root";
-            Root.Size = new Size(798, 625);
+            Root.Size = new Size(798, 695);
             Root.TextVisible = false;
             // 
             // layoutControlGroup1
@@ -616,7 +689,7 @@ namespace Foxoft
             layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroupGeneral, layoutControlGroupPos, layoutControlGroupWhatsApp, layoutControlGroupSystem, emptySpaceItem1, layoutControlItem1 });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new Size(778, 605);
+            layoutControlGroup1.Size = new Size(778, 675);
             // 
             // layoutControlGroupGeneral
             // 
@@ -722,14 +795,14 @@ namespace Foxoft
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.Location = new Point(0, 458);
+            emptySpaceItem1.Location = new Point(0, 638);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(579, 147);
+            emptySpaceItem1.Size = new Size(579, 11);
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Save;
-            layoutControlItem1.Location = new Point(579, 579);
+            layoutControlItem1.Location = new Point(579, 649);
             layoutControlItem1.MinSize = new Size(70, 26);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(199, 26);
@@ -861,10 +934,10 @@ namespace Foxoft
             // 
             // layoutControlGroupWhatsApp
             // 
-            layoutControlGroupWhatsApp.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForWhatsAppProvider, ItemForWhatsappChromeProfileName, ItemForApiKey, ItemForInstanceName, ItemForServerUrl });
+            layoutControlGroupWhatsApp.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForWhatsAppProvider, ItemForWhatsappChromeProfileName, ItemForApiKey, ItemForInstanceName, ItemForServerUrl, LCI_WhatsAppQrCodeButton, LCI_WhatsAppLogoutButton, ItemForWhatsAppQrCode });
             layoutControlGroupWhatsApp.Location = new Point(0, 261);
             layoutControlGroupWhatsApp.Name = "layoutControlGroupWhatsApp";
-            layoutControlGroupWhatsApp.Size = new Size(389, 165);
+            layoutControlGroupWhatsApp.Size = new Size(389, 377);
             layoutControlGroupWhatsApp.Text = Resources.Form_AppSetting_Group_WhatsApp;
             // 
             // ItemForServerUrl
@@ -912,11 +985,36 @@ namespace Foxoft
             ItemForWhatsAppProvider.Text = Resources.Entity_AppSetting_WhatsAppProvider;
             ItemForWhatsAppProvider.TextSize = new Size(152, 13);
             // 
+            // LCI_WhatsAppQrCodeButton
+            // 
+            LCI_WhatsAppQrCodeButton.Control = btn_WhatsAppQrCode;
+            LCI_WhatsAppQrCodeButton.Location = new Point(0, 120);
+            LCI_WhatsAppQrCodeButton.Name = "LCI_WhatsAppQrCodeButton";
+            LCI_WhatsAppQrCodeButton.Size = new Size(365, 26);
+            LCI_WhatsAppQrCodeButton.TextVisible = false;
+            // 
+            // LCI_WhatsAppLogoutButton
+            // 
+            LCI_WhatsAppLogoutButton.Control = btn_WhatsAppLogout;
+            LCI_WhatsAppLogoutButton.Location = new Point(0, 146);
+            LCI_WhatsAppLogoutButton.Name = "LCI_WhatsAppLogoutButton";
+            LCI_WhatsAppLogoutButton.Size = new Size(365, 26);
+            LCI_WhatsAppLogoutButton.TextVisible = false;
+            // 
+            // ItemForWhatsAppQrCode
+            // 
+            ItemForWhatsAppQrCode.Control = WhatsAppQrCodePanelControl;
+            ItemForWhatsAppQrCode.Location = new Point(0, 172);
+            ItemForWhatsAppQrCode.Name = "ItemForWhatsAppQrCode";
+            ItemForWhatsAppQrCode.Size = new Size(365, 160);
+            ItemForWhatsAppQrCode.Text = Resources.Form_AppSetting_WhatsAppQrCode;
+            ItemForWhatsAppQrCode.TextVisible = false;
+            // 
             // tabPageNotification
             // 
             tabPageNotification.Controls.Add(ucNotificationSetting1);
             tabPageNotification.Name = "tabPageNotification";
-            tabPageNotification.Size = new Size(798, 625);
+            tabPageNotification.Size = new Size(798, 695);
             tabPageNotification.Text = Resources.Form_NotificationSettings;
             // 
             // ucNotificationSetting1
@@ -924,14 +1022,14 @@ namespace Foxoft
             ucNotificationSetting1.Dock = DockStyle.Fill;
             ucNotificationSetting1.Location = new Point(0, 0);
             ucNotificationSetting1.Name = "ucNotificationSetting1";
-            ucNotificationSetting1.Size = new Size(798, 625);
+            ucNotificationSetting1.Size = new Size(798, 695);
             ucNotificationSetting1.TabIndex = 0;
             // 
             // FormAppSetting
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 650);
+            ClientSize = new Size(800, 720);
             Controls.Add(tabControl1);
             Name = "FormAppSetting";
             Text = Resources.Form_AppSetting_Caption;
@@ -968,6 +1066,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ServerUrlTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)InstanceNameTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ApiKeyTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)WhatsAppQrCodePanelControl).EndInit();
+            WhatsAppQrCodePanelControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)WhatsAppQrCodePictureEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)NotifyBalanceWarningLevelCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)LockReturnDocumentCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)TransferAutoApproveCheckEdit.Properties).EndInit();
@@ -1008,6 +1109,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForTransferAutoApprove).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_WhatsAppQrCodeButton).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_WhatsAppLogoutButton).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppQrCode).EndInit();
             tabPageNotification.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -1073,11 +1177,19 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit ServerUrlTextEdit;
         private DevExpress.XtraEditors.TextEdit InstanceNameTextEdit;
         private DevExpress.XtraEditors.TextEdit ApiKeyTextEdit;
+        private DevExpress.XtraEditors.SimpleButton btn_WhatsAppQrCode;
+        private DevExpress.XtraEditors.SimpleButton btn_WhatsAppLogout;
+        private DevExpress.XtraEditors.PanelControl WhatsAppQrCodePanelControl;
+        private DevExpress.XtraEditors.PictureEdit WhatsAppQrCodePictureEdit;
+        private DevExpress.XtraEditors.BarCodeControl WhatsAppQrCodeBarCodeControl;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupWhatsApp;
         private DevExpress.XtraLayout.LayoutControlItem ItemForWhatsAppProvider;
         private DevExpress.XtraLayout.LayoutControlItem ItemForServerUrl;
         private DevExpress.XtraLayout.LayoutControlItem ItemForInstanceName;
         private DevExpress.XtraLayout.LayoutControlItem ItemForApiKey;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_WhatsAppQrCodeButton;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_WhatsAppLogoutButton;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForWhatsAppQrCode;
         private DevExpress.XtraEditors.CheckEdit NotifyBalanceWarningLevelCheckEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForNotifyBalanceWarningLevel;
         private DevExpress.XtraEditors.CheckEdit LockReturnDocumentCheckEdit;

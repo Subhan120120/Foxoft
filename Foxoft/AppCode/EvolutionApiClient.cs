@@ -83,6 +83,32 @@ namespace Foxoft.AppCode
             return body;
         }
 
+        public async Task<EvolutionQrCodeResult> GetConnectionQrCodeAsync(CancellationToken ct = default)
+        {
+            string url = $"{_serverUrl}/instance/connect/{Uri.EscapeDataString(_instanceName)}";
+
+            using var resp = await _http.GetAsync(url, ct);
+            var body = await resp.Content.ReadAsStringAsync(ct);
+
+            if (!resp.IsSuccessStatusCode)
+                throw new HttpRequestException(string.Format(Resources.Common_WhatsAppApiConnectFailed, body), null, resp.StatusCode);
+
+            return EvolutionQrCodeResult.FromJson(body);
+        }
+
+        public async Task<string> LogoutAsync(CancellationToken ct = default)
+        {
+            string url = $"{_serverUrl}/instance/logout/{Uri.EscapeDataString(_instanceName)}";
+
+            using var resp = await _http.DeleteAsync(url, ct);
+            var body = await resp.Content.ReadAsStringAsync(ct);
+
+            if (!resp.IsSuccessStatusCode)
+                throw new HttpRequestException(string.Format(Resources.Common_WhatsAppApiLogoutFailed, body), null, resp.StatusCode);
+
+            return body;
+        }
+
         private static HttpRequestException CreateSendException(HttpResponseMessage response, string body)
         {
             string? missingNumber = TryGetMissingWhatsAppNumber(body);
@@ -138,5 +164,89 @@ namespace Foxoft.AppCode
         }
 
         public void Dispose() => _http.Dispose();
+    }
+
+    public sealed class EvolutionQrCodeResult
+    {
+        private EvolutionQrCodeResult(string? code, string? base64, string body)
+        {
+            Code = code;
+            Base64 = base64;
+            Body = body;
+        }
+
+        public string? Code { get; }
+
+        public string? Base64 { get; }
+
+        public string Body { get; }
+
+        public bool HasQrCode => !string.IsNullOrWhiteSpace(Code) || !string.IsNullOrWhiteSpace(Base64);
+
+        public static EvolutionQrCodeResult FromJson(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body))
+                return new EvolutionQrCodeResult(null, null, body);
+
+            using JsonDocument document = JsonDocument.Parse(body);
+            JsonElement root = document.RootElement;
+
+            string? code = TryGetNestedString(root, "code") ?? TryFindString(root, "code");
+            string? base64 = TryGetNestedString(root, "base64") ?? TryFindString(root, "base64");
+
+            return new EvolutionQrCodeResult(code, base64, body);
+        }
+
+        private static string? TryGetNestedString(JsonElement element, string propertyName)
+        {
+            if (element.ValueKind != JsonValueKind.Object)
+                return null;
+
+            if (element.TryGetProperty(propertyName, out JsonElement value) &&
+                value.ValueKind == JsonValueKind.String &&
+                !string.IsNullOrWhiteSpace(value.GetString()))
+                return value.GetString();
+
+            if (element.TryGetProperty("qrcode", out JsonElement qrCode) &&
+                qrCode.ValueKind == JsonValueKind.Object &&
+                qrCode.TryGetProperty(propertyName, out value) &&
+                value.ValueKind == JsonValueKind.String &&
+                !string.IsNullOrWhiteSpace(value.GetString()))
+                return value.GetString();
+
+            return null;
+        }
+
+        private static string? TryFindString(JsonElement element, string propertyName)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.Object:
+                    foreach (JsonProperty property in element.EnumerateObject())
+                    {
+                        if (property.NameEquals(propertyName) &&
+                            property.Value.ValueKind == JsonValueKind.String &&
+                            !string.IsNullOrWhiteSpace(property.Value.GetString()))
+                            return property.Value.GetString();
+
+                        string? nestedValue = TryFindString(property.Value, propertyName);
+                        if (!string.IsNullOrWhiteSpace(nestedValue))
+                            return nestedValue;
+                    }
+
+                    break;
+                case JsonValueKind.Array:
+                    foreach (JsonElement item in element.EnumerateArray())
+                    {
+                        string? nestedValue = TryFindString(item, propertyName);
+                        if (!string.IsNullOrWhiteSpace(nestedValue))
+                            return nestedValue;
+                    }
+
+                    break;
+            }
+
+            return null;
+        }
     }
 }
