@@ -471,7 +471,6 @@ namespace Foxoft
                     if (formReport.CopyToClipboard && dcReport.ReportTypeId == 2)
                     {
                         CopyReportToClipboard(dcReport, filter);
-                        return;
                     }
 
                     ShowReportForm(dcReport, filter, activeFilterStr);
