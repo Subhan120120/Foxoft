@@ -4597,4 +4597,28 @@ Tətbiq edilsin?</value>
   <data name="Common_InvalidValue" xml:space="preserve">
     <value>Daxil edilən dəyər yanlışdır</value>
   </data>
+  <data name="Form_PaymentMethodList_RibbonPage_Main" xml:space="preserve">
+    <value>Əsas</value>
+  </data>
+  <data name="Form_PaymentMethodList_RibbonGroup_Manage" xml:space="preserve">
+    <value>İdarə</value>
+  </data>
+  <data name="Form_PaymentMethodList_RibbonGroup_Report" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="Form_PaymentMethodList_NoItemToDelete" xml:space="preserve">
+    <value>Silmək üçün ödəniş üsulu seçilməyib.</value>
+  </data>
+  <data name="Form_PaymentPlanList_RibbonPage_Main" xml:space="preserve">
+    <value>Əsas</value>
+  </data>
+  <data name="Form_PaymentPlanList_RibbonGroup_Manage" xml:space="preserve">
+    <value>İdarə</value>
+  </data>
+  <data name="Form_PaymentPlanList_RibbonGroup_Report" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="Form_PaymentPlanList_NoItemToDelete" xml:space="preserve">
+    <value>Silmək üçün ödəniş planı seçilməyib.</value>
+  </data>
 </root>

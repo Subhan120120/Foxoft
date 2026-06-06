@@ -203,8 +203,8 @@ namespace Foxoft
                 case "CrmActivityList": ShowExistForm<FormCrmActivityList>(); break;
                 case "CreditList": ShowExistForm<FormCreditList>(); break;
                 case "CurrencyList": ShowExistForm<FormCommonList<DcCurrency>>("", nameof(DcCurrency.CurrencyCode)); break;
-                case "PaymentMethodList": ShowExistForm<FormCommonList<DcPaymentMethod>>("", nameof(DcPaymentMethod.PaymentMethodId)); break;
-                case "PaymentPlanList": ShowExistForm<FormCommonList<DcPaymentPlan>>("", nameof(DcPaymentPlan.PaymentPlanCode)); break;
+                case "PaymentMethodList": ShowExistForm<FormPaymentMethodList>(); break;
+                case "PaymentPlanList": ShowExistForm<FormPaymentPlanList>(); break;
                 case "WhatsAppMessageLog": ShowExistForm<FormWhatsAppMessageLog>(); break;
                 case "NotificationSettings": ShowExistForm<FormAppSetting>(); break;
                 case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
