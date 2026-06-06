@@ -487,12 +487,14 @@ namespace Foxoft
 
             BBI_manage.ItemClick += (sender, e) =>
             {
-                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", formCode);
+                using FormFormReport form = new(formCode);
                 try
                 {
-                    if (form.ShowDialog() == DialogResult.OK)
+                    form.ShowDialog();
+
+                    if (form.IsChanged)
                     {
-                        efMethods.InsertEntity<TrFormReport>(new() { FormCode = formCode, ReportId = Convert.ToInt32(form.Value_Id) });
+                        BSI.ItemLinks.Clear();
                         AddReports(BSI, formCode, columnName, gV, activeFilterStr);
                     }
                 }
