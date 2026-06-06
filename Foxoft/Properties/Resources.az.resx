@@ -1848,6 +1848,12 @@
   <data name="Form_AppSetting_WhatsAppQrCode" xml:space="preserve">
     <value>WhatsApp QR kodu</value>
   </data>
+  <data name="Form_AppSetting_WhatsAppProvider_Chrome" xml:space="preserve">
+    <value>Chrome</value>
+  </data>
+  <data name="Form_AppSetting_WhatsAppProvider_API" xml:space="preserve">
+    <value>API</value>
+  </data>
   <data name="Entity_AppSetting_ClearMemory" xml:space="preserve">
     <value>RAM-ı təmizlə</value>
   </data>

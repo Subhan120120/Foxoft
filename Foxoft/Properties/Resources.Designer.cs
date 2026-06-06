@@ -7464,6 +7464,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API.
+        /// </summary>
+        public static string Form_AppSetting_WhatsAppProvider_API {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_WhatsAppProvider_API", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chrome.
+        /// </summary>
+        public static string Form_AppSetting_WhatsAppProvider_Chrome {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_WhatsAppProvider_Chrome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Attendance.
         /// </summary>
         public static string Form_AttendanceEdit_Caption_Edit {
