@@ -21,6 +21,8 @@ namespace Foxoft.Models.Entity.Report
         [Display(Name = nameof(Resources.Entity_FormReport_Shortcut), ResourceType = typeof(Resources))]
         public string? Shortcut { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_FormReport_CopyToClipboard), ResourceType = typeof(Resources))]
+        public bool CopyToClipboard { get; set; }
 
         [ForeignKey("FormCode")]
         public virtual DcForm DcForm { get; set; }

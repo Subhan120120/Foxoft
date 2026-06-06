@@ -1,4 +1,4 @@
-﻿using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.Sql;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraPrinting;

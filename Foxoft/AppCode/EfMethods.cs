@@ -608,9 +608,11 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            return db.TrFormReports.Include(x => x.DcReport).ThenInclude(x => x.DcReportVariables)
-                                   .Where(x => x.FormCode == formCode)
-                                   .ToList();
+            var variable = db.TrFormReports.Include(x => x.DcReport).ThenInclude(x => x.DcReportVariables)
+                                  .Where(x => x.FormCode == formCode)
+                                  .ToList();
+
+            return variable;
         }
 
         public List<DcHierarchy> SelectHierarchies()

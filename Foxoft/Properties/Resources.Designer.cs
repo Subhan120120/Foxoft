@@ -228,20 +228,20 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Campaign Log.
-        /// </summary>
-        public static string Campaign_LogTitle {
-            get {
-                return ResourceManager.GetString("Campaign_LogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Line count.
         /// </summary>
         public static string Campaign_LogLineCount {
             get {
                 return ResourceManager.GetString("Campaign_LogLineCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campaign Log.
+        /// </summary>
+        public static string Campaign_LogTitle {
+            get {
+                return ResourceManager.GetString("Campaign_LogTitle", resourceCulture);
             }
         }
         
@@ -975,24 +975,6 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sent successfully..
-        /// </summary>
-        public static string Common_SentSuccessfully {
-            get {
-                return ResourceManager.GetString("Common_SentSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Font size was saved. Restart the application to apply it everywhere..
-        /// </summary>
-        public static string Message_AppFontSizeRestartRequired {
-            get {
-                return ResourceManager.GetString("Message_AppFontSizeRestartRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Save Layout.
         /// </summary>
         public static string Common_SaveLayout {
@@ -1043,6 +1025,15 @@ namespace Foxoft.Properties {
         public static string Common_SensorMode {
             get {
                 return ResourceManager.GetString("Common_SensorMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent successfully..
+        /// </summary>
+        public static string Common_SentSuccessfully {
+            get {
+                return ResourceManager.GetString("Common_SentSuccessfully", resourceCulture);
             }
         }
         
@@ -1155,11 +1146,11 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to send WhatsApp message: {0}.
+        ///   Looks up a localized string similar to WhatsApp message could not be sent. Server response: {0}.
         /// </summary>
-        public static string Common_WhatsAppSendError {
+        public static string Common_WhatsAppApiSendFailed {
             get {
-                return ResourceManager.GetString("Common_WhatsAppSendError", resourceCulture);
+                return ResourceManager.GetString("Common_WhatsAppApiSendFailed", resourceCulture);
             }
         }
         
@@ -1173,11 +1164,11 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WhatsApp message could not be sent. Server response: {0}.
+        ///   Looks up a localized string similar to Failed to send WhatsApp message: {0}.
         /// </summary>
-        public static string Common_WhatsAppApiSendFailed {
+        public static string Common_WhatsAppSendError {
             get {
-                return ResourceManager.GetString("Common_WhatsAppApiSendFailed", resourceCulture);
+                return ResourceManager.GetString("Common_WhatsAppSendError", resourceCulture);
             }
         }
         
@@ -1308,6 +1299,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Global Font Size.
+        /// </summary>
+        public static string Entity_AppSetting_AppFontSize {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AppFontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Print.
         /// </summary>
         public static string Entity_AppSetting_AutoPrint {
@@ -1358,15 +1358,6 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_GridViewLayout {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_GridViewLayout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Global Font Size.
-        /// </summary>
-        public static string Entity_AppSetting_AppFontSize {
-            get {
-                return ResourceManager.GetString("Entity_AppSetting_AppFontSize", resourceCulture);
             }
         }
         
@@ -1497,15 +1488,6 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Keep Products Window Open.
-        /// </summary>
-        public static string Entity_AppSetting_ProductsFormKeepActive {
-            get {
-                return ResourceManager.GetString("Entity_AppSetting_ProductsFormKeepActive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Show Quantity Dialog on POS.
         /// </summary>
         public static string Entity_AppSetting_POSShowQuantityDialog {
@@ -1547,6 +1529,15 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_PrinterName {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_PrinterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep Products Window Open.
+        /// </summary>
+        public static string Entity_AppSetting_ProductsFormKeepActive {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_ProductsFormKeepActive", resourceCulture);
             }
         }
         
@@ -1596,15 +1587,6 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WhatsApp Provider.
-        /// </summary>
-        public static string Entity_AppSetting_WhatsAppProvider {
-            get {
-                return ResourceManager.GetString("Entity_AppSetting_WhatsAppProvider", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Whatsapp Chrome Profile Name.
         /// </summary>
         public static string Entity_AppSetting_WhatsappChromeProfileName {
@@ -1614,29 +1596,11 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to API Key.
+        ///   Looks up a localized string similar to WhatsApp Provider.
         /// </summary>
-        public static string Entity_DcWhatsAppProviderSetting_ApiKey {
+        public static string Entity_AppSetting_WhatsAppProvider {
             get {
-                return ResourceManager.GetString("Entity_DcWhatsAppProviderSetting_ApiKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Instance Name.
-        /// </summary>
-        public static string Entity_DcWhatsAppProviderSetting_InstanceName {
-            get {
-                return ResourceManager.GetString("Entity_DcWhatsAppProviderSetting_InstanceName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Server URL.
-        /// </summary>
-        public static string Entity_DcWhatsAppProviderSetting_ServerUrl {
-            get {
-                return ResourceManager.GetString("Entity_DcWhatsAppProviderSetting_ServerUrl", resourceCulture);
+                return ResourceManager.GetString("Entity_AppSetting_WhatsAppProvider", resourceCulture);
             }
         }
         
@@ -2649,6 +2613,33 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API Key.
+        /// </summary>
+        public static string Entity_DcWhatsAppProviderSetting_ApiKey {
+            get {
+                return ResourceManager.GetString("Entity_DcWhatsAppProviderSetting_ApiKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instance Name.
+        /// </summary>
+        public static string Entity_DcWhatsAppProviderSetting_InstanceName {
+            get {
+                return ResourceManager.GetString("Entity_DcWhatsAppProviderSetting_InstanceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server URL.
+        /// </summary>
+        public static string Entity_DcWhatsAppProviderSetting_ServerUrl {
+            get {
+                return ResourceManager.GetString("Entity_DcWhatsAppProviderSetting_ServerUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Discount.
         /// </summary>
         public static string Entity_Discount {
@@ -2798,6 +2789,15 @@ namespace Foxoft.Properties {
         public static string Entity_FormReport {
             get {
                 return ResourceManager.GetString("Entity_FormReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy To Clipboard.
+        /// </summary>
+        public static string Entity_FormReport_CopyToClipboard {
+            get {
+                return ResourceManager.GetString("Entity_FormReport_CopyToClipboard", resourceCulture);
             }
         }
         
@@ -3716,6 +3716,96 @@ namespace Foxoft.Properties {
         public static string Entity_InvoiceLineExt_PriceDiscountedLoc {
             get {
                 return ResourceManager.GetString("Entity_InvoiceLineExt_PriceDiscountedLoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line Feature.
+        /// </summary>
+        public static string Entity_InvoiceLineFeature {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Code.
+        /// </summary>
+        public static string Entity_InvoiceLineFeature_Code {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeature_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Description.
+        /// </summary>
+        public static string Entity_InvoiceLineFeature_Desc {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeature_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Id.
+        /// </summary>
+        public static string Entity_InvoiceLineFeature_TypeId {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeature_TypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line Feature.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureLink {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line Feature Type.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filterable.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType_Filterable {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Filterable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Id.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType_Id {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Name.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType_Name {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Entity_InvoiceLineFeatureType_Order {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Order", resourceCulture);
             }
         }
         
@@ -6375,6 +6465,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Entity_TrWhatsAppMessageLog_ImageData {
+            get {
+                return ResourceManager.GetString("Entity_TrWhatsAppMessageLog_ImageData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Path.
+        /// </summary>
+        public static string Entity_TrWhatsAppMessageLog_ImageFilePath {
+            get {
+                return ResourceManager.GetString("Entity_TrWhatsAppMessageLog_ImageFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successful.
         /// </summary>
         public static string Entity_TrWhatsAppMessageLog_IsSuccessful {
@@ -6830,6 +6938,15 @@ namespace Foxoft.Properties {
         public static string ERP_ACE_InventoryTransfers {
             get {
                 return ResourceManager.GetString("ERP_ACE_InventoryTransfers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line Feature Type.
+        /// </summary>
+        public static string ERP_ACE_InvoiceLineFeatureType {
+            get {
+                return ResourceManager.GetString("ERP_ACE_InvoiceLineFeatureType", resourceCulture);
             }
         }
         
@@ -8833,15 +8950,6 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The invoice edit grace period has expired. This invoice cannot be changed or deleted..
-        /// </summary>
-        public static string Form_Invoice_GracePeriodExpired {
-            get {
-                return ResourceManager.GetString("Form_Invoice_GracePeriodExpired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Do you also want to delete payments for this invoice?.
         /// </summary>
         public static string Form_Invoice_DeletePaymentsForInvoiceQuestion {
@@ -8874,6 +8982,15 @@ namespace Foxoft.Properties {
         public static string Form_Invoice_Expense {
             get {
                 return ResourceManager.GetString("Form_Invoice_Expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The invoice edit grace period has expired. This invoice cannot be changed or deleted..
+        /// </summary>
+        public static string Form_Invoice_GracePeriodExpired {
+            get {
+                return ResourceManager.GetString("Form_Invoice_GracePeriodExpired", resourceCulture);
             }
         }
         
@@ -9980,6 +10097,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The invoice or payment edit grace period has expired. This payment cannot be changed or deleted..
+        /// </summary>
+        public static string Form_PaymentDetail_GracePeriodExpired {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_GracePeriodExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Information.
         /// </summary>
         public static string Form_PaymentDetail_Info_Caption {
@@ -10021,15 +10147,6 @@ namespace Foxoft.Properties {
         public static string Form_PaymentDetail_NoPaymentToDelete {
             get {
                 return ResourceManager.GetString("Form_PaymentDetail_NoPaymentToDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The invoice or payment edit grace period has expired. This payment cannot be changed or deleted..
-        /// </summary>
-        public static string Form_PaymentDetail_GracePeriodExpired {
-            get {
-                return ResourceManager.GetString("Form_PaymentDetail_GracePeriodExpired", resourceCulture);
             }
         }
         
@@ -10291,6 +10408,78 @@ namespace Foxoft.Properties {
         public static string Form_PaymentLineList_RibbonPage_Main {
             get {
                 return ResourceManager.GetString("Form_PaymentLineList_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No payment method selected to delete..
+        /// </summary>
+        public static string Form_PaymentMethodList_NoItemToDelete {
+            get {
+                return ResourceManager.GetString("Form_PaymentMethodList_NoItemToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Form_PaymentMethodList_RibbonGroup_Manage {
+            get {
+                return ResourceManager.GetString("Form_PaymentMethodList_RibbonGroup_Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Form_PaymentMethodList_RibbonGroup_Report {
+            get {
+                return ResourceManager.GetString("Form_PaymentMethodList_RibbonGroup_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main.
+        /// </summary>
+        public static string Form_PaymentMethodList_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_PaymentMethodList_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No payment plan selected to delete..
+        /// </summary>
+        public static string Form_PaymentPlanList_NoItemToDelete {
+            get {
+                return ResourceManager.GetString("Form_PaymentPlanList_NoItemToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Form_PaymentPlanList_RibbonGroup_Manage {
+            get {
+                return ResourceManager.GetString("Form_PaymentPlanList_RibbonGroup_Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Form_PaymentPlanList_RibbonGroup_Report {
+            get {
+                return ResourceManager.GetString("Form_PaymentPlanList_RibbonGroup_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main.
+        /// </summary>
+        public static string Form_PaymentPlanList_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_PaymentPlanList_RibbonPage_Main", resourceCulture);
             }
         }
         
@@ -10919,15 +11108,6 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test.
-        /// </summary>
-        public static string Form_ProductList_Button_Test {
-            get {
-                return ResourceManager.GetString("Form_ProductList_Button_Test", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Search by barcode....
         /// </summary>
         public static string Form_ProductList_BarcodeSearchPrompt {
@@ -10942,6 +11122,15 @@ namespace Foxoft.Properties {
         public static string Form_ProductList_BarcodeSearchTooltip {
             get {
                 return ResourceManager.GetString("Form_ProductList_BarcodeSearchTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string Form_ProductList_Button_Test {
+            get {
+                return ResourceManager.GetString("Form_ProductList_Button_Test", resourceCulture);
             }
         }
         
@@ -12039,7 +12228,7 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright Â© 2021 Subhan Huseynzade.
+        ///   Looks up a localized string similar to Copyright © 2021 Subhan Huseynzade.
         /// </summary>
         public static string Form_Splash_Copyright {
             get {
@@ -12368,6 +12557,24 @@ namespace Foxoft.Properties {
         public static string Form_WhatsAppMessageLog {
             get {
                 return ResourceManager.GetString("Form_WhatsAppMessageLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_ImagePreview {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_ImagePreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Image.
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_NoImage {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_NoImage", resourceCulture);
             }
         }
         
@@ -13002,6 +13209,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Font size was saved. Restart the application to apply it everywhere..
+        /// </summary>
+        public static string Message_AppFontSizeRestartRequired {
+            get {
+                return ResourceManager.GetString("Message_AppFontSizeRestartRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to delete?
         ///{0}.
         /// </summary>
@@ -13318,213 +13534,6 @@ namespace Foxoft.Properties {
         public static string Validation_StringLength_Max {
             get {
                 return ResourceManager.GetString("Validation_StringLength_Max", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Image Path.
-        /// </summary>
-        public static string Entity_TrWhatsAppMessageLog_ImageFilePath {
-            get {
-                return ResourceManager.GetString("Entity_TrWhatsAppMessageLog_ImageFilePath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Image.
-        /// </summary>
-        public static string Form_WhatsAppMessageLog_ImagePreview {
-            get {
-                return ResourceManager.GetString("Form_WhatsAppMessageLog_ImagePreview", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No Image.
-        /// </summary>
-        public static string Form_WhatsAppMessageLog_NoImage {
-            get {
-                return ResourceManager.GetString("Form_WhatsAppMessageLog_NoImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Image.
-        /// </summary>
-        public static string Entity_TrWhatsAppMessageLog_ImageData {
-            get {
-                return ResourceManager.GetString("Entity_TrWhatsAppMessageLog_ImageData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invoice Line Feature Type.
-        /// </summary>
-        public static string Entity_InvoiceLineFeatureType {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeatureType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feature Type Id.
-        /// </summary>
-        public static string Entity_InvoiceLineFeatureType_Id {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Id", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feature Type Name.
-        /// </summary>
-        public static string Entity_InvoiceLineFeatureType_Name {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Order.
-        /// </summary>
-        public static string Entity_InvoiceLineFeatureType_Order {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Order", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filterable.
-        /// </summary>
-        public static string Entity_InvoiceLineFeatureType_Filterable {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeatureType_Filterable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invoice Line Feature.
-        /// </summary>
-        public static string Entity_InvoiceLineFeature {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeature", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feature Code.
-        /// </summary>
-        public static string Entity_InvoiceLineFeature_Code {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeature_Code", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feature Type Id.
-        /// </summary>
-        public static string Entity_InvoiceLineFeature_TypeId {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeature_TypeId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feature Description.
-        /// </summary>
-        public static string Entity_InvoiceLineFeature_Desc {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeature_Desc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invoice Line Feature.
-        /// </summary>
-        public static string Entity_InvoiceLineFeatureLink {
-            get {
-                return ResourceManager.GetString("Entity_InvoiceLineFeatureLink", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invoice Line Feature Type.
-        /// </summary>
-        public static string ERP_ACE_InvoiceLineFeatureType {
-            get {
-                return ResourceManager.GetString("ERP_ACE_InvoiceLineFeatureType", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Main.
-        /// </summary>
-        public static string Form_PaymentMethodList_RibbonPage_Main {
-            get {
-                return ResourceManager.GetString("Form_PaymentMethodList_RibbonPage_Main", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Manage.
-        /// </summary>
-        public static string Form_PaymentMethodList_RibbonGroup_Manage {
-            get {
-                return ResourceManager.GetString("Form_PaymentMethodList_RibbonGroup_Manage", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Report.
-        /// </summary>
-        public static string Form_PaymentMethodList_RibbonGroup_Report {
-            get {
-                return ResourceManager.GetString("Form_PaymentMethodList_RibbonGroup_Report", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to No payment method selected to delete..
-        /// </summary>
-        public static string Form_PaymentMethodList_NoItemToDelete {
-            get {
-                return ResourceManager.GetString("Form_PaymentMethodList_NoItemToDelete", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Main.
-        /// </summary>
-        public static string Form_PaymentPlanList_RibbonPage_Main {
-            get {
-                return ResourceManager.GetString("Form_PaymentPlanList_RibbonPage_Main", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Manage.
-        /// </summary>
-        public static string Form_PaymentPlanList_RibbonGroup_Manage {
-            get {
-                return ResourceManager.GetString("Form_PaymentPlanList_RibbonGroup_Manage", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Report.
-        /// </summary>
-        public static string Form_PaymentPlanList_RibbonGroup_Report {
-            get {
-                return ResourceManager.GetString("Form_PaymentPlanList_RibbonGroup_Report", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to No payment plan selected to delete..
-        /// </summary>
-        public static string Form_PaymentPlanList_NoItemToDelete {
-            get {
-                return ResourceManager.GetString("Form_PaymentPlanList_NoItemToDelete", resourceCulture);
             }
         }
     }

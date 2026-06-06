@@ -436,31 +436,31 @@ namespace Foxoft
                     e.Handled = true;
                 }
 
-                if (e.KeyCode == Keys.B && e.Control)
-                {
-                    DcReport dcReport = efMethods.SelectReport(1032);
-                    string filter = "";
+                //if (e.KeyCode == Keys.B && e.Control)
+                //{
+                //    DcReport dcReport = efMethods.SelectReport(1032);
+                //    string filter = "";
 
-                    if (!string.IsNullOrEmpty(dcProduct.ProductCode))
-                        filter = $"{nameof(DcProduct.ProductCode)} = '{dcProduct.ProductCode}'";
+                //    if (!string.IsNullOrEmpty(dcProduct.ProductCode))
+                //        filter = $"{nameof(DcProduct.ProductCode)} = '{dcProduct.ProductCode}'";
 
-                    SqlParameter[] sqlParameters;
-                    dcReport.ReportQuery = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
-                    DataTable? data = adoMethods.SqlGetDt(dcReport.ReportQuery);
+                //    SqlParameter[] sqlParameters;
+                //    dcReport.ReportQuery = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
+                //    DataTable? data = adoMethods.SqlGetDt(dcReport.ReportQuery);
 
-                    XtraReport xtraReport = reportClass.CreateReport(data, dcReport.ReportName + ".repx");
+                //    XtraReport xtraReport = reportClass.CreateReport(data, dcReport.ReportName + ".repx");
 
-                    using (MemoryStream ms = new())
-                    {
-                        xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
-                        using (Image img = Image.FromStream(ms))
-                        {
-                            Clipboard.SetImage(img);
-                        }
-                    }
+                //    using (MemoryStream ms = new())
+                //    {
+                //        xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
+                //        using (Image img = Image.FromStream(ms))
+                //        {
+                //            Clipboard.SetImage(img);
+                //        }
+                //    }
 
-                    e.Handled = true;
-                }
+                //    e.Handled = true;
+                //}
             }
         }
 

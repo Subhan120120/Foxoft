@@ -5,10 +5,14 @@ using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
+using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -464,6 +468,12 @@ namespace Foxoft
                         }
                     }
 
+                    if (formReport.CopyToClipboard && dcReport.ReportTypeId == 2)
+                    {
+                        CopyReportToClipboard(dcReport, filter);
+                        return;
+                    }
+
                     ShowReportForm(dcReport, filter, activeFilterStr);
                 };
                 BSI.ItemLinks.Add(BBI);
@@ -494,6 +504,92 @@ namespace Foxoft
             };
 
             BSI.ItemLinks.Add(BBI_manage, true);
+        }
+
+        private void CopyReportToClipboard(DcReport dcReport, string filter)
+        {
+            using XtraReport xReport = CreateDetailReport(dcReport, filter);
+
+            if (xReport is null)
+                return;
+
+            using MemoryStream ms = new();
+
+            xReport.ExportToImage(ms, new ImageExportOptions()
+            {
+                Format = ImageFormat.Png,
+                PageRange = "1-30",
+                ExportMode = ImageExportMode.SingleFilePageByPage,
+                Resolution = 480
+            });
+
+            if (ms.CanSeek)
+                ms.Position = 0;
+
+            using Image image = Image.FromStream(ms);
+            Clipboard.SetImage(new Bitmap(image));
+        }
+
+        private XtraReport CreateDetailReport(DcReport dcReport, string filter)
+        {
+            SqlParameter[] sqlParameters;
+
+            string query = ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
+            List<QueryParameter> qryParams = ConvertSqlParametersToQueryParameters(sqlParameters);
+
+            CustomSqlQuery mainQuery = new("Main", query);
+            mainQuery.Parameters.AddRange(qryParams);
+
+            List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
+
+            foreach (TrReportSubQuery reportSubQuery in dcReport.TrReportSubQueries)
+            {
+                SqlParameter[] sqlParameters1;
+                string subQueryText = ApplyFilter(dcReport, reportSubQuery.SubQueryText, null, out sqlParameters1);
+                subQueryText = AddRelation(query, reportSubQuery, subQueryText);
+
+                List<QueryParameter> subQryParams = ConvertSqlParametersToQueryParameters(sqlParameters1);
+                CustomSqlQuery subQuery = new(reportSubQuery.SubQueryName, subQueryText);
+                subQuery.Parameters.AddRange(subQryParams);
+
+                sqlQueries.Add(subQuery);
+            }
+
+            SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            ReportClass reportClass = new(settingStore?.DesignFileFolder ?? string.Empty);
+            XtraReport xReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
+
+            SetReportHeaderParameters(xReport, settingStore);
+
+            return xReport;
+        }
+
+        private static void SetReportHeaderParameters(XtraReport report, SettingStore settingStore)
+        {
+            if (report is null || settingStore is null)
+                return;
+
+            AddOrSetParameter(report, "ImageRootPath", settingStore.ImageFolder);
+            AddOrSetParameter(report, "StoreName", settingStore.DcStore?.CurrAccDesc);
+        }
+
+        private static void AddOrSetParameter(XtraReport report, string parameterName, object value)
+        {
+            DevExpress.XtraReports.Parameters.Parameter parameter = report.Parameters[parameterName];
+
+            if (parameter is null)
+            {
+                parameter = new DevExpress.XtraReports.Parameters.Parameter()
+                {
+                    Name = parameterName,
+                    Type = typeof(string),
+                    Visible = false
+                };
+
+                report.Parameters.Add(parameter);
+            }
+
+            parameter.Value = value?.ToString() ?? string.Empty;
         }
 
         private static BarShortcut ConvertToShortCut(string shortCut)

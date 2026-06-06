@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4620,5 +4620,8 @@ Apply it?</value>
   </data>
   <data name="Form_PaymentPlanList_NoItemToDelete" xml:space="preserve">
     <value>No payment plan selected to delete.</value>
+  </data>
+  <data name="Entity_FormReport_CopyToClipboard" xml:space="preserve">
+    <value>Copy To Clipboard</value>
   </data>
 </root>
