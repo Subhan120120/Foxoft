@@ -55,5 +55,12 @@ namespace Foxoft.Models
         Rejected = 3       // Rədd edilib
     }
 
-}
+    [Flags]
+    public enum UseReportAs : byte
+    {
+        CopyToClipboard = 1,
+        OpenPreview = 2,
+        CopyToClipboardAndOpenPreview = CopyToClipboard | OpenPreview
+    }
 
+}

@@ -4657,7 +4657,16 @@ Tətbiq edilsin?</value>
   <data name="Form_PaymentPlanList_NoItemToDelete" xml:space="preserve">
     <value>Silmək üçün ödəniş planı seçilməyib.</value>
   </data>
-  <data name="Entity_FormReport_CopyToClipboard" xml:space="preserve">
+  <data name="Entity_FormReport_UseReportAs" xml:space="preserve">
+    <value>Hesabatdan istifadə</value>
+  </data>
+  <data name="Entity_FormReport_UseReportAs_CopyToClipboard" xml:space="preserve">
     <value>Buferə Kopyala</value>
+  </data>
+  <data name="Entity_FormReport_UseReportAs_OpenPreview" xml:space="preserve">
+    <value>Önizləməni Aç</value>
+  </data>
+  <data name="Entity_FormReport_UseReportAs_CopyToClipboardAndOpenPreview" xml:space="preserve">
+    <value>Buferə Kopyala və Önizləməni Aç</value>
   </data>
 </root>

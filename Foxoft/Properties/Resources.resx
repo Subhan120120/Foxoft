@@ -4657,7 +4657,16 @@ Apply it?</value>
   <data name="Form_PaymentPlanList_NoItemToDelete" xml:space="preserve">
     <value>No payment plan selected to delete.</value>
   </data>
-  <data name="Entity_FormReport_CopyToClipboard" xml:space="preserve">
-    <value>Copy To Clipboard</value>
+  <data name="Entity_FormReport_UseReportAs" xml:space="preserve">
+    <value>Use Report As</value>
+  </data>
+  <data name="Entity_FormReport_UseReportAs_CopyToClipboard" xml:space="preserve">
+    <value>CopyToClipboard</value>
+  </data>
+  <data name="Entity_FormReport_UseReportAs_OpenPreview" xml:space="preserve">
+    <value>Open Preview</value>
+  </data>
+  <data name="Entity_FormReport_UseReportAs_CopyToClipboardAndOpenPreview" xml:space="preserve">
+    <value>CopyToClipboard AND Open Preview</value>
   </data>
 </root>

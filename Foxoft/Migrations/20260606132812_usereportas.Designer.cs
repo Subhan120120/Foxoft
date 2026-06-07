@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20260522071913_invFea")]
-    partial class invFea
+    [Migration("20260606132812_usereportas")]
+    partial class usereportas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,11 @@ namespace Foxoft.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("AppFontSize")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(4,1)")
+                        .HasDefaultValueSql("10");
 
                     b.Property<bool>("AutoPrint")
                         .HasColumnType("bit");
@@ -93,6 +98,11 @@ namespace Foxoft.Migrations
                     b.Property<string>("PrintDesignPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("ProductsFormKeepActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
                     b.Property<bool>("TransferAutoApprove")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -135,6 +145,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             Id = 1,
+                            AppFontSize = 10m,
                             AutoPrint = false,
                             AutoSave = false,
                             DefaultUnitOfMeasureId = 1,
@@ -146,6 +157,7 @@ namespace Foxoft.Migrations
                             POSShowQuantityDialog = false,
                             POSShowSalesmanCodeDialog = false,
                             PrintCount = 0,
+                            ProductsFormKeepActive = false,
                             TransferAutoApprove = true,
                             UseBarcode = false,
                             UseCampaign = false,
@@ -695,6 +707,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             CurrAccCode = "KASSA01",
+                            CashRegPaymentTypeCode = (byte)1,
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreditLimit = 0m,
                             CurrAccDesc = "Nağd Kassa",
@@ -3405,7 +3418,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CashRegList",
-                            ReportQuery = "\r\n\r\n	select CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, StoreCode\r\n	from \r\n	DcCurrAccs \r\n	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1\r\n	where CurrAccTypeCode = 5 and IsDisabled = 0\r\n		--and DcCurrAccs.IsVIP = 1 \r\n		--and balance.CurrAccCode = '1403'\r\n	group by DcCurrAccs.CurrAccCode\r\n	, CurrAccDesc\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegisterCode \r\n	, StoreCode\r\n	order by CurrAccDesc",
+                            ReportQuery = "\r\n\r\n	select CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegPaymentTypeCode\r\n	, StoreCode\r\n	from \r\n	DcCurrAccs \r\n	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = ISNULL(DcCurrAccs.CashRegPaymentTypeCode, 1)\r\n	where CurrAccTypeCode = 5 and IsDisabled = 0\r\n		--and DcCurrAccs.IsVIP = 1 \r\n		--and balance.CurrAccCode = '1403'\r\n	group by DcCurrAccs.CurrAccCode\r\n	, CurrAccDesc\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegPaymentTypeCode\r\n	, CashRegisterCode \r\n	, StoreCode\r\n	order by CurrAccDesc\r\n",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -3465,7 +3478,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_PaymentReport",
-                            ReportQuery = "\r\n\r\nselect ph.*\r\n	, ProcessDesc\r\n	, pl.PaymentLineId\r\n	, pl.PaymentTypeCode\r\n	, pl.Payment\r\n	, pl.PaymentLoc\r\n	, pl.CurrencyCode\r\n	, pl.ExchangeRate\r\n	, pl.LineDescription\r\n	, pl.CashRegisterCode\r\n	, pl.PaymentMethodId\r\n	, cari.CurrAccDesc\r\n	, cari.PhoneNum\r\n	, CashRegisterDesc = kassa.CurrAccDesc\r\n	, DcPaymentTypes.PaymentTypeDesc\r\n	, CurrAccBalance = dbo.CurrAccBalance(ph.CurrAccCode, CAST(ph.DocumentDate as Datetime) + CAST(ph.DocumentTime as Datetime))\r\n	\r\n	, StorePhoneNum = store.PhoneNum\r\n	, StoreAddress = store.Address\r\n\r\n	from TrPaymentLines pl \r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n	left join DcPaymentTypes on DcPaymentTypes.PaymentTypeCode = pl.PaymentTypeCode\r\n	left join DcCurrAccs cari on cari.CurrAccCode = ph.CurrAccCode\r\n	left join DcCurrAccs kassa on kassa.CurrAccCode = pl.CashRegisterCode\r\n	left join DcProcesses on DcProcesses.ProcessCode = ph.ProcessCode\r\n	left join DcCurrAccs store on store.CurrAccCode = ph.StoreCode\r\n	left join DcCurrencies on DcCurrencies.CurrencyCode = pl.CurrencyCode\r\n\r\n	where ph.ProcessCode = 'PA' AND ph.PaymentHeaderId = @PaymentHeaderId\r\n	order by DocumentDate\r\n\r\n",
+                            ReportQuery = "\r\n\r\nselect ph.*\r\n	, ProcessDesc\r\n	, pl.PaymentLineId\r\n	, pl.PaymentTypeCode\r\n	, pl.Payment\r\n	, pl.PaymentLoc\r\n	, pl.CurrencyCode\r\n	, pl.ExchangeRate\r\n	, pl.LineDescription\r\n	, pl.CashRegisterCode\r\n	, pl.PaymentMethodId\r\n	, cari.CurrAccDesc\r\n	, cari.PhoneNum\r\n	, CashRegisterDesc = kassa.CurrAccDesc\r\n	, DcPaymentTypes.PaymentTypeDesc\r\n	, CurrAccBalance = dbo.CurrAccBalance(ph.CurrAccCode, CAST(ph.DocumentDate as Datetime) + CAST(ph.DocumentTime as Datetime))\r\n	\r\n	, StorePhoneNum = store.PhoneNum\r\n	, StoreAddress = store.Address\r\n\r\n	from TrPaymentLines pl \r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n	left join DcPaymentTypes on DcPaymentTypes.PaymentTypeCode = pl.PaymentTypeCode\r\n	left join DcCurrAccs cari on cari.CurrAccCode = ph.CurrAccCode\r\n	left join DcCurrAccs kassa on kassa.CurrAccCode = pl.CashRegisterCode\r\n	left join DcProcesses on DcProcesses.ProcessCode = ph.ProcessCode\r\n	left join DcCurrAccs store on store.CurrAccCode = ph.StoreCode\r\n	left join DcCurrencies on DcCurrencies.CurrencyCode = pl.CurrencyCode\r\n\r\n	where ph.PaymentHeaderId = @PaymentHeaderId\n	order by DocumentDate\n",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -3868,6 +3881,11 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("Shortcut")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("UseReportAs")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValue((byte)2);
 
                     b.HasKey("FormCode", "ReportId");
 
@@ -4726,6 +4744,14 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
+                            ClaimCode = "InvoiceLineFeatureType",
+                            CategoryId = 2,
+                            ClaimDesc = "Faktura Sətiri Özəlliyi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
                             ClaimCode = "CurrAccCreditLimit",
                             CategoryId = 19,
                             ClaimDesc = "Cari Hesab Taksit Limiti",
@@ -5081,6 +5107,14 @@ namespace Foxoft.Migrations
                             ClaimCode = "EmployeeShifts",
                             CategoryId = 23,
                             ClaimDesc = "İşçi Növbələri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "ChangeStore",
+                            CategoryId = 22,
+                            ClaimDesc = "Mağaza Dəyişmə",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         });
@@ -6322,6 +6356,22 @@ namespace Foxoft.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 204,
+                            ClaimCode = "InvoiceLineFeatureType",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 205,
+                            ClaimCode = "ChangeStore",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
                         });
                 });
 
@@ -7557,6 +7607,10 @@ namespace Foxoft.Migrations
 
                     b.Property<decimal>("AmountLoc")
                         .HasColumnType("money");
+
+                    b.Property<string>("Barcode")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()

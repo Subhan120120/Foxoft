@@ -468,12 +468,17 @@ namespace Foxoft
                         }
                     }
 
-                    if (formReport.CopyToClipboard && dcReport.ReportTypeId == 2)
+                    UseReportAs useReportAs = NormalizeUseReportAs(formReport.UseReportAs);
+
+                    if (useReportAs.HasFlag(UseReportAs.CopyToClipboard) && dcReport.ReportTypeId == 2)
                     {
                         CopyReportToClipboard(dcReport, filter);
                     }
 
-                    ShowReportForm(dcReport, filter, activeFilterStr);
+                    if (useReportAs.HasFlag(UseReportAs.OpenPreview))
+                    {
+                        ShowReportForm(dcReport, filter, activeFilterStr);
+                    }
                 };
                 BSI.ItemLinks.Add(BBI);
             }
@@ -487,7 +492,7 @@ namespace Foxoft
 
             BBI_manage.ItemClick += (sender, e) =>
             {
-                using FormFormReport form = new(formCode);
+                using FormFormReportList form = new(formCode);
                 try
                 {
                     form.ShowDialog();
@@ -529,6 +534,11 @@ namespace Foxoft
 
             using Image image = Image.FromStream(ms);
             Clipboard.SetImage(new Bitmap(image));
+        }
+
+        private static UseReportAs NormalizeUseReportAs(UseReportAs useReportAs)
+        {
+            return useReportAs == 0 ? UseReportAs.OpenPreview : useReportAs;
         }
 
         private XtraReport CreateDetailReport(DcReport dcReport, string filter)

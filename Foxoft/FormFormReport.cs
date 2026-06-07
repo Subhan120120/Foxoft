@@ -1,94 +1,76 @@
-using DevExpress.Utils;
-using DevExpress.XtraBars;
-using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Views.Base;
-using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
-using System.IO;
-using System.Text;
 
 namespace Foxoft
 {
-    public partial class FormFormReport : RibbonForm
+    public partial class FormFormReport : XtraForm
     {
-        private readonly string? formCode;
-        private subContext dbContext = new();
-        private bool isFirstPaint = true;
+        private readonly string? initialFormCode;
+        private readonly int? initialReportId;
+        private subContext dbContext = null!;
 
-        public bool IsChanged { get; private set; }
-        public TrFormReport? TrFormReport { get; private set; }
+        public TrFormReport trFormReport = new();
 
         public FormFormReport()
-            : this(null)
+            : this(null, null)
         {
         }
 
         public FormFormReport(string? formCode)
+            : this(formCode, null)
         {
-            this.formCode = formCode;
+        }
+
+        public FormFormReport(string formCode, int reportId)
+            : this(formCode, (int?)reportId)
+        {
+        }
+
+        private FormFormReport(string? formCode, int? reportId)
+        {
+            initialFormCode = formCode;
+            initialReportId = reportId;
 
             InitializeComponent();
 
-            byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-            MemoryStream stream = new(byteArray);
-            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-            gV_FormReportList.RestoreLayoutFromStream(stream, option);
-
-            if (!string.IsNullOrWhiteSpace(formCode))
-                colFormCode.OptionsColumn.AllowEdit = false;
-
-            FormClosed += (_, __) => dbContext.Dispose();
-
-            UpdateGridViewData();
+            AcceptButton = btn_Ok;
+            CancelButton = btn_Cancel;
+            FormClosed += (_, _) => dbContext?.Dispose();
         }
 
-        private void UpdateGridViewData()
+        private void FormFormReport_Load(object sender, EventArgs e)
         {
-            int focusedRowHandle = gV_FormReportList.FocusedRowHandle;
-
-            LoadData();
-
-            if (focusedRowHandle > 0)
-                gV_FormReportList.FocusedRowHandle = focusedRowHandle;
-            else
-                gV_FormReportList.MoveLast();
-
-            SetFocusedEntity();
+            LoadFormReport();
+            dataLayoutControl1.IsValid(out List<string> errorList);
         }
 
-        private void LoadData()
+        private void LoadFormReport()
         {
-            dbContext.Dispose();
             dbContext = new subContext();
 
             LoadLookups();
 
-            IQueryable<TrFormReport> query = dbContext.TrFormReports
-                .Include(x => x.DcForm)
-                .Include(x => x.DcReport);
+            if (initialReportId is null)
+                ClearControlsAddNew();
+            else
+            {
+                dbContext.TrFormReports
+                    .Where(x => x.FormCode == initialFormCode && x.ReportId == initialReportId.Value)
+                    .Load();
 
-            if (!string.IsNullOrWhiteSpace(formCode))
-                query = query.Where(x => x.FormCode == formCode);
+                trFormReportsBindingSource.DataSource = dbContext.TrFormReports.Local.ToBindingList();
+                trFormReport = trFormReportsBindingSource.Current as TrFormReport ?? new TrFormReport();
 
-            query
-                .OrderBy(x => x.FormCode)
-                .ThenBy(x => x.ReportId)
-                .Load();
-
-            trFormReportsBindingSource.DataSource = dbContext.TrFormReports.Local.ToBindingList();
-
-            gV_FormReportList.BestFitColumns();
+                SetKeyEditorsReadOnly();
+            }
         }
 
         private void LoadLookups()
         {
-            repoLUE_FormCode.DataSource = dbContext.DcForms
+            FormCodeLookUpEdit.Properties.DataSource = dbContext.DcForms
                 .AsNoTracking()
                 .OrderBy(x => x.FormCode)
                 .Select(x => new
@@ -98,7 +80,7 @@ namespace Foxoft
                 })
                 .ToList();
 
-            repoLUE_ReportId.DataSource = dbContext.DcReports
+            ReportIdLookUpEdit.Properties.DataSource = dbContext.DcReports
                 .AsNoTracking()
                 .OrderBy(x => x.ReportName)
                 .Select(x => new
@@ -107,171 +89,93 @@ namespace Foxoft
                     x.ReportName
                 })
                 .ToList();
+
+            UseReportAsLookUpEdit.Properties.DataSource = new[]
+            {
+                new { UseReportAs = UseReportAs.CopyToClipboard, UseReportAsDesc = Resources.Entity_FormReport_UseReportAs_CopyToClipboard },
+                new { UseReportAs = UseReportAs.OpenPreview, UseReportAsDesc = Resources.Entity_FormReport_UseReportAs_OpenPreview },
+                new { UseReportAs = UseReportAs.CopyToClipboardAndOpenPreview, UseReportAsDesc = Resources.Entity_FormReport_UseReportAs_CopyToClipboardAndOpenPreview }
+            };
         }
 
-        private void SetFocusedEntity()
+        private void ClearControlsAddNew()
         {
-            if (gV_FormReportList.FocusedRowHandle >= 0)
-                TrFormReport = gV_FormReportList.GetFocusedRow() as TrFormReport;
-            else
-                TrFormReport = null;
+            trFormReport = new TrFormReport
+            {
+                FormCode = initialFormCode ?? string.Empty,
+                UseReportAs = UseReportAs.OpenPreview
+            };
+
+            trFormReportsBindingSource.DataSource = trFormReport;
+
+            if (!string.IsNullOrWhiteSpace(initialFormCode))
+                SetFormCodeReadOnly();
+
+            ReportIdLookUpEdit.Select();
         }
 
-        private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
+        private void SetKeyEditorsReadOnly()
         {
-            gV_FormReportList.AddNewRow();
-            gV_FormReportList.FocusedColumn = string.IsNullOrWhiteSpace(formCode) ? colFormCode : colReportId;
-            gV_FormReportList.ShowEditor();
+            SetFormCodeReadOnly();
+            ReportIdLookUpEdit.Properties.ReadOnly = true;
+            ReportIdLookUpEdit.Properties.Appearance.BackColor = Color.LightGray;
         }
 
-        private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
+        private void SetFormCodeReadOnly()
         {
-            Validate();
-            gV_FormReportList.PostEditor();
-            gV_FormReportList.UpdateCurrentRow();
+            FormCodeLookUpEdit.Properties.ReadOnly = true;
+            FormCodeLookUpEdit.Properties.Appearance.BackColor = Color.LightGray;
+        }
+
+        private void btn_Ok_Click(object sender, EventArgs e)
+        {
             trFormReportsBindingSource.EndEdit();
+            trFormReport = trFormReportsBindingSource.Current as TrFormReport ?? new TrFormReport();
 
-            if (!ValidateRows())
+            if (!ValidateFormReport())
                 return;
 
-            try
+            if (initialReportId is null)
             {
-                dbContext.SaveChanges();
-                IsChanged = true;
-                UpdateGridViewData();
-                XtraMessageBox.Show(this, Resources.Common_SavedSuccessfully, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bool exists = dbContext.TrFormReports
+                    .AsNoTracking()
+                    .Any(x => x.FormCode == trFormReport.FormCode && x.ReportId == trFormReport.ReportId);
+
+                if (exists)
+                {
+                    XtraMessageBox.Show(this, Resources.Form_Common_Exists, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                dbContext.TrFormReports.Add(trFormReport);
             }
-            catch (Exception ex)
-            {
-                XtraMessageBox.Show(this, ex.GetBaseException().Message, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+            dbContext.SaveChanges();
+            DialogResult = DialogResult.OK;
         }
 
-        private bool ValidateRows()
+        private bool ValidateFormReport()
         {
-            List<TrFormReport> rows = dbContext.TrFormReports.Local
-                .Where(x => dbContext.Entry(x).State != EntityState.Deleted)
-                .ToList();
-
-            if (rows.Any(x => string.IsNullOrWhiteSpace(x.FormCode) || x.ReportId <= 0))
+            if (!dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                XtraMessageBox.Show(this, Resources.Form_PriceListDetail_Message_InvalidData, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string combined = errorList.Aggregate((x, y) => x + "" + y);
+                XtraMessageBox.Show(this, combined, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            bool hasDuplicate = rows
-                .GroupBy(x => new { x.FormCode, x.ReportId })
-                .Any(x => x.Count() > 1);
-
-            if (hasDuplicate)
+            if (string.IsNullOrWhiteSpace(trFormReport.FormCode) || trFormReport.ReportId <= 0)
             {
-                XtraMessageBox.Show(this, Resources.Form_Common_Exists, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show(this, Resources.Form_PriceListDetail_Message_InvalidData, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             return true;
         }
 
-        private void bBI_Delete_ItemClick(object sender, ItemClickEventArgs e)
+        private void btn_Cancel_Click(object sender, EventArgs e)
         {
-            if (TrFormReport is null)
-            {
-                XtraMessageBox.Show(this, Resources.Message_NoRowSelected, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string deleteText = $"{TrFormReport.FormCode} - {TrFormReport.DcReport?.ReportName ?? TrFormReport.ReportId.ToString()}";
-
-            if (XtraMessageBox.Show(
-                this,
-                string.Format(Resources.Message_DeleteConfirm, deleteText),
-                Resources.Common_Attention,
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Question) != DialogResult.OK)
-                return;
-
-            dbContext.TrFormReports.Remove(TrFormReport);
-            dbContext.SaveChanges();
-            IsChanged = true;
-            UpdateGridViewData();
+            DialogResult = DialogResult.Cancel;
         }
 
-        private void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            UpdateGridViewData();
-        }
-
-        private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            CustomExtensions.ExportToExcel(this, Text, gC_FormReportList);
-        }
-
-        private void bBI_Close_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            Close();
-        }
-
-        private void gV_FormReportList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
-        {
-            SetFocusedEntity();
-        }
-
-        private void gV_FormReportList_ColumnFilterChanged(object sender, EventArgs e)
-        {
-            SetFocusedEntity();
-        }
-
-        private void gV_FormReportList_InitNewRow(object sender, InitNewRowEventArgs e)
-        {
-            GridView view = (GridView)sender;
-
-            if (!string.IsNullOrWhiteSpace(formCode))
-                view.SetRowCellValue(e.RowHandle, colFormCode, formCode);
-
-            view.SetRowCellValue(e.RowHandle, colCopyToClipboard, false);
-        }
-
-        private void gV_FormReportList_ShowingEditor(object sender, CancelEventArgs e)
-        {
-            bool isKeyColumn = gV_FormReportList.FocusedColumn == colFormCode || gV_FormReportList.FocusedColumn == colReportId;
-
-            if (isKeyColumn && !gV_FormReportList.IsNewItemRow(gV_FormReportList.FocusedRowHandle))
-                e.Cancel = true;
-        }
-
-        private void gC_FormReportList_ProcessGridKey(object sender, KeyEventArgs e)
-        {
-            ColumnView view = (sender as GridControl)?.FocusedView as ColumnView;
-            if (view is null)
-                return;
-
-            if (e.KeyCode == Keys.C && e.Control)
-            {
-                string cellValue = view.GetFocusedValue()?.ToString();
-                if (!string.IsNullOrEmpty(cellValue))
-                {
-                    Clipboard.SetText(cellValue);
-                    e.Handled = true;
-                }
-            }
-        }
-
-        private void gC_FormReportList_Paint(object sender, PaintEventArgs e)
-        {
-            if (!isFirstPaint)
-                return;
-
-            if (!gV_FormReportList.FindPanelVisible)
-                gV_FormReportList.ShowFindPanel();
-
-            gV_FormReportList.OptionsFind.FindNullPrompt = Resources.Common_Search;
-            isFirstPaint = false;
-        }
-
-        private void FormTrFormReport_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-                Close();
-        }
     }
 }

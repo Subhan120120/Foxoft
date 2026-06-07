@@ -1500,7 +1500,6 @@ namespace Foxoft
             using subContext db = new();
             return db.DcCurrAccs
                 .Where(x => x.IsDisabled == false)
-                .Where(x => new[] { CurrAccType.Customer, CurrAccType.Supplier, CurrAccType.Personnel }.Contains(x.CurrAccTypeCode))
                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
@@ -1509,7 +1508,6 @@ namespace Foxoft
             using subContext db = new();
             return db.DcCurrAccs
                 .Where(x => x.IsDisabled == true)
-                .Where(x => new[] { CurrAccType.Customer, CurrAccType.Supplier, CurrAccType.Personnel }.Contains(x.CurrAccTypeCode))
                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 

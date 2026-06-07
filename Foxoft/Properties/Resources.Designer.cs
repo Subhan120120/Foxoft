@@ -2811,15 +2811,6 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy To Clipboard.
-        /// </summary>
-        public static string Entity_FormReport_CopyToClipboard {
-            get {
-                return ResourceManager.GetString("Entity_FormReport_CopyToClipboard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Form Code.
         /// </summary>
         public static string Entity_FormReport_FormCode {
@@ -2843,6 +2834,42 @@ namespace Foxoft.Properties {
         public static string Entity_FormReport_Shortcut {
             get {
                 return ResourceManager.GetString("Entity_FormReport_Shortcut", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Use Report As.
+        /// </summary>
+        public static string Entity_FormReport_UseReportAs {
+            get {
+                return ResourceManager.GetString("Entity_FormReport_UseReportAs", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CopyToClipboard.
+        /// </summary>
+        public static string Entity_FormReport_UseReportAs_CopyToClipboard {
+            get {
+                return ResourceManager.GetString("Entity_FormReport_UseReportAs_CopyToClipboard", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CopyToClipboard AND Open Preview.
+        /// </summary>
+        public static string Entity_FormReport_UseReportAs_CopyToClipboardAndOpenPreview {
+            get {
+                return ResourceManager.GetString("Entity_FormReport_UseReportAs_CopyToClipboardAndOpenPreview", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Open Preview.
+        /// </summary>
+        public static string Entity_FormReport_UseReportAs_OpenPreview {
+            get {
+                return ResourceManager.GetString("Entity_FormReport_UseReportAs_OpenPreview", resourceCulture);
             }
         }
         

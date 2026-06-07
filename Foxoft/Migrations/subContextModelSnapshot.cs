@@ -3876,11 +3876,13 @@ namespace Foxoft.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    b.Property<bool>("CopyToClipboard")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Shortcut")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("UseReportAs")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValue((byte)2);
 
                     b.HasKey("FormCode", "ReportId");
 

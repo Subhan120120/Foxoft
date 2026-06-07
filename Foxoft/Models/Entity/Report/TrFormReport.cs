@@ -1,5 +1,7 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,8 +23,9 @@ namespace Foxoft.Models.Entity.Report
         [Display(Name = nameof(Resources.Entity_FormReport_Shortcut), ResourceType = typeof(Resources))]
         public string? Shortcut { get; set; }
 
-        [Display(Name = nameof(Resources.Entity_FormReport_CopyToClipboard), ResourceType = typeof(Resources))]
-        public bool CopyToClipboard { get; set; }
+        [Display(Name = nameof(Resources.Entity_FormReport_UseReportAs), ResourceType = typeof(Resources))]
+        [DefaultValue(UseReportAs.OpenPreview)]
+        public UseReportAs UseReportAs { get; set; } = UseReportAs.OpenPreview;
 
         [ForeignKey("FormCode")]
         public virtual DcForm DcForm { get; set; }

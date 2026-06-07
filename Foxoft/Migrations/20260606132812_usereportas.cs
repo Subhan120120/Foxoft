@@ -5,7 +5,7 @@
 namespace Foxoft.Migrations
 {
     /// <inheritdoc />
-    public partial class asd234 : Migration
+    public partial class usereportas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
