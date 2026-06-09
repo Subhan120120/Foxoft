@@ -2316,6 +2316,12 @@
   <data name="FormInvoice_WhatsappSend" xml:space="preserve">
     <value>Whatsappdan Göndər</value>
   </data>
+  <data name="FormInvoice_WhatsAppCaptionDefault" xml:space="preserve">
+    <value>Faktura</value>
+  </data>
+  <data name="FormInvoice_WhatsAppCaption" xml:space="preserve">
+    <value>Faktura No: {0}</value>
+  </data>
   <data name="FormInvoice_EditInvoice" xml:space="preserve">
     <value>Dəyiş</value>
   </data>
@@ -2808,6 +2814,9 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_PaymentDetail_Button_SendWhatsapp" xml:space="preserve">
     <value>Whatsappa Göndər</value>
+  </data>
+  <data name="Form_PaymentDetail_WhatsAppCaption" xml:space="preserve">
+    <value>Ödəniş No: {0}</value>
   </data>
   <data name="Form_PaymentDetail_Button_NewPayment" xml:space="preserve">
     <value>Yeni Ödəniş</value>
@@ -4111,6 +4120,42 @@ Tətbiq edilsin?</value>
   <data name="Form_WhatsAppMessageLog_Summary_Total_Title" xml:space="preserve">
     <value>Cəmi Göndərilən</value>
   </data>
+  <data name="Form_WhatsAppMessageLog_SendSelected" xml:space="preserve">
+    <value>Seçiləni göndər</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_SendAgain" xml:space="preserve">
+    <value>Yenidən göndər</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Action" xml:space="preserve">
+    <value>Əməliyyat</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_SendAllUnsent" xml:space="preserve">
+    <value>Göndərilməyənlərin hamısını göndər</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_SendAllUnsentConfirm" xml:space="preserve">
+    <value>Bütün göndərilməyən WhatsApp mesajları göndərilsin?</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_SendResult" xml:space="preserve">
+    <value>Göndərildi: {0}, Uğursuz: {1}</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_NoUnsentMessages" xml:space="preserve">
+    <value>Göndərilməyən WhatsApp mesajı yoxdur.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_AlreadySent" xml:space="preserve">
+    <value>Seçilmiş WhatsApp mesajı artıq göndərilib.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_NotFound" xml:space="preserve">
+    <value>WhatsApp mesaj loqu tapılmadı.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_PhoneRequired" xml:space="preserve">
+    <value>Qəbul edən telefon nömrəsi mütləqdir.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_ImageFileNotFound" xml:space="preserve">
+    <value>WhatsApp mesajının şəkil faylı tapılmadı.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_MessageRequired" xml:space="preserve">
+    <value>Mesaj mətni mütləqdir.</value>
+  </data>
   <data name="Form_NotificationSettings" xml:space="preserve">
     <value>Bildiriş tənzimləmələri</value>
   </data>
@@ -4163,7 +4208,7 @@ Tətbiq edilsin?</value>
     <value>Göndərildi: {0}, Uğursuz: {1}</value>
   </data>
   <data name="Entity_TrWhatsAppMessageLog_IsSuccessful" xml:space="preserve">
-    <value>Uğurludur</value>
+    <value>Göndərilib</value>
   </data>
   <data name="Common_InsufficientBalance" xml:space="preserve">
     <value>Balansınızda kifayət qədər vəsait yoxdur</value>

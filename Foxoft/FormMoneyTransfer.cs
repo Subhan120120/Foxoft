@@ -528,8 +528,12 @@ namespace Foxoft
                 return;
             }
 
+            string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
+            string caption = GetWhatsAppCaption();
+
             if (!WhatsAppCreditService.HasEnoughBalance())
             {
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false);
                 XtraMessageBox.Show(Resources.Common_InsufficientBalance);
                 return;
             }
@@ -538,21 +542,21 @@ namespace Foxoft
             {
                 using var client = new EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
 
-                string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
+                await client.SendImageBase64Async(formattedNumber, memoryStream, caption: caption);
 
-                await client.SendImageBase64Async(formattedNumber, memoryStream, caption: GetWhatsAppCaption());
-
-                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream);
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: true);
 
                 XtraMessageBox.Show(Resources.Common_SentSuccessfully, Resources.Form_MoneyTransfer_Button_SendWhatsapp, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false);
                 XtraMessageBox.Show(Resources.Common_ErrorOccurred + " " + ex.Message);
             }
         }
 
-        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, MemoryStream? imageStream = null)
+        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, MemoryStream? imageStream = null,
+            string? message = null, bool isSuccessful = false)
         {
             try
             {
@@ -571,13 +575,15 @@ namespace Foxoft
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = receiverPhone,
                     MessageType = trPaymentHeader?.DcProcess?.ProcessDesc,
+                    Message = message,
                     Sender = Authorization.CurrAccCode,
                     CurrAccCode = trPaymentHeader?.CurrAccCode,
                     ImageFilePath = imageFilePath,
-                    IsSuccessful = true
+                    IsSuccessful = isSuccessful
                 });
 
-                ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(trPaymentHeader?.DcProcess?.ProcessDesc, receiverPhone));
+                if (isSuccessful)
+                    ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(trPaymentHeader?.DcProcess?.ProcessDesc, receiverPhone));
 
                 ctx.SaveChanges();
             }

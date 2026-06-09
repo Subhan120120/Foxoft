@@ -2316,6 +2316,12 @@
   <data name="FormInvoice_WhatsappSend" xml:space="preserve">
     <value>Send via Whatsapp</value>
   </data>
+  <data name="FormInvoice_WhatsAppCaptionDefault" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="FormInvoice_WhatsAppCaption" xml:space="preserve">
+    <value>Invoice No: {0}</value>
+  </data>
   <data name="FormInvoice_EditInvoice" xml:space="preserve">
     <value>Edit Invoice</value>
   </data>
@@ -2808,6 +2814,9 @@ Do you want to return to the invoice?</value>
   </data>
   <data name="Form_PaymentDetail_Button_SendWhatsapp" xml:space="preserve">
     <value>Send to Whatsapp</value>
+  </data>
+  <data name="Form_PaymentDetail_WhatsAppCaption" xml:space="preserve">
+    <value>Payment No: {0}</value>
   </data>
   <data name="Form_PaymentDetail_Button_NewPayment" xml:space="preserve">
     <value>New Payment</value>
@@ -4111,6 +4120,42 @@ Apply it?</value>
   <data name="Form_WhatsAppMessageLog_Summary_Total_Title" xml:space="preserve">
     <value>Total Sent</value>
   </data>
+  <data name="Form_WhatsAppMessageLog_SendSelected" xml:space="preserve">
+    <value>Send Selected</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_SendAgain" xml:space="preserve">
+    <value>Send Again</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_SendAllUnsent" xml:space="preserve">
+    <value>Send All Unsent</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_SendAllUnsentConfirm" xml:space="preserve">
+    <value>Send all unsent WhatsApp messages?</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_SendResult" xml:space="preserve">
+    <value>Sent: {0}, Failed: {1}</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_NoUnsentMessages" xml:space="preserve">
+    <value>There are no unsent WhatsApp messages.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_AlreadySent" xml:space="preserve">
+    <value>The selected WhatsApp message has already been sent.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_NotFound" xml:space="preserve">
+    <value>WhatsApp message log was not found.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_PhoneRequired" xml:space="preserve">
+    <value>Receiver phone number is required.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_ImageFileNotFound" xml:space="preserve">
+    <value>WhatsApp message image file was not found.</value>
+  </data>
+  <data name="Form_WhatsAppMessageLog_MessageRequired" xml:space="preserve">
+    <value>Message text is required.</value>
+  </data>
   <data name="Form_NotificationSettings" xml:space="preserve">
     <value>Notification Settings</value>
   </data>
@@ -4163,7 +4208,7 @@ Apply it?</value>
     <value>Sent: {0}, Failed: {1}</value>
   </data>
   <data name="Entity_TrWhatsAppMessageLog_IsSuccessful" xml:space="preserve">
-    <value>Successful</value>
+    <value>Sent</value>
   </data>
   <data name="Common_InsufficientBalance" xml:space="preserve">
     <value>Insufficient balance</value>

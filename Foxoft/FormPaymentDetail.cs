@@ -586,8 +586,12 @@ namespace Foxoft
                 return;
             }
 
+            string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
+            string caption = string.Format(Resources.Form_PaymentDetail_WhatsAppCaption, trPaymentHeader.DocumentNumber);
+
             if (!WhatsAppCreditService.HasEnoughBalance())
             {
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false);
                 XtraMessageBox.Show(Properties.Resources.Common_InsufficientBalance);
                 return;
             }
@@ -596,21 +600,21 @@ namespace Foxoft
             {
                 using var client = new Foxoft.AppCode.EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
 
-                string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
+                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: caption);
 
-                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: $"Ödəniş No: {trPaymentHeader.DocumentNumber}");
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: true);
 
-                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream);
-
-                alertControl1.Show(this, "WhatsApp mesajı", "Uğurla göndərildi.", "", (Image)null, null);
+                alertControl1.Show(this, Resources.Form_PaymentDetail_Button_SendWhatsapp, Resources.Common_SentSuccessfully, "", (Image)null, null);
             }
             catch (Exception ex)
             {
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false);
                 XtraMessageBox.Show(Properties.Resources.Common_ErrorOccurred + " " + ex.Message);
             }
         }
 
-        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, MemoryStream? imageStream = null)
+        private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, MemoryStream? imageStream = null,
+            string? message = null, bool isSuccessful = false)
         {
             try
             {
@@ -629,12 +633,15 @@ namespace Foxoft
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = receiverPhone,
                     MessageType = trPaymentHeader?.DcProcess?.ProcessDesc,
+                    Message = message,
                     Sender = Authorization.CurrAccCode,
                     CurrAccCode = trPaymentHeader?.CurrAccCode,
-                    ImageFilePath = imageFilePath
+                    ImageFilePath = imageFilePath,
+                    IsSuccessful = isSuccessful
                 });
 
-                ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(trPaymentHeader?.DcProcess?.ProcessDesc, receiverPhone));
+                if (isSuccessful)
+                    ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(trPaymentHeader?.DcProcess?.ProcessDesc, receiverPhone));
 
                 ctx.SaveChanges();
             }

@@ -156,9 +156,10 @@ namespace Foxoft.AppCode.Service
                     // Apply store placeholders from settings
                     message = ApplyStorePlaceholders(message);
 
-                    await SendAndLogAsync(apiSetting, phoneNum, message, "InstallmentReminder",
-                                          null, null);
-                    sent++;
+                    bool isSent = await SendAndLogAsync(apiSetting, phoneNum, message, "InstallmentReminder",
+                                                        null, null);
+                    if (isSent) sent++;
+                    else failed++;
                 }
                 catch (Exception ex)
                 {
@@ -192,9 +193,10 @@ namespace Foxoft.AppCode.Service
 
                     message = ApplyStorePlaceholders(message);
 
-                    await SendAndLogAsync(apiSetting, phoneNum, message, "InstallmentDueDay",
-                                          null, null);
-                    sent++;
+                    bool isSent = await SendAndLogAsync(apiSetting, phoneNum, message, "InstallmentDueDay",
+                                                        null, null);
+                    if (isSent) sent++;
+                    else failed++;
                 }
                 catch (Exception ex)
                 {
@@ -229,9 +231,10 @@ namespace Foxoft.AppCode.Service
                     var store = db.DcCurrAccs.FirstOrDefault(c => c.CurrAccCode == customer.StoreCode);
                     string message = ApplyPlaceholders(setting.MessageTemplate, customer, store, null);
 
-                    await SendAndLogAsync(apiSetting, customer.PhoneNum, message, "Birthday",
-                                          customer.CurrAccCode, null);
-                    sent++;
+                    bool isSent = await SendAndLogAsync(apiSetting, customer.PhoneNum, message, "Birthday",
+                                                        customer.CurrAccCode, null);
+                    if (isSent) sent++;
+                    else failed++;
                 }
                 catch (Exception ex)
                 {
@@ -363,7 +366,7 @@ namespace Foxoft.AppCode.Service
             return template;
         }
 
-        private async Task SendAndLogAsync(DcWhatsAppProviderSetting apiSetting, string phoneNum,
+        private async Task<bool> SendAndLogAsync(DcWhatsAppProviderSetting apiSetting, string phoneNum,
             string message, string messageType, string currAccCode, Guid? documentHeaderId)
         {
             string formattedNumber = phoneNum.Trim().Replace("+", "").Replace(" ", "");
@@ -382,11 +385,10 @@ namespace Foxoft.AppCode.Service
             if (!WhatsAppCreditService.HasEnoughBalance(db))
             {
                 logEntry.IsSuccessful = false;
-                logEntry.Message = Resources.Common_InsufficientBalance;
 
                 db.TrWhatsAppMessageLogs.Add(logEntry);
                 db.SaveChanges();
-                return;
+                return false;
             }
 
             try
@@ -400,9 +402,14 @@ namespace Foxoft.AppCode.Service
 
                 db.TrWhatsAppMessageLogs.Add(logEntry);
                 db.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {
+                logEntry.IsSuccessful = false;
+                db.TrWhatsAppMessageLogs.Add(logEntry);
+                db.SaveChanges();
+
                 var mainForm = System.Windows.Forms.Application.OpenForms.OfType<System.Windows.Forms.Form>().FirstOrDefault();
                 if (mainForm != null)
                 {
@@ -414,6 +421,8 @@ namespace Foxoft.AppCode.Service
                         alertControl.Show(mainForm, Resources.Common_ErrorTitle, string.Format(Resources.Common_WhatsAppSendError, ex.Message));
                     }));
                 }
+
+                return false;
             }
         }
     }

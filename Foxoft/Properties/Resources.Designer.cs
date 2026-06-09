@@ -10169,6 +10169,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment No: {0}.
+        /// </summary>
+        public static string Form_PaymentDetail_WhatsAppCaption {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_WhatsAppCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment.
         /// </summary>
         public static string Form_PaymentDetail_Caption {
@@ -12651,6 +12660,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_Action {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected WhatsApp message has already been sent..
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_AlreadySent {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_AlreadySent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image.
         /// </summary>
         public static string Form_WhatsAppMessageLog_ImagePreview {
@@ -12660,11 +12687,101 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WhatsApp message image file was not found..
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_ImageFileNotFound {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_ImageFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message text is required..
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_MessageRequired {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_MessageRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Image.
         /// </summary>
         public static string Form_WhatsAppMessageLog_NoImage {
             get {
                 return ResourceManager.GetString("Form_WhatsAppMessageLog_NoImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no unsent WhatsApp messages..
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_NoUnsentMessages {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_NoUnsentMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WhatsApp message log was not found..
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_NotFound {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receiver phone number is required..
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_PhoneRequired {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_PhoneRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send All Unsent.
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_SendAllUnsent {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_SendAllUnsent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send all unsent WhatsApp messages?.
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_SendAllUnsentConfirm {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_SendAllUnsentConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Again.
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_SendAgain {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_SendAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent: {0}, Failed: {1}.
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_SendResult {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_SendResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Selected.
+        /// </summary>
+        public static string Form_WhatsAppMessageLog_SendSelected {
+            get {
+                return ResourceManager.GetString("Form_WhatsAppMessageLog_SendSelected", resourceCulture);
             }
         }
         
@@ -13232,6 +13349,24 @@ namespace Foxoft.Properties {
         public static string FormInvoice_WhatsappSend {
             get {
                 return ResourceManager.GetString("FormInvoice_WhatsappSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice No: {0}.
+        /// </summary>
+        public static string FormInvoice_WhatsAppCaption {
+            get {
+                return ResourceManager.GetString("FormInvoice_WhatsAppCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice.
+        /// </summary>
+        public static string FormInvoice_WhatsAppCaptionDefault {
+            get {
+                return ResourceManager.GetString("FormInvoice_WhatsAppCaptionDefault", resourceCulture);
             }
         }
         

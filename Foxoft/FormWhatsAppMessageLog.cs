@@ -3,13 +3,16 @@ using System.Drawing.Drawing2D;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Grid;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 
 namespace Foxoft
@@ -84,6 +87,8 @@ namespace Foxoft
                 gV_WhatsAppMessageLogList.RestoreLayoutFromXml(layoutFilePath);
                 layoutLoaded = true;
             }
+
+            EnsureSendAgainColumnVisible();
         }
 
         private void SaveLayout()
@@ -105,6 +110,120 @@ namespace Foxoft
         private void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
             LoadData();
+        }
+
+        private async void bBI_SendSelected_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            await SendAgainAsync(gV_WhatsAppMessageLogList.GetFocusedRow() as TrWhatsAppMessageLog);
+        }
+
+        private async void repoBtn_SendAgain_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            await SendAgainAsync(gV_WhatsAppMessageLogList.GetFocusedRow() as TrWhatsAppMessageLog);
+        }
+
+        private async Task SendAgainAsync(TrWhatsAppMessageLog? log)
+        {
+            if (log == null)
+            {
+                XtraMessageBox.Show(Resources.Message_NoRowSelected, Resources.Common_Attention);
+                return;
+            }
+
+            if (log.IsSuccessful)
+            {
+                XtraMessageBox.Show(Resources.Form_WhatsAppMessageLog_AlreadySent, Resources.Common_Attention);
+                return;
+            }
+
+            SetSendButtonsEnabled(false);
+            try
+            {
+                await WhatsAppMessageLogService.ResendAsync(log.WhatsAppMessageLogId);
+                XtraMessageBox.Show(Resources.Common_SentSuccessfully, Resources.Form_WhatsAppMessageLog, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(string.Format(Resources.Common_WhatsAppSendError, ex.Message), Resources.Common_Attention);
+            }
+            finally
+            {
+                SetSendButtonsEnabled(true);
+            }
+        }
+
+        private async void bBI_SendAllUnsent_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            List<Guid> unsentLogIds = dbContext.TrWhatsAppMessageLogs
+                .AsNoTracking()
+                .Where(x => !x.IsSuccessful)
+                .OrderBy(x => x.CreatedDate)
+                .Select(x => x.WhatsAppMessageLogId)
+                .ToList();
+
+            if (unsentLogIds.Count == 0)
+            {
+                XtraMessageBox.Show(Resources.Form_WhatsAppMessageLog_NoUnsentMessages, Resources.Common_Attention);
+                return;
+            }
+
+            DialogResult result = XtraMessageBox.Show(
+                Resources.Form_WhatsAppMessageLog_SendAllUnsentConfirm,
+                Resources.Common_Confirm,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            int sent = 0;
+            int failed = 0;
+
+            SetSendButtonsEnabled(false);
+            try
+            {
+                foreach (Guid logId in unsentLogIds)
+                {
+                    try
+                    {
+                        await WhatsAppMessageLogService.ResendAsync(logId);
+                        sent++;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Print($"WhatsApp resend error: {ex.Message}");
+                        failed++;
+                    }
+                }
+
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_WhatsAppMessageLog_SendResult, sent, failed),
+                    Resources.Form_WhatsAppMessageLog,
+                    MessageBoxButtons.OK,
+                    failed == 0 ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+
+                LoadData();
+            }
+            finally
+            {
+                SetSendButtonsEnabled(true);
+            }
+        }
+
+        private void SetSendButtonsEnabled(bool enabled)
+        {
+            bBI_SendSelected.Enabled = enabled;
+            bBI_SendAllUnsent.Enabled = enabled;
+            bBI_Refresh.Enabled = enabled;
+            colSendAgain.OptionsColumn.AllowEdit = enabled;
+        }
+
+        private void EnsureSendAgainColumnVisible()
+        {
+            colSendAgain.Visible = true;
+            colSendAgain.VisibleIndex = Math.Max(0, gV_WhatsAppMessageLogList.VisibleColumns.Count - 1);
+            colSendAgain.Width = 110;
         }
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
@@ -255,6 +374,15 @@ namespace Foxoft
         }
 
         private readonly Dictionary<string, Image> _imageCache = new();
+
+        private void gV_WhatsAppMessageLogList_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
+        {
+            if (e.Column != colSendAgain || e.RowHandle < 0)
+                return;
+
+            bool isSuccessful = Convert.ToBoolean(gV_WhatsAppMessageLogList.GetRowCellValue(e.RowHandle, colIsSuccessful) ?? false);
+            e.RepositoryItem = isSuccessful ? repoTextEmpty : repoBtn_SendAgain;
+        }
 
         private void gV_WhatsAppMessageLogList_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
         {
