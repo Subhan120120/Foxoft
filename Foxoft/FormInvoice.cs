@@ -746,15 +746,6 @@ namespace Foxoft
             BBI_Next.Enabled     = !isLoading;
             btnEdit_DocNum.Enabled = !isLoading;
 
-            // Save / action buttons
-            bBI_Save.Enabled         = !isLoading;
-            bBI_SaveAndNew.Enabled   = !isLoading;
-            bBI_SaveAndQuit.Enabled  = !isLoading;
-            bBI_New.Enabled          = !isLoading;
-            bBI_Payment.Enabled      = !isLoading;
-            bBI_DeleteInvoice.Enabled = !isLoading;
-            BBI_ModifyInvoice.Enabled = !isLoading;
-
             if (isLoading)
                 SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
             else
