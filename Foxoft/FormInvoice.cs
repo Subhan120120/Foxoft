@@ -80,6 +80,7 @@ namespace Foxoft
 
         public bool isNew = false;
         private bool _isSaved = false;
+        private bool _isLoading = false;
         private bool IsCampaignEnabled
             => Settings.Default.AppSetting != null
             && Settings.Default.AppSetting.UseCampaign;
@@ -254,12 +255,12 @@ namespace Foxoft
         }
 
 
-        private void FormInvoice_Shown(object sender, EventArgs e)
+        private async void FormInvoice_Shown(object sender, EventArgs e)
         {
             if (isNew)
                 ClearControlsAddNew();
             else
-                LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
 
             dataLayoutControl1.IsValid(out List<string> errorList);
             gC_InvoiceLine.Focus();
@@ -532,24 +533,24 @@ namespace Foxoft
                 UpdateInstallmentLabels();
             }
 
-            if (dbContext != null && dataLayoutControl1.IsValid(out _))
+            if (!_isLoading && dbContext != null && dataLayoutControl1.IsValid(out _))
                 if (Settings.Default.AppSetting.AutoSave)
                     if (gV_InvoiceLine.DataRowCount > 0)
-                        if (!new[] { "EX", "EI" }.Contains(dcProcess.ProcessCode) // bunun yerine trInvoiceHeader.CashRegisterCode validation olmalidi
+                        if (!new[] { "EX", "EI" }.Contains(dcProcess.ProcessCode)
                             || !string.IsNullOrEmpty(trInvoiceHeader.CashRegisterCode))
                             SaveInvoice();
 
             //gV_InvoiceLine.Focus();
         }
 
-        private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        private async void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             if (e.Button.Kind == ButtonPredefines.Left)
-                NavigateInvoice(isPrevious: true);
+                await NavigateInvoiceAsync(isPrevious: true);
             else if (e.Button.Kind == ButtonPredefines.Right)
-                NavigateInvoice(isPrevious: false);
+                await NavigateInvoiceAsync(isPrevious: false);
             else
-                SelectDocNum();
+                await SelectDocNumAsync();
         }
 
         //private void btnEdit_DocNum_DoubleClick(object sender, EventArgs e)
@@ -557,7 +558,7 @@ namespace Foxoft
         //    SelectDocNum();
         //}
 
-        private void SelectDocNum()
+        private async Task SelectDocNumAsync()
         {
             if (!PromptSaveChanges())
                 return;
@@ -577,22 +578,22 @@ namespace Foxoft
                         _appInstanceId);
 
                     trInvoiceHeader = form.trInvoiceHeader;
-                    LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+                    await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
         }
 
-        private void BBI_Previous_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void BBI_Previous_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            NavigateInvoice(isPrevious: true);
+            await NavigateInvoiceAsync(isPrevious: true);
         }
 
-        private void BBI_Next_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void BBI_Next_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            NavigateInvoice(isPrevious: false);
+            await NavigateInvoiceAsync(isPrevious: false);
         }
 
-        private void NavigateInvoice(bool isPrevious)
+        private async Task NavigateInvoiceAsync(bool isPrevious)
         {
             if (trInvoiceHeader is null)
                 return;
@@ -653,13 +654,13 @@ namespace Foxoft
                     _appInstanceId);
 
                 trInvoiceHeader = adjacent;
-                LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
             }
         }
 
         private async Task LoadInvoiceAsync(Guid invoiceHeaderId)
         {
-            SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
+            SetLoadingState(true);
 
             try
             {
@@ -728,8 +729,36 @@ namespace Foxoft
             }
             finally
             {
-                SplashScreenManager.CloseForm(false);
+                SetLoadingState(false);
             }
+        }
+
+        /// <summary>
+        /// Loading zamanı navigation/action buttonları disable edir və DbContext-ə paralel
+        /// əməliyyat getməsinin qarşısını alır (_isLoading flag vasitəsilə).
+        /// </summary>
+        private void SetLoadingState(bool isLoading)
+        {
+            _isLoading = isLoading;
+
+            // Navigation
+            BBI_Previous.Enabled = !isLoading;
+            BBI_Next.Enabled     = !isLoading;
+            btnEdit_DocNum.Enabled = !isLoading;
+
+            // Save / action buttons
+            bBI_Save.Enabled         = !isLoading;
+            bBI_SaveAndNew.Enabled   = !isLoading;
+            bBI_SaveAndQuit.Enabled  = !isLoading;
+            bBI_New.Enabled          = !isLoading;
+            bBI_Payment.Enabled      = !isLoading;
+            bBI_DeleteInvoice.Enabled = !isLoading;
+            BBI_ModifyInvoice.Enabled = !isLoading;
+
+            if (isLoading)
+                SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
+            else
+                SplashScreenManager.CloseForm(false);
         }
 
         private bool IsInvoiceGracePeriodExpired()

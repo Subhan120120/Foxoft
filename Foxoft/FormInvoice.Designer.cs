@@ -95,6 +95,7 @@ namespace Foxoft
             bBI_CampaignLog = new BarButtonItem();
             BBI_PromoCodeCampaign = new BarButtonItem();
             bBI_CampaignDelete = new BarButtonItem();
+            BBI_ModifyInvoice = new BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             RPG_Invoice = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
