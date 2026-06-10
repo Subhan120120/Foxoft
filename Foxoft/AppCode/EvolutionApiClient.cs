@@ -168,10 +168,11 @@ namespace Foxoft.AppCode
 
     public sealed class EvolutionQrCodeResult
     {
-        private EvolutionQrCodeResult(string? code, string? base64, string body)
+        private EvolutionQrCodeResult(string? code, string? base64, string? state, string body)
         {
             Code = code;
             Base64 = base64;
+            State = state;
             Body = body;
         }
 
@@ -179,22 +180,27 @@ namespace Foxoft.AppCode
 
         public string? Base64 { get; }
 
+        public string? State { get; }
+
         public string Body { get; }
 
         public bool HasQrCode => !string.IsNullOrWhiteSpace(Code) || !string.IsNullOrWhiteSpace(Base64);
 
+        public bool IsConnected => string.Equals(State, "open", StringComparison.OrdinalIgnoreCase);
+
         public static EvolutionQrCodeResult FromJson(string body)
         {
             if (string.IsNullOrWhiteSpace(body))
-                return new EvolutionQrCodeResult(null, null, body);
+                return new EvolutionQrCodeResult(null, null, null, body);
 
             using JsonDocument document = JsonDocument.Parse(body);
             JsonElement root = document.RootElement;
 
             string? code = TryGetNestedString(root, "code") ?? TryFindString(root, "code");
             string? base64 = TryGetNestedString(root, "base64") ?? TryFindString(root, "base64");
+            string? state = TryGetNestedString(root, "state") ?? TryFindString(root, "state");
 
-            return new EvolutionQrCodeResult(code, base64, body);
+            return new EvolutionQrCodeResult(code, base64, state, body);
         }
 
         private static string? TryGetNestedString(JsonElement element, string propertyName)

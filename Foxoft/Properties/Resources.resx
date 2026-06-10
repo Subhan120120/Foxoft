@@ -4228,6 +4228,9 @@ Apply it?</value>
   <data name="Common_WhatsAppApiLogoutFailed" xml:space="preserve">
     <value>WhatsApp logout failed. Server response: {0}</value>
   </data>
+  <data name="Common_WhatsAppAlreadyConnected" xml:space="preserve">
+    <value>WhatsApp is already connected.</value>
+  </data>
   <data name="Common_Previous" xml:space="preserve">
     <value>Previous</value>
   </data>

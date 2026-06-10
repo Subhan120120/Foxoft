@@ -4228,6 +4228,9 @@ Tətbiq edilsin?</value>
   <data name="Common_WhatsAppApiLogoutFailed" xml:space="preserve">
     <value>WhatsApp logout əməliyyatı uğursuz oldu. Server cavabı: {0}</value>
   </data>
+  <data name="Common_WhatsAppAlreadyConnected" xml:space="preserve">
+    <value>WhatsApp artıq qoşulub.</value>
+  </data>
   <data name="Common_Previous" xml:space="preserve">
     <value>Əvvəlki</value>
   </data>

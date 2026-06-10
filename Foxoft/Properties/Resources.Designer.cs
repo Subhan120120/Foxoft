@@ -1173,6 +1173,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WhatsApp is already connected..
+        /// </summary>
+        public static string Common_WhatsAppAlreadyConnected {
+            get {
+                return ResourceManager.GetString("Common_WhatsAppAlreadyConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to WhatsApp account was not found for this number: {0}.
         /// </summary>
         public static string Common_WhatsAppNumberNotFound {

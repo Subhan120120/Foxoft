@@ -234,6 +234,17 @@ namespace Foxoft
 
         private void ShowWhatsAppQrCode(EvolutionQrCodeResult qrCode)
         {
+            if (qrCode.IsConnected)
+            {
+                ClearWhatsAppQrCode();
+                XtraMessageBox.Show(
+                    Resources.Common_WhatsAppAlreadyConnected,
+                    Resources.Common_Info,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
             if (!qrCode.HasQrCode)
             {
                 XtraMessageBox.Show(string.Format(Resources.Message_WhatsAppQrCodeNotFound, qrCode.Body), Resources.Common_Attention);
