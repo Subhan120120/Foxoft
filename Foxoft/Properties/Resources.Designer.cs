@@ -13815,5 +13815,23 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Validation_StringLength_Max", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to kick &quot;{0}&quot; from this document?.
+        /// </summary>
+        internal static string Form_Invoice_LockTakeoverQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_LockTakeoverQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Lock.
+        /// </summary>
+        internal static string Form_Invoice_LockTakeoverCaption {
+            get {
+                return ResourceManager.GetString("Form_Invoice_LockTakeoverCaption", resourceCulture);
+            }
+        }
     }
 }

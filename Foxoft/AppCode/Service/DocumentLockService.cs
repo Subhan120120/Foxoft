@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Models.Entity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -468,6 +468,70 @@ namespace Foxoft.AppCode.Service
                 x.LockedByUserId == userId &&
                 x.AppInstanceId == appInstanceId &&
                 x.FormInstanceId == formInstanceId);
+        }
+
+        public LockResult ForceTakeoverLock(
+            string documentType,
+            Guid documentId,
+            string newUserId,
+            string? machineName,
+            Guid appInstanceId,
+            Guid formInstanceId,
+            int clientProcessId,
+            string? reason = null)
+        {
+            var now = DateTime.UtcNow;
+
+            string? newUserName = _db.DcCurrAccs
+                .Where(x => x.CurrAccCode == newUserId)
+                .Select(x => x.CurrAccDesc)
+                .FirstOrDefault();
+
+            var existing = _db.DocumentLocks.AsNoTracking()
+                .FirstOrDefault(x => x.DocumentType == documentType && x.DocumentId == documentId);
+
+            if (existing is null)
+                return new LockResult(false, false, null, null, null, null, null, null, null, "LOCK_NOT_FOUND");
+
+            string previousOwner = existing.LockedByUserId;
+
+            var rows = _db.DocumentLocks
+                .Where(x => x.DocumentType == documentType && x.DocumentId == documentId)
+                .ExecuteUpdate(setters => setters
+                    .SetProperty(x => x.LockedByUserId, newUserId)
+                    .SetProperty(x => x.LockedAtUtc, now)
+                    .SetProperty(x => x.LastHeartbeatAtUtc, now)
+                    .SetProperty(x => x.MachineName, machineName)
+                    .SetProperty(x => x.AppInstanceId, appInstanceId)
+                    .SetProperty(x => x.FormInstanceId, formInstanceId)
+                    .SetProperty(x => x.ClientProcessId, clientProcessId)
+                    .SetProperty(x => x.Reason, reason)
+                    .SetProperty(x => x.CloseRequestedAtUtc, (DateTime?)null)
+                    .SetProperty(x => x.CloseRequestedByUserId, (string?)null)
+                    .SetProperty(x => x.CloseRequestReason, (string?)null)
+                    .SetProperty(x => x.ForceCloseRequestedAtUtc, (DateTime?)null)
+                    .SetProperty(x => x.ForceCloseReason, (string?)null));
+
+            if (rows == 1)
+            {
+                AddAudit(documentType, documentId, "FORCE_TAKEOVER", newUserId, machineName,
+                    $"Force takeover. Previous: {previousOwner}; {reason}");
+
+                return new LockResult(
+                    Acquired: true,
+                    TakenOver: true,
+                    LockedBy: newUserId,
+                    LockedByName: newUserName,
+                    LockedAtUtc: now,
+                    LastHeartbeatAtUtc: now,
+                    AppInstanceId: appInstanceId,
+                    FormInstanceId: formInstanceId,
+                    MachineName: machineName,
+                    Message: "LOCK_FORCE_TAKEN_OVER"
+                );
+            }
+
+            return new LockResult(false, false, null, null, null, null, null, null, null, "LOCK_TAKEOVER_FAILED");
         }
 
     }

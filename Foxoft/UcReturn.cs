@@ -1,4 +1,4 @@
-using DevExpress.Utils.Menu;
+﻿using DevExpress.Utils.Menu;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -157,7 +157,35 @@ namespace Foxoft
                         return false;
                 }
 
-                DialogResult answer = XtraMessageBox.Show(
+                bool canTakeover = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DocumentLockTakeover");
+
+                if (canTakeover)
+                {
+                    var answer = XtraMessageBox.Show(
+                        string.Format(Properties.Resources.Form_Invoice_LockTakeoverQuestion, res.LockedByName),
+                        Properties.Resources.Form_Invoice_LockTakeoverCaption,
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (answer == DialogResult.Yes)
+                    {
+                        var takeoverRes = _lockService.ForceTakeoverLock(
+                            documentType: "Invoice",
+                            documentId: invoiceHeaderId,
+                            newUserId: Authorization.CurrAccCode,
+                            machineName: Environment.MachineName,
+                            appInstanceId: formERP._appInstanceId,
+                            formInstanceId: formInstanceId,
+                            clientProcessId: Process.GetCurrentProcess().Id,
+                            reason: "Force takeover by authorized user");
+
+                        if (takeoverRes.Acquired)
+                            return true;
+                    }
+
+                    return false;
+                }
+                DialogResult closeAnswer = XtraMessageBox.Show(
                     $"Faktura hazırda {res.LockedByName} tərəfindən redaktə olunur.\n" +
                     $"Machine: {res.MachineName}\n" +
                     $"LockedAt: {res.LockedAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n" +
@@ -167,7 +195,7 @@ namespace Foxoft
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 
-                if (answer == DialogResult.Yes)
+                if (closeAnswer == DialogResult.Yes)
                 {
                     _lockService.RequestOwnerToClose(
                         documentType: "Invoice",
@@ -232,7 +260,7 @@ namespace Foxoft
             //gC_InvoiceLine.ForceInitialize();
 
             int rowHandle = gV_InvoiceLine.LocateByValue(0, col_InvoiceLineId, invoiceLineId);
-            if (rowHandle == GridControl.InvalidRowHandle)
+            if (GridControl.InvalidRowHandle == rowHandle)
                 return;
 
             gV_InvoiceLine.FocusedRowHandle = rowHandle;
@@ -243,8 +271,6 @@ namespace Foxoft
 
         private void CalcPaidAmount()
         {
-            //decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
-            //lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
         }
 
         private void repobtn_ReturnLine_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -289,7 +315,6 @@ namespace Foxoft
                         if (!efMethods.ReturnExistByInvoiceLine(returnInvoiceHeaderId, invoiceLineID))
                         {
                             TrInvoiceLine invoiceLine = efMethods.SelectInvoiceLine(invoiceLineID);
-
                             TrInvoiceLine returnInvoiceLine = new();
 
                             //returnInvoiceLine.TrInvoiceHeader = returnInvoHeader;
@@ -356,7 +381,7 @@ namespace Foxoft
             if (returnInvoHeader is null || returnInvoHeader.InvoiceHeaderId == Guid.Empty)
                 return;
 
-            // Loyalty txn-i return invoice-ın özünə görə hesabla (IsReturn=true => məbləğ mənfi olacaq)
+            // Loyalty txn-i return invoice-in ozune gore hesabla (IsReturn=true => mebleq menfi olacaq)
             _loyalty.SyncInvoiceEarn(returnInvoHeader);
         }
         
@@ -383,55 +408,55 @@ namespace Foxoft
             }
             else
             {
-                XtraMessageBox.Show(Resources.Form_Return_Message_PaymentIsZero);
+                XtraMessageBox.Show(Resources.Form_Return_Message_NoQtyToReturn);
             }
         }
 
         private void ClearControls()
         {
             returnInvoiceHeaderId = Guid.NewGuid();
+            returnInvoHeader = null;
             trInvoiceHeader = null;
-            gC_InvoiceLine.DataSource = null;
-            gC_PaymentLine.DataSource = null;
-            gC_ReturnInvoiceLine.DataSource = null;
             btnEdit_InvoiceHeader.EditValue = null;
-            txt_CurrAccDesc.Text = null;
+            txt_CurrAccDesc.Text = string.Empty;
+            gC_InvoiceLine.DataSource = null;
+            gC_ReturnInvoiceLine.DataSource = null;
+            gC_PaymentLine.DataSource = null;
+            Tag = null;
         }
 
         private void OpenFormInvoice(string strDocNum)
         {
+            TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
 
-            if (trInvoiceHeader is null)
+            if (trInvoiceHeader is not null)
             {
-                MessageBox.Show(Resources.Form_Return_Message_InvoiceNotFound);
-                return;
-            }
+                string claim = CustomExtensions.GetClaim(trInvoiceHeader.ProcessCode);
 
-            string claim = CustomExtensions.GetClaim(trInvoiceHeader.ProcessCode);
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show(Resources.Common_NoPermission);
+                    return;
+                }
 
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show(Resources.Common_AccessDenied);
-                return;
-            }
+                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                if (formERP == null)
+                    return;
 
-            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-            if (formERP == null)
-                return;
+                Guid formInstanceId = Guid.NewGuid();
+                byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
-            Guid formInstanceId = Guid.NewGuid();
-            byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
-
-            if (TryAcquireInvoiceLockForEdit(trInvoiceHeader.InvoiceHeaderId, formERP, formInstanceId))
-            {
-                FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
-                frm._formInstanceId = formInstanceId;
-                frm.MdiParent = formERP;
-                frm.WindowState = FormWindowState.Maximized;
-                frm.Show();
-                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                if (TryAcquireInvoiceLockForEdit(trInvoiceHeader.InvoiceHeaderId, formERP, formInstanceId))
+                {
+                    FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
+                    frm._formInstanceId = formInstanceId;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
             }
         }
 
@@ -440,32 +465,20 @@ namespace Foxoft
             GridView view = sender as GridView;
             if (view == null) return;
 
-            decimal posDiscount = Convert.ToDecimal(
-                view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.PosDiscount)]));
-
-            decimal amount = Convert.ToDecimal(
-                view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.Amount)]));
-
-            decimal netAmount = Convert.ToDecimal(
-                view.GetRowCellDisplayText(e.RowHandle, view.Columns[nameof(TrInvoiceLine.NetAmount)]));
-
-            string strVatRate = view.GetRowCellDisplayText(
-                e.RowHandle, view.Columns[nameof(TrInvoiceLine.VatRate)]);
-
-            string salesPersonCode = view.GetRowCellDisplayText(
-                e.RowHandle, view.Columns[nameof(TrInvoiceLine.SalesPersonCode)]);
-
-            float vatRate = float.Parse(strVatRate);
+            decimal posDiscountRate = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, "PosDiscount"));
+            decimal amount = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, "Amount"));
+            decimal netAmount = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, "NetAmount"));
+            float vatRate = Convert.ToSingle(view.GetRowCellValue(e.RowHandle, "VatRate"));
+            string salesPersonCode = view.GetRowCellValue(e.RowHandle, "SalesPersonCode")?.ToString() ?? string.Empty;
 
             e.PreviewText = CustomExtensions.GetPreviewText(
-                posDiscount,
+                posDiscountRate,
                 amount,
                 netAmount,
                 vatRate,
                 string.Empty,
                 salesPersonCode);
         }
-
         private void gV_InvoiceLine_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
             if (e.MenuType == GridMenuType.Column)

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4716,5 +4716,11 @@ Apply it?</value>
   </data>
   <data name="Entity_FormReport_UseReportAs_CopyToClipboardAndOpenPreview" xml:space="preserve">
     <value>CopyToClipboard AND Open Preview</value>
+  </data>
+  <data name="Form_Invoice_LockTakeoverQuestion" xml:space="preserve">
+    <value>Do you want to kick "{0}" from this document?</value>
+  </data>
+  <data name="Form_Invoice_LockTakeoverCaption" xml:space="preserve">
+    <value>Document Lock</value>
   </data>
 </root>

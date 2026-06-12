@@ -1,4 +1,4 @@
-using Foxoft.AppCode;
+﻿using Foxoft.AppCode;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Models.Entity.RoleClaim;
@@ -813,7 +813,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "Leaves", ClaimDesc = "Məzuniyyətlər", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "Shifts", ClaimDesc = "Növbələr", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "EmployeeShifts", ClaimDesc = "İşçi Növbələri", ClaimTypeId = 1, CategoryId = 23 },
-                new DcClaim { ClaimCode = "ChangeStore", ClaimDesc = "Mağaza Dəyişmə", ClaimTypeId = 1, CategoryId = 22 }
+                new DcClaim { ClaimCode = "ChangeStore", ClaimDesc = "Mağaza Dəyişmə", ClaimTypeId = 1, CategoryId = 22 },
+                new DcClaim { ClaimCode = "DocumentLockTakeover", ClaimDesc = "Sənəd Kilidi Ələ Keçirmə", ClaimTypeId = 1, CategoryId = 15 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -914,7 +915,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 68, RoleCode = "Admin", ClaimCode = "PaymentPlanList" },
                 new TrRoleClaim { RoleClaimId = 69, RoleCode = "Admin", ClaimCode = "WhatsAppMessageLog" },
                 new TrRoleClaim { RoleClaimId = 204, RoleCode = "Admin", ClaimCode = "InvoiceLineFeatureType" },
-                new TrRoleClaim { RoleClaimId = 205, RoleCode = "Admin", ClaimCode = "ChangeStore" }
+                new TrRoleClaim { RoleClaimId = 205, RoleCode = "Admin", ClaimCode = "ChangeStore" },
+                new TrRoleClaim { RoleClaimId = 206, RoleCode = "Admin", ClaimCode = "DocumentLockTakeover" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

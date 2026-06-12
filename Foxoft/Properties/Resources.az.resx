@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4716,5 +4716,11 @@ Tətbiq edilsin?</value>
   </data>
   <data name="Entity_FormReport_UseReportAs_CopyToClipboardAndOpenPreview" xml:space="preserve">
     <value>Buferə Kopyala və Önizləməni Aç</value>
+  </data>
+  <data name="Form_Invoice_LockTakeoverQuestion" xml:space="preserve">
+    <value>"{0}" istifadəçisini sənəddən çıxarmaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_Invoice_LockTakeoverCaption" xml:space="preserve">
+    <value>Sənəd Kilidi</value>
   </data>
 </root>

@@ -3851,7 +3851,39 @@ namespace Foxoft
                         return false;
                 }
 
-                var answer = XtraMessageBox.Show(
+                bool canTakeover = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DocumentLockTakeover");
+
+                if (canTakeover)
+                {
+                    var answer = XtraMessageBox.Show(
+                        string.Format(Properties.Resources.Form_Invoice_LockTakeoverQuestion, res.LockedByName),
+                        Properties.Resources.Form_Invoice_LockTakeoverCaption,
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (answer == DialogResult.Yes)
+                    {
+                        var takeoverRes = _lockService.ForceTakeoverLock(
+                            documentType: "Invoice",
+                            documentId: invoiceHeaderId,
+                            newUserId: Authorization.CurrAccCode,
+                            machineName: Environment.MachineName,
+                            appInstanceId: _appInstanceId,
+                            formInstanceId: _formInstanceId,
+                            clientProcessId: _pid,
+                            reason: "Force takeover by authorized user");
+
+                        if (takeoverRes.Acquired)
+                        {
+                            StartLockHeartbeat();
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
+                var closeAnswer = XtraMessageBox.Show(
                     $"Faktura hazırda {res.LockedByName} tərəfindən redaktə olunur.\n" +
                     $"Machine: {res.MachineName}\n" +
                     $"LockedAt: {res.LockedAtUtc:yyyy-MM-dd HH:mm:ss} (UTC)\n" +
@@ -3861,7 +3893,7 @@ namespace Foxoft
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 
-                if (answer == DialogResult.Yes)
+                if (closeAnswer == DialogResult.Yes)
                 {
                     _lockService.RequestOwnerToClose(
                         documentType: "Invoice",
