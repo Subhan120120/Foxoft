@@ -150,8 +150,8 @@ namespace Foxoft
 
         private void BBI_ContactDetail_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            FormCommonList<DcCurrAccContactDetail> formCommonList = new("", nameof(DcCurrAccContactDetail.Id), null, nameof(dcCurrAcc.CurrAccCode), dcCurrAcc.CurrAccCode);
-            formCommonList.ShowDialog();
+            FormCurrAccContactDetailList frm = new(dcCurrAcc.CurrAccCode);
+            frm.ShowDialog();
         }
 
         private void PhoneNumTextEdit_Validating(object sender, CancelEventArgs e)

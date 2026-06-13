@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -557,6 +557,21 @@
   </data>
   <data name="Entity_CurrAccContactDetail_Desc" xml:space="preserve">
     <value>Əlaqə Məlumatları Açıqlaması</value>
+  </data>
+  <data name="Entity_CurrAccContactDetail_SendWhatsapp" xml:space="preserve">
+    <value>WhatsApp Göndər</value>
+  </data>
+  <data name="Form_CurrAccContactDetail_Caption_New" xml:space="preserve">
+    <value>Yeni Əlaqə Məlumatı</value>
+  </data>
+  <data name="Form_CurrAccContactDetail_Caption_Edit" xml:space="preserve">
+    <value>Əlaqə Məlumatını Redaktə Et</value>
+  </data>
+  <data name="Form_CurrAccContactDetailList_Caption" xml:space="preserve">
+    <value>Əlaqə Məlumatları</value>
+  </data>
+  <data name="Form_CurrAccContactDetailList_NoItemToDelete" xml:space="preserve">
+    <value>Silmək üçün əlaqə məlumatı seçilməyib.</value>
   </data>
   <data name="Entity_CurrAccFeature" xml:space="preserve">
     <value>Cari Hesab Özəlliyi</value>

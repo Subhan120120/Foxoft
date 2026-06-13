@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -37,6 +37,9 @@ namespace Foxoft.Models
         )]
         [ForeignKey(nameof(DcCurrAcc))]
         public string CurrAccCode { get; set; }
+
+        [Display(Name = nameof(Resources.Entity_CurrAccContactDetail_SendWhatsapp), ResourceType = typeof(Resources))]
+        public bool SendWhatsapp { get; set; }
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual DcContactType DcContactType { get; set; }
