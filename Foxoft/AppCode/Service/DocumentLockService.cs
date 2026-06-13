@@ -316,6 +316,7 @@ namespace Foxoft.AppCode.Service
 
             return new LockCheckResult(LockCloseReason.None);
         }
+
         public bool RequestOwnerToClose(
             string documentType,
             Guid documentId,

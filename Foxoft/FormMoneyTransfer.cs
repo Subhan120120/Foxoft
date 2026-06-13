@@ -644,12 +644,6 @@ namespace Foxoft
                 return;
             }
 
-            if (!WhatsAppCreditService.HasEnoughBalance())
-            {
-                MessageBox.Show(Resources.Common_InsufficientBalance);
-                return;
-            }
-
             string link = $"https://web.whatsapp.com/send?phone={number}&text={Uri.EscapeDataString(message)}";
 
             Process myProcess = new();
