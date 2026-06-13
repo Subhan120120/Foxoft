@@ -15,10 +15,14 @@ namespace Foxoft.AppCode
     internal class GoogleDriveAPI : IDisposable
     {
         private const string ApplicationName = "Foxoft";
-        private const string TokenDirectoryName = "TokenStore";
         private const string CredentialData = "DQogICAgICAgIHsNCiAgICAgICAgICAgImluc3RhbGxlZCI6IHsNCiAgICAgICAgICAgICAgImNsaWVudF9pZCI6ICI4ODQyNzM5NzA5OTctbTJ0MmRxZDg4dG5vNDRkYjZkdmxzcXU4dm1hdHVjaWkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLA0KICAgICAgICAgICAgICAicHJvamVjdF9pZCI6ICJzdHJpa2luZy1hcmJvci0yOTIwMTgiLA0KICAgICAgICAgICAgICAiYXV0aF91cmkiOiAiaHR0cHM6Ly9hY2NvdW50cy5nb29nbGUuY29tL28vb2F1dGgyL2F1dGgiLA0KICAgICAgICAgICAgICAidG9rZW5fdXJpIjogImh0dHBzOi8vb2F1dGgyLmdvb2dsZWFwaXMuY29tL3Rva2VuIiwNCiAgICAgICAgICAgICAgImF1dGhfcHJvdmlkZXJfeDUwOV9jZXJ0X3VybCI6ICJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9vYXV0aDIvdjEvY2VydHMiLA0KICAgICAgICAgICAgICAiY2xpZW50X3NlY3JldCI6ICJHT0NTUFgtd3UyMnBSZmR4MzJrcksxSlJUYXJGeDRQLUdfVyIsDQogICAgICAgICAgICAgICJyZWRpcmVjdF91cmlzIjogWyAiaHR0cDovL2xvY2FsaG9zdCIgXQ0KICAgICAgICAgICB9DQogICAgICAgIH0=";
         private const string GoogleSheetsMimeType = "application/vnd.google-apps.spreadsheet";
         private const string XlsxMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+        private static readonly string TokenPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+            "Foxoft",
+            "token.json");
 
         private DriveService _driveService;
         private bool _disposed;
@@ -40,7 +44,7 @@ namespace Foxoft.AppCode
                 new[] { DriveService.Scope.Drive },
                 "user",
                 CancellationToken.None,
-                new FileDataStore(GetTokenDirectoryPath(), true)).Result;
+                new FileDataStore(TokenPath, true)).Result;
 
             _driveService = new DriveService(new BaseClientService.Initializer()
             {
@@ -51,18 +55,6 @@ namespace Foxoft.AppCode
             return _driveService;
         }
 
-        private static string GetTokenDirectoryPath()
-        {
-            string tokenDirectoryPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                ApplicationName,
-                "GoogleDrive",
-                TokenDirectoryName);
-
-            Directory.CreateDirectory(tokenDirectoryPath);
-
-            return tokenDirectoryPath;
-        }
 
         /// <summary>
         /// Google Sheets və ya xlsx faylını yükləyir və MemoryStream kimi qaytarır.
