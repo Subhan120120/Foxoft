@@ -90,8 +90,11 @@ namespace Foxoft
                 ContactDescTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
 
                 // Default value for new records
-                if (isNew && string.IsNullOrWhiteSpace(ContactDescTextEdit.Text))
-                    ContactDescTextEdit.EditValue = "+994";
+                if (isNew && string.IsNullOrWhiteSpace(dcContactDetail.ContactDesc))
+                {
+                    dcContactDetail.ContactDesc = "+994";
+                    ContactDescTextEdit.DataBindings["EditValue"]?.ReadValue();
+                }
             }
             else
             {
