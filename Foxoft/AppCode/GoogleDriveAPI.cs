@@ -4,6 +4,8 @@ using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 
 namespace Foxoft.AppCode
@@ -20,8 +22,7 @@ namespace Foxoft.AppCode
         private const string XlsxMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
         private static readonly string TokenPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-            "Foxoft",
+            AppDomain.CurrentDomain.BaseDirectory,
             "token.json");
 
         private DriveService _driveService;
@@ -34,6 +35,8 @@ namespace Foxoft.AppCode
         {
             if (_driveService != null)
                 return _driveService;
+
+            EnsureTokenDirectoryAccess(TokenPath);
 
             byte[] credentialBytes = Convert.FromBase64String(CredentialData);
 
@@ -117,6 +120,30 @@ namespace Foxoft.AppCode
 
             memoryStream.Position = 0;
             return memoryStream;
+        }
+
+        /// <summary>
+        /// Token qovluğunun mövcud olduğunu və bütün istifadəçilərin yazı icazəsinin olduğunu təmin edir.
+        /// </summary>
+        private static void EnsureTokenDirectoryAccess(string tokenDirectoryPath)
+        {
+            DirectoryInfo dirInfo = new(tokenDirectoryPath);
+
+            if (!dirInfo.Exists)
+                dirInfo.Create();
+
+            DirectorySecurity security = dirInfo.GetAccessControl();
+
+            SecurityIdentifier usersGroup = new(WellKnownSidType.BuiltinUsersSid, null);
+
+            security.AddAccessRule(new FileSystemAccessRule(
+                usersGroup,
+                FileSystemRights.FullControl,
+                InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+                PropagationFlags.None,
+                AccessControlType.Allow));
+
+            dirInfo.SetAccessControl(security);
         }
 
         /// <summary>
