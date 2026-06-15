@@ -456,20 +456,28 @@ namespace Foxoft
                 return;
             }
 
-            string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode)?.PhoneNum;
+            List<string> phoneNums = efMethods.SelectCurrAccWhatsappRecipients(trPaymentHeader.CurrAccCode);
+            if (phoneNums.Count == 0)
+            {
+                MessageBox.Show(Resources.Form_PaymentDetail_PhoneNotFound);
+                return;
+            }
 
             MemoryStream? memoryStream = GetPaymentReportImg();
             if (memoryStream == null) return;
 
             if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
             {
-                await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream);
+                foreach (string phoneNum in phoneNums)
+                    await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream);
             }
             else
             {
                 if (memoryStream.CanSeek) memoryStream.Position = 0;
                 Clipboard.SetImage(Image.FromStream(memoryStream));
-                sendWhatsApp(phoneNum, $"Ödəniş No: {trPaymentHeader.DocumentNumber}");
+
+                foreach (string phoneNum in phoneNums)
+                    sendWhatsApp(phoneNum, $"Ödəniş No: {trPaymentHeader.DocumentNumber}");
             }
         }
 

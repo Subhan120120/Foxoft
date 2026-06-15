@@ -1800,26 +1800,23 @@ namespace Foxoft
             // Send WhatsApp product purchase message for IS process
             if (new[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && !string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode))
             {
-                string phoneNum = trInvoiceHeader.DcCurrAcc?.PhoneNum;
-                if (string.IsNullOrEmpty(phoneNum))
-                {
-                    using var tempDb = new subContext();
-                    phoneNum = tempDb.DcCurrAccs
-                        .Where(c => c.CurrAccCode == trInvoiceHeader.CurrAccCode)
-                        .Select(c => c.PhoneNum)
-                        .FirstOrDefault();
-                }
+                string currAccCode = trInvoiceHeader.CurrAccCode;
+                List<string> phoneNums = efMethods.SelectCurrAccWhatsappRecipients(currAccCode);
 
-                if (!string.IsNullOrEmpty(phoneNum))
+                if (phoneNums.Count > 0)
                 {
                     _ = Task.Run(async () =>
                     {
-                        try
+                        var messagingService = new AppCode.Service.MessagingService();
+
+                        foreach (string phoneNum in phoneNums)
                         {
-                            var messagingService = new AppCode.Service.MessagingService();
-                            await messagingService.SendProductPurchaseMessageAsync(trInvoiceHeader.CurrAccCode, phoneNum);
+                            try
+                            {
+                                await messagingService.SendProductPurchaseMessageAsync(currAccCode, phoneNum);
+                            }
+                            catch (Exception ex) { System.Diagnostics.Debug.Print($"ProductPurchase message error: {ex.Message}"); }
                         }
-                        catch (Exception ex) { System.Diagnostics.Debug.Print($"ProductPurchase message error: {ex.Message}"); }
                     });
                 }
             }
@@ -2207,18 +2204,27 @@ namespace Foxoft
 
         private async void bBI_Whatsapp_ItemClick(object sender, ItemClickEventArgs e)
         {
+            List<string> phoneNums = efMethods.SelectCurrAccWhatsappRecipients(trInvoiceHeader.CurrAccCode);
+            if (phoneNums.Count == 0)
+            {
+                MessageBox.Show(Resources.Form_Invoice_Whatsapp_NumberNotEntered);
+                return;
+            }
+
             MemoryStream memoryStream = GetInvoiceReportImg();
-            string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
             if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
             {
-                await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream, trInvoiceHeader.DocumentNumber);
+                foreach (string phoneNum in phoneNums)
+                    await SendWhatsAppViaEvolutionApi(phoneNum, memoryStream, trInvoiceHeader.DocumentNumber);
             }
             else
             {
                 if (memoryStream.CanSeek) memoryStream.Position = 0;
                 Clipboard.SetImage(Image.FromStream(memoryStream));
-                SendWhatsApp(phoneNum, $"Faktura No: {trInvoiceHeader.DocumentNumber}");
+
+                foreach (string phoneNum in phoneNums)
+                    SendWhatsApp(phoneNum, $"Faktura No: {trInvoiceHeader.DocumentNumber}");
             }
         }
 

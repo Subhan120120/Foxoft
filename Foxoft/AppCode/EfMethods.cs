@@ -1949,6 +1949,53 @@ namespace Foxoft
             return db.DcCurrAccContactDetails.Any(x => x.CurrAccCode == currAccCode);
         }
 
+        public List<string> SelectCurrAccWhatsappRecipients(string currAccCode)
+        {
+            if (string.IsNullOrWhiteSpace(currAccCode))
+                return new List<string>();
+
+            const byte phoneContactTypeId = 1;
+
+            using subContext db = new();
+            List<string?> numbers = db.DcCurrAccContactDetails
+                .Where(x => x.CurrAccCode == currAccCode
+                            && x.ContactTypeId == phoneContactTypeId
+                            && x.SendWhatsapp
+                            && x.ContactDesc != null
+                            && x.ContactDesc != "")
+                .Select(x => x.ContactDesc)
+                .ToList();
+
+            if (numbers.Count == 0)
+            {
+                string? defaultPhoneNum = db.DcCurrAccs
+                    .Where(x => x.IsDisabled == false)
+                    .Where(x => x.CurrAccCode == currAccCode)
+                    .Select(x => x.PhoneNum)
+                    .FirstOrDefault();
+
+                if (!string.IsNullOrWhiteSpace(defaultPhoneNum))
+                    numbers.Add(defaultPhoneNum);
+            }
+
+            List<string> recipients = new();
+            HashSet<string> phoneKeys = new();
+
+            foreach (string? number in numbers)
+            {
+                string? trimmedNumber = number?.Trim();
+                string phoneKey = new((trimmedNumber ?? "").Where(char.IsDigit).ToArray());
+
+                if (string.IsNullOrWhiteSpace(trimmedNumber) || string.IsNullOrEmpty(phoneKey))
+                    continue;
+
+                if (phoneKeys.Add(phoneKey))
+                    recipients.Add(trimmedNumber);
+            }
+
+            return recipients;
+        }
+
         public void InsertProduct(DcProduct dcProduct)
         {
             using subContext db = new();
