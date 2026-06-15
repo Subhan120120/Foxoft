@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -380,6 +380,12 @@
   </data>
   <data name="Validation_Required" xml:space="preserve">
     <value>{0} boş buraxıla bilməz</value>
+  </data>
+  <data name="Common_Off" xml:space="preserve">
+    <value>Söndür</value>
+  </data>
+  <data name="Common_On" xml:space="preserve">
+    <value>Aktiv et</value>
   </data>
   <data name="Entity_Claim" xml:space="preserve">
     <value>Yetki</value>
@@ -4171,55 +4177,55 @@ Tətbiq edilsin?</value>
   <data name="Form_WhatsAppMessageLog_MessageRequired" xml:space="preserve">
     <value>Mesaj mətni mütləqdir.</value>
   </data>
-  <data name="Form_NotificationSettings" xml:space="preserve">
-    <value>Bildiriş tənzimləmələri</value>
+  <data name="Form_MessagingSettings" xml:space="preserve">
+    <value>Mesajlaşma tənzimləmələri</value>
   </data>
-  <data name="Form_NotificationSettings_NotificationType" xml:space="preserve">
-    <value>Bildiriş növü</value>
+  <data name="Form_MessagingSettings_MessagingType" xml:space="preserve">
+    <value>Mesajlaşma növü</value>
   </data>
-  <data name="Form_NotificationSettings_IsEnabled" xml:space="preserve">
+  <data name="Form_MessagingSettings_IsEnabled" xml:space="preserve">
     <value>Aktiv</value>
   </data>
-  <data name="Form_NotificationSettings_DaysBefore" xml:space="preserve">
+  <data name="Form_MessagingSettings_DaysBefore" xml:space="preserve">
     <value>Gün qalmış</value>
   </data>
-  <data name="Form_NotificationSettings_MessageTemplate" xml:space="preserve">
+  <data name="Form_MessagingSettings_MessageTemplate" xml:space="preserve">
     <value>SMS mətni</value>
   </data>
-  <data name="Form_NotificationSettings_InstallmentReminder" xml:space="preserve">
-    <value>Kreditdə əvvəl bildiriş</value>
+  <data name="Form_MessagingSettings_InstallmentReminder" xml:space="preserve">
+    <value>Kredit üzrə əvvəlcədən mesaj</value>
   </data>
-  <data name="Form_NotificationSettings_InstallmentDueDay" xml:space="preserve">
-    <value>Ödəniş günü bildiriş</value>
+  <data name="Form_MessagingSettings_InstallmentDueDay" xml:space="preserve">
+    <value>Ödəniş günü mesajı</value>
   </data>
-  <data name="Form_NotificationSettings_ProductPurchase" xml:space="preserve">
-    <value>Məhsul alarkən bildiriş</value>
+  <data name="Form_MessagingSettings_ProductPurchase" xml:space="preserve">
+    <value>Məhsul alarkən mesaj</value>
   </data>
-  <data name="Form_NotificationSettings_CreditClosed" xml:space="preserve">
-    <value>Kredit bağlandığı zaman</value>
+  <data name="Form_MessagingSettings_CreditClosed" xml:space="preserve">
+    <value>Kredit bağlandıqda mesaj</value>
   </data>
-  <data name="Form_NotificationSettings_CreditPayment" xml:space="preserve">
-    <value>Kredit ödənişi zaman</value>
+  <data name="Form_MessagingSettings_CreditPayment" xml:space="preserve">
+    <value>Kredit ödənişi zamanı mesaj</value>
   </data>
-  <data name="Form_NotificationSettings_Birthday" xml:space="preserve">
-    <value>Doğum günü bildiriş</value>
+  <data name="Form_MessagingSettings_Birthday" xml:space="preserve">
+    <value>Doğum günü mesajı</value>
   </data>
-  <data name="Form_NotificationSettings_Save" xml:space="preserve">
+  <data name="Form_MessagingSettings_Save" xml:space="preserve">
     <value>Saxla</value>
   </data>
-  <data name="Form_NotificationSettings_SendNow" xml:space="preserve">
-    <value>Bildirişləri göndər</value>
+  <data name="Form_MessagingSettings_SendNow" xml:space="preserve">
+    <value>Mesajları göndər</value>
   </data>
-  <data name="Form_NotificationSettings_SendSuccess" xml:space="preserve">
-    <value>Bildirişlər uğurla göndərildi</value>
+  <data name="Form_MessagingSettings_SendSuccess" xml:space="preserve">
+    <value>Mesajlar uğurla göndərildi</value>
   </data>
-  <data name="Form_NotificationSettings_SendFailed" xml:space="preserve">
-    <value>Bildiriş göndərilmədi: {0}</value>
+  <data name="Form_MessagingSettings_SendFailed" xml:space="preserve">
+    <value>Mesaj göndərilmədi: {0}</value>
   </data>
-  <data name="Form_NotificationSettings_Sending" xml:space="preserve">
-    <value>Bildirişlər göndərilir...</value>
+  <data name="Form_MessagingSettings_Sending" xml:space="preserve">
+    <value>Mesajlar göndərilir...</value>
   </data>
-  <data name="Form_NotificationSettings_SendResult" xml:space="preserve">
+  <data name="Form_MessagingSettings_SendResult" xml:space="preserve">
     <value>Göndərildi: {0}, Uğursuz: {1}</value>
   </data>
   <data name="Entity_TrWhatsAppMessageLog_IsSuccessful" xml:space="preserve">

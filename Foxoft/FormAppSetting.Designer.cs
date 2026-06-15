@@ -1,4 +1,4 @@
-
+﻿
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -114,8 +114,8 @@ namespace Foxoft
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             tabPageShortcuts = new DevExpress.XtraTab.XtraTabPage();
             ucShortcutSetting1 = new UcShortcutSetting();
-            tabPageNotification = new DevExpress.XtraTab.XtraTabPage();
-            ucNotificationSetting1 = new UcNotificationSetting();
+            tabPageMessaging = new DevExpress.XtraTab.XtraTabPage();
+            ucMessagingSetting1 = new UcMessagingSetting();
             ((System.ComponentModel.ISupportInitialize)tabControl1).BeginInit();
             tabControl1.SuspendLayout();
             tabPageSettings.SuspendLayout();
@@ -194,7 +194,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             tabPageShortcuts.SuspendLayout();
-            tabPageNotification.SuspendLayout();
+            tabPageMessaging.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -205,7 +205,7 @@ namespace Foxoft
             tabControl1.SelectedTabPage = tabPageSettings;
             tabControl1.Size = new Size(800, 720);
             tabControl1.TabIndex = 1;
-            tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts, tabPageNotification });
+            tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts, tabPageMessaging });
             // 
             // tabPageSettings
             // 
@@ -1013,20 +1013,20 @@ namespace Foxoft
             ucShortcutSetting1.Size = new Size(798, 695);
             ucShortcutSetting1.TabIndex = 0;
             // 
-            // tabPageNotification
+            // tabPageMessaging
             // 
-            tabPageNotification.Controls.Add(ucNotificationSetting1);
-            tabPageNotification.Name = "tabPageNotification";
-            tabPageNotification.Size = new Size(798, 695);
-            tabPageNotification.Text = "Notification Settings";
+            tabPageMessaging.Controls.Add(ucMessagingSetting1);
+            tabPageMessaging.Name = "tabPageMessaging";
+            tabPageMessaging.Size = new Size(798, 695);
+            tabPageMessaging.Text = Resources.Form_MessagingSettings;
             // 
-            // ucNotificationSetting1
+            // ucMessagingSetting1
             // 
-            ucNotificationSetting1.Dock = DockStyle.Fill;
-            ucNotificationSetting1.Location = new Point(0, 0);
-            ucNotificationSetting1.Name = "ucNotificationSetting1";
-            ucNotificationSetting1.Size = new Size(798, 695);
-            ucNotificationSetting1.TabIndex = 0;
+            ucMessagingSetting1.Dock = DockStyle.Fill;
+            ucMessagingSetting1.Location = new Point(0, 0);
+            ucMessagingSetting1.Name = "ucMessagingSetting1";
+            ucMessagingSetting1.Size = new Size(798, 695);
+            ucMessagingSetting1.TabIndex = 0;
             // 
             // FormAppSetting
             // 
@@ -1115,7 +1115,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             tabPageShortcuts.ResumeLayout(false);
-            tabPageNotification.ResumeLayout(false);
+            tabPageMessaging.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1203,8 +1203,8 @@ namespace Foxoft
         private DevExpress.XtraTab.XtraTabPage tabPageSettings;
         private DevExpress.XtraTab.XtraTabPage tabPageShortcuts;
         private Foxoft.UcShortcutSetting ucShortcutSetting1;
-        // Notification tab
-        private DevExpress.XtraTab.XtraTabPage tabPageNotification;
-        private Foxoft.UcNotificationSetting ucNotificationSetting1;
+        // Messaging tab
+        private DevExpress.XtraTab.XtraTabPage tabPageMessaging;
+        private Foxoft.UcMessagingSetting ucMessagingSetting1;
     }
 }

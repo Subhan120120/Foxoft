@@ -1,4 +1,4 @@
-using Foxoft.Models;
+﻿using Foxoft.Models;
 using Foxoft.Properties;
 using Foxoft.AppCode;
 using Microsoft.Data.SqlClient;
@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace Foxoft.AppCode.Service
 {
-    public class NotificationService
+    public class MessagingService
     {
         /// <summary>
-        /// Sends scheduled notifications (installment reminders, due day, birthday).
+        /// Sends scheduled messages (installment reminders, due day, birthday).
         /// Returns (sentCount, failedCount).
         /// </summary>
-        public async Task<(int Sent, int Failed)> SendScheduledNotificationsAsync()
+        public async Task<(int Sent, int Failed)> SendScheduledMessagesAsync()
         {
             int sent = 0;
             int failed = 0;
 
             using var db = new subContext();
-            var settings = db.DcNotificationSettings.ToList();
+            var settings = db.DcMessagingSettings.ToList();
 
             var apiSetting = db.DcWhatsAppProviderSettings.FirstOrDefault(x => x.Id == 1);
             if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl) ||
@@ -31,28 +31,28 @@ namespace Foxoft.AppCode.Service
                 return (0, 0);
 
             // 1. Installment Reminder (X days before due date)
-            var reminderSetting = settings.FirstOrDefault(s => s.NotificationType == "InstallmentReminder");
+            var reminderSetting = settings.FirstOrDefault(s => s.MessagingType == "InstallmentReminder");
             if (reminderSetting?.IsEnabled == true && !string.IsNullOrEmpty(reminderSetting.MessageTemplate))
             {
-                var result = await SendInstallmentReminderNotificationsAsync(apiSetting, reminderSetting);
+                var result = await SendInstallmentReminderMessagesAsync(apiSetting, reminderSetting);
                 sent += result.Sent;
                 failed += result.Failed;
             }
 
             // 2. Installment Due Day
-            var dueDaySetting = settings.FirstOrDefault(s => s.NotificationType == "InstallmentDueDay");
+            var dueDaySetting = settings.FirstOrDefault(s => s.MessagingType == "InstallmentDueDay");
             if (dueDaySetting?.IsEnabled == true && !string.IsNullOrEmpty(dueDaySetting.MessageTemplate))
             {
-                var result = await SendInstallmentDueDayNotificationsAsync(apiSetting, dueDaySetting);
+                var result = await SendInstallmentDueDayMessagesAsync(apiSetting, dueDaySetting);
                 sent += result.Sent;
                 failed += result.Failed;
             }
 
             // 3. Birthday
-            var birthdaySetting = settings.FirstOrDefault(s => s.NotificationType == "Birthday");
+            var birthdaySetting = settings.FirstOrDefault(s => s.MessagingType == "Birthday");
             if (birthdaySetting?.IsEnabled == true && !string.IsNullOrEmpty(birthdaySetting.MessageTemplate))
             {
-                var result = await SendBirthdayNotificationsAsync(apiSetting, birthdaySetting);
+                var result = await SendBirthdayMessagesAsync(apiSetting, birthdaySetting);
                 sent += result.Sent;
                 failed += result.Failed;
             }
@@ -61,12 +61,12 @@ namespace Foxoft.AppCode.Service
         }
 
         /// <summary>
-        /// Sends notification after a payment is made on an installment sale.
+        /// Sends a message after a payment is made on an installment sale.
         /// </summary>
-        public async Task SendPaymentNotificationAsync(Guid invoiceHeaderId, decimal paid, decimal remaining)
+        public async Task SendPaymentMessageAsync(Guid invoiceHeaderId, decimal paid, decimal remaining)
         {
             using var db = new subContext();
-            var setting = db.DcNotificationSettings.FirstOrDefault(s => s.NotificationType == "CreditPayment");
+            var setting = db.DcMessagingSettings.FirstOrDefault(s => s.MessagingType == "CreditPayment");
             if (setting?.IsEnabled != true || string.IsNullOrEmpty(setting.MessageTemplate))
                 return;
 
@@ -96,7 +96,7 @@ namespace Foxoft.AppCode.Service
             // Check if credit is fully closed
             if (remaining <= 0)
             {
-                var closedSetting = db.DcNotificationSettings.FirstOrDefault(s => s.NotificationType == "CreditClosed");
+                var closedSetting = db.DcMessagingSettings.FirstOrDefault(s => s.MessagingType == "CreditClosed");
                 if (closedSetting?.IsEnabled == true && !string.IsNullOrEmpty(closedSetting.MessageTemplate))
                 {
                     string closedMsg = ApplyPlaceholders(closedSetting.MessageTemplate, currAcc, store, null);
@@ -107,12 +107,12 @@ namespace Foxoft.AppCode.Service
         }
 
         /// <summary>
-        /// Sends notification when a product is purchased (IS process invoice saved).
+        /// Sends a message when a product is purchased (IS process invoice saved).
         /// </summary>
-        public async Task SendProductPurchaseNotificationAsync(string currAccCode, string phoneNum)
+        public async Task SendProductPurchaseMessageAsync(string currAccCode, string phoneNum)
         {
             using var db = new subContext();
-            var setting = db.DcNotificationSettings.FirstOrDefault(s => s.NotificationType == "ProductPurchase");
+            var setting = db.DcMessagingSettings.FirstOrDefault(s => s.MessagingType == "ProductPurchase");
             if (setting?.IsEnabled != true || string.IsNullOrEmpty(setting.MessageTemplate))
                 return;
 
@@ -131,8 +131,8 @@ namespace Foxoft.AppCode.Service
             await SendAndLogAsync(apiSetting, phoneNum, message, "ProductPurchase", currAccCode, null);
         }
 
-        private async Task<(int Sent, int Failed)> SendInstallmentReminderNotificationsAsync(
-            DcWhatsAppProviderSetting apiSetting, DcNotificationSetting setting)
+        private async Task<(int Sent, int Failed)> SendInstallmentReminderMessagesAsync(
+            DcWhatsAppProviderSetting apiSetting, DcMessagingSetting setting)
         {
             int sent = 0, failed = 0;
             int daysBefore = setting.DaysBefore ?? 2;
@@ -163,7 +163,7 @@ namespace Foxoft.AppCode.Service
                 }
                 catch (Exception ex)
                 {
-                    Debug.Print($"InstallmentReminder notification error: {ex.Message}");
+                    Debug.Print($"InstallmentReminder message error: {ex.Message}");
                     failed++;
                 }
             }
@@ -171,8 +171,8 @@ namespace Foxoft.AppCode.Service
             return (sent, failed);
         }
 
-        private async Task<(int Sent, int Failed)> SendInstallmentDueDayNotificationsAsync(
-            DcWhatsAppProviderSetting apiSetting, DcNotificationSetting setting)
+        private async Task<(int Sent, int Failed)> SendInstallmentDueDayMessagesAsync(
+            DcWhatsAppProviderSetting apiSetting, DcMessagingSetting setting)
         {
             int sent = 0, failed = 0;
 
@@ -200,7 +200,7 @@ namespace Foxoft.AppCode.Service
                 }
                 catch (Exception ex)
                 {
-                    Debug.Print($"InstallmentDueDay notification error: {ex.Message}");
+                    Debug.Print($"InstallmentDueDay message error: {ex.Message}");
                     failed++;
                 }
             }
@@ -208,8 +208,8 @@ namespace Foxoft.AppCode.Service
             return (sent, failed);
         }
 
-        private async Task<(int Sent, int Failed)> SendBirthdayNotificationsAsync(
-            DcWhatsAppProviderSetting apiSetting, DcNotificationSetting setting)
+        private async Task<(int Sent, int Failed)> SendBirthdayMessagesAsync(
+            DcWhatsAppProviderSetting apiSetting, DcMessagingSetting setting)
         {
             int sent = 0, failed = 0;
 
@@ -238,7 +238,7 @@ namespace Foxoft.AppCode.Service
                 }
                 catch (Exception ex)
                 {
-                    Debug.Print($"Birthday notification error: {ex.Message}");
+                    Debug.Print($"Birthday message error: {ex.Message}");
                     failed++;
                 }
             }

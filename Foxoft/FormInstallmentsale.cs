@@ -1,4 +1,4 @@
-using DevExpress.Data;
+﻿using DevExpress.Data;
 using DevExpress.Data.Filtering;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
@@ -581,7 +581,7 @@ namespace Foxoft
 
                     ReloadData();
 
-                    // Send WhatsApp payment notification
+                    // Send WhatsApp payment message
                     _ = Task.Run(async () =>
                     {
                         try
@@ -591,7 +591,7 @@ namespace Foxoft
                             var installment = tempDb.TrInstallments.FirstOrDefault(i => i.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
                             if (installment != null)
                             {
-                                var notifService = new AppCode.Service.NotificationService();
+                                var messagingService = new AppCode.Service.MessagingService();
                                 // Get remaining: we use the paid amount and query the remaining from the DB
                                 decimal remaining = 0;
                                 // Find remaining from grid data after reload - use DB query instead
@@ -625,10 +625,10 @@ namespace Foxoft
                                 if (dt.Rows.Count > 0 && dt.Rows[0]["RemainingAmount"] != DBNull.Value)
                                     remaining = Convert.ToDecimal(dt.Rows[0]["RemainingAmount"]);
 
-                                await notifService.SendPaymentNotificationAsync(trInvoiceHeader.InvoiceHeaderId, confirmedPay, remaining);
+                                await messagingService.SendPaymentMessageAsync(trInvoiceHeader.InvoiceHeaderId, confirmedPay, remaining);
                             }
                         }
-                        catch (Exception ex) { System.Diagnostics.Debug.Print($"CreditPayment notification error: {ex.Message}"); }
+                        catch (Exception ex) { System.Diagnostics.Debug.Print($"CreditPayment message error: {ex.Message}"); }
                     });
                 }
             }

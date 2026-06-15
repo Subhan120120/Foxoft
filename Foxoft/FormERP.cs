@@ -1,4 +1,4 @@
-using DevExpress.LookAndFeel;
+﻿using DevExpress.LookAndFeel;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
@@ -206,7 +206,7 @@ namespace Foxoft
                 case "PaymentMethodList": ShowExistForm<FormPaymentMethodList>(); break;
                 case "PaymentPlanList": ShowExistForm<FormPaymentPlanList>(); break;
                 case "WhatsAppMessageLog": ShowExistForm<FormWhatsAppMessageLog>(); break;
-                case "NotificationSettings": ShowExistForm<FormAppSetting>(); break;
+                case "MessagingSettings": ShowExistForm<FormAppSetting>(); break;
                 case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
                 case "ReportNew": 
                     FormReportEditor formQueryEditor = new(0);

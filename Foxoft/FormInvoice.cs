@@ -1,4 +1,4 @@
-
+﻿
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -1797,7 +1797,7 @@ namespace Foxoft
                 UpdateInstallmentLabels();
             }
 
-            // Send WhatsApp product purchase notification for IS process
+            // Send WhatsApp product purchase message for IS process
             if (new[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && !string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode))
             {
                 string phoneNum = trInvoiceHeader.DcCurrAcc?.PhoneNum;
@@ -1816,10 +1816,10 @@ namespace Foxoft
                     {
                         try
                         {
-                            var notifService = new AppCode.Service.NotificationService();
-                            await notifService.SendProductPurchaseNotificationAsync(trInvoiceHeader.CurrAccCode, phoneNum);
+                            var messagingService = new AppCode.Service.MessagingService();
+                            await messagingService.SendProductPurchaseMessageAsync(trInvoiceHeader.CurrAccCode, phoneNum);
                         }
-                        catch (Exception ex) { System.Diagnostics.Debug.Print($"ProductPurchase notification error: {ex.Message}"); }
+                        catch (Exception ex) { System.Diagnostics.Debug.Print($"ProductPurchase message error: {ex.Message}"); }
                     });
                 }
             }

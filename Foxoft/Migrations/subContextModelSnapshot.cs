@@ -1310,7 +1310,7 @@ namespace Foxoft.Migrations
                     b.ToTable("DcLoyaltyPrograms");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.DcNotificationSetting", b =>
+            modelBuilder.Entity("Foxoft.Models.DcMessagingSetting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1328,14 +1328,14 @@ namespace Foxoft.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("NotificationType")
+                    b.Property<string>("MessagingType")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DcNotificationSettings");
+                    b.ToTable("DcMessagingSettings");
 
                     b.HasData(
                         new
@@ -1344,42 +1344,42 @@ namespace Foxoft.Migrations
                             DaysBefore = 2,
                             IsEnabled = false,
                             MessageTemplate = "Hörmətli müştəri! {StoreDesc} mağazasından götürdüyünüz məhsulun aylıq ödənişinə {day} gün qalıb. Əlaqə nömrəsi: {StorePhone}",
-                            NotificationType = "InstallmentReminder"
+                            MessagingType = "InstallmentReminder"
                         },
                         new
                         {
                             Id = 2,
                             IsEnabled = false,
                             MessageTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun ödənişinin bu gün vaxtıdır. Xahiş edirik, ödənişinizi vaxtında ödəyəsiniz. Əlaqə nömrəsi: {StorePhone}",
-                            NotificationType = "InstallmentDueDay"
+                            MessagingType = "InstallmentDueDay"
                         },
                         new
                         {
                             Id = 3,
                             IsEnabled = false,
                             MessageTemplate = "Yeni cihazınız xeyirli olsun. Bizi seçdiyiniz üçün təşəkkür edirik.",
-                            NotificationType = "ProductPurchase"
+                            MessagingType = "ProductPurchase"
                         },
                         new
                         {
                             Id = 4,
                             IsEnabled = false,
                             MessageTemplate = "Hörmətli müştəri, sizin kreditiniz tam bağlandı. Bizi seçdiyiniz üçün təşəkkürlər! {StorePhone}",
-                            NotificationType = "CreditClosed"
+                            MessagingType = "CreditClosed"
                         },
                         new
                         {
                             Id = 5,
                             IsEnabled = false,
                             MessageTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun {paid} AZN aylıq krediti ödəndi. Qalıq borcunuz {debit} AZN-dir.",
-                            NotificationType = "CreditPayment"
+                            MessagingType = "CreditPayment"
                         },
                         new
                         {
                             Id = 6,
                             IsEnabled = false,
                             MessageTemplate = "Dəyərli müştərimiz, sizi ad günü münasibətilə {StoreDesc} adından təbrik edirik.",
-                            NotificationType = "Birthday"
+                            MessagingType = "Birthday"
                         });
                 });
 
@@ -4992,9 +4992,9 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            ClaimCode = "NotificationSettings",
+                            ClaimCode = "MessagingSettings",
                             CategoryId = 15,
-                            ClaimDesc = "Bildiriş Tənzimləmələri",
+                            ClaimDesc = "Mesajlaşma Tənzimləmələri",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         },
