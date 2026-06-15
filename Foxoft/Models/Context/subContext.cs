@@ -647,7 +647,7 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<SettingStore>().HasData(
-               new SettingStore { Id = 1, StoreCode = "MGZ01", DefaultUnitOfMeasureId = 1, DesignFileFolder = @"C:\Foxoft\Foxoft Design Files", ImageFolder = @"C:\Foxoft\Foxoft Images" }
+               new SettingStore { Id = 1, StoreCode = "MGZ01", DefaultUnitOfMeasureId = 1, DesignFileFolder = @"C:\Foxoft\CompanyCode\Design Files", ImageFolder = @"C:\Foxoft\CompanyCode\Image Files" }
                 );
 
             modelBuilder.Entity<DcCurrency>().HasData(
