@@ -10322,6 +10322,25 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no payment to print..
+        /// </summary>
+        public static string Form_PaymentDetail_NoPaymentToPrint {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_NoPaymentToPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: 1256795721
+        ///{0}.
+        /// </summary>
+        public static string Form_PaymentDetail_PrinterError {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_PrinterError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment given: .
         /// </summary>
         public static string Form_PaymentDetail_PaymentGiven {

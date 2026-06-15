@@ -2863,6 +2863,13 @@ Do you want to return to the invoice?</value>
   <data name="Form_PaymentDetail_NoPaymentToDelete" xml:space="preserve">
     <value>There is no payment to delete.</value>
   </data>
+  <data name="Form_PaymentDetail_NoPaymentToPrint" xml:space="preserve">
+    <value>There is no payment to print.</value>
+  </data>
+  <data name="Form_PaymentDetail_PrinterError" xml:space="preserve">
+    <value>Error: 1256795721
+{0}</value>
+  </data>
   <data name="Form_PaymentDetail_GracePeriodExpired" xml:space="preserve">
     <value>The invoice or payment edit grace period has expired. This payment cannot be changed or deleted.</value>
   </data>

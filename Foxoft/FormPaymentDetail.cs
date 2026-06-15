@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
 
@@ -38,12 +39,14 @@ namespace Foxoft
         private Guid paymentHeaderId;
         private decimal BalanceBefore;
         readonly SettingStore settingStore;
+        readonly DcTerminal? dcTerminal;
 
         public FormPaymentDetail()
         {
             InitializeComponent();
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            dcTerminal = efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId);
             reportClass = new(settingStore.DesignFileFolder);
 
             string activeFilterStr = "[StoreCode] = '" + Authorization.StoreCode + "'";
@@ -455,7 +458,7 @@ namespace Foxoft
 
             string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode)?.PhoneNum;
 
-            MemoryStream memoryStream = GetPaymentReportImg();
+            MemoryStream? memoryStream = GetPaymentReportImg();
             if (memoryStream == null) return;
 
             if (Settings.Default.AppSetting.WhatsAppProvider == WhatsAppProvider.API)
@@ -518,13 +521,58 @@ namespace Foxoft
             ShowReportPreview();
         }
 
+        private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            await PrintFast(GetPrinterName(dcTerminal?.PrinterName));
+        }
+
+        private async Task PrintFast(string printerName)
+        {
+            alertControl1.Show(
+                this,
+                Resources.Common_PrintSending,
+                string.Format(Resources.Common_PrinterLabel, printerName),
+                string.Empty,
+                (Image)null,
+                null);
+
+            if (trPaymentHeader is not null)
+                await Task.Run(() => GetPrint(trPaymentHeader.PaymentHeaderId, printerName));
+            else
+                XtraMessageBox.Show(Resources.Form_PaymentDetail_NoPaymentToPrint);
+
+            alertControl1.Show(
+                this,
+                Resources.Common_PrintSent,
+                string.Format(Resources.Common_PrinterLabel, printerName),
+                string.Empty,
+                (Image)null,
+                null);
+        }
+
+        private void GetPrint(Guid paymentHeaderId, string printerName)
+        {
+            XtraReport? xtraReport = GetPaymentReport(paymentHeaderId);
+
+            if (xtraReport is null)
+                return;
+
+            using (xtraReport)
+            {
+                xtraReport.PrinterName = printerName;
+
+                ReportPrintTool printTool = new(xtraReport);
+                printTool.Print();
+            }
+        }
+
         private void ShowReportPreview()
         {
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_PaymentReport");
 
             if (dcReport == null)
             {
-                XtraMessageBox.Show("Report_Embedded_PaymentReport tapılmadı.");
+                XtraMessageBox.Show(Resources.Report_NotFound);
                 return;
             }
 
@@ -537,32 +585,49 @@ namespace Foxoft
             form.Show();
         }
 
-        private MemoryStream GetPaymentReportImg()
+        private MemoryStream? GetPaymentReportImg()
+        {
+            XtraReport? xtraReport = GetPaymentReport(trPaymentHeader.PaymentHeaderId);
+
+            if (xtraReport == null)
+                return null;
+
+            MemoryStream ms = new();
+            xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 240 });
+            xtraReport.Dispose();
+
+            return ms;
+        }
+
+        private XtraReport? GetPaymentReport(Guid paymentHeaderId)
         {
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_PaymentReport");
 
             if (dcReport == null)
             {
-                XtraMessageBox.Show("Report_Embedded_PaymentReport tapılmadı.");
+                XtraMessageBox.Show(Resources.Report_NotFound);
                 return null;
             }
 
             foreach (var item in dcReport.DcReportVariables)
                 if (item.VariableProperty == nameof(TrPaymentHeader.PaymentHeaderId))
-                    item.VariableValue = trPaymentHeader.PaymentHeaderId.ToString();
+                    item.VariableValue = paymentHeaderId.ToString();
 
             SqlParameter[] sqlParameters;
-            dcReport.ReportQuery = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
+            string query = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
             List<QueryParameter> qryParams = reportClass.ConvertSqlParametersToQueryParameters(sqlParameters);
-            CustomSqlQuery mainQuery = new("Main", dcReport.ReportQuery);
+            CustomSqlQuery mainQuery = new("Main", query);
             mainQuery.Parameters.AddRange(qryParams);
             List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
-            XtraReport xtraReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
 
-            MemoryStream ms = new();
-            xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 240 });
+            return reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
+        }
 
-            return ms;
+        private string GetPrinterName(string? printerName)
+        {
+            return string.IsNullOrWhiteSpace(printerName)
+                ? new PrinterSettings().PrinterName
+                : printerName;
         }
 
         private async Task SendWhatsAppViaEvolutionApi(string number, MemoryStream memoryStream)
@@ -885,6 +950,40 @@ namespace Foxoft
         private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
         {
 
+        }
+
+        private void popupMenuPrinters_BeforePopup(object sender, CancelEventArgs e)
+        {
+            if (sender is not PopupMenu menu)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            menu.ItemLinks.Clear();
+
+            try
+            {
+                foreach (string printer in PrinterSettings.InstalledPrinters)
+                {
+                    BarButtonItem BBI = new();
+                    BBI.Caption = printer;
+                    BBI.Name = printer;
+                    BBI.ImageOptions.SvgImage = svgImageCollection1["print"];
+                    BBI.ItemClick += async (sender, e) =>
+                    {
+                        await PrintFast(printer);
+                    };
+
+                    menu.AddItem(BBI);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format(Resources.Form_PaymentDetail_PrinterError, ex.Message));
+            }
+
+            e.Cancel = false;
         }
 
         private void BBI_EditPayment_ItemClick_1(object sender, ItemClickEventArgs e)

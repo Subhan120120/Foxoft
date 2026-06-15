@@ -2863,6 +2863,13 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_PaymentDetail_NoPaymentToDelete" xml:space="preserve">
     <value>Silinməli olan ödəniş yoxdur.</value>
   </data>
+  <data name="Form_PaymentDetail_NoPaymentToPrint" xml:space="preserve">
+    <value>Çap olunmaq üçün ödəniş yoxdur.</value>
+  </data>
+  <data name="Form_PaymentDetail_PrinterError" xml:space="preserve">
+    <value>Xəta: 1256795721
+{0}</value>
+  </data>
   <data name="Form_PaymentDetail_GracePeriodExpired" xml:space="preserve">
     <value>Qaimə və ya ödəniş üzrə dəyişiklik müddəti bitib. Ödəniş dəyişdirilə və ya silinə bilməz.</value>
   </data>
