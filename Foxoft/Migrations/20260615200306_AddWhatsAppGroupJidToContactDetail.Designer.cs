@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20260615184708_init")]
-    partial class init
+    [Migration("20260615200306_AddWhatsAppGroupJidToContactDetail")]
+    partial class AddWhatsAppGroupJidToContactDetail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -746,6 +746,10 @@ namespace Foxoft.Migrations
 
                     b.Property<bool>("SendWhatsapp")
                         .HasColumnType("bit");
+
+                    b.Property<string>("WhatsAppGroupJid")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -6504,8 +6508,8 @@ namespace Foxoft.Migrations
                         {
                             Id = 1,
                             DefaultUnitOfMeasureId = 1,
-                            DesignFileFolder = "C:\\Foxoft\\Foxoft Design Files",
-                            ImageFolder = "C:\\Foxoft\\Foxoft Images",
+                            DesignFileFolder = "C:\\Foxoft\\CompanyCode\\Design Files",
+                            ImageFolder = "C:\\Foxoft\\CompanyCode\\Image Files",
                             SalesmanContinuity = false,
                             StoreCode = "MGZ01"
                         });

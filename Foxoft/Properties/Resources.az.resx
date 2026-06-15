@@ -567,11 +567,17 @@
   <data name="Entity_CurrAccContactDetail_SendWhatsapp" xml:space="preserve">
     <value>WhatsApp Göndər</value>
   </data>
+  <data name="Entity_CurrAccContactDetail_WhatsAppGroupJid" xml:space="preserve">
+    <value>WhatsApp Qrupu</value>
+  </data>
   <data name="Form_CurrAccContactDetail_Caption_New" xml:space="preserve">
     <value>Yeni Əlaqə Məlumatı</value>
   </data>
   <data name="Form_CurrAccContactDetail_Caption_Edit" xml:space="preserve">
     <value>Əlaqə Məlumatını Redaktə Et</value>
+  </data>
+  <data name="Form_CurrAccContactDetail_NoGroupsFound" xml:space="preserve">
+    <value>WhatsApp qrupu tapılmadı</value>
   </data>
   <data name="Form_CurrAccContactDetailList_Caption" xml:space="preserve">
     <value>Əlaqə Məlumatları</value>

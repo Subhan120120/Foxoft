@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -81,6 +82,45 @@ namespace Foxoft.AppCode
                 throw CreateSendException(resp, body);
 
             return body;
+        }
+
+        public async Task<List<EvolutionGroupInfo>> FetchAllGroupsAsync(CancellationToken ct = default)
+        {
+            string url = $"{_serverUrl}/group/fetchAllGroups/{Uri.EscapeDataString(_instanceName)}?getParticipants=false";
+
+            using var resp = await _http.GetAsync(url, ct);
+            var body = await resp.Content.ReadAsStringAsync(ct);
+
+            if (!resp.IsSuccessStatusCode)
+                throw new HttpRequestException(string.Format(Resources.Common_WhatsAppApiSendFailed, body), null, resp.StatusCode);
+
+            var groups = new List<EvolutionGroupInfo>();
+
+            using JsonDocument doc = JsonDocument.Parse(body);
+            JsonElement root = doc.RootElement;
+
+            // Handle both array and object-with-array responses
+            JsonElement groupArray = root.ValueKind == JsonValueKind.Array
+                ? root
+                : root.TryGetProperty("data", out JsonElement data) && data.ValueKind == JsonValueKind.Array
+                    ? data
+                    : default;
+
+            if (groupArray.ValueKind == JsonValueKind.Array)
+            {
+                foreach (JsonElement item in groupArray.EnumerateArray())
+                {
+                    string? id = item.TryGetProperty("id", out JsonElement idEl) && idEl.ValueKind == JsonValueKind.String
+                        ? idEl.GetString() : null;
+                    string? subject = item.TryGetProperty("subject", out JsonElement subEl) && subEl.ValueKind == JsonValueKind.String
+                        ? subEl.GetString() : null;
+
+                    if (!string.IsNullOrWhiteSpace(id))
+                        groups.Add(new EvolutionGroupInfo(id!, subject ?? id!));
+                }
+            }
+
+            return groups;
         }
 
         public async Task<EvolutionQrCodeResult> GetConnectionQrCodeAsync(CancellationToken ct = default)
@@ -254,5 +294,19 @@ namespace Foxoft.AppCode
 
             return null;
         }
+    }
+
+    public sealed class EvolutionGroupInfo
+    {
+        public EvolutionGroupInfo(string id, string subject)
+        {
+            Id = id;
+            Subject = subject;
+        }
+
+        public string Id { get; }
+        public string Subject { get; }
+
+        public override string ToString() => $"{Subject} ({Id})";
     }
 }

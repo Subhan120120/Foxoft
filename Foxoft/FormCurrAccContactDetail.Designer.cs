@@ -36,12 +36,14 @@ namespace Foxoft
             bindingSource1 = new BindingSource(components);
             ContactTypeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             SendWhatsappCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            WhatsAppGroupJidTextEdit = new DevExpress.XtraEditors.ButtonEdit();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             ItemForContactDesc = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForContactType = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForSendWhatsapp = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForWhatsAppGroupJid = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForOk = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForCancel = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -51,10 +53,12 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ContactTypeLookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SendWhatsappCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)WhatsAppGroupJidTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForContactDesc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForContactType).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForSendWhatsapp).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppGroupJid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForOk).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCancel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
@@ -65,6 +69,7 @@ namespace Foxoft
             layoutControl1.Controls.Add(ContactDescTextEdit);
             layoutControl1.Controls.Add(ContactTypeLookUpEdit);
             layoutControl1.Controls.Add(SendWhatsappCheckEdit);
+            layoutControl1.Controls.Add(WhatsAppGroupJidTextEdit);
             layoutControl1.Controls.Add(btn_Ok);
             layoutControl1.Controls.Add(btn_Cancel);
             layoutControl1.Dock = DockStyle.Fill;
@@ -113,6 +118,19 @@ namespace Foxoft
             SendWhatsappCheckEdit.StyleController = layoutControl1;
             SendWhatsappCheckEdit.TabIndex = 2;
             // 
+            // WhatsAppGroupJidTextEdit
+            // 
+            WhatsAppGroupJidTextEdit.DataBindings.Add(new Binding("EditValue", bindingSource1, "WhatsAppGroupJid", true));
+            WhatsAppGroupJidTextEdit.Location = new Point(152, 84);
+            WhatsAppGroupJidTextEdit.Name = "WhatsAppGroupJidTextEdit";
+            WhatsAppGroupJidTextEdit.Properties.NullValuePrompt = "120363xxxx@g.us";
+            WhatsAppGroupJidTextEdit.Properties.NullValuePromptShowForEmptyValue = true;
+            WhatsAppGroupJidTextEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis) });
+            WhatsAppGroupJidTextEdit.Properties.ButtonClick += WhatsAppGroupJidTextEdit_ButtonClick;
+            WhatsAppGroupJidTextEdit.Size = new Size(236, 20);
+            WhatsAppGroupJidTextEdit.StyleController = layoutControl1;
+            WhatsAppGroupJidTextEdit.TabIndex = 5;
+            // 
             // btn_Ok
             // 
             btn_Ok.Location = new Point(12, 166);
@@ -137,7 +155,7 @@ namespace Foxoft
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             Root.GroupBordersVisible = false;
-            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForContactType, ItemForContactDesc, ItemForSendWhatsapp, emptySpaceItem1, ItemForOk, ItemForCancel });
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForContactType, ItemForContactDesc, ItemForSendWhatsapp, ItemForWhatsAppGroupJid, emptySpaceItem1, ItemForOk, ItemForCancel });
             Root.Name = "Root";
             Root.Size = new Size(400, 200);
             Root.TextVisible = false;
@@ -169,6 +187,16 @@ namespace Foxoft
             ItemForSendWhatsapp.TextSize = new Size(0, 0);
             ItemForSendWhatsapp.TextVisible = false;
             ItemForSendWhatsapp.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+            // 
+            // ItemForWhatsAppGroupJid
+            // 
+            ItemForWhatsAppGroupJid.Control = WhatsAppGroupJidTextEdit;
+            ItemForWhatsAppGroupJid.Location = new Point(0, 72);
+            ItemForWhatsAppGroupJid.Name = "ItemForWhatsAppGroupJid";
+            ItemForWhatsAppGroupJid.Size = new Size(380, 24);
+            ItemForWhatsAppGroupJid.Text = Resources.Entity_CurrAccContactDetail_WhatsAppGroupJid;
+            ItemForWhatsAppGroupJid.TextSize = new Size(130, 13);
+            ItemForWhatsAppGroupJid.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             // 
             // emptySpaceItem1
             // 
@@ -202,7 +230,7 @@ namespace Foxoft
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btn_Cancel;
-            ClientSize = new Size(400, 200);
+            ClientSize = new Size(400, 224);
             Controls.Add(layoutControl1);
             KeyPreview = true;
             MaximizeBox = false;
@@ -217,10 +245,12 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ContactTypeLookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)SendWhatsappCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)WhatsAppGroupJidTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForContactDesc).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForContactType).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForSendWhatsapp).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppGroupJid).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForOk).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCancel).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
@@ -234,12 +264,14 @@ namespace Foxoft
         private BindingSource bindingSource1;
         private DevExpress.XtraEditors.LookUpEdit ContactTypeLookUpEdit;
         private DevExpress.XtraEditors.CheckEdit SendWhatsappCheckEdit;
+        private DevExpress.XtraEditors.ButtonEdit WhatsAppGroupJidTextEdit;
         private DevExpress.XtraEditors.SimpleButton btn_Ok;
         private DevExpress.XtraEditors.SimpleButton btn_Cancel;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraLayout.LayoutControlItem ItemForContactDesc;
         private DevExpress.XtraLayout.LayoutControlItem ItemForContactType;
         private DevExpress.XtraLayout.LayoutControlItem ItemForSendWhatsapp;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForWhatsAppGroupJid;
         private DevExpress.XtraLayout.LayoutControlItem ItemForOk;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCancel;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;

@@ -1,5 +1,7 @@
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -82,6 +84,9 @@ namespace Foxoft
             // SendWhatsapp visibility
             ItemForSendWhatsapp.Visibility = isPhone ? LayoutVisibility.Always : LayoutVisibility.Never;
 
+            // WhatsApp Group JID visibility
+            ItemForWhatsAppGroupJid.Visibility = isPhone ? LayoutVisibility.Always : LayoutVisibility.Never;
+
             if (isPhone)
             {
                 // Phone mask
@@ -105,6 +110,9 @@ namespace Foxoft
 
                 // Clear SendWhatsapp if not phone
                 SendWhatsappCheckEdit.Checked = false;
+
+                // Clear WhatsApp Group JID if not phone
+                WhatsAppGroupJidTextEdit.EditValue = null;
             }
         }
 
@@ -147,6 +155,81 @@ namespace Foxoft
         {
             if (e.KeyCode == Keys.Escape)
                 Close();
+        }
+
+        private async void WhatsAppGroupJidTextEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            var apiSetting = efMethods.SelectEntityById<DcWhatsAppProviderSetting>(1);
+            if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl)
+                                   || string.IsNullOrEmpty(apiSetting.InstanceName)
+                                   || string.IsNullOrEmpty(apiSetting.ApiKey))
+            {
+                XtraMessageBox.Show(Resources.Payment_ApiSettingsIncomplete);
+                return;
+            }
+
+            Cursor = Cursors.WaitCursor;
+            try
+            {
+                using var client = new EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
+                List<EvolutionGroupInfo> groups = await client.FetchAllGroupsAsync();
+
+                Cursor = Cursors.Default;
+
+                if (groups.Count == 0)
+                {
+                    XtraMessageBox.Show(Resources.Form_CurrAccContactDetail_NoGroupsFound);
+                    return;
+                }
+
+                using var form = new XtraForm();
+                form.Text = Resources.Entity_CurrAccContactDetail_WhatsAppGroupJid;
+                form.StartPosition = FormStartPosition.CenterParent;
+                form.Size = new Size(450, 350);
+                form.MinimizeBox = false;
+                form.MaximizeBox = false;
+                form.KeyPreview = true;
+
+                var listBox = new ListBoxControl();
+                listBox.Dock = DockStyle.Fill;
+                listBox.DisplayMember = "Subject";
+                listBox.ValueMember = "Id";
+                listBox.DataSource = groups;
+
+                string selectedJid = null;
+
+                listBox.DoubleClick += (s, ev) =>
+                {
+                    if (listBox.SelectedValue is string jid)
+                    {
+                        selectedJid = jid;
+                        form.DialogResult = DialogResult.OK;
+                    }
+                };
+
+                form.KeyDown += (s, ev) =>
+                {
+                    if (ev.KeyCode == Keys.Escape)
+                        form.Close();
+                    else if (ev.KeyCode == Keys.Enter && listBox.SelectedValue is string jid)
+                    {
+                        selectedJid = jid;
+                        form.DialogResult = DialogResult.OK;
+                    }
+                };
+
+                form.Controls.Add(listBox);
+
+                if (form.ShowDialog(this) == DialogResult.OK && !string.IsNullOrWhiteSpace(selectedJid))
+                {
+                    WhatsAppGroupJidTextEdit.EditValue = selectedJid;
+                }
+            }
+            catch (Exception ex)
+            {
+                Cursor = Cursors.Default;
+                XtraMessageBox.Show(Resources.Common_ErrorOccurred + " " + ex.Message);
+            }
         }
     }
 }

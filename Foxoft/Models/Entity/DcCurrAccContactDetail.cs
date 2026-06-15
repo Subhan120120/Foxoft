@@ -41,6 +41,13 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_CurrAccContactDetail_SendWhatsapp), ResourceType = typeof(Resources))]
         public bool SendWhatsapp { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_CurrAccContactDetail_WhatsAppGroupJid), ResourceType = typeof(Resources))]
+        [StringLength(100,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max)
+        )]
+        public string? WhatsAppGroupJid { get; set; }
+
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual DcContactType DcContactType { get; set; }
     }

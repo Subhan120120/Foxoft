@@ -1978,6 +1978,16 @@ namespace Foxoft
                     numbers.Add(defaultPhoneNum);
             }
 
+            // Collect WhatsApp group JIDs from phone contacts
+            List<string?> groupJids = db.DcCurrAccContactDetails
+                .Where(x => x.CurrAccCode == currAccCode
+                            && x.ContactTypeId == phoneContactTypeId
+                            && x.SendWhatsapp
+                            && x.WhatsAppGroupJid != null
+                            && x.WhatsAppGroupJid != "")
+                .Select(x => x.WhatsAppGroupJid)
+                .ToList();
+
             List<string> recipients = new();
             HashSet<string> phoneKeys = new();
 
@@ -1991,6 +2001,14 @@ namespace Foxoft
 
                 if (phoneKeys.Add(phoneKey))
                     recipients.Add(trimmedNumber);
+            }
+
+            // Add group JIDs to recipients (deduplicated)
+            foreach (string? jid in groupJids)
+            {
+                string? trimmedJid = jid?.Trim();
+                if (!string.IsNullOrWhiteSpace(trimmedJid) && phoneKeys.Add(trimmedJid))
+                    recipients.Add(trimmedJid);
             }
 
             return recipients;
