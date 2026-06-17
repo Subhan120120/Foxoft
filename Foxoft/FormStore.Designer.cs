@@ -14,9 +14,9 @@ namespace Foxoft
         private DevExpress.XtraEditors.LookUpEdit CurrAccTypeCodeLookUpEdit;
         private DevExpress.XtraEditors.TextEdit CurrAccDescTextEdit;
         private DevExpress.XtraEditors.LookUpEdit OfficeCodeLookUpEdit;
-        private DevExpress.XtraEditors.TextEdit DesignFileFolderTextEdit;
+        private DevExpress.XtraEditors.ButtonEdit DesignFileFolderTextEdit;
         private DevExpress.XtraEditors.CheckEdit SalesmanContinuityCheckEdit;
-        private DevExpress.XtraEditors.TextEdit ImageFolderTextEdit;
+        private DevExpress.XtraEditors.ButtonEdit ImageFolderTextEdit;
         private DevExpress.XtraEditors.LookUpEdit DefaultUnitOfMeasureIdLookUpEdit;
         private DevExpress.XtraEditors.TextEdit PhoneNumTextEdit;
         private DevExpress.XtraEditors.TextEdit textEdit2;
@@ -61,9 +61,9 @@ namespace Foxoft
             CurrAccTypeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             CurrAccDescTextEdit = new DevExpress.XtraEditors.TextEdit();
             OfficeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
-            DesignFileFolderTextEdit = new DevExpress.XtraEditors.TextEdit();
+            DesignFileFolderTextEdit = new DevExpress.XtraEditors.ButtonEdit();
             SalesmanContinuityCheckEdit = new DevExpress.XtraEditors.CheckEdit();
-            ImageFolderTextEdit = new DevExpress.XtraEditors.TextEdit();
+            ImageFolderTextEdit = new DevExpress.XtraEditors.ButtonEdit();
             DefaultUnitOfMeasureIdLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             PhoneNumTextEdit = new DevExpress.XtraEditors.TextEdit();
             textEdit2 = new DevExpress.XtraEditors.TextEdit();
@@ -155,7 +155,7 @@ namespace Foxoft
             btn_Cancel.Size = new Size(74, 46);
             btn_Cancel.StyleController = dataLayoutControl1;
             btn_Cancel.TabIndex = 12;
-            btn_Cancel.Text = "simpleButton2";
+            btn_Cancel.Text = Resources.Form_Store_Cancel;
             // 
             // btn_Ok
             // 
@@ -166,7 +166,7 @@ namespace Foxoft
             btn_Ok.Size = new Size(74, 46);
             btn_Ok.StyleController = dataLayoutControl1;
             btn_Ok.TabIndex = 13;
-            btn_Ok.Text = "simpleButton1";
+            btn_Ok.Text = Resources.Form_Store_Save;
             btn_Ok.Click += btn_Ok_Click;
             // 
             // CurrAccCodeTextEdit
@@ -239,9 +239,11 @@ namespace Foxoft
             DesignFileFolderTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "SettingStore.DesignFileFolder", true));
             DesignFileFolderTextEdit.Location = new Point(137, 108);
             DesignFileFolderTextEdit.Name = "DesignFileFolderTextEdit";
+            DesignFileFolderTextEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis) });
             DesignFileFolderTextEdit.Size = new Size(394, 20);
             DesignFileFolderTextEdit.StyleController = dataLayoutControl1;
             DesignFileFolderTextEdit.TabIndex = 8;
+            DesignFileFolderTextEdit.ButtonClick += DesignFileFolderTextEdit_ButtonClick;
             // 
             // SalesmanContinuityCheckEdit
             // 
@@ -259,9 +261,11 @@ namespace Foxoft
             ImageFolderTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "SettingStore.ImageFolder", true));
             ImageFolderTextEdit.Location = new Point(137, 132);
             ImageFolderTextEdit.Name = "ImageFolderTextEdit";
+            ImageFolderTextEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis) });
             ImageFolderTextEdit.Size = new Size(394, 20);
             ImageFolderTextEdit.StyleController = dataLayoutControl1;
             ImageFolderTextEdit.TabIndex = 9;
+            ImageFolderTextEdit.ButtonClick += ImageFolderTextEdit_ButtonClick;
             // 
             // DefaultUnitOfMeasureIdLookUpEdit
             // 
@@ -424,7 +428,7 @@ namespace Foxoft
             ItemForIsDisabled.Location = new Point(261, 144);
             ItemForIsDisabled.Name = "ItemForIsDisabled";
             ItemForIsDisabled.Size = new Size(262, 24);
-            ItemForIsDisabled.Text = "Qeyri-Aktiv";
+            ItemForIsDisabled.Text = Resources.Form_Store_IsDisabled;
             ItemForIsDisabled.TextVisible = false;
             // 
             // ItemForCurrAccTypeCode
@@ -469,7 +473,7 @@ namespace Foxoft
             ClientSize = new Size(543, 238);
             Controls.Add(dataLayoutControl1);
             Name = "FormStore";
-            Text = "Store";
+            Text = Resources.Form_Store_Caption;
             Load += FormFormStore_Load;
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);

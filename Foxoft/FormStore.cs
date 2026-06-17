@@ -1,10 +1,12 @@
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.DXErrorProvider;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
+using System.IO;
 
 namespace Foxoft
 {
@@ -108,6 +110,35 @@ namespace Foxoft
             {
                 string combinedString = errorList.Aggregate((x, y) => x + " " + y);
                 XtraMessageBox.Show(combinedString);
+            }
+        }
+
+        private void DesignFileFolderTextEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            SelectFolder(DesignFileFolderTextEdit, Resources.Form_Store_SelectDesignFileFolder);
+        }
+
+        private void ImageFolderTextEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            SelectFolder(ImageFolderTextEdit, Resources.Form_Store_SelectImageFolder);
+        }
+
+        private void SelectFolder(ButtonEdit editor, string description)
+        {
+            using XtraFolderBrowserDialog dialog = new()
+            {
+                Description = description,
+                ShowNewFolderButton = true
+            };
+
+            string selectedPath = editor.EditValue?.ToString() ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(selectedPath) && Directory.Exists(selectedPath))
+                dialog.SelectedPath = selectedPath;
+
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                editor.EditValue = dialog.SelectedPath;
+                editor.DataBindings[nameof(BaseEdit.EditValue)]?.WriteValue();
             }
         }
 

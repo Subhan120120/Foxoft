@@ -3353,6 +3353,12 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_Store_ImageFolder" xml:space="preserve">
     <value>Şəkil qovluğu</value>
   </data>
+  <data name="Form_Store_SelectDesignFileFolder" xml:space="preserve">
+    <value>Dizayn fayl qovluğunu seçin</value>
+  </data>
+  <data name="Form_Store_SelectImageFolder" xml:space="preserve">
+    <value>Şəkil qovluğunu seçin</value>
+  </data>
   <data name="Form_Store_PrinterName" xml:space="preserve">
     <value>Printer Adı</value>
   </data>

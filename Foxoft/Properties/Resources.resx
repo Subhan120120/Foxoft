@@ -3353,6 +3353,12 @@ Do you want to return to the invoice?</value>
   <data name="Form_Store_ImageFolder" xml:space="preserve">
     <value>Image folder</value>
   </data>
+  <data name="Form_Store_SelectDesignFileFolder" xml:space="preserve">
+    <value>Select design file folder</value>
+  </data>
+  <data name="Form_Store_SelectImageFolder" xml:space="preserve">
+    <value>Select image folder</value>
+  </data>
   <data name="Form_Store_PrinterName" xml:space="preserve">
     <value>Printer Name</value>
   </data>

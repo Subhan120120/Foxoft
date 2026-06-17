@@ -12544,6 +12544,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select design file folder.
+        /// </summary>
+        public static string Form_Store_SelectDesignFileFolder {
+            get {
+                return ResourceManager.GetString("Form_Store_SelectDesignFileFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select image folder.
+        /// </summary>
+        public static string Form_Store_SelectImageFolder {
+            get {
+                return ResourceManager.GetString("Form_Store_SelectImageFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Disabled.
         /// </summary>
         public static string Form_Store_IsDisabled {
