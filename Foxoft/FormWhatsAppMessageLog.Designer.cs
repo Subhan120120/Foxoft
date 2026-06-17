@@ -26,12 +26,6 @@ namespace Foxoft
             gC_WhatsAppMessageLogList = new DevExpress.XtraGrid.GridControl();
             trWhatsAppMessageLogBindingSource = new BindingSource(components);
             gV_WhatsAppMessageLogList = new DevExpress.XtraGrid.Views.Grid.GridView();
-            colImagePreview = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoPictureEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
-            colSendAgain = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoBtn_SendAgain = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            repoTextEmpty = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
-            colImageFilePath = new DevExpress.XtraGrid.Columns.GridColumn();
             colWhatsAppMessageLogId = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -41,9 +35,14 @@ namespace Foxoft
             colReceiverPhoneNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colMessageType = new DevExpress.XtraGrid.Columns.GridColumn();
             colMessage = new DevExpress.XtraGrid.Columns.GridColumn();
+            colIsSuccessful = new DevExpress.XtraGrid.Columns.GridColumn();
             colSender = new DevExpress.XtraGrid.Columns.GridColumn();
             colSenderName = new DevExpress.XtraGrid.Columns.GridColumn();
-            colIsSuccessful = new DevExpress.XtraGrid.Columns.GridColumn();
+            colImagePreview = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoPictureEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
+            colSendAgain = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoBtn_SendAgain = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            colImageFilePath = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
@@ -53,6 +52,7 @@ namespace Foxoft
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            repoTextEmpty = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             svgImageCollection1 = new SvgImageCollection(components);
             panelSummary = new DevExpress.XtraEditors.PanelControl();
             panelCardBalance = new DevExpress.XtraEditors.PanelControl();
@@ -80,8 +80,8 @@ namespace Foxoft
             ((ISupportInitialize)gV_WhatsAppMessageLogList).BeginInit();
             ((ISupportInitialize)repoPictureEdit).BeginInit();
             ((ISupportInitialize)repoBtn_SendAgain).BeginInit();
-            ((ISupportInitialize)repoTextEmpty).BeginInit();
             ((ISupportInitialize)ribbonControl1).BeginInit();
+            ((ISupportInitialize)repoTextEmpty).BeginInit();
             ((ISupportInitialize)svgImageCollection1).BeginInit();
             ((ISupportInitialize)panelSummary).BeginInit();
             panelSummary.SuspendLayout();
@@ -122,18 +122,17 @@ namespace Foxoft
             gV_WhatsAppMessageLogList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colWhatsAppMessageLogId, colDocumentHeaderId, colCreatedDate, colCreatedUserName, colCurrAccCode, colCurrAccDesc, colReceiverPhoneNumber, colMessageType, colMessage, colIsSuccessful, colSender, colSenderName, colImagePreview, colSendAgain, colImageFilePath });
             gV_WhatsAppMessageLogList.GridControl = gC_WhatsAppMessageLogList;
             gV_WhatsAppMessageLogList.Name = "gV_WhatsAppMessageLogList";
-            gV_WhatsAppMessageLogList.OptionsBehavior.Editable = true;
             gV_WhatsAppMessageLogList.OptionsFind.FindDelay = 100;
             gV_WhatsAppMessageLogList.OptionsView.RowAutoHeight = true;
-            gV_WhatsAppMessageLogList.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
             gV_WhatsAppMessageLogList.OptionsView.ShowAutoFilterRow = true;
+            gV_WhatsAppMessageLogList.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
             gV_WhatsAppMessageLogList.OptionsView.ShowFooter = true;
             gV_WhatsAppMessageLogList.OptionsView.ShowGroupPanel = false;
             gV_WhatsAppMessageLogList.RowHeight = 60;
             gV_WhatsAppMessageLogList.CustomRowCellEdit += gV_WhatsAppMessageLogList_CustomRowCellEdit;
+            gV_WhatsAppMessageLogList.PopupMenuShowing += gV_WhatsAppMessageLogList_PopupMenuShowing;
             gV_WhatsAppMessageLogList.CustomUnboundColumnData += gV_WhatsAppMessageLogList_CustomUnboundColumnData;
             gV_WhatsAppMessageLogList.DoubleClick += gV_WhatsAppMessageLogList_DoubleClick;
-            gV_WhatsAppMessageLogList.PopupMenuShowing += gV_WhatsAppMessageLogList_PopupMenuShowing;
             // 
             // colWhatsAppMessageLogId
             // 
@@ -153,6 +152,8 @@ namespace Foxoft
             colCreatedDate.FieldName = "CreatedDate";
             colCreatedDate.Name = "colCreatedDate";
             colCreatedDate.OptionsColumn.AllowEdit = false;
+            colCreatedDate.Visible = true;
+            colCreatedDate.VisibleIndex = 0;
             // 
             // colCreatedUserName
             // 
@@ -168,7 +169,7 @@ namespace Foxoft
             colCurrAccCode.Name = "colCurrAccCode";
             colCurrAccCode.OptionsColumn.AllowEdit = false;
             colCurrAccCode.Visible = true;
-            colCurrAccCode.VisibleIndex = 2;
+            colCurrAccCode.VisibleIndex = 3;
             // 
             // colCurrAccDesc
             // 
@@ -177,7 +178,7 @@ namespace Foxoft
             colCurrAccDesc.Name = "colCurrAccDesc";
             colCurrAccDesc.OptionsColumn.AllowEdit = false;
             colCurrAccDesc.Visible = true;
-            colCurrAccDesc.VisibleIndex = 3;
+            colCurrAccDesc.VisibleIndex = 4;
             // 
             // colReceiverPhoneNumber
             // 
@@ -186,7 +187,7 @@ namespace Foxoft
             colReceiverPhoneNumber.Name = "colReceiverPhoneNumber";
             colReceiverPhoneNumber.OptionsColumn.AllowEdit = false;
             colReceiverPhoneNumber.Visible = true;
-            colReceiverPhoneNumber.VisibleIndex = 4;
+            colReceiverPhoneNumber.VisibleIndex = 5;
             // 
             // colMessageType
             // 
@@ -195,7 +196,7 @@ namespace Foxoft
             colMessageType.Name = "colMessageType";
             colMessageType.OptionsColumn.AllowEdit = false;
             colMessageType.Visible = true;
-            colMessageType.VisibleIndex = 5;
+            colMessageType.VisibleIndex = 6;
             // 
             // colMessage
             // 
@@ -204,7 +205,7 @@ namespace Foxoft
             colMessage.Name = "colMessage";
             colMessage.OptionsColumn.AllowEdit = false;
             colMessage.Visible = true;
-            colMessage.VisibleIndex = 6;
+            colMessage.VisibleIndex = 7;
             // 
             // colIsSuccessful
             // 
@@ -212,7 +213,7 @@ namespace Foxoft
             colIsSuccessful.Name = "colIsSuccessful";
             colIsSuccessful.OptionsColumn.AllowEdit = false;
             colIsSuccessful.Visible = true;
-            colIsSuccessful.VisibleIndex = 7;
+            colIsSuccessful.VisibleIndex = 8;
             // 
             // colSender
             // 
@@ -221,7 +222,7 @@ namespace Foxoft
             colSender.Name = "colSender";
             colSender.OptionsColumn.AllowEdit = false;
             colSender.Visible = true;
-            colSender.VisibleIndex = 0;
+            colSender.VisibleIndex = 1;
             // 
             // colSenderName
             // 
@@ -230,30 +231,30 @@ namespace Foxoft
             colSenderName.Name = "colSenderName";
             colSenderName.OptionsColumn.AllowEdit = false;
             colSenderName.Visible = true;
-            colSenderName.VisibleIndex = 1;
+            colSenderName.VisibleIndex = 2;
             // 
             // colImagePreview
             // 
-            colImagePreview.Caption = Resources.Form_WhatsAppMessageLog_ImagePreview;
+            colImagePreview.Caption = "Image";
             colImagePreview.ColumnEdit = repoPictureEdit;
             colImagePreview.FieldName = "colImagePreview";
             colImagePreview.Name = "colImagePreview";
             colImagePreview.OptionsColumn.AllowEdit = false;
             colImagePreview.UnboundDataType = typeof(object);
             colImagePreview.Visible = true;
-            colImagePreview.VisibleIndex = 8;
+            colImagePreview.VisibleIndex = 9;
             colImagePreview.Width = 80;
             // 
             // repoPictureEdit
             // 
             repoPictureEdit.Name = "repoPictureEdit";
-            repoPictureEdit.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
             repoPictureEdit.NullText = " ";
             repoPictureEdit.ReadOnly = true;
+            repoPictureEdit.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
             // 
             // colSendAgain
             // 
-            colSendAgain.Caption = Resources.Form_WhatsAppMessageLog_Action;
+            colSendAgain.Caption = "Action";
             colSendAgain.ColumnEdit = repoBtn_SendAgain;
             colSendAgain.FieldName = "colSendAgain";
             colSendAgain.Name = "colSendAgain";
@@ -261,26 +262,16 @@ namespace Foxoft
             colSendAgain.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
             colSendAgain.UnboundDataType = typeof(object);
             colSendAgain.Visible = true;
-            colSendAgain.VisibleIndex = 9;
+            colSendAgain.VisibleIndex = 10;
             colSendAgain.Width = 110;
             // 
             // repoBtn_SendAgain
             // 
             repoBtn_SendAgain.AutoHeight = false;
-            repoBtn_SendAgain.Buttons.Clear();
             repoBtn_SendAgain.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph) });
-            repoBtn_SendAgain.Buttons[0].Caption = Resources.Form_WhatsAppMessageLog_SendAgain;
-            repoBtn_SendAgain.Buttons[0].Width = 95;
             repoBtn_SendAgain.Name = "repoBtn_SendAgain";
             repoBtn_SendAgain.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
             repoBtn_SendAgain.ButtonClick += repoBtn_SendAgain_ButtonClick;
-            // 
-            // repoTextEmpty
-            // 
-            repoTextEmpty.AutoHeight = false;
-            repoTextEmpty.Name = "repoTextEmpty";
-            repoTextEmpty.NullText = "";
-            repoTextEmpty.ReadOnly = true;
             // 
             // colImageFilePath
             // 
@@ -355,6 +346,12 @@ namespace Foxoft
             ribbonStatusBar1.Ribbon = ribbonControl1;
             ribbonStatusBar1.Size = new Size(1100, 24);
             // 
+            // repoTextEmpty
+            // 
+            repoTextEmpty.AutoHeight = false;
+            repoTextEmpty.Name = "repoTextEmpty";
+            repoTextEmpty.ReadOnly = true;
+            // 
             // svgImageCollection1
             // 
             svgImageCollection1.Add("Export", "image://svgimages/export/exporttoxlsx.svg");
@@ -401,7 +398,6 @@ namespace Foxoft
             svgCardBalance_ImageBox.Location = new Point(175, 10);
             svgCardBalance_ImageBox.Name = "svgCardBalance_ImageBox";
             svgCardBalance_ImageBox.Size = new Size(35, 35);
-            svgCardBalance_ImageBox.SvgImage = svgImageCollection1["Balance"];
             svgCardBalance_ImageBox.TabIndex = 3;
             svgCardBalance_ImageBox.Text = "svgImageBox1";
             svgCardBalance_ImageBox.Paint += svgCard_Paint;
@@ -412,9 +408,8 @@ namespace Foxoft
             lblCardBalance_Subtitle.Appearance.Options.UseForeColor = true;
             lblCardBalance_Subtitle.Location = new Point(10, 58);
             lblCardBalance_Subtitle.Name = "lblCardBalance_Subtitle";
-            lblCardBalance_Subtitle.Size = new Size(83, 13);
+            lblCardBalance_Subtitle.Size = new Size(0, 13);
             lblCardBalance_Subtitle.TabIndex = 4;
-
             // 
             // lblCardBalance_Value
             // 
@@ -432,9 +427,8 @@ namespace Foxoft
             lblCardBalance_Title.Appearance.Options.UseForeColor = true;
             lblCardBalance_Title.Location = new Point(10, 10);
             lblCardBalance_Title.Name = "lblCardBalance_Title";
-            lblCardBalance_Title.Size = new Size(69, 13);
+            lblCardBalance_Title.Size = new Size(0, 13);
             lblCardBalance_Title.TabIndex = 6;
-
             // 
             // panelCardToday
             // 
@@ -457,7 +451,6 @@ namespace Foxoft
             svgCardToday_ImageBox.Location = new Point(175, 10);
             svgCardToday_ImageBox.Name = "svgCardToday_ImageBox";
             svgCardToday_ImageBox.Size = new Size(35, 35);
-            svgCardToday_ImageBox.SvgImage = svgImageCollection1["Today"];
             svgCardToday_ImageBox.TabIndex = 3;
             svgCardToday_ImageBox.Text = "svgImageBox2";
             svgCardToday_ImageBox.Paint += svgCard_Paint;
@@ -468,9 +461,8 @@ namespace Foxoft
             lblCardToday_Subtitle.Appearance.Options.UseForeColor = true;
             lblCardToday_Subtitle.Location = new Point(10, 58);
             lblCardToday_Subtitle.Name = "lblCardToday_Subtitle";
-            lblCardToday_Subtitle.Size = new Size(59, 13);
+            lblCardToday_Subtitle.Size = new Size(0, 13);
             lblCardToday_Subtitle.TabIndex = 4;
-
             // 
             // lblCardToday_Value
             // 
@@ -488,9 +480,8 @@ namespace Foxoft
             lblCardToday_Title.Appearance.Options.UseForeColor = true;
             lblCardToday_Title.Location = new Point(10, 10);
             lblCardToday_Title.Name = "lblCardToday_Title";
-            lblCardToday_Title.Size = new Size(55, 13);
+            lblCardToday_Title.Size = new Size(0, 13);
             lblCardToday_Title.TabIndex = 6;
-
             // 
             // panelCardLast30Days
             // 
@@ -513,7 +504,6 @@ namespace Foxoft
             svgCardLast30Days_ImageBox.Location = new Point(175, 10);
             svgCardLast30Days_ImageBox.Name = "svgCardLast30Days_ImageBox";
             svgCardLast30Days_ImageBox.Size = new Size(35, 35);
-            svgCardLast30Days_ImageBox.SvgImage = svgImageCollection1["Last30Days"];
             svgCardLast30Days_ImageBox.TabIndex = 3;
             svgCardLast30Days_ImageBox.Text = "svgImageBox3";
             svgCardLast30Days_ImageBox.Paint += svgCard_Paint;
@@ -524,9 +514,8 @@ namespace Foxoft
             lblCardLast30Days_Subtitle.Appearance.Options.UseForeColor = true;
             lblCardLast30Days_Subtitle.Location = new Point(10, 58);
             lblCardLast30Days_Subtitle.Name = "lblCardLast30Days_Subtitle";
-            lblCardLast30Days_Subtitle.Size = new Size(94, 13);
+            lblCardLast30Days_Subtitle.Size = new Size(0, 13);
             lblCardLast30Days_Subtitle.TabIndex = 4;
-
             // 
             // lblCardLast30Days_Value
             // 
@@ -544,9 +533,8 @@ namespace Foxoft
             lblCardLast30Days_Title.Appearance.Options.UseForeColor = true;
             lblCardLast30Days_Title.Location = new Point(10, 10);
             lblCardLast30Days_Title.Name = "lblCardLast30Days_Title";
-            lblCardLast30Days_Title.Size = new Size(62, 13);
+            lblCardLast30Days_Title.Size = new Size(0, 13);
             lblCardLast30Days_Title.TabIndex = 6;
-
             // 
             // panelCardTotal
             // 
@@ -569,7 +557,6 @@ namespace Foxoft
             svgCardTotal_ImageBox.Location = new Point(175, 10);
             svgCardTotal_ImageBox.Name = "svgCardTotal_ImageBox";
             svgCardTotal_ImageBox.Size = new Size(35, 35);
-            svgCardTotal_ImageBox.SvgImage = svgImageCollection1["Total"];
             svgCardTotal_ImageBox.TabIndex = 3;
             svgCardTotal_ImageBox.Text = "svgImageBox4";
             svgCardTotal_ImageBox.Paint += svgCard_Paint;
@@ -580,9 +567,8 @@ namespace Foxoft
             lblCardTotal_Subtitle.Appearance.Options.UseForeColor = true;
             lblCardTotal_Subtitle.Location = new Point(10, 58);
             lblCardTotal_Subtitle.Name = "lblCardTotal_Subtitle";
-            lblCardTotal_Subtitle.Size = new Size(71, 13);
+            lblCardTotal_Subtitle.Size = new Size(0, 13);
             lblCardTotal_Subtitle.TabIndex = 4;
-
             // 
             // lblCardTotal_Value
             // 
@@ -600,9 +586,8 @@ namespace Foxoft
             lblCardTotal_Title.Appearance.Options.UseForeColor = true;
             lblCardTotal_Title.Location = new Point(10, 10);
             lblCardTotal_Title.Name = "lblCardTotal_Title";
-            lblCardTotal_Title.Size = new Size(49, 13);
+            lblCardTotal_Title.Size = new Size(0, 13);
             lblCardTotal_Title.TabIndex = 6;
-
             // 
             // FormWhatsAppMessageLog
             // 
@@ -624,8 +609,8 @@ namespace Foxoft
             ((ISupportInitialize)gV_WhatsAppMessageLogList).EndInit();
             ((ISupportInitialize)repoPictureEdit).EndInit();
             ((ISupportInitialize)repoBtn_SendAgain).EndInit();
-            ((ISupportInitialize)repoTextEmpty).EndInit();
             ((ISupportInitialize)ribbonControl1).EndInit();
+            ((ISupportInitialize)repoTextEmpty).EndInit();
             ((ISupportInitialize)svgImageCollection1).EndInit();
             ((ISupportInitialize)panelSummary).EndInit();
             panelSummary.ResumeLayout(false);
