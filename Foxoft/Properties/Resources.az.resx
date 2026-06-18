@@ -546,6 +546,75 @@
   <data name="Entity_CurrAcc_IsDefault" xml:space="preserve">
     <value>Varsayılan Müştəri</value>
   </data>
+  <data name="Entity_TrCrmActivity" xml:space="preserve">
+    <value>CRM Aktivliyi</value>
+  </data>
+  <data name="Entity_TrCrmActivity_ActivityId" xml:space="preserve">
+    <value>Aktivlik Id</value>
+  </data>
+  <data name="Entity_TrCrmActivity_ActivityCode" xml:space="preserve">
+    <value>Aktivlik Kodu</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Subject" xml:space="preserve">
+    <value>Mövzu</value>
+  </data>
+  <data name="Entity_TrCrmActivity_ActivityTypeId" xml:space="preserve">
+    <value>Aktivlik Növü</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status_Planned" xml:space="preserve">
+    <value>Planlandı</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status_InProgress" xml:space="preserve">
+    <value>Davam edir</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status_Completed" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status_Cancelled" xml:space="preserve">
+    <value>Ləğv edildi</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Priority" xml:space="preserve">
+    <value>Prioritet</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Priority_Low" xml:space="preserve">
+    <value>Aşağı</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Priority_Medium" xml:space="preserve">
+    <value>Orta</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Priority_High" xml:space="preserve">
+    <value>Yüksək</value>
+  </data>
+  <data name="Entity_TrCrmActivity_ActivityDate" xml:space="preserve">
+    <value>Tarix</value>
+  </data>
+  <data name="Entity_TrCrmActivity_NextPlanDate" xml:space="preserve">
+    <value>Növbəti Plan Tarixi</value>
+  </data>
+  <data name="Entity_TrCrmActivity_StartTime" xml:space="preserve">
+    <value>Başlama Saatı</value>
+  </data>
+  <data name="Entity_TrCrmActivity_EndTime" xml:space="preserve">
+    <value>Bitmə Saatı</value>
+  </data>
+  <data name="Entity_TrCrmActivity_AssignedCurrAccCode" xml:space="preserve">
+    <value>Təyin edilən</value>
+  </data>
+  <data name="Entity_TrCrmActivity_AssignedCurrAccDesc" xml:space="preserve">
+    <value>Təyin edilən adı</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Description" xml:space="preserve">
+    <value>Açıqlama</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Result" xml:space="preserve">
+    <value>Nəticə</value>
+  </data>
+  <data name="Entity_TrCrmActivity_IsCompleted" xml:space="preserve">
+    <value>Tamamlanıb</value>
+  </data>
   <data name="Common_Balance" xml:space="preserve">
     <value>Qalıq</value>
   </data>
@@ -2086,6 +2155,15 @@
   </data>
   <data name="Form_CurrAccList_Caption" xml:space="preserve">
     <value>Cari Hesablar</value>
+  </data>
+  <data name="Form_CrmActivityList_Caption" xml:space="preserve">
+    <value>CRM Aktivlikləri</value>
+  </data>
+  <data name="Form_CrmActivityList_DeleteConfirm" xml:space="preserve">
+    <value>Seçilmiş CRM aktivliyi silinsin?</value>
+  </data>
+  <data name="Form_CrmActivityList_RibbonPage_Main" xml:space="preserve">
+    <value>CRM Aktivlikləri</value>
   </data>
   <data name="Form_CurrAccList_RibbonPage_Main" xml:space="preserve">
     <value>Cari Hesab</value>

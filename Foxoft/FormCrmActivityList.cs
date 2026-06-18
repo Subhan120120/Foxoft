@@ -4,11 +4,11 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
@@ -17,8 +17,8 @@ namespace Foxoft
 {
     public partial class FormCrmActivityList : RibbonForm
     {
-        private readonly EfMethods efMethods = new();
         private subContext dbContext;
+        private Dictionary<string, string> assignedCurrAccDescriptions = new();
         private bool layoutLoaded;
 
         public FormCrmActivityList()
@@ -45,10 +45,30 @@ namespace Foxoft
                 .ThenByDescending(x => x.CreatedDate)
                 .ToList();
 
+            LoadAssignedCurrAccDescriptions(list);
+
             crmActivitiesBindingSource.DataSource = list;
 
             if (!layoutLoaded)
                 gV_CrmActivityList.BestFitColumns();
+        }
+
+        private void LoadAssignedCurrAccDescriptions(List<TrCrmActivity> crmActivities)
+        {
+            List<string> assignedCurrAccCodes = crmActivities
+                .Select(x => x.AssignedCurrAccCode)
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Select(x => x!)
+                .Distinct()
+                .ToList();
+
+            assignedCurrAccDescriptions = assignedCurrAccCodes.Count == 0
+                ? new Dictionary<string, string>()
+                : dbContext.DcCurrAccs
+                    .AsNoTracking()
+                    .Where(x => assignedCurrAccCodes.Contains(x.CurrAccCode))
+                    .Select(x => new { x.CurrAccCode, x.CurrAccDesc })
+                    .ToDictionary(x => x.CurrAccCode, x => x.CurrAccDesc ?? string.Empty);
         }
 
         private void LoadLayout()
@@ -118,7 +138,7 @@ namespace Foxoft
                 return;
 
             if (XtraMessageBox.Show(
-                    "Seçilmiş CRM aktivliyi silinsin?",
+                    Resources.Form_CrmActivityList_DeleteConfirm,
                     Resources.Common_Confirm,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) != DialogResult.Yes)
@@ -138,18 +158,27 @@ namespace Foxoft
             LoadData();
         }
 
-        private static string GetEnumDescription<TEnum>(TEnum value) where TEnum : struct, Enum
+        private static string GetStatusDisplayText(CrmActivityStatus status)
         {
-            var member = typeof(TEnum).GetMember(value.ToString()).FirstOrDefault();
+            return status switch
+            {
+                CrmActivityStatus.Planned => Resources.Entity_TrCrmActivity_Status_Planned,
+                CrmActivityStatus.InProgress => Resources.Entity_TrCrmActivity_Status_InProgress,
+                CrmActivityStatus.Completed => Resources.Entity_TrCrmActivity_Status_Completed,
+                CrmActivityStatus.Cancelled => Resources.Entity_TrCrmActivity_Status_Cancelled,
+                _ => status.ToString()
+            };
+        }
 
-            if (member is null)
-                return value.ToString();
-
-            var attr = member.GetCustomAttributes(typeof(DescriptionAttribute), false)
-                .Cast<DescriptionAttribute>()
-                .FirstOrDefault();
-
-            return attr?.Description ?? value.ToString();
+        private static string GetPriorityDisplayText(CrmActivityPriority priority)
+        {
+            return priority switch
+            {
+                CrmActivityPriority.Low => Resources.Entity_TrCrmActivity_Priority_Low,
+                CrmActivityPriority.Medium => Resources.Entity_TrCrmActivity_Priority_Medium,
+                CrmActivityPriority.High => Resources.Entity_TrCrmActivity_Priority_High,
+                _ => priority.ToString()
+            };
         }
 
         private void bBI_CrmActivityNew_ItemClick(object sender, ItemClickEventArgs e)
@@ -174,7 +203,7 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CustomExtensions.ExportToExcel(this, "CRM Aktivlikləri", gC_CrmActivityList);
+            CustomExtensions.ExportToExcel(this, Resources.Form_CrmActivityList_Caption, gC_CrmActivityList);
         }
 
         private void gC_CrmActivityList_ProcessGridKey(object sender, KeyEventArgs e)
@@ -213,10 +242,22 @@ namespace Foxoft
         private void gV_CrmActivityList_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
         {
             if (e.Column == colStatus && e.Value is CrmActivityStatus status)
-                e.DisplayText = GetEnumDescription(status);
+                e.DisplayText = GetStatusDisplayText(status);
 
             if (e.Column == colPriority && e.Value is CrmActivityPriority priority)
-                e.DisplayText = GetEnumDescription(priority);
+                e.DisplayText = GetPriorityDisplayText(priority);
+        }
+
+        private void gV_CrmActivityList_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
+        {
+            if (e.Column != colAssignedCurrAccDesc || !e.IsGetData || sender is not GridView view)
+                return;
+
+            int rowHandle = view.GetRowHandle(e.ListSourceRowIndex);
+            string assignedCurrAccCode = view.GetRowCellValue(rowHandle, colAssignedCurrAccCode) as string ?? string.Empty;
+
+            if (assignedCurrAccDescriptions.TryGetValue(assignedCurrAccCode, out string currAccDesc))
+                e.Value = currAccDesc;
         }
 
         private void gV_CrmActivityList_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)

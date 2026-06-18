@@ -1738,6 +1738,213 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Entity_Base_LastUpdatedUserName", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CRM Activity.
+        /// </summary>
+        public static string Entity_TrCrmActivity {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Activity Code.
+        /// </summary>
+        public static string Entity_TrCrmActivity_ActivityCode {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_ActivityCode", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Activity Date.
+        /// </summary>
+        public static string Entity_TrCrmActivity_ActivityDate {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_ActivityDate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Activity Id.
+        /// </summary>
+        public static string Entity_TrCrmActivity_ActivityId {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_ActivityId", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Activity Type.
+        /// </summary>
+        public static string Entity_TrCrmActivity_ActivityTypeId {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_ActivityTypeId", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Assigned Name.
+        /// </summary>
+        public static string Entity_TrCrmActivity_AssignedCurrAccDesc {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_AssignedCurrAccDesc", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Assigned To.
+        /// </summary>
+        public static string Entity_TrCrmActivity_AssignedCurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_AssignedCurrAccCode", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Description {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to End Time.
+        /// </summary>
+        public static string Entity_TrCrmActivity_EndTime {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_EndTime", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        public static string Entity_TrCrmActivity_IsCompleted {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_IsCompleted", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Next Plan Date.
+        /// </summary>
+        public static string Entity_TrCrmActivity_NextPlanDate {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_NextPlanDate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Priority.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Priority {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Priority", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to High.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Priority_High {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Priority_High", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Low.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Priority_Low {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Priority_Low", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Medium.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Priority_Medium {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Priority_Medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Result {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Result", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Start Time.
+        /// </summary>
+        public static string Entity_TrCrmActivity_StartTime {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_StartTime", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Status {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Status", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelled.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Status_Cancelled {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Status_Cancelled", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Status_Completed {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Status_Completed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to In Progress.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Status_InProgress {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Status_InProgress", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Planned.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Status_Planned {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Status_Planned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject.
+        /// </summary>
+        public static string Entity_TrCrmActivity_Subject {
+            get {
+                return ResourceManager.GetString("Entity_TrCrmActivity_Subject", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Claim.
@@ -8090,6 +8297,33 @@ namespace Foxoft.Properties {
         public static string Form_CurrAccList_Caption {
             get {
                 return ResourceManager.GetString("Form_CurrAccList_Caption", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CRM Activities.
+        /// </summary>
+        public static string Form_CrmActivityList_Caption {
+            get {
+                return ResourceManager.GetString("Form_CrmActivityList_Caption", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Delete selected CRM activity?.
+        /// </summary>
+        public static string Form_CrmActivityList_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("Form_CrmActivityList_DeleteConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CRM Activities.
+        /// </summary>
+        public static string Form_CrmActivityList_RibbonPage_Main {
+            get {
+                return ResourceManager.GetString("Form_CrmActivityList_RibbonPage_Main", resourceCulture);
             }
         }
         

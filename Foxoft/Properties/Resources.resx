@@ -546,6 +546,75 @@
   <data name="Entity_CurrAcc_IsDefault" xml:space="preserve">
     <value>Default Customer</value>
   </data>
+  <data name="Entity_TrCrmActivity" xml:space="preserve">
+    <value>CRM Activity</value>
+  </data>
+  <data name="Entity_TrCrmActivity_ActivityId" xml:space="preserve">
+    <value>Activity Id</value>
+  </data>
+  <data name="Entity_TrCrmActivity_ActivityCode" xml:space="preserve">
+    <value>Activity Code</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="Entity_TrCrmActivity_ActivityTypeId" xml:space="preserve">
+    <value>Activity Type</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status_Planned" xml:space="preserve">
+    <value>Planned</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status_InProgress" xml:space="preserve">
+    <value>In Progress</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Status_Cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Priority_Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Priority_Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Priority_High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Entity_TrCrmActivity_ActivityDate" xml:space="preserve">
+    <value>Activity Date</value>
+  </data>
+  <data name="Entity_TrCrmActivity_NextPlanDate" xml:space="preserve">
+    <value>Next Plan Date</value>
+  </data>
+  <data name="Entity_TrCrmActivity_StartTime" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
+  <data name="Entity_TrCrmActivity_EndTime" xml:space="preserve">
+    <value>End Time</value>
+  </data>
+  <data name="Entity_TrCrmActivity_AssignedCurrAccCode" xml:space="preserve">
+    <value>Assigned To</value>
+  </data>
+  <data name="Entity_TrCrmActivity_AssignedCurrAccDesc" xml:space="preserve">
+    <value>Assigned Name</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Entity_TrCrmActivity_Result" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="Entity_TrCrmActivity_IsCompleted" xml:space="preserve">
+    <value>Completed</value>
+  </data>
   <data name="Common_Balance" xml:space="preserve">
     <value>Balance</value>
   </data>
@@ -2086,6 +2155,15 @@
   </data>
   <data name="Form_CurrAccList_Caption" xml:space="preserve">
     <value>Current Accounts</value>
+  </data>
+  <data name="Form_CrmActivityList_Caption" xml:space="preserve">
+    <value>CRM Activities</value>
+  </data>
+  <data name="Form_CrmActivityList_DeleteConfirm" xml:space="preserve">
+    <value>Delete selected CRM activity?</value>
+  </data>
+  <data name="Form_CrmActivityList_RibbonPage_Main" xml:space="preserve">
+    <value>CRM Activities</value>
   </data>
   <data name="Form_CurrAccList_RibbonPage_Main" xml:space="preserve">
     <value>Current Account</value>
