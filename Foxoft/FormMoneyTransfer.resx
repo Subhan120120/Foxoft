@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
-    Microsoft ResX Schema 
+    Microsoft ResX Schema
 
     Version 2.0
 
@@ -48,7 +48,7 @@
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
@@ -120,7 +120,7 @@
   <assembly alias="DevExpress.Data.v24.2" name="DevExpress.Data.v24.2, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="bBI_DeletePayment.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjIsIFZlcnNpb249MjQuMi43
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAD4DAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -141,7 +141,7 @@
   </data>
   <data name="bBI_SaveAndClose.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjIsIFZlcnNpb249MjQuMi43
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAEgEAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -167,24 +167,44 @@
   </data>
   <data name="bBI_SendWhatsapp.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjIsIFZlcnNpb249MjQuMi43
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
-        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAADUCAAAC77u/
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAN0GAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
-        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3Bh
-        Y2U9InByZXNlcnZlIiBpZD0iTGF5ZXJfMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAg
-        MzIgMzIiPg0KICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLkJsdWV7ZmlsbDojMTE3N0Q3O30KCS5Z
-        ZWxsb3d7ZmlsbDojRkZCMTE1O30KCS5CbGFja3tmaWxsOiM3MjcyNzI7fQoJLkdyZWVue2ZpbGw6IzAz
-        OUMyMzt9CgkuUmVke2ZpbGw6I0QxMUMxQzt9Cgkuc3Qwe29wYWNpdHk6MC43NTt9Cgkuc3Qxe29wYWNp
-        dHk6MC41O30KPC9zdHlsZT4NCiAgPGcgaWQ9IlNlbmQiPg0KICAgIDxwb2x5Z29uIHBvaW50cz0iMiwy
-        MCA4LDIyLjQgMjQsMTAgMTIsMjQgMTIsMzAgMTYuMywyNS43IDIyLDI4IDMwLDIgICIgY2xhc3M9IkJs
-        dWUiIC8+DQogIDwvZz4NCjwvc3ZnPgs=
+        IHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCIgdmlld0JveD0iMCAwIDI0IDI0IiB2ZXJzaW9uPSIx
+        LjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93
+        d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIGlkPSJDYXBhXzEiIHN0eWxl
+        PSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDI0IDI0Ij4NCiAgPGcgaWQ9IldBX0xvZ28iPg0KICAg
+        IDxnPg0KICAgICAgPHBhdGggZD0iTTIwLjQ2MywzLjQ4OEMxOC4yMTcsMS4yNCwxNS4yMzEsMC4wMDEs
+        MTIuMDUsMCAgICBDNS40OTUsMCwwLjE2LDUuMzM0LDAuMTU3LDExLjg5MmMtMC4wMDEsMi4wOTYsMC41
+        NDcsNC4xNDIsMS41ODgsNS45NDZMMC4wNTcsMjRsNi4zMDQtMS42NTQgICAgYzEuNzM3LDAuOTQ4LDMu
+        NjkzLDEuNDQ3LDUuNjgzLDEuNDQ4aDAuMDA1YzYuNTU0LDAsMTEuODktNS4zMzUsMTEuODkzLTExLjg5
+        M0MyMy45NDQsOC43MjQsMjIuNzA4LDUuNzM1LDIwLjQ2MywzLjQ4OHogICAgIE0xMi4wNSwyMS43ODVo
+        LTAuMDA0Yy0xLjc3NCwwLTMuNTEzLTAuNDc3LTUuMDMxLTEuMzc4bC0wLjM2MS0wLjIxNGwtMy43NDEs
+        MC45ODFsMC45OTktMy42NDhsLTAuMjM1LTAuMzc0ICAgIGMtMC45OS0xLjU3NC0xLjUxMi0zLjM5My0x
+        LjUxMS01LjI2YzAuMDAyLTUuNDUsNC40MzctOS44ODQsOS44ODktOS44ODRjMi42NCwwLDUuMTIyLDEu
+        MDMsNi45ODgsMi44OTggICAgYzEuODY2LDEuODY5LDIuODkzLDQuMzUyLDIuODkyLDYuOTkzQzIxLjkz
+        MiwxNy4zNTEsMTcuNDk4LDIxLjc4NSwxMi4wNSwyMS43ODV6IE0xNy40NzIsMTQuMzgyICAgIGMtMC4y
+        OTctMC4xNDktMS43NTgtMC44NjgtMi4wMzEtMC45NjdjLTAuMjcyLTAuMDk5LTAuNDctMC4xNDktMC42
+        NjksMC4xNDhzLTAuNzY3LDAuOTY3LTAuOTQxLDEuMTY2ICAgIGMtMC4xNzMsMC4xOTgtMC4zNDcsMC4y
+        MjMtMC42NDQsMC4wNzRjLTAuMjk3LTAuMTQ5LTEuMjU1LTAuNDYyLTIuMzktMS40NzVjLTAuODgzLTAu
+        Nzg4LTEuNDgtMS43NjEtMS42NTMtMi4wNTkgICAgcy0wLjAxOC0wLjQ1OCwwLjEzLTAuNjA2YzAuMTM0
+        LTAuMTMzLDAuMjk3LTAuMzQ3LDAuNDQ2LTAuNTIxQzkuODcsOS45Nyw5LjkxOSw5Ljg0NiwxMC4wMTks
+        OS42NDcgICAgYzAuMDk5LTAuMTk4LDAuMDUtMC4zNzItMC4wMjUtMC41MjFDOS45MTksOC45NzgsOS4z
+        MjUsNy41MTUsOS4wNzgsNi45MmMtMC4yNDEtMC41OC0wLjQ4Ni0wLjUwMS0wLjY2OS0wLjUxICAgIEM4
+        LjIzNiw2LjQwMSw4LjAzOCw2LjQsNy44MzksNi40Yy0wLjE5OCwwLTAuNTIsMC4wNzQtMC43OTIsMC4z
+        NzJjLTAuMjcyLDAuMjk4LTEuMDQsMS4wMTctMS4wNCwyLjQ3OSAgICBjMCwxLjQ2MywxLjA2NSwyLjg3
+        NiwxLjIxMywzLjA3NGMwLjE0OCwwLjE5OCwyLjA5NSwzLjIsNS4wNzYsNC40ODdjMC43MDksMC4zMDYs
+        MS4yNjMsMC40ODksMS42OTQsMC42MjYgICAgYzAuNzEyLDAuMjI2LDEuMzYsMC4xOTQsMS44NzIsMC4x
+        MThjMC41NzEtMC4wODUsMS43NTgtMC43MTksMi4wMDYtMS40MTNjMC4yNDgtMC42OTQsMC4yNDgtMS4y
+        OSwwLjE3My0xLjQxMyAgICBDMTcuOTY3LDE0LjYwNSwxNy43NjksMTQuNTMxLDE3LjQ3MiwxNC4zODJ6
+        IiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQiIC8+DQogICAgPC9nPg0K
+        ICA8L2c+DQo8L3N2Zz4L
 </value>
   </data>
   <data name="bBI_NewPayment.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjIsIFZlcnNpb249MjQuMi43
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAMUBAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -197,26 +217,9 @@
         VjI2eiIgY2xhc3M9IkJsYWNrIiAvPg0KPC9zdmc+Cw==
 </value>
   </data>
-  <data name="bBI_CopyPayment.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
-        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
-        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAADACAAAC77u/
-        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
-        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3Bh
-        Y2U9InByZXNlcnZlIiBpZD0iQ29weSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzIg
-        MzIiPg0KICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLkJsYWNre2ZpbGw6IzcyNzI3Mjt9Cjwvc3R5
-        bGU+DQogIDxwYXRoIGQ9Ik0yMSwwSDlDOC40LDAsOCwwLjQsOCwxdjVIM0MyLjQsNiwyLDYuNCwyLDd2
-        MjJjMCwwLjYsMC40LDEsMSwxaDE4YzAuNiwwLDEtMC40LDEtMXYtNWg1YzAuNiwwLDEtMC40LDEtMVY3
-        ICBMMjEsMHogTTIwLDI4SDRWOGg0aDJoNHY1YzAsMC42LDAuNCwxLDEsMWg1djR2NHYyVjI4eiBNMjYs
-        MTJ2MTBoLTR2LTlsLTctN2gtNVYyaDRoNnY0djFjMCwwLjYsMC40LDEsMSwxaDVWMTJ6IiBjbGFzcz0i
-        QmxhY2siIC8+DQo8L3N2Zz4L
-</value>
-  </data>
   <data name="BBI_Info.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjIsIFZlcnNpb249MjQuMi43
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAABsDAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -235,11 +238,17 @@
         PC9nPg0KPC9zdmc+Cw==
 </value>
   </data>
+  <metadata name="popupMenuPrinters.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="trPaymentLinesBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1, 3</value>
+    <value>300, 17</value>
   </metadata>
   <metadata name="trPaymentHeadersBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>215, 3</value>
+    <value>513, 17</value>
+  </metadata>
+  <metadata name="alertControl1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>177, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>41</value>

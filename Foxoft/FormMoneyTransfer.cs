@@ -21,7 +21,9 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.IO;
 
 namespace Foxoft
@@ -32,6 +34,7 @@ namespace Foxoft
         private EfMethods efMethods = new();
         private readonly ReportClass reportClass;
         private readonly SettingStore settingStore;
+        private readonly DcTerminal? dcTerminal;
         private subContext dbContext;
         private Guid paymentHeaderId;
         private decimal BalanceBefore;
@@ -41,6 +44,7 @@ namespace Foxoft
             InitializeComponent();
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            dcTerminal = efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId);
             reportClass = new(settingStore?.DesignFileFolder ?? string.Empty);
 
             repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
@@ -478,6 +482,42 @@ namespace Foxoft
 
         private MemoryStream? GetPaymentReportImg()
         {
+            XtraReport? xtraReport = GetPaymentReport(trPaymentHeader.PaymentHeaderId);
+
+            if (xtraReport == null)
+                return null;
+
+            MemoryStream ms = new();
+
+            using (xtraReport)
+            {
+                xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 240 });
+            }
+
+            if (ms.CanSeek) ms.Position = 0;
+
+            return ms;
+        }
+
+        private XtraReport? GetPaymentReport(Guid paymentHeaderId)
+        {
+            DcReport? dcReport = GetPaymentReportDefinition(paymentHeaderId);
+
+            if (dcReport == null)
+                return null;
+
+            SqlParameter[] sqlParameters;
+            string query = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
+            List<QueryParameter> qryParams = reportClass.ConvertSqlParametersToQueryParameters(sqlParameters);
+            CustomSqlQuery mainQuery = new("Main", query);
+            mainQuery.Parameters.AddRange(qryParams);
+            List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
+
+            return reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
+        }
+
+        private DcReport? GetPaymentReportDefinition(Guid paymentHeaderId)
+        {
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_PaymentReport");
 
             if (dcReport == null)
@@ -492,25 +532,90 @@ namespace Foxoft
 
             foreach (var item in dcReport.DcReportVariables)
                 if (item.VariableProperty == nameof(TrPaymentHeader.PaymentHeaderId))
-                    item.VariableValue = trPaymentHeader.PaymentHeaderId.ToString();
+                    item.VariableValue = paymentHeaderId.ToString();
 
-            SqlParameter[] sqlParameters;
-            dcReport.ReportQuery = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
-            List<QueryParameter> qryParams = reportClass.ConvertSqlParametersToQueryParameters(sqlParameters);
-            CustomSqlQuery mainQuery = new("Main", dcReport.ReportQuery);
-            mainQuery.Parameters.AddRange(qryParams);
-            List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
-            XtraReport xtraReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
+            return dcReport;
+        }
 
-            if (xtraReport == null)
-                return null;
+        private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowReportPreview();
+        }
 
-            MemoryStream ms = new();
-            xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 240 });
+        private void ShowReportPreview()
+        {
+            gV_PaymentLine.PostEditor();
+            gV_PaymentLine.UpdateCurrentRow();
 
-            if (ms.CanSeek) ms.Position = 0;
+            if (trPaymentHeader is null || !efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
+            {
+                XtraMessageBox.Show(Resources.Form_MoneyTransfer_NoPaymentToPrint);
+                return;
+            }
 
-            return ms;
+            DcReport? dcReport = GetPaymentReportDefinition(trPaymentHeader.PaymentHeaderId);
+
+            if (dcReport == null)
+                return;
+
+            FormReportPreview form = new(dcReport.ReportQuery, "", dcReport);
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
+        private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            await PrintFast(GetPrinterName(dcTerminal?.PrinterName));
+        }
+
+        private async Task PrintFast(string printerName)
+        {
+            gV_PaymentLine.PostEditor();
+            gV_PaymentLine.UpdateCurrentRow();
+
+            alertControl1.Show(
+                this,
+                Resources.Common_PrintSending,
+                string.Format(Resources.Common_PrinterLabel, printerName),
+                string.Empty,
+                (Image)null,
+                null);
+
+            if (trPaymentHeader is not null && efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
+                await Task.Run(() => GetPrint(trPaymentHeader.PaymentHeaderId, printerName));
+            else
+                XtraMessageBox.Show(Resources.Form_MoneyTransfer_NoPaymentToPrint);
+
+            alertControl1.Show(
+                this,
+                Resources.Common_PrintSent,
+                string.Format(Resources.Common_PrinterLabel, printerName),
+                string.Empty,
+                (Image)null,
+                null);
+        }
+
+        private void GetPrint(Guid paymentHeaderId, string printerName)
+        {
+            XtraReport? xtraReport = GetPaymentReport(paymentHeaderId);
+
+            if (xtraReport is null)
+                return;
+
+            using (xtraReport)
+            {
+                xtraReport.PrinterName = printerName;
+
+                ReportPrintTool printTool = new(xtraReport);
+                printTool.Print();
+            }
+        }
+
+        private static string GetPrinterName(string? printerName)
+        {
+            return string.IsNullOrWhiteSpace(printerName)
+                ? new PrinterSettings().PrinterName
+                : printerName;
         }
 
         private async Task SendWhatsAppViaEvolutionApi(string number, MemoryStream memoryStream)
@@ -762,6 +867,40 @@ namespace Foxoft
             string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
 
             XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void popupMenuPrinters_BeforePopup(object sender, CancelEventArgs e)
+        {
+            if (sender is not PopupMenu menu)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            menu.ItemLinks.Clear();
+
+            try
+            {
+                foreach (string printer in PrinterSettings.InstalledPrinters)
+                {
+                    BarButtonItem bBI = new();
+                    bBI.Caption = printer;
+                    bBI.Name = printer;
+                    bBI.ImageOptions.ImageUri.Uri = "Print";
+                    bBI.ItemClick += async (sender, e) =>
+                    {
+                        await PrintFast(printer);
+                    };
+
+                    menu.AddItem(bBI);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format(Resources.Form_MoneyTransfer_PrinterError, ex.Message));
+            }
+
+            e.Cancel = false;
         }
 
         private void NavigateToAdjacentMoneyTransfer(bool isPrevious)

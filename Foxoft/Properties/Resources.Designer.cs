@@ -9933,6 +9933,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report Preview.
+        /// </summary>
+        public static string Form_MoneyTransfer_Button_ReportPreview {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_Button_ReportPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save Close.
         /// </summary>
         public static string Form_MoneyTransfer_Button_SaveAndClose {
@@ -10014,6 +10023,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no payment to print..
+        /// </summary>
+        public static string Form_MoneyTransfer_NoPaymentToPrint {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_NoPaymentToPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number is not specified..
         /// </summary>
         public static string Form_MoneyTransfer_NumberNotDefined {
@@ -10046,6 +10064,16 @@ namespace Foxoft.Properties {
         public static string Form_MoneyTransfer_PhoneNotDefined {
             get {
                 return ResourceManager.GetString("Form_MoneyTransfer_PhoneNotDefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: 1256795721
+        ///{0}.
+        /// </summary>
+        public static string Form_MoneyTransfer_PrinterError {
+            get {
+                return ResourceManager.GetString("Form_MoneyTransfer_PrinterError", resourceCulture);
             }
         }
         

@@ -2789,6 +2789,9 @@ Do you want to return to the invoice?</value>
   <data name="Form_MoneyTransfer_Button_NewPayment" xml:space="preserve">
     <value>New Payment</value>
   </data>
+  <data name="Form_MoneyTransfer_Button_ReportPreview" xml:space="preserve">
+    <value>Report Preview</value>
+  </data>
   <data name="Common_Info" xml:space="preserve">
     <value>Information</value>
   </data>
@@ -2811,6 +2814,13 @@ Do you want to return to the invoice?</value>
   </data>
   <data name="Form_MoneyTransfer_NoPaymentToDelete" xml:space="preserve">
     <value>There is no payment to delete.</value>
+  </data>
+  <data name="Form_MoneyTransfer_NoPaymentToPrint" xml:space="preserve">
+    <value>There is no payment to print.</value>
+  </data>
+  <data name="Form_MoneyTransfer_PrinterError" xml:space="preserve">
+    <value>Error: 1256795721
+{0}</value>
   </data>
   <data name="Form_MoneyTransfer_PaymentReceived" xml:space="preserve">
     <value>Payment received: </value>

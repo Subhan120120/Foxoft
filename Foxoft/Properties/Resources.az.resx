@@ -2789,6 +2789,9 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_MoneyTransfer_Button_NewPayment" xml:space="preserve">
     <value>Yeni Ödəniş</value>
   </data>
+  <data name="Form_MoneyTransfer_Button_ReportPreview" xml:space="preserve">
+    <value>Hesabat Önizləmə</value>
+  </data>
   <data name="Common_Info" xml:space="preserve">
     <value>Məlumat</value>
   </data>
@@ -2811,6 +2814,13 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_MoneyTransfer_NoPaymentToDelete" xml:space="preserve">
     <value>Silinməli olan ödəniş yoxdur.</value>
+  </data>
+  <data name="Form_MoneyTransfer_NoPaymentToPrint" xml:space="preserve">
+    <value>Çap olunmaq üçün ödəniş yoxdur.</value>
+  </data>
+  <data name="Form_MoneyTransfer_PrinterError" xml:space="preserve">
+    <value>Xəta: 1256795721
+{0}</value>
   </data>
   <data name="Form_MoneyTransfer_PaymentReceived" xml:space="preserve">
     <value>Ödəniş alındı: </value>
