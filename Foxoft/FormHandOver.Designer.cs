@@ -69,6 +69,7 @@ namespace Foxoft
             col_CurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_CurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_DocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_DeliveryDate = new DevExpress.XtraGrid.Columns.GridColumn();
             col_WarehouseCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_Description = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProcessCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -76,6 +77,7 @@ namespace Foxoft
             col_OfficeCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_StoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_CustomsDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_CreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             lC_Root = new DevExpress.XtraLayout.LayoutControl();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             DocumentNumberTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -130,7 +132,6 @@ namespace Foxoft
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             lCI_InvoiceLine = new DevExpress.XtraLayout.LayoutControlItem();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            col_CreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)gvDetail).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtn_AddWaybill).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_Invoice).BeginInit();
@@ -185,20 +186,23 @@ namespace Foxoft
             // 
             // col_InvoiceLineId
             // 
+            col_InvoiceLineId.Caption = Resources.Entity_InvoiceLine_Id;
             col_InvoiceLineId.FieldName = "TrInvoiceLine.InvoiceLineId";
             col_InvoiceLineId.Name = "col_InvoiceLineId";
             col_InvoiceLineId.Visible = true;
-            col_InvoiceLineId.VisibleIndex = 1;
+            col_InvoiceLineId.VisibleIndex = 0;
             // 
             // col_HierarchyCode
             // 
+            col_HierarchyCode.Caption = Resources.Entity_Product_HierarchyCode;
             col_HierarchyCode.FieldName = "TrInvoiceLine.DcProduct.HierarchyCode";
             col_HierarchyCode.Name = "col_HierarchyCode";
             col_HierarchyCode.Visible = true;
-            col_HierarchyCode.VisibleIndex = 0;
+            col_HierarchyCode.VisibleIndex = 1;
             // 
             // col_ProductCode
             // 
+            col_ProductCode.Caption = Resources.Entity_InvoiceLine_ProductCode;
             col_ProductCode.FieldName = "TrInvoiceLine.ProductCode";
             col_ProductCode.Name = "col_ProductCode";
             col_ProductCode.OptionsColumn.AllowEdit = false;
@@ -208,6 +212,7 @@ namespace Foxoft
             // 
             // col_ProductDesc
             // 
+            col_ProductDesc.Caption = Resources.Entity_InvoiceLine_ProductDesc;
             col_ProductDesc.FieldName = "TrInvoiceLine.DcProduct.ProductDesc";
             col_ProductDesc.Name = "col_ProductDesc";
             col_ProductDesc.Visible = true;
@@ -216,6 +221,7 @@ namespace Foxoft
             // 
             // col_Qty
             // 
+            col_Qty.Caption = Resources.Entity_InvoiceLine_Qty;
             col_Qty.FieldName = "TrInvoiceLine.Qty";
             col_Qty.Name = "col_Qty";
             col_Qty.OptionsColumn.AllowEdit = false;
@@ -247,6 +253,7 @@ namespace Foxoft
             // 
             // col_Price
             // 
+            col_Price.Caption = Resources.Entity_InvoiceLine_Price;
             col_Price.FieldName = "TrInvoiceLine.Price";
             col_Price.Name = "col_Price";
             col_Price.OptionsColumn.AllowEdit = false;
@@ -256,6 +263,7 @@ namespace Foxoft
             // 
             // col_Amount
             // 
+            col_Amount.Caption = Resources.Entity_InvoiceLine_Amount;
             col_Amount.FieldName = "TrInvoiceLine.Amount";
             col_Amount.Name = "col_Amount";
             col_Amount.OptionsColumn.AllowEdit = false;
@@ -264,6 +272,7 @@ namespace Foxoft
             // 
             // col_PosDiscount
             // 
+            col_PosDiscount.Caption = Resources.Entity_InvoiceLine_PosDiscount;
             col_PosDiscount.FieldName = "TrInvoiceLine.PosDiscount";
             col_PosDiscount.Name = "col_PosDiscount";
             col_PosDiscount.OptionsColumn.AllowEdit = false;
@@ -272,6 +281,7 @@ namespace Foxoft
             // 
             // col_DiscountCampaign
             // 
+            col_DiscountCampaign.Caption = Resources.Entity_InvoiceLine_DiscountCampaign;
             col_DiscountCampaign.FieldName = "TrInvoiceLine.DiscountCampaign";
             col_DiscountCampaign.Name = "col_DiscountCampaign";
             col_DiscountCampaign.OptionsColumn.AllowEdit = false;
@@ -280,6 +290,7 @@ namespace Foxoft
             // 
             // col_NetAmount
             // 
+            col_NetAmount.Caption = Resources.Entity_InvoiceLine_NetAmount;
             col_NetAmount.FieldName = "TrInvoiceLine.NetAmount";
             col_NetAmount.Name = "col_NetAmount";
             col_NetAmount.OptionsColumn.AllowEdit = false;
@@ -289,6 +300,7 @@ namespace Foxoft
             // 
             // col_LineDesc
             // 
+            col_LineDesc.Caption = Resources.Entity_InvoiceLine_LineDescription;
             col_LineDesc.FieldName = "TrInvoiceLine.LineDescription";
             col_LineDesc.Name = "col_LineDesc";
             col_LineDesc.OptionsColumn.AllowEdit = false;
@@ -297,6 +309,7 @@ namespace Foxoft
             // 
             // col_SalesPersonCode
             // 
+            col_SalesPersonCode.Caption = Resources.Entity_InvoiceLine_SalesPersonCode;
             col_SalesPersonCode.FieldName = "TrInvoiceLine.SalesPersonCode";
             col_SalesPersonCode.Name = "col_SalesPersonCode";
             col_SalesPersonCode.OptionsColumn.AllowEdit = false;
@@ -305,6 +318,7 @@ namespace Foxoft
             // 
             // col_VatRate
             // 
+            col_VatRate.Caption = Resources.Entity_InvoiceLine_VatRate;
             col_VatRate.FieldName = "TrInvoiceLine.VatRate";
             col_VatRate.Name = "col_VatRate";
             col_VatRate.OptionsColumn.AllowEdit = false;
@@ -313,6 +327,7 @@ namespace Foxoft
             // 
             // col_SerialNumberCode
             // 
+            col_SerialNumberCode.Caption = Resources.Entity_InvoiceLine_SerialNumberCode;
             col_SerialNumberCode.FieldName = "TrInvoiceLine.SerialNumberCode";
             col_SerialNumberCode.Name = "col_SerialNumberCode";
             col_SerialNumberCode.Visible = true;
@@ -320,6 +335,7 @@ namespace Foxoft
             // 
             // col_UnitOfMeasureId
             // 
+            col_UnitOfMeasureId.Caption = Resources.Entity_InvoiceLine_UnitOfMeasureId;
             col_UnitOfMeasureId.FieldName = "TrInvoiceLine.UnitOfMeasureId";
             col_UnitOfMeasureId.Name = "col_UnitOfMeasureId";
             col_UnitOfMeasureId.Visible = true;
@@ -327,7 +343,7 @@ namespace Foxoft
             // 
             // col_AddWaybill
             // 
-            col_AddWaybill.Caption = Resources.Form_HandOver_Button_AddWaybill; // əvvəl: "Əlavə Et"
+            col_AddWaybill.Caption = Resources.Form_HandOver_Button_AddWaybill;
             col_AddWaybill.ColumnEdit = repoBtn_AddWaybill;
             col_AddWaybill.FieldName = "AddWaybill";
             col_AddWaybill.Name = "col_AddWaybill";
@@ -365,7 +381,7 @@ namespace Foxoft
             gvMaster.Appearance.FooterPanel.Options.UseFont = true;
             gvMaster.Appearance.Row.Font = new Font("Tahoma", 12F);
             gvMaster.Appearance.Row.Options.UseFont = true;
-            gvMaster.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_WarehouseCode, col_Description, col_ProcessCode, col_DocumentTime, col_OfficeCode, col_StoreCode, col_CustomsDocumentNumber, col_CreatedUserName });
+            gvMaster.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_DeliveryDate, col_WarehouseCode, col_Description, col_ProcessCode, col_DocumentTime, col_OfficeCode, col_StoreCode, col_CustomsDocumentNumber, col_CreatedUserName });
             gvMaster.GridControl = gC_Invoice;
             gvMaster.Name = "gvMaster";
             gvMaster.OptionsBehavior.Editable = false;
@@ -387,85 +403,116 @@ namespace Foxoft
             // 
             // col_InvoiceHeaderId
             // 
+            col_InvoiceHeaderId.Caption = Resources.Entity_InvoiceHeader_InvoiceHeaderId;
             col_InvoiceHeaderId.FieldName = "TrInvoiceHeader.InvoiceHeaderId";
             col_InvoiceHeaderId.Name = "col_InvoiceHeaderId";
             col_InvoiceHeaderId.Visible = true;
-            col_InvoiceHeaderId.VisibleIndex = 4;
+            col_InvoiceHeaderId.VisibleIndex = 5;
             // 
             // col_DocumentNumber
             // 
+            col_DocumentNumber.Caption = Resources.Entity_InvoiceHeader_DocumentNumber;
             col_DocumentNumber.FieldName = "TrInvoiceHeader.DocumentNumber";
             col_DocumentNumber.Name = "col_DocumentNumber";
             col_DocumentNumber.Visible = true;
-            col_DocumentNumber.VisibleIndex = 1;
+            col_DocumentNumber.VisibleIndex = 2;
             // 
             // col_CurrAccCode
             // 
+            col_CurrAccCode.Caption = Resources.Entity_InvoiceHeader_CurrAccCode;
             col_CurrAccCode.FieldName = "TrInvoiceHeader.CurrAccCode";
             col_CurrAccCode.Name = "col_CurrAccCode";
             // 
             // col_CurrAccDesc
             // 
+            col_CurrAccDesc.Caption = Resources.Entity_InvoiceHeader_CurrAccDesc;
             col_CurrAccDesc.FieldName = "TrInvoiceHeader.DcCurrAcc.CurrAccDesc";
             col_CurrAccDesc.Name = "col_CurrAccDesc";
             col_CurrAccDesc.Visible = true;
-            col_CurrAccDesc.VisibleIndex = 2;
+            col_CurrAccDesc.VisibleIndex = 3;
             // 
             // col_DocumentDate
             // 
+            col_DocumentDate.Caption = Resources.Entity_InvoiceHeader_DocumentDate;
             col_DocumentDate.FieldName = "TrInvoiceHeader.DocumentDate";
             col_DocumentDate.Name = "col_DocumentDate";
             col_DocumentDate.Visible = true;
             col_DocumentDate.VisibleIndex = 0;
+            col_DocumentDate.Width = 142;
+            // 
+            // col_DeliveryDate
+            // 
+            col_DeliveryDate.Caption = Resources.Entity_InvoiceHeader_DeliveryDate;
+            col_DeliveryDate.DisplayFormat.FormatString = "d";
+            col_DeliveryDate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            col_DeliveryDate.FieldName = "TrInvoiceHeader.DeliveryDate";
+            col_DeliveryDate.Name = "col_DeliveryDate";
+            col_DeliveryDate.Visible = true;
+            col_DeliveryDate.VisibleIndex = 1;
             // 
             // col_WarehouseCode
             // 
+            col_WarehouseCode.Caption = Resources.Entity_InvoiceHeader_WarehouseCode;
             col_WarehouseCode.FieldName = "TrInvoiceHeader.WarehouseCode";
             col_WarehouseCode.Name = "col_WarehouseCode";
             col_WarehouseCode.Visible = true;
-            col_WarehouseCode.VisibleIndex = 3;
+            col_WarehouseCode.VisibleIndex = 4;
             // 
             // col_Description
             // 
+            col_Description.Caption = Resources.Entity_InvoiceHeader_Description;
             col_Description.FieldName = "TrInvoiceHeader.Description";
             col_Description.Name = "col_Description";
             col_Description.Visible = true;
-            col_Description.VisibleIndex = 5;
+            col_Description.VisibleIndex = 6;
             // 
             // col_ProcessCode
             // 
+            col_ProcessCode.Caption = Resources.Entity_InvoiceHeader_ProcessCode;
             col_ProcessCode.FieldName = "TrInvoiceHeader.ProcessCode";
             col_ProcessCode.Name = "col_ProcessCode";
             col_ProcessCode.Visible = true;
-            col_ProcessCode.VisibleIndex = 6;
+            col_ProcessCode.VisibleIndex = 7;
             // 
             // col_DocumentTime
             // 
+            col_DocumentTime.Caption = Resources.Entity_InvoiceHeader_DocumentTime;
             col_DocumentTime.FieldName = "TrInvoiceHeader.DocumentTime";
             col_DocumentTime.Name = "col_DocumentTime";
             col_DocumentTime.Visible = true;
-            col_DocumentTime.VisibleIndex = 7;
+            col_DocumentTime.VisibleIndex = 8;
             // 
             // col_OfficeCode
             // 
+            col_OfficeCode.Caption = Resources.Entity_InvoiceHeader_OfficeCode;
             col_OfficeCode.FieldName = "TrInvoiceHeader.OfficeCode";
             col_OfficeCode.Name = "col_OfficeCode";
             col_OfficeCode.Visible = true;
-            col_OfficeCode.VisibleIndex = 8;
+            col_OfficeCode.VisibleIndex = 9;
             // 
             // col_StoreCode
             // 
+            col_StoreCode.Caption = Resources.Entity_InvoiceHeader_StoreCode;
             col_StoreCode.FieldName = "TrInvoiceHeader.StoreCode";
             col_StoreCode.Name = "col_StoreCode";
             col_StoreCode.Visible = true;
-            col_StoreCode.VisibleIndex = 9;
+            col_StoreCode.VisibleIndex = 10;
             // 
             // col_CustomsDocumentNumber
             // 
+            col_CustomsDocumentNumber.Caption = Resources.Entity_InvoiceHeader_CustomsDocumentNumber;
             col_CustomsDocumentNumber.FieldName = "TrInvoiceHeader.CustomsDocumentNumber";
             col_CustomsDocumentNumber.Name = "col_CustomsDocumentNumber";
             col_CustomsDocumentNumber.Visible = true;
-            col_CustomsDocumentNumber.VisibleIndex = 10;
+            col_CustomsDocumentNumber.VisibleIndex = 11;
+            // 
+            // col_CreatedUserName
+            // 
+            col_CreatedUserName.Caption = Resources.Entity_Base_CreatedUserName;
+            col_CreatedUserName.FieldName = "TrInvoiceHeader.CreatedUserName";
+            col_CreatedUserName.Name = "col_CreatedUserName";
+            col_CreatedUserName.Visible = true;
+            col_CreatedUserName.VisibleIndex = 12;
             // 
             // lC_Root
             // 
@@ -481,7 +528,7 @@ namespace Foxoft
             lC_Root.Root = lCG_Root;
             lC_Root.Size = new Size(1049, 621);
             lC_Root.TabIndex = 0;
-            lC_Root.Text = "layoutControl1";
+            lC_Root.Text = Resources.Form_HandOver_Caption;
             // 
             // dataLayoutControl1
             // 
@@ -501,16 +548,16 @@ namespace Foxoft
             dataLayoutControl1.Root = Root;
             dataLayoutControl1.Size = new Size(1001, 68);
             dataLayoutControl1.TabIndex = 5;
-            dataLayoutControl1.Text = "dataLayoutControl1";
+            dataLayoutControl1.Text = Resources.Form_HandOver_Group_HandOver;
             // 
             // DocumentNumberTextEdit
             // 
             DocumentNumberTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentNumber", true));
-            DocumentNumberTextEdit.Location = new Point(102, 12);
+            DocumentNumberTextEdit.Location = new Point(131, 12);
             DocumentNumberTextEdit.Name = "DocumentNumberTextEdit";
             DocumentNumberTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             DocumentNumberTextEdit.Properties.ReadOnly = true;
-            DocumentNumberTextEdit.Size = new Size(162, 20);
+            DocumentNumberTextEdit.Size = new Size(133, 20);
             DocumentNumberTextEdit.StyleController = dataLayoutControl1;
             DocumentNumberTextEdit.TabIndex = 4;
             // 
@@ -522,32 +569,32 @@ namespace Foxoft
             // 
             DocumentDateDateEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentDate", true));
             DocumentDateDateEdit.EditValue = null;
-            DocumentDateDateEdit.Location = new Point(102, 36);
+            DocumentDateDateEdit.Location = new Point(131, 36);
             DocumentDateDateEdit.Name = "DocumentDateDateEdit";
             DocumentDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DocumentDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DocumentDateDateEdit.Properties.ReadOnly = true;
-            DocumentDateDateEdit.Size = new Size(162, 20);
+            DocumentDateDateEdit.Size = new Size(133, 20);
             DocumentDateDateEdit.StyleController = dataLayoutControl1;
             DocumentDateDateEdit.TabIndex = 5;
             // 
             // DescriptionTextEdit
             // 
             DescriptionTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "Description", true));
-            DescriptionTextEdit.Location = new Point(358, 36);
+            DescriptionTextEdit.Location = new Point(387, 36);
             DescriptionTextEdit.Name = "DescriptionTextEdit";
             DescriptionTextEdit.Properties.ReadOnly = true;
-            DescriptionTextEdit.Size = new Size(631, 20);
+            DescriptionTextEdit.Size = new Size(602, 20);
             DescriptionTextEdit.StyleController = dataLayoutControl1;
             DescriptionTextEdit.TabIndex = 6;
             // 
             // CurrAccCodeTextEdit
             // 
             CurrAccCodeTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "CurrAccCode", true));
-            CurrAccCodeTextEdit.Location = new Point(358, 12);
+            CurrAccCodeTextEdit.Location = new Point(387, 12);
             CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
             CurrAccCodeTextEdit.Properties.ReadOnly = true;
-            CurrAccCodeTextEdit.Size = new Size(169, 20);
+            CurrAccCodeTextEdit.Size = new Size(140, 20);
             CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
             CurrAccCodeTextEdit.TabIndex = 7;
             // 
@@ -565,11 +612,11 @@ namespace Foxoft
             // CurrAccDescTextEdit
             // 
             CurrAccDescTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DcCurrAcc.CurrAccDesc", true));
-            CurrAccDescTextEdit.Location = new Point(621, 12);
+            CurrAccDescTextEdit.Location = new Point(650, 12);
             CurrAccDescTextEdit.MenuManager = ribbonControl1;
             CurrAccDescTextEdit.Name = "CurrAccDescTextEdit";
             CurrAccDescTextEdit.Properties.ReadOnly = true;
-            CurrAccDescTextEdit.Size = new Size(368, 20);
+            CurrAccDescTextEdit.Size = new Size(339, 20);
             CurrAccDescTextEdit.StyleController = dataLayoutControl1;
             CurrAccDescTextEdit.TabIndex = 9;
             // 
@@ -659,6 +706,7 @@ namespace Foxoft
             ItemForStoreCode.Location = new Point(369, 24);
             ItemForStoreCode.Name = "ItemForStoreCode";
             ItemForStoreCode.Size = new Size(595, 24);
+            ItemForStoreCode.Text = Resources.Entity_InvoiceHeader_StoreCode;
             ItemForStoreCode.TextSize = new Size(123, 13);
             // 
             // Root
@@ -685,7 +733,8 @@ namespace Foxoft
             ItemForDocumentNumber.Location = new Point(0, 0);
             ItemForDocumentNumber.Name = "ItemForDocumentNumber";
             ItemForDocumentNumber.Size = new Size(256, 24);
-            ItemForDocumentNumber.TextSize = new Size(78, 13);
+            ItemForDocumentNumber.Text = Resources.Entity_InvoiceHeader_DocumentNumber;
+            ItemForDocumentNumber.TextSize = new Size(107, 13);
             // 
             // ItemForCurrAccCode
             // 
@@ -693,7 +742,8 @@ namespace Foxoft
             ItemForCurrAccCode.Location = new Point(256, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
             ItemForCurrAccCode.Size = new Size(263, 24);
-            ItemForCurrAccCode.TextSize = new Size(78, 13);
+            ItemForCurrAccCode.Text = Resources.Entity_InvoiceHeader_CurrAccCode;
+            ItemForCurrAccCode.TextSize = new Size(107, 13);
             // 
             // ItemForDescription
             // 
@@ -701,7 +751,8 @@ namespace Foxoft
             ItemForDescription.Location = new Point(256, 24);
             ItemForDescription.Name = "ItemForDescription";
             ItemForDescription.Size = new Size(725, 24);
-            ItemForDescription.TextSize = new Size(78, 13);
+            ItemForDescription.Text = Resources.Entity_InvoiceHeader_Description;
+            ItemForDescription.TextSize = new Size(107, 13);
             // 
             // ItemForDocumentDate
             // 
@@ -709,7 +760,8 @@ namespace Foxoft
             ItemForDocumentDate.Location = new Point(0, 24);
             ItemForDocumentDate.Name = "ItemForDocumentDate";
             ItemForDocumentDate.Size = new Size(256, 24);
-            ItemForDocumentDate.TextSize = new Size(78, 13);
+            ItemForDocumentDate.Text = Resources.Entity_InvoiceHeader_DocumentDate;
+            ItemForDocumentDate.TextSize = new Size(107, 13);
             // 
             // ItemForCurrAccDesc
             // 
@@ -717,8 +769,8 @@ namespace Foxoft
             ItemForCurrAccDesc.Location = new Point(519, 0);
             ItemForCurrAccDesc.Name = "ItemForDcCurrAcc";
             ItemForCurrAccDesc.Size = new Size(462, 24);
-            ItemForCurrAccDesc.Text = "Cari Hesab Adı";
-            ItemForCurrAccDesc.TextSize = new Size(78, 13);
+            ItemForCurrAccDesc.Text = Resources.Entity_InvoiceHeader_CurrAccDesc;
+            ItemForCurrAccDesc.TextSize = new Size(107, 13);
             // 
             // gC_DeliveryInvoiceLine
             // 
@@ -749,13 +801,13 @@ namespace Foxoft
             // 
             // col_RInvoiceHeaderId
             // 
-            col_RInvoiceHeaderId.Caption = "InvoiceHeaderId";
+            col_RInvoiceHeaderId.Caption = Resources.Entity_InvoiceHeader_InvoiceHeaderId;
             col_RInvoiceHeaderId.FieldName = "InvoiceHeaderId";
             col_RInvoiceHeaderId.Name = "col_RInvoiceHeaderId";
             // 
             // col_RRelatedLineId
             // 
-            col_RRelatedLineId.Caption = "RelatedLineId";
+            col_RRelatedLineId.Caption = Resources.Entity_InvoiceLine_Id;
             col_RRelatedLineId.FieldName = "RelatedLineId";
             col_RRelatedLineId.Name = "col_RRelatedLineId";
             // 
@@ -834,7 +886,7 @@ namespace Foxoft
             btn_Ok.Size = new Size(132, 56);
             btn_Ok.StyleController = lC_Root;
             btn_Ok.TabIndex = 3;
-            btn_Ok.Text = "simpleButton1";
+            btn_Ok.Text = Resources.Common_Ok;
             btn_Ok.Click += btn_Ok_Click;
             // 
             // btn_Cancel
@@ -846,7 +898,7 @@ namespace Foxoft
             btn_Cancel.Size = new Size(167, 56);
             btn_Cancel.StyleController = lC_Root;
             btn_Cancel.TabIndex = 4;
-            btn_Cancel.Text = "simpleButton2";
+            btn_Cancel.Text = Resources.Common_Cancel;
             btn_Cancel.Click += btn_Cancel_Click;
             // 
             // lCG_Root
@@ -892,7 +944,6 @@ namespace Foxoft
             lCG_ReturnInvoiceLine.Name = "lCG_ReturnInvoiceLine";
             lCG_ReturnInvoiceLine.Size = new Size(1029, 325);
             lCG_ReturnInvoiceLine.Text = Resources.Form_HandOver_Group_HandOver;
-
             // 
             // layoutControlItem2
             // 
@@ -928,13 +979,6 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("quickprint", "image://svgimages/diagramicons/quickprint.svg");
             // 
-            // col_CreatedUserName
-            // 
-            col_CreatedUserName.FieldName = "TrInvoiceHeader.CreatedUserName";
-            col_CreatedUserName.Name = "col_CreatedUserName";
-            col_CreatedUserName.Visible = true;
-            col_CreatedUserName.VisibleIndex = 11;
-            // 
             // FormHandOver
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -943,8 +987,8 @@ namespace Foxoft
             Controls.Add(lC_Root);
             Controls.Add(ribbonControl1);
             Name = "FormHandOver";
-            Text = Resources.Form_HandOver_Caption;
             Ribbon = ribbonControl1;
+            Text = Resources.Form_HandOver_Caption;
             FormClosing += FormWaybill_FormClosing;
             Load += FormWaybill_Load;
             ((System.ComponentModel.ISupportInitialize)gvDetail).EndInit();
@@ -1037,6 +1081,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccDesc;
         private DevExpress.XtraGrid.Columns.GridColumn col_DocumentDate;
+        private DevExpress.XtraGrid.Columns.GridColumn col_DeliveryDate;
         private DevExpress.XtraGrid.Columns.GridColumn col_RProductDesc;
         private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
         private BindingSource trInvoiceHeadersBindingSource;

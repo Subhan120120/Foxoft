@@ -548,7 +548,7 @@ namespace Foxoft
             SaveLayout();
         }
 
-        private void GvMaster_MasterRowEmpty(object sender, DevExpress.XtraGrid.Views.Grid.MasterRowEmptyEventArgs e)
+        private void GvMaster_MasterRowEmpty(object sender, MasterRowEmptyEventArgs e)
         {
             if (e.RowHandle < 0) { e.IsEmpty = true; return; }
             var vm = gvMaster.GetRow(e.RowHandle) as DeliveryVM;
@@ -565,9 +565,5 @@ namespace Foxoft
             else
                 view.ExpandMasterRow(e.RowHandle);
         }
-
-
-
-
     }
 }
