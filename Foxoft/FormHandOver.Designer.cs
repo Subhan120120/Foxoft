@@ -1,4 +1,4 @@
-﻿
+
 using DevExpress.XtraBars;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -183,6 +183,7 @@ namespace Foxoft
             gvDetail.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             gvDetail.OptionsView.ColumnAutoWidth = false;
             gvDetail.OptionsView.ShowGroupPanel = false;
+            gvDetail.PopupMenuShowing += GvInvoice_PopupMenuShowing;
             // 
             // col_InvoiceLineId
             // 
@@ -397,6 +398,7 @@ namespace Foxoft
             gvMaster.OptionsView.ShowDetailButtons = false;
             gvMaster.OptionsView.ShowGroupPanel = false;
             gvMaster.OptionsView.ShowIndicator = false;
+            gvMaster.PopupMenuShowing += GvInvoice_PopupMenuShowing;
             gvMaster.RowClick += GvMaster_RowClick;
             gvMaster.MasterRowEmpty += GvMaster_MasterRowEmpty;
             gvMaster.FocusedRowChanged += gV_InvoiceHeader_FocusedRowChanged;
@@ -978,6 +980,7 @@ namespace Foxoft
             // svgImageCollection1
             // 
             svgImageCollection1.Add("quickprint", "image://svgimages/diagramicons/quickprint.svg");
+            svgImageCollection1.Add("actions_edit", "image://svgimages/icon builder/actions_edit.svg");
             // 
             // FormHandOver
             // 

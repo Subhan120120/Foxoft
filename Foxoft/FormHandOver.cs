@@ -1,4 +1,5 @@
-﻿using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.Sql;
+using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Alerter;
 using DevExpress.XtraBars.Ribbon;
@@ -555,8 +556,43 @@ namespace Foxoft
             e.IsEmpty = vm == null || vm.Lines.Count == 0;
         }
 
+        private void GvInvoice_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        {
+            if (e.MenuType != GridMenuType.Row || e.HitInfo.RowHandle < 0 || e.Menu is null)
+                return;
+
+            if (sender is not GridView view)
+                return;
+
+            string documentNumber = GetInvoiceDocumentNumber(view, e.HitInfo.RowHandle);
+            if (string.IsNullOrWhiteSpace(documentNumber))
+                return;
+
+            DXMenuItem menuItem = new(Resources.Form_HandOver_OpenInvoice, (s, args) => OpenFormInvoice(documentNumber), svgImageCollection1[1], DXMenuItemPriority.High);
+            //menuItem.ImageOptions.SvgImage = ;
+
+            e.Menu.Items.Clear();
+            e.Menu.Items.Add(menuItem);
+        }
+
+        private string GetInvoiceDocumentNumber(GridView view, int rowHandle)
+        {
+            object? row = view.GetRow(rowHandle);
+
+            if (row is DeliveryVM header)
+                return header.TrInvoiceHeader?.DocumentNumber ?? string.Empty;
+
+            if (row is DeliveryVM.Line line)
+                return line.TrInvoiceHeader?.DocumentNumber ?? string.Empty;
+
+            return view.GetRowCellValue(rowHandle, col_DocumentNumber)?.ToString() ?? string.Empty;
+        }
+
         private void GvMaster_RowClick(object sender, RowClickEventArgs e)
         {
+            if (e.Button != MouseButtons.Left)
+                return;
+
             var view = sender as GridView;
             if (view == null) return;
 

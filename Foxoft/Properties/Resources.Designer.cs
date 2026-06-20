@@ -8805,6 +8805,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open Invoice.
+        /// </summary>
+        public static string Form_HandOver_OpenInvoice {
+            get {
+                return ResourceManager.GetString("Form_HandOver_OpenInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to open the invoice?.
         /// </summary>
         public static string Form_HandOver_OpenInvoiceQuestion {

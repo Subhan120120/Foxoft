@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2254,6 +2254,9 @@
   </data>
   <data name="Form_HandOver_OpenInvoiceQuestion" xml:space="preserve">
     <value>Qaiməni açmaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_HandOver_OpenInvoice" xml:space="preserve">
+    <value>Qaiməni aç</value>
   </data>
   <data name="Form_HandOver_CancelQuestion" xml:space="preserve">
     <value>Təhvil ləğv edilsin?</value>
