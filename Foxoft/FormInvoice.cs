@@ -169,7 +169,7 @@ namespace Foxoft
         private void LoadShortcuts()
         {
             // Button adı → BarButtonItem referansı
-            var buttonMap = new Dictionary<string, DevExpress.XtraBars.BarButtonItem>(StringComparer.OrdinalIgnoreCase)
+            var buttonMap = new Dictionary<string, BarButtonItem>(StringComparer.OrdinalIgnoreCase)
             {
                 ["bBI_Save"]              = bBI_Save,
                 ["bBI_SaveAndNew"]        = bBI_SaveAndNew,
@@ -199,7 +199,7 @@ namespace Foxoft
                     // DevExpress BarButtonItem üçün ItemShortcut istifadə olunur
                     if (kvp.Value != Keys.None)
                     {
-                        item.ItemShortcut = new DevExpress.XtraBars.BarShortcut(kvp.Value);
+                        item.ItemShortcut = new BarShortcut(kvp.Value);
                         // Text-ə əlavə etmirik çünki DevExpress özü tooltip-də göstərir (və ya ItemShortcut property özü kifayət edir)
                     }
                 }
@@ -580,12 +580,12 @@ namespace Foxoft
             }
         }
 
-        private async void BBI_Previous_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void BBI_Previous_ItemClick(object sender, ItemClickEventArgs e)
         {
             await NavigateInvoiceAsync(isPrevious: true);
         }
 
-        private async void BBI_Next_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void BBI_Next_ItemClick(object sender, ItemClickEventArgs e)
         {
             await NavigateInvoiceAsync(isPrevious: false);
         }
@@ -605,6 +605,7 @@ namespace Foxoft
             if (isPrevious)
             {
                 adjacent = ctx.TrInvoiceHeaders
+                    .Where(x => relatedInvoiceId == null || x.RelatedInvoiceId == relatedInvoiceId)
                     .Where(x => x.ProcessCode == dcProcess.ProcessCode && x.IsMainTF == true)
                     .Where(x => x.DocumentDate < trInvoiceHeader.DocumentDate
                              || (x.DocumentDate == trInvoiceHeader.DocumentDate
@@ -621,6 +622,7 @@ namespace Foxoft
             else
             {
                 adjacent = ctx.TrInvoiceHeaders
+                    .Where(x => relatedInvoiceId == null || x.RelatedInvoiceId == relatedInvoiceId)
                     .Where(x => x.ProcessCode == dcProcess.ProcessCode && x.IsMainTF == true)
                     .Where(x => x.DocumentDate > trInvoiceHeader.DocumentDate
                              || (x.DocumentDate == trInvoiceHeader.DocumentDate
