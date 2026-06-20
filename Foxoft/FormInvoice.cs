@@ -368,9 +368,6 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
-            if (!PromptSaveChanges())
-                return;
-
             if (trInvoiceHeader is not null)
             {
                 _lockService.ReleaseLock(
@@ -1923,9 +1920,8 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                SaveInvoice();
-
-                ClearControlsAddNew();
+                if (SaveInvoice())
+                    ClearControlsAddNew();
             }
             else
             {
@@ -1946,6 +1942,9 @@ namespace Foxoft
 
         private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (!PromptSaveChanges())
+                return;
+
             ClearControlsAddNew();
         }
 

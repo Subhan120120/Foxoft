@@ -24,6 +24,7 @@ namespace Foxoft.AppCode.Services
         {
             if (invoice is null) throw new ArgumentNullException(nameof(invoice));
             if (string.IsNullOrWhiteSpace(Authorization.CurrAccCode)) throw new ArgumentNullException(nameof(Authorization.CurrAccCode));
+            if (!_ef.EntityExists<TrInvoiceHeader>(invoice.InvoiceHeaderId)) return;
 
             TrPaymentHeader paymentHeader = BuildPaymentHeaderDefaults(invoice, Authorization.CurrAccCode);
 
