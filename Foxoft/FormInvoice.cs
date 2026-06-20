@@ -76,6 +76,7 @@ namespace Foxoft
         private readonly Guid _appInstanceId;
         public Guid _formInstanceId;
         private bool _closingByLock = false;
+        private DateTime _lastInfoPaymentPopupAt = DateTime.MinValue;
         private int _pid => Process.GetCurrentProcess().Id;
 
         public bool isNew = false;
@@ -3424,6 +3425,48 @@ namespace Foxoft
             }
 
             e.Cancel = false;
+        }
+
+        private void LCG_InfoPayment_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+
+            DateTime utcNow = DateTime.UtcNow;
+            if (utcNow - _lastInfoPaymentPopupAt < TimeSpan.FromMilliseconds(150)) return;
+
+            _lastInfoPaymentPopupAt = utcNow;
+            popupMenuInfoPayment.ShowPopup(Cursor.Position);
+        }
+
+        private void bBI_OpenPayments_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty) return;
+
+            using FormPaymentHeaderList formPaymentHeaderList = new(trInvoiceHeader.InvoiceHeaderId);
+
+            if (formPaymentHeaderList.ShowDialog(this) != DialogResult.OK) return;
+            if (formPaymentHeaderList.trPaymentHeader is null) return;
+
+            OpenPaymentDetail(formPaymentHeaderList.trPaymentHeader.PaymentHeaderId);
+        }
+
+        private void OpenPaymentDetail(Guid paymentHeaderId)
+        {
+            FormPaymentDetail formPaymentDetail = new(paymentHeaderId);
+            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+
+            if (formERP is null)
+            {
+                formPaymentDetail.Show(this);
+                return;
+            }
+
+            formPaymentDetail.MdiParent = formERP;
+            formPaymentDetail.WindowState = FormWindowState.Maximized;
+            formPaymentDetail.Show();
+
+            if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
         }
 
         private void dataLayoutControl1_Changed(object sender, EventArgs e)

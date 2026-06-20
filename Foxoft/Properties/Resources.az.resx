@@ -2406,6 +2406,9 @@
   <data name="FormInvoice_Payment" xml:space="preserve">
     <value>Ödəmə</value>
   </data>
+  <data name="FormInvoice_OpenPayments" xml:space="preserve">
+    <value>Open Payments</value>
+  </data>
   <data name="FormInvoice_New" xml:space="preserve">
     <value>Yeni</value>
   </data>

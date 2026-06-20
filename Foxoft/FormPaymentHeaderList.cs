@@ -27,7 +27,8 @@ namespace Foxoft
     public partial class FormPaymentHeaderList : RibbonForm
     {
         subContext dbContext;
-        string processCode { get; set; }
+        string? processCode { get; set; }
+        Guid? invoiceHeaderId { get; set; }
         EfMethods efMethods = new EfMethods();
         public TrPaymentHeader trPaymentHeader { get; set; }
 
@@ -56,6 +57,19 @@ namespace Foxoft
                 $"[{nameof(TrPaymentHeader.StoreCode)}] = '{storeCode}'";
         }
 
+        public FormPaymentHeaderList(Guid invoiceHeaderId)
+           : this()
+        {
+            this.invoiceHeaderId = invoiceHeaderId;
+
+            bBI_ReceivePayment.Visibility = BarItemVisibility.Never;
+            bBI_MakePayment.Visibility = BarItemVisibility.Never;
+            gV_PaymentHeaderList.ActiveFilterString = string.Empty;
+            StartPosition = FormStartPosition.CenterParent;
+
+            LoadPaymentHeaders();
+        }
+
         private void LoadPaymentHeaders()
         {
             dbContext = new subContext();
@@ -64,13 +78,19 @@ namespace Foxoft
             CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
             IQueryable<TrPaymentHeader> filteredData =
                 trPaymentHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_PaymentHeaderList.ActiveFilterCriteria)
-                as IQueryable<TrPaymentHeader>;
+                as IQueryable<TrPaymentHeader> ?? trPaymentHeaders;
+
+            if (invoiceHeaderId.HasValue)
+                filteredData = filteredData.Where(x => x.InvoiceHeaderId == invoiceHeaderId.Value);
+
+            if (!string.IsNullOrWhiteSpace(processCode))
+                filteredData = filteredData.Where(x => x.ProcessCode == processCode);
 
             List<TrPaymentHeader> headerList = filteredData
                 .Include(x => x.TrPaymentLines)
                 .Include(x => x.DcCurrAcc)
+                .Include(x => x.TrInvoiceHeader)
                 .Where(x => x.IsMainTF == true)
-                .Where(x => x.ProcessCode == processCode)
                 .OrderByDescending(x => x.OperationDate)
                 .ThenByDescending(x => x.OperationTime)
                 .Select(x => new TrPaymentHeader
@@ -204,14 +224,29 @@ namespace Foxoft
 
             if (obj is not null)
             {
-                Guid invoiceHeaderId = Guid.Parse(obj.ToString());
-                TrPaymentHeader trInvoiceHeader = efMethods.SelectPaymentHeader(invoiceHeaderId);
+                Guid paymentHeaderId = Guid.Parse(obj.ToString());
 
-                FormPaymentDetail formaPayment = new(trInvoiceHeader.PaymentHeaderId);
+                if (Modal)
+                {
+                    trPaymentHeader = gV_PaymentHeaderList.GetFocusedRow() as TrPaymentHeader
+                        ?? efMethods.SelectPaymentHeader(paymentHeaderId);
+                    DialogResult = DialogResult.OK;
+                    return;
+                }
+
+                FormPaymentDetail formaPayment = new(paymentHeaderId);
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+
+                if (formERP is null)
+                {
+                    formaPayment.Show(this);
+                    return;
+                }
+
                 formaPayment.MdiParent = formERP;
                 formaPayment.WindowState = FormWindowState.Maximized;
-                //formaPayment.Show();
+                formaPayment.Show();
+
                 if (formERP.parentRibbonControl.MergedPages.Count > 0)
                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
             }

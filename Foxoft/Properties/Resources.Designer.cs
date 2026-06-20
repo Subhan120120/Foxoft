@@ -13481,6 +13481,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open Payments.
+        /// </summary>
+        public static string FormInvoice_OpenPayments {
+            get {
+                return ResourceManager.GetString("FormInvoice_OpenPayments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment.
         /// </summary>
         public static string FormInvoice_Payment {

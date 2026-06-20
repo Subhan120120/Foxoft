@@ -73,7 +73,9 @@ namespace Foxoft
             BBI_ImportExcel = new BarButtonItem();
             BBI_ReportPrintFast = new BarButtonItem();
             popupMenuPrinters = new PopupMenu(components);
+            popupMenuInfoPayment = new PopupMenu(components);
             barButtonItem3 = new BarButtonItem();
+            bBI_OpenPayments = new BarButtonItem();
             btn_info = new BarButtonItem();
             BBI_picture = new BarButtonItem();
             barButtonItem2 = new BarButtonItem();
@@ -260,6 +262,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuInfoPayment).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repo).BeginInit();
@@ -458,9 +461,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog, BBI_PromoCodeCampaign, bBI_CampaignDelete, BBI_Previous, BBI_Next });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog, BBI_PromoCodeCampaign, bBI_CampaignDelete, BBI_Previous, BBI_Next, bBI_OpenPayments });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 75;
+            ribbonControl1.MaxItemId = 76;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -599,12 +602,26 @@ namespace Foxoft
             popupMenuPrinters.Ribbon = ribbonControl1;
             popupMenuPrinters.BeforePopup += popupMenuPrinters_BeforePopup;
             // 
+            // popupMenuInfoPayment
+            // 
+            popupMenuInfoPayment.ItemLinks.Add(bBI_OpenPayments);
+            popupMenuInfoPayment.Name = "popupMenuInfoPayment";
+            popupMenuInfoPayment.Ribbon = ribbonControl1;
+            // 
             // barButtonItem3
             // 
             barButtonItem3.Caption = Resources.FormInvoice_Test1;
             barButtonItem3.Id = 36;
             barButtonItem3.Name = "barButtonItem3";
             barButtonItem3.ItemClick += barButtonItem3_ItemClick;
+            // 
+            // bBI_OpenPayments
+            // 
+            bBI_OpenPayments.Caption = Resources.FormInvoice_OpenPayments;
+            bBI_OpenPayments.Id = 75;
+            bBI_OpenPayments.ImageOptions.ImageUri.Uri = "Currency";
+            bBI_OpenPayments.Name = "bBI_OpenPayments";
+            bBI_OpenPayments.ItemClick += bBI_OpenPayments_ItemClick;
             // 
             // btn_info
             // 
@@ -1161,6 +1178,14 @@ namespace Foxoft
             lbl_InvoicePaidTotalSumTxt.StyleController = dataLayoutControl1;
             lbl_InvoicePaidTotalSumTxt.TabIndex = 1;
             lbl_InvoicePaidTotalSumTxt.Text = "Paid: ";
+            lbl_InvoicePaidLoyaltySum.MouseUp += LCG_InfoPayment_MouseUp;
+            lbl_InvoicePaidCashlessSum.MouseUp += LCG_InfoPayment_MouseUp;
+            lbl_InvoicePaidCashSum.MouseUp += LCG_InfoPayment_MouseUp;
+            lbl_InvoicePaidLoyaltySumTxt.MouseUp += LCG_InfoPayment_MouseUp;
+            lbl_InvoicePaidCashlessSumTxt.MouseUp += LCG_InfoPayment_MouseUp;
+            lbl_InvoicePaidCashSumTxt.MouseUp += LCG_InfoPayment_MouseUp;
+            lbl_InvoicePaidTotalSum.MouseUp += LCG_InfoPayment_MouseUp;
+            lbl_InvoicePaidTotalSumTxt.MouseUp += LCG_InfoPayment_MouseUp;
             // 
             // checkEdit_IsSent
             // 
@@ -1904,6 +1929,7 @@ namespace Foxoft
             LCG_InfoPayment.Text = Resources.FormInvoice_Group_PaymentInfo;
             LCG_InfoPayment.TextLocation = DevExpress.Utils.Locations.Left;
             LCG_InfoPayment.TextVisible = false;
+            LCG_InfoPayment.MouseUp += LCG_InfoPayment_MouseUp;
             // 
             // LCI_InvoicePaidSum
             // 
@@ -1978,6 +2004,14 @@ namespace Foxoft
             LCI_LoyaltySumTxt.Name = "LCI_LoyaltySumTxt";
             LCI_LoyaltySumTxt.Size = new Size(63, 20);
             LCI_LoyaltySumTxt.TextVisible = false;
+            LCI_InvoicePaidSum.MouseUp += LCG_InfoPayment_MouseUp;
+            LCI_InvoicePaidCashSum.MouseUp += LCG_InfoPayment_MouseUp;
+            LCI_InvoicePaidSumTxt.MouseUp += LCG_InfoPayment_MouseUp;
+            LCI_InvoicePaidCashlessSumTxt.MouseUp += LCG_InfoPayment_MouseUp;
+            LCI_InvoicePaidCashSumTxt.MouseUp += LCG_InfoPayment_MouseUp;
+            LCI_InvoicePaidCashlessSum.MouseUp += LCG_InfoPayment_MouseUp;
+            layoutControlItem1.MouseUp += LCG_InfoPayment_MouseUp;
+            LCI_LoyaltySumTxt.MouseUp += LCG_InfoPayment_MouseUp;
             // 
             // LCI_CurrAccDesc
             // 
@@ -2211,6 +2245,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuInfoPayment).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).EndInit();
             ((System.ComponentModel.ISupportInitialize)repo).EndInit();
@@ -2419,6 +2454,8 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem barButtonItem6;
         private BarSubItem BSI_Reports;
         private PopupMenu popupMenuPrinters;
+        private PopupMenu popupMenuInfoPayment;
+        private BarButtonItem bBI_OpenPayments;
         private DevExpress.XtraGrid.Columns.GridColumn colUnitOfMeasureId;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_UnitOfMeasure;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_UnitOfMeasure;
