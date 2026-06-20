@@ -1,4 +1,4 @@
-﻿
+
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -3715,6 +3715,8 @@ namespace Foxoft
             if (trInvoiceHeader is null || curr is null)
                 return;
 
+            trInvoiceHeader.CashRegisterCode = curr.CurrAccCode;
+
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode)
                     && dbContext != null
                     && dataLayoutControl1.IsValid(out _)
@@ -3722,7 +3724,7 @@ namespace Foxoft
             {
                 _paymentService.RebuildPaymentsFromInvoice(
                     trInvoiceHeader,
-                    btn_CashRegCode.EditValue?.ToString());
+                    trInvoiceHeader.CashRegisterCode);
 
                 UpdatePaidLabels();
             }
