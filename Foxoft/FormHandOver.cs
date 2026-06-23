@@ -8,10 +8,12 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Printing;
 using System.IO;
 
@@ -28,6 +30,8 @@ namespace Foxoft
         ReportClass reportClass;
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
 
+        private readonly subContext _db = new();
+        private readonly DocumentLockService _lockService;
         private readonly BindingList<DeliveryVM> _master = new();
         private readonly Dictionary<Guid, DeliveryVM> _index = new();
 
@@ -61,6 +65,8 @@ namespace Foxoft
         public FormHandOver()
         {
             InitializeComponent();
+
+            _lockService = new DocumentLockService(_db);
             //gC_Invoice.DataSource = liveList;
 
             gC_Invoice.DataSource = _master;
@@ -291,19 +297,129 @@ namespace Foxoft
                     return;
                 }
 
+                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                if (formERP == null)
+                    return;
+
+                Guid formInstanceId = Guid.NewGuid();
                 byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
-                FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
-                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                frm.MdiParent = formERP;
-                frm.WindowState = FormWindowState.Maximized;
-                frm.Show();
-                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                if (TryAcquireInvoiceLockForEdit(trInvoiceHeader.InvoiceHeaderId, formERP, formInstanceId))
+                {
+                    FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
+                    frm._formInstanceId = formInstanceId;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
             }
             else
             {
                 MessageBox.Show(Resources.Form_HandOver_NoDocument);
             }
+        }
+
+        private bool TryActivateOpenInvoiceWindow(Guid invoiceHeaderId, FormERP formERP)
+        {
+            if (formERP == null)
+                return false;
+
+            foreach (Form child in formERP.MdiChildren)
+            {
+                if (child is FormInvoice frm &&
+                    frm.trInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
+                {
+                    if (frm.WindowState == FormWindowState.Minimized)
+                        frm.WindowState = FormWindowState.Normal;
+
+                    frm.BringToFront();
+                    frm.Activate();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool TryAcquireInvoiceLockForEdit(Guid invoiceHeaderId, FormERP formERP, Guid formInstanceId)
+        {
+            if (formERP == null)
+                return false;
+
+            var res = _lockService.TryAcquireLock(
+                documentType: "Invoice",
+                documentId: invoiceHeaderId,
+                userId: Authorization.CurrAccCode,
+                machineName: Environment.MachineName,
+                appInstanceId: formERP._appInstanceId,
+                formInstanceId: formInstanceId,
+                clientProcessId: Process.GetCurrentProcess().Id,
+                timeout: TimeSpan.FromMinutes(10),
+                reason: "Edit invoice");
+
+            if (!res.Acquired)
+            {
+                if (res.LockedBy == Authorization.CurrAccCode &&
+                    res.AppInstanceId == formERP._appInstanceId)
+                {
+                    if (TryActivateOpenInvoiceWindow(invoiceHeaderId, formERP))
+                        return false;
+                }
+
+                bool canTakeover = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DocumentLockTakeover");
+
+                if (canTakeover)
+                {
+                    var answer = XtraMessageBox.Show(
+                        string.Format(Resources.Form_Invoice_LockTakeoverQuestion, res.LockedByName),
+                        Resources.Form_Invoice_LockTakeoverCaption,
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (answer == DialogResult.Yes)
+                    {
+                        var takeoverRes = _lockService.ForceTakeoverLock(
+                            documentType: "Invoice",
+                            documentId: invoiceHeaderId,
+                            newUserId: Authorization.CurrAccCode,
+                            machineName: Environment.MachineName,
+                            appInstanceId: formERP._appInstanceId,
+                            formInstanceId: formInstanceId,
+                            clientProcessId: Process.GetCurrentProcess().Id,
+                            reason: "Force takeover by authorized user");
+
+                        if (takeoverRes.Acquired)
+                            return true;
+                    }
+
+                    return false;
+                }
+
+                var closeAnswer = XtraMessageBox.Show(
+                    string.Format(
+                        Resources.Form_Invoice_LockedQuestion,
+                        res.LockedByName,
+                        res.MachineName,
+                        res.LockedAtUtc?.ToString("yyyy-MM-dd HH:mm:ss"),
+                        res.LastHeartbeatAtUtc?.ToString("yyyy-MM-dd HH:mm:ss")),
+                    Resources.Form_Invoice_LockedCaption,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (closeAnswer == DialogResult.Yes)
+                {
+                    _lockService.RequestOwnerToClose(
+                        documentType: "Invoice",
+                        documentId: invoiceHeaderId,
+                        requestedByUserId: Authorization.CurrAccCode,
+                        note: "Another user wants to edit this invoice.");
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
 

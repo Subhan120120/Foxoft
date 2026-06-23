@@ -4857,4 +4857,15 @@ Apply it?</value>
   <data name="Form_Invoice_LockTakeoverCaption" xml:space="preserve">
     <value>Document Lock</value>
   </data>
+  <data name="Form_Invoice_LockedQuestion" xml:space="preserve">
+    <value>Invoice is currently being edited by {0}.
+Machine: {1}
+LockedAt: {2} (UTC)
+Heartbeat: {3} (UTC)
+
+Send a close request to the document owner?</value>
+  </data>
+  <data name="Form_Invoice_LockedCaption" xml:space="preserve">
+    <value>Document is locked</value>
+  </data>
 </root>

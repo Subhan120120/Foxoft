@@ -4857,4 +4857,15 @@ Tətbiq edilsin?</value>
   <data name="Form_Invoice_LockTakeoverCaption" xml:space="preserve">
     <value>Sənəd Kilidi</value>
   </data>
+  <data name="Form_Invoice_LockedQuestion" xml:space="preserve">
+    <value>Qaimə hazırda {0} tərəfindən redaktə olunur.
+Machine: {1}
+LockedAt: {2} (UTC)
+Heartbeat: {3} (UTC)
+
+Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
+  </data>
+  <data name="Form_Invoice_LockedCaption" xml:space="preserve">
+    <value>Sənəd kilidlənib</value>
+  </data>
 </root>

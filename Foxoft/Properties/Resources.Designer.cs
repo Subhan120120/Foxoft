@@ -14231,5 +14231,28 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_Invoice_LockTakeoverCaption", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice is currently being edited by {0}.
+        ///Machine: {1}
+        ///LockedAt: {2} (UTC)
+        ///Heartbeat: {3} (UTC)
+        ///
+        ///Send a close request to the document owner?.
+        /// </summary>
+        internal static string Form_Invoice_LockedQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_LockedQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document is locked.
+        /// </summary>
+        internal static string Form_Invoice_LockedCaption {
+            get {
+                return ResourceManager.GetString("Form_Invoice_LockedCaption", resourceCulture);
+            }
+        }
     }
 }
