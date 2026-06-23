@@ -659,7 +659,7 @@ namespace Foxoft
             // 
             // aCE_Operation
             // 
-            aCE_Operation.Elements.AddRange(new AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_InvoiceLineFeatureType, ACE_LoyaltyCards, ACE_CampaignList, ACE_CrmActivityList });
+            aCE_Operation.Elements.AddRange(new AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_InvoiceLineFeatureType, ACE_LoyaltyCards, ACE_CampaignList });
             aCE_Operation.Expanded = true;
             aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
             aCE_Operation.Name = "aCE_Operation";
@@ -741,7 +741,7 @@ namespace Foxoft
             // 
             // aCE_HumanResource
             // 
-            aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances, ACE_PayrollList });
+            aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances, ACE_PayrollList, ACE_CrmActivityList });
             aCE_HumanResource.Expanded = true;
             aCE_HumanResource.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage");
             aCE_HumanResource.Name = "aCE_HumanResource";

@@ -1,25 +1,24 @@
-﻿
-
-	select CashRegisterCode = DcCurrAccs.CurrAccCode
+﻿CashRegisterCode = DcCurrAccs.CurrAccCode
 	, [Kassa Adı] = CurrAccDesc
-	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)
-	, PhoneNum
-	, IsVIP
-	, CurrAccTypeCode
-	, CashRegPaymentTypeCode
-	, StoreCode
-	from 
-	DcCurrAccs 
-	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = ISNULL(DcCurrAccs.CashRegPaymentTypeCode, 1)
-	where CurrAccTypeCode = 5 and IsDisabled = 0
-		--and DcCurrAccs.IsVIP = 1 
-		--and balance.CurrAccCode = '1403'
-	group by DcCurrAccs.CurrAccCode
-	, CurrAccDesc
-	, PhoneNum
-	, IsVIP
-	, CurrAccTypeCode
-	, CashRegPaymentTypeCode
-	, CashRegisterCode 
-	, StoreCode
-	order by CurrAccDesc
+    , CurrAccDesc
+    , Balance = ISNULL(SUM(CAST(PaymentLoc AS money)), 0)
+    , PhoneNum
+    , IsVIP
+    , CurrAccTypeCode
+    , StoreCode
+FROM DcCurrAccs
+LEFT JOIN TrPaymentLines 
+    ON TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode
+    AND TrPaymentLines.PaymentTypeCode IN (1, 2)
+WHERE 
+    CurrAccTypeCode = 5
+    AND IsDisabled = 0
+GROUP BY 
+     DcCurrAccs.CurrAccCode
+    , CashRegisterCode
+    , CurrAccDesc
+    , PhoneNum
+    , IsVIP
+    , CurrAccTypeCode
+    , StoreCode
+--ORDER BY CurrAccDesc;
