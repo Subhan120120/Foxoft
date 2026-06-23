@@ -46,30 +46,31 @@ namespace Foxoft
             lblCardTotal_Subtitle.Text = Resources.Form_WhatsAppMessageLog_Summary_Total_Subtitle;
         }
 
-        private void FormWhatsAppMessageLog_Load(object sender, EventArgs e)
+        private async void FormWhatsAppMessageLog_Load(object sender, EventArgs e)
         {
-            LoadData();
+            await LoadDataAsync();
             LoadLayout();
         }
 
-        private void LoadData()
+        private async Task LoadDataAsync()
         {
             dbContext?.Dispose();
             dbContext = new subContext();
 
-            var list = dbContext.TrWhatsAppMessageLogs
-                .AsNoTracking()
-                .Include(x => x.DcCurrAcc)
-                .Include(x => x.DcSender)
-                .OrderByDescending(x => x.CreatedDate)
-                .ToList();
+            var list = await Task.Run(() =>
+                dbContext.TrWhatsAppMessageLogs
+                    .AsNoTracking()
+                    .Include(x => x.DcCurrAcc)
+                    .Include(x => x.DcSender)
+                    .OrderByDescending(x => x.CreatedDate)
+                    .ToList());
 
             trWhatsAppMessageLogBindingSource.DataSource = list;
 
             if (!layoutLoaded)
                 gV_WhatsAppMessageLogList.BestFitColumns();
 
-            UpdateSummary();
+            await UpdateSummaryAsync();
         }
 
         private void LoadLayout()
@@ -107,9 +108,9 @@ namespace Foxoft
             layoutLoaded = true;
         }
 
-        private void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
+        private async void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
-            LoadData();
+            await LoadDataAsync();
         }
 
         private async void bBI_SendSelected_ItemClick(object sender, ItemClickEventArgs e)
@@ -141,7 +142,7 @@ namespace Foxoft
             {
                 await WhatsAppMessageLogService.ResendAsync(log.WhatsAppMessageLogId);
                 XtraMessageBox.Show(Resources.Common_SentSuccessfully, Resources.Form_WhatsAppMessageLog, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData();
+                await LoadDataAsync();
             }
             catch (Exception ex)
             {
@@ -203,7 +204,7 @@ namespace Foxoft
                     MessageBoxButtons.OK,
                     failed == 0 ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
 
-                LoadData();
+                await LoadDataAsync();
             }
             finally
             {
@@ -231,11 +232,11 @@ namespace Foxoft
             CustomExtensions.ExportToExcel(this, Resources.Form_WhatsAppMessageLog, gC_WhatsAppMessageLogList);
         }
 
-        private void gC_WhatsAppMessageLogList_ProcessGridKey(object sender, KeyEventArgs e)
+        private async void gC_WhatsAppMessageLogList_ProcessGridKey(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
             {
-                LoadData();
+                await LoadDataAsync();
                 e.Handled = true;
             }
         }
@@ -284,7 +285,7 @@ namespace Foxoft
             dbContext?.Dispose();
         }
 
-        private void UpdateSummary()
+        private async Task UpdateSummaryAsync()
         {
             int countToday = 0;
             int countLast30Days = 0;
@@ -304,9 +305,8 @@ namespace Foxoft
             lblCardLast30Days_Value.Text = countLast30Days.ToString("N0");
             lblCardTotal_Value.Text = countTotal.ToString("N0");
 
-            decimal balance = dbContext.TrCredits
-                .AsEnumerable()
-                .Sum(x => x.Amount);
+            decimal balance = await dbContext.TrCredits
+                .SumAsync(x => x.Amount);
 
             lblCardBalance_Value.Text = balance.ToString("N2");
         }
