@@ -14353,5 +14353,14 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_Invoice_LockedCaption", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Invoices.
+        /// </summary>
+        internal static string Form_Invoice_RelatedInvoices {
+            get {
+                return ResourceManager.GetString("Form_Invoice_RelatedInvoices", resourceCulture);
+            }
+        }
     }
 }

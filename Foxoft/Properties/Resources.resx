@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4901,4 +4901,6 @@ Send a close request to the document owner?</value>
   <data name="Form_Invoice_LockedCaption" xml:space="preserve">
     <value>Document is locked</value>
   </data>
-</root>
+  <data name="Form_Invoice_RelatedInvoices" xml:space="preserve">
+    <value>Related Invoices</value>
+  </data></root>

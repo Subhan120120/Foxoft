@@ -456,6 +456,7 @@ namespace Foxoft
             Tag = btnEdit_DocNum.EditValue;
             _isSaved = false;
 
+            PopulateRelatedInvoicesMenu();
 
             SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
         }
@@ -726,6 +727,8 @@ namespace Foxoft
                     _cashOnlyCampaignApplied = false;
                     _appliedPromoCode = null;
                 }
+
+                PopulateRelatedInvoicesMenu();
             }
             finally
             {
@@ -4540,6 +4543,74 @@ namespace Foxoft
                 _isApplyingCampaign = false;
             }
         }
+
+        #region Related Invoices
+
+        private void PopulateRelatedInvoicesMenu()
+        {
+            BSI_RelatedInvoices.ClearLinks();
+
+            if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return;
+
+            using var ctx = new subContext();
+            var relatedInvoices = new List<TrInvoiceHeader>();
+
+            // Parent invoice (the one this invoice references)
+            if (trInvoiceHeader.RelatedInvoiceId.HasValue)
+            {
+                var parent = ctx.TrInvoiceHeaders
+                    .Include(x => x.DcProcess)
+                    .FirstOrDefault(x => x.InvoiceHeaderId == trInvoiceHeader.RelatedInvoiceId.Value);
+                if (parent != null)
+                    relatedInvoices.Add(parent);
+            }
+
+            // Child invoices (those that reference this invoice)
+            var children = ctx.TrInvoiceHeaders
+                .Include(x => x.DcProcess)
+                .Where(x => x.RelatedInvoiceId == trInvoiceHeader.InvoiceHeaderId)
+                .OrderBy(x => x.DocumentDate)
+                .ThenBy(x => x.DocumentNumber)
+                .ToList();
+
+            relatedInvoices.AddRange(children);
+
+            foreach (var related in relatedInvoices)
+            {
+                var item = new BarButtonItem();
+                string processDesc = related.DcProcess?.ProcessDesc ?? related.ProcessCode;
+                item.Caption = $"{processDesc} - {related.DocumentNumber} ({related.DocumentDate:dd.MM.yyyy})";
+                item.Tag = related.InvoiceHeaderId;
+                item.ItemClick += BSI_RelatedInvoices_ItemClick;
+                BSI_RelatedInvoices.AddItem(item);
+            }
+        }
+
+        private async void BSI_RelatedInvoices_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.Item.Tag is not Guid invoiceHeaderId)
+                return;
+
+            if (!PromptSaveChanges())
+                return;
+
+            if (TryAcquireInvoiceLockForEdit(invoiceHeaderId))
+            {
+                if (trInvoiceHeader is not null)
+                    _lockService.ReleaseLock(
+                        "Invoice",
+                        trInvoiceHeader.InvoiceHeaderId,
+                        Authorization.CurrAccCode,
+                        Environment.MachineName,
+                        _appInstanceId);
+
+                trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+            }
+        }
+
+        #endregion
 
     }
 }
