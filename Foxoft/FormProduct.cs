@@ -32,6 +32,7 @@ namespace Foxoft
         string imageFilePath = string.Empty;
         private byte productTypeCode;
         private bool isNew;
+        private const string ChangeProductCodeClaim = "ChangeProductCode";
 
         SettingStore settingStore;
 
@@ -57,7 +58,7 @@ namespace Foxoft
 
             if (!isNew)
             {
-                ProductCodeTextEdit.Properties.Buttons[0].Enabled = true;
+                ProductCodeTextEdit.Properties.Buttons[0].Enabled = CanChangeProductCode();
                 BBI_ProductDiscount.Enabled = true;
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
@@ -632,10 +633,21 @@ namespace Foxoft
             frm.ShowDialog();
         }
 
+        private bool CanChangeProductCode()
+        {
+            return efMethods.CurrAccHasClaims(Authorization.CurrAccCode, ChangeProductCodeClaim);
+        }
+
         private void ProductCodeTextEdit_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             if (isNew)
                 return;
+
+            if (!CanChangeProductCode())
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission, Resources.Common_Attention);
+                return;
+            }
 
             if (dcProductsBindingSource.Current is not DcProduct product)
                 return;
@@ -811,7 +823,7 @@ namespace Foxoft
                 SaveImage();
 
                 isNew = false;
-                ProductCodeTextEdit.Properties.Buttons[0].Enabled = true;
+                ProductCodeTextEdit.Properties.Buttons[0].Enabled = CanChangeProductCode();
                 BBI_ProductFeature.Enabled = true;
                 BBI_ProductFeatureClone.Enabled = true;
                 BBI_ProductDiscount.Enabled = true;

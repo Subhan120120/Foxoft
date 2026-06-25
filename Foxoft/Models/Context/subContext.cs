@@ -684,8 +684,10 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ButunHesabatlar", ClaimDesc = "Butun Hesabatlar", ClaimTypeId = 2, CategoryId = 1 },
                 new DcClaim { ClaimCode = "Products", ClaimDesc = "Məhsullar", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "ProductsDisabled", ClaimDesc = "Qeyri-Aktiv Məhsullar", ClaimTypeId = 1, CategoryId = 18 },
+                new DcClaim { ClaimCode = "ChangeProductCode", ClaimDesc = "Məhsul Kodunu Dəyişmə", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "CurrAccs", ClaimDesc = "Cari Hesablar", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "CurrAccsDisabled", ClaimDesc = "Qeyri-Aktiv Cari Hesablar", ClaimTypeId = 1, CategoryId = 19 },
+                new DcClaim { ClaimCode = "ChangeCurrAccCode", ClaimDesc = "Cari Hesab Kodunu Dəyişmə", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "CashRegs", ClaimDesc = "Kassalar", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "CashTransfer", ClaimDesc = "Pul Transferi", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "InventoryTransfer", ClaimDesc = "Mal Transferi", ClaimTypeId = 1, CategoryId = 14 },
@@ -916,7 +918,9 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 69, RoleCode = "Admin", ClaimCode = "WhatsAppMessageLog" },
                 new TrRoleClaim { RoleClaimId = 204, RoleCode = "Admin", ClaimCode = "InvoiceLineFeatureType" },
                 new TrRoleClaim { RoleClaimId = 205, RoleCode = "Admin", ClaimCode = "ChangeStore" },
-                new TrRoleClaim { RoleClaimId = 206, RoleCode = "Admin", ClaimCode = "DocumentLockTakeover" }
+                new TrRoleClaim { RoleClaimId = 206, RoleCode = "Admin", ClaimCode = "DocumentLockTakeover" },
+                new TrRoleClaim { RoleClaimId = 207, RoleCode = "Admin", ClaimCode = "ChangeProductCode" },
+                new TrRoleClaim { RoleClaimId = 208, RoleCode = "Admin", ClaimCode = "ChangeCurrAccCode" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

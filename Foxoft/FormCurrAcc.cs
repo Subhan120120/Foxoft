@@ -21,6 +21,7 @@ namespace Foxoft
         EfMethods efMethods = new();
         bool isCustomer;
         public DcCurrAcc dcCurrAcc = new();
+        private const string ChangeCurrAccCodeClaim = "ChangeCurrAccCode";
 
         public FormCurrAcc()
         {
@@ -45,7 +46,7 @@ namespace Foxoft
             dcCurrAcc.CurrAccCode = currAccCode;
             CurrAccCodeTextEdit.Properties.ReadOnly = true;
             CurrAccCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
-            CurrAccCodeTextEdit.Properties.Buttons[0].Enabled = true;
+            CurrAccCodeTextEdit.Properties.Buttons[0].Enabled = CanChangeCurrAccCode();
         }
 
         public FormCurrAcc(string currAccCode, bool isCustomer)
@@ -145,8 +146,19 @@ namespace Foxoft
             }
         }
 
+        private bool CanChangeCurrAccCode()
+        {
+            return efMethods.CurrAccHasClaims(Authorization.CurrAccCode, ChangeCurrAccCodeClaim);
+        }
+
         private void CurrAccCodeTextEdit_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
+            if (!CanChangeCurrAccCode())
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission, Resources.Common_Attention);
+                return;
+            }
+
             if (dcCurrAccsBindingSource.Current is not DcCurrAcc currAcc)
                 return;
 
