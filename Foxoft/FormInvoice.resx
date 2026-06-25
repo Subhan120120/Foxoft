@@ -149,16 +149,16 @@
 </value>
   </data>
   <metadata name="behaviorManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>305, 9</value>
+    <value>523, 17</value>
   </metadata>
   <metadata name="trInvoiceLinesBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>469, 9</value>
+    <value>676, 17</value>
   </metadata>
   <metadata name="trInvoiceHeadersBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>692, 9</value>
+    <value>880, 17</value>
   </metadata>
   <metadata name="popupMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1294, 7</value>
+    <value>17, 54</value>
   </metadata>
   <data name="bBI_SaveAndNew.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -590,7 +590,7 @@
 </value>
   </data>
   <metadata name="popupMenuPrinters.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>6, 9</value>
+    <value>205, 17</value>
   </metadata>
   <data name="BBI_ReportPrintFast.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1004,11 +1004,32 @@
         Zz4NCjwvc3ZnPgs=
 </value>
   </data>
+  <data name="BSI_RelatedInvoices.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjIsIFZlcnNpb249MjQuMi43
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAABkDAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
+        IHZpZXdCb3g9IjAgMCAxNiAxNiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3Bh
+        Y2U9InByZXNlcnZlIiBpZD0iTGluayIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTYg
+        MTYiPg0KICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLkJsYWNre2ZpbGw6IzcyNzI3Mjt9Cjwvc3R5
+        bGU+DQogIDxwYXRoIGQ9Ik0xMi41LDVoLTJDOS4zLDUsOC4zLDUuOSw4LjEsN0g2LjlDNi43LDUuOSw1
+        LjcsNSw0LjUsNWgtMkMxLjEsNSwwLDYuMSwwLDcuNVMxLjEsMTAsMi41LDEwaDIgIGMxLjIsMCwyLjIt
+        MC45LDIuNC0yaDEuMWMwLjIsMS4xLDEuMiwyLDIuNCwyaDJjMS40LDAsMi41LTEuMSwyLjUtMi41UzEz
+        LjksNSwxMi41LDV6IE00LjUsOWgtMkMxLjcsOSwxLDguMywxLDcuNSAgQzEsNi43LDEuNyw2LDIuNSw2
+        aDJjMC42LDAsMS4yLDAuNCwxLjQsMUgzLjVDMy4yLDcsMyw3LjIsMyw3LjVTMy4yLDgsMy41LDhoMi40
+        QzUuNyw4LjYsNS4xLDksNC41LDl6IE0xMi41LDloLTIgIEM5LjksOSw5LjMsOC42LDkuMSw4aDIuNEMx
+        MS44LDgsMTIsNy44LDEyLDcuNVMxMS44LDcsMTEuNSw3SDkuMWMwLjItMC42LDAuOC0xLDEuNC0xaDJD
+        MTMuMyw2LDE0LDYuNywxNCw3LjVDMTQsOC4zLDEzLjMsOSwxMi41LDkgIHoiIGNsYXNzPSJCbGFjayIg
+        Lz4NCjwvc3ZnPgs=
+</value>
+  </data>
   <metadata name="trInstallmentGuarantorsBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 44</value>
+    <value>143, 54</value>
   </metadata>
   <metadata name="svgImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1095, 7</value>
+    <value>1223, 17</value>
   </metadata>
   <data name="svgImageCollection1.DeleteInvoiceIS" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1206,16 +1227,19 @@
         PC9nPg0KPC9zdmc+Cw==
 </value>
   </data>
+  <metadata name="popupMenuInfoPayment.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="adorneruıManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>147, 9</value>
+    <value>365, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>48</value>
   </metadata>
   <metadata name="alertControl1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>963, 8</value>
+    <value>1100, 17</value>
   </metadata>
   <metadata name="dxErrorProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>273, 44</value>
+    <value>399, 54</value>
   </metadata>
 </root>

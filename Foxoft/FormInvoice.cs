@@ -1,4 +1,4 @@
-
+﻿
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -172,22 +172,22 @@ namespace Foxoft
             // Button adı → BarButtonItem referansı
             var buttonMap = new Dictionary<string, BarButtonItem>(StringComparer.OrdinalIgnoreCase)
             {
-                ["bBI_Save"]              = bBI_Save,
-                ["bBI_SaveAndNew"]        = bBI_SaveAndNew,
-                ["bBI_SaveAndQuit"]       = bBI_SaveAndQuit,
-                ["bBI_Payment"]           = bBI_Payment,
-                ["bBI_New"]               = bBI_New,
-                ["bBI_reportPreview"]     = bBI_reportPreview,
-                ["bBI_DeleteInvoice"]     = bBI_DeleteInvoice,
-                ["bBI_PaymentDelete"]     = bBI_DeletePayment,
-                ["bBI_CopyInvoice"]       = bBI_CopyInvoice,
-                ["bBI_Whatsapp"]          = bBI_Whatsapp,
-                ["BBI_EditInvoice"]       = BBI_ModifyInvoice,
-                ["BBI_exportXLSX"]        = BBI_exportXLSX,
-                ["BBI_ImportExcel"]       = BBI_ImportExcel,
-                ["BBI_ReportPrintFast"]   = BBI_ReportPrintFast,
-                ["BBI_picture"]           = BBI_picture,
-                ["BBI_InvoiceExpenses"]   = BBI_InvoiceExpenses
+                ["bBI_Save"] = bBI_Save,
+                ["bBI_SaveAndNew"] = bBI_SaveAndNew,
+                ["bBI_SaveAndQuit"] = bBI_SaveAndQuit,
+                ["bBI_Payment"] = bBI_Payment,
+                ["bBI_New"] = bBI_New,
+                ["bBI_reportPreview"] = bBI_reportPreview,
+                ["bBI_DeleteInvoice"] = bBI_DeleteInvoice,
+                ["bBI_PaymentDelete"] = bBI_DeletePayment,
+                ["bBI_CopyInvoice"] = bBI_CopyInvoice,
+                ["bBI_Whatsapp"] = bBI_Whatsapp,
+                ["BBI_EditInvoice"] = BBI_ModifyInvoice,
+                ["BBI_exportXLSX"] = BBI_exportXLSX,
+                ["BBI_ImportExcel"] = BBI_ImportExcel,
+                ["BBI_ReportPrintFast"] = BBI_ReportPrintFast,
+                ["BBI_picture"] = BBI_picture,
+                ["BBI_InvoiceExpenses"] = BBI_InvoiceExpenses
                 // Note: Kampaniya düymələri kimi bəzi buttonlar bəlkə tam başqa yerdədir, onları tapana qədər commentdə saxlayaq.
             };
 
@@ -746,7 +746,7 @@ namespace Foxoft
 
             // Navigation
             BBI_Previous.Enabled = !isLoading;
-            BBI_Next.Enabled     = !isLoading;
+            BBI_Next.Enabled = !isLoading;
             btnEdit_DocNum.Enabled = !isLoading;
 
             if (isLoading)
@@ -2265,7 +2265,7 @@ namespace Foxoft
                 using var client = new Foxoft.AppCode.EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
 
                 string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: caption);
-                
+
                 SaveWhatsAppLog(trInvoiceHeader.InvoiceHeaderId, formattedNumber, memoryStream, caption, isSuccessful: true);
 
                 alertControl1.Show(this, Resources.FormInvoice_WhatsappSend, Resources.Common_SentSuccessfully, "", (Image)null, null);
@@ -2314,8 +2314,8 @@ namespace Foxoft
                 Debug.Print($"WhatsApp log save error: {ex.Message}");
             }
         }
-                 
-        private string? SaveWhatsAppImageToDisk(MemoryStream imageStream) 
+
+        private string? SaveWhatsAppImageToDisk(MemoryStream imageStream)
         {
             try
             {
@@ -2327,7 +2327,7 @@ namespace Foxoft
                     Directory.CreateDirectory(whatsAppFolder);
 
                 string fileName = $"{Guid.NewGuid()}.png";
-                string filePath = Path.Combine(whatsAppFolder, fileName); 
+                string filePath = Path.Combine(whatsAppFolder, fileName);
 
                 if (imageStream.CanSeek) imageStream.Position = 0;
                 File.WriteAllBytes(filePath, imageStream.ToArray());
@@ -3273,7 +3273,7 @@ namespace Foxoft
                         {
                             if (dbContext.Entry(existingFeature).State != EntityState.Detached)
                                 dbContext.TrInvoiceLineFeatures.Remove(existingFeature);
-                            
+
                             rowLine.TrInvoiceLineFeatures.Remove(existingFeature);
                         }
                         else
@@ -4580,34 +4580,76 @@ namespace Foxoft
             {
                 var item = new BarButtonItem();
                 string processDesc = related.DcProcess?.ProcessDesc ?? related.ProcessCode;
-                item.Caption = $"{processDesc} - {related.DocumentNumber} ({related.DocumentDate:dd.MM.yyyy})";
+                string returnMark = related.IsReturn ? "-" + Resources.Entity_InvoiceHeader_IsReturn : "";
+                item.Caption = $"{processDesc}{returnMark} - {related.DocumentNumber} ({related.DocumentDate:dd.MM.yyyy})";
+                string iconKey = related.IsReturn ? "relatedReturn"
+                    : new[] { "WO", "WI" }.Contains(related.ProcessCode) ? "relatedDelivery"
+                    : "relatedInvoice";
+                item.ImageOptions.SvgImage = svgImageCollection1[iconKey];
                 item.Tag = related.InvoiceHeaderId;
                 item.ItemClick += BSI_RelatedInvoices_ItemClick;
                 BSI_RelatedInvoices.AddItem(item);
             }
         }
 
-        private async void BSI_RelatedInvoices_ItemClick(object sender, ItemClickEventArgs e)
+        private void BSI_RelatedInvoices_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.Item.Tag is not Guid invoiceHeaderId)
                 return;
 
-            if (!PromptSaveChanges())
+            if (TryActivateOpenInvoiceWindow(invoiceHeaderId))
                 return;
 
-            if (TryAcquireInvoiceLockForEdit(invoiceHeaderId))
-            {
-                if (trInvoiceHeader is not null)
-                    _lockService.ReleaseLock(
-                        "Invoice",
-                        trInvoiceHeader.InvoiceHeaderId,
-                        Authorization.CurrAccCode,
-                        Environment.MachineName,
-                        _appInstanceId);
+            TrInvoiceHeader relatedHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+            if (relatedHeader is null)
+                return;
 
-                trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
-                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+            string claim = CustomExtensions.GetClaim(relatedHeader.ProcessCode);
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim))
+            {
+                XtraMessageBox.Show(Resources.Common_AccessDenied);
+                return;
             }
+
+            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+            if (formERP is null)
+                return;
+
+            Guid formInstanceId = Guid.NewGuid();
+            byte[] bytes = CustomExtensions.GetProductTypeArray(relatedHeader.ProcessCode);
+
+            using var lockCtx = new subContext();
+            var lockSvc = new DocumentLockService(lockCtx);
+            var res = lockSvc.TryAcquireLock(
+                documentType: "Invoice",
+                documentId: invoiceHeaderId,
+                userId: Authorization.CurrAccCode,
+                machineName: Environment.MachineName,
+                appInstanceId: _appInstanceId,
+                formInstanceId: formInstanceId,
+                clientProcessId: _pid,
+                timeout: TimeSpan.FromMinutes(10),
+                reason: "Open related invoice");
+
+            if (!res.Acquired)
+            {
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_Invoice_LockedQuestion,
+                        res.LockedByName, res.MachineName, res.LockedAtUtc, res.LastHeartbeatAtUtc),
+                    Resources.Form_Invoice_LockedCaption,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            FormInvoice frm = new(relatedHeader.ProcessCode, null, bytes, null, invoiceHeaderId);
+            frm._formInstanceId = formInstanceId;
+            frm.MdiParent = formERP;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+
+            if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
         }
 
         #endregion
