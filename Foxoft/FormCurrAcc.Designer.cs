@@ -35,7 +35,7 @@ namespace Foxoft
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
-            CurrAccCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
+            CurrAccCodeTextEdit = new DevExpress.XtraEditors.ButtonEdit();
             dcCurrAccsBindingSource = new BindingSource(components);
             FirstNameTextEdit = new DevExpress.XtraEditors.TextEdit();
             LastNameTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -213,9 +213,12 @@ namespace Foxoft
             CurrAccCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccCode", true));
             CurrAccCodeTextEdit.Location = new Point(133, 12);
             CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
+            CurrAccCodeTextEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            CurrAccCodeTextEdit.Properties.Buttons[0].Enabled = false;
             CurrAccCodeTextEdit.Size = new Size(166, 20);
             CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
             CurrAccCodeTextEdit.TabIndex = 0;
+            CurrAccCodeTextEdit.ButtonPressed += CurrAccCodeTextEdit_ButtonPressed;
             // 
             // dcCurrAccsBindingSource
             // 
@@ -853,7 +856,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraEditors.SimpleButton btn_Cancel;
         private DevExpress.XtraEditors.SimpleButton btn_Ok;
-        private DevExpress.XtraEditors.TextEdit CurrAccCodeTextEdit;
+        private DevExpress.XtraEditors.ButtonEdit CurrAccCodeTextEdit;
         private DevExpress.XtraEditors.TextEdit DataLanguageCodeTextEdit;
         private DevExpress.XtraEditors.TextEdit FirstNameTextEdit;
         private DevExpress.XtraEditors.TextEdit LastNameTextEdit;

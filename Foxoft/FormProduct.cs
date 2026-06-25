@@ -10,6 +10,7 @@ using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
@@ -56,6 +57,7 @@ namespace Foxoft
 
             if (!isNew)
             {
+                ProductCodeTextEdit.Properties.Buttons[0].Enabled = true;
                 BBI_ProductDiscount.Enabled = true;
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
@@ -630,6 +632,140 @@ namespace Foxoft
             frm.ShowDialog();
         }
 
+        private void ProductCodeTextEdit_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            if (isNew)
+                return;
+
+            if (dcProductsBindingSource.Current is not DcProduct product)
+                return;
+
+            string oldProductCode = product.ProductCode;
+            string? newProductCode = XtraInputBox.Show(
+                Resources.Form_Product_Input_NewProductCode,
+                Resources.Form_Product_Button_ChangeProductCode,
+                oldProductCode)?.Trim();
+
+            if (string.IsNullOrWhiteSpace(newProductCode))
+                return;
+
+            if (string.Equals(oldProductCode, newProductCode, StringComparison.Ordinal))
+                return;
+
+            if (efMethods.ProductExist(newProductCode))
+            {
+                XtraMessageBox.Show(Resources.Form_Product_Message_ProductCodeExists, Resources.Common_Attention);
+                return;
+            }
+
+            DialogResult dialogResult = XtraMessageBox.Show(
+                string.Format(Resources.Form_Product_Message_ChangeProductCodeConfirm, oldProductCode, newProductCode),
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNo);
+
+            if (dialogResult != DialogResult.Yes)
+                return;
+
+            try
+            {
+                ChangeProductCode(oldProductCode, newProductCode);
+
+                dcProduct = new DcProduct { ProductCode = newProductCode };
+                LoadProduct();
+                dcProduct = dcProductsBindingSource.Current as DcProduct ?? dcProduct;
+
+                productFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "Products", dcProduct.ProductCode);
+                imageFilePath = CustomExtensions.CombinePath(productFolder, dcProduct.ProductCode + ".jpg");
+
+                pictureEdit.Image = null;
+                LoadPictureBoxImage();
+                LoadGalleryImages();
+
+                XtraMessageBox.Show(Resources.Form_Product_Message_ProductCodeChanged, Resources.Common_Info);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_Product_Message_ProductCodeChangeError, ex.Message),
+                    Resources.Common_ErrorTitle);
+            }
+        }
+
+        public void ChangeProductCode(string oldDocNum, string newDocNum)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(oldDocNum);
+            ArgumentException.ThrowIfNullOrWhiteSpace(newDocNum);
+
+            oldDocNum = oldDocNum.Trim();
+            newDocNum = newDocNum.Trim();
+
+            if (string.Equals(oldDocNum, newDocNum, StringComparison.Ordinal))
+                return;
+
+            using subContext context = new();
+            using var transaction = context.Database.BeginTransaction();
+
+            SqlParameter oldDocNumParam = new("@OldDocNum", oldDocNum);
+            SqlParameter newDocNumParam = new("@NewDocNum", newDocNum);
+            SqlParameter currAccCodeParam = new("@CurrAccCode", (object?)Authorization.CurrAccCode ?? DBNull.Value);
+
+            context.Database.ExecuteSqlRaw(
+                """
+                SET XACT_ABORT ON;
+
+                ALTER TABLE DcProductStaticPrices NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrProductDiscounts NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrProductBarcodes NOCHECK CONSTRAINT ALL;
+                ALTER TABLE DcSerialNumbers NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrProductFeatures NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceLines NOCHECK CONSTRAINT ALL;
+                ALTER TABLE SiteProducts NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrPriceListLines NOCHECK CONSTRAINT ALL;
+                ALTER TABLE DcProductScales NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrBarcodeOperationLines NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrCampaignProducts NOCHECK CONSTRAINT ALL;
+
+                UPDATE DcProducts
+                SET ProductCode = @NewDocNum,
+                    LastUpdatedUserName = @CurrAccCode,
+                    LastUpdatedDate = GETDATE()
+                WHERE ProductCode = @OldDocNum;
+
+                UPDATE DcProductStaticPrices SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                DELETE FROM DcProductStaticPrices WHERE ProductCode = @OldDocNum;
+
+                UPDATE TrProductDiscounts SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                DELETE FROM TrProductDiscounts WHERE ProductCode = @OldDocNum;
+
+                UPDATE TrProductBarcodes SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                UPDATE DcSerialNumbers SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                UPDATE TrProductFeatures SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                UPDATE TrInvoiceLines SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                UPDATE SiteProducts SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                UPDATE TrPriceListLines SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                UPDATE DcProductScales SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                UPDATE TrBarcodeOperationLines SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+                UPDATE TrCampaignProducts SET ProductCode = @NewDocNum WHERE ProductCode = @OldDocNum;
+
+                ALTER TABLE DcProductStaticPrices WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrProductDiscounts WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrProductBarcodes WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE DcSerialNumbers WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrProductFeatures WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceLines WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE SiteProducts WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrPriceListLines WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE DcProductScales WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrBarcodeOperationLines WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrCampaignProducts WITH CHECK CHECK CONSTRAINT ALL;
+                """,
+                oldDocNumParam,
+                newDocNumParam,
+                currAccCodeParam);
+
+            transaction.Commit();
+        }
+
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {
@@ -675,6 +811,7 @@ namespace Foxoft
                 SaveImage();
 
                 isNew = false;
+                ProductCodeTextEdit.Properties.Buttons[0].Enabled = true;
                 BBI_ProductFeature.Enabled = true;
                 BBI_ProductFeatureClone.Enabled = true;
                 BBI_ProductDiscount.Enabled = true;

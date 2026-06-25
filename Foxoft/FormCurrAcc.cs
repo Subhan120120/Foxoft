@@ -1,10 +1,12 @@
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Google.Apis.PeopleService.v1.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Data;
@@ -43,6 +45,7 @@ namespace Foxoft
             dcCurrAcc.CurrAccCode = currAccCode;
             CurrAccCodeTextEdit.Properties.ReadOnly = true;
             CurrAccCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
+            CurrAccCodeTextEdit.Properties.Buttons[0].Enabled = true;
         }
 
         public FormCurrAcc(string currAccCode, bool isCustomer)
@@ -140,6 +143,111 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
+        }
+
+        private void CurrAccCodeTextEdit_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            if (dcCurrAccsBindingSource.Current is not DcCurrAcc currAcc)
+                return;
+
+            string oldCurrAccCode = currAcc.CurrAccCode;
+            string? newCurrAccCode = XtraInputBox.Show(
+                Resources.Form_CurrAcc_Input_NewCurrAccCode,
+                Resources.Form_CurrAcc_Button_ChangeCurrAccCode,
+                oldCurrAccCode)?.Trim();
+
+            if (string.IsNullOrWhiteSpace(newCurrAccCode))
+                return;
+
+            if (string.Equals(oldCurrAccCode, newCurrAccCode, StringComparison.Ordinal))
+                return;
+
+            if (efMethods.EntityExists<DcCurrAcc>(newCurrAccCode))
+            {
+                XtraMessageBox.Show(Resources.Form_CurrAcc_Message_CurrAccCodeExists, Resources.Common_Attention);
+                return;
+            }
+
+            DialogResult dialogResult = XtraMessageBox.Show(
+                string.Format(Resources.Form_CurrAcc_Message_ChangeCurrAccCodeConfirm, oldCurrAccCode, newCurrAccCode),
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNo);
+
+            if (dialogResult != DialogResult.Yes)
+                return;
+
+            try
+            {
+                ChangeCurrAccCode(oldCurrAccCode, newCurrAccCode);
+
+                dcCurrAcc = new DcCurrAcc { CurrAccCode = newCurrAccCode };
+                LoadCurrAcc();
+                dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc ?? dcCurrAcc;
+
+                XtraMessageBox.Show(Resources.Form_CurrAcc_Message_CurrAccCodeChanged, Resources.Common_Info);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_CurrAcc_Message_CurrAccCodeChangeError, ex.Message),
+                    Resources.Common_ErrorTitle);
+            }
+        }
+
+        public void ChangeCurrAccCode(string oldDocNum, string newDocNum)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(oldDocNum);
+            ArgumentException.ThrowIfNullOrWhiteSpace(newDocNum);
+
+            oldDocNum = oldDocNum.Trim();
+            newDocNum = newDocNum.Trim();
+
+            if (string.Equals(oldDocNum, newDocNum, StringComparison.Ordinal))
+                return;
+
+            using subContext context = new();
+            using var transaction = context.Database.BeginTransaction();
+
+            SqlParameter oldDocNumParam = new("@OldDocNum", oldDocNum);
+            SqlParameter newDocNumParam = new("@NewDocNum", newDocNum);
+            SqlParameter currAccCodeParam = new("@CurrAccCode", (object?)Authorization.CurrAccCode ?? DBNull.Value);
+
+            context.Database.ExecuteSqlRaw(
+                """
+                SET XACT_ABORT ON;
+
+                ALTER TABLE DcPaymentMethods NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrCurrAccRoles NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceHeaders NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceLines NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrPaymentHeaders NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrSessions NOCHECK CONSTRAINT ALL;
+
+                UPDATE DcCurrAccs
+                SET CurrAccCode = @NewDocNum,
+                    LastUpdatedUserName = @CurrAccCode,
+                    LastUpdatedDate = GETDATE()
+                WHERE CurrAccCode = @OldDocNum;
+
+                UPDATE DcPaymentMethods SET RedirectedCurrAccCode = @NewDocNum WHERE RedirectedCurrAccCode = @OldDocNum;
+                UPDATE TrCurrAccRoles SET CurrAccCode = @NewDocNum WHERE CurrAccCode = @OldDocNum;
+                UPDATE TrInvoiceHeaders SET CurrAccCode = @NewDocNum WHERE CurrAccCode = @OldDocNum;
+                UPDATE TrInvoiceLines SET SalesPersonCode = @NewDocNum WHERE SalesPersonCode = @OldDocNum;
+                UPDATE TrPaymentHeaders SET CurrAccCode = @NewDocNum WHERE CurrAccCode = @OldDocNum;
+                UPDATE TrSessions SET CurrAccCode = @NewDocNum WHERE CurrAccCode = @OldDocNum;
+
+                ALTER TABLE DcPaymentMethods WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrCurrAccRoles WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceHeaders WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceLines WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrPaymentHeaders WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrSessions WITH CHECK CHECK CONSTRAINT ALL;
+                """,
+                oldDocNumParam,
+                newDocNumParam,
+                currAccCodeParam);
+
+            transaction.Commit();
         }
 
         private void BBI_CurrAccFeatures_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

@@ -2144,6 +2144,24 @@
   <data name="Form_CurrAcc_Bar_ContactDetail" xml:space="preserve">
     <value>Əlaqə</value>
   </data>
+  <data name="Form_CurrAcc_Button_ChangeCurrAccCode" xml:space="preserve">
+    <value>Cari hesab kodunu dəyiş</value>
+  </data>
+  <data name="Form_CurrAcc_Input_NewCurrAccCode" xml:space="preserve">
+    <value>Yeni cari hesab kodunu daxil edin.</value>
+  </data>
+  <data name="Form_CurrAcc_Message_ChangeCurrAccCodeConfirm" xml:space="preserve">
+    <value>Cari hesab kodu {0} dəyərindən {1} dəyərinə dəyişdirilsin?</value>
+  </data>
+  <data name="Form_CurrAcc_Message_CurrAccCodeChanged" xml:space="preserve">
+    <value>Cari hesab kodu uğurla dəyişdirildi.</value>
+  </data>
+  <data name="Form_CurrAcc_Message_CurrAccCodeChangeError" xml:space="preserve">
+    <value>Cari hesab kodu dəyişdirilərkən xəta baş verdi: {0}</value>
+  </data>
+  <data name="Form_CurrAcc_Message_CurrAccCodeExists" xml:space="preserve">
+    <value>Bu kodda cari hesab artıq mövcuddur!</value>
+  </data>
   <data name="Validation_Phone_ExistsInAnotherCurrAcc" xml:space="preserve">
     <value>Bu nömrə başqa Cari Hesabda mövcuddur.</value>
   </data>
@@ -3155,6 +3173,21 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_Product_Caption" xml:space="preserve">
     <value>Məhsul</value>
+  </data>
+  <data name="Form_Product_Button_ChangeProductCode" xml:space="preserve">
+    <value>Məhsul kodunu dəyiş</value>
+  </data>
+  <data name="Form_Product_Input_NewProductCode" xml:space="preserve">
+    <value>Yeni məhsul kodunu daxil edin.</value>
+  </data>
+  <data name="Form_Product_Message_ChangeProductCodeConfirm" xml:space="preserve">
+    <value>Məhsul kodu {0} dəyərindən {1} dəyərinə dəyişdirilsin?</value>
+  </data>
+  <data name="Form_Product_Message_ProductCodeChanged" xml:space="preserve">
+    <value>Məhsul kodu uğurla dəyişdirildi.</value>
+  </data>
+  <data name="Form_Product_Message_ProductCodeChangeError" xml:space="preserve">
+    <value>Məhsul kodu dəyişdirilərkən xəta baş verdi: {0}</value>
   </data>
   <data name="Form_Product_OpenFileDialog_Title" xml:space="preserve">
     <value>Foxoft üçün şəkil seçin.</value>

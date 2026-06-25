@@ -41,7 +41,7 @@ namespace Foxoft
             galleryControl1 = new GalleryControl();
             barAndDockingController1 = new DevExpress.XtraBars.BarAndDockingController(components);
             galleryControlClient1 = new GalleryControlClient();
-            ProductCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
+            ProductCodeTextEdit = new DevExpress.XtraEditors.ButtonEdit();
             dcProductsBindingSource = new BindingSource(components);
             UsePosCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             PromotionCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -271,9 +271,12 @@ namespace Foxoft
             ProductCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductCode", true));
             ProductCodeTextEdit.Location = new Point(138, 12);
             ProductCodeTextEdit.Name = "ProductCodeTextEdit";
+            ProductCodeTextEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            ProductCodeTextEdit.Properties.Buttons[0].Enabled = false;
             ProductCodeTextEdit.Size = new Size(106, 20);
             ProductCodeTextEdit.StyleController = dataLayoutControl1;
             ProductCodeTextEdit.TabIndex = 0;
+            ProductCodeTextEdit.ButtonPressed += ProductCodeTextEdit_ButtonPressed;
             // 
             // dcProductsBindingSource
             // 
@@ -1133,7 +1136,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
         private DevExpress.XtraEditors.LookUpEdit LUE_ProductTypeCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductTypeCode;
-        private DevExpress.XtraEditors.TextEdit ProductCodeTextEdit;
+        private DevExpress.XtraEditors.ButtonEdit ProductCodeTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductCode;
         private DevExpress.XtraEditors.TextEdit PurchasePriceTextEdit;
         private DevExpress.XtraEditors.TextEdit WholesalePriceTextEdit;

@@ -2144,6 +2144,24 @@
   <data name="Form_CurrAcc_Bar_ContactDetail" xml:space="preserve">
     <value>Contact</value>
   </data>
+  <data name="Form_CurrAcc_Button_ChangeCurrAccCode" xml:space="preserve">
+    <value>Change account code</value>
+  </data>
+  <data name="Form_CurrAcc_Input_NewCurrAccCode" xml:space="preserve">
+    <value>Enter the new account code.</value>
+  </data>
+  <data name="Form_CurrAcc_Message_ChangeCurrAccCodeConfirm" xml:space="preserve">
+    <value>Change account code from {0} to {1}?</value>
+  </data>
+  <data name="Form_CurrAcc_Message_CurrAccCodeChanged" xml:space="preserve">
+    <value>Account code changed successfully.</value>
+  </data>
+  <data name="Form_CurrAcc_Message_CurrAccCodeChangeError" xml:space="preserve">
+    <value>Error changing account code: {0}</value>
+  </data>
+  <data name="Form_CurrAcc_Message_CurrAccCodeExists" xml:space="preserve">
+    <value>An account with this code already exists!</value>
+  </data>
   <data name="Validation_Phone_ExistsInAnotherCurrAcc" xml:space="preserve">
     <value>This phone number is already used by another current account.</value>
   </data>
@@ -3155,6 +3173,21 @@ Do you want to return to the invoice?</value>
   </data>
   <data name="Form_Product_Caption" xml:space="preserve">
     <value>Product</value>
+  </data>
+  <data name="Form_Product_Button_ChangeProductCode" xml:space="preserve">
+    <value>Change product code</value>
+  </data>
+  <data name="Form_Product_Input_NewProductCode" xml:space="preserve">
+    <value>Enter the new product code.</value>
+  </data>
+  <data name="Form_Product_Message_ChangeProductCodeConfirm" xml:space="preserve">
+    <value>Change product code from {0} to {1}?</value>
+  </data>
+  <data name="Form_Product_Message_ProductCodeChanged" xml:space="preserve">
+    <value>Product code changed successfully.</value>
+  </data>
+  <data name="Form_Product_Message_ProductCodeChangeError" xml:space="preserve">
+    <value>Error changing product code: {0}</value>
   </data>
   <data name="Form_Product_OpenFileDialog_Title" xml:space="preserve">
     <value>Select image for Foxoft.</value>

@@ -8265,6 +8265,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change account code.
+        /// </summary>
+        public static string Form_CurrAcc_Button_ChangeCurrAccCode {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Button_ChangeCurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Additional.
         /// </summary>
         public static string Form_CurrAcc_Group_Extra {
@@ -8279,6 +8288,51 @@ namespace Foxoft.Properties {
         public static string Form_CurrAcc_Group_Personal {
             get {
                 return ResourceManager.GetString("Form_CurrAcc_Group_Personal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the new account code..
+        /// </summary>
+        public static string Form_CurrAcc_Input_NewCurrAccCode {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Input_NewCurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change account code from {0} to {1}?.
+        /// </summary>
+        public static string Form_CurrAcc_Message_ChangeCurrAccCodeConfirm {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_ChangeCurrAccCodeConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account code changed successfully..
+        /// </summary>
+        public static string Form_CurrAcc_Message_CurrAccCodeChanged {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_CurrAccCodeChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error changing account code: {0}.
+        /// </summary>
+        public static string Form_CurrAcc_Message_CurrAccCodeChangeError {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_CurrAccCodeChangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An account with this code already exists!.
+        /// </summary>
+        public static string Form_CurrAcc_Message_CurrAccCodeExists {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_CurrAccCodeExists", resourceCulture);
             }
         }
         
@@ -11449,6 +11503,33 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change product code.
+        /// </summary>
+        public static string Form_Product_Button_ChangeProductCode {
+            get {
+                return ResourceManager.GetString("Form_Product_Button_ChangeProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the new product code..
+        /// </summary>
+        public static string Form_Product_Input_NewProductCode {
+            get {
+                return ResourceManager.GetString("Form_Product_Input_NewProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change product code from {0} to {1}?.
+        /// </summary>
+        public static string Form_Product_Message_ChangeProductCodeConfirm {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_ChangeProductCodeConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error deleting file: {0}.
         /// </summary>
         public static string Form_Product_Message_DeleteFileError {
@@ -11481,6 +11562,24 @@ namespace Foxoft.Properties {
         public static string Form_Product_Message_NoImageInClipboard {
             get {
                 return ResourceManager.GetString("Form_Product_Message_NoImageInClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product code changed successfully..
+        /// </summary>
+        public static string Form_Product_Message_ProductCodeChanged {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_ProductCodeChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error changing product code: {0}.
+        /// </summary>
+        public static string Form_Product_Message_ProductCodeChangeError {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_ProductCodeChangeError", resourceCulture);
             }
         }
         
