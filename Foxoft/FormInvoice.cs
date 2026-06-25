@@ -1,4 +1,4 @@
-﻿
+
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -4631,16 +4631,48 @@ namespace Foxoft
                 timeout: TimeSpan.FromMinutes(10),
                 reason: "Open related invoice");
 
-            if (!res.Acquired)
+            bool lockAcquired = res.Acquired;
+
+            if (!lockAcquired)
             {
-                XtraMessageBox.Show(
-                    string.Format(Resources.Form_Invoice_LockedQuestion,
-                        res.LockedByName, res.MachineName, res.LockedAtUtc, res.LastHeartbeatAtUtc),
-                    Resources.Form_Invoice_LockedCaption,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-                return;
+                bool canTakeover = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DocumentLockTakeover");
+
+                if (canTakeover)
+                {
+                    var answer = XtraMessageBox.Show(
+                        string.Format(Resources.Form_Invoice_LockTakeoverQuestion, res.LockedByName),
+                        Resources.Form_Invoice_LockTakeoverCaption,
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (answer == DialogResult.Yes)
+                    {
+                        var takeoverRes = lockSvc.ForceTakeoverLock(
+                            documentType: "Invoice",
+                            documentId: invoiceHeaderId,
+                            newUserId: Authorization.CurrAccCode,
+                            machineName: Environment.MachineName,
+                            appInstanceId: _appInstanceId,
+                            formInstanceId: formInstanceId,
+                            clientProcessId: _pid,
+                            reason: "Force takeover by authorized user");
+
+                        lockAcquired = takeoverRes.Acquired;
+                    }
+                }
+                else
+                {
+                    XtraMessageBox.Show(
+                        string.Format(Resources.Form_Invoice_LockedQuestion,
+                            res.LockedByName, res.MachineName, res.LockedAtUtc, res.LastHeartbeatAtUtc),
+                        Resources.Form_Invoice_LockedCaption,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                }
             }
+
+            if (!lockAcquired)
+                return;
 
             FormInvoice frm = new(relatedHeader.ProcessCode, null, bytes, null, invoiceHeaderId);
             frm._formInstanceId = formInstanceId;
