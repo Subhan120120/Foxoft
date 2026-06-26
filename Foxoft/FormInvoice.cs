@@ -82,6 +82,7 @@ namespace Foxoft
         public bool isNew = false;
         private bool _isSaved = false;
         private bool _isLoading = false;
+        private bool _pendingPaymentCurrAccUpdate = false;
         private bool IsCampaignEnabled
             => Settings.Default.AppSetting != null
             && Settings.Default.AppSetting.UseCampaign;
@@ -1783,6 +1784,12 @@ namespace Foxoft
 
             dbContext.ChangeTracker.AcceptAllChanges();
 
+            if (_pendingPaymentCurrAccUpdate)
+            {
+                efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
+                _pendingPaymentCurrAccUpdate = false;
+            }
+
             if (new[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
             {
                 _paymentService.RebuildPaymentsFromInvoice(trInvoiceHeader, trInvoiceHeader.CashRegisterCode);
@@ -2442,8 +2449,7 @@ namespace Foxoft
                 efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode,
                     trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime)), 2);
 
-            if (Settings.Default.AppSetting.AutoSave)
-                efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr.CurrAccCode);
+            _pendingPaymentCurrAccUpdate = true;
 
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
             lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
