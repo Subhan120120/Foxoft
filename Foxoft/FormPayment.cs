@@ -645,6 +645,7 @@ namespace Foxoft
                 InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
                 OperationDate = DateTime.Now,
                 IsMainTF = true,
+                TerminalId = Settings.Default.TerminalId,
             };
             efMethods.InsertEntity(redirectedHeader);
 
