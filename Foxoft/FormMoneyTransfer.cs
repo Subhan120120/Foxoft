@@ -101,6 +101,7 @@ namespace Foxoft
             paymentHeader.StoreCode = Authorization.StoreCode;
             paymentHeader.CreatedUserName = Authorization.CurrAccCode;
             paymentHeader.IsMainTF = true;
+            paymentHeader.TerminalId = Settings.Default.TerminalId;
 
             e.NewObject = paymentHeader;
         }
