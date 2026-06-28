@@ -1503,6 +1503,16 @@ namespace Foxoft
                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
+        public DcCurrAcc SelectCurrAcc(string currAccCode, bool? isDisabled)
+        {
+            using subContext db = new();
+
+            return db.DcCurrAccs
+                .Where(x => x.CurrAccCode == currAccCode)
+                .Where(x => isDisabled == null || x.IsDisabled == isDisabled.Value)
+                .FirstOrDefault();
+        }
+
         public DcCurrAcc SelectCurrAccIsDisabled(string currAccCode)
         {
             using subContext db = new();

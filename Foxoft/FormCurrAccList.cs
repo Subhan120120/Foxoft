@@ -146,7 +146,7 @@ namespace Foxoft
                     if (currAccTypeArr.Contains((byte)4))
                         dcCurrAcc = efMethods.SelectStore(currAccCode.ToString());
                     else
-                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString(), isDisabled);
             }
             else
                 dcCurrAcc = null;
@@ -247,7 +247,7 @@ namespace Foxoft
                     if (currAccTypeArr.Contains((byte)4))
                         dcCurrAcc = efMethods.SelectStore(currAccCode.ToString());
                     else
-                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString(), isDisabled);
             }
             else
                 dcCurrAcc = null;
@@ -300,7 +300,7 @@ namespace Foxoft
                     if (currAccTypeArr.Contains((byte)4))
                         dcCurrAcc = efMethods.SelectStore(currAccCode.ToString());
                     else
-                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString(), isDisabled);
             }
             else
                 dcCurrAcc = null;
@@ -345,7 +345,7 @@ namespace Foxoft
                     if (currAccTypeArr.Contains((byte)4))
                         dcCurrAcc = efMethods.SelectStore(currAccCode.ToString());
                     else
-                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
+                        dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString(), isDisabled);
             }
             else
                 dcCurrAcc = null;
