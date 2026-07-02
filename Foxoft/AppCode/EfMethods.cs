@@ -1967,6 +1967,13 @@ namespace Foxoft
             const byte phoneContactTypeId = 1;
 
             using subContext db = new();
+
+            string? defaultPhoneNum = db.DcCurrAccs
+                .Where(x => x.IsDisabled == false)
+                .Where(x => x.CurrAccCode == currAccCode)
+                .Select(x => x.PhoneNum)
+                .FirstOrDefault();
+
             List<string?> numbers = db.DcCurrAccContactDetails
                 .Where(x => x.CurrAccCode == currAccCode
                             && x.ContactTypeId == phoneContactTypeId
@@ -1976,17 +1983,8 @@ namespace Foxoft
                 .Select(x => x.ContactDesc)
                 .ToList();
 
-            if (numbers.Count == 0)
-            {
-                string? defaultPhoneNum = db.DcCurrAccs
-                    .Where(x => x.IsDisabled == false)
-                    .Where(x => x.CurrAccCode == currAccCode)
-                    .Select(x => x.PhoneNum)
-                    .FirstOrDefault();
-
-                if (!string.IsNullOrWhiteSpace(defaultPhoneNum))
-                    numbers.Add(defaultPhoneNum);
-            }
+            if (!string.IsNullOrWhiteSpace(defaultPhoneNum))
+                numbers.Insert(0, defaultPhoneNum);
 
             // Collect WhatsApp group JIDs from phone contacts
             List<string?> groupJids = db.DcCurrAccContactDetails
