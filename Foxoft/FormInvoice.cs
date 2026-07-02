@@ -3116,7 +3116,8 @@ namespace Foxoft
 
             trInvoiceHeader.StoreCode = storeCode;
 
-            ApplyExpenseDefaultCashRegisterByStore(storeCode);
+            if (!_isLoading)
+                ApplyExpenseDefaultCashRegisterByStore(storeCode);
 
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
             lUE_WarehouseCode.Properties.DataSource = dcWarehouses;
@@ -3773,6 +3774,7 @@ namespace Foxoft
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode)
                     && dbContext != null
+                    && !_isLoading
                     && dataLayoutControl1.IsValid(out _)
                     && gV_InvoiceLine.DataRowCount > 0)
             {
