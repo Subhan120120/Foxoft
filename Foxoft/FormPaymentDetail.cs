@@ -205,6 +205,7 @@ namespace Foxoft
             dbContext = new subContext();
 
             dbContext.TrPaymentHeaders.Include(x => x.DcCurrAcc)
+                                      .Include(x => x.DcProcess)
                                       .Where(x => x.PaymentHeaderId == paymentHeaderId)
                                       .Load();
 

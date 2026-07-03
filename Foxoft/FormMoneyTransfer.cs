@@ -236,6 +236,7 @@ namespace Foxoft
             dbContext.TrPaymentHeaders
                                       .Include(x => x.DcCurrAcc)
                                       .Include(x => x.ToCashReg)
+                                      .Include(x => x.DcProcess)
                                       .Where(x => x.PaymentHeaderId == paymentHeaderId)
                                       .Load();
 
