@@ -1,6 +1,7 @@
 ﻿using DevExpress.Data.Filtering.Helpers;
 using DevExpress.DataAccess.Excel;
 using DevExpress.LookAndFeel;
+using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraEditors;
@@ -11,6 +12,7 @@ using DevExpress.XtraGrid.FilterEditor;
 using DevExpress.XtraGrid.Registrator;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -27,10 +29,28 @@ namespace Foxoft
         {
         }
 
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            DisableHeaderClickSorting();
+        }
+
         protected override void RegisterAvailableViewsCore(InfoCollection collection)
         {
             base.RegisterAvailableViewsCore(collection);
             collection.Add(new MyGridViewInfoRegistrator());
+        }
+
+        private void DisableHeaderClickSorting()
+        {
+            if (MainView is GridView mainView)
+                MyGridView.DisableHeaderClickSorting(mainView);
+
+            foreach (BaseView view in ViewCollection)
+            {
+                if (view is GridView gridView)
+                    MyGridView.DisableHeaderClickSorting(gridView);
+            }
         }
     }
 
@@ -40,6 +60,7 @@ namespace Foxoft
         public MyGridView(IWin32Window parentForm) : base()
         {
             parentForm = parentForm;
+            DisableHeaderClickSorting(this);
             this.FilterEditorCreated += new FilterControlEventHandler(gV_ProductList_FilterEditorCreated);
         }
 
@@ -58,10 +79,29 @@ namespace Foxoft
             e.InitFilterRepositoryItems(parentForm);
         }
 
-        public MyGridView(GridControl grid) : base(grid) { }
+        public MyGridView(GridControl grid) : base(grid)
+        {
+            DisableHeaderClickSorting(this);
+        }
 
         internal const string MyGridViewName = "MyGridView";
         protected override string ViewName { get { return MyGridViewName; } }
+
+        internal static void DisableHeaderClickSorting(GridView view)
+        {
+            view.MouseDown -= MyGridView_MouseDown;
+            view.MouseDown += MyGridView_MouseDown;
+        }
+
+        private static void MyGridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (sender is not GridView view || e.Button != MouseButtons.Left)
+                return;
+
+            GridHitInfo hitInfo = view.CalcHitInfo(e.Location);
+            if (hitInfo.HitTest == GridHitTest.Column)
+                DXMouseEventArgs.GetMouseArgs(e).Handled = true;
+        }
 
         protected override Form CreateFilterBuilderDialog(FilterColumnCollection filterColumns, FilterColumn defaultFilterColumn)
         {
