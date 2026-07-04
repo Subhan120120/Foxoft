@@ -1,4 +1,4 @@
-﻿using Foxoft.Models.ViewModel;
+using Foxoft.Models.ViewModel;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -44,9 +44,9 @@ namespace Foxoft
             checkEdit_ResetUncountedProductBalance = new DevExpress.XtraEditors.CheckEdit();
             completionWizardPage1 = new DevExpress.XtraWizard.CompletionWizardPage();
             wizardPage2 = new DevExpress.XtraWizard.WizardPage();
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridControl1 = new MyGridControl();
             trInvoiceLineBindingSource = new BindingSource(components);
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridView1 = new MyGridView();
             colInvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colRelatedLineId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -369,8 +369,8 @@ namespace Foxoft
         private DevExpress.XtraWizard.CompletionWizardPage completionWizardPage1;
         private DevExpress.XtraEditors.CheckEdit checkEdit_ResetUncountedProductBalance;
         private DevExpress.XtraWizard.WizardPage wizardPage2;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private MyGridControl gridControl1;
+        private MyGridView gridView1;
         private BindingSource trInvoiceLineBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceLineId;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;

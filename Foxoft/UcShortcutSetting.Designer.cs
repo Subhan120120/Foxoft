@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridControl1 = new MyGridControl();
+            this.gridView1 = new MyGridView();
             this.colFormName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colButtonDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colShortcutKeys = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -139,8 +139,8 @@
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private MyGridControl gridControl1;
+        private MyGridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn colFormName;
         private DevExpress.XtraGrid.Columns.GridColumn colButtonDescription;
         private DevExpress.XtraGrid.Columns.GridColumn colShortcutKeys;

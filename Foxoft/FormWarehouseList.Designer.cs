@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
 
@@ -34,9 +34,9 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWarehouseList));
-            gC_WarehouseList = new DevExpress.XtraGrid.GridControl();
+            gC_WarehouseList = new MyGridControl();
             dcWarehousesBindingSource = new BindingSource(components);
-            gV_WarehouseList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_WarehouseList = new MyGridView();
             colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -262,8 +262,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_WarehouseList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_WarehouseList;
+        private MyGridControl gC_WarehouseList;
+        private MyGridView gV_WarehouseList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;

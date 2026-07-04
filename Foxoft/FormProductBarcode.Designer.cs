@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -45,7 +45,7 @@ namespace Foxoft
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
             GC_ProductBarcode = new MyGridControl();
             bindingSourceProductBarcode = new BindingSource(components);
-            gV_ProductBarcode = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_ProductBarcode = new MyGridView();
             colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
             RepoBtnEdit_BarcodeGenerate = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             colBarcodeTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -294,7 +294,7 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_ProductBarcode;
+        private MyGridView gV_ProductBarcode;
         private System.Windows.Forms.BindingSource bindingSourceProductBarcode;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcodeTypeCode;

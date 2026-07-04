@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using Foxoft.Properties; // Resources üçün
 using System.Data;
 
@@ -42,9 +42,9 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCurrAccList));
-            gC_CurrAccList = new DevExpress.XtraGrid.GridControl();
+            gC_CurrAccList = new MyGridControl();
             dcCurrAccsBindingSource = new BindingSource(components);
-            gV_CurrAccList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_CurrAccList = new MyGridView();
             colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -445,8 +445,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_CurrAccList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_CurrAccList;
+        private MyGridControl gC_CurrAccList;
+        private MyGridView gV_CurrAccList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;

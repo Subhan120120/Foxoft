@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
@@ -92,9 +92,9 @@ namespace Foxoft
             layoutControlItem5 = new LayoutControlItem();
             ucNumberPad1 = new UCNumberPad();
             txtEdit_Barcode = new TextEdit();
-            gC_InvoiceLine = new GridControl();
+            gC_InvoiceLine = new MyGridControl();
             trInvoiceLinesBindingSource = new BindingSource(components);
-            gV_InvoiceLine = new GridView();
+            gV_InvoiceLine = new MyGridView();
             colInvoiceHeaderId = new GridColumn();
             colInvoiceLineId = new GridColumn();
             colProductCode = new GridColumn();
@@ -1693,8 +1693,8 @@ namespace Foxoft
         private LayoutControlGroup lCG_Root;
         public SimpleButton btn_Enter;
         private TextEdit txtEdit_Barcode;
-        private GridControl gC_InvoiceLine;
-        private GridView gV_InvoiceLine;
+        private MyGridControl gC_InvoiceLine;
+        private MyGridView gV_InvoiceLine;
         private GridColumn col_Qty;
         private GridColumn col_Price;
         private GridColumn col_NetAmount;

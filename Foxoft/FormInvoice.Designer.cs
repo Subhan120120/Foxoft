@@ -1,4 +1,4 @@
-﻿
+
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Columns;
@@ -115,9 +115,9 @@ namespace Foxoft
             repoTxtEdit_TwilioToken = new RepositoryItemTextEdit();
             repo = new RepositoryItemCheckedComboBoxEdit();
             repoCBE_PrinterName = new RepositoryItemComboBox();
-            gC_InstallmentGarantor = new DevExpress.XtraGrid.GridControl();
+            gC_InstallmentGarantor = new MyGridControl();
             trInstallmentGuarantorsBindingSource = new BindingSource(components);
-            gV_InstallmentGarantor = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_InstallmentGarantor = new MyGridView();
             colInstallmentGarantorId = new GridColumn();
             ColCurrAccCode = new GridColumn();
             CurrAccDesc = new GridColumn();
@@ -152,8 +152,8 @@ namespace Foxoft
             lUE_WarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
             lUE_ToWarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
             txtEdit_PrintCount = new DevExpress.XtraEditors.TextEdit();
-            gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
-            gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gC_InvoiceLine = new MyGridControl();
+            gV_InvoiceLine = new MyGridView();
             col_InvoiceLineId = new GridColumn();
             col_InvoiceHeaderId = new GridColumn();
             col_ProductCode = new GridColumn();
@@ -2375,8 +2375,8 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForStoreCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForWarehouseCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCustomsDocumentNumber;
-        private DevExpress.XtraGrid.GridControl gC_InvoiceLine;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceLine;
+        private MyGridControl gC_InvoiceLine;
+        private MyGridView gV_InvoiceLine;
         private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceLineId;
         private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductCode;
@@ -2520,8 +2520,8 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlGroup LCG_Installment;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InstallmentDate;
         private DevExpress.XtraEditors.DateEdit DateEdit_InstallmentDate;
-        private DevExpress.XtraGrid.GridControl gC_InstallmentGarantor;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_InstallmentGarantor;
+        private MyGridControl gC_InstallmentGarantor;
+        private MyGridView gV_InstallmentGarantor;
         private DevExpress.XtraLayout.LayoutControlItem LCI_InstallmentGarantors;
         private GridColumn colInstallmentGarantorId;
         private GridColumn ColCurrAccCode;

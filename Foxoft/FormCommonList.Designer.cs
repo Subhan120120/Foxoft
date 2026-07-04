@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils.Svg;
+using DevExpress.Utils.Svg;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -44,9 +44,9 @@ namespace Foxoft
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridControl1 = new MyGridControl();
             bindingSource1 = new BindingSource(components);
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridView1 = new MyGridView();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
@@ -197,8 +197,8 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private MyGridControl gridControl1;
+        private MyGridView gridView1;
         private System.Windows.Forms.BindingSource bindingSource1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;

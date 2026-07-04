@@ -1,4 +1,4 @@
-﻿using Foxoft.Models.Entity.RoleClaim;
+using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Properties; // Resources
 
 namespace Foxoft
@@ -46,9 +46,9 @@ namespace Foxoft
             btn_Save = new Button();
             txtEdit_ConfirmPassword = new DevExpress.XtraEditors.TextEdit();
             txtEdit_NewPassword = new DevExpress.XtraEditors.TextEdit();
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridControl1 = new MyGridControl();
             bindingSource1 = new BindingSource(components);
-            gV_CurrAccRole = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_CurrAccRole = new MyGridView();
             colCurrAccRoleId = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_CurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -595,8 +595,8 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControl layoutControl1;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_CurrAccRole;
+        private MyGridControl gridControl1;
+        private MyGridView gV_CurrAccRole;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private BindingSource bindingSource1;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccRoleId;

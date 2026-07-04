@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -32,9 +32,9 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPaymentHeaderList));
-            gC_PaymentHeaderList = new DevExpress.XtraGrid.GridControl();
+            gC_PaymentHeaderList = new MyGridControl();
             trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(components);
-            gV_PaymentHeaderList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_PaymentHeaderList = new MyGridView();
             colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             repoHLE_DocNum = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
@@ -340,9 +340,9 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_PaymentHeaderList;
+        private MyGridControl gC_PaymentHeaderList;
         private System.Windows.Forms.BindingSource trPaymentHeadersBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentHeaderList;
+        private MyGridView gV_PaymentHeaderList;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn colOperationDate;
         private DevExpress.XtraGrid.Columns.GridColumn colOperationTime;

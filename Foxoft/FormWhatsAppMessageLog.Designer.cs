@@ -23,9 +23,9 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new Container();
-            gC_WhatsAppMessageLogList = new DevExpress.XtraGrid.GridControl();
+            gC_WhatsAppMessageLogList = new MyGridControl();
             trWhatsAppMessageLogBindingSource = new BindingSource(components);
-            gV_WhatsAppMessageLogList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_WhatsAppMessageLogList = new MyGridView();
             colWhatsAppMessageLogId = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -636,9 +636,9 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_WhatsAppMessageLogList;
+        private MyGridControl gC_WhatsAppMessageLogList;
         private BindingSource trWhatsAppMessageLogBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_WhatsAppMessageLogList;
+        private MyGridView gV_WhatsAppMessageLogList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
         private DevExpress.XtraBars.BarButtonItem bBI_Refresh;

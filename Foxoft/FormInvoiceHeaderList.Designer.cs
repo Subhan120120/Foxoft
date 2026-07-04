@@ -33,9 +33,9 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            gC_InvoiceHeaderList = new DevExpress.XtraGrid.GridControl();
+            gC_InvoiceHeaderList = new MyGridControl();
             trInvoiceHeadersBindingSource = new BindingSource(components);
-            gV_InvoiceHeaderList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_InvoiceHeaderList = new MyGridView();
             colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colIsReturn = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -247,8 +247,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_InvoiceHeaderList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceHeaderList;
+        private MyGridControl gC_InvoiceHeaderList;
+        private MyGridView gV_InvoiceHeaderList;
         private System.Windows.Forms.BindingSource trInvoiceHeadersBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colOperationDate;

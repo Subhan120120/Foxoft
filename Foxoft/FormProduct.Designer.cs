@@ -116,8 +116,8 @@ namespace Foxoft
             layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForUseInternet = new DevExpress.XtraLayout.LayoutControlItem();
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
-            gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridControl1 = new MyGridControl();
+            gridView2 = new MyGridView();
             layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             popupMenu_Gallery = new DevExpress.XtraBars.PopupMenu(components);
             svgImageCollection1 = new SvgImageCollection(components);
@@ -1132,8 +1132,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.SimpleButton btn_Cancel;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+        private MyGridControl gridControl1;
+        private MyGridView gridView2;
         private DevExpress.XtraEditors.LookUpEdit LUE_ProductTypeCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductTypeCode;
         private DevExpress.XtraEditors.ButtonEdit ProductCodeTextEdit;

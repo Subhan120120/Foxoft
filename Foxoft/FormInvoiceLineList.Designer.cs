@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -38,9 +38,9 @@ namespace Foxoft
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-            gC_InvoiceLineList = new DevExpress.XtraGrid.GridControl();
+            gC_InvoiceLineList = new MyGridControl();
             trInvoiceHeadersBindingSource = new BindingSource(components);
-            gV_InvoiceLineList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_InvoiceLineList = new MyGridView();
             colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colIsReturn = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -284,8 +284,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_InvoiceLineList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceLineList;
+        private MyGridControl gC_InvoiceLineList;
+        private MyGridView gV_InvoiceLineList;
         private System.Windows.Forms.BindingSource trInvoiceHeadersBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colOperationDate;

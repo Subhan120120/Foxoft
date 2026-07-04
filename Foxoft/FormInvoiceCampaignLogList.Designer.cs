@@ -15,9 +15,9 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            gC_Log = new DevExpress.XtraGrid.GridControl();
+            gC_Log = new MyGridControl();
             invoiceCampaignLogRowsBindingSource = new BindingSource(components);
-            gV_Log = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_Log = new MyGridView();
             colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colCampaignCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colCampaignDesc = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -104,9 +104,9 @@ namespace Foxoft
             PerformLayout();
         }
 
-        private DevExpress.XtraGrid.GridControl gC_Log;
+        private MyGridControl gC_Log;
         private BindingSource invoiceCampaignLogRowsBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_Log;
+        private MyGridView gV_Log;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colCampaignCode;
         private DevExpress.XtraGrid.Columns.GridColumn colCampaignDesc;

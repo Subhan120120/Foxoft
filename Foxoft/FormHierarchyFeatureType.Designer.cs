@@ -1,4 +1,4 @@
-﻿namespace Foxoft
+namespace Foxoft
 {
     partial class FormHierarchyFeatureType
     {
@@ -40,7 +40,7 @@
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             myGridControl1 = new MyGridControl();
             bindingSource1 = new System.Windows.Forms.BindingSource(components);
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridView1 = new MyGridView();
             colFeatureTypeId = new DevExpress.XtraGrid.Columns.GridColumn();
             colFeatureTypeName = new DevExpress.XtraGrid.Columns.GridColumn();
             colHierarchyCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -275,7 +275,7 @@
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraLayout.LayoutControlItem LCI_Hierarchy;
         private MyGridControl myGridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private MyGridView gridView1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private BindingSource bindingSource1;
         private DevExpress.XtraBars.BarButtonItem BBI_Delete;

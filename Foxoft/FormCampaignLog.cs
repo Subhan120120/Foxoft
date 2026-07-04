@@ -12,8 +12,8 @@ namespace Foxoft
     /// </summary>
     public class FormCampaignLog : XtraForm
     {
-        private GridControl _grid;
-        private GridView _view;
+        private MyGridControl _grid;
+        private MyGridView _view;
         private LayoutControl _layout;
         private SimpleButton _btnClose;
 
@@ -33,8 +33,8 @@ namespace Foxoft
         private void BuildUI()
         {
             _layout = new LayoutControl { Dock = DockStyle.Fill };
-            _grid = new GridControl { Dock = DockStyle.Fill };
-            _view = new GridView
+            _grid = new MyGridControl { Dock = DockStyle.Fill };
+            _view = new MyGridView
             {
                 GridControl = _grid,
                 Name = "gridView1"

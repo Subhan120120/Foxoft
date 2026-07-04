@@ -33,9 +33,9 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            gC_FormReportList = new DevExpress.XtraGrid.GridControl();
+            gC_FormReportList = new MyGridControl();
             trFormReportsBindingSource = new BindingSource(components);
-            gV_FormReportList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_FormReportList = new MyGridView();
             colFormCode = new DevExpress.XtraGrid.Columns.GridColumn();
             repoLUE_FormCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             colReportId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -275,8 +275,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_FormReportList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_FormReportList;
+        private MyGridControl gC_FormReportList;
+        private MyGridView gV_FormReportList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;

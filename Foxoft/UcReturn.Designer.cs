@@ -1,4 +1,4 @@
-﻿using Foxoft.Models.ViewModel;
+using Foxoft.Models.ViewModel;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -38,8 +38,8 @@ namespace Foxoft
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             lC_Root = new DevExpress.XtraLayout.LayoutControl();
-            gC_ReturnInvoiceLine = new DevExpress.XtraGrid.GridControl();
-            gV_ReturnInvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gC_ReturnInvoiceLine = new MyGridControl();
+            gV_ReturnInvoiceLine = new MyGridView();
             col_RInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RRelatedLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -52,13 +52,13 @@ namespace Foxoft
             col_RCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RSalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
-            gC_PaymentLine = new DevExpress.XtraGrid.GridControl();
-            gV_PaymentLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gC_PaymentLine = new MyGridControl();
+            gV_PaymentLine = new MyGridView();
             col_PaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_PaymentTypeDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_Payment = new DevExpress.XtraGrid.Columns.GridColumn();
-            gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
-            gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gC_InvoiceLine = new MyGridControl();
+            gV_InvoiceLine = new MyGridView();
             col_InvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_Barcode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -752,11 +752,11 @@ namespace Foxoft
 
         private DevExpress.XtraLayout.LayoutControl lC_Root;
         private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;
-        private DevExpress.XtraGrid.GridControl gC_InvoiceLine;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceLine;
+        private MyGridControl gC_InvoiceLine;
+        private MyGridView gV_InvoiceLine;
         private DevExpress.XtraLayout.LayoutControlItem lCI_InvoiceLine;
-        private DevExpress.XtraGrid.GridControl gC_PaymentLine;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentLine;
+        private MyGridControl gC_PaymentLine;
+        private MyGridView gV_PaymentLine;
         private DevExpress.XtraLayout.LayoutControlGroup lCG_Payment;
         private DevExpress.XtraLayout.LayoutControlItem lCI_Payment;
         private DevExpress.XtraLayout.LayoutControlGroup lCG_InvoiceLine;
@@ -787,8 +787,8 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_Payment;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_InvoiceHeader;
         private DevExpress.XtraLayout.LayoutControlItem lCI_InvoiceHeader;
-        private DevExpress.XtraGrid.GridControl gC_ReturnInvoiceLine;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_ReturnInvoiceLine;
+        private MyGridControl gC_ReturnInvoiceLine;
+        private MyGridView gV_ReturnInvoiceLine;
         private DevExpress.XtraLayout.LayoutControlGroup lCG_ReturnInvoiceLine;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraGrid.Columns.GridColumn col_RInvoiceHeaderId;

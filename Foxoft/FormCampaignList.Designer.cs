@@ -18,9 +18,9 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            gC_CampaignList = new DevExpress.XtraGrid.GridControl();
+            gC_CampaignList = new MyGridControl();
             dcCampaignsBindingSource = new BindingSource(components);
-            gV_CampaignList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_CampaignList = new MyGridView();
             colCampaignId = new DevExpress.XtraGrid.Columns.GridColumn();
             colCampaignCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colCampaignDesc = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -126,9 +126,9 @@ namespace Foxoft
             PerformLayout();
         }
 
-        private DevExpress.XtraGrid.GridControl gC_CampaignList;
+        private MyGridControl gC_CampaignList;
         private BindingSource dcCampaignsBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_CampaignList;
+        private MyGridView gV_CampaignList;
         private DevExpress.XtraGrid.Columns.GridColumn colCampaignId;
         private DevExpress.XtraGrid.Columns.GridColumn colCampaignCode;
         private DevExpress.XtraGrid.Columns.GridColumn colCampaignDesc;

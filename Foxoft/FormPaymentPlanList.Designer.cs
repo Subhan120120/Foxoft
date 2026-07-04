@@ -32,9 +32,9 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            gC_PaymentPlanList = new DevExpress.XtraGrid.GridControl();
+            gC_PaymentPlanList = new MyGridControl();
             dcPaymentPlansBindingSource = new BindingSource(components);
-            gV_PaymentPlanList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_PaymentPlanList = new MyGridView();
             colPaymentPlanCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentPlanDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -226,8 +226,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_PaymentPlanList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentPlanList;
+        private MyGridControl gC_PaymentPlanList;
+        private MyGridView gV_PaymentPlanList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;

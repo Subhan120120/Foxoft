@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -33,9 +33,9 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCashRegisterList));
-            gC_CashRegList = new DevExpress.XtraGrid.GridControl();
+            gC_CashRegList = new MyGridControl();
             dcCurrAccsBindingSource = new BindingSource(components);
-            gV_CashRegList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_CashRegList = new MyGridView();
             colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -424,8 +424,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_CashRegList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_CashRegList;
+        private MyGridControl gC_CashRegList;
+        private MyGridView gV_CashRegList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;

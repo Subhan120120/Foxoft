@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -34,7 +34,7 @@ namespace Foxoft
             components = new System.ComponentModel.Container();
             myGridControl1 = new MyGridControl();
             trPriceListBindingSource = new System.Windows.Forms.BindingSource(components);
-            gV_priceListHeader = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_priceListHeader = new MyGridView();
             colPriceListHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -172,7 +172,7 @@ namespace Foxoft
         #endregion
 
         private MyGridControl myGridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_priceListHeader;
+        private MyGridView gV_priceListHeader;
         private System.Windows.Forms.BindingSource trPriceListBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
         private DevExpress.XtraGrid.Columns.GridColumn colPriceListHeaderId;

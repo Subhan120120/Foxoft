@@ -23,9 +23,9 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new Container();
-            gC_CreditList = new DevExpress.XtraGrid.GridControl();
+            gC_CreditList = new MyGridControl();
             creditBindingSource = new BindingSource(components);
-            gV_CreditList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_CreditList = new MyGridView();
             colTransactionType = new DevExpress.XtraGrid.Columns.GridColumn();
             colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
             colServiceType = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -232,9 +232,9 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_CreditList;
+        private MyGridControl gC_CreditList;
         private BindingSource creditBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_CreditList;
+        private MyGridView gV_CreditList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.BarButtonItem bBI_AddCredit;
         private DevExpress.XtraBars.BarButtonItem bBI_Refresh;

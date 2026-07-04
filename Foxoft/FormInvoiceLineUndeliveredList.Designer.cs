@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -31,9 +31,9 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            gC_InvoiceLineList = new DevExpress.XtraGrid.GridControl();
+            gC_InvoiceLineList = new MyGridControl();
             trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(components);
-            gV_InvoiceLineList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_InvoiceLineList = new MyGridView();
             colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colIsReturn = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -246,8 +246,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_InvoiceLineList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceLineList;
+        private MyGridControl gC_InvoiceLineList;
+        private MyGridView gV_InvoiceLineList;
         private System.Windows.Forms.BindingSource trInvoiceHeadersBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colOperationDate;

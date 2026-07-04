@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -32,9 +32,9 @@ namespace Foxoft
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPaymentLineList));
-            this.gC_PaymentLineList = new DevExpress.XtraGrid.GridControl();
+            this.gC_PaymentLineList = new MyGridControl();
             this.trPaymentLinesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gV_PaymentLineList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gV_PaymentLineList = new MyGridView();
             this.colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPaymentLineId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -407,9 +407,9 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_PaymentLineList;
+        private MyGridControl gC_PaymentLineList;
         private System.Windows.Forms.BindingSource trPaymentLinesBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentLineList;
+        private MyGridView gV_PaymentLineList;
         private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_InvoiceNumber;
         private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_DocNum;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;

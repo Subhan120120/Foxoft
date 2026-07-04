@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using Foxoft.Models;
 using Foxoft.Properties;
 
@@ -45,10 +45,10 @@ namespace Foxoft
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridControl1 = new MyGridControl();
             trBarcodeOperationLinesBindingSource = new BindingSource(components);
             trBarcodeOperationHeaderBindingSource = new BindingSource(components);
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridView1 = new MyGridView();
             colId = new DevExpress.XtraGrid.Columns.GridColumn();
             colBarcodeOperationHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -380,8 +380,8 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private MyGridControl gridControl1;
+        private MyGridView gridView1;
         private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private BindingSource trBarcodeOperationHeaderBindingSource;

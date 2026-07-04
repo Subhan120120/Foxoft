@@ -69,9 +69,9 @@ namespace Foxoft
             checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
             trPaymentHeadersBindingSource = new BindingSource(components);
             lbl_CurrAccDesc = new DevExpress.XtraEditors.LabelControl();
-            gC_PaymentLine = new DevExpress.XtraGrid.GridControl();
+            gC_PaymentLine = new MyGridControl();
             trPaymentLinesBindingSource = new BindingSource(components);
-            gV_PaymentLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_PaymentLine = new MyGridView();
             colPaymentLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -809,9 +809,9 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForDescription;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForOperationDate;
-        private DevExpress.XtraGrid.GridControl gC_PaymentLine;
+        private MyGridControl gC_PaymentLine;
         private System.Windows.Forms.BindingSource trPaymentLinesBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentLine;
+        private MyGridView gV_PaymentLine;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentLineId;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentTypeCode;

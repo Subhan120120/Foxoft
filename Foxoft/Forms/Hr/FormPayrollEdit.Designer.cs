@@ -21,8 +21,8 @@ namespace Foxoft
             this.btnEditEmployee = new DevExpress.XtraEditors.ButtonEdit();
             this.txtEmployeeName = new DevExpress.XtraEditors.TextEdit();
             this.lkpPeriod = new DevExpress.XtraEditors.LookUpEdit();
-            this.gridLines = new DevExpress.XtraGrid.GridControl();
-            this.viewLines = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridLines = new MyGridControl();
+            this.viewLines = new MyGridView();
             this.btnAddLine = new DevExpress.XtraEditors.SimpleButton();
             this.btnRemoveLine = new DevExpress.XtraEditors.SimpleButton();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
@@ -133,8 +133,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.ButtonEdit btnEditEmployee;
         private DevExpress.XtraEditors.TextEdit txtEmployeeName;
         private DevExpress.XtraEditors.LookUpEdit lkpPeriod;
-        private DevExpress.XtraGrid.GridControl gridLines;
-        private DevExpress.XtraGrid.Views.Grid.GridView viewLines;
+        private MyGridControl gridLines;
+        private MyGridView viewLines;
         private DevExpress.XtraEditors.SimpleButton btnAddLine;
         private DevExpress.XtraEditors.SimpleButton btnRemoveLine;
         private DevExpress.XtraEditors.SimpleButton btnSave;

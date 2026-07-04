@@ -82,8 +82,8 @@ namespace Foxoft
             {
                 TextEdit txtEdit = new();
                 MemoEdit memoEdit = new();
-                GridControl GC = new();
-                GridView GV = new();
+                MyGridControl GC = new();
+                MyGridView GV = new();
                 LayoutControlGroup LCG = new();
                 LayoutControl LC = new();
                 BindingSource subQueryBindingSource = new();
@@ -241,8 +241,8 @@ namespace Foxoft
 
             TextEdit txtEdit = new();
             MemoEdit memoEdit = new();
-            GridControl GC = new();
-            GridView GV = new();
+            MyGridControl GC = new();
+            MyGridView GV = new();
             LayoutControlGroup LCG = new();
             LayoutControl LC = new();
             LayoutControlItem LCI_TXTEDIT = new();

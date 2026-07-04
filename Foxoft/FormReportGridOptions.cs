@@ -7,9 +7,9 @@ namespace Foxoft
 {
     public partial class FormReportGridOptions : Form
     {
-        private GridView gridView;
+        private MyGridView gridView;
 
-        public FormReportGridOptions(GridView gridView)
+        public FormReportGridOptions(MyGridView gridView)
         {
             InitializeComponent();
             this.gridView = gridView;

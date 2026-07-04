@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
 
@@ -34,9 +34,9 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTerminalList));
-            gC_TerminalList = new DevExpress.XtraGrid.GridControl();
+            gC_TerminalList = new MyGridControl();
             dcTerminalsBindingSource = new BindingSource(components);
-            gV_TerminalList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_TerminalList = new MyGridView();
             colTerminalId = new DevExpress.XtraGrid.Columns.GridColumn();
             colTerminalDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             colCashRegisterCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -222,8 +222,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_TerminalList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_TerminalList;
+        private MyGridControl gC_TerminalList;
+        private MyGridView gV_TerminalList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;

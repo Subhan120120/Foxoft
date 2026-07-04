@@ -35,8 +35,8 @@ namespace Foxoft
             btnRefresh = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            grid = new DevExpress.XtraGrid.GridControl();
-            view = new DevExpress.XtraGrid.Views.Grid.GridView();
+            grid = new MyGridControl();
+            view = new MyGridView();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)view).BeginInit();
@@ -146,7 +146,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem btnDelete;
         private DevExpress.XtraBars.BarButtonItem btnRefresh;
 
-        private DevExpress.XtraGrid.GridControl grid;
-        private DevExpress.XtraGrid.Views.Grid.GridView view;
+        private MyGridControl grid;
+        private MyGridView view;
     }
 }

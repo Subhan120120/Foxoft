@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using DevExpress.Utils.Svg;
 using Foxoft.Models;
 using Foxoft.Models.Entity;
@@ -25,9 +25,9 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDocumentLockList));
-            gC_DocumentLockList = new DevExpress.XtraGrid.GridControl();
+            gC_DocumentLockList = new MyGridControl();
             documentLocksBindingSource = new BindingSource(components);
-            gV_DocumentLockList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_DocumentLockList = new MyGridView();
             colLockId = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentType = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -270,8 +270,8 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_DocumentLockList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_DocumentLockList;
+        private MyGridControl gC_DocumentLockList;
+        private MyGridView gV_DocumentLockList;
         private System.Windows.Forms.BindingSource documentLocksBindingSource;
 
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;

@@ -1,4 +1,4 @@
-﻿namespace Foxoft
+namespace Foxoft
 {
     partial class FormLoyaltyCards
     {
@@ -36,9 +36,9 @@
             BBI_Delete = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridControl1 = new MyGridControl();
             dcLoyaltyCardBindingSource = new BindingSource(components);
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridView1 = new MyGridView();
             colLoyaltyCardId = new DevExpress.XtraGrid.Columns.GridColumn();
             colCardNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -252,9 +252,9 @@
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-        private DevExpress.XtraGrid.GridControl gridControl1;
+        private MyGridControl gridControl1;
         private BindingSource dcLoyaltyCardBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private MyGridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn colLoyaltyCardId;
         private DevExpress.XtraGrid.Columns.GridColumn colCardNumber;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;

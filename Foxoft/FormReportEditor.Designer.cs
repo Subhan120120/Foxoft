@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 
@@ -46,9 +46,9 @@ namespace Foxoft
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             ReportIdTextEdit = new DevExpress.XtraEditors.TextEdit();
             ReportNameTextEdit = new DevExpress.XtraEditors.TextEdit();
-            GC_ReportVariables = new DevExpress.XtraGrid.GridControl();
+            GC_ReportVariables = new MyGridControl();
             dcReportVariableBindingSource = new BindingSource(components);
-            GV_ReportVariables = new GridView();
+            GV_ReportVariables = new MyGridView();
             colVariableId = new DevExpress.XtraGrid.Columns.GridColumn();
             colReportId = new DevExpress.XtraGrid.Columns.GridColumn();
             colVariableTypeId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -646,8 +646,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit ReportNameTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForReportId;
         private DevExpress.XtraLayout.LayoutControlItem ItemForReportName;
-        private DevExpress.XtraGrid.GridControl GC_ReportVariables;
-        private GridView GV_ReportVariables;
+        private MyGridControl GC_ReportVariables;
+        private MyGridView GV_ReportVariables;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDcReportVariables;
         private DevExpress.XtraLayout.LayoutControlItem ItemForReportTypeId;
         private DevExpress.XtraEditors.LookUpEdit ReportTypeIdLookUpEdit;

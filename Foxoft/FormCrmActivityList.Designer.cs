@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using DevExpress.Utils.Svg;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -24,9 +24,9 @@ namespace Foxoft
         {
             components = new Container();
             ComponentResourceManager resources = new ComponentResourceManager(typeof(FormCrmActivityList));
-            gC_CrmActivityList = new DevExpress.XtraGrid.GridControl();
+            gC_CrmActivityList = new MyGridControl();
             crmActivitiesBindingSource = new BindingSource(components);
-            gV_CrmActivityList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_CrmActivityList = new MyGridView();
             colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -383,9 +383,9 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_CrmActivityList;
+        private MyGridControl gC_CrmActivityList;
         private BindingSource crmActivitiesBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_CrmActivityList;
+        private MyGridView gV_CrmActivityList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.BarButtonItem bBI_CrmActivityNew;
         private DevExpress.XtraBars.BarButtonItem bBI_CrmActivityEdit;

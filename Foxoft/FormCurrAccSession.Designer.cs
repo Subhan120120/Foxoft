@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -39,7 +39,7 @@ namespace Foxoft
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             bindingSource1 = new BindingSource(components);
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridView1 = new MyGridView();
             colPID = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -193,7 +193,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private MyGridView gridView1;
         private DevExpress.XtraBars.BarButtonItem bBI_Update;
         private BindingSource bindingSource1;
         private DevExpress.XtraBars.BarButtonItem bBI_KickUser;

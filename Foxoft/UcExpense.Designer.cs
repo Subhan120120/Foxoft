@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Drawing;
@@ -31,9 +31,9 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-            gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
+            gC_InvoiceLine = new MyGridControl();
             trInvoiceLinesBindingSource = new BindingSource(components);
-            gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_InvoiceLine = new MyGridView();
             colInvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -490,8 +490,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.SimpleButton btn_Save;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private BindingSource trInvoiceLinesBindingSource;
-        private DevExpress.XtraGrid.GridControl gC_InvoiceLine;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceLine;
+        private MyGridControl gC_InvoiceLine;
+        private MyGridView gV_InvoiceLine;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceLineId;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCode;

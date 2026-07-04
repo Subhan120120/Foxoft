@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using DevExpress.Utils;
@@ -43,9 +43,9 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStoreList));
-            gC_StoreList = new GridControl();
+            gC_StoreList = new MyGridControl();
             dcCurrAccsBindingSource = new BindingSource(components);
-            gV_StoreList = new GridView();
+            gV_StoreList = new MyGridView();
             colCurrAccCode = new GridColumn();
             colCurrAccDesc = new GridColumn();
             colCurrAccTypeCode = new GridColumn();
@@ -413,8 +413,8 @@ namespace Foxoft
 
         #endregion
 
-        private GridControl gC_StoreList;
-        private GridView gV_StoreList;
+        private MyGridControl gC_StoreList;
+        private MyGridView gV_StoreList;
         private RibbonControl ribbonControl1;
         private RibbonPage ribbonPage1;
         private RibbonPageGroup ribbonPageGroup1;

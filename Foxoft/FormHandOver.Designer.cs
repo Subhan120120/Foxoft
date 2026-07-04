@@ -41,7 +41,7 @@ namespace Foxoft
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
-            gvDetail = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gvDetail = new MyGridView();
             col_InvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_HierarchyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -61,9 +61,9 @@ namespace Foxoft
             col_UnitOfMeasureId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_AddWaybill = new DevExpress.XtraGrid.Columns.GridColumn();
             repoBtn_AddWaybill = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            gC_Invoice = new DevExpress.XtraGrid.GridControl();
+            gC_Invoice = new MyGridControl();
             UndeliveredBindingSource = new BindingSource(components);
-            gvMaster = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gvMaster = new MyGridView();
             col_InvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_DocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             col_CurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -106,8 +106,8 @@ namespace Foxoft
             ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForCurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
-            gC_DeliveryInvoiceLine = new DevExpress.XtraGrid.GridControl();
-            gV_DeliveryInvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gC_DeliveryInvoiceLine = new MyGridControl();
+            gV_DeliveryInvoiceLine = new MyGridView();
             col_RInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RRelatedLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -1042,7 +1042,7 @@ namespace Foxoft
 
         private DevExpress.XtraLayout.LayoutControl lC_Root;
         private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;
-        private DevExpress.XtraGrid.GridControl gC_Invoice;
+        private MyGridControl gC_Invoice;
         private DevExpress.XtraLayout.LayoutControlItem lCI_InvoiceLine;
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductCode;
         private DevExpress.XtraGrid.Columns.GridColumn col_Qty;
@@ -1063,8 +1063,8 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem lCI_Cancel;
         private DevExpress.XtraLayout.LayoutControlItem lCI_Cash;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpace_1;
-        private DevExpress.XtraGrid.GridControl gC_DeliveryInvoiceLine;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_DeliveryInvoiceLine;
+        private MyGridControl gC_DeliveryInvoiceLine;
+        private MyGridView gV_DeliveryInvoiceLine;
         private DevExpress.XtraLayout.LayoutControlGroup lCG_ReturnInvoiceLine;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraGrid.Columns.GridColumn col_RInvoiceHeaderId;
@@ -1114,8 +1114,8 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private BarButtonItem BBI_GridLayoutSave;
         private DevExpress.XtraGrid.Columns.GridColumn col_WarehouseCode;
-        private DevExpress.XtraGrid.Views.Grid.GridView gvMaster;
-        private DevExpress.XtraGrid.Views.Grid.GridView gvDetail;
+        private MyGridView gvMaster;
+        private MyGridView gvDetail;
         private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceLineId;
         private DevExpress.XtraGrid.Columns.GridColumn col_AddWaybill;

@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -47,9 +47,9 @@ namespace Foxoft
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-            gC_PriceListLine = new DevExpress.XtraGrid.GridControl();
+            gC_PriceListLine = new MyGridControl();
             trPriceListLinesBindingSource = new System.Windows.Forms.BindingSource(components);
-            gV_PriceListLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_PriceListLine = new MyGridView();
             colPriceListLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             colPriceListHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -679,9 +679,9 @@ namespace Foxoft
         private System.Windows.Forms.BindingSource trPriceListHeadersBindingSource;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-        private DevExpress.XtraGrid.GridControl gC_PriceListLine;
+        private MyGridControl gC_PriceListLine;
         private System.Windows.Forms.BindingSource trPriceListLinesBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_PriceListLine;
+        private MyGridView gV_PriceListLine;
         private DevExpress.XtraGrid.Columns.GridColumn colPriceListLineId;
         private DevExpress.XtraGrid.Columns.GridColumn colPriceListHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn colLineDescription;

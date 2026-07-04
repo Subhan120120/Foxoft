@@ -39,8 +39,8 @@ namespace Foxoft
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridControl1 = new MyGridControl();
+            gridView1 = new MyGridView();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
@@ -160,7 +160,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_Delete;
         private DevExpress.XtraBars.BarButtonItem BBI_Refresh;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private MyGridControl gridControl1;
+        private MyGridView gridView1;
     }
 }

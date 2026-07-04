@@ -44,9 +44,9 @@ namespace Foxoft
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridControl1 = new MyGridControl();
             bindingSourceTrInstallmentSale = new BindingSource(components);
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridView1 = new MyGridView();
             repoBtnEdit_Payment = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             col_Buttons = new DevExpress.XtraGrid.Columns.GridColumn();
             colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -622,8 +622,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.SvgImageBox svgCardRemaining_ImageBox;
 
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private MyGridControl gridControl1;
+        private MyGridView gridView1;
         private System.Windows.Forms.BindingSource bindingSourceTrInstallmentSale;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_Payment;
         private DevExpress.XtraGrid.Columns.GridColumn col_Buttons;
