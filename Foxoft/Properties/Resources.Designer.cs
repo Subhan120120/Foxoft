@@ -9717,6 +9717,24 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to update the invoice header information from the Excel file?.
+        /// </summary>
+        public static string Form_Invoice_ApplyImportedHeaderQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_ApplyImportedHeaderQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Excel file process is &quot;{0}&quot;, but the current invoice process is &quot;{1}&quot;. Do you want to import it anyway?.
+        /// </summary>
+        public static string Form_Invoice_ImportDifferentProcessQuestion {
+            get {
+                return ResourceManager.GetString("Form_Invoice_ImportDifferentProcessQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are unsaved changes. Do you want to save?.
         /// </summary>
         public static string Form_Invoice_UnsavedChangesQuestion {

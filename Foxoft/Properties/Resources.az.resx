@@ -4413,6 +4413,12 @@ Tətbiq edilsin?</value>
   <data name="Form_Invoice_UnsavedChangesQuestion" xml:space="preserve">
     <value>Yadda saxlanmamış dəyişikliklər var. Yadda saxlamaq istəyirsiniz?</value>
   </data>
+  <data name="Form_Invoice_ApplyImportedHeaderQuestion" xml:space="preserve">
+    <value>Excel faylındakı məlumatlarla fakturanın başlıq məlumatları dəyişdirilsin?</value>
+  </data>
+  <data name="Form_Invoice_ImportDifferentProcessQuestion" xml:space="preserve">
+    <value>Excel faylının prosesi "{0}", cari fakturanın prosesi isə "{1}"-dir. Yenə də import edilsin?</value>
+  </data>
   <data name="Entity_AppSetting_TransferAutoApprove" xml:space="preserve">
     <value>Avtomatik Transfer Təsdiqi</value>
   </data>

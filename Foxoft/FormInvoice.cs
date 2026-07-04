@@ -1,4 +1,4 @@
-
+﻿
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -2905,155 +2905,291 @@ namespace Foxoft
 
         private void BBI_exportXLSX_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CustomExtensions.ExportToExcel(this, dcProcess.ProcessDesc, gC_InvoiceLine);
+            if (trInvoiceHeader is null)
+                return;
+
+            CommitInvoiceEditors();
+
+            using var sFD = new XtraSaveFileDialog
+            {
+                Filter = Resources.Common_File_ExcelFilter,
+                Title = Resources.Common_File_SaveExcel,
+                FileName = InvoiceExcelService.GetSafeFileName($"{dcProcess.ProcessDesc} {trInvoiceHeader.DocumentNumber}"),
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                DefaultExt = "*.xlsx",
+            };
+
+            if (sFD.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            try
+            {
+                CreateInvoiceExcelService().Export(sFD.FileName, CreateInvoiceExcelExportContext());
+
+                if (XtraMessageBox.Show(
+                        this,
+                        Resources.Form_ReportGrid_Message_OpenExportedFileQuestion,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Question) == DialogResult.OK)
+                {
+                    using var p = new Process
+                    {
+                        StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true }
+                    };
+                    p.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    $"{Resources.Common_ErrorOccurred}\n{ex.Message}",
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void BBI_ImportExcel_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string captionProductCode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ProductCode);
-            string captionBarcode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Barcode);
-            string captionQty = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Qty);
-            string captionLineDesc = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.LineDescription);
-            string captionPrice = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Price);
-            string captionCurrency = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
-            string captionExRate = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ExchangeRate);
-            string captionPosDiscount = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.PosDiscount);
-            string captionSerialNumber = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.SerialNumberCode);
-
-            OpenFileDialog dialog = new();
-            dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*";
-            dialog.Title = "Excel faylı seçin.";
-
-            if (dialog.ShowDialog() != DialogResult.OK)
+            if (trInvoiceHeader is null)
                 return;
 
-            SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
+            if (!EnsureInvoiceCanBeChanged())
+                return;
 
-            ExcelDataSource excelDataSource = new();
-            excelDataSource.FileName = dialog.FileName;
+            using OpenFileDialog dialog = new()
+            {
+                Filter = Resources.Form_ReportFilter_ExcelDialogFilter,
+                Title = Resources.Form_PriceListDetail_OpenFileDialog_Title,
+            };
 
-            ExcelWorksheetSettings excelWorksheetSettings = new(0);
+            if (dialog.ShowDialog(this) != DialogResult.OK)
+                return;
 
-            ExcelSourceOptions excelOptions = new();
-            excelOptions.ImportSettings = excelWorksheetSettings;
-            excelOptions.SkipHiddenRows = false;
-            excelOptions.SkipHiddenColumns = false;
-            excelOptions.UseFirstRowAsHeader = true;
-            excelDataSource.SourceOptions = excelOptions;
+            CommitInvoiceEditors();
 
-            excelDataSource.Fill();
+            try
+            {
+                ImportInvoiceWorkbookAppendOnly(dialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    $"{Resources.Common_ErrorOccurred}\n{ex.Message}",
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
 
+        private void CommitInvoiceEditors()
+        {
+            dataLayoutControl1.Validate();
+            gV_InvoiceLine.CloseEditor();
+            gV_InvoiceLine.UpdateCurrentRow();
+            trInvoiceHeadersBindingSource.EndEdit();
+            trInvoiceLinesBindingSource.EndEdit();
+        }
+
+        private InvoiceExcelService CreateInvoiceExcelService()
+            => new(dbContext, efMethods);
+
+        private InvoiceExcelService.InvoiceExcelExportContext CreateInvoiceExcelExportContext()
+            => new()
+            {
+                InvoiceHeader = trInvoiceHeader,
+                Process = dcProcess,
+                InvoiceLines = GetInvoiceLinesForExcel(),
+                InstallmentGuarantors = GetInstallmentGuarantorsForExcel(),
+                EnsureInstallment = EnsureInstallment,
+            };
+
+        private InvoiceExcelService.InvoiceExcelImportContext CreateInvoiceExcelImportContext()
+            => new()
+            {
+                InvoiceHeader = trInvoiceHeader,
+                Process = dcProcess,
+                ProductTypeArr = productTypeArr,
+                EnsureInstallment = EnsureInstallment,
+                GetInstallmentGuarantors = GetInstallmentGuarantorsForExcelImport,
+                GetInstallmentGuarantorContext = GetInstallmentGuarantorContextForExcelImport,
+            };
+
+        private void ImportInvoiceWorkbookAppendOnly(string fileName)
+        {
+            InvoiceExcelService service = CreateInvoiceExcelService();
+            InvoiceExcelService.InvoiceExcelImportContext context = CreateInvoiceExcelImportContext();
+            InvoiceExcelService.InvoiceExcelImportPlan plan = service.ReadImportPlan(fileName, context);
+
+            if (plan.HasErrors)
+            {
+                ShowExcelImportErrors(plan.Errors);
+                return;
+            }
+
+            if (plan.HasDifferentProcess(dcProcess.ProcessCode)
+                && !ConfirmImportDifferentProcess(plan.ImportedProcessCode))
+            {
+                return;
+            }
+
+            bool applyHeader = ConfirmApplyImportedHeader();
+            if (applyHeader)
+            {
+                List<string> headerErrors = service.ValidateHeaderValues(plan, context);
+                if (headerErrors.Any())
+                {
+                    ShowExcelImportErrors(headerErrors);
+                    return;
+                }
+            }
+
+            string previousCurrAccCode = trInvoiceHeader.CurrAccCode;
+            bool oldLoading = _isLoading;
+            bool hasApplyErrors = false;
+            _isLoading = true;
             gV_InvoiceLine.GridControl.BeginUpdate();
             gV_InvoiceLine.BeginUpdate();
 
-            DataTable dt = ToDataTableFromExcelDataSource(excelDataSource);
-
-            static string Cell(DataRow r, string colName)
-                => (r.Table.Columns.Contains(colName) ? r[colName] : null)?.ToString()?.Trim() ?? "";
-
-            string errorCodes = "";
-            double rowCount = 0;
-
-            foreach (DataRow row in dt.Rows)
+            try
             {
-                int i = Convert.ToInt32(rowCount / dt.Rows.Count * 100);
-                SplashScreenManager.Default.SendCommand(WaitForm.WaitFormCommand.SetProgress, i);
-                SplashScreenManager.Default.SetWaitFormDescription(i + "%");
-                rowCount++;
+                service.ApplyImportPlan(plan, context, applyHeader);
+                hasApplyErrors = plan.HasErrors;
 
-                string productCode = Cell(row, captionProductCode);
-                string barcode = Cell(row, captionBarcode);
-
-                if (string.IsNullOrEmpty(productCode) && string.IsNullOrEmpty(barcode))
-                    continue;
-
-                DcProduct product = null;
-
-                if (!string.IsNullOrEmpty(productCode))
-                    product = efMethods.SelectProduct(productCode, productTypeArr);
-
-                // ProductCode yoxdursa Barcode ilə axtar
-                if (product is null && !string.IsNullOrEmpty(barcode))
-                    product = efMethods.SelectProductByBarcode(barcode);
-
-                if (product is null)
+                if (!hasApplyErrors)
                 {
-                    // Hansı dəyərə görə tapılmadığını yaz
-                    if (!string.IsNullOrEmpty(productCode))
-                        errorCodes += $"{captionProductCode}: {productCode}\n";
-                    else
-                        errorCodes += $"{captionBarcode}: {barcode}\n";
+                    if (applyHeader)
+                        SyncImportedHeaderEditors(previousCurrAccCode);
 
-                    continue;
+                    trInvoiceHeadersBindingSource.ResetCurrentItem();
+                    trInvoiceLinesBindingSource.ResetBindings(false);
+                    gV_InvoiceLine.RefreshData();
+                    UpdateInstallmentLabels();
+                    UpdatePaidLabels();
+
+                    if (dataLayoutControl1.IsValid(out _))
+                        SaveInvoice();
                 }
-
-                if (gV_InvoiceLine.GetRowCellValue(GridControl.NewItemRowHandle, col_InvoiceHeaderId) is null)
-                    gV_InvoiceLine.AddNewRow();
-
-                foreach (DataColumn column in dt.Columns)
-                {
-                    try
-                    {
-                        if (column.ColumnName == captionProductCode || column.ColumnName == captionBarcode)
-                        {
-                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_ProductCode, product.ProductCode);
-
-                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colBarcode, barcode);
-                        }
-                        else if (column.ColumnName == captionQty)
-                        {
-                            gV_InvoiceLine.SetFocusedRowCellValue(colQty, Cell(row, captionQty));
-                        }
-                        else if (column.ColumnName == captionLineDesc)
-                            gV_InvoiceLine.SetFocusedRowCellValue(col_LineDesc, Cell(row, captionLineDesc));
-
-                        else if (column.ColumnName == captionSerialNumber)
-                            gV_InvoiceLine.SetFocusedRowCellValue(colSerialNumberCode, Cell(row, captionSerialNumber));
-
-                        else if (column.ColumnName == captionPrice)
-                            gV_InvoiceLine.SetFocusedRowCellValue(col_Price, Cell(row, captionPrice));
-
-                        else if (column.ColumnName == captionCurrency)
-                        {
-                            string curText = Cell(row, captionCurrency);
-                            if (string.IsNullOrEmpty(curText))
-                                continue;
-
-                            DcCurrency currency = efMethods.SelectEntityById<DcCurrency>(curText)
-                                                  ?? efMethods.SelectCurrencyByName(curText);
-
-                            if (currency is not null)
-                            {
-                                gV_InvoiceLine.SetFocusedRowCellValue(colCurrencyCode, currency.CurrencyCode);
-                                gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, currency.ExchangeRate);
-                            }
-                            else
-                                errorCodes += $"{captionCurrency}: {curText}\n";
-                        }
-                        else if (column.ColumnName == captionExRate)
-                            gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, Cell(row, captionExRate));
-
-                        else if (column.ColumnName == captionPosDiscount)
-                            gV_InvoiceLine.SetFocusedRowCellValue(col_PosDiscount, Cell(row, captionPosDiscount));
-                    }
-                    catch (ArgumentException ae)
-                    {
-                        MessageBox.Show("Xəta No: 256545 \n" + ae.Message, "Import xetası");
-                    }
-                }
-
-                gV_InvoiceLine.UpdateCurrentRow();
+            }
+            finally
+            {
+                gV_InvoiceLine.EndUpdate();
+                gV_InvoiceLine.GridControl.EndUpdate();
+                _isLoading = oldLoading;
             }
 
-            gV_InvoiceLine.EndUpdate();
-            gV_InvoiceLine.GridControl.EndUpdate();
-
-            SplashScreenManager.CloseForm(false);
-
-            if (!string.IsNullOrEmpty(errorCodes))
-                MessageBox.Show(Properties.Resources.Invoice_NoValueFoundForCodes + "\n" + errorCodes, Properties.Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (hasApplyErrors)
+                ShowExcelImportErrors(plan.Errors);
         }
 
+        private bool ConfirmApplyImportedHeader()
+        {
+            return XtraMessageBox.Show(
+                this,
+                Resources.Form_Invoice_ApplyImportedHeaderQuestion,
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes;
+        }
+
+        private bool ConfirmImportDifferentProcess(string importedProcessCode)
+        {
+            string message = string.Format(
+                Resources.Form_Invoice_ImportDifferentProcessQuestion,
+                ResolveProcessDesc(importedProcessCode),
+                dcProcess.ProcessDesc);
+
+            return XtraMessageBox.Show(
+                this,
+                message,
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes;
+        }
+
+        private string ResolveProcessDesc(string processCode)
+        {
+            if (string.IsNullOrWhiteSpace(processCode))
+                return Resources.Common_NotFound;
+
+            return efMethods.SelectEntityById<DcProcess>(processCode)?.ProcessDesc
+                ?? Resources.Common_NotFound;
+        }
+
+        private IEnumerable<TrInvoiceLine> GetInvoiceLinesForExcel()
+        {
+            if (trInvoiceLinesBindingSource?.List is IEnumerable invoiceLines)
+                return invoiceLines.OfType<TrInvoiceLine>();
+
+            return Enumerable.Empty<TrInvoiceLine>();
+        }
+
+        private IEnumerable<TrInstallmentGuarantor> GetInstallmentGuarantorsForExcel()
+        {
+            return (trInstallmentGuarantorsBindingSource.DataSource as IEnumerable)?.OfType<TrInstallmentGuarantor>()
+                ?? Enumerable.Empty<TrInstallmentGuarantor>();
+        }
+
+        private IList<TrInstallmentGuarantor> GetInstallmentGuarantorsForExcelImport()
+        {
+            if (dbContext2 is null)
+                LoadInstallmentGarantors();
+
+            if (trInstallmentGuarantorsBindingSource.DataSource is BindingList<TrInstallmentGuarantor> bindingList)
+                return bindingList;
+
+            bindingList = new BindingList<TrInstallmentGuarantor>();
+            trInstallmentGuarantorsBindingSource.DataSource = bindingList;
+            return bindingList;
+        }
+
+        private subContext GetInstallmentGuarantorContextForExcelImport()
+        {
+            if (dbContext2 is null)
+                LoadInstallmentGarantors();
+
+            return dbContext2;
+        }
+
+        private void SyncImportedHeaderEditors(string previousCurrAccCode)
+        {
+            btnEdit_CurrAccCode.EditValue = trInvoiceHeader.CurrAccCode;
+
+            DcCurrAcc curr = null;
+            if (!string.IsNullOrWhiteSpace(trInvoiceHeader.CurrAccCode))
+            {
+                curr = string.Equals(dcProcess.ProcessCode, "IT", StringComparison.OrdinalIgnoreCase)
+                    ? efMethods.SelectStore(trInvoiceHeader.CurrAccCode)
+                    : efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
+            }
+
+            lbl_CurrAccDesc.Text = curr is null
+                ? string.Empty
+                : $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}";
+
+            if (!string.Equals(previousCurrAccCode, trInvoiceHeader.CurrAccCode, StringComparison.OrdinalIgnoreCase))
+                _pendingPaymentCurrAccUpdate = true;
+
+            lUE_StoreCode.EditValue = trInvoiceHeader.StoreCode;
+            lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.StoreCode);
+            lUE_WarehouseCode.EditValue = trInvoiceHeader.WarehouseCode;
+
+            if (!string.IsNullOrWhiteSpace(trInvoiceHeader.CurrAccCode))
+                lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
+
+            lUE_ToWarehouseCode.EditValue = trInvoiceHeader.ToWarehouseCode;
+            btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
+        }
+
+        private void ShowExcelImportErrors(IEnumerable<string> errors)
+        {
+            XtraMessageBox.Show(
+                string.Join(Environment.NewLine, errors),
+                Resources.Common_Error,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
 
         private void FillRow(int rowHandle, DcProduct product)
         {

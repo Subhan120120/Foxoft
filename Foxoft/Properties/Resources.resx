@@ -4413,6 +4413,12 @@ Apply it?</value>
   <data name="Form_Invoice_UnsavedChangesQuestion" xml:space="preserve">
     <value>There are unsaved changes. Do you want to save?</value>
   </data>
+  <data name="Form_Invoice_ApplyImportedHeaderQuestion" xml:space="preserve">
+    <value>Do you want to update the invoice header information from the Excel file?</value>
+  </data>
+  <data name="Form_Invoice_ImportDifferentProcessQuestion" xml:space="preserve">
+    <value>The Excel file process is "{0}", but the current invoice process is "{1}". Do you want to import it anyway?</value>
+  </data>
   <data name="Entity_AppSetting_TransferAutoApprove" xml:space="preserve">
     <value>Transfer Auto Approve</value>
   </data>

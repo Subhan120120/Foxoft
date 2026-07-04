@@ -338,6 +338,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="DevExpress.Win.Design" Version="24.2.7" />
+		<PackageReference Include="DevExpress.Spreadsheet.Core" Version="24.2.7" />
+		<PackageReference Include="DevExpress.Document.Processor" Version="24.2.7" />
 		<PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3466" />
 		<PackageReference Include="Google.Apis.PeopleService.v1" Version="1.68.0.3359" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
