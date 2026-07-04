@@ -9,11 +9,11 @@ namespace Foxoft
 {
     public static class CustomRepositoryItems
     {
-        public static IWin32Window parentForm;
+        public static IWin32Window ownerForm;
 
         public static void InitFilterRepositoryItems(this object valueditor, IWin32Window parentForm)
         {
-            parentForm = parentForm;
+            ownerForm = parentForm;
 
             if (valueditor.GetType() == typeof(CustomValueEditorArgs))
             {
@@ -112,7 +112,7 @@ namespace Foxoft
                 ButtonEdit editor = (ButtonEdit)sender;
                 using (FormWarehouseList form = new())
                 {
-                    if (form.ShowDialog(parentForm) == DialogResult.OK)
+                    if (form.ShowDialog(ownerForm) == DialogResult.OK)
                         editor.EditValue = form.dcWarehouse.WarehouseCode;
                 }
             };
@@ -127,7 +127,7 @@ namespace Foxoft
 
             using (FormProductList form = new(new byte[] { 1, 3 }, false, value))
             {
-                if (form.ShowDialog(parentForm) == DialogResult.OK)
+                if (form.ShowDialog(ownerForm) == DialogResult.OK)
                     editor.EditValue = form.dcProduct.ProductCode;
             }
         }
@@ -140,7 +140,7 @@ namespace Foxoft
 
             using (FormCurrAccList form = new(currAccTypeCode, false, value))
             {
-                if (form.ShowDialog(parentForm) == DialogResult.OK)
+                if (form.ShowDialog(ownerForm) == DialogResult.OK)
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;
             }
         }
@@ -153,7 +153,7 @@ namespace Foxoft
 
             using (FormHierarchyList form = new(value))
             {
-                if (form.ShowDialog(parentForm) == DialogResult.OK)
+                if (form.ShowDialog(ownerForm) == DialogResult.OK)
                     editor.EditValue = form.DcHierarchy.HierarchyCode;
             }
         }
