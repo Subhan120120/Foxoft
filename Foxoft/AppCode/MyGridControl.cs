@@ -56,12 +56,16 @@ namespace Foxoft
 
     public class MyGridView : GridView
     {
-        public IWin32Window parentForm;
-        public MyGridView(IWin32Window parentForm) : base()
+        public MyGridView() : base()
         {
-            parentForm = parentForm;
+            InitializeMyGridView();
+        }
+
+        private void InitializeMyGridView()
+        {
             DisableHeaderClickSorting(this);
-            this.FilterEditorCreated += new FilterControlEventHandler(gV_ProductList_FilterEditorCreated);
+            FilterEditorCreated -= gV_ProductList_FilterEditorCreated;
+            FilterEditorCreated += gV_ProductList_FilterEditorCreated;
         }
 
         private void gV_ProductList_FilterEditorCreated(object sender, FilterControlEventArgs e)
@@ -76,12 +80,12 @@ namespace Foxoft
 
         void FilterControl_BeforeShowValueEditor(object sender, ShowValueEditorEventArgs e)
         {
-            e.InitFilterRepositoryItems(parentForm);
+            e.InitFilterRepositoryItems();
         }
 
         public MyGridView(GridControl grid) : base(grid)
         {
-            DisableHeaderClickSorting(this);
+            InitializeMyGridView();
         }
 
         internal const string MyGridViewName = "MyGridView";

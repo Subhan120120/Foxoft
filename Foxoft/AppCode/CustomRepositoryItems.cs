@@ -9,12 +9,8 @@ namespace Foxoft
 {
     public static class CustomRepositoryItems
     {
-        public static IWin32Window ownerForm;
-
-        public static void InitFilterRepositoryItems(this object valueditor, IWin32Window parentForm)
+        public static void InitFilterRepositoryItems(this object valueditor)
         {
-            ownerForm = parentForm;
-
             if (valueditor.GetType() == typeof(CustomValueEditorArgs))
             {
                 CustomValueEditorArgs e = (CustomValueEditorArgs)valueditor;
@@ -110,9 +106,11 @@ namespace Foxoft
             repoBtnEdit.ButtonPressed += (sender, e) =>
             {
                 ButtonEdit editor = (ButtonEdit)sender;
+                IWin32Window owner = editor.FindForm();
+
                 using (FormWarehouseList form = new())
                 {
-                    if (form.ShowDialog(ownerForm) == DialogResult.OK)
+                    if (form.ShowDialog(owner) == DialogResult.OK)
                         editor.EditValue = form.dcWarehouse.WarehouseCode;
                 }
             };
@@ -122,12 +120,13 @@ namespace Foxoft
         private static void SelectProduct(object sender)
         {
             ButtonEdit editor = (ButtonEdit)sender;
+            IWin32Window owner = editor.FindForm();
 
             string value = editor.EditValue?.ToString();
 
             using (FormProductList form = new(new byte[] { 1, 3 }, false, value))
             {
-                if (form.ShowDialog(ownerForm) == DialogResult.OK)
+                if (form.ShowDialog(owner) == DialogResult.OK)
                     editor.EditValue = form.dcProduct.ProductCode;
             }
         }
@@ -135,12 +134,13 @@ namespace Foxoft
         private static void SelectCurrAcc(object sender, byte[] currAccTypeCode)
         {
             ButtonEdit editor = (ButtonEdit)sender;
+            IWin32Window owner = editor.FindForm();
 
             string value = editor.EditValue?.ToString();
 
             using (FormCurrAccList form = new(currAccTypeCode, false, value))
             {
-                if (form.ShowDialog(ownerForm) == DialogResult.OK)
+                if (form.ShowDialog(owner) == DialogResult.OK)
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;
             }
         }
@@ -148,12 +148,13 @@ namespace Foxoft
         private static void SelectHierarchy(object sender)
         {
             ButtonEdit editor = (ButtonEdit)sender;
+            IWin32Window owner = editor.FindForm();
 
             string value = editor.EditValue?.ToString();
 
             using (FormHierarchyList form = new(value))
             {
-                if (form.ShowDialog(ownerForm) == DialogResult.OK)
+                if (form.ShowDialog(owner) == DialogResult.OK)
                     editor.EditValue = form.DcHierarchy.HierarchyCode;
             }
         }

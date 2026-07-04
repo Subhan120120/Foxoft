@@ -258,7 +258,7 @@ namespace Foxoft
 
         private void filterControl_Inner_CustomValueEditor(object sender, CustomValueEditorArgs e)
         {
-            e.InitFilterRepositoryItems(this);
+            e.InitFilterRepositoryItems();
 
             if (e.Value is not null && e.PropertyName is not null)
             {
@@ -273,7 +273,7 @@ namespace Foxoft
 
         private void filterControl_Outer_CustomValueEditor(object sender, CustomValueEditorArgs e)
         {
-            e.InitFilterRepositoryItems(this);
+            e.InitFilterRepositoryItems();
         }
 
         private void ExcelButtonFilterControl_ExcelButtonClick(object sender, ExcelButtonEventArgs e)
