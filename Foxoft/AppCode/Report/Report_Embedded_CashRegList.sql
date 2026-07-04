@@ -1,4 +1,4 @@
-﻿CashRegisterCode = DcCurrAccs.CurrAccCode
+﻿SELECT CashRegisterCode = DcCurrAccs.CurrAccCode
 	, [Kassa Adı] = CurrAccDesc
     , CurrAccDesc
     , Balance = ISNULL(SUM(CAST(PaymentLoc AS money)), 0)
