@@ -1,4 +1,4 @@
-﻿using DevExpress.Data.Filtering.Helpers;
+using DevExpress.Data.Filtering.Helpers;
 using DevExpress.DataAccess.Excel;
 using DevExpress.LookAndFeel;
 using DevExpress.Utils;
@@ -93,11 +93,11 @@ namespace Foxoft
 
         internal static void DisableHeaderClickSorting(GridView view)
         {
-            view.MouseDown -= MyGridView_MouseDown;
-            view.MouseDown += MyGridView_MouseDown;
+            view.MouseUp -= MyGridView_MouseUp;
+            view.MouseUp += MyGridView_MouseUp;
         }
 
-        private static void MyGridView_MouseDown(object sender, MouseEventArgs e)
+        private static void MyGridView_MouseUp(object sender, MouseEventArgs e)
         {
             if (sender is not GridView view || e.Button != MouseButtons.Left)
                 return;
