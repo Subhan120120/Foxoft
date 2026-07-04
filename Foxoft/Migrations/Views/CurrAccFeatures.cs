@@ -13,7 +13,7 @@ namespace Foxoft.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"  CREATE   VIEW [dbo].CurrAccFeatures AS 
+            migrationBuilder.Sql(@"  CREATE OR ALTER VIEW [dbo].CurrAccFeatures AS 
 									select CurrAccCode
 										, [Feature01] = MAX(PivotTable2.[1]	)
 										, [Feature02] = MAX(PivotTable2.[2]	)
