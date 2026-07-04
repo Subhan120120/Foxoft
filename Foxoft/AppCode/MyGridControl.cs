@@ -246,12 +246,37 @@ namespace Foxoft
             MyIcon = bm.Render(null, 0.5);
 
             base.OnMouseDown(e);
-            FilterControlLabelInfo li = Model.GetLabelInfoByCoordinates(e.X - _Icon.Width - 1, e.Y);
-            if (li != null)
-                if (li.Owner.Elements[0].ElementType != ElementType.Group)
-                    if (li.NodeWidth < e.X)
-                        if (ExcelBtnClick != null)
-                            ExcelBtnClick(this, new ExcelBtnEventArgs(li));
+            Point mouseLocation = new(e.X, e.Y);
+            if (e.Button == MouseButtons.Left && TryGetExcelButtonLabelInfo(mouseLocation, out FilterControlLabelInfo labelInfo))
+                ExcelBtnClick?.Invoke(this, new ExcelBtnEventArgs(labelInfo));
+        }
+
+        private bool TryGetExcelButtonLabelInfo(Point mouseLocation, out FilterControlLabelInfo labelInfo)
+        {
+            labelInfo = null;
+
+            if (_Icon == null)
+                return false;
+
+            labelInfo = Model.GetLabelInfoByCoordinates(mouseLocation.X - _Icon.Width - 1, mouseLocation.Y);
+            if (labelInfo == null)
+                return false;
+
+            ClauseNode clauseNode = labelInfo.Owner as ClauseNode;
+            if (labelInfo.Owner.Elements[0].ElementType == ElementType.Group
+                || (clauseNode?.Operation != ClauseType.AnyOf && clauseNode?.Operation != ClauseType.NoneOf))
+                return false;
+
+            return GetExcelButtonBounds(labelInfo).Contains(mouseLocation);
+        }
+
+        internal Rectangle GetExcelButtonBounds(FilterControlLabelInfo labelInfo)
+        {
+            return new Rectangle(
+                labelInfo.NodeBounds.X + labelInfo.NodeBounds.Width,
+                labelInfo.NodeBounds.Y + (labelInfo.NodeBounds.Height - MyIcon.Height) / 2 + 2,
+                MyIcon.Width,
+                MyIcon.Height);
         }
 
     }
@@ -285,12 +310,9 @@ namespace Foxoft
                 ClauseNode clauseNode = node as ClauseNode;
 
                 if (node.Elements[0].ElementType != ElementType.Group
-                   && (clauseNode.Operation == ClauseType.AnyOf || clauseNode.Operation == ClauseType.NoneOf))
+                   && (clauseNode?.Operation == ClauseType.AnyOf || clauseNode?.Operation == ClauseType.NoneOf))
                 {
-                    Point p = new Point(labelInfo.NodeBounds.X + labelInfo.NodeBounds.Width,
-                       labelInfo.NodeBounds.Y + (labelInfo.NodeBounds.Height - fControl.MyIcon.Height) / 2 + 2);
-
-                    info.Graphics.DrawImage(fControl.MyIcon, p);
+                    info.Graphics.DrawImage(fControl.MyIcon, fControl.GetExcelButtonBounds(labelInfo).Location);
                 }
             }
             base.DrawNodeLabel(node, info);
