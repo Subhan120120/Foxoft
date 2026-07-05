@@ -4751,7 +4751,7 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            ClaimCode = "AllowPaymentDifference",
+                            ClaimCode = "AllowUnderPayment",
                             CategoryId = 2,
                             ClaimDesc = "Faktura ilə ödəniş arasında fərqə icazə",
                             ClaimTypeId = (byte)1,

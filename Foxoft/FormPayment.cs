@@ -558,7 +558,7 @@ namespace Foxoft
 
             bool currAccHasClaims = efMethods.CurrAccHasClaims(
                 Authorization.CurrAccCode,
-                "AllowPaymentDifference");
+                "AllowUnderPayment");
 
             if (currAccHasClaims) return true;
 
