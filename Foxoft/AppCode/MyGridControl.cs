@@ -15,6 +15,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -91,10 +92,26 @@ namespace Foxoft
         internal const string MyGridViewName = "MyGridView";
         protected override string ViewName { get { return MyGridViewName; } }
 
+        private static readonly Dictionary<GridView, Point> _columnClickPoints = new();
+
         internal static void DisableHeaderClickSorting(GridView view)
         {
+            view.MouseDown -= MyGridView_MouseDown;
+            view.MouseDown += MyGridView_MouseDown;
             view.MouseUp -= MyGridView_MouseUp;
             view.MouseUp += MyGridView_MouseUp;
+        }
+
+        private static void MyGridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (sender is not GridView view || e.Button != MouseButtons.Left)
+                return;
+
+            GridHitInfo hitInfo = view.CalcHitInfo(e.Location);
+            if (hitInfo.HitTest == GridHitTest.Column)
+                _columnClickPoints[view] = e.Location;
+            else
+                _columnClickPoints.Remove(view);
         }
 
         private static void MyGridView_MouseUp(object sender, MouseEventArgs e)
@@ -102,9 +119,17 @@ namespace Foxoft
             if (sender is not GridView view || e.Button != MouseButtons.Left)
                 return;
 
-            GridHitInfo hitInfo = view.CalcHitInfo(e.Location);
-            if (hitInfo.HitTest == GridHitTest.Column)
-                DXMouseEventArgs.GetMouseArgs(e).Handled = true;
+            if (_columnClickPoints.TryGetValue(view, out Point downPoint))
+            {
+                _columnClickPoints.Remove(view);
+
+                int dx = Math.Abs(e.X - downPoint.X);
+                int dy = Math.Abs(e.Y - downPoint.Y);
+
+                // Only block if mouse didn't move — it's a pure click (sorting), not drag/resize
+                if (dx <= SystemInformation.DragSize.Width && dy <= SystemInformation.DragSize.Height)
+                    DXMouseEventArgs.GetMouseArgs(e).Handled = true;
+            }
         }
 
         protected override Form CreateFilterBuilderDialog(FilterColumnCollection filterColumns, FilterColumn defaultFilterColumn)
