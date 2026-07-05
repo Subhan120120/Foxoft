@@ -1,4 +1,4 @@
-﻿using DevExpress.LookAndFeel;
+using DevExpress.LookAndFeel;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -530,6 +531,11 @@ namespace Foxoft
 
         private void ShowNewForm<T>(params object[] args) where T : Form
         {
+            ShowNewForm<T>(args, null);
+        }
+
+        private void ShowNewForm<T>(object[] args, string formKey) where T : Form
+        {
             T form = null;
 
             //try
@@ -560,6 +566,8 @@ namespace Foxoft
                 throw new ArgumentException(string.Format(Resources.ERP_NoMatchingCtor, typeof(T).Name));
 
             form = (T)constructor.Invoke(args);
+            if (formKey != null)
+                form.Name = formKey;
             form.MdiParent = this;
             form.FormClosed += (s, args) => form.Dispose();
             form.Show();
@@ -581,7 +589,8 @@ namespace Foxoft
 
         private void ShowExistForm<T>(params object[] args) where T : Form
         {
-            T form = Application.OpenForms[typeof(T).Name] as T;
+            string formKey = BuildFormKey<T>(args);
+            T form = Application.OpenForms[formKey] as T;
 
             if (form != null)
             {
@@ -590,8 +599,26 @@ namespace Foxoft
             }
             else
             {
-                ShowNewForm<T>(args);
+                ShowNewForm<T>(args, formKey);
             }
+        }
+
+        private static string BuildFormKey<T>(object[] args)
+        {
+            if (args == null || args.Length == 0)
+                return typeof(T).Name;
+
+            StringBuilder sb = new();
+            sb.Append(typeof(T).Name);
+            foreach (object arg in args)
+            {
+                sb.Append('_');
+                if (arg is byte[] byteArr)
+                    sb.Append(string.Join(",", byteArr));
+                else
+                    sb.Append(arg?.ToString() ?? "null");
+            }
+            return sb.ToString();
         }
     }
 }
