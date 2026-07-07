@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties; // Resources üçün
 
 namespace Foxoft.Models
@@ -14,7 +15,8 @@ namespace Foxoft.Models
 
         [Key]
         [Display(Name = nameof(Resources.Entity_ContactType_Id), ResourceType = typeof(Resources))]
-        public byte Id { get; set; }
+        [Column(TypeName = "tinyint")]
+        public ContactType Id { get; set; }
 
         [Display(Name = nameof(Resources.Entity_ContactType_Desc), ResourceType = typeof(Resources))]
         [Required(

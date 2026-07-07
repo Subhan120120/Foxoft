@@ -10,6 +10,15 @@ namespace Foxoft.Models
         CashRegister = 5
     }
 
+    public enum ContactType : int
+    {
+        Phone = 1,
+        Address = 2,
+        Email = 3,
+        SocialMedia = 4,
+        WhatsAppGroup = 5
+    }
+
     public enum OverpaymentMode : byte
     {
         AskEachTime = 0,

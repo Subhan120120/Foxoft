@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20260615203029_test")]
-    partial class test
+    [Migration("20260707110741_ContactDescText")]
+    partial class ContactDescText
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -358,6 +358,11 @@ namespace Foxoft.Migrations
                         {
                             Id = (byte)4,
                             ContactTypeDesc = "Sosial Media"
+                        },
+                        new
+                        {
+                            Id = (byte)5,
+                            ContactTypeDesc = "WhatsApp Qrupu"
                         });
                 });
 
@@ -3425,7 +3430,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CashRegList",
-                            ReportQuery = "\r\n\r\n	select CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegPaymentTypeCode\r\n	, StoreCode\r\n	from \r\n	DcCurrAccs \r\n	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = ISNULL(DcCurrAccs.CashRegPaymentTypeCode, 1)\r\n	where CurrAccTypeCode = 5 and IsDisabled = 0\r\n		--and DcCurrAccs.IsVIP = 1 \r\n		--and balance.CurrAccCode = '1403'\r\n	group by DcCurrAccs.CurrAccCode\r\n	, CurrAccDesc\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegPaymentTypeCode\r\n	, CashRegisterCode \r\n	, StoreCode\r\n	order by CurrAccDesc\r\n",
+                            ReportQuery = "SELECT CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n    , CurrAccDesc\r\n    , Balance = ISNULL(SUM(CAST(PaymentLoc AS money)), 0)\r\n    , PhoneNum\r\n    , IsVIP\r\n    , CurrAccTypeCode\r\n    , StoreCode\r\nFROM DcCurrAccs\r\nLEFT JOIN TrPaymentLines \r\n    ON TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode\r\n    AND TrPaymentLines.PaymentTypeCode IN (1, 2)\r\nWHERE \r\n    CurrAccTypeCode = 5\r\n    AND IsDisabled = 0\r\nGROUP BY \r\n     DcCurrAccs.CurrAccCode\r\n    , CashRegisterCode\r\n    , CurrAccDesc\r\n    , PhoneNum\r\n    , IsVIP\r\n    , CurrAccTypeCode\r\n    , StoreCode\r\n--ORDER BY CurrAccDesc;\r\n",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -4087,6 +4092,14 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
+                            ClaimCode = "ChangeProductCode",
+                            CategoryId = 18,
+                            ClaimDesc = "Məhsul Kodunu Dəyişmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
                             ClaimCode = "CurrAccs",
                             CategoryId = 19,
                             ClaimDesc = "Cari Hesablar",
@@ -4098,6 +4111,14 @@ namespace Foxoft.Migrations
                             ClaimCode = "CurrAccsDisabled",
                             CategoryId = 19,
                             ClaimDesc = "Qeyri-Aktiv Cari Hesablar",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "ChangeCurrAccCode",
+                            CategoryId = 19,
+                            ClaimDesc = "Cari Hesab Kodunu Dəyişmə",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         },
@@ -6392,6 +6413,22 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 206,
                             ClaimCode = "DocumentLockTakeover",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 207,
+                            ClaimCode = "ChangeProductCode",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 208,
+                            ClaimCode = "ChangeCurrAccCode",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

@@ -1,4 +1,4 @@
-using DevExpress.CodeParser;
+﻿using DevExpress.CodeParser;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
@@ -1964,8 +1964,6 @@ namespace Foxoft
             if (string.IsNullOrWhiteSpace(currAccCode))
                 return new List<string>();
 
-            const byte phoneContactTypeId = 1;
-
             using subContext db = new();
 
             string? defaultPhoneNum = db.DcCurrAccs
@@ -1976,7 +1974,7 @@ namespace Foxoft
 
             List<string?> numbers = db.DcCurrAccContactDetails
                 .Where(x => x.CurrAccCode == currAccCode
-                            && x.ContactTypeId == phoneContactTypeId
+                            && x.ContactTypeId == ContactType.Phone
                             && x.SendWhatsapp
                             && x.ContactDesc != null
                             && x.ContactDesc != "")
@@ -1986,14 +1984,14 @@ namespace Foxoft
             if (!string.IsNullOrWhiteSpace(defaultPhoneNum))
                 numbers.Insert(0, defaultPhoneNum);
 
-            // Collect WhatsApp group JIDs from phone contacts
+            // Collect WhatsApp group JIDs from WhatsApp Group contacts
             List<string?> groupJids = db.DcCurrAccContactDetails
                 .Where(x => x.CurrAccCode == currAccCode
-                            && x.ContactTypeId == phoneContactTypeId
+                            && x.ContactTypeId == ContactType.WhatsAppGroup
                             && x.SendWhatsapp
-                            && x.WhatsAppGroupJid != null
-                            && x.WhatsAppGroupJid != "")
-                .Select(x => x.WhatsAppGroupJid)
+                            && x.ContactDesc != null
+                            && x.ContactDesc != "")
+                .Select(x => x.ContactDesc)
                 .ToList();
 
             List<string> recipients = new();

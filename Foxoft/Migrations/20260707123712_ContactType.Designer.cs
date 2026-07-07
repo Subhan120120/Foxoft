@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20260705174404_RenameAllowPaymentDifferenceToAllowUnderPayment")]
-    partial class RenameAllowPaymentDifferenceToAllowUnderPayment
+    [Migration("20260707123712_ContactType")]
+    partial class ContactType
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -358,6 +358,11 @@ namespace Foxoft.Migrations
                         {
                             Id = (byte)4,
                             ContactTypeDesc = "Sosial Media"
+                        },
+                        new
+                        {
+                            Id = (byte)5,
+                            ContactTypeDesc = "WhatsApp Qrupu"
                         });
                 });
 
@@ -3425,7 +3430,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CashRegList",
-                            ReportQuery = "CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n    , CurrAccDesc\r\n    , Balance = ISNULL(SUM(CAST(PaymentLoc AS money)), 0)\r\n    , PhoneNum\r\n    , IsVIP\r\n    , CurrAccTypeCode\r\n    , StoreCode\r\nFROM DcCurrAccs\r\nLEFT JOIN TrPaymentLines \r\n    ON TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode\r\n    AND TrPaymentLines.PaymentTypeCode IN (1, 2)\r\nWHERE \r\n    CurrAccTypeCode = 5\r\n    AND IsDisabled = 0\r\nGROUP BY \r\n     DcCurrAccs.CurrAccCode\r\n    , CashRegisterCode\r\n    , CurrAccDesc\r\n    , PhoneNum\r\n    , IsVIP\r\n    , CurrAccTypeCode\r\n    , StoreCode\r\n--ORDER BY CurrAccDesc;\r\n",
+                            ReportQuery = "SELECT CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n    , CurrAccDesc\r\n    , Balance = ISNULL(SUM(CAST(PaymentLoc AS money)), 0)\r\n    , PhoneNum\r\n    , IsVIP\r\n    , CurrAccTypeCode\r\n    , StoreCode\r\nFROM DcCurrAccs\r\nLEFT JOIN TrPaymentLines \r\n    ON TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode\r\n    AND TrPaymentLines.PaymentTypeCode IN (1, 2)\r\nWHERE \r\n    CurrAccTypeCode = 5\r\n    AND IsDisabled = 0\r\nGROUP BY \r\n     DcCurrAccs.CurrAccCode\r\n    , CashRegisterCode\r\n    , CurrAccDesc\r\n    , PhoneNum\r\n    , IsVIP\r\n    , CurrAccTypeCode\r\n    , StoreCode\r\n--ORDER BY CurrAccDesc;\r\n",
                             ReportTypeId = (byte)0
                         },
                         new

@@ -1,4 +1,4 @@
-﻿using Foxoft.AppCode;
+using Foxoft.AppCode;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Models.Entity.RoleClaim;
@@ -636,10 +636,11 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcContactType>().HasData(
-                new DcContactType { Id = 1, ContactTypeDesc = "Telefon" },
-                new DcContactType { Id = 2, ContactTypeDesc = "Adres" },
-                new DcContactType { Id = 3, ContactTypeDesc = "Email" },
-                new DcContactType { Id = 4, ContactTypeDesc = "Sosial Media" }
+                new DcContactType { Id = ContactType.Phone, ContactTypeDesc = "Telefon" },
+                new DcContactType { Id = ContactType.Address, ContactTypeDesc = "Adres" },
+                new DcContactType { Id = ContactType.Email, ContactTypeDesc = "Email" },
+                new DcContactType { Id = ContactType.SocialMedia, ContactTypeDesc = "Sosial Media" },
+                new DcContactType { Id = ContactType.WhatsAppGroup, ContactTypeDesc = "WhatsApp Qrupu" }
                 );
 
             modelBuilder.Entity<DcPersonalType>().HasData(
@@ -1153,6 +1154,16 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcCurrAcc>()
                 .Property(x => x.CashRegPaymentTypeCode)
+                .HasConversion<byte>()
+                .HasColumnType("tinyint");
+
+            modelBuilder.Entity<DcContactType>()
+                .Property(x => x.Id)
+                .HasConversion<byte>()
+                .HasColumnType("tinyint");
+
+            modelBuilder.Entity<DcCurrAccContactDetail>()
+                .Property(x => x.ContactTypeId)
                 .HasConversion<byte>()
                 .HasColumnType("tinyint");
         }

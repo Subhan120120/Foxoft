@@ -28,7 +28,8 @@ namespace Foxoft.Models
             ErrorMessageResourceName = nameof(Resources.Validation_Required)
         )]
         [ForeignKey(nameof(DcContactType))]
-        public byte ContactTypeId { get; set; }
+        [Column(TypeName = "tinyint")]
+        public ContactType ContactTypeId { get; set; }
 
         [Display(Name = nameof(Resources.Entity_CurrAcc_Code), ResourceType = typeof(Resources))]
         [Required(

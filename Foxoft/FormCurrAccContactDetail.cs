@@ -15,7 +15,6 @@ namespace Foxoft
         private DcCurrAccContactDetail dcContactDetail;
         private string currAccCode;
         private bool isNew;
-        private const byte PhoneContactTypeId = 1;
 
         public FormCurrAccContactDetail(string currAccCode)
         {
@@ -75,17 +74,16 @@ namespace Foxoft
 
         private void ApplyContactTypeSettings()
         {
-            byte contactTypeId = 0;
-            if (ContactTypeLookUpEdit.EditValue != null && ContactTypeLookUpEdit.EditValue != DBNull.Value)
-                byte.TryParse(ContactTypeLookUpEdit.EditValue.ToString(), out contactTypeId);
+            ContactType contactTypeId = GetSelectedContactType();
 
-            bool isPhone = contactTypeId == PhoneContactTypeId;
+            bool isPhone = contactTypeId == ContactType.Phone;
+            bool isWhatsAppGroup = contactTypeId == ContactType.WhatsAppGroup;
 
-            // SendWhatsapp visibility
-            ItemForSendWhatsapp.Visibility = isPhone ? LayoutVisibility.Always : LayoutVisibility.Never;
+            // SendWhatsapp visibility (phone or whatsapp group)
+            ItemForSendWhatsapp.Visibility = (isPhone || isWhatsAppGroup) ? LayoutVisibility.Always : LayoutVisibility.Never;
 
-            // WhatsApp Group JID visibility
-            ItemForWhatsAppGroupJid.Visibility = isPhone ? LayoutVisibility.Always : LayoutVisibility.Never;
+            // Ellipsis button visibility (only for whatsapp group)
+            ContactDescTextEdit.Properties.Buttons[0].Visible = isWhatsAppGroup;
 
             if (isPhone)
             {
@@ -93,6 +91,9 @@ namespace Foxoft
                 ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
                 ContactDescTextEdit.Properties.Mask.EditMask = "+000 00 000-00-00";
                 ContactDescTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+                ContactDescTextEdit.Properties.NullValuePrompt = "";
+                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = false;
+                ContactDescTextEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
 
                 // Default value for new records
                 if (isNew && string.IsNullOrWhiteSpace(dcContactDetail.ContactDesc))
@@ -101,18 +102,45 @@ namespace Foxoft
                     ContactDescTextEdit.DataBindings["EditValue"]?.ReadValue();
                 }
             }
+            else if (isWhatsAppGroup)
+            {
+                // Remove phone mask
+                ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
+                ContactDescTextEdit.Properties.Mask.EditMask = "";
+                ContactDescTextEdit.Properties.Mask.UseMaskAsDisplayFormat = false;
+                ContactDescTextEdit.Properties.NullValuePrompt = "120363xxxx@g.us";
+                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = true;
+                ContactDescTextEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+
+                // Clear phone default value
+                if (isNew)
+                {
+                    dcContactDetail.ContactDesc = null;
+                    ContactDescTextEdit.DataBindings["EditValue"]?.ReadValue();
+                }
+
+                // Auto-enable SendWhatsapp for WhatsApp Group
+                SendWhatsappCheckEdit.Checked = true;
+            }
             else
             {
                 // Remove phone mask
                 ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
                 ContactDescTextEdit.Properties.Mask.EditMask = "";
                 ContactDescTextEdit.Properties.Mask.UseMaskAsDisplayFormat = false;
+                ContactDescTextEdit.Properties.NullValuePrompt = "";
+                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = false;
+                ContactDescTextEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
 
-                // Clear SendWhatsapp if not phone
+                // Clear phone/group default value
+                if (isNew)
+                {
+                    dcContactDetail.ContactDesc = null;
+                    ContactDescTextEdit.DataBindings["EditValue"]?.ReadValue();
+                }
+
+                // Clear SendWhatsapp if not phone/group
                 SendWhatsappCheckEdit.Checked = false;
-
-                // Clear WhatsApp Group JID if not phone
-                WhatsAppGroupJidTextEdit.EditValue = null;
             }
         }
 
@@ -133,7 +161,7 @@ namespace Foxoft
                 return;
             }
 
-            if (dcContactDetail.ContactTypeId == 0)
+            if (dcContactDetail.ContactTypeId == default)
             {
                 XtraMessageBox.Show(
                     string.Format(Resources.Validation_Required, Resources.Entity_ContactType),
@@ -151,13 +179,31 @@ namespace Foxoft
             DialogResult = DialogResult.OK;
         }
 
+        private ContactType GetSelectedContactType()
+        {
+            object value = ContactTypeLookUpEdit.EditValue;
+            if (value == null || value == DBNull.Value)
+                return default;
+
+            if (value is ContactType contactType)
+                return contactType;
+
+            string text = value.ToString();
+            if (int.TryParse(text, out int contactTypeId))
+                return (ContactType)contactTypeId;
+
+            return Enum.TryParse(text, out ContactType parsedContactType)
+                ? parsedContactType
+                : default;
+        }
+
         private void FormCurrAccContactDetail_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
                 Close();
         }
 
-        private async void WhatsAppGroupJidTextEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
+        private async void ContactDescTextEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             var apiSetting = efMethods.SelectEntityById<DcWhatsAppProviderSetting>(1);
             if (apiSetting == null || string.IsNullOrEmpty(apiSetting.ServerUrl)
@@ -222,7 +268,7 @@ namespace Foxoft
 
                 if (form.ShowDialog(this) == DialogResult.OK && !string.IsNullOrWhiteSpace(selectedJid))
                 {
-                    WhatsAppGroupJidTextEdit.EditValue = selectedJid;
+                    ContactDescTextEdit.EditValue = selectedJid;
                 }
             }
             catch (Exception ex)
