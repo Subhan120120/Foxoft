@@ -629,7 +629,7 @@ namespace Foxoft.AppCode.Services
                     ProductCode = imported.ProductCode,
                     Barcode = NullIfEmpty(imported.Barcode),
                     UnitOfMeasureId = imported.UnitOfMeasureId,
-                    Price = imported.Price ?? 0m,
+                    Price = IsTransferProcess(context.Process) ? 0m : imported.Price ?? 0m,
                     CurrencyCode = imported.CurrencyCode,
                     ExchangeRate = imported.ExchangeRate ?? imported.Currency.ExchangeRate,
                     PosDiscount = imported.PosDiscount ?? 0m,
@@ -765,6 +765,9 @@ namespace Foxoft.AppCode.Services
                 line.UnitOfMeasureId = product.DefaultUnitOfMeasureId;
                 line.DcUnitOfMeasure = LoadUnitOfMeasure(line.UnitOfMeasureId);
             }
+
+            if (IsTransferProcess(process))
+                return;
 
             if (line.Price == 0m)
             {
@@ -1131,6 +1134,9 @@ namespace Foxoft.AppCode.Services
 
         private static bool IsInstallmentProcess(TrInvoiceHeader invoiceHeader, DcProcess process)
             => string.Equals(invoiceHeader?.ProcessCode ?? process?.ProcessCode, "IS", StringComparison.OrdinalIgnoreCase);
+
+        private static bool IsTransferProcess(DcProcess process)
+            => string.Equals(process?.ProcessCode, "IT", StringComparison.OrdinalIgnoreCase);
 
         private delegate bool TryParseIntDelegate(string value, out int result);
 
