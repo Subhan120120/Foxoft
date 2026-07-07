@@ -572,6 +572,7 @@ namespace Foxoft
             form.FormClosed += (s, args) => form.Dispose();
             form.Show();
             form.WindowState = FormWindowState.Maximized;
+            FormSizeHelper.Track(form);
             if (parentRibbonControl.MergedPages.Count > 0)
                 parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             //}
