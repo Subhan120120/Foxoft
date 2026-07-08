@@ -65,7 +65,28 @@ namespace Foxoft
         Guid? relatedInvoiceId;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
-        private decimal CurrAccBalanceBefore;
+        private decimal _currAccBalanceBefore;
+        private bool _currAccBalanceCalculated;
+        private decimal CurrAccBalanceBefore
+        {
+            get
+            {
+                if (!_currAccBalanceCalculated && trInvoiceHeader != null
+                    && !string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode))
+                {
+                    _currAccBalanceBefore = Math.Round(
+                        efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode,
+                            trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime)), 2);
+                    _currAccBalanceCalculated = true;
+                }
+                return _currAccBalanceBefore;
+            }
+            set
+            {
+                _currAccBalanceBefore = value;
+                _currAccBalanceCalculated = true;
+            }
+        }
         ReportClass reportClass;
         private string salesPersonCode;
         private FormProductList? productsForm;
@@ -408,8 +429,21 @@ namespace Foxoft
                                       .Where(x => x.InvoiceHeaderId == newInvoiceHeaderId)
                                       .Load();
 
-            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
-            trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
+            // Default müştəri set olunanda ağır balans/anbar sorğularının
+            // işə düşməsinin qarşısını almaq üçün _isLoading aktiv edilir.
+            _isLoading = true;
+            try
+            {
+                trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+                trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
+            }
+            finally
+            {
+                _isLoading = false;
+            }
+
+            // Balans lazy hesablanacaq — form açılışında sorğu göndərilmir.
+            _currAccBalanceCalculated = false;
 
             trInvoiceLinesBindingSource.DataSource = null;
 
@@ -2445,9 +2479,13 @@ namespace Foxoft
             trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
             lbl_CurrAccDesc.Text = $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}";
 
-            CurrAccBalanceBefore = Math.Round(
-                efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode,
-                    trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime)), 2);
+            // _isLoading aktiv olanda (məs. yeni faktura açılışında default müştəri set olunanda)
+            // ağır balans/anbar sorğularını işə salma — form tez açılsın.
+            if (_isLoading)
+                return;
+
+            // Balans cache-ini invalidate et — növbəti istifadədə yenidən hesablanacaq.
+            _currAccBalanceCalculated = false;
 
             _pendingPaymentCurrAccUpdate = true;
 
