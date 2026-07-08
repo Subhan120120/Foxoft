@@ -1604,18 +1604,25 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                       .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
-                                       .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
-                                       .AsEnumerable()
-                                       .Where(x => x.TrInvoiceHeader.DocumentDate.Add(x.TrInvoiceHeader.DocumentTime) < documentDate)
-                                       .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
+            DateTime dateOnly = documentDate.Date;
+            TimeSpan timeOnly = documentDate.TimeOfDay;
 
-            decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+            string[] processCodes = { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" };
+
+            decimal invoiceSum = db.TrInvoiceLines
+                                       .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
+                                       .Where(x => processCodes.Contains(x.TrInvoiceHeader.ProcessCode))
+                                       .Where(x => x.TrInvoiceHeader.DocumentDate < dateOnly
+                                                 || (x.TrInvoiceHeader.DocumentDate == dateOnly
+                                                     && x.TrInvoiceHeader.DocumentTime < timeOnly))
+                                       .Sum(x => (decimal?)((x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)))) ?? 0m;
+
+            decimal paymentSum = db.TrPaymentLines
                                        .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
-                                       .AsEnumerable()
-                                       .Where(x => x.TrPaymentHeader.OperationDate.Add(x.TrPaymentHeader.OperationTime) < documentDate)
-                                       .Sum(x => x.PaymentLoc);
+                                       .Where(x => x.TrPaymentHeader.OperationDate < dateOnly
+                                                 || (x.TrPaymentHeader.OperationDate == dateOnly
+                                                     && x.TrPaymentHeader.OperationTime < timeOnly))
+                                       .Sum(x => (decimal?)x.PaymentLoc) ?? 0m;
 
             return paymentSum + invoiceSum;
         }
@@ -1624,11 +1631,15 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+            DateTime dateOnly = documentDate.Date;
+            TimeSpan timeOnly = documentDate.TimeOfDay;
+
+            decimal paymentSum = db.TrPaymentLines
                                        .Where(x => x.CashRegisterCode == cashRegCode)
-                                       .ToList() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
-                                       .Where(x => x.TrPaymentHeader.OperationDate.Add(x.TrPaymentHeader.OperationTime) < documentDate)
-                                       .Sum(x => x.PaymentLoc);
+                                       .Where(x => x.TrPaymentHeader.OperationDate < dateOnly
+                                                 || (x.TrPaymentHeader.OperationDate == dateOnly
+                                                     && x.TrPaymentHeader.OperationTime < timeOnly))
+                                       .Sum(x => (decimal?)x.PaymentLoc) ?? 0m;
 
             return paymentSum;
         }
