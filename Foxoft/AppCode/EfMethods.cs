@@ -1604,10 +1604,10 @@ namespace Foxoft
         {
             using subContext db = new();
 
+            string[] processCodes = { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" };
+
             DateTime dateOnly = documentDate.Date;
             TimeSpan timeOnly = documentDate.TimeOfDay;
-
-            string[] processCodes = { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" };
 
             decimal invoiceSum = db.TrInvoiceLines
                                        .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
