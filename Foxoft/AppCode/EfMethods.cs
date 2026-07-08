@@ -1620,40 +1620,6 @@ namespace Foxoft
             return paymentSum + invoiceSum;
         }
 
-        /// <summary>
-        /// SQL-side optimized balance calculation. Avoids pulling entire history
-        /// into memory by applying CurrAccCode, ProcessCode, and date/time
-        /// filters entirely on the SQL Server side.
-        /// </summary>
-        public decimal SelectCurrAccBalanceSQL(string currAccCode, DateTime documentDate, TimeSpan documentTime)
-        {
-            if (string.IsNullOrEmpty(currAccCode))
-                return 0;
-
-            using subContext db = new();
-
-            string[] processCodes = { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" };
-
-            // Split date+time comparison so EF Core can translate to SQL:
-            //   (DocumentDate < date) OR (DocumentDate == date AND DocumentTime < time)
-            decimal invoiceSum = db.TrInvoiceLines
-                                       .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
-                                       .Where(x => processCodes.Contains(x.TrInvoiceHeader.ProcessCode))
-                                       .Where(x => x.TrInvoiceHeader.DocumentDate < documentDate
-                                                 || (x.TrInvoiceHeader.DocumentDate == documentDate
-                                                     && x.TrInvoiceHeader.DocumentTime < documentTime))
-                                       .Sum(x => (decimal?)((x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)))) ?? 0;
-
-            decimal paymentSum = db.TrPaymentLines
-                                       .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
-                                       .Where(x => x.TrPaymentHeader.OperationDate < documentDate
-                                                 || (x.TrPaymentHeader.OperationDate == documentDate
-                                                     && x.TrPaymentHeader.OperationTime < documentTime))
-                                       .Sum(x => (decimal?)x.PaymentLoc) ?? 0;
-
-            return paymentSum + invoiceSum;
-        }
-
         public decimal SelectCashRegBalance(string cashRegCode, DateTime documentDate)
         {
             using subContext db = new();
@@ -1913,19 +1879,6 @@ namespace Foxoft
                 defCustomer = dcCurrAcc.CurrAccCode;
 
             return defCustomer;
-        }
-
-        /// <summary>
-        /// Returns the full DcCurrAcc entity for the default customer in a single
-        /// DB call, so callers can read both CurrAccCode and CurrAccDesc without
-        /// extra roundtrips.
-        /// </summary>
-        public DcCurrAcc SelectDefaultCustomerByStoreWithDetails(string storeCode)
-        {
-            using subContext db = new();
-
-            return db.DcCurrAccs.Where(x => x.IsDefault == true && x.CurrAccTypeCode == CurrAccType.Customer)
-                                .FirstOrDefault(x => x.IsDisabled == false && x.StoreCode == storeCode);
         }
 
         public DcCurrAcc Login(string CurrAccCode, string Password)
