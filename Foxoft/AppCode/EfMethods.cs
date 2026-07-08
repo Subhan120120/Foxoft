@@ -1,4 +1,4 @@
-﻿using DevExpress.CodeParser;
+using DevExpress.CodeParser;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
@@ -889,9 +889,18 @@ namespace Foxoft
 
         }
 
-        public int DeleteInvoice(Guid invoiceHeaderId)
+        public int DeleteInvoice(Guid invoiceHeaderId, string deletedByUserName = null)
         {
             using subContext db = new();
+
+            if (!string.IsNullOrEmpty(deletedByUserName))
+            {
+                db.TrInvoiceHeaders
+                    .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                    .ExecuteUpdate(s => s
+                        .SetProperty(x => x.LastUpdatedUserName, deletedByUserName)
+                        .SetProperty(x => x.LastUpdatedDate, DateTime.Now));
+            }
 
             string editable = invoiceHeaderId.ToString();
             Guid transferHead = Guid.Parse(editable.Replace(editable.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
@@ -963,11 +972,21 @@ namespace Foxoft
             return db.TrPaymentHeaders.FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
         }
 
-        public int DeletePaymentsByInvoiceId(Guid invoiceHeaderId)
+        public int DeletePaymentsByInvoiceId(Guid invoiceHeaderId, string deletedByUserName = null)
         {
             using subContext db = new();
+
+            if (!string.IsNullOrEmpty(deletedByUserName))
+            {
+                db.TrPaymentHeaders
+                    .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                    .ExecuteUpdate(s => s
+                        .SetProperty(x => x.LastUpdatedUserName, deletedByUserName)
+                        .SetProperty(x => x.LastUpdatedDate, DateTime.Now));
+            }
+
             List<TrPaymentHeader> trPaymentHeaders = db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                                               .ToList();
+                                                                .ToList();
             if (trPaymentHeaders is not null)
                 db.TrPaymentHeaders.RemoveRange(trPaymentHeaders);
 

@@ -1,4 +1,4 @@
-﻿
+
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -2076,14 +2076,14 @@ namespace Foxoft
 
                 if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
                     if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                        efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                        efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
                     else if (XtraMessageBox.Show(
                                  xtraMessageBox(
                                      Resources.Common_Attention,
                                      Resources.Form_Invoice_DeletePaymentsForInvoiceQuestion,
                                      "DeletePayment")) == DialogResult.OK)
                         if (currAccHasDeletePayClaims)
-                            efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                            efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
                         else
                             XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionDeletePayment);
 
@@ -2101,7 +2101,7 @@ namespace Foxoft
                         else
                             XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionExpense);
 
-                efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
+                efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
 
                 ClearControlsAddNew();
             }
@@ -4617,7 +4617,7 @@ namespace Foxoft
                 Resources.Common_Attention,
                 MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
                 UpdatePaidLabels();
             }
         }
