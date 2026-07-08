@@ -18,6 +18,12 @@ namespace Foxoft.AppCode
         private static Dictionary<string, FormSizeInfo> _cache;
         private static readonly object _lock = new();
 
+        /// <summary>
+        /// Tracks the previous WindowState per form so we can detect
+        /// Maximize / Restore button clicks via the Resize event.
+        /// </summary>
+        private static readonly Dictionary<Form, FormWindowState> _previousStates = new();
+
         static FormSizeHelper()
         {
             string appDataDir = Path.Combine(
@@ -39,8 +45,17 @@ namespace Foxoft.AppCode
 
             RestoreSize(form);
 
+            // Remember current state for change detection
+            _previousStates[form] = form.WindowState;
+
+            // ResizeEnd fires only on border drag — captures Normal size changes
             form.ResizeEnd += OnFormResizeEnd;
-            form.FormClosed += OnFormClosed;
+
+            // Resize fires on Maximize/Restore/Minimize button clicks
+            form.Resize += OnFormResize;
+
+            // Use FormClosing (not FormClosed) so we save BEFORE the Dispose() handler
+            form.FormClosing += OnFormClosing;
         }
 
         private static void RestoreSize(Form form)
@@ -71,13 +86,35 @@ namespace Foxoft.AppCode
                 SaveSize(form);
         }
 
-        private static void OnFormClosed(object sender, FormClosedEventArgs e)
+        /// <summary>
+        /// Detects Maximize / Restore / Minimize via WindowState change.
+        /// Only saves when the state actually changed to avoid redundant writes.
+        /// </summary>
+        private static void OnFormResize(object sender, EventArgs e)
+        {
+            if (sender is Form form)
+            {
+                _previousStates.TryGetValue(form, out FormWindowState previous);
+
+                if (form.WindowState != previous)
+                {
+                    _previousStates[form] = form.WindowState;
+                    SaveSize(form);
+                }
+            }
+        }
+
+        private static void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (sender is Form form)
             {
                 SaveSize(form);
+
+                // Clean up event subscriptions and state tracking
                 form.ResizeEnd -= OnFormResizeEnd;
-                form.FormClosed -= OnFormClosed;
+                form.Resize -= OnFormResize;
+                form.FormClosing -= OnFormClosing;
+                _previousStates.Remove(form);
             }
         }
 
@@ -148,3 +185,4 @@ namespace Foxoft.AppCode
         public FormWindowState State { get; set; }
     }
 }
+
