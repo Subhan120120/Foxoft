@@ -1053,6 +1053,8 @@ namespace Foxoft
                 .SelectEntityById<DcCurrAcc>(salesPersonCode)
                 ?.CurrAccDesc;
 
+            string lineDescription = (view.GetRow(e.RowHandle) as TrInvoiceLine)?.LineDescription ?? string.Empty;
+
             string strVatRate = view.GetRowCellDisplayText(
                 e.RowHandle,
                 view.Columns[nameof(TrInvoiceLine.VatRate)]);
@@ -1065,7 +1067,8 @@ namespace Foxoft
                 netAmount,
                 vatRate,
                 barcode,
-                salesPersonDesc);
+                salesPersonDesc,
+                lineDescription);
         }
 
         private void btn_ProductSearch_Click(object sender, EventArgs e)

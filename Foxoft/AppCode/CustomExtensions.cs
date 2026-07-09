@@ -48,7 +48,7 @@ namespace Foxoft
             return errorList.Count == 0;
         }
 
-        public static string GetPreviewText(decimal PosDiscountRate, decimal Amount, decimal NetAmount, float VatRate, string Barcode, string SalesPersonCode)
+        public static string GetPreviewText(decimal PosDiscountRate, decimal Amount, decimal NetAmount, float VatRate, string Barcode, string SalesPersonCode, string? lineDescription = null)
         {
             decimal PosDiscount = 0;
             if (Amount != 0 && NetAmount != 0)
@@ -64,6 +64,9 @@ namespace Foxoft
 
             if (!string.IsNullOrEmpty(SalesPersonCode))
                 previewText += Properties.Resources.Preview_Salesperson + SalesPersonCode + "\n";
+
+            if (!string.IsNullOrWhiteSpace(lineDescription))
+                previewText += Properties.Resources.Entity_InvoiceLine_LineDescription + ": " + lineDescription.Trim() + "\n";
 
             return previewText;
         }

@@ -3638,10 +3638,10 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
     <value>Qaimə Endirimi</value>
   </data>
   <data name="Form_RetailSale_Button_InvoiceDescription" xml:space="preserve">
-    <value>Qaimə Qeydi</value>
+    <value>Qaimə Açıqlaması</value>
   </data>
   <data name="Form_RetailSale_Button_LineDescription" xml:space="preserve">
-    <value>Sətir Qeydi</value>
+    <value>Sətir Açıqlaması</value>
   </data>
   <data name="Form_RetailSale_Input_InvoiceDescription" xml:space="preserve">
     <value>Qaimə açıqlamasını daxil edin</value>
