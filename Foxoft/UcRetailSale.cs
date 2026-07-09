@@ -67,6 +67,8 @@ namespace Foxoft
 
             LoadShortcuts();
 
+            ApplyPosButtonSettings();
+
             LoadLayout();
         }
 
@@ -150,7 +152,6 @@ namespace Foxoft
             LCI_PromoCode.Visibility = visible;
         }
 
-
         private void InitializeResourseName()
         {
             lbl_InvoicePaidTotalSumTxt.Text = Resources.Form_RetailSale_Label_PaidTotal;
@@ -173,6 +174,69 @@ namespace Foxoft
             btn_Desc.Text = Resources.Form_RetailSale_Button_InvoiceDescription;
             btn_LineDesc.Text = Resources.Form_RetailSale_Button_LineDescription;
             btn_NewInvoice.Text = Resources.Form_RetailSale_Button_New;
+        }
+
+        private void ApplyPosButtonSettings()
+        {
+            try
+            {
+                using var ctx = new subContext();
+                var posButtons = ctx.DcPosButtons.OrderBy(x => x.SortOrder).ToList();
+                if (posButtons.Count == 0) return;
+
+                // Button adı → (SimpleButton, LayoutControlItem) mapping
+                var buttonLayoutMap = new Dictionary<string, (SimpleButton button, DevExpress.XtraLayout.LayoutControlItem layoutItem)>(StringComparer.OrdinalIgnoreCase)
+                {
+                    ["btn_ProductSearch"]       = (btn_ProductSearch,       lCI_ProductSearch),
+                    ["btn_SalesPerson"]         = (btn_SalesPerson,         lCI_SalesPerson),
+                    ["btn_DeleteLine"]          = (btn_DeleteLine,          lCI_DeleteLine),
+                    ["btn_CancelInvoice"]       = (btn_CancelInvoice,       lCI_CancelInvoice),
+                    ["btn_UncomplatedInvoices"] = (btn_UncomplatedInvoices, layoutControlItem8),
+                    ["btn_Print"]               = (btn_Print,               lCI_Print),
+                    ["btn_PrintPreview"]        = (btn_PrintPreview,        lCI_PrintDesign),
+                    ["btn_ReportZ"]             = (btn_ReportZ,             lCI_ReportZ),
+                    ["btn_AddBasket"]           = (btn_AddBasket,           LCI_AddBasket),
+                    ["btn_LineDiscount"]        = (btn_LineDiscount,        lCI_Discount),
+                    ["btn_InvoiceDiscount"]     = (btn_InvoiceDiscount,     layoutControlItem9),
+                    ["btn_LoyaltyCard"]         = (btn_LoyaltyCard,         lCI_LoyaltyCard),
+                    ["btn_Desc"]                = (btn_Desc,                LCI_Desc),
+                    ["btn_LineDesc"]            = (btn_LineDesc,            LCI_LineDesc),
+                    ["btn_CampaignApply"]       = (btn_CampaignApply,       LCI_CampaignApply),
+                    ["btn_CampaignDelete"]      = (btn_CampaignDelete,      LCI_CampaignDelete),
+                };
+
+                // Bütün buttonları SortOrder-a görə pozisiyala, gizli olanlar boş xana olaraq qalsın
+                int colCount = 4;
+
+                foreach (var posBtn in posButtons)
+                {
+                    if (!buttonLayoutMap.TryGetValue(posBtn.ButtonName, out var pair))
+                        continue;
+
+                    var (button, layoutItem) = pair;
+
+                    // Pozisiyanı SortOrder-a görə təyin et
+                    layoutItem.OptionsTableLayoutItem.RowIndex = posBtn.SortOrder / colCount;
+                    layoutItem.OptionsTableLayoutItem.ColumnIndex = posBtn.SortOrder % colCount;
+
+                    // Visibility — gizli olanlar yerini saxlayır, sadəcə görünmür
+                    layoutItem.Visibility = posBtn.IsVisible
+                        ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always
+                        : DevExpress.XtraLayout.Utils.LayoutVisibility.OnlyInCustomization;
+
+                    // BackColor
+                    if (posBtn.BackColorArgb.HasValue)
+                        button.BackColor = Color.FromArgb(posBtn.BackColorArgb.Value);
+
+                    // ForeColor
+                    if (posBtn.ForeColorArgb.HasValue)
+                        button.ForeColor = Color.FromArgb(posBtn.ForeColorArgb.Value);
+                }
+            }
+            catch
+            {
+                // Databaza əlçatan deyilsə, default layout-la davam et
+            }
         }
 
         private void BindCheckedCombo()

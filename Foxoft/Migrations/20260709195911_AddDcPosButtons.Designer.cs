@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20260707110741_ContactDescText")]
-    partial class ContactDescText
+    [Migration("20260709195911_AddDcPosButtons")]
+    partial class AddDcPosButtons
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1796,6 +1796,173 @@ namespace Foxoft.Migrations
                             PersonalTypeCode = (byte)1,
                             IsDisabled = false,
                             PersonalTypeDesc = "Satıcı"
+                        });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcPosButton", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BackColorArgb")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ButtonDescription")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ButtonName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("ForeColorArgb")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ButtonName")
+                        .IsUnique();
+
+                    b.ToTable("DcPosButtons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ButtonDescription = "Məhsul Axtar",
+                            ButtonName = "btn_ProductSearch",
+                            IsVisible = true,
+                            SortOrder = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ButtonDescription = "Satıcı",
+                            ButtonName = "btn_SalesPerson",
+                            IsVisible = true,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ButtonDescription = "Sətri Sil",
+                            ButtonName = "btn_DeleteLine",
+                            IsVisible = true,
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ButtonDescription = "Çeki Ləğv Et",
+                            ButtonName = "btn_CancelInvoice",
+                            IsVisible = true,
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ButtonDescription = "Natamam Fakturalar",
+                            ButtonName = "btn_UncomplatedInvoices",
+                            IsVisible = true,
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ButtonDescription = "Çap",
+                            ButtonName = "btn_Print",
+                            IsVisible = true,
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ButtonDescription = "Çap Görünüş",
+                            ButtonName = "btn_PrintPreview",
+                            IsVisible = true,
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ButtonDescription = "Gün Sonu",
+                            ButtonName = "btn_ReportZ",
+                            IsVisible = true,
+                            SortOrder = 7
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ButtonDescription = "Səbətə At",
+                            ButtonName = "btn_AddBasket",
+                            IsVisible = true,
+                            SortOrder = 8
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ButtonDescription = "Sətir Endirimi",
+                            ButtonName = "btn_LineDiscount",
+                            IsVisible = true,
+                            SortOrder = 9
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ButtonDescription = "Qaimə Endirimi",
+                            ButtonName = "btn_InvoiceDiscount",
+                            IsVisible = true,
+                            SortOrder = 10
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ButtonDescription = "Bonus Kart",
+                            ButtonName = "btn_LoyaltyCard",
+                            IsVisible = true,
+                            SortOrder = 11
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ButtonDescription = "Faktura Açıqlama",
+                            ButtonName = "btn_Desc",
+                            IsVisible = true,
+                            SortOrder = 12
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ButtonDescription = "Sətir Açıqlama",
+                            ButtonName = "btn_LineDesc",
+                            IsVisible = true,
+                            SortOrder = 13
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ButtonDescription = "Kampaniya Tətbiq Et",
+                            ButtonName = "btn_CampaignApply",
+                            IsVisible = true,
+                            SortOrder = 14
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ButtonDescription = "Kampaniyanı Sil",
+                            ButtonName = "btn_CampaignDelete",
+                            IsVisible = true,
+                            SortOrder = 15
                         });
                 });
 

@@ -1,4 +1,4 @@
-﻿
+
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -116,6 +116,8 @@ namespace Foxoft
             ucShortcutSetting1 = new UcShortcutSetting();
             tabPageMessaging = new DevExpress.XtraTab.XtraTabPage();
             ucMessagingSetting1 = new UcMessagingSetting();
+            tabPagePosButtons = new DevExpress.XtraTab.XtraTabPage();
+            ucPosButtonSetting1 = new UcPosButtonSetting();
             ((System.ComponentModel.ISupportInitialize)tabControl1).BeginInit();
             tabControl1.SuspendLayout();
             tabPageSettings.SuspendLayout();
@@ -195,6 +197,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             tabPageShortcuts.SuspendLayout();
             tabPageMessaging.SuspendLayout();
+            tabPagePosButtons.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -205,7 +208,7 @@ namespace Foxoft
             tabControl1.SelectedTabPage = tabPageSettings;
             tabControl1.Size = new Size(800, 720);
             tabControl1.TabIndex = 1;
-            tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts, tabPageMessaging });
+            tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts, tabPageMessaging, tabPagePosButtons });
             // 
             // tabPageSettings
             // 
@@ -1028,6 +1031,21 @@ namespace Foxoft
             ucMessagingSetting1.Size = new Size(798, 695);
             ucMessagingSetting1.TabIndex = 0;
             // 
+            // tabPagePosButtons
+            // 
+            tabPagePosButtons.Controls.Add(ucPosButtonSetting1);
+            tabPagePosButtons.Name = "tabPagePosButtons";
+            tabPagePosButtons.Size = new Size(798, 695);
+            tabPagePosButtons.Text = Resources.Form_PosButtonSetting_Caption;
+            // 
+            // ucPosButtonSetting1
+            // 
+            ucPosButtonSetting1.Dock = DockStyle.Fill;
+            ucPosButtonSetting1.Location = new Point(0, 0);
+            ucPosButtonSetting1.Name = "ucPosButtonSetting1";
+            ucPosButtonSetting1.Size = new Size(798, 695);
+            ucPosButtonSetting1.TabIndex = 0;
+            // 
             // FormAppSetting
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -1116,6 +1134,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             tabPageShortcuts.ResumeLayout(false);
             tabPageMessaging.ResumeLayout(false);
+            tabPagePosButtons.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1206,5 +1225,8 @@ namespace Foxoft
         // Messaging tab
         private DevExpress.XtraTab.XtraTabPage tabPageMessaging;
         private Foxoft.UcMessagingSetting ucMessagingSetting1;
+        // POS Button Settings tab
+        private DevExpress.XtraTab.XtraTabPage tabPagePosButtons;
+        private Foxoft.UcPosButtonSetting ucPosButtonSetting1;
     }
 }

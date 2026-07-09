@@ -4921,4 +4921,33 @@ Send a close request to the document owner?</value>
   </data>
   <data name="Form_Invoice_RelatedInvoices" xml:space="preserve">
     <value>Related Invoices</value>
+  </data>  <data name="Entity_PosButton" xml:space="preserve">
+    <value>POS Button</value>
+  </data>
+  <data name="Entity_PosButton_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Entity_PosButton_ButtonName" xml:space="preserve">
+    <value>Button Name</value>
+  </data>
+  <data name="Entity_PosButton_ButtonDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Entity_PosButton_IsVisible" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="Entity_PosButton_SortOrder" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Entity_PosButton_BackColor" xml:space="preserve">
+    <value>Back Color</value>
+  </data>
+  <data name="Entity_PosButton_ForeColor" xml:space="preserve">
+    <value>Text Color</value>
+  </data>
+  <data name="Form_PosButtonSetting_Caption" xml:space="preserve">
+    <value>POS Button Settings</value>
+  </data>
+  <data name="Common_DragToReorder" xml:space="preserve">
+    <value>Drag rows to reorder</value>
   </data></root>

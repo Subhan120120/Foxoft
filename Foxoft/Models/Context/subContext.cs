@@ -125,6 +125,7 @@ namespace Foxoft.Models
         public DbSet<TrCredit> TrCredits { get; set; }
         public DbSet<DcShortcut> DcShortcuts { get; set; }
         public DbSet<DcMessagingSetting> DcMessagingSettings { get; set; }
+        public DbSet<DcPosButton> DcPosButtons { get; set; }
 
         //CRM Model
         public DbSet<TrCrmActivity> TrCrmActivities { get; set; }
@@ -424,6 +425,10 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcShortcut>()
                         .HasIndex(s => new { s.FormName, s.ButtonName })
+                        .IsUnique();
+
+            modelBuilder.Entity<DcPosButton>()
+                        .HasIndex(p => p.ButtonName)
                         .IsUnique();
 
             modelBuilder.Entity<TrInvoiceHeader>(entity =>
@@ -1130,6 +1135,26 @@ namespace Foxoft.Models
                 new DcCrmActivityType { ActivityTypeId = 3, ActivityTypeDesc = "Tapşırıq", IsDisabled = false },
                 new DcCrmActivityType { ActivityTypeId = 4, ActivityTypeDesc = "Email", IsDisabled = false },
                 new DcCrmActivityType { ActivityTypeId = 5, ActivityTypeDesc = "Ziyarət", IsDisabled = false }
+            );
+
+            // --- DcPosButton Seed Data ---
+            modelBuilder.Entity<DcPosButton>().HasData(
+                new DcPosButton { Id = 1,  ButtonName = "btn_ProductSearch",       ButtonDescription = "Məhsul Axtar",       IsVisible = true, SortOrder = 0 },
+                new DcPosButton { Id = 2,  ButtonName = "btn_SalesPerson",         ButtonDescription = "Satıcı",             IsVisible = true, SortOrder = 1 },
+                new DcPosButton { Id = 3,  ButtonName = "btn_DeleteLine",          ButtonDescription = "Sətri Sil",          IsVisible = true, SortOrder = 2 },
+                new DcPosButton { Id = 4,  ButtonName = "btn_CancelInvoice",       ButtonDescription = "Çeki Ləğv Et",       IsVisible = true, SortOrder = 3 },
+                new DcPosButton { Id = 5,  ButtonName = "btn_UncomplatedInvoices", ButtonDescription = "Natamam Fakturalar",  IsVisible = true, SortOrder = 4 },
+                new DcPosButton { Id = 6,  ButtonName = "btn_Print",               ButtonDescription = "Çap",                IsVisible = true, SortOrder = 5 },
+                new DcPosButton { Id = 7,  ButtonName = "btn_PrintPreview",        ButtonDescription = "Çap Görünüş",        IsVisible = true, SortOrder = 6 },
+                new DcPosButton { Id = 8,  ButtonName = "btn_ReportZ",             ButtonDescription = "Gün Sonu",           IsVisible = true, SortOrder = 7 },
+                new DcPosButton { Id = 9,  ButtonName = "btn_AddBasket",           ButtonDescription = "Səbətə At",          IsVisible = true, SortOrder = 8 },
+                new DcPosButton { Id = 10, ButtonName = "btn_LineDiscount",        ButtonDescription = "Sətir Endirimi",     IsVisible = true, SortOrder = 9 },
+                new DcPosButton { Id = 11, ButtonName = "btn_InvoiceDiscount",     ButtonDescription = "Qaimə Endirimi",     IsVisible = true, SortOrder = 10 },
+                new DcPosButton { Id = 12, ButtonName = "btn_LoyaltyCard",         ButtonDescription = "Bonus Kart",         IsVisible = true, SortOrder = 11 },
+                new DcPosButton { Id = 13, ButtonName = "btn_Desc",                ButtonDescription = "Faktura Açıqlama",   IsVisible = true, SortOrder = 12 },
+                new DcPosButton { Id = 14, ButtonName = "btn_LineDesc",            ButtonDescription = "Sətir Açıqlama",     IsVisible = true, SortOrder = 13 },
+                new DcPosButton { Id = 15, ButtonName = "btn_CampaignApply",       ButtonDescription = "Kampaniya Tətbiq Et",IsVisible = true, SortOrder = 14 },
+                new DcPosButton { Id = 16, ButtonName = "btn_CampaignDelete",      ButtonDescription = "Kampaniyanı Sil",    IsVisible = true, SortOrder = 15 }
             );
         }
 

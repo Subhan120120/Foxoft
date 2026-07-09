@@ -4922,4 +4922,33 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   <data name="Form_Invoice_RelatedInvoices" xml:space="preserve">
     <value>Əlaqəli Fakturalar</value>
   </data>
-</root>
+  <data name="Entity_PosButton" xml:space="preserve">
+    <value>POS Düymə</value>
+  </data>
+  <data name="Entity_PosButton_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Entity_PosButton_ButtonName" xml:space="preserve">
+    <value>Düymə Adı</value>
+  </data>
+  <data name="Entity_PosButton_ButtonDescription" xml:space="preserve">
+    <value>Təsvir</value>
+  </data>
+  <data name="Entity_PosButton_IsVisible" xml:space="preserve">
+    <value>Görünən</value>
+  </data>
+  <data name="Entity_PosButton_SortOrder" xml:space="preserve">
+    <value>Sıra</value>
+  </data>
+  <data name="Entity_PosButton_BackColor" xml:space="preserve">
+    <value>Fon Rəngi</value>
+  </data>
+  <data name="Entity_PosButton_ForeColor" xml:space="preserve">
+    <value>Yazı Rəngi</value>
+  </data>
+  <data name="Form_PosButtonSetting_Caption" xml:space="preserve">
+    <value>POS Düymə Parametrləri</value>
+  </data>
+  <data name="Common_DragToReorder" xml:space="preserve">
+    <value>Sıranı dəyişmək üçün sürükləyin</value>
+  </data></root>
