@@ -6,14 +6,16 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
+using System.Drawing.Printing;
 using System.IO;
 
 namespace Foxoft
 {
     public partial class FormTerminal : XtraForm
     {
-        subContext dbContext;
+        subContext? dbContext;
         EfMethods efMethods = new EfMethods();
+        bool isLoading;
 
         // Edit olunan entity
         public DcTerminal dcTerminal = new();
@@ -39,9 +41,20 @@ namespace Foxoft
 
         private void FormTerminal_Load(object sender, EventArgs e)
         {
-            LoadLookups();
-            LoadTerminal();
-            LoadLayout();
+            isLoading = true;
+
+            try
+            {
+                LoadLookups();
+                LoadPrinters();
+                LoadTerminal();
+                LoadLayout();
+                EnsureTerminalFieldsVisible();
+            }
+            finally
+            {
+                isLoading = false;
+            }
 
             dataLayoutControl1.IsValid(out List<string> errorList);
         }
@@ -49,6 +62,14 @@ namespace Foxoft
         private void LoadLookups()
         {
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
+        }
+
+        private void LoadPrinters()
+        {
+            PrinterNameComboBoxEdit.Properties.Items.Clear();
+
+            foreach (string printerName in PrinterSettings.InstalledPrinters)
+                PrinterNameComboBoxEdit.Properties.Items.Add(printerName);
         }
 
         private void LoadTerminal()
@@ -78,13 +99,30 @@ namespace Foxoft
                 dataLayoutControl1.RestoreLayoutFromXml(layoutFilePath);
         }
 
+        private void EnsureTerminalFieldsVisible()
+        {
+            var visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
+
+            ItemForTerminalId.Visibility = visibility;
+            ItemForTerminalDesc.Visibility = visibility;
+            ItemForStoreCode.Visibility = visibility;
+            ItemForCashRegisterCode.Visibility = visibility;
+            ItemForPrinterName.Visibility = visibility;
+            ItemForIsDisabled.Visibility = visibility;
+            ItemForTouchUIMode.Visibility = visibility;
+            ItemForTouchScaleFactor.Visibility = visibility;
+            ItemForRowGuid.Visibility = visibility;
+        }
+
         private void ClearControlsAddNew()
         {
-            dcTerminal = dcTerminalsBindingSource.AddNew() as DcTerminal;
+            dcTerminal = (DcTerminal)dcTerminalsBindingSource.AddNew();
 
             // Default-lar
             dcTerminal.IsDisabled = false;
             dcTerminal.TouchUIMode = false;
+            dcTerminal.TouchScaleFactor = 1;
+            dcTerminal.PrinterName = GetDefaultPrinterName();
 
             if (dcTerminal.RowGuid == null)
                 dcTerminal.RowGuid = Guid.NewGuid();
@@ -95,9 +133,13 @@ namespace Foxoft
 
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
         {
-            // BaseEntity sahələri layihəyə görə fərqli ola bilər – ehtiyac olduqda burada gizlət.
-            if (e.FieldName == "ModifiedDate" || e.FieldName == "CreatedDate" ||
-                e.FieldName == "CreatedUserName" || e.FieldName == "ModifiedUserName")
+            if (e.FieldName is nameof(BaseEntity.CreatedDate)
+                or nameof(BaseEntity.CreatedUserName)
+                or nameof(BaseEntity.LastUpdatedDate)
+                or nameof(BaseEntity.LastUpdatedUserName)
+                or nameof(DcTerminal.DcCashRegister)
+                or nameof(DcTerminal.DcStore)
+                or nameof(DcTerminal.TrInvoiceHeaders))
             {
                 e.Visible = false;
                 e.Handled = true;
@@ -106,9 +148,17 @@ namespace Foxoft
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {
+            if (!ValidateChildren())
+                return;
+
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                dcTerminal = dcTerminalsBindingSource.Current as DcTerminal;
+                dcTerminalsBindingSource.EndEdit();
+                if (dcTerminalsBindingSource.Current is not DcTerminal currentTerminal)
+                    return;
+
+                dcTerminal = currentTerminal;
+                dbContext ??= new subContext();
 
                 if (dcTerminal.TerminalId <= 0)
                     dbContext.DcTerminals.Add(dcTerminal);
@@ -119,8 +169,11 @@ namespace Foxoft
             }
             else
             {
-                string combined = errorList.Aggregate((x, y) => x + "" + y);
-                XtraMessageBox.Show(combined);
+                XtraMessageBox.Show(
+                    string.Join(Environment.NewLine, errorList),
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -132,11 +185,11 @@ namespace Foxoft
         private void CashRegisterCodeButtonEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            string storeCode = StoreCodeLookUpEdit.EditValue?.ToString();
+            string storeCode = StoreCodeLookUpEdit.EditValue?.ToString() ?? string.Empty;
 
-            using (FormCashRegisterList form = new(editor.EditValue?.ToString(), storeCode, PaymentType.Cash))
+            using (FormCashRegisterList form = new(editor.EditValue?.ToString() ?? string.Empty, storeCode, PaymentType.Cash))
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK && form.dcCurrAcc is not null)
                 {
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;
                 }
@@ -150,12 +203,12 @@ namespace Foxoft
 
             dxErrorProvider1.SetError(editor, string.Empty);
 
-            string value = editor.Text?.Trim();
+            string value = editor.Text?.Trim() ?? string.Empty;
 
             if (string.IsNullOrEmpty(value))
                 return;
 
-            DcCurrAcc curr = efMethods.SelectCashReg(value, PaymentType.Cash);
+            DcCurrAcc? curr = efMethods.SelectCashReg(value, PaymentType.Cash);
 
             if (curr is null)
             {
@@ -179,7 +232,18 @@ namespace Foxoft
 
         private void StoreCodeLookUpEdit_EditValueChanged(object sender, EventArgs e)
         {
+            if (isLoading)
+                return;
+
             CashRegisterCodeButtonEdit.EditValue = null;
+        }
+
+        private static string? GetDefaultPrinterName()
+        {
+            using PrintDocument printDocument = new();
+            string printerName = printDocument.PrinterSettings.PrinterName;
+
+            return string.IsNullOrWhiteSpace(printerName) ? null : printerName;
         }
     }
 }

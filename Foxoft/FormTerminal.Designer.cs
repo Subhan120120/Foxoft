@@ -39,6 +39,7 @@
             RowGuidTextEdit = new DevExpress.XtraEditors.TextEdit();
             TouchUIModeCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             TouchScaleFactorSpinEdit = new DevExpress.XtraEditors.SpinEdit();
+            PrinterNameComboBoxEdit = new DevExpress.XtraEditors.ComboBoxEdit();
             CashRegisterCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
             StoreCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -46,9 +47,11 @@
             ItemForTerminalId = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForTerminalDesc = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForCashRegisterCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPrinterName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForTouchUIMode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForTouchScaleFactor = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForRowGuid = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             ItemForStoreCode = new DevExpress.XtraLayout.LayoutControlItem();
             lcgButtons = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -65,6 +68,7 @@
             ((System.ComponentModel.ISupportInitialize)RowGuidTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TouchUIModeCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TouchScaleFactorSpinEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PrinterNameComboBoxEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CashRegisterCodeButtonEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)StoreCodeLookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
@@ -72,9 +76,11 @@
             ((System.ComponentModel.ISupportInitialize)ItemForTerminalId).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTerminalDesc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCashRegisterCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPrinterName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForIsDisabled).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTouchUIMode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTouchScaleFactor).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForRowGuid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForStoreCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lcgButtons).BeginInit();
@@ -94,6 +100,7 @@
             dataLayoutControl1.Controls.Add(RowGuidTextEdit);
             dataLayoutControl1.Controls.Add(TouchUIModeCheckEdit);
             dataLayoutControl1.Controls.Add(TouchScaleFactorSpinEdit);
+            dataLayoutControl1.Controls.Add(PrinterNameComboBoxEdit);
             dataLayoutControl1.Controls.Add(CashRegisterCodeButtonEdit);
             dataLayoutControl1.Controls.Add(StoreCodeLookUpEdit);
             dataLayoutControl1.DataSource = dcTerminalsBindingSource;
@@ -102,29 +109,30 @@
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(568, 0, 650, 400);
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new Size(520, 260);
+            dataLayoutControl1.Size = new Size(560, 326);
             dataLayoutControl1.TabIndex = 0;
             dataLayoutControl1.Text = "dataLayoutControl1";
             dataLayoutControl1.FieldRetrieving += dataLayoutControl1_FieldRetrieving;
             // 
             // btn_Cancel
             // 
-            btn_Cancel.Location = new Point(262, 156);
+            btn_Cancel.CausesValidation = false;
+            btn_Cancel.Location = new Point(282, 204);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new Size(246, 22);
+            btn_Cancel.Size = new Size(266, 22);
             btn_Cancel.StyleController = dataLayoutControl1;
-            btn_Cancel.TabIndex = 9;
-            btn_Cancel.Text = "Cancel";
+            btn_Cancel.TabIndex = 10;
+            btn_Cancel.Text = Properties.Resources.Common_Cancel;
             btn_Cancel.Click += btn_Cancel_Click;
             // 
             // btn_Ok
             // 
-            btn_Ok.Location = new Point(12, 156);
+            btn_Ok.Location = new Point(12, 204);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new Size(246, 22);
+            btn_Ok.Size = new Size(266, 22);
             btn_Ok.StyleController = dataLayoutControl1;
-            btn_Ok.TabIndex = 8;
-            btn_Ok.Text = "OK";
+            btn_Ok.TabIndex = 9;
+            btn_Ok.Text = Properties.Resources.Common_Ok;
             btn_Ok.Click += btn_Ok_Click;
             // 
             // TerminalIdTextEdit
@@ -133,7 +141,7 @@
             TerminalIdTextEdit.Location = new Point(120, 12);
             TerminalIdTextEdit.Name = "TerminalIdTextEdit";
             TerminalIdTextEdit.Properties.ReadOnly = true;
-            TerminalIdTextEdit.Size = new Size(136, 20);
+            TerminalIdTextEdit.Size = new Size(148, 20);
             TerminalIdTextEdit.StyleController = dataLayoutControl1;
             TerminalIdTextEdit.TabIndex = 0;
             // 
@@ -146,52 +154,64 @@
             TerminalDescTextEdit.DataBindings.Add(new Binding("EditValue", dcTerminalsBindingSource, "TerminalDesc", true));
             TerminalDescTextEdit.Location = new Point(120, 36);
             TerminalDescTextEdit.Name = "TerminalDescTextEdit";
-            TerminalDescTextEdit.Size = new Size(388, 20);
+            TerminalDescTextEdit.Size = new Size(428, 20);
             TerminalDescTextEdit.StyleController = dataLayoutControl1;
             TerminalDescTextEdit.TabIndex = 1;
             // 
             // IsDisabledCheckEdit
             // 
             IsDisabledCheckEdit.DataBindings.Add(new Binding("EditValue", dcTerminalsBindingSource, "IsDisabled", true));
-            IsDisabledCheckEdit.Location = new Point(12, 108);
+            IsDisabledCheckEdit.Location = new Point(12, 132);
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
             IsDisabledCheckEdit.Properties.Caption = Properties.Resources.Common_IsDisabled;
-            IsDisabledCheckEdit.Size = new Size(244, 20);
+            IsDisabledCheckEdit.Size = new Size(266, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
-            IsDisabledCheckEdit.TabIndex = 4;
+            IsDisabledCheckEdit.TabIndex = 5;
             // 
             // RowGuidTextEdit
             // 
             RowGuidTextEdit.DataBindings.Add(new Binding("EditValue", dcTerminalsBindingSource, "RowGuid", true));
-            RowGuidTextEdit.Location = new Point(120, 156);
+            RowGuidTextEdit.Location = new Point(120, 180);
             RowGuidTextEdit.Name = "RowGuidTextEdit";
             RowGuidTextEdit.Properties.ReadOnly = true;
-            RowGuidTextEdit.Size = new Size(388, 20);
+            RowGuidTextEdit.Size = new Size(428, 20);
             RowGuidTextEdit.StyleController = dataLayoutControl1;
-            RowGuidTextEdit.TabIndex = 7;
+            RowGuidTextEdit.TabIndex = 8;
             // 
             // TouchUIModeCheckEdit
             // 
             TouchUIModeCheckEdit.DataBindings.Add(new Binding("EditValue", dcTerminalsBindingSource, "TouchUIMode", true));
-            TouchUIModeCheckEdit.Location = new Point(260, 108);
+            TouchUIModeCheckEdit.Location = new Point(282, 132);
             TouchUIModeCheckEdit.Name = "TouchUIModeCheckEdit";
             TouchUIModeCheckEdit.Properties.Caption = Properties.Resources.Entity_Terminal_TouchUIMode;
-            TouchUIModeCheckEdit.Size = new Size(248, 20);
+            TouchUIModeCheckEdit.Size = new Size(266, 20);
             TouchUIModeCheckEdit.StyleController = dataLayoutControl1;
-            TouchUIModeCheckEdit.TabIndex = 5;
+            TouchUIModeCheckEdit.TabIndex = 6;
             // 
             // TouchScaleFactorSpinEdit
             // 
             TouchScaleFactorSpinEdit.DataBindings.Add(new Binding("EditValue", dcTerminalsBindingSource, "TouchScaleFactor", true));
-            TouchScaleFactorSpinEdit.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
-            TouchScaleFactorSpinEdit.Location = new Point(120, 132);
+            TouchScaleFactorSpinEdit.EditValue = new decimal(new int[] { 1, 0, 0, 0 });
+            TouchScaleFactorSpinEdit.Location = new Point(120, 156);
             TouchScaleFactorSpinEdit.Name = "TouchScaleFactorSpinEdit";
             TouchScaleFactorSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             TouchScaleFactorSpinEdit.Properties.IsFloatValue = false;
             TouchScaleFactorSpinEdit.Properties.Mask.EditMask = "N00";
-            TouchScaleFactorSpinEdit.Size = new Size(388, 20);
+            TouchScaleFactorSpinEdit.Properties.MaxValue = new decimal(new int[] { 5, 0, 0, 0 });
+            TouchScaleFactorSpinEdit.Properties.MinValue = new decimal(new int[] { 1, 0, 0, 0 });
+            TouchScaleFactorSpinEdit.Size = new Size(428, 20);
             TouchScaleFactorSpinEdit.StyleController = dataLayoutControl1;
-            TouchScaleFactorSpinEdit.TabIndex = 6;
+            TouchScaleFactorSpinEdit.TabIndex = 7;
+            // 
+            // PrinterNameComboBoxEdit
+            // 
+            PrinterNameComboBoxEdit.DataBindings.Add(new Binding("EditValue", dcTerminalsBindingSource, "PrinterName", true));
+            PrinterNameComboBoxEdit.Location = new Point(120, 108);
+            PrinterNameComboBoxEdit.Name = "PrinterNameComboBoxEdit";
+            PrinterNameComboBoxEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            PrinterNameComboBoxEdit.Size = new Size(428, 20);
+            PrinterNameComboBoxEdit.StyleController = dataLayoutControl1;
+            PrinterNameComboBoxEdit.TabIndex = 4;
             // 
             // CashRegisterCodeButtonEdit
             // 
@@ -200,10 +220,12 @@
             CashRegisterCodeButtonEdit.Name = "CashRegisterCodeButtonEdit";
             CashRegisterCodeButtonEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             CashRegisterCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            CashRegisterCodeButtonEdit.Size = new Size(388, 20);
+            CashRegisterCodeButtonEdit.Size = new Size(428, 20);
             CashRegisterCodeButtonEdit.StyleController = dataLayoutControl1;
-            CashRegisterCodeButtonEdit.TabIndex = 10;
+            CashRegisterCodeButtonEdit.TabIndex = 3;
             CashRegisterCodeButtonEdit.ButtonClick += CashRegisterCodeButtonEdit_ButtonClick;
+            CashRegisterCodeButtonEdit.InvalidValue += Btn_CashRegCode_InvalidValue;
+            CashRegisterCodeButtonEdit.Validating += Btn_CashRegCode_Validating;
             // 
             // StoreCodeLookUpEdit
             // 
@@ -212,13 +234,13 @@
             StoreCodeLookUpEdit.Name = "StoreCodeLookUpEdit";
             StoreCodeLookUpEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             StoreCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            StoreCodeLookUpEdit.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", "CurrAccCode"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "CurrAccDesc") });
+            StoreCodeLookUpEdit.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", Properties.Resources.Entity_CurrAcc_CurrAccCode), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", Properties.Resources.Entity_CurrAcc_CurrAccDesc) });
             StoreCodeLookUpEdit.Properties.DisplayMember = "CurrAccDesc";
             StoreCodeLookUpEdit.Properties.NullText = "";
             StoreCodeLookUpEdit.Properties.ValueMember = "CurrAccCode";
-            StoreCodeLookUpEdit.Size = new Size(388, 20);
+            StoreCodeLookUpEdit.Size = new Size(428, 20);
             StoreCodeLookUpEdit.StyleController = dataLayoutControl1;
-            StoreCodeLookUpEdit.TabIndex = 11;
+            StoreCodeLookUpEdit.TabIndex = 2;
             StoreCodeLookUpEdit.EditValueChanged += StoreCodeLookUpEdit_EditValueChanged;
             // 
             // Root
@@ -227,23 +249,23 @@
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1, lcgButtons, layoutControlGroup2 });
             Root.Name = "Root";
-            Root.Size = new Size(520, 260);
+            Root.Size = new Size(560, 326);
             Root.TextVisible = false;
             // 
             // layoutControlGroup1
             // 
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForTerminalId, ItemForTerminalDesc, ItemForCashRegisterCode, ItemForIsDisabled, ItemForTouchUIMode, ItemForTouchScaleFactor, emptySpaceItem1, ItemForStoreCode });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForTerminalId, ItemForTerminalDesc, ItemForStoreCode, ItemForCashRegisterCode, ItemForPrinterName, ItemForIsDisabled, ItemForTouchUIMode, ItemForTouchScaleFactor, ItemForRowGuid, emptySpaceItem1 });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "layoutControlGroup1";
-            layoutControlGroup1.Size = new Size(500, 144);
+            layoutControlGroup1.Size = new Size(540, 192);
             // 
             // ItemForTerminalId
             // 
             ItemForTerminalId.Control = TerminalIdTextEdit;
             ItemForTerminalId.Location = new Point(0, 0);
             ItemForTerminalId.Name = "ItemForTerminalId";
-            ItemForTerminalId.Size = new Size(248, 24);
+            ItemForTerminalId.Size = new Size(260, 24);
             ItemForTerminalId.Text = Properties.Resources.Entity_Terminal_Id;
             ItemForTerminalId.TextSize = new Size(96, 13);
             // 
@@ -252,90 +274,109 @@
             ItemForTerminalDesc.Control = TerminalDescTextEdit;
             ItemForTerminalDesc.Location = new Point(0, 24);
             ItemForTerminalDesc.Name = "ItemForTerminalDesc";
-            ItemForTerminalDesc.Size = new Size(500, 24);
+            ItemForTerminalDesc.Size = new Size(540, 24);
             ItemForTerminalDesc.Text = Properties.Resources.Entity_Terminal_Desc;
             ItemForTerminalDesc.TextSize = new Size(96, 13);
-            // 
-            // ItemForCashRegisterCode
-            // 
-            ItemForCashRegisterCode.Control = CashRegisterCodeButtonEdit;
-            ItemForCashRegisterCode.Location = new Point(0, 72);
-            ItemForCashRegisterCode.Name = "ItemForCashRegisterCode";
-            ItemForCashRegisterCode.Size = new Size(500, 24);
-            ItemForCashRegisterCode.Text = Properties.Resources.Entity_Terminal_CashRegisterCode;
-            ItemForCashRegisterCode.TextSize = new Size(96, 13);
-            // 
-            // ItemForIsDisabled
-            // 
-            ItemForIsDisabled.Control = IsDisabledCheckEdit;
-            ItemForIsDisabled.Location = new Point(0, 96);
-            ItemForIsDisabled.Name = "ItemForIsDisabled";
-            ItemForIsDisabled.Size = new Size(248, 24);
-            ItemForIsDisabled.TextVisible = false;
-            // 
-            // ItemForTouchUIMode
-            // 
-            ItemForTouchUIMode.Control = TouchUIModeCheckEdit;
-            ItemForTouchUIMode.Location = new Point(248, 96);
-            ItemForTouchUIMode.Name = "ItemForTouchUIMode";
-            ItemForTouchUIMode.Size = new Size(252, 24);
-            ItemForTouchUIMode.TextVisible = false;
-            // 
-            // ItemForTouchScaleFactor
-            // 
-            ItemForTouchScaleFactor.Control = TouchScaleFactorSpinEdit;
-            ItemForTouchScaleFactor.Location = new Point(0, 120);
-            ItemForTouchScaleFactor.Name = "ItemForTouchScaleFactor";
-            ItemForTouchScaleFactor.Size = new Size(500, 24);
-            ItemForTouchScaleFactor.Text = Properties.Resources.Entity_Terminal_TouchScaleFactor;
-            ItemForTouchScaleFactor.TextSize = new Size(96, 13);
-            // 
-            // emptySpaceItem1
-            // 
-            emptySpaceItem1.Location = new Point(248, 0);
-            emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(252, 24);
             // 
             // ItemForStoreCode
             // 
             ItemForStoreCode.Control = StoreCodeLookUpEdit;
             ItemForStoreCode.Location = new Point(0, 48);
             ItemForStoreCode.Name = "ItemForStoreCode";
-            ItemForStoreCode.Size = new Size(500, 24);
+            ItemForStoreCode.Size = new Size(540, 24);
+            ItemForStoreCode.Text = Properties.Resources.Entity_Terminal_StoreCode;
             ItemForStoreCode.TextSize = new Size(96, 13);
+            // 
+            // ItemForCashRegisterCode
+            // 
+            ItemForCashRegisterCode.Control = CashRegisterCodeButtonEdit;
+            ItemForCashRegisterCode.Location = new Point(0, 72);
+            ItemForCashRegisterCode.Name = "ItemForCashRegisterCode";
+            ItemForCashRegisterCode.Size = new Size(540, 24);
+            ItemForCashRegisterCode.Text = Properties.Resources.Entity_Terminal_CashRegisterCode;
+            ItemForCashRegisterCode.TextSize = new Size(96, 13);
+            // 
+            // ItemForPrinterName
+            // 
+            ItemForPrinterName.Control = PrinterNameComboBoxEdit;
+            ItemForPrinterName.Location = new Point(0, 96);
+            ItemForPrinterName.Name = "ItemForPrinterName";
+            ItemForPrinterName.Size = new Size(540, 24);
+            ItemForPrinterName.Text = Properties.Resources.Entity_Terminal_PrinterName;
+            ItemForPrinterName.TextSize = new Size(96, 13);
+            // 
+            // ItemForIsDisabled
+            // 
+            ItemForIsDisabled.Control = IsDisabledCheckEdit;
+            ItemForIsDisabled.Location = new Point(0, 120);
+            ItemForIsDisabled.Name = "ItemForIsDisabled";
+            ItemForIsDisabled.Size = new Size(270, 24);
+            ItemForIsDisabled.TextVisible = false;
+            // 
+            // ItemForTouchUIMode
+            // 
+            ItemForTouchUIMode.Control = TouchUIModeCheckEdit;
+            ItemForTouchUIMode.Location = new Point(270, 120);
+            ItemForTouchUIMode.Name = "ItemForTouchUIMode";
+            ItemForTouchUIMode.Size = new Size(270, 24);
+            ItemForTouchUIMode.TextVisible = false;
+            // 
+            // ItemForTouchScaleFactor
+            // 
+            ItemForTouchScaleFactor.Control = TouchScaleFactorSpinEdit;
+            ItemForTouchScaleFactor.Location = new Point(0, 144);
+            ItemForTouchScaleFactor.Name = "ItemForTouchScaleFactor";
+            ItemForTouchScaleFactor.Size = new Size(540, 24);
+            ItemForTouchScaleFactor.Text = Properties.Resources.Entity_Terminal_TouchScaleFactor;
+            ItemForTouchScaleFactor.TextSize = new Size(96, 13);
+            // 
+            // ItemForRowGuid
+            // 
+            ItemForRowGuid.Control = RowGuidTextEdit;
+            ItemForRowGuid.Location = new Point(0, 168);
+            ItemForRowGuid.Name = "ItemForRowGuid";
+            ItemForRowGuid.Size = new Size(540, 24);
+            ItemForRowGuid.Text = Properties.Resources.Common_RowGuid;
+            ItemForRowGuid.TextSize = new Size(96, 13);
+            // 
+            // emptySpaceItem1
+            // 
+            emptySpaceItem1.Location = new Point(260, 0);
+            emptySpaceItem1.Name = "emptySpaceItem1";
+            emptySpaceItem1.Size = new Size(280, 24);
             // 
             // lcgButtons
             // 
             lcgButtons.GroupBordersVisible = false;
             lcgButtons.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForOk, ItemForCancel });
-            lcgButtons.Location = new Point(0, 144);
+            lcgButtons.Location = new Point(0, 192);
             lcgButtons.Name = "lcgButtons";
-            lcgButtons.Size = new Size(500, 26);
+            lcgButtons.Size = new Size(540, 26);
             // 
             // ItemForOk
             // 
             ItemForOk.Control = btn_Ok;
             ItemForOk.Location = new Point(0, 0);
             ItemForOk.Name = "ItemForOk";
-            ItemForOk.Size = new Size(250, 26);
+            ItemForOk.Size = new Size(270, 26);
             ItemForOk.TextVisible = false;
             // 
             // ItemForCancel
             // 
             ItemForCancel.Control = btn_Cancel;
-            ItemForCancel.Location = new Point(250, 0);
+            ItemForCancel.Location = new Point(270, 0);
             ItemForCancel.Name = "ItemForCancel";
             ItemForCancel.OptionsTableLayoutItem.ColumnIndex = 1;
-            ItemForCancel.Size = new Size(250, 26);
+            ItemForCancel.Size = new Size(270, 26);
             ItemForCancel.TextVisible = false;
             // 
             // layoutControlGroup2
             // 
             layoutControlGroup2.AllowDrawBackground = false;
             layoutControlGroup2.GroupBordersVisible = false;
-            layoutControlGroup2.Location = new Point(0, 170);
+            layoutControlGroup2.Location = new Point(0, 218);
             layoutControlGroup2.Name = "autoGeneratedGroup0";
-            layoutControlGroup2.Size = new Size(500, 70);
+            layoutControlGroup2.Size = new Size(540, 88);
             // 
             // dxErrorProvider1
             // 
@@ -345,11 +386,11 @@
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(520, 260);
+            ClientSize = new Size(560, 326);
             Controls.Add(dataLayoutControl1);
             Name = "FormTerminal";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Terminal";
+            Text = Properties.Resources.Entity_Terminal;
             Load += FormTerminal_Load;
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
@@ -360,6 +401,7 @@
             ((System.ComponentModel.ISupportInitialize)RowGuidTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)TouchUIModeCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)TouchScaleFactorSpinEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PrinterNameComboBoxEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)CashRegisterCodeButtonEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)StoreCodeLookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
@@ -367,9 +409,11 @@
             ((System.ComponentModel.ISupportInitialize)ItemForTerminalId).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTerminalDesc).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCashRegisterCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPrinterName).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForIsDisabled).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTouchUIMode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTouchScaleFactor).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForRowGuid).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForStoreCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)lcgButtons).EndInit();
@@ -392,15 +436,18 @@
         private DevExpress.XtraEditors.TextEdit RowGuidTextEdit;
         private DevExpress.XtraEditors.CheckEdit TouchUIModeCheckEdit;
         private DevExpress.XtraEditors.SpinEdit TouchScaleFactorSpinEdit;
+        private DevExpress.XtraEditors.ComboBoxEdit PrinterNameComboBoxEdit;
         private DevExpress.XtraEditors.SimpleButton btn_Cancel;
         private DevExpress.XtraEditors.SimpleButton btn_Ok;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
         private DevExpress.XtraLayout.LayoutControlItem ItemForTerminalId;
         private DevExpress.XtraLayout.LayoutControlItem ItemForTerminalDesc;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCashRegisterCode;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForPrinterName;
         private DevExpress.XtraLayout.LayoutControlItem ItemForIsDisabled;
         private DevExpress.XtraLayout.LayoutControlItem ItemForTouchUIMode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForTouchScaleFactor;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForRowGuid;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraLayout.LayoutControlGroup lcgButtons;
         private DevExpress.XtraLayout.LayoutControlItem ItemForOk;
