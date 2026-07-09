@@ -1463,12 +1463,7 @@ namespace Foxoft
 
         private async void btn_Print_Click(object sender, EventArgs e)
         {
-            string printerName =
-                string.IsNullOrEmpty(trInvoiceHeader.DcTerminal?.PrinterName)
-                    ? new PrinterSettings().PrinterName
-                    : trInvoiceHeader.DcTerminal?.PrinterName;
-
-            await PrintFast(trInvoiceHeader.DcTerminal?.PrinterName);
+            await PrintFast(GetPrinterName(trInvoiceHeader.DcTerminal?.PrinterName));
         }
 
         private async Task PrintFast(string printerName)
@@ -1476,7 +1471,7 @@ namespace Foxoft
             alertControl1.Show(
                 this.ParentForm,
                 Resources.Common_PrintSending,
-                string.Format("{0}: {1}", Resources.Common_PrinterLabel, printerName),
+                string.Format(Resources.Common_PrinterLabel, printerName),
                 string.Empty,
                 (Image)null,
                 null);
@@ -1496,7 +1491,7 @@ namespace Foxoft
             alertControl1.Show(
                 this.ParentForm,
                 Resources.Common_PrintSent,
-                string.Format("{0}: {1}", Resources.Common_PrinterLabel, printerName),
+                string.Format(Resources.Common_PrinterLabel, printerName),
                 string.Empty,
                 (Image)null,
                 null);
@@ -1513,23 +1508,40 @@ namespace Foxoft
 
         private void GetPrint(Guid invoiceHeaderId, string printerName)
         {
-            XtraReport report = GetInvoiceReport("Report_Embedded_InvoiceReport.repx");
-            report.PrinterName = printerName;
+            XtraReport? report = GetInvoiceReport("Report_Embedded_InvoiceReport.repx");
 
-            if (report is not null)
+            if (report is null)
+                return;
+
+            using (report)
             {
+                report.PrinterName = printerName;
+                report.CreateDocument();
+
                 ReportPrintTool printTool = new(report);
-                printTool.Print();
+                printTool.Print(printerName);
                 efMethods.UpdateInvoicePrintCount(invoiceHeaderId);
             }
-            report.Dispose();
         }
 
-        private XtraReport GetInvoiceReport(string fileName)
+        private XtraReport? GetInvoiceReport(string fileName)
         {
             DsMethods dsMethods = new();
             SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
             return reportClass.GetReport("invoice", fileName, new SqlQuery[] { sqlQuerySale });
+        }
+
+        private static string GetPrinterName(string? printerName)
+        {
+            if (!string.IsNullOrWhiteSpace(printerName)
+                && PrinterSettings.InstalledPrinters
+                    .Cast<string>()
+                    .Any(installedPrinter => string.Equals(installedPrinter, printerName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return printerName;
+            }
+
+            return new PrinterSettings().PrinterName;
         }
 
         private void btn_PrintPrevieww_Click(object sender, EventArgs e)
