@@ -224,11 +224,13 @@ namespace Foxoft.AppCode.Services
         // ─────────────────────────────────────────────────────────────────
 
         public bool HasCampaignApplied(Guid invoiceHeaderId)
-            => _db.TrInvoiceCampaignLogs.Any(l => l.InvoiceHeaderId == invoiceHeaderId);
+            => _db.TrInvoiceCampaignLogs
+                  .AsNoTracking()
+                  .Any(l => l.InvoiceHeaderId == invoiceHeaderId);
 
         public bool HasCashOnlyCampaignApplied(Guid invoiceHeaderId)
             => _db.TrInvoiceCampaignLogs
-                  .Include(l => l.DcCampaign)
+                  .AsNoTracking()
                   .Any(l => l.InvoiceHeaderId == invoiceHeaderId && l.DcCampaign.IsCashOnly);
 
         public List<TrInvoiceCampaignLog> GetCampaignLogs(Guid invoiceHeaderId)

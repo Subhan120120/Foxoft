@@ -906,40 +906,43 @@ namespace Foxoft
         //        CalcPaidAmount();
         //    }
         //}
-        private void LoadInvoice(Guid InvoiceHeaderId)
+        private async Task LoadInvoiceAsync(Guid InvoiceHeaderId)
         {
             SplashScreenManager.ShowForm(this.ParentForm, typeof(WaitForm), true, true, false);
 
-            dbContext = new subContext();
+            try
+            {
+                dbContext = new subContext();
 
-            loyaltyService = new LoyaltyService(dbContext);
+                loyaltyService = new LoyaltyService(dbContext);
 
-            dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
-                                      .Include(x => x.DcProcess)
-                                      .Include(x => x.DcTerminal)
-                                      .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
-                                      .Load();
+                await dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                                .Include(x => x.DcProcess)
+                                                .Include(x => x.DcTerminal)
+                                                .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
+                                                .LoadAsync();
 
-            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+                trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
-            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+                trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
-            dbContext.TrInvoiceLines.Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
-                                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
-                                    .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
-                                    .OrderBy(x => x.CreatedDate)
-                                    .LoadAsync()
-                                    .ContinueWith(loadTask =>
-                                    {
-                                        trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
-                                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                await dbContext.TrInvoiceLines.Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
+                                              .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                                              .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
+                                              .OrderBy(x => x.CreatedDate)
+                                              .LoadAsync();
 
-            txt_LoyaltyEarned.EditValue = efMethods.SelectLoyalityTxnAmount(InvoiceHeaderId);
+                trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
 
-            InitCampaignService();
-            _cashOnlyCampaignApplied = _campaignService.HasCashOnlyCampaignApplied(InvoiceHeaderId);
+                txt_LoyaltyEarned.EditValue = efMethods.SelectLoyalityTxnAmount(InvoiceHeaderId);
 
-            SplashScreenManager.CloseForm(false);
+                InitCampaignService();
+                _cashOnlyCampaignApplied = _campaignService.HasCashOnlyCampaignApplied(InvoiceHeaderId);
+            }
+            finally
+            {
+                SplashScreenManager.CloseForm(false);
+            }
         }
 
         private void LoadCurrAcc()
@@ -1924,7 +1927,7 @@ namespace Foxoft
             ClearControlsAddNew();
         }
 
-        private void btn_UncomplatedInvoices_Click(object sender, EventArgs e)
+        private async void btn_UncomplatedInvoices_Click(object sender, EventArgs e)
         {
             using FormInvoiceHeaderList form = new("RS", false);
 
@@ -1932,7 +1935,7 @@ namespace Foxoft
             {
                 trInvoiceHeader = form.trInvoiceHeader;
 
-                LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
 
                 LoadCurrAcc();
 
