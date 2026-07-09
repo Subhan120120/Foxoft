@@ -160,7 +160,7 @@ namespace Foxoft
                 case "InventoryTransfer": ShowNewForm<FormInvoice>("IT", false, new byte[] { 1 }, null, true); break;
 
                 case "RetailPurchaseReturnCustom": ShowNewForm<FormInvoice>("RP", true, new byte[] { 1, 3 }, null, true); break;
-                case "RetailsaleReturnCustom": ShowNewForm<FormInvoice>("RS", true, new byte[] { 1, 3 }, null, true); break;
+                case "RetailSaleReturnCustom": ShowNewForm<FormInvoice>("RS", true, new byte[] { 1, 3 }, null, true); break;
                 case "WholesaleReturnCustom": ShowNewForm<FormInvoice>("WS", true, new byte[] { 1, 3 }, null, true); break;
                 case "InstallmentSaleReturnCustom": ShowNewForm<FormInvoice>("IS", true, new byte[] { 1, 3 }, null, true); break;
                 case "InventoryTransferReturnCustom": ShowNewForm<FormInvoice>("IT", true, new byte[] { 1, 3 }, null, true); break;
