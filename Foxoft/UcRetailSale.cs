@@ -195,6 +195,7 @@ namespace Foxoft
                 trInvoiceHeader.CurrAccCode = defaultCustomer;
             }
 
+            LoadCurrAcc();
             POSFindProductByCheckedComboBoxEdit.EditValue = Settings.Default.AppSetting.POSFindProductBy?.Trim() ?? "";
         }
 
@@ -278,6 +279,7 @@ namespace Foxoft
 
             trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
 
+            LoadCurrAcc();
             LoadCampaignHeader();
             CalcPaidAmount();
 
@@ -934,6 +936,7 @@ namespace Foxoft
 
                 trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
 
+                LoadCurrAcc();
                 txt_LoyaltyEarned.EditValue = efMethods.SelectLoyalityTxnAmount(InvoiceHeaderId);
 
                 InitCampaignService();
@@ -947,16 +950,20 @@ namespace Foxoft
 
         private void LoadCurrAcc()
         {
-            using (var newContext = new subContext())
-            {
-                var currAcc = newContext.DcCurrAccs
-                                       .AsNoTracking()
-                                       .FirstOrDefault(x => x.CurrAccCode == trInvoiceHeader.CurrAccCode);
+            DcCurrAcc? currAcc = null;
 
-                dcCurrAccBindingSource.DataSource = currAcc;
+            if (!string.IsNullOrWhiteSpace(trInvoiceHeader?.CurrAccCode))
+            {
+                using var newContext = new subContext();
+
+                currAcc = newContext.DcCurrAccs
+                                    .AsNoTracking()
+                                    .FirstOrDefault(x => x.CurrAccCode == trInvoiceHeader.CurrAccCode);
             }
 
-            dcCurrAcc = dcCurrAccBindingSource.Current as DcCurrAcc;
+            dcCurrAcc = currAcc ?? new DcCurrAcc();
+            dcCurrAccBindingSource.DataSource = dcCurrAcc;
+            dcCurrAccBindingSource.ResetBindings(false);
         }
 
         private void dcCurrAccBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
@@ -1948,8 +1955,6 @@ namespace Foxoft
                 trInvoiceHeader = form.trInvoiceHeader;
 
                 await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
-
-                LoadCurrAcc();
 
                 CalcPaidAmount();
             }
