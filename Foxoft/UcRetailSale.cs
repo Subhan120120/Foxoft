@@ -86,6 +86,8 @@ namespace Foxoft
                 ["btn_DeleteLine"]          = (() => btn_DeleteLine_Click(btn_DeleteLine, EventArgs.Empty), btn_DeleteLine),
                 ["btn_SalesPerson"]         = (() => btn_SalesPerson_Click(btn_SalesPerson, EventArgs.Empty), btn_SalesPerson),
                 ["btn_InvoiceDiscount"]     = (() => btn_InvoiceDiscount_Click(btn_InvoiceDiscount, EventArgs.Empty), btn_InvoiceDiscount),
+                ["btn_Desc"]                = (() => btn_Desc_Click(btn_Desc, EventArgs.Empty), btn_Desc),
+                ["btn_LineDesc"]            = (() => btn_LineDesc_Click(btn_LineDesc, EventArgs.Empty), btn_LineDesc),
                 ["btn_NewInvoice"]          = (() => Btn_NewInvoice_Click(btn_NewInvoice, EventArgs.Empty), btn_NewInvoice),
                 ["btn_AddBasket"]           = (() => Btn_AddBasket_Click(btn_AddBasket, EventArgs.Empty), btn_AddBasket),
                 ["btn_UncomplatedInvoices"] = (() => btn_UncomplatedInvoices_Click(btn_UncomplatedInvoices, EventArgs.Empty), btn_UncomplatedInvoices),
@@ -168,6 +170,8 @@ namespace Foxoft
             btn_AddBasket.Text = Resources.Form_RetailSale_Button_AddBasket;
             btn_UncomplatedInvoices.Text = Resources.Form_RetailSale_Button_IncompletedInvoices;
             btn_InvoiceDiscount.Text = Resources.Form_RetailSale_Button_InvoiceDiscount;
+            btn_Desc.Text = Resources.Form_RetailSale_Button_InvoiceDescription;
+            btn_LineDesc.Text = Resources.Form_RetailSale_Button_LineDescription;
             btn_NewInvoice.Text = Resources.Form_RetailSale_Button_New;
         }
 
@@ -1307,6 +1311,82 @@ namespace Foxoft
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
+        }
+
+        private void btn_Desc_Click(object sender, EventArgs e)
+        {
+            if (trInvoiceHeader is null)
+                return;
+
+            string? input = XtraInputBox.Show(
+                Resources.Form_RetailSale_Input_InvoiceDescription,
+                Resources.Entity_InvoiceHeader_Description,
+                trInvoiceHeader.Description ?? string.Empty);
+
+            if (input is null)
+                return;
+
+            string? description = NormalizeDescription(input);
+            if (!ValidateDescriptionLength(description, 200, Resources.Entity_InvoiceHeader_Description))
+                return;
+
+            trInvoiceHeader.Description = description;
+            trInvoiceHeadersBindingSource.EndEdit();
+
+            SaveInvoice();
+            txtEdit_Barcode.Focus();
+        }
+
+        private void btn_LineDesc_Click(object sender, EventArgs e)
+        {
+            if (gV_InvoiceLine.GetFocusedRow() is not TrInvoiceLine invoiceLine)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_SelectProduct,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            string? input = XtraInputBox.Show(
+                Resources.Form_RetailSale_Input_LineDescription,
+                Resources.Entity_InvoiceLine_LineDescription,
+                invoiceLine.LineDescription ?? string.Empty);
+
+            if (input is null)
+                return;
+
+            string? description = NormalizeDescription(input);
+            if (!ValidateDescriptionLength(description, 100, Resources.Entity_InvoiceLine_LineDescription))
+                return;
+
+            invoiceLine.LineDescription = description;
+            trInvoiceLinesBindingSource.EndEdit();
+
+            gV_InvoiceLine.RefreshData();
+            SaveInvoice();
+            txtEdit_Barcode.Focus();
+        }
+
+        private static string? NormalizeDescription(string value)
+        {
+            string description = value.Trim();
+            return string.IsNullOrEmpty(description) ? null : description;
+        }
+
+        private static bool ValidateDescriptionLength(string? description, int maxLength, string fieldName)
+        {
+            if ((description?.Length ?? 0) <= maxLength)
+                return true;
+
+            XtraMessageBox.Show(
+                string.Format(Resources.Validation_StringLength_Max, fieldName, maxLength),
+                Resources.Common_Attention,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+
+            return false;
         }
 
         private void gC_Sale_MouseUp(object sender, MouseEventArgs e)

@@ -12400,11 +12400,29 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invoice Desc..
+        /// </summary>
+        public static string Form_RetailSale_Button_InvoiceDescription {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_InvoiceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line Discount.
         /// </summary>
         public static string Form_RetailSale_Button_LineDiscount {
             get {
                 return ResourceManager.GetString("Form_RetailSale_Button_LineDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Desc..
+        /// </summary>
+        public static string Form_RetailSale_Button_LineDescription {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Button_LineDescription", resourceCulture);
             }
         }
         
@@ -12559,6 +12577,24 @@ namespace Foxoft.Properties {
         public static string Form_RetailSale_InvoiceEmpty {
             get {
                 return ResourceManager.GetString("Form_RetailSale_InvoiceEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter invoice description.
+        /// </summary>
+        public static string Form_RetailSale_Input_InvoiceDescription {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Input_InvoiceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter line description.
+        /// </summary>
+        public static string Form_RetailSale_Input_LineDescription {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_Input_LineDescription", resourceCulture);
             }
         }
         

@@ -3637,6 +3637,18 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_RetailSale_Button_InvoiceDiscount" xml:space="preserve">
     <value>Qaimə Endirimi</value>
   </data>
+  <data name="Form_RetailSale_Button_InvoiceDescription" xml:space="preserve">
+    <value>Qaimə Qeydi</value>
+  </data>
+  <data name="Form_RetailSale_Button_LineDescription" xml:space="preserve">
+    <value>Sətir Qeydi</value>
+  </data>
+  <data name="Form_RetailSale_Input_InvoiceDescription" xml:space="preserve">
+    <value>Qaimə açıqlamasını daxil edin</value>
+  </data>
+  <data name="Form_RetailSale_Input_LineDescription" xml:space="preserve">
+    <value>Sətir açıqlamasını daxil edin</value>
+  </data>
   <data name="Form_RetailSale_Label_PaidCash" xml:space="preserve">
     <value>Nağd:</value>
   </data>

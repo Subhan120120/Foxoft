@@ -3637,6 +3637,18 @@ To delete, cancel the receipt!</value>
   <data name="Form_RetailSale_Button_InvoiceDiscount" xml:space="preserve">
     <value>Invoice Discount</value>
   </data>
+  <data name="Form_RetailSale_Button_InvoiceDescription" xml:space="preserve">
+    <value>Invoice Desc.</value>
+  </data>
+  <data name="Form_RetailSale_Button_LineDescription" xml:space="preserve">
+    <value>Line Desc.</value>
+  </data>
+  <data name="Form_RetailSale_Input_InvoiceDescription" xml:space="preserve">
+    <value>Enter invoice description</value>
+  </data>
+  <data name="Form_RetailSale_Input_LineDescription" xml:space="preserve">
+    <value>Enter line description</value>
+  </data>
   <data name="Form_RetailSale_Label_PaidCash" xml:space="preserve">
     <value>Cash:</value>
   </data>
