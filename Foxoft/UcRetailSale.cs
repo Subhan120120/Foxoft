@@ -44,6 +44,7 @@ namespace Foxoft
         private string? _promoCode = null;
         private bool _cashOnlyCampaignApplied = false;
         private bool _isApplyingCampaign = false;
+        private bool _isPrintInProgress = false;
 
         public UcRetailSale()
         {
@@ -1617,44 +1618,75 @@ namespace Foxoft
 
         private async void btn_Print_Click(object sender, EventArgs e)
         {
-            await PrintFast(GetPrinterName(trInvoiceHeader.DcTerminal?.PrinterName));
+            await PrintFast(GetPrinterName(trInvoiceHeader?.DcTerminal?.PrinterName));
         }
 
         private async Task PrintFast(string printerName)
         {
-            alertControl1.Show(
-                this.ParentForm,
-                Resources.Common_PrintSending,
-                string.Format(Resources.Common_PrinterLabel, printerName),
-                string.Empty,
-                (Image)null,
-                null);
+            if (_isPrintInProgress)
+                return;
 
-            if (trInvoiceHeader is not null)
-                await Task.Run(() => GetPrint(trInvoiceHeader.InvoiceHeaderId, printerName));
-            else
+            if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+            {
                 XtraMessageBox.Show(
                     Resources.Form_RetailSale_NoInvoiceToPrint,
                     Resources.Common_Attention,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
+                return;
+            }
 
-            if (this.IsHandleCreated)
-                this.BeginInvoke(new Action(ShowPrintCount));
+            Guid invoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+            _isPrintInProgress = true;
+            btn_Print.Enabled = false;
 
-            alertControl1.Show(
-                this.ParentForm,
-                Resources.Common_PrintSent,
-                string.Format(Resources.Common_PrinterLabel, printerName),
-                string.Empty,
-                (Image)null,
-                null);
+            try
+            {
+                alertControl1.Show(
+                    this.ParentForm,
+                    Resources.Common_PrintSending,
+                    string.Format(Resources.Common_PrinterLabel, printerName),
+                    string.Empty,
+                    (Image)null,
+                    null);
+
+                await Task.Run(() => GetPrint(invoiceHeaderId, printerName));
+
+                if (this.IsHandleCreated)
+                    this.BeginInvoke(new Action(() => ShowPrintCount(invoiceHeaderId)));
+
+                alertControl1.Show(
+                    this.ParentForm,
+                    Resources.Common_PrintSent,
+                    string.Format(Resources.Common_PrinterLabel, printerName),
+                    string.Empty,
+                    (Image)null,
+                    null);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    $"{Resources.Common_ErrorOccurred}{Environment.NewLine}{ex.Message}",
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                _isPrintInProgress = false;
+
+                if (!IsDisposed)
+                    btn_Print.Enabled = true;
+            }
         }
 
-        private void ShowPrintCount()
+        private void ShowPrintCount(Guid invoiceHeaderId)
         {
+            if (trInvoiceHeader?.InvoiceHeaderId != invoiceHeaderId)
+                return;
+
             int printCount = efMethods
-                .SelectEntityById<TrInvoiceHeader>(trInvoiceHeader?.InvoiceHeaderId)
+                .SelectEntityById<TrInvoiceHeader>(invoiceHeaderId)
                 .PrintCount;
 
             txt_PrintCount.Text = printCount.ToString();
@@ -1662,7 +1694,7 @@ namespace Foxoft
 
         private void GetPrint(Guid invoiceHeaderId, string printerName)
         {
-            XtraReport? report = GetInvoiceReport("Report_Embedded_InvoiceReport.repx");
+            XtraReport? report = GetInvoiceReport(invoiceHeaderId, "Report_Embedded_InvoiceReport.repx");
 
             if (report is null)
                 return;
@@ -1670,18 +1702,16 @@ namespace Foxoft
             using (report)
             {
                 report.PrinterName = printerName;
-                report.CreateDocument();
-
                 ReportPrintTool printTool = new(report);
-                printTool.Print(printerName);
+                printTool.Print();
                 efMethods.UpdateInvoicePrintCount(invoiceHeaderId);
             }
         }
 
-        private XtraReport? GetInvoiceReport(string fileName)
+        private XtraReport? GetInvoiceReport(Guid invoiceHeaderId, string fileName)
         {
             DsMethods dsMethods = new();
-            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(invoiceHeaderId);
             return reportClass.GetReport("invoice", fileName, new SqlQuery[] { sqlQuerySale });
         }
 
