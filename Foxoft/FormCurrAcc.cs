@@ -390,113 +390,117 @@ namespace Foxoft
             using subContext context = new();
             using var transaction = context.Database.BeginTransaction();
 
-            SqlParameter srcParam = new("@SourceCurrAccCode", sourceCurrAccCode);
-            SqlParameter tgtParam = new("@TargetCurrAccCode", targetCurrAccCode);
+            // 1. DcPaymentMethods
+            context.DcPaymentMethods
+                .Where(x => x.RedirectedCurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.RedirectedCurrAccCode, targetCurrAccCode));
 
-            context.Database.ExecuteSqlRaw(
-                """
-                SET XACT_ABORT ON;
+            // 2. TrCurrAccRoles
+            var targetRoles = context.TrCurrAccRoles
+                .Where(x => x.CurrAccCode == targetCurrAccCode)
+                .Select(x => x.RoleCode)
+                .ToList();
 
-                ALTER TABLE DcPaymentMethods NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrCurrAccRoles NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrInvoiceHeaders NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrInvoiceLines NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrPaymentHeaders NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrSessions NOCHECK CONSTRAINT ALL;
-                ALTER TABLE DcCurrAccContactDetails NOCHECK CONSTRAINT ALL;
-                ALTER TABLE DcLoyaltyCards NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrCampaignCustomers NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrCrmActivities NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrCurrAccFeatures NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrInstallmentGuarantors NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrLoyaltyTxns NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrWhatsAppMessageLogs NOCHECK CONSTRAINT ALL;
+            context.TrCurrAccRoles
+                .Where(x => x.CurrAccCode == sourceCurrAccCode && !targetRoles.Contains(x.RoleCode))
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-                -- DcPaymentMethods
-                UPDATE DcPaymentMethods SET RedirectedCurrAccCode = @TargetCurrAccCode WHERE RedirectedCurrAccCode = @SourceCurrAccCode;
+            context.TrCurrAccRoles
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteDelete();
 
-                -- TrCurrAccRoles
-                UPDATE src SET src.CurrAccCode = @TargetCurrAccCode
-                FROM TrCurrAccRoles src
-                WHERE src.CurrAccCode = @SourceCurrAccCode
-                  AND NOT EXISTS (
-                    SELECT 1 FROM TrCurrAccRoles tgt
-                    WHERE tgt.RoleCode = src.RoleCode AND tgt.CurrAccCode = @TargetCurrAccCode
-                  );
-                DELETE FROM TrCurrAccRoles WHERE CurrAccCode = @SourceCurrAccCode;
+            // 3. TrInvoiceHeaders
+            context.TrInvoiceHeaders
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-                -- TrInvoiceHeaders
-                UPDATE TrInvoiceHeaders SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+            // 4. TrInvoiceLines
+            context.TrInvoiceLines
+                .Where(x => x.SalesPersonCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.SalesPersonCode, targetCurrAccCode));
 
-                -- TrInvoiceLines (Salesperson)
-                UPDATE TrInvoiceLines SET SalesPersonCode = @TargetCurrAccCode WHERE SalesPersonCode = @SourceCurrAccCode;
+            // 5. TrPaymentHeaders
+            context.TrPaymentHeaders
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-                -- TrPaymentHeaders
-                UPDATE TrPaymentHeaders SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+            // 6. TrSessions
+            context.TrSessions
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-                -- TrSessions
-                UPDATE TrSessions SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+            // 7. DcCurrAccContactDetails
+            context.DcCurrAccContactDetails
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-                -- DcCurrAccContactDetails
-                UPDATE DcCurrAccContactDetails SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+            // 8. DcLoyaltyCards
+            context.DcLoyaltyCards
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-                -- DcLoyaltyCards
-                UPDATE DcLoyaltyCards SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+            // 9. TrCampaignCustomers
+            var targetCampaignIds = context.TrCampaignCustomers
+                .Where(x => x.CurrAccCode == targetCurrAccCode)
+                .Select(x => x.CampaignId)
+                .ToList();
 
-                -- TrCampaignCustomers
-                UPDATE src SET src.CurrAccCode = @TargetCurrAccCode
-                FROM TrCampaignCustomers src
-                WHERE src.CurrAccCode = @SourceCurrAccCode
-                  AND NOT EXISTS (
-                    SELECT 1 FROM TrCampaignCustomers tgt
-                    WHERE tgt.CampaignId = src.CampaignId AND tgt.CurrAccCode = @TargetCurrAccCode
-                  );
-                DELETE FROM TrCampaignCustomers WHERE CurrAccCode = @SourceCurrAccCode;
+            context.TrCampaignCustomers
+                .Where(x => x.CurrAccCode == sourceCurrAccCode && !targetCampaignIds.Contains(x.CampaignId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-                -- TrCrmActivities
-                UPDATE TrCrmActivities SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
-                UPDATE TrCrmActivities SET AssignedCurrAccCode = @TargetCurrAccCode WHERE AssignedCurrAccCode = @SourceCurrAccCode;
+            context.TrCampaignCustomers
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteDelete();
 
-                -- TrCurrAccFeatures
-                UPDATE src SET src.CurrAccCode = @TargetCurrAccCode
-                FROM TrCurrAccFeatures src
-                WHERE src.CurrAccCode = @SourceCurrAccCode
-                  AND NOT EXISTS (
-                    SELECT 1 FROM TrCurrAccFeatures tgt
-                    WHERE tgt.CurrAccCode = @TargetCurrAccCode AND tgt.CurrAccFeatureTypeId = src.CurrAccFeatureTypeId
-                  );
-                DELETE FROM TrCurrAccFeatures WHERE CurrAccCode = @SourceCurrAccCode;
+            // 10. TrCrmActivities
+            context.TrCrmActivities
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-                -- TrInstallmentGuarantors
-                UPDATE TrInstallmentGuarantors SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+            context.TrCrmActivities
+                .Where(x => x.AssignedCurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.AssignedCurrAccCode, targetCurrAccCode));
 
-                -- TrLoyaltyTxns
-                UPDATE TrLoyaltyTxns SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+            // 11. TrCurrAccFeatures
+            var targetFeatureTypeIds = context.TrCurrAccFeatures
+                .Where(x => x.CurrAccCode == targetCurrAccCode)
+                .Select(x => x.CurrAccFeatureTypeId)
+                .ToList();
 
-                -- TrWhatsAppMessageLogs
-                UPDATE TrWhatsAppMessageLogs SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
-                UPDATE TrWhatsAppMessageLogs SET Sender = @TargetCurrAccCode WHERE Sender = @SourceCurrAccCode;
+            context.TrCurrAccFeatures
+                .Where(x => x.CurrAccCode == sourceCurrAccCode && !targetFeatureTypeIds.Contains(x.CurrAccFeatureTypeId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-                -- Delete source DcCurrAccs
-                DELETE FROM DcCurrAccs WHERE CurrAccCode = @SourceCurrAccCode;
+            context.TrCurrAccFeatures
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteDelete();
 
-                ALTER TABLE DcPaymentMethods WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrCurrAccRoles WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrInvoiceHeaders WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrInvoiceLines WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrPaymentHeaders WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrSessions WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE DcCurrAccContactDetails WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE DcLoyaltyCards WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrCampaignCustomers WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrCrmActivities WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrCurrAccFeatures WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrInstallmentGuarantors WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrLoyaltyTxns WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrWhatsAppMessageLogs WITH CHECK CHECK CONSTRAINT ALL;
-                """,
-                srcParam,
-                tgtParam);
+            // 12. TrInstallmentGuarantors
+            context.TrInstallmentGuarantors
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            // 13. TrLoyaltyTxns
+            context.TrLoyaltyTxns
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            // 14. TrWhatsAppMessageLogs
+            context.TrWhatsAppMessageLogs
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            context.TrWhatsAppMessageLogs
+                .Where(x => x.Sender == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.Sender, targetCurrAccCode));
+
+
+
+            // 16. Delete the source current account
+            context.DcCurrAccs
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteDelete();
 
             transaction.Commit();
         }

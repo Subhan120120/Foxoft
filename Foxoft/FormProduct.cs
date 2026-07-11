@@ -861,6 +861,7 @@ namespace Foxoft
                 dxErrorProvider1.ClearErrors();
         }
 
+
         private void BBI_MergeProduct_ItemClick(object sender, ItemClickEventArgs e)
         {
             using FormProductList frm = new(new byte[] { 1, 2, 3, 4 }, false);
@@ -923,94 +924,130 @@ namespace Foxoft
             using subContext context = new();
             using var transaction = context.Database.BeginTransaction();
 
-            SqlParameter srcParam = new("@SourceProductCode", sourceProductCode);
-            SqlParameter tgtParam = new("@TargetProductCode", targetProductCode);
+            // 1. TrInvoiceLines: simple FK update
+            context.TrInvoiceLines
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
 
-            context.Database.ExecuteSqlRaw(
-                """
-                SET XACT_ABORT ON;
+            // 2. TrProductBarcodes: move non-duplicate barcodes, delete rest
+            var targetBarcodes = context.TrProductBarcodes
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.Barcode)
+                .ToList();
 
-                ALTER TABLE DcProductStaticPrices NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrProductDiscounts NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrProductBarcodes NOCHECK CONSTRAINT ALL;
-                ALTER TABLE DcSerialNumbers NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrProductFeatures NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrInvoiceLines NOCHECK CONSTRAINT ALL;
-                ALTER TABLE SiteProducts NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrPriceListLines NOCHECK CONSTRAINT ALL;
-                ALTER TABLE DcProductScales NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrBarcodeOperationLines NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrCampaignProducts NOCHECK CONSTRAINT ALL;
+            context.TrProductBarcodes
+                .Where(x => x.ProductCode == sourceProductCode && !targetBarcodes.Contains(x.Barcode))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
 
-                -- TrInvoiceLines: simple FK update
-                UPDATE TrInvoiceLines SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+            context.TrProductBarcodes
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
 
-                -- TrProductBarcodes: move non-duplicate barcodes, delete rest
-                UPDATE TrProductBarcodes SET ProductCode = @TargetProductCode
-                WHERE ProductCode = @SourceProductCode
-                  AND Barcode NOT IN (SELECT Barcode FROM TrProductBarcodes WHERE ProductCode = @TargetProductCode);
-                DELETE FROM TrProductBarcodes WHERE ProductCode = @SourceProductCode;
+            // 3. TrBarcodeOperationLines: simple FK update
+            context.TrBarcodeOperationLines
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
 
-                -- TrBarcodeOperationLines: simple FK update
-                UPDATE TrBarcodeOperationLines SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+            // 4. DcSerialNumbers: simple FK update
+            context.DcSerialNumbers
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
 
-                -- DcSerialNumbers: simple FK update
-                UPDATE DcSerialNumbers SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+            // 5. TrPriceListLines: simple FK update
+            context.TrPriceListLines
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
 
-                -- TrPriceListLines: simple FK update
-                UPDATE TrPriceListLines SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+            // 6. DcProductStaticPrices: composite PK (ProductCode, PriceTypeCode) - move non-duplicates, delete rest
+            var targetPriceTypeCodes = context.DcProductStaticPrices
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.PriceTypeCode)
+                .ToList();
 
-                -- DcProductStaticPrices: composite PK (ProductCode, PriceTypeCode) — move non-duplicates, delete rest
-                UPDATE DcProductStaticPrices SET ProductCode = @TargetProductCode
-                WHERE ProductCode = @SourceProductCode
-                  AND PriceTypeCode NOT IN (SELECT PriceTypeCode FROM DcProductStaticPrices WHERE ProductCode = @TargetProductCode);
-                DELETE FROM DcProductStaticPrices WHERE ProductCode = @SourceProductCode;
+            context.DcProductStaticPrices
+                .Where(x => x.ProductCode == sourceProductCode && !targetPriceTypeCodes.Contains(x.PriceTypeCode))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
 
-                -- TrProductDiscounts: composite PK (ProductCode, DiscountId) — move non-duplicates, delete rest
-                UPDATE TrProductDiscounts SET ProductCode = @TargetProductCode
-                WHERE ProductCode = @SourceProductCode
-                  AND DiscountId NOT IN (SELECT DiscountId FROM TrProductDiscounts WHERE ProductCode = @TargetProductCode);
-                DELETE FROM TrProductDiscounts WHERE ProductCode = @SourceProductCode;
+            context.DcProductStaticPrices
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
 
-                -- TrProductFeatures: composite PK (ProductCode, FeatureTypeId, FeatureCode) — move only if target doesn't have this FeatureTypeId
-                UPDATE src SET src.ProductCode = @TargetProductCode
-                FROM TrProductFeatures src
-                WHERE src.ProductCode = @SourceProductCode
-                  AND NOT EXISTS (
-                    SELECT 1 FROM TrProductFeatures tgt
-                    WHERE tgt.ProductCode = @TargetProductCode
-                      AND tgt.FeatureTypeId = src.FeatureTypeId
-                  );
-                DELETE FROM TrProductFeatures WHERE ProductCode = @SourceProductCode;
+            // 7. TrProductDiscounts: composite PK (ProductCode, DiscountId) - move non-duplicates, delete rest
+            var targetDiscountIds = context.TrProductDiscounts
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.DiscountId)
+                .ToList();
 
-                -- TrCampaignProducts: move non-duplicates, delete rest
-                UPDATE src SET src.ProductCode = @TargetProductCode
-                FROM TrCampaignProducts src
-                WHERE src.ProductCode = @SourceProductCode
-                  AND NOT EXISTS (
-                    SELECT 1 FROM TrCampaignProducts tgt
-                    WHERE tgt.ProductCode = @TargetProductCode
-                      AND tgt.CampaignId = src.CampaignId
-                  );
-                DELETE FROM TrCampaignProducts WHERE ProductCode = @SourceProductCode;
+            context.TrProductDiscounts
+                .Where(x => x.ProductCode == sourceProductCode && !targetDiscountIds.Contains(x.DiscountId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
 
-                -- DcProductScales: 1:1 — keep target if exists, delete source
-                IF NOT EXISTS (SELECT 1 FROM DcProductScales WHERE ProductCode = @TargetProductCode)
-                    UPDATE DcProductScales SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
-                ELSE
-                    DELETE FROM DcProductScales WHERE ProductCode = @SourceProductCode;
+            context.TrProductDiscounts
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
 
-                -- SiteProducts: 1:1 with ProductCode as PK — keep target if exists, delete source
-                IF NOT EXISTS (SELECT 1 FROM SiteProducts WHERE ProductCode = @TargetProductCode)
-                    UPDATE SiteProducts SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
-                ELSE
-                    DELETE FROM SiteProducts WHERE ProductCode = @SourceProductCode;
+            // 8. TrProductFeatures: composite PK (ProductCode, FeatureTypeId, FeatureCode) - move only if target doesn't have this FeatureTypeId
+            var targetFeatureTypeIds = context.TrProductFeatures
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.FeatureTypeId)
+                .ToList();
 
-                -- Delete the source product
-                DELETE FROM DcProducts WHERE ProductCode = @SourceProductCode;
-                """,
-                srcParam,
-                tgtParam);
+            context.TrProductFeatures
+                .Where(x => x.ProductCode == sourceProductCode && !targetFeatureTypeIds.Contains(x.FeatureTypeId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            context.TrProductFeatures
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
+
+            // 9. TrCampaignProducts: move non-duplicates, delete rest
+            var targetCampaignIds = context.TrCampaignProducts
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.CampaignId)
+                .ToList();
+
+            context.TrCampaignProducts
+                .Where(x => x.ProductCode == sourceProductCode && !targetCampaignIds.Contains(x.CampaignId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            context.TrCampaignProducts
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
+
+            // 10. DcProductScales: 1:1 - keep target if exists, delete source
+            bool targetScaleExists = context.DcProductScales.Any(x => x.ProductCode == targetProductCode);
+            if (!targetScaleExists)
+            {
+                context.DcProductScales
+                    .Where(x => x.ProductCode == sourceProductCode)
+                    .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+            }
+            else
+            {
+                context.DcProductScales
+                    .Where(x => x.ProductCode == sourceProductCode)
+                    .ExecuteDelete();
+            }
+
+            // 11. SiteProducts: 1:1 - keep target if exists, delete source
+            bool targetSiteProductExists = context.SiteProducts.Any(x => x.ProductCode == targetProductCode);
+            if (!targetSiteProductExists)
+            {
+                context.SiteProducts
+                    .Where(x => x.ProductCode == sourceProductCode)
+                    .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+            }
+            else
+            {
+                context.SiteProducts
+                    .Where(x => x.ProductCode == sourceProductCode)
+                    .ExecuteDelete();
+            }
+
+            // 12. Delete the source product
+            context.DcProducts
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
 
             transaction.Commit();
         }
