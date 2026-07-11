@@ -102,8 +102,10 @@ namespace Foxoft
 
         public bool isNew = false;
         private bool _isSaved = false;
+
         private bool _isLoading = false;
         private bool _pendingPaymentCurrAccUpdate = false;
+        private readonly BarcodeInputInterceptor _barcodeInterceptor = new();
         private bool IsCampaignEnabled
             => Settings.Default.AppSetting != null
             && Settings.Default.AppSetting.UseCampaign;
@@ -1007,6 +1009,31 @@ namespace Foxoft
             GridControl gC = sender as GridControl;
             GridView gV = gC.MainView as GridView;
 
+
+            // Barcode scanner interception: suppress rapid keystrokes on Price / Qty columns
+            if (gV.FocusedColumn != null && IsBarcodeProtectedColumn(gV.FocusedColumn))
+            {
+                if (_barcodeInterceptor.ProcessKey(e))
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    return;
+                }
+
+                // If the interceptor is accumulating a burst that started before we
+                // could tell it was a scanner, suppress subsequent characters too.
+                if (_barcodeInterceptor.IsAccumulating)
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    return;
+                }
+            }
+            else
+            {
+                _barcodeInterceptor.Reset();
+            }
+
             StandartKeys(e);
 
             if (gV.SelectedRowsCount > 0)
@@ -1076,6 +1103,13 @@ namespace Foxoft
                 e.Handled = true;   // Stop the character from being entered into the control.
             }
         }
+
+        /// <summary>
+        /// Returns <c>true</c> for columns where barcode-scanner input must be
+        /// suppressed (numeric fields that should not receive rapid keystrokes).
+        /// </summary>
+        private bool IsBarcodeProtectedColumn(GridColumn column)
+            => column == colQty || column == col_Price || column == colPriceLoc;
 
         private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
