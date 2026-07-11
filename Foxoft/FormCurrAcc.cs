@@ -80,11 +80,18 @@ namespace Foxoft
             dbContext = new subContext();
 
             if (string.IsNullOrEmpty(dcCurrAcc.CurrAccCode))
+            {
                 ClearControlsAddNew();
+                BBI_MergeCurrAcc.Enabled = false;
+            }
             else
             {
                 dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode).Load();
                 dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
+
+
+                dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
+                BBI_MergeCurrAcc.Enabled = efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode);
             }
         }
 
@@ -136,6 +143,8 @@ namespace Foxoft
                     efMethods.InsertEntity(dcCurrAcc);
                 else
                     dbContext.SaveChanges();
+
+                BBI_MergeCurrAcc.Enabled = true;
 
                 DialogResult = DialogResult.OK;
             }
@@ -317,6 +326,179 @@ namespace Foxoft
         private void BBI_HumanResources_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
 
+        }
+
+        private void BBI_MergeCurrAcc_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            using FormCurrAccList frm = new(new byte[] { (byte)dcCurrAcc.CurrAccTypeCode }, false);
+            if (frm.ShowDialog() != DialogResult.OK || frm.dcCurrAcc is null)
+                return;
+
+            string sourceCurrAccCode = frm.dcCurrAcc.CurrAccCode;
+            string sourceCurrAccDesc = frm.dcCurrAcc.CurrAccDesc;
+
+            if (sourceCurrAccCode == dcCurrAcc.CurrAccCode)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_CurrAcc_Message_CannotMergeSameCurrAcc,
+                    Resources.Common_Attention);
+                return;
+            }
+
+            DialogResult dialogResult = XtraMessageBox.Show(
+                string.Format(
+                    Resources.Form_CurrAcc_Message_MergeConfirm,
+                    sourceCurrAccDesc, sourceCurrAccCode,
+                    dcCurrAcc.CurrAccDesc, dcCurrAcc.CurrAccCode),
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNo);
+
+            if (dialogResult != DialogResult.Yes)
+                return;
+
+            try
+            {
+                MergeCurrAccs(sourceCurrAccCode, dcCurrAcc.CurrAccCode);
+
+                dcCurrAcc = new DcCurrAcc { CurrAccCode = dcCurrAcc.CurrAccCode };
+                LoadCurrAcc();
+                dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc ?? dcCurrAcc;
+
+                XtraMessageBox.Show(
+                    Resources.Form_CurrAcc_Message_MergeSuccess,
+                    Resources.Common_Info);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_CurrAcc_Message_MergeError, ex.Message),
+                    Resources.Common_ErrorTitle);
+            }
+        }
+
+        private void MergeCurrAccs(string sourceCurrAccCode, string targetCurrAccCode)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(sourceCurrAccCode);
+            ArgumentException.ThrowIfNullOrWhiteSpace(targetCurrAccCode);
+
+            sourceCurrAccCode = sourceCurrAccCode.Trim();
+            targetCurrAccCode = targetCurrAccCode.Trim();
+
+            if (string.Equals(sourceCurrAccCode, targetCurrAccCode, StringComparison.Ordinal))
+                return;
+
+            using subContext context = new();
+            using var transaction = context.Database.BeginTransaction();
+
+            SqlParameter srcParam = new("@SourceCurrAccCode", sourceCurrAccCode);
+            SqlParameter tgtParam = new("@TargetCurrAccCode", targetCurrAccCode);
+
+            context.Database.ExecuteSqlRaw(
+                """
+                SET XACT_ABORT ON;
+
+                ALTER TABLE DcPaymentMethods NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrCurrAccRoles NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceHeaders NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceLines NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrPaymentHeaders NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrSessions NOCHECK CONSTRAINT ALL;
+                ALTER TABLE DcCurrAccContactDetails NOCHECK CONSTRAINT ALL;
+                ALTER TABLE DcLoyaltyCards NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrCampaignCustomers NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrCrmActivities NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrCurrAccFeatures NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrInstallmentGuarantors NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrLoyaltyTxns NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrWhatsAppMessageLogs NOCHECK CONSTRAINT ALL;
+
+                -- DcPaymentMethods
+                UPDATE DcPaymentMethods SET RedirectedCurrAccCode = @TargetCurrAccCode WHERE RedirectedCurrAccCode = @SourceCurrAccCode;
+
+                -- TrCurrAccRoles
+                UPDATE src SET src.CurrAccCode = @TargetCurrAccCode
+                FROM TrCurrAccRoles src
+                WHERE src.CurrAccCode = @SourceCurrAccCode
+                  AND NOT EXISTS (
+                    SELECT 1 FROM TrCurrAccRoles tgt
+                    WHERE tgt.RoleCode = src.RoleCode AND tgt.CurrAccCode = @TargetCurrAccCode
+                  );
+                DELETE FROM TrCurrAccRoles WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- TrInvoiceHeaders
+                UPDATE TrInvoiceHeaders SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- TrInvoiceLines (Salesperson)
+                UPDATE TrInvoiceLines SET SalesPersonCode = @TargetCurrAccCode WHERE SalesPersonCode = @SourceCurrAccCode;
+
+                -- TrPaymentHeaders
+                UPDATE TrPaymentHeaders SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- TrSessions
+                UPDATE TrSessions SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- DcCurrAccContactDetails
+                UPDATE DcCurrAccContactDetails SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- DcLoyaltyCards
+                UPDATE DcLoyaltyCards SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- TrCampaignCustomers
+                UPDATE src SET src.CurrAccCode = @TargetCurrAccCode
+                FROM TrCampaignCustomers src
+                WHERE src.CurrAccCode = @SourceCurrAccCode
+                  AND NOT EXISTS (
+                    SELECT 1 FROM TrCampaignCustomers tgt
+                    WHERE tgt.CampaignId = src.CampaignId AND tgt.CurrAccCode = @TargetCurrAccCode
+                  );
+                DELETE FROM TrCampaignCustomers WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- TrCrmActivities
+                UPDATE TrCrmActivities SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+                UPDATE TrCrmActivities SET AssignedCurrAccCode = @TargetCurrAccCode WHERE AssignedCurrAccCode = @SourceCurrAccCode;
+
+                -- TrCurrAccFeatures
+                UPDATE src SET src.CurrAccCode = @TargetCurrAccCode
+                FROM TrCurrAccFeatures src
+                WHERE src.CurrAccCode = @SourceCurrAccCode
+                  AND NOT EXISTS (
+                    SELECT 1 FROM TrCurrAccFeatures tgt
+                    WHERE tgt.CurrAccCode = @TargetCurrAccCode AND tgt.CurrAccFeatureTypeId = src.CurrAccFeatureTypeId
+                  );
+                DELETE FROM TrCurrAccFeatures WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- TrInstallmentGuarantors
+                UPDATE TrInstallmentGuarantors SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- TrLoyaltyTxns
+                UPDATE TrLoyaltyTxns SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+
+                -- TrWhatsAppMessageLogs
+                UPDATE TrWhatsAppMessageLogs SET CurrAccCode = @TargetCurrAccCode WHERE CurrAccCode = @SourceCurrAccCode;
+                UPDATE TrWhatsAppMessageLogs SET Sender = @TargetCurrAccCode WHERE Sender = @SourceCurrAccCode;
+
+                -- Delete source DcCurrAccs
+                DELETE FROM DcCurrAccs WHERE CurrAccCode = @SourceCurrAccCode;
+
+                ALTER TABLE DcPaymentMethods WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrCurrAccRoles WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceHeaders WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceLines WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrPaymentHeaders WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrSessions WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE DcCurrAccContactDetails WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE DcLoyaltyCards WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrCampaignCustomers WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrCrmActivities WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrCurrAccFeatures WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrInstallmentGuarantors WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrLoyaltyTxns WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrWhatsAppMessageLogs WITH CHECK CHECK CONSTRAINT ALL;
+                """,
+                srcParam,
+                tgtParam);
+
+            transaction.Commit();
         }
     }
 }

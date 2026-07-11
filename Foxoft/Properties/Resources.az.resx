@@ -2162,6 +2162,21 @@
   <data name="Form_CurrAcc_Message_CurrAccCodeExists" xml:space="preserve">
     <value>Bu kodda cari hesab artıq mövcuddur!</value>
   </data>
+  <data name="Form_CurrAcc_Button_MergeCurrAcc" xml:space="preserve">
+    <value>Birləşdir</value>
+  </data>
+  <data name="Form_CurrAcc_Message_MergeConfirm" xml:space="preserve">
+    <value>'{0}' ({1}) müştərisinin bütün dataları '{2}' ({3}) müştərisinə köçürüləcək və '{0}' silinəcək. Davam etmək istəyirsiniz?</value>
+  </data>
+  <data name="Form_CurrAcc_Message_MergeSuccess" xml:space="preserve">
+    <value>Müştərilər uğurla birləşdirildi.</value>
+  </data>
+  <data name="Form_CurrAcc_Message_MergeError" xml:space="preserve">
+    <value>Müştərilərin birləşdirilməsində xəta: {0}</value>
+  </data>
+  <data name="Form_CurrAcc_Message_CannotMergeSameCurrAcc" xml:space="preserve">
+    <value>Müştəri özü ilə birləşdirilə bilməz.</value>
+  </data>
   <data name="Validation_Phone_ExistsInAnotherCurrAcc" xml:space="preserve">
     <value>Bu nömrə başqa Cari Hesabda mövcuddur.</value>
   </data>

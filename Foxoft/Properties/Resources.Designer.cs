@@ -8328,6 +8328,51 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge.
+        /// </summary>
+        public static string Form_CurrAcc_Button_MergeCurrAcc {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Button_MergeCurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A current account cannot be merged with itself..
+        /// </summary>
+        public static string Form_CurrAcc_Message_CannotMergeSameCurrAcc {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_CannotMergeSameCurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All data of &apos;{0}&apos; ({1}) will be transferred to &apos;{2}&apos; ({3}) and &apos;{0}&apos; will be deleted. Do you want to continue?.
+        /// </summary>
+        public static string Form_CurrAcc_Message_MergeConfirm {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_MergeConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error merging current accounts: {0}.
+        /// </summary>
+        public static string Form_CurrAcc_Message_MergeError {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_MergeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current accounts merged successfully..
+        /// </summary>
+        public static string Form_CurrAcc_Message_MergeSuccess {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_MergeSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Contact Detail.
         /// </summary>
         public static string Form_CurrAccContactDetail_Caption_Edit {

@@ -2162,6 +2162,21 @@
   <data name="Form_CurrAcc_Message_CurrAccCodeExists" xml:space="preserve">
     <value>An account with this code already exists!</value>
   </data>
+  <data name="Form_CurrAcc_Button_MergeCurrAcc" xml:space="preserve">
+    <value>Merge</value>
+  </data>
+  <data name="Form_CurrAcc_Message_MergeConfirm" xml:space="preserve">
+    <value>All data of '{0}' ({1}) will be transferred to '{2}' ({3}) and '{0}' will be deleted. Do you want to continue?</value>
+  </data>
+  <data name="Form_CurrAcc_Message_MergeSuccess" xml:space="preserve">
+    <value>Current accounts merged successfully.</value>
+  </data>
+  <data name="Form_CurrAcc_Message_MergeError" xml:space="preserve">
+    <value>Error merging current accounts: {0}</value>
+  </data>
+  <data name="Form_CurrAcc_Message_CannotMergeSameCurrAcc" xml:space="preserve">
+    <value>A current account cannot be merged with itself.</value>
+  </data>
   <data name="Validation_Phone_ExistsInAnotherCurrAcc" xml:space="preserve">
     <value>This phone number is already used by another current account.</value>
   </data>
