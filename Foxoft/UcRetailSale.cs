@@ -1,4 +1,4 @@
-using DevExpress.DataAccess.Sql;
+﻿using DevExpress.DataAccess.Sql;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
@@ -45,6 +45,7 @@ namespace Foxoft
         private bool _cashOnlyCampaignApplied = false;
         private bool _isApplyingCampaign = false;
         private bool _isPrintInProgress = false;
+        private readonly BarcodeInputInterceptor _barcodeInterceptor = new();
 
         public UcRetailSale()
         {
@@ -62,6 +63,13 @@ namespace Foxoft
 
             loyaltyService = new LoyaltyService(dbContext);
 
+            _barcodeInterceptor.BarcodeScanned += barcode =>
+            {
+                txtEdit_Barcode.EditValue = barcode;
+                OnEnterKeyPressed();
+                txtEdit_Barcode.EditValue = string.Empty;
+            };
+
             ClearControlsAddNew();
 
             InitializeResourseName();
@@ -77,7 +85,7 @@ namespace Foxoft
         {
             shortcutActions.Clear();
 
-            // Button adı → click handler və SimpleButton referansı
+            // Button adi - click handler ve SimpleButton referansi
             var buttonMap = new Dictionary<string, (Action action, SimpleButton button)>(StringComparer.OrdinalIgnoreCase)
             {
                 ["btn_ProductSearch"]       = (() => btn_ProductSearch_Click(btn_ProductSearch, EventArgs.Empty), btn_ProductSearch),
@@ -112,7 +120,7 @@ namespace Foxoft
                 {
                     shortcutActions[kvp.Value] = mapping.action;
 
-                    // Button text-inin sonuna shortcut yazılır
+                    // Button text-inin sonuna shortcut yazilir
                     mapping.button.Text = ShortcutHelper.AppendShortcutToText(mapping.button.Text, kvp.Value);
                 }
             }
@@ -124,6 +132,25 @@ namespace Foxoft
             {
                 action.Invoke();
                 return true;
+            }
+
+            // Barcode scanner interception: when focus is not on the barcode
+            // text field, detect rapid keystrokes and suppress them so they
+            // don't pollute Price / Qty or other controls.
+            if (ActiveControl != txtEdit_Barcode)
+            {
+                Keys key = keyData & Keys.KeyCode;
+                KeyEventArgs fakeArgs = new(keyData);
+
+                if (_barcodeInterceptor.ProcessKey(fakeArgs))
+                    return true; // suppress the key
+
+                if (_barcodeInterceptor.IsAccumulating)
+                    return true; // suppress while burst is building
+            }
+            else
+            {
+                _barcodeInterceptor.Reset();
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
