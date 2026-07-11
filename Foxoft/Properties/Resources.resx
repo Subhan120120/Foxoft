@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3212,6 +3212,21 @@ Do you want to return to the invoice?</value>
   </data>
   <data name="Form_Product_Validation_ProductNameExists" xml:space="preserve">
     <value>A product with this name already exists.</value>
+  </data>
+  <data name="Form_Product_Button_MergeProduct" xml:space="preserve">
+    <value>Merge</value>
+  </data>
+  <data name="Form_Product_Message_MergeConfirm" xml:space="preserve">
+    <value>All data of '{0}' ({1}) will be transferred to '{2}' ({3}) and '{0}' will be deleted. Do you want to continue?</value>
+  </data>
+  <data name="Form_Product_Message_MergeSuccess" xml:space="preserve">
+    <value>Products merged successfully.</value>
+  </data>
+  <data name="Form_Product_Message_MergeError" xml:space="preserve">
+    <value>Error merging products: {0}</value>
+  </data>
+  <data name="Form_Product_Message_CannotMergeSameProduct" xml:space="preserve">
+    <value>A product cannot be merged with itself.</value>
   </data>
   <data name="Form_ProductBarcode_Caption" xml:space="preserve">
     <value>Product barcodes</value>

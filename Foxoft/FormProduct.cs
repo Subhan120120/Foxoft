@@ -1,4 +1,4 @@
-using DevExpress.Utils.Extensions;
+﻿using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -63,6 +63,7 @@ namespace Foxoft
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
                 BBI_Scales.Enabled = true;
+                BBI_MergeProduct.Enabled = true;
             }
 
             LUE_ProductTypeCode.Properties.DataSource = efMethods.SelectEntities<DcProductType>();
@@ -830,6 +831,7 @@ namespace Foxoft
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
                 BBI_Scales.Enabled = true;
+                BBI_MergeProduct.Enabled = true;
 
                 LoadProduct();
             }
@@ -857,6 +859,160 @@ namespace Foxoft
                     ErrorType.Information);
             else
                 dxErrorProvider1.ClearErrors();
+        }
+
+        private void BBI_MergeProduct_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            using FormProductList frm = new(new byte[] { 1, 2, 3, 4 }, false);
+            if (frm.ShowDialog() != DialogResult.OK || frm.dcProduct is null)
+                return;
+
+            string sourceProductCode = frm.dcProduct.ProductCode;
+            string sourceProductDesc = frm.dcProduct.ProductDesc;
+
+            if (sourceProductCode == dcProduct.ProductCode)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_Product_Message_CannotMergeSameProduct,
+                    Resources.Common_Attention);
+                return;
+            }
+
+            DialogResult dialogResult = XtraMessageBox.Show(
+                string.Format(
+                    Resources.Form_Product_Message_MergeConfirm,
+                    sourceProductDesc, sourceProductCode,
+                    dcProduct.ProductDesc, dcProduct.ProductCode),
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNo);
+
+            if (dialogResult != DialogResult.Yes)
+                return;
+
+            try
+            {
+                MergeProducts(sourceProductCode, dcProduct.ProductCode);
+
+                dcProduct = new DcProduct { ProductCode = dcProduct.ProductCode };
+                LoadProduct();
+                dcProduct = dcProductsBindingSource.Current as DcProduct ?? dcProduct;
+
+                XtraMessageBox.Show(
+                    Resources.Form_Product_Message_MergeSuccess,
+                    Resources.Common_Info);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_Product_Message_MergeError, ex.Message),
+                    Resources.Common_ErrorTitle);
+            }
+        }
+
+        private void MergeProducts(string sourceProductCode, string targetProductCode)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(sourceProductCode);
+            ArgumentException.ThrowIfNullOrWhiteSpace(targetProductCode);
+
+            sourceProductCode = sourceProductCode.Trim();
+            targetProductCode = targetProductCode.Trim();
+
+            if (string.Equals(sourceProductCode, targetProductCode, StringComparison.Ordinal))
+                return;
+
+            using subContext context = new();
+            using var transaction = context.Database.BeginTransaction();
+
+            SqlParameter srcParam = new("@SourceProductCode", sourceProductCode);
+            SqlParameter tgtParam = new("@TargetProductCode", targetProductCode);
+
+            context.Database.ExecuteSqlRaw(
+                """
+                SET XACT_ABORT ON;
+
+                ALTER TABLE DcProductStaticPrices NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrProductDiscounts NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrProductBarcodes NOCHECK CONSTRAINT ALL;
+                ALTER TABLE DcSerialNumbers NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrProductFeatures NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrInvoiceLines NOCHECK CONSTRAINT ALL;
+                ALTER TABLE SiteProducts NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrPriceListLines NOCHECK CONSTRAINT ALL;
+                ALTER TABLE DcProductScales NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrBarcodeOperationLines NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrCampaignProducts NOCHECK CONSTRAINT ALL;
+
+                -- TrInvoiceLines: simple FK update
+                UPDATE TrInvoiceLines SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+
+                -- TrProductBarcodes: move non-duplicate barcodes, delete rest
+                UPDATE TrProductBarcodes SET ProductCode = @TargetProductCode
+                WHERE ProductCode = @SourceProductCode
+                  AND Barcode NOT IN (SELECT Barcode FROM TrProductBarcodes WHERE ProductCode = @TargetProductCode);
+                DELETE FROM TrProductBarcodes WHERE ProductCode = @SourceProductCode;
+
+                -- TrBarcodeOperationLines: simple FK update
+                UPDATE TrBarcodeOperationLines SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+
+                -- DcSerialNumbers: simple FK update
+                UPDATE DcSerialNumbers SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+
+                -- TrPriceListLines: simple FK update
+                UPDATE TrPriceListLines SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+
+                -- DcProductStaticPrices: composite PK (ProductCode, PriceTypeCode) — move non-duplicates, delete rest
+                UPDATE DcProductStaticPrices SET ProductCode = @TargetProductCode
+                WHERE ProductCode = @SourceProductCode
+                  AND PriceTypeCode NOT IN (SELECT PriceTypeCode FROM DcProductStaticPrices WHERE ProductCode = @TargetProductCode);
+                DELETE FROM DcProductStaticPrices WHERE ProductCode = @SourceProductCode;
+
+                -- TrProductDiscounts: composite PK (ProductCode, DiscountId) — move non-duplicates, delete rest
+                UPDATE TrProductDiscounts SET ProductCode = @TargetProductCode
+                WHERE ProductCode = @SourceProductCode
+                  AND DiscountId NOT IN (SELECT DiscountId FROM TrProductDiscounts WHERE ProductCode = @TargetProductCode);
+                DELETE FROM TrProductDiscounts WHERE ProductCode = @SourceProductCode;
+
+                -- TrProductFeatures: composite PK (ProductCode, FeatureTypeId, FeatureCode) — move only if target doesn't have this FeatureTypeId
+                UPDATE src SET src.ProductCode = @TargetProductCode
+                FROM TrProductFeatures src
+                WHERE src.ProductCode = @SourceProductCode
+                  AND NOT EXISTS (
+                    SELECT 1 FROM TrProductFeatures tgt
+                    WHERE tgt.ProductCode = @TargetProductCode
+                      AND tgt.FeatureTypeId = src.FeatureTypeId
+                  );
+                DELETE FROM TrProductFeatures WHERE ProductCode = @SourceProductCode;
+
+                -- TrCampaignProducts: move non-duplicates, delete rest
+                UPDATE src SET src.ProductCode = @TargetProductCode
+                FROM TrCampaignProducts src
+                WHERE src.ProductCode = @SourceProductCode
+                  AND NOT EXISTS (
+                    SELECT 1 FROM TrCampaignProducts tgt
+                    WHERE tgt.ProductCode = @TargetProductCode
+                      AND tgt.CampaignId = src.CampaignId
+                  );
+                DELETE FROM TrCampaignProducts WHERE ProductCode = @SourceProductCode;
+
+                -- DcProductScales: 1:1 — keep target if exists, delete source
+                IF NOT EXISTS (SELECT 1 FROM DcProductScales WHERE ProductCode = @TargetProductCode)
+                    UPDATE DcProductScales SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+                ELSE
+                    DELETE FROM DcProductScales WHERE ProductCode = @SourceProductCode;
+
+                -- SiteProducts: 1:1 with ProductCode as PK — keep target if exists, delete source
+                IF NOT EXISTS (SELECT 1 FROM SiteProducts WHERE ProductCode = @TargetProductCode)
+                    UPDATE SiteProducts SET ProductCode = @TargetProductCode WHERE ProductCode = @SourceProductCode;
+                ELSE
+                    DELETE FROM SiteProducts WHERE ProductCode = @SourceProductCode;
+
+                -- Delete the source product
+                DELETE FROM DcProducts WHERE ProductCode = @SourceProductCode;
+                """,
+                srcParam,
+                tgtParam);
+
+            transaction.Commit();
         }
     }
 }

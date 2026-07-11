@@ -2220,13 +2220,16 @@ namespace Foxoft
 
             if (!string.IsNullOrEmpty(value) && pf?.FeatureCode != value)
             {
-                pf = new TrProductFeature()
+                if (!db.TrProductFeatures.Any(x => x.ProductCode == productCode && x.FeatureTypeId == featureTypeId && x.FeatureCode == value))
                 {
-                    FeatureTypeId = featureTypeId,
-                    ProductCode = productCode,
-                    FeatureCode = value
-                };
-                db.TrProductFeatures.Add(pf);
+                    pf = new TrProductFeature()
+                    {
+                        FeatureTypeId = featureTypeId,
+                        ProductCode = productCode,
+                        FeatureCode = value
+                    };
+                    db.TrProductFeatures.Add(pf);
+                }
             }
 
             return db.SaveChanges();
@@ -2249,13 +2252,16 @@ namespace Foxoft
 
             if (!string.IsNullOrEmpty(value) && pf?.CurrAccFeatureCode != value)
             {
-                pf = new TrCurrAccFeature()
+                if (!db.TrCurrAccFeatures.Any(x => x.CurrAccCode == currAccCode && x.CurrAccFeatureTypeId == featureTypeId && x.CurrAccFeatureCode == value))
                 {
-                    CurrAccFeatureTypeId = featureTypeId,
-                    CurrAccCode = currAccCode,
-                    CurrAccFeatureCode = value
-                };
-                db.TrCurrAccFeatures.Add(pf);
+                    pf = new TrCurrAccFeature()
+                    {
+                        CurrAccFeatureTypeId = featureTypeId,
+                        CurrAccCode = currAccCode,
+                        CurrAccFeatureCode = value
+                    };
+                    db.TrCurrAccFeatures.Add(pf);
+                }
             }
 
             return db.SaveChanges();
@@ -2287,13 +2293,16 @@ namespace Foxoft
 
             if (!string.IsNullOrEmpty(value) && pf?.InvoiceLineFeatureCode != value)
             {
-                pf = new TrInvoiceLineFeature()
+                if (!db.TrInvoiceLineFeatures.Any(x => x.InvoiceLineId == invoiceLineId && x.InvoiceLineFeatureTypeId == featureTypeId && x.InvoiceLineFeatureCode == value))
                 {
-                    InvoiceLineFeatureTypeId = featureTypeId,
-                    InvoiceLineId = invoiceLineId,
-                    InvoiceLineFeatureCode = value
-                };
-                db.TrInvoiceLineFeatures.Add(pf);
+                    pf = new TrInvoiceLineFeature()
+                    {
+                        InvoiceLineFeatureTypeId = featureTypeId,
+                        InvoiceLineId = invoiceLineId,
+                        InvoiceLineFeatureCode = value
+                    };
+                    db.TrInvoiceLineFeatures.Add(pf);
+                }
             }
 
             return db.SaveChanges();

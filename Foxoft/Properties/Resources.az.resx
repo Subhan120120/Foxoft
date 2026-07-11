@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3212,6 +3212,21 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_Product_Validation_ProductNameExists" xml:space="preserve">
     <value>Bu adda məhsul mövcuddur.</value>
+  </data>
+  <data name="Form_Product_Button_MergeProduct" xml:space="preserve">
+    <value>Birləşdir</value>
+  </data>
+  <data name="Form_Product_Message_MergeConfirm" xml:space="preserve">
+    <value>'{0}' ({1}) məhsulunun bütün datası '{2}' ({3}) məhsuluna köçürüləcək və '{0}' silinəcək. Davam etmək istəyirsiniz?</value>
+  </data>
+  <data name="Form_Product_Message_MergeSuccess" xml:space="preserve">
+    <value>Məhsullar uğurla birləşdirildi.</value>
+  </data>
+  <data name="Form_Product_Message_MergeError" xml:space="preserve">
+    <value>Məhsulların birləşdirilməsində xəta: {0}</value>
+  </data>
+  <data name="Form_Product_Message_CannotMergeSameProduct" xml:space="preserve">
+    <value>Məhsul özü ilə birləşdirilə bilməz.</value>
   </data>
   <data name="Form_ProductBarcode_Caption" xml:space="preserve">
     <value>Məhsul barkodları</value>

@@ -377,6 +377,24 @@
         IDwvZz4NCjwvc3ZnPgs=
 </value>
   </data>
+  <data name="BBI_MergeProduct.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjIsIFZlcnNpb249MjQuMi43
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAGoCAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
+        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3Bh
+        Y2U9InByZXNlcnZlIiBpZD0iR3JvdXAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMy
+        IDMyIj4NCiAgPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5CbHVle2ZpbGw6IzExNzdENzt9CgkuQmxh
+        Y2t7ZmlsbDojNzI3MjcyO30KPC9zdHlsZT4NCiAgPHBhdGggZD0iTTEzLDEyaDE2YzAuNSwwLDEsMC40
+        LDEsMXYxNmMwLDAuNS0wLjUsMS0xLDFIMTNjLTAuNiwwLTEtMC41LTEtMVYxM0MxMiwxMi40LDEyLjQs
+        MTIsMTMsMTJ6IE0xMCwxMSAgYzAtMC41LDAuNS0xLDEtMWg5VjNjMC0wLjUtMC41LTEtMS0xSDNDMi41
+        LDIsMiwyLjUsMiwzdjE2YzAsMC41LDAuNSwxLDEsMWg3VjExeiIgY2xhc3M9IkJsdWUiIC8+DQogIDxw
+        YXRoIGQ9Ik0zMCwydjZoLTJWNGgtNFYySDMweiBNOCwzMHYtMkg0di00SDJ2Nkg4eiIgY2xhc3M9IkJs
+        YWNrIiAvPg0KPC9zdmc+Cw==
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>41</value>
   </metadata>

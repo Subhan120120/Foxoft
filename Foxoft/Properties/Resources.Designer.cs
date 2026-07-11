@@ -11688,6 +11688,51 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge.
+        /// </summary>
+        public static string Form_Product_Button_MergeProduct {
+            get {
+                return ResourceManager.GetString("Form_Product_Button_MergeProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A product cannot be merged with itself..
+        /// </summary>
+        public static string Form_Product_Message_CannotMergeSameProduct {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_CannotMergeSameProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All data of &apos;{0}&apos; ({1}) will be transferred to &apos;{2}&apos; ({3}) and &apos;{0}&apos; will be deleted. Do you want to continue?.
+        /// </summary>
+        public static string Form_Product_Message_MergeConfirm {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_MergeConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error merging products: {0}.
+        /// </summary>
+        public static string Form_Product_Message_MergeError {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_MergeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products merged successfully..
+        /// </summary>
+        public static string Form_Product_Message_MergeSuccess {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_MergeSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product barcodes.
         /// </summary>
         public static string Form_ProductBarcode_Caption {
