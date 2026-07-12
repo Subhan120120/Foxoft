@@ -300,6 +300,9 @@
   <data name="Common_Save" xml:space="preserve">
     <value>Yadda saxla</value>
   </data>
+  <data name="Common_Reset" xml:space="preserve">
+    <value>Sıfırla</value>
+  </data>
   <data name="Entity_AppSetting_AutoPrint" xml:space="preserve">
     <value>Avtomatik Çap</value>
   </data>

@@ -1,4 +1,4 @@
-using Foxoft.AppCode;
+﻿using Foxoft.AppCode;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Models.Entity.RoleClaim;
@@ -1154,7 +1154,9 @@ namespace Foxoft.Models
                 new DcPosButton { Id = 13, ButtonName = "btn_Desc",                ButtonDescription = "Faktura Açıqlama",   IsVisible = true, SortOrder = 12 },
                 new DcPosButton { Id = 14, ButtonName = "btn_LineDesc",            ButtonDescription = "Sətir Açıqlama",     IsVisible = true, SortOrder = 13 },
                 new DcPosButton { Id = 15, ButtonName = "btn_CampaignApply",       ButtonDescription = "Kampaniya Tətbiq Et",IsVisible = true, SortOrder = 14 },
-                new DcPosButton { Id = 16, ButtonName = "btn_CampaignDelete",      ButtonDescription = "Kampaniyanı Sil",    IsVisible = true, SortOrder = 15 }
+                new DcPosButton { Id = 16, ButtonName = "btn_CampaignDelete",      ButtonDescription = "Kampaniyanı Sil",    IsVisible = true, SortOrder = 15 },
+                new DcPosButton { Id = 17, ButtonName = "btn_CampaignLog",         ButtonDescription = "Kampaniya Log",      IsVisible = false, SortOrder = 16 },
+                new DcPosButton { Id = 18, ButtonName = "btn_PromoCode",           ButtonDescription = "Promo Kod",          IsVisible = false, SortOrder = 17 }
             );
         }
 
@@ -1166,7 +1168,6 @@ namespace Foxoft.Models
                 .Property(x => x.PaymentTypeCode)
                 .HasConversion<byte>()
                 .HasColumnType("tinyint");
-
             modelBuilder.Entity<DcPaymentMethod>()
                 .Property(x => x.PaymentTypeCode)
                 .HasConversion<byte>()

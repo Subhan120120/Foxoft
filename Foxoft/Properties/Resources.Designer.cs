@@ -984,6 +984,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Common_Reset {
+            get {
+                return ResourceManager.GetString("Common_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saved successfully..
         /// </summary>
         public static string Common_SavedSuccessfully {

@@ -1,4 +1,4 @@
-﻿using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.Sql;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
@@ -76,9 +76,9 @@ namespace Foxoft
 
             LoadShortcuts();
 
-            ApplyPosButtonSettings();
-
             LoadLayout();
+
+            ApplyPosButtonSettings();
         }
 
         private void LoadShortcuts()
@@ -231,6 +231,8 @@ namespace Foxoft
                     ["btn_LineDesc"]            = (btn_LineDesc,            LCI_LineDesc),
                     ["btn_CampaignApply"]       = (btn_CampaignApply,       LCI_CampaignApply),
                     ["btn_CampaignDelete"]      = (btn_CampaignDelete,      LCI_CampaignDelete),
+                    ["btn_CampaignLog"]         = (btn_CampaignLog,         LCI_CampaignLog),
+                    ["btn_PromoCode"]           = (btn_PromoCode,           LCI_PromoCode),
                 };
 
                 // Bütün buttonları SortOrder-a görə pozisiyala, gizli olanlar boş xana olaraq qalsın
@@ -247,10 +249,20 @@ namespace Foxoft
                     layoutItem.OptionsTableLayoutItem.RowIndex = posBtn.SortOrder / colCount;
                     layoutItem.OptionsTableLayoutItem.ColumnIndex = posBtn.SortOrder % colCount;
 
-                    // Visibility — gizli olanlar yerini saxlayır, sadəcə görünmür
-                    layoutItem.Visibility = posBtn.IsVisible
-                        ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always
-                        : DevExpress.XtraLayout.Utils.LayoutVisibility.OnlyInCustomization;
+                    // Visibility — if campaign is disabled, force hide it completely. Otherwise respect user setting.
+                    bool isCampaignButton = posBtn.ButtonName.StartsWith("btn_Campaign", StringComparison.OrdinalIgnoreCase)
+                                         || posBtn.ButtonName.Equals("btn_PromoCode", StringComparison.OrdinalIgnoreCase);
+
+                    if (isCampaignButton && !IsCampaignEnabled)
+                    {
+                        layoutItem.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                    }
+                    else
+                    {
+                        layoutItem.Visibility = posBtn.IsVisible
+                            ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always
+                            : DevExpress.XtraLayout.Utils.LayoutVisibility.OnlyInCustomization;
+                    }
 
                     // BackColor
                     if (posBtn.BackColorArgb.HasValue)

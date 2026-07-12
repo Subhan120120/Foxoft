@@ -20,6 +20,7 @@ namespace Foxoft
             panelBottom = new DevExpress.XtraEditors.PanelControl();
             btnCancel = new DevExpress.XtraEditors.SimpleButton();
             btnSave = new DevExpress.XtraEditors.SimpleButton();
+            btnReset = new DevExpress.XtraEditors.SimpleButton();
             splitContainer = new DevExpress.XtraEditors.SplitContainerControl();
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             layoutControlGroupRoot = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -48,39 +49,50 @@ namespace Foxoft
             // 
             // panelBottom
             // 
+            panelBottom.Controls.Add(btnReset);
             panelBottom.Controls.Add(btnCancel);
             panelBottom.Controls.Add(btnSave);
-            panelBottom.Dock = DockStyle.Bottom;
-            panelBottom.Location = new Point(0, 610);
+            panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            panelBottom.Location = new System.Drawing.Point(0, 610);
             panelBottom.Name = "panelBottom";
-            panelBottom.Size = new Size(800, 50);
+            panelBottom.Size = new System.Drawing.Size(800, 50);
             panelBottom.TabIndex = 1;
             // 
             // btnCancel
             // 
-            btnCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCancel.Location = new Point(698, 10);
+            btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btnCancel.Location = new System.Drawing.Point(698, 10);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(90, 30);
+            btnCancel.Size = new System.Drawing.Size(90, 30);
             btnCancel.TabIndex = 1;
             btnCancel.Text = "Cancel";
             btnCancel.Click += btnCancel_Click;
             // 
             // btnSave
             // 
-            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSave.Location = new Point(598, 10);
+            btnSave.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btnSave.Location = new System.Drawing.Point(598, 10);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(90, 30);
+            btnSave.Size = new System.Drawing.Size(90, 30);
             btnSave.TabIndex = 0;
             btnSave.Text = "Save";
             btnSave.Click += btnSave_Click;
             // 
+            // btnReset
+            // 
+            btnReset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            btnReset.Location = new System.Drawing.Point(10, 10);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new System.Drawing.Size(90, 30);
+            btnReset.TabIndex = 2;
+            btnReset.Text = "Reset";
+            btnReset.Click += btnReset_Click;
+            // 
             // splitContainer
             // 
-            splitContainer.Dock = DockStyle.Fill;
+            splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             splitContainer.Horizontal = false;
-            splitContainer.Location = new Point(0, 0);
+            splitContainer.Location = new System.Drawing.Point(0, 0);
             splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
@@ -92,19 +104,18 @@ namespace Foxoft
             // 
             splitContainer.Panel2.Controls.Add(groupHidden);
             splitContainer.Panel2.MinSize = 150;
-            splitContainer.Size = new Size(800, 610);
+            splitContainer.Size = new System.Drawing.Size(800, 610);
             splitContainer.SplitterPosition = 400;
             splitContainer.TabIndex = 0;
             // 
             // layoutControl1
             // 
             layoutControl1.AllowDrop = true;
-            layoutControl1.Dock = DockStyle.Fill;
-            layoutControl1.Location = new Point(0, 0);
+            layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            layoutControl1.Location = new System.Drawing.Point(0, 0);
             layoutControl1.Name = "layoutControl1";
-            layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(847, 108, 650, 400);
             layoutControl1.Root = layoutControlGroupRoot;
-            layoutControl1.Size = new Size(800, 400);
+            layoutControl1.Size = new System.Drawing.Size(800, 400);
             layoutControl1.TabIndex = 0;
             // 
             // layoutControlGroupRoot
@@ -112,34 +123,34 @@ namespace Foxoft
             layoutControlGroupRoot.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             layoutControlGroupRoot.GroupBordersVisible = false;
             layoutControlGroupRoot.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCG_Buttons });
-            layoutControlGroupRoot.Name = "Root";
-            layoutControlGroupRoot.Size = new Size(800, 400);
+            layoutControlGroupRoot.Name = "layoutControlGroupRoot";
+            layoutControlGroupRoot.Size = new System.Drawing.Size(800, 400);
             // 
             // lCG_Buttons
             // 
             lCG_Buttons.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
-            lCG_Buttons.Location = new Point(0, 0);
+            lCG_Buttons.Location = new System.Drawing.Point(0, 0);
             lCG_Buttons.Name = "lCG_Buttons";
-            lCG_Buttons.Size = new Size(780, 380);
+            lCG_Buttons.Size = new System.Drawing.Size(780, 380);
             lCG_Buttons.Text = "POS Buttons";
             // 
             // groupHidden
             // 
             groupHidden.Controls.Add(gridHidden);
-            groupHidden.Dock = DockStyle.Fill;
-            groupHidden.Location = new Point(0, 0);
+            groupHidden.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupHidden.Location = new System.Drawing.Point(0, 0);
             groupHidden.Name = "groupHidden";
-            groupHidden.Size = new Size(800, 200);
+            groupHidden.Size = new System.Drawing.Size(800, 200);
             groupHidden.TabIndex = 0;
             groupHidden.Text = "Hidden Buttons";
             // 
             // gridHidden
             // 
-            gridHidden.Dock = DockStyle.Fill;
-            gridHidden.Location = new Point(2, 23);
+            gridHidden.Dock = System.Windows.Forms.DockStyle.Fill;
+            gridHidden.Location = new System.Drawing.Point(2, 23);
             gridHidden.MainView = gridViewHidden;
             gridHidden.Name = "gridHidden";
-            gridHidden.Size = new Size(796, 175);
+            gridHidden.Size = new System.Drawing.Size(796, 175);
             gridHidden.TabIndex = 0;
             gridHidden.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewHidden });
             // 
@@ -148,9 +159,9 @@ namespace Foxoft
             gridViewHidden.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colButtonName, colButtonDescription });
             gridViewHidden.GridControl = gridHidden;
             gridViewHidden.Name = "gridViewHidden";
-            gridViewHidden.OptionsBehavior.Editable = false;
             gridViewHidden.OptionsView.ShowGroupPanel = false;
             gridViewHidden.OptionsView.ShowIndicator = false;
+            gridViewHidden.OptionsBehavior.Editable = false;
             // 
             // colButtonName
             // 
@@ -170,12 +181,12 @@ namespace Foxoft
             // 
             // UcPosButtonSetting
             // 
-            AutoScaleDimensions = new SizeF(6F, 13F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(splitContainer);
             Controls.Add(panelBottom);
             Name = "UcPosButtonSetting";
-            Size = new Size(800, 660);
+            Size = new System.Drawing.Size(800, 660);
             Load += UcPosButtonSetting_Load;
             ((System.ComponentModel.ISupportInitialize)panelBottom).EndInit();
             panelBottom.ResumeLayout(false);
@@ -200,6 +211,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.PanelControl panelBottom;
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private DevExpress.XtraEditors.SimpleButton btnCancel;
+        private DevExpress.XtraEditors.SimpleButton btnReset;
         private DevExpress.XtraEditors.SplitContainerControl splitContainer;
         private DevExpress.XtraLayout.LayoutControl layoutControl1;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupRoot;

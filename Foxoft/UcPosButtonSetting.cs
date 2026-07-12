@@ -48,6 +48,7 @@ namespace Foxoft
         {
             btnSave.Text = Resources.Common_Save;
             btnCancel.Text = Resources.Common_Cancel;
+            btnReset.Text = Resources.Common_Reset;
             lCG_Buttons.Text = Resources.Form_PosButtonSetting_Caption;
             groupHidden.Text = Resources.Common_DragToReorder;
             colButtonName.Caption = Resources.Entity_PosButton_ButtonName;
@@ -360,6 +361,21 @@ namespace Foxoft
         #endregion
 
         #region Save / Cancel
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            // Reset in-memory list to defaults matching seed data
+            // Default seed: IsVisible = true (except Id >= 17), SortOrder = Id - 1, Colors = null
+            foreach (var posBtn in allButtons)
+            {
+                posBtn.IsVisible = (posBtn.Id < 17);
+                posBtn.SortOrder = posBtn.Id - 1;
+                posBtn.BackColorArgb = null;
+                posBtn.ForeColorArgb = null;
+            }
+
+            RebuildUI();
+        }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
