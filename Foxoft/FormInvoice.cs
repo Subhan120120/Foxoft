@@ -2773,6 +2773,9 @@ namespace Foxoft
                     ItemForWarehouseCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
                     LCI_CashRegCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
 
+                    colUnitOfMeasureId.Visible = false;
+                    colUnitOfMeasureId.OptionsColumn.AllowEdit = false;
+
                     if (dcProcess.ProcessCode == "EX")
                         ItemForDeliveryDate.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
                 }
