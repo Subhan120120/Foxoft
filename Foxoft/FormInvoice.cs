@@ -2513,16 +2513,6 @@ namespace Foxoft
             trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
             lbl_CurrAccDesc.Text = $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}";
 
-            // _isLoading aktiv olanda (məs. yeni faktura açılışında default müştəri set olunanda)
-            // ağır balans/anbar sorğularını işə salma — form tez açılsın.
-            if (_isLoading)
-                return;
-
-            // Balans cache-ini invalidate et — növbəti istifadədə yenidən hesablanacaq.
-            _currAccBalanceCalculated = false;
-
-            _pendingPaymentCurrAccUpdate = true;
-
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
             lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
 
@@ -2560,6 +2550,16 @@ namespace Foxoft
                     return;
                 }
             }
+
+            // _isLoading aktiv olanda (məs. yeni faktura açılışında default müştəri set olunanda)
+            // ağır balans/anbar sorğularını işə salma — form tez açılsın.
+            if (_isLoading)
+                return;
+
+            // Balans cache-ini invalidate et — növbəti istifadədə yenidən hesablanacaq.
+            _currAccBalanceCalculated = false;
+
+            _pendingPaymentCurrAccUpdate = true;
         }
 
         private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
