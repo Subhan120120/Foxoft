@@ -15,14 +15,24 @@ namespace Foxoft.AppCode
     public static class FormSizeHelper
     {
         private static readonly string FilePath;
-        private static Dictionary<string, FormSizeInfo> _cache;
+        private static readonly Dictionary<string, FormSizeInfo> _cache;
         private static readonly object _lock = new();
 
         /// <summary>
-        /// Tracks the previous WindowState per form so we can detect
-        /// Maximize / Restore button clicks via the Resize event.
+        /// Tracks the previous non-minimized WindowState per form so we can detect
+        /// Maximize / Restore transitions and save the correct state on close.
         /// </summary>
         private static readonly Dictionary<Form, FormWindowState> _previousStates = new();
+
+        /// <summary>
+        /// Tracks all currently active forms.
+        /// </summary>
+        private static readonly HashSet<Form> _trackedForms = new();
+
+        /// <summary>
+        /// Flag to prevent updating state during application/parent shutdown.
+        /// </summary>
+        private static bool _isShuttingDown = false;
 
         static FormSizeHelper()
         {
@@ -43,10 +53,20 @@ namespace Foxoft.AppCode
         {
             if (form == null) return;
 
+            lock (_lock)
+            {
+                if (_trackedForms.Contains(form)) return;
+                _trackedForms.Add(form);
+            }
+
             RestoreSize(form);
 
-            // Remember current state for change detection
-            _previousStates[form] = form.WindowState;
+            // Keep track of the last known stable state in memory (ignoring Minimized)
+            FormWindowState initialState = form.WindowState == FormWindowState.Minimized ? FormWindowState.Normal : form.WindowState;
+            lock (_lock)
+            {
+                _previousStates[form] = initialState;
+            }
 
             // ResizeEnd fires only on border drag — captures Normal size changes
             form.ResizeEnd += OnFormResizeEnd;
@@ -56,6 +76,14 @@ namespace Foxoft.AppCode
 
             // Use FormClosing (not FormClosed) so we save BEFORE the Dispose() handler
             form.FormClosing += OnFormClosing;
+
+            // Clean up on disposal to avoid memory leaks
+            form.Disposed += OnFormDisposed;
+
+            if (form.MdiParent != null)
+            {
+                form.MdiParent.FormClosing += OnMdiParentClosing;
+            }
         }
 
         private static void RestoreSize(Form form)
@@ -82,8 +110,19 @@ namespace Foxoft.AppCode
 
         private static void OnFormResizeEnd(object sender, EventArgs e)
         {
+            if (_isShuttingDown) return;
+
             if (sender is Form form)
-                SaveSize(form);
+            {
+                if (form.WindowState == FormWindowState.Normal)
+                {
+                    lock (_lock)
+                    {
+                        SaveSizeInternal(form);
+                        PersistInternal();
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -92,55 +131,129 @@ namespace Foxoft.AppCode
         /// </summary>
         private static void OnFormResize(object sender, EventArgs e)
         {
+            if (_isShuttingDown) return;
+
             if (sender is Form form)
             {
-                _previousStates.TryGetValue(form, out FormWindowState previous);
-
-                if (form.WindowState != previous)
+                if (form.WindowState != FormWindowState.Minimized)
                 {
-                    _previousStates[form] = form.WindowState;
-                    SaveSize(form);
+                    lock (_lock)
+                    {
+                        _previousStates.TryGetValue(form, out FormWindowState previous);
+
+                        if (form.WindowState != previous)
+                        {
+                            _previousStates[form] = form.WindowState;
+                            SaveSizeInternal(form);
+                            PersistInternal();
+                        }
+                    }
                 }
             }
         }
 
         private static void OnFormClosing(object sender, FormClosingEventArgs e)
         {
+            if (_isShuttingDown) return;
+
             if (sender is Form form)
             {
-                SaveSize(form);
-
-                // Clean up event subscriptions and state tracking
-                form.ResizeEnd -= OnFormResizeEnd;
-                form.Resize -= OnFormResize;
-                form.FormClosing -= OnFormClosing;
-                _previousStates.Remove(form);
+                lock (_lock)
+                {
+                    SaveSizeInternal(form);
+                    PersistInternal();
+                    Cleanup(form);
+                }
             }
         }
 
-        private static void SaveSize(Form form)
+        private static void OnFormDisposed(object sender, EventArgs e)
+        {
+            if (sender is Form form)
+            {
+                Cleanup(form);
+            }
+        }
+
+        private static void OnMdiParentClosing(object sender, FormClosingEventArgs e)
+        {
+            lock (_lock)
+            {
+                if (_isShuttingDown) return;
+                _isShuttingDown = true;
+
+                // Save all currently tracked active forms
+                foreach (Form form in _trackedForms)
+                {
+                    SaveSizeInternal(form);
+                }
+                PersistInternal();
+            }
+        }
+
+        private static void SaveSizeInternal(Form form)
         {
             string key = GetKey(form);
             if (string.IsNullOrEmpty(key)) return;
 
+            _previousStates.TryGetValue(form, out FormWindowState lastState);
+            if (lastState == FormWindowState.Minimized)
+            {
+                lastState = FormWindowState.Normal;
+            }
+
+            int width;
+            int height;
+
+            if (form.WindowState == FormWindowState.Normal)
+            {
+                width = form.Width;
+                height = form.Height;
+            }
+            else
+            {
+                width = form.RestoreBounds.Width;
+                height = form.RestoreBounds.Height;
+            }
+
+            // Fallback if RestoreBounds or size is invalid (e.g., during startup/shutdown of minimized forms)
+            if (width <= 0 || height <= 0)
+            {
+                width = form.Width > 0 ? form.Width : 800;
+                height = form.Height > 0 ? form.Height : 600;
+            }
+
             FormSizeInfo info = new()
             {
-                Width = form.WindowState == FormWindowState.Normal ? form.Width : form.RestoreBounds.Width,
-                Height = form.WindowState == FormWindowState.Normal ? form.Height : form.RestoreBounds.Height,
-                State = form.WindowState == FormWindowState.Minimized ? FormWindowState.Normal : form.WindowState
+                Width = width,
+                Height = height,
+                State = lastState
             };
 
+            _cache[key] = info;
+        }
+
+        private static void Cleanup(Form form)
+        {
             lock (_lock)
             {
-                _cache[key] = info;
-                Persist();
+                if (!_trackedForms.Contains(form)) return;
+
+                form.ResizeEnd -= OnFormResizeEnd;
+                form.Resize -= OnFormResize;
+                form.FormClosing -= OnFormClosing;
+                form.Disposed -= OnFormDisposed;
+                if (form.MdiParent != null)
+                {
+                    form.MdiParent.FormClosing -= OnMdiParentClosing;
+                }
+                _previousStates.Remove(form);
+                _trackedForms.Remove(form);
             }
         }
 
         private static string GetKey(Form form)
         {
-            // Use the form's Name (which is the formKey set by ShowNewForm/ShowExistForm)
-            // Fall back to type name if Name is empty
             return !string.IsNullOrEmpty(form.Name) ? form.Name : form.GetType().Name;
         }
 
@@ -163,7 +276,7 @@ namespace Foxoft.AppCode
             return new Dictionary<string, FormSizeInfo>();
         }
 
-        private static void Persist()
+        private static void PersistInternal()
         {
             try
             {
@@ -185,4 +298,3 @@ namespace Foxoft.AppCode
         public FormWindowState State { get; set; }
     }
 }
-
