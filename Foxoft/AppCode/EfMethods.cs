@@ -2419,5 +2419,274 @@ namespace Foxoft
                                 .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                 .Sum(x => x.Amount);
         }
+
+        public void MergeProducts(string sourceProductCode, string targetProductCode)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(sourceProductCode);
+            ArgumentException.ThrowIfNullOrWhiteSpace(targetProductCode);
+
+            sourceProductCode = sourceProductCode.Trim();
+            targetProductCode = targetProductCode.Trim();
+
+            if (string.Equals(sourceProductCode, targetProductCode, StringComparison.Ordinal))
+                return;
+
+            using subContext context = new();
+            using var transaction = context.Database.BeginTransaction();
+
+            // 1. TrInvoiceLines: simple FK update
+            context.TrInvoiceLines
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            // 2. TrProductBarcodes: move non-duplicate barcodes, delete rest
+            var targetBarcodes = context.TrProductBarcodes
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.Barcode)
+                .ToList();
+
+            context.TrProductBarcodes
+                .Where(x => x.ProductCode == sourceProductCode && !targetBarcodes.Contains(x.Barcode))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            context.TrProductBarcodes
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
+
+            // 3. TrBarcodeOperationLines: simple FK update
+            context.TrBarcodeOperationLines
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            // 4. DcSerialNumbers: simple FK update
+            context.DcSerialNumbers
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            // 5. TrPriceListLines: simple FK update
+            context.TrPriceListLines
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            // 6. DcProductStaticPrices: composite PK (ProductCode, PriceTypeCode) - move non-duplicates, delete rest
+            var targetPriceTypeCodes = context.DcProductStaticPrices
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.PriceTypeCode)
+                .ToList();
+
+            context.DcProductStaticPrices
+                .Where(x => x.ProductCode == sourceProductCode && !targetPriceTypeCodes.Contains(x.PriceTypeCode))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            context.DcProductStaticPrices
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
+
+            // 7. TrProductDiscounts: composite PK (ProductCode, DiscountId) - move non-duplicates, delete rest
+            var targetDiscountIds = context.TrProductDiscounts
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.DiscountId)
+                .ToList();
+
+            context.TrProductDiscounts
+                .Where(x => x.ProductCode == sourceProductCode && !targetDiscountIds.Contains(x.DiscountId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            context.TrProductDiscounts
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
+
+            // 8. TrProductFeatures: composite PK (ProductCode, FeatureTypeId, FeatureCode) - move only if target doesn't have this FeatureTypeId
+            var targetFeatureTypeIds = context.TrProductFeatures
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.FeatureTypeId)
+                .ToList();
+
+            context.TrProductFeatures
+                .Where(x => x.ProductCode == sourceProductCode && !targetFeatureTypeIds.Contains(x.FeatureTypeId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            context.TrProductFeatures
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
+
+            // 9. TrCampaignProducts: move non-duplicates, delete rest
+            var targetCampaignIds = context.TrCampaignProducts
+                .Where(x => x.ProductCode == targetProductCode)
+                .Select(x => x.CampaignId)
+                .ToList();
+
+            context.TrCampaignProducts
+                .Where(x => x.ProductCode == sourceProductCode && !targetCampaignIds.Contains(x.CampaignId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+
+            context.TrCampaignProducts
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
+
+            // 10. DcProductScales: 1:1 - keep target if exists, delete source
+            bool targetScaleExists = context.DcProductScales.Any(x => x.ProductCode == targetProductCode);
+            if (!targetScaleExists)
+            {
+                context.DcProductScales
+                    .Where(x => x.ProductCode == sourceProductCode)
+                    .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+            }
+            else
+            {
+                context.DcProductScales
+                    .Where(x => x.ProductCode == sourceProductCode)
+                    .ExecuteDelete();
+            }
+
+            // 11. SiteProducts: 1:1 - keep target if exists, delete source
+            bool targetSiteProductExists = context.SiteProducts.Any(x => x.ProductCode == targetProductCode);
+            if (!targetSiteProductExists)
+            {
+                context.SiteProducts
+                    .Where(x => x.ProductCode == sourceProductCode)
+                    .ExecuteUpdate(s => s.SetProperty(p => p.ProductCode, targetProductCode));
+            }
+            else
+            {
+                context.SiteProducts
+                    .Where(x => x.ProductCode == sourceProductCode)
+                    .ExecuteDelete();
+            }
+
+            // 12. Delete the source product
+            context.DcProducts
+                .Where(x => x.ProductCode == sourceProductCode)
+                .ExecuteDelete();
+
+            transaction.Commit();
+        }
+
+        public void MergeCurrAccs(string sourceCurrAccCode, string targetCurrAccCode)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(sourceCurrAccCode);
+            ArgumentException.ThrowIfNullOrWhiteSpace(targetCurrAccCode);
+
+            sourceCurrAccCode = sourceCurrAccCode.Trim();
+            targetCurrAccCode = targetCurrAccCode.Trim();
+
+            if (string.Equals(sourceCurrAccCode, targetCurrAccCode, StringComparison.Ordinal))
+                return;
+
+            using subContext context = new();
+            using var transaction = context.Database.BeginTransaction();
+
+            // 1. DcPaymentMethods
+            context.DcPaymentMethods
+                .Where(x => x.RedirectedCurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.RedirectedCurrAccCode, targetCurrAccCode));
+
+            // 2. TrCurrAccRoles
+            var targetRoles = context.TrCurrAccRoles
+                .Where(x => x.CurrAccCode == targetCurrAccCode)
+                .Select(x => x.RoleCode)
+                .ToList();
+
+            context.TrCurrAccRoles
+                .Where(x => x.CurrAccCode == sourceCurrAccCode && !targetRoles.Contains(x.RoleCode))
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            context.TrCurrAccRoles
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteDelete();
+
+            // 3. TrInvoiceHeaders
+            context.TrInvoiceHeaders
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            // 4. TrInvoiceLines
+            context.TrInvoiceLines
+                .Where(x => x.SalesPersonCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.SalesPersonCode, targetCurrAccCode));
+
+            // 5. TrPaymentHeaders
+            context.TrPaymentHeaders
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            // 6. TrSessions
+            context.TrSessions
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            // 7. DcCurrAccContactDetails
+            context.DcCurrAccContactDetails
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            // 8. DcLoyaltyCards
+            context.DcLoyaltyCards
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            // 9. TrCampaignCustomers
+            var targetCampaignIds = context.TrCampaignCustomers
+                .Where(x => x.CurrAccCode == targetCurrAccCode)
+                .Select(x => x.CampaignId)
+                .ToList();
+
+            context.TrCampaignCustomers
+                .Where(x => x.CurrAccCode == sourceCurrAccCode && !targetCampaignIds.Contains(x.CampaignId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            context.TrCampaignCustomers
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteDelete();
+
+            // 10. TrCrmActivities
+            context.TrCrmActivities
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            context.TrCrmActivities
+                .Where(x => x.AssignedCurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.AssignedCurrAccCode, targetCurrAccCode));
+
+            // 11. TrCurrAccFeatures
+            var targetFeatureTypeIds = context.TrCurrAccFeatures
+                .Where(x => x.CurrAccCode == targetCurrAccCode)
+                .Select(x => x.CurrAccFeatureTypeId)
+                .ToList();
+
+            context.TrCurrAccFeatures
+                .Where(x => x.CurrAccCode == sourceCurrAccCode && !targetFeatureTypeIds.Contains(x.CurrAccFeatureTypeId))
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            context.TrCurrAccFeatures
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteDelete();
+
+            // 12. TrInstallmentGuarantors
+            context.TrInstallmentGuarantors
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            // 13. TrLoyaltyTxns
+            context.TrLoyaltyTxns
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            // 14. TrWhatsAppMessageLogs
+            context.TrWhatsAppMessageLogs
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            context.TrWhatsAppMessageLogs
+                .Where(x => x.Sender == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.Sender, targetCurrAccCode));
+
+            // 15. Delete the source current account
+            context.DcCurrAccs
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteDelete();
+
+            transaction.Commit();
+        }
     }
 }
