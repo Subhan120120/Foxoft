@@ -191,16 +191,34 @@ namespace Foxoft.AppCode
             }
         }
 
-        private static void SaveSizeInternal(Form form)
+        private static FormWindowState GetStateToSave(Form form)
         {
-            string key = GetKey(form);
-            if (string.IsNullOrEmpty(key)) return;
+            if (form.MdiParent != null)
+            {
+                Form activeChild = form.MdiParent.ActiveMdiChild;
+                if (activeChild != null && activeChild != form)
+                {
+                    if (activeChild.WindowState == FormWindowState.Maximized)
+                    {
+                        return FormWindowState.Maximized;
+                    }
+                }
+            }
 
             _previousStates.TryGetValue(form, out FormWindowState lastState);
             if (lastState == FormWindowState.Minimized)
             {
                 lastState = FormWindowState.Normal;
             }
+            return lastState;
+        }
+
+        private static void SaveSizeInternal(Form form)
+        {
+            string key = GetKey(form);
+            if (string.IsNullOrEmpty(key)) return;
+
+            FormWindowState stateToSave = GetStateToSave(form);
 
             int width;
             int height;
@@ -227,7 +245,7 @@ namespace Foxoft.AppCode
             {
                 Width = width,
                 Height = height,
-                State = lastState
+                State = stateToSave
             };
 
             _cache[key] = info;
