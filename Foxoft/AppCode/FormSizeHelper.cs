@@ -19,20 +19,17 @@ namespace Foxoft.AppCode
         private static readonly object _lock = new();
 
         /// <summary>
-        /// Tracks the previous non-minimized WindowState per form so we can detect
-        /// Maximize / Restore transitions and save the correct state on close.
-        /// </summary>
-        private static readonly Dictionary<Form, FormWindowState> _previousStates = new();
-
-        /// <summary>
         /// Tracks all currently active forms.
         /// </summary>
         private static readonly HashSet<Form> _trackedForms = new();
 
         /// <summary>
         /// Flag to prevent updating state during application/parent shutdown.
+        /// When the MDI parent begins closing, child forms are internally
+        /// un-maximized by WinForms before their own FormClosing fires.
+        /// We snapshot all states up-front and ignore subsequent transitions.
         /// </summary>
-        private static bool _isShuttingDown = false;
+        private static bool _isShuttingDown;
 
         static FormSizeHelper()
         {
@@ -61,13 +58,6 @@ namespace Foxoft.AppCode
 
             RestoreSize(form);
 
-            // Keep track of the last known stable state in memory (ignoring Minimized)
-            FormWindowState initialState = form.WindowState == FormWindowState.Minimized ? FormWindowState.Normal : form.WindowState;
-            lock (_lock)
-            {
-                _previousStates[form] = initialState;
-            }
-
             // ResizeEnd fires only on border drag — captures Normal size changes
             form.ResizeEnd += OnFormResizeEnd;
 
@@ -95,7 +85,9 @@ namespace Foxoft.AppCode
             {
                 if (_cache.TryGetValue(key, out FormSizeInfo info))
                 {
-                    if (info.State == FormWindowState.Maximized)
+                    // In MDI, if any sibling child is maximized then all children
+                    // share maximized layout — respect that regardless of cache.
+                    if (info.State == FormWindowState.Maximized || AnySiblingMaximized(form))
                     {
                         form.WindowState = FormWindowState.Maximized;
                     }
@@ -105,29 +97,48 @@ namespace Foxoft.AppCode
                         form.Size = new Size(info.Width, info.Height);
                     }
                 }
+                // If there is no cache entry, don't touch the form's current state.
+                // ShowNewForm already sets Maximized before calling Track.
             }
+        }
+
+        /// <summary>
+        /// Returns true if the form is an MDI child and any of its sibling
+        /// children is currently maximized.  In standard MDI, all children
+        /// share the same maximized layout, so a "Normal" state on a
+        /// background child is only an internal artefact of WinForms.
+        /// </summary>
+        private static bool AnySiblingMaximized(Form form)
+        {
+            if (form.MdiParent == null) return false;
+
+            foreach (Form child in form.MdiParent.MdiChildren)
+            {
+                if (child != form && child.WindowState == FormWindowState.Maximized)
+                    return true;
+            }
+            return false;
         }
 
         private static void OnFormResizeEnd(object sender, EventArgs e)
         {
             if (_isShuttingDown) return;
 
-            if (sender is Form form)
+            if (sender is Form form && form.WindowState == FormWindowState.Normal)
             {
-                if (form.WindowState == FormWindowState.Normal)
+                lock (_lock)
                 {
-                    lock (_lock)
-                    {
-                        SaveSizeInternal(form);
-                        PersistInternal();
-                    }
+                    SaveSizeInternal(form);
+                    PersistInternal();
                 }
             }
         }
 
         /// <summary>
-        /// Detects Maximize / Restore / Minimize via WindowState change.
-        /// Only saves when the state actually changed to avoid redundant writes.
+        /// Detects Maximize / Restore via WindowState change.
+        /// Skips Minimized transitions and MDI phantom Normal transitions
+        /// where WinForms internally sets a background child to Normal while
+        /// a sibling is maximized.
         /// </summary>
         private static void OnFormResize(object sender, EventArgs e)
         {
@@ -135,19 +146,19 @@ namespace Foxoft.AppCode
 
             if (sender is Form form)
             {
-                if (form.WindowState != FormWindowState.Minimized)
-                {
-                    lock (_lock)
-                    {
-                        _previousStates.TryGetValue(form, out FormWindowState previous);
+                // Ignore minimize — nothing to save
+                if (form.WindowState == FormWindowState.Minimized) return;
 
-                        if (form.WindowState != previous)
-                        {
-                            _previousStates[form] = form.WindowState;
-                            SaveSizeInternal(form);
-                            PersistInternal();
-                        }
-                    }
+                // Ignore phantom Normal transitions caused by MDI internal re-layout.
+                // When one MDI child is maximized, WinForms internally un-maximizes
+                // background children. This is not a real user action.
+                if (form.WindowState == FormWindowState.Normal && AnySiblingMaximized(form))
+                    return;
+
+                lock (_lock)
+                {
+                    SaveSizeInternal(form);
+                    PersistInternal();
                 }
             }
         }
@@ -175,6 +186,16 @@ namespace Foxoft.AppCode
             }
         }
 
+        /// <summary>
+        /// Fires when the MDI parent begins closing. At this point the child
+        /// forms have not yet been un-maximized, so we can snapshot the true
+        /// user-visible state.
+        ///
+        /// Note: WinForms fires children's FormClosing events BEFORE the
+        /// parent's FormClosing.  However, by that time MDI has already
+        /// started its internal cleanup and some children may appear Normal.
+        /// We handle that via AnySiblingMaximized in SaveSizeInternal.
+        /// </summary>
         private static void OnMdiParentClosing(object sender, FormClosingEventArgs e)
         {
             lock (_lock)
@@ -182,7 +203,6 @@ namespace Foxoft.AppCode
                 if (_isShuttingDown) return;
                 _isShuttingDown = true;
 
-                // Save all currently tracked active forms
                 foreach (Form form in _trackedForms)
                 {
                     SaveSizeInternal(form);
@@ -191,35 +211,34 @@ namespace Foxoft.AppCode
             }
         }
 
-        private static FormWindowState GetStateToSave(Form form)
-        {
-            if (form.MdiParent != null)
-            {
-                Form activeChild = form.MdiParent.ActiveMdiChild;
-                if (activeChild != null && activeChild != form)
-                {
-                    if (activeChild.WindowState == FormWindowState.Maximized)
-                    {
-                        return FormWindowState.Maximized;
-                    }
-                }
-            }
-
-            _previousStates.TryGetValue(form, out FormWindowState lastState);
-            if (lastState == FormWindowState.Minimized)
-            {
-                lastState = FormWindowState.Normal;
-            }
-            return lastState;
-        }
-
         private static void SaveSizeInternal(Form form)
         {
             string key = GetKey(form);
             if (string.IsNullOrEmpty(key)) return;
 
-            FormWindowState stateToSave = GetStateToSave(form);
+            // Determine the real state.
+            // In MDI, background children report Normal even when the user
+            // sees them as maximized (because a sibling is maximized).
+            FormWindowState stateToSave;
+            if (form.WindowState == FormWindowState.Maximized || AnySiblingMaximized(form))
+            {
+                stateToSave = FormWindowState.Maximized;
+            }
+            else if (form.WindowState == FormWindowState.Minimized)
+            {
+                // Minimized → keep whatever was previously in the cache, or
+                // fall back to Normal so we never persist Minimized.
+                if (_cache.TryGetValue(key, out FormSizeInfo existing))
+                    stateToSave = existing.State;
+                else
+                    stateToSave = FormWindowState.Normal;
+            }
+            else
+            {
+                stateToSave = FormWindowState.Normal;
+            }
 
+            // Get the Normal-mode size (used when restoring as Normal).
             int width;
             int height;
 
@@ -234,21 +253,27 @@ namespace Foxoft.AppCode
                 height = form.RestoreBounds.Height;
             }
 
-            // Fallback if RestoreBounds or size is invalid (e.g., during startup/shutdown of minimized forms)
+            // Fallback for invalid sizes
             if (width <= 0 || height <= 0)
             {
-                width = form.Width > 0 ? form.Width : 800;
-                height = form.Height > 0 ? form.Height : 600;
+                if (_cache.TryGetValue(key, out FormSizeInfo prev) && prev.Width > 0 && prev.Height > 0)
+                {
+                    width = prev.Width;
+                    height = prev.Height;
+                }
+                else
+                {
+                    width = 800;
+                    height = 600;
+                }
             }
 
-            FormSizeInfo info = new()
+            _cache[key] = new FormSizeInfo
             {
                 Width = width,
                 Height = height,
                 State = stateToSave
             };
-
-            _cache[key] = info;
         }
 
         private static void Cleanup(Form form)
@@ -265,7 +290,6 @@ namespace Foxoft.AppCode
                 {
                     form.MdiParent.FormClosing -= OnMdiParentClosing;
                 }
-                _previousStates.Remove(form);
                 _trackedForms.Remove(form);
             }
         }
