@@ -1034,6 +1034,16 @@ namespace Foxoft.Models
                 new DcPaymentPlan { PaymentPlanCode = "B24", PaymentPlanDesc = "24 AY", PaymentMethodId = 3, DurationInMonths = 24 }
                 );
 
+            modelBuilder.Entity<DcInstallmentPlan>().HasData(
+                new DcInstallmentPlan { InstallmentPlanCode = "I00", InstallmentPlanDesc = "Təyin edilməyib", DurationInMonths = 0, InterestRate = 0f, IsDefault = true },
+                new DcInstallmentPlan { InstallmentPlanCode = "I03", InstallmentPlanDesc = "3 AY", DurationInMonths = 3, InterestRate = 0f },
+                new DcInstallmentPlan { InstallmentPlanCode = "I06", InstallmentPlanDesc = "6 AY", DurationInMonths = 6, InterestRate = 0f },
+                new DcInstallmentPlan { InstallmentPlanCode = "I09", InstallmentPlanDesc = "9 AY", DurationInMonths = 9, InterestRate = 0f },
+                new DcInstallmentPlan { InstallmentPlanCode = "I12", InstallmentPlanDesc = "12 AY", DurationInMonths = 12, InterestRate = 0f },
+                new DcInstallmentPlan { InstallmentPlanCode = "I18", InstallmentPlanDesc = "18 AY", DurationInMonths = 18, InterestRate = 0f },
+                new DcInstallmentPlan { InstallmentPlanCode = "I24", InstallmentPlanDesc = "24 AY", DurationInMonths = 24, InterestRate = 0f }
+                );
+
             modelBuilder.Entity<DcProcess>().HasData(
                 new DcProcess { ProcessCode = "RP", ProcessDesc = "Alış", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "RS", ProcessDesc = "Satış", ProcessDir = 2 },

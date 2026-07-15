@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -13,6 +14,7 @@ namespace Foxoft.Migrations
     [DbContext(typeof(subContext))]
     partial class subContextModelSnapshot : ModelSnapshot
     {
+        /// <inheritdoc />
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -1173,6 +1175,64 @@ namespace Foxoft.Migrations
                     b.HasKey("InstallmentPlanCode");
 
                     b.ToTable("DcInstallmentPlan");
+
+                    b.HasData(
+                        new
+                        {
+                            InstallmentPlanCode = "I00",
+                            DurationInMonths = 0,
+                            InstallmentPlanDesc = "Təyin edilməyib",
+                            InterestRate = 0f,
+                            IsDefault = false
+                        },
+                        new
+                        {
+                            InstallmentPlanCode = "I03",
+                            DurationInMonths = 3,
+                            InstallmentPlanDesc = "3 AY",
+                            InterestRate = 0f,
+                            IsDefault = false
+                        },
+                        new
+                        {
+                            InstallmentPlanCode = "I06",
+                            DurationInMonths = 6,
+                            InstallmentPlanDesc = "6 AY",
+                            InterestRate = 0f,
+                            IsDefault = false
+                        },
+                        new
+                        {
+                            InstallmentPlanCode = "I09",
+                            DurationInMonths = 9,
+                            InstallmentPlanDesc = "9 AY",
+                            InterestRate = 0f,
+                            IsDefault = false
+                        },
+                        new
+                        {
+                            InstallmentPlanCode = "I12",
+                            DurationInMonths = 12,
+                            InstallmentPlanDesc = "12 AY",
+                            InterestRate = 0f,
+                            IsDefault = true
+                        },
+                        new
+                        {
+                            InstallmentPlanCode = "I18",
+                            DurationInMonths = 18,
+                            InstallmentPlanDesc = "18 AY",
+                            InterestRate = 0f,
+                            IsDefault = false
+                        },
+                        new
+                        {
+                            InstallmentPlanCode = "I24",
+                            DurationInMonths = 24,
+                            InstallmentPlanDesc = "24 AY",
+                            InterestRate = 0f,
+                            IsDefault = false
+                        });
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcInvoiceLineFeature", b =>

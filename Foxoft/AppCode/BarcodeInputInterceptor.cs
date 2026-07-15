@@ -21,7 +21,7 @@ namespace Foxoft.AppCode
     public sealed class BarcodeInputInterceptor
     {
         /// <summary>Maximum milliseconds allowed between consecutive barcode-scanner keystrokes.</summary>
-        public int MaxInterKeystrokeMs { get; set; } = 50;
+        public int MaxInterKeystrokeMs { get; set; } = 40;
 
         /// <summary>Minimum number of characters to treat a rapid burst as a barcode.</summary>
         public int MinBarcodeLength { get; set; } = 4;
