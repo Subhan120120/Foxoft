@@ -1,6 +1,7 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
+using Foxoft.AppCode;
 using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -31,6 +32,7 @@ namespace Foxoft
 
         private readonly subContext _db = new();
         private readonly LoyaltyService _loyalty;
+        private readonly BarcodeInputInterceptor _barcodeInterceptor = new();
 
         private readonly List<int>? _allowedPaymentMethodIds;
         private List<PaymentType>? _allowedPaymentTypes;
@@ -783,5 +785,37 @@ namespace Foxoft
         }
 
 
+        /// <summary>
+        /// Returns <c>true</c> for controls where barcode-scanner input must be
+        /// suppressed (payment amount fields).
+        /// </summary>
+        private bool IsBarcodeProtectedControl(Control control)
+            => control == txtEdit_Cash
+            || control == txtEdit_Cashless
+            || control == txtEdit_Bonus
+            || control == txtEdit_LoyaltyBalance
+            || control == txt_CashlessCommission;
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // Barcode scanner interception: suppress rapid keystrokes on
+            // payment amount text fields so scanner input doesn't pollute them.
+            if (ActiveControl != null && IsBarcodeProtectedControl(ActiveControl))
+            {
+                KeyEventArgs fakeArgs = new(keyData);
+
+                if (_barcodeInterceptor.ProcessKey(fakeArgs))
+                    return true;
+
+                if (_barcodeInterceptor.IsAccumulating)
+                    return true;
+            }
+            else
+            {
+                _barcodeInterceptor.Reset();
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
     }
 }
