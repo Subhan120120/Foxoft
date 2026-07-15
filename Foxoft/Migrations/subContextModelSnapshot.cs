@@ -1183,7 +1183,7 @@ namespace Foxoft.Migrations
                             DurationInMonths = 0,
                             InstallmentPlanDesc = "Təyin edilməyib",
                             InterestRate = 0f,
-                            IsDefault = false
+                            IsDefault = true
                         },
                         new
                         {
@@ -1215,7 +1215,7 @@ namespace Foxoft.Migrations
                             DurationInMonths = 12,
                             InstallmentPlanDesc = "12 AY",
                             InterestRate = 0f,
-                            IsDefault = true
+                            IsDefault = false
                         },
                         new
                         {

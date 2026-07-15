@@ -591,7 +591,6 @@ namespace Foxoft.AppCode.Services
             if (table is null || table.LastRow < 1)
                 return;
 
-            SetIfText(table, c.DocumentNumber, value => invoiceHeader.DocumentNumber = value);
             SetIfBool(table, c.IsReturn, value => invoiceHeader.IsReturn = value);
             SetIfDate(table, c.DocumentDate, value => invoiceHeader.DocumentDate = value);
             SetIfTime(table, c.DocumentTime, value => invoiceHeader.DocumentTime = value);
