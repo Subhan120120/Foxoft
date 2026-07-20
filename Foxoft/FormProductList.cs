@@ -92,10 +92,6 @@ namespace Foxoft
         {
             this.productTypeArr = productTypeArr;
             this.isDisabled = isDisabled;
-            LoadProducts(productTypeArr);
-            gV_ProductList.PopulateColumns();
-            LoadLayout();
-            gV_ProductList.Columns.Add(colImage);
         }
 
         public FormProductList(byte[] productTypeArr, bool? isDisabled, string focusedProductCode)
@@ -112,6 +108,10 @@ namespace Foxoft
 
         private void FormProductList_Load(object sender, EventArgs e)
         {
+            LoadProducts(productTypeArr);
+            gV_ProductList.PopulateColumns();
+            LoadLayout();
+            gV_ProductList.Columns.Add(colImage);
             FocusProduct(focusedProductCode);
 
             //this.StartPosition = FormStartPosition.CenterScreen;
@@ -168,8 +168,6 @@ namespace Foxoft
                 if (!gV_ProductList.FindPanelVisible)
                     gC_ProductList.BeginInvoke(new Action(gV_ProductList.ShowFindPanel));
             }
-
-            LoadProducts(productTypeArr);
         }
 
         private void SaveLayout()
