@@ -235,6 +235,7 @@ namespace Foxoft
             txtEdit_filtercolumns.EditValue = gV_ProductList.OptionsFind.FindFilterColumns;
         }
 
+        private const int ThumbnailMaxSize = 360;
         public Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
 
         private void gV_ProductList_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
@@ -268,7 +269,21 @@ namespace Foxoft
                 using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 using (var tmp = Image.FromStream(fs))
                 {
-                    return (Image)tmp.Clone(); // prevents locking the jpg on disk
+                    // Resize to thumbnail to save RAM instead of keeping full-size image
+                    int w = tmp.Width, h = tmp.Height;
+                    if (w > ThumbnailMaxSize || h > ThumbnailMaxSize)
+                    {
+                        double scale = Math.Min((double)ThumbnailMaxSize / w, (double)ThumbnailMaxSize / h);
+                        w = (int)(w * scale);
+                        h = (int)(h * scale);
+                    }
+                    Bitmap thumb = new Bitmap(w, h);
+                    using (Graphics g = Graphics.FromImage(thumb))
+                    {
+                        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                        g.DrawImage(tmp, 0, 0, w, h);
+                    }
+                    return thumb;
                 }
             }
             catch
@@ -286,6 +301,13 @@ namespace Foxoft
 
         private void LoadProducts(byte[] productTypeArr)
         {
+            // Dispose previous DataTable to prevent memory leak
+            if (dcProductsBindingSource.DataSource is DataTable oldDt)
+            {
+                dcProductsBindingSource.DataSource = null;
+                oldDt.Dispose();
+            }
+
             object dataSource = null;
 
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_ProductList");
@@ -314,6 +336,8 @@ namespace Foxoft
                     DataTable dt = adoMethods.SqlGetDt(sql, sqlParameters);
                     if (dt.Columns.Count > 0)
                         dataSource = dt;
+                    else
+                        dt.Dispose();
                 }
             }
 
