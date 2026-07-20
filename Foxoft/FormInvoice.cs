@@ -1622,6 +1622,7 @@ namespace Foxoft
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 editor.EditValue = form.dcCurrAcc.CurrAccCode;
+                gV_InvoiceLine.PostEditor();
             }
         }
 
