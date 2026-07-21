@@ -21,12 +21,25 @@ namespace Foxoft
     {
         private subContext dbContext;
         private bool layoutLoaded;
+        private readonly string? whatsAppImageFolder;
 
         public FormWhatsAppMessageLog()
         {
             InitializeComponent();
 
+            EfMethods efMethods = new();
+            SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            whatsAppImageFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "WhatsApp");
+
             DesignComponentNames();
+        }
+
+        private string? ResolveImagePath(string? fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName) || string.IsNullOrWhiteSpace(whatsAppImageFolder))
+                return null;
+
+            return Path.Combine(whatsAppImageFolder, fileName);
         }
 
         private void DesignComponentNames()
@@ -392,7 +405,8 @@ namespace Foxoft
             var view = sender as GridView;
             if (view == null) return;
 
-            string filePath = view.GetListSourceRowCellValue(e.ListSourceRowIndex, colImageFilePath)?.ToString();
+            string fileName = view.GetListSourceRowCellValue(e.ListSourceRowIndex, colImageFileName)?.ToString();
+            string filePath = ResolveImagePath(fileName);
 
             if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
             {
@@ -431,7 +445,8 @@ namespace Foxoft
             var hitInfo = view.CalcHitInfo(gC_WhatsAppMessageLogList.PointToClient(Control.MousePosition));
             if (!hitInfo.InRow) return;
 
-            string filePath = view.GetRowCellValue(hitInfo.RowHandle, colImageFilePath)?.ToString();
+            string fileName = view.GetRowCellValue(hitInfo.RowHandle, colImageFileName)?.ToString();
+            string filePath = ResolveImagePath(fileName);
 
             if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
                 return;

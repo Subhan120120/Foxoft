@@ -1,5 +1,6 @@
 using Foxoft.Models;
 using Foxoft.Properties;
+using Foxoft;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
@@ -53,12 +54,17 @@ namespace Foxoft.AppCode.Service
 
             using var client = new EvolutionApiClient(apiSetting.ServerUrl!, apiSetting.InstanceName!, apiSetting.ApiKey!);
 
-            if (!string.IsNullOrWhiteSpace(log.ImageFilePath))
+            if (!string.IsNullOrWhiteSpace(log.ImageFileName))
             {
-                if (!File.Exists(log.ImageFilePath))
-                    throw new FileNotFoundException(Resources.Form_WhatsAppMessageLog_ImageFileNotFound, log.ImageFilePath);
+                EfMethods efMethods = new();
+                SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+                string whatsAppFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "WhatsApp");
+                string fullPath = Path.Combine(whatsAppFolder ?? string.Empty, log.ImageFileName);
 
-                using FileStream stream = new(log.ImageFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                if (!File.Exists(fullPath))
+                    throw new FileNotFoundException(Resources.Form_WhatsAppMessageLog_ImageFileNotFound, fullPath);
+
+                using FileStream stream = new(fullPath, FileMode.Open, FileAccess.Read, FileShare.Read);
                 await client.SendImageBase64Async(log.ReceiverPhoneNumber, stream, caption: log.Message, ct: ct);
                 return;
             }

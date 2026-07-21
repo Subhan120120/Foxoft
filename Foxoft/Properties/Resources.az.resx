@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4851,8 +4851,8 @@ Tətbiq edilsin?</value>
   <data name="ERP_ACE_Credits" xml:space="preserve">
     <value>Kredit Əməliyatları</value>
   </data>
-  <data name="Entity_TrWhatsAppMessageLog_ImageFilePath" xml:space="preserve">
-    <value>Şəkil yolu</value>
+  <data name="Entity_TrWhatsAppMessageLog_ImageFileName" xml:space="preserve">
+    <value>Şəkil faylı</value>
   </data>
   <data name="Form_WhatsAppMessageLog_ImagePreview" xml:space="preserve">
     <value>Şəkil önizləmə</value>

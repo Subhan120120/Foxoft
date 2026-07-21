@@ -1,4 +1,4 @@
-﻿using DevExpress.Data;
+using DevExpress.Data;
 using DevExpress.Utils.Extensions;
 using DevExpress.DataAccess.Sql;
 using DevExpress.XtraBars;
@@ -667,11 +667,11 @@ namespace Foxoft
         {
             try
             {
-                string? imageFilePath = null;
+                string? imageFileName = null;
 
                 if (imageStream != null && imageStream.Length > 0)
                 {
-                    imageFilePath = SaveWhatsAppImageToDisk(imageStream);
+                    imageFileName = SaveWhatsAppImageToDisk(imageStream);
                 }
 
                 using var ctx = new subContext();
@@ -685,7 +685,7 @@ namespace Foxoft
                     Message = message,
                     Sender = Authorization.CurrAccCode,
                     CurrAccCode = trPaymentHeader?.CurrAccCode,
-                    ImageFilePath = imageFilePath,
+                    ImageFileName = imageFileName,
                     IsSuccessful = isSuccessful
                 });
 
@@ -717,7 +717,7 @@ namespace Foxoft
                 if (imageStream.CanSeek) imageStream.Position = 0;
                 File.WriteAllBytes(filePath, imageStream.ToArray());
 
-                return filePath;
+                return fileName;
             }
             catch (Exception ex)
             {

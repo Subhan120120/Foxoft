@@ -32,8 +32,9 @@ namespace Foxoft.Models
         [StringLength(30)]
         public string? CurrAccCode { get; set; }
 
-        [StringLength(500)]
-        public string? ImageFilePath { get; set; }
+        [StringLength(100)]
+        [Display(Name = nameof(Resources.Entity_TrWhatsAppMessageLog_ImageFileName), ResourceType = typeof(Resources))]
+        public string? ImageFileName { get; set; }
 
         [ForeignKey(nameof(CurrAccCode))]
         public virtual DcCurrAcc? DcCurrAcc { get; set; }

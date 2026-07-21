@@ -6780,11 +6780,11 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image Path.
+        ///   Looks up a localized string similar to Image File Name.
         /// </summary>
-        public static string Entity_TrWhatsAppMessageLog_ImageFilePath {
+        public static string Entity_TrWhatsAppMessageLog_ImageFileName {
             get {
-                return ResourceManager.GetString("Entity_TrWhatsAppMessageLog_ImageFilePath", resourceCulture);
+                return ResourceManager.GetString("Entity_TrWhatsAppMessageLog_ImageFileName", resourceCulture);
             }
         }
         

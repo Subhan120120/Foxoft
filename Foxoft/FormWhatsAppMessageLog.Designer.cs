@@ -42,7 +42,7 @@ namespace Foxoft
             repoPictureEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
             colSendAgain = new DevExpress.XtraGrid.Columns.GridColumn();
             repoBtn_SendAgain = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            colImageFilePath = new DevExpress.XtraGrid.Columns.GridColumn();
+            colImageFileName = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
@@ -119,7 +119,7 @@ namespace Foxoft
             // 
             // gV_WhatsAppMessageLogList
             // 
-            gV_WhatsAppMessageLogList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colWhatsAppMessageLogId, colDocumentHeaderId, colCreatedDate, colCreatedUserName, colCurrAccCode, colCurrAccDesc, colReceiverPhoneNumber, colMessageType, colMessage, colIsSuccessful, colSender, colSenderName, colImagePreview, colSendAgain, colImageFilePath });
+            gV_WhatsAppMessageLogList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colWhatsAppMessageLogId, colDocumentHeaderId, colCreatedDate, colCreatedUserName, colCurrAccCode, colCurrAccDesc, colReceiverPhoneNumber, colMessageType, colMessage, colIsSuccessful, colSender, colSenderName, colImagePreview, colSendAgain, colImageFileName });
             gV_WhatsAppMessageLogList.GridControl = gC_WhatsAppMessageLogList;
             gV_WhatsAppMessageLogList.Name = "gV_WhatsAppMessageLogList";
             gV_WhatsAppMessageLogList.OptionsFind.FindDelay = 100;
@@ -273,12 +273,12 @@ namespace Foxoft
             repoBtn_SendAgain.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
             repoBtn_SendAgain.ButtonClick += repoBtn_SendAgain_ButtonClick;
             // 
-            // colImageFilePath
+            // colImageFileName
             // 
-            colImageFilePath.Caption = "Image File Path";
-            colImageFilePath.FieldName = "ImageFilePath";
-            colImageFilePath.Name = "colImageFilePath";
-            colImageFilePath.OptionsColumn.AllowEdit = false;
+            colImageFileName.Caption = "Image File Name";
+            colImageFileName.FieldName = "ImageFileName";
+            colImageFileName.Name = "colImageFileName";
+            colImageFileName.OptionsColumn.AllowEdit = false;
             // 
             // ribbonControl1
             // 
@@ -662,7 +662,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colIsSuccessful;
         private DevExpress.XtraGrid.Columns.GridColumn colImagePreview;
         private DevExpress.XtraGrid.Columns.GridColumn colSendAgain;
-        private DevExpress.XtraGrid.Columns.GridColumn colImageFilePath;
+        private DevExpress.XtraGrid.Columns.GridColumn colImageFileName;
         private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit repoPictureEdit;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtn_SendAgain;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repoTextEmpty;
