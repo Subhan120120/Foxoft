@@ -4208,6 +4208,10 @@ namespace Foxoft
                             return;
                         }
 
+                        // Stop the timer first to prevent duplicate dialogs
+                        // while the modal message box is open.
+                        _lockHeartbeatTimer?.Stop();
+
                         _isClosingByLockEvent = true;
 
                         string msg = chk.Reason switch
