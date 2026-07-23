@@ -1180,14 +1180,14 @@ namespace Foxoft
             bool IsServiceProduct(string productCode)
                 => efMethods.SelectEntityById<DcProduct>(productCode)?.ProductTypeCode == 3;
 
-            void ValidateStock(string productCode, decimal qtyToCompare, decimal qtyDeltaForBalanceCalc)
+            void ValidateStock(string productCode, decimal qtyToCompare, decimal qtyDeltaForBalanceCalc, string serialNumberCode = null)
             {
                 if (!ShouldCheckStock()) return;
                 if (string.IsNullOrWhiteSpace(productCode)) return;
                 if (IsServiceProduct(productCode)) return;
 
                 string wh = ResolveWarehouse();
-                decimal balance = CalcProductBalance(tr, productCode, wh, qtyDeltaForBalanceCalc);
+                decimal balance = CalcProductBalance(tr, productCode, wh, qtyDeltaForBalanceCalc, serialNumberCode);
 
                 if (!PermitNegativeStock() && qtyToCompare > balance)
                     SetError(Resources.Form_Invoice_NoStockQuantity);
@@ -1250,7 +1250,8 @@ namespace Foxoft
                 }
 
                 // Stock check: compare current qty vs balance (same as your original)
-                ValidateStock(product.ProductCode, tr.Qty, qtyDeltaForBalanceCalc: 0);
+                string serialNumberForBalance = column == colSerialNumberCode ? input : null;
+                ValidateStock(product.ProductCode, tr.Qty, qtyDeltaForBalanceCalc: 0, serialNumberCode: serialNumberForBalance);
                 if (!e.Valid) return;
 
                 return;
@@ -1512,12 +1513,13 @@ namespace Foxoft
             //return (decimal)colAmountLoc.SummaryItem.SummaryValue
         }
 
-        private decimal CalcProductBalance(TrInvoiceLine trInvoiceLine, string productCode, string wareHouse, decimal presentQty)
+        private decimal CalcProductBalance(TrInvoiceLine trInvoiceLine, string productCode, string wareHouse, decimal presentQty, string serialNumberOverride = null)
         {
             if (trInvoiceLine is not null && !String.IsNullOrEmpty(productCode))
             {
-                if (!String.IsNullOrEmpty(trInvoiceLine.SerialNumberCode))
-                    return efMethods.SelectProductBalanceSerialNumber(productCode, wareHouse, trInvoiceLine.SerialNumberCode) + presentQty;
+                string serialNumber = serialNumberOverride ?? trInvoiceLine.SerialNumberCode;
+                if (!String.IsNullOrEmpty(serialNumber))
+                    return efMethods.SelectProductBalanceSerialNumber(productCode, wareHouse, serialNumber) + presentQty;
                 else
                     return efMethods.SelectProductBalance(productCode, wareHouse) + presentQty;
             }
