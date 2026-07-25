@@ -171,6 +171,7 @@ namespace Foxoft
             dcProduct.ProductCode = NewDocNum;
             dcProduct.ProductTypeCode = productTypeCode;
             dcProduct.CreatedUserName = Authorization.CurrAccCode;
+            dcProduct.LastUpdatedUserName = Authorization.CurrAccCode;
             dcProduct.DefaultUnitOfMeasureId = settingStore.DefaultUnitOfMeasureId;
 
             dcProductsBindingSource.DataSource = dcProduct;
@@ -793,7 +794,11 @@ namespace Foxoft
                             Resources.Form_Product_Message_ProductCodeExists,
                             Resources.Common_Attention);
                 else
+                {
+                    dcProduct.LastUpdatedUserName = Authorization.CurrAccCode;
+                    dcProduct.LastUpdatedDate = DateTime.Now;
                     dbContext.SaveChanges();
+                }
 
                 SaveImage();
 
@@ -819,7 +824,11 @@ namespace Foxoft
                             Resources.Form_Product_Message_ProductCodeExists,
                             Resources.Common_Attention);
                 else
+                {
+                    dcProduct.LastUpdatedUserName = Authorization.CurrAccCode;
+                    dcProduct.LastUpdatedDate = DateTime.Now;
                     dbContext.SaveChanges();
+                }
 
                 SaveImage();
 
