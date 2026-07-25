@@ -3535,9 +3535,11 @@ namespace Foxoft
 
         private void BBI_InvoiceExpenses_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormInvoice formInvoice = new("EI", null, new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId, true);
+            using FormInvoice formInvoice = new("EI", null, new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId, true);
+            formInvoice.Name = CustomExtensions.GetClaim("EI");
             formInvoice.WindowState = FormWindowState.Normal;
-            formInvoice.ShowDialog();
+            FormSizeHelper.Track(formInvoice);
+            formInvoice.ShowDialog(this);
         }
 
         private void BCI_CheckedChanged(object sender, ItemClickEventArgs e)
