@@ -119,6 +119,8 @@ namespace Foxoft
             dcCurrAcc.CurrAccCode = NewDocNum;
             dcCurrAcc.LanguageCode = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
             dcCurrAcc.PhoneNum = "+994";
+            dcCurrAcc.CreatedUserName = Authorization.CurrAccCode;
+            dcCurrAcc.LastUpdatedUserName = Authorization.CurrAccCode;
 
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;
             CurrAccDescTextEdit.Select();
@@ -142,7 +144,11 @@ namespace Foxoft
                 if (!efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode))
                     efMethods.InsertEntity(dcCurrAcc);
                 else
+                {
+                    dcCurrAcc.LastUpdatedUserName = Authorization.CurrAccCode;
+                    dcCurrAcc.LastUpdatedDate = DateTime.Now;
                     dbContext.SaveChanges();
+                }
 
                 BBI_MergeCurrAcc.Enabled = true;
 
