@@ -225,6 +225,9 @@
   <data name="ERP_ACE_Expenses" xml:space="preserve">
     <value>Xərclər</value>
   </data>
+  <data name="ERP_ACE_ExpenseOfInvoice" xml:space="preserve">
+    <value>Faktura Xərcləri</value>
+  </data>
   <data name="ERP_ACE_PaymentDetail" xml:space="preserve">
     <value>Ödəniş Qəbzi</value>
   </data>

@@ -7176,6 +7176,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invoice Expenses.
+        /// </summary>
+        public static string ERP_ACE_ExpenseOfInvoice {
+            get {
+                return ResourceManager.GetString("ERP_ACE_ExpenseOfInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Favorites.
         /// </summary>
         public static string ERP_ACE_Favorites {

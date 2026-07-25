@@ -225,6 +225,9 @@
   <data name="ERP_ACE_Expenses" xml:space="preserve">
     <value>Expenses</value>
   </data>
+  <data name="ERP_ACE_ExpenseOfInvoice" xml:space="preserve">
+    <value>Invoice Expenses</value>
+  </data>
   <data name="ERP_ACE_PaymentDetail" xml:space="preserve">
     <value>Payment Detail</value>
   </data>

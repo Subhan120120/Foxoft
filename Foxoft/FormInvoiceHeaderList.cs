@@ -241,7 +241,7 @@ namespace Foxoft
                 gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
             }
 
-            if (new[] { "EX" }.Contains(processCode))
+            if (new[] { "EX", "EI" }.Contains(processCode))
             {
                 colWarehouseCode.Visible = false;
                 colToWarehouseCode.Visible = false;
