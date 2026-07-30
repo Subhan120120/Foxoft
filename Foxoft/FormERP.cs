@@ -5,8 +5,10 @@ using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using Foxoft.AppCode;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
+using Foxoft.Models.ViewModel;
 using Foxoft.Properties;
 using System.Collections;
 using System.Collections.Specialized;
@@ -28,6 +30,8 @@ namespace Foxoft
 
         public readonly Guid _appInstanceId = Guid.NewGuid();
         private AccordionControlElement aCE_Active;
+        private System.Windows.Forms.Timer? notificationPopupTimer;
+        private string? notificationProductsFolder;
 
         public FormERP()
         {
@@ -74,6 +78,7 @@ namespace Foxoft
 
             InitializeReports();
             InitializeFavorites();
+            StartNotificationPopupTimer();
         }
 
         private void InitializeACEClaims()
@@ -208,6 +213,9 @@ namespace Foxoft
                 case "PaymentMethodList": ShowExistForm<FormPaymentMethodList>(); break;
                 case "PaymentPlanList": ShowExistForm<FormPaymentPlanList>(); break;
                 case "WhatsAppMessageLog": ShowExistForm<FormWhatsAppMessageLog>(); break;
+                case "NotificationCenter": ShowExistForm<FormNotificationCenter>(); break;
+                case "NotificationRules": ShowExistForm<FormNotificationRule>(); break;
+                case "NotificationTemplates": ShowExistForm<FormNotificationTemplate>(); break;
                 case "MessagingSettings": ShowExistForm<FormAppSetting>(); break;
                 case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
                 case "ReportNew": 
@@ -318,7 +326,274 @@ namespace Foxoft
             this.ACE_PaymentMethodList.Name = "PaymentMethodList";
             this.ACE_PaymentPlanList.Name = "PaymentPlanList";
             this.ACE_WhatsAppMessageLog.Name = "WhatsAppMessageLog";
+            this.ACE_NotificationCenter.Name = "NotificationCenter";
+            this.ACE_NotificationRules.Name = "NotificationRules";
+            this.ACE_NotificationTemplates.Name = "NotificationTemplates";
             this.ACE_TransferApproval.Name = "TransferApproval";
+        }
+
+        private void StartNotificationPopupTimer()
+        {
+            notificationPopupTimer = new System.Windows.Forms.Timer { Interval = 60_000 };
+            notificationPopupTimer.Tick += async (sender, args) =>
+            {
+                notificationPopupTimer.Stop();
+                try
+                {
+                    await new NotificationPopupService().ShowPendingPopupsAsync(this, Authorization.CurrAccCode);
+                    await RefreshNotificationBadgeAsync();
+                }
+                finally
+                {
+                    if (!IsDisposed)
+                        notificationPopupTimer.Start();
+                }
+            };
+
+            notificationPopupTimer.Start();
+        }
+
+        private async Task ShowInitialNotificationsAsync()
+        {
+            await new NotificationPopupService().ShowPendingPopupsAsync(this, Authorization.CurrAccCode);
+            await RefreshNotificationBadgeAsync();
+        }
+
+        private async void FormERP_Shown(object sender, EventArgs e)
+        {
+            await Task.Yield();
+            ConfigureNotificationBadgeTarget();
+            await ShowInitialNotificationsAsync();
+        }
+
+        private void ConfigureNotificationBadgeTarget()
+        {
+            foreach (BarItemLink link in ribbonPageGroupNotifications.ItemLinks)
+            {
+                if (link.Item == bBI_Notifications)
+                {
+                    notificationBadge.TargetElement = link;
+                    return;
+                }
+            }
+
+            notificationBadge.TargetElement = bBI_Notifications;
+        }
+
+        internal async Task RefreshNotificationBadgeAsync()
+        {
+            try
+            {
+                using subContext db = new();
+                int unreadCount = await new NotificationService(db).GetUnreadCountAsync(Authorization.CurrAccCode);
+                SetNotificationBadge(unreadCount);
+            }
+            catch
+            {
+                SetNotificationBadge(0);
+            }
+        }
+
+        private void SetNotificationBadge(int unreadCount)
+        {
+            notificationBadge.Visible = unreadCount > 0;
+            notificationBadge.Properties.Text = unreadCount > 99
+                ? "99+"
+                : unreadCount.ToString(CultureInfo.InvariantCulture);
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            if (notificationPopupPanel?.IsPopupOpen == true)
+            {
+                Point popupPoint = PositionNotificationPopup();
+                notificationPopupPanel.HidePopup(false);
+                notificationPopupPanel.ShowBeakForm(popupPoint, false, this);
+            }
+        }
+
+        private async Task ToggleNotificationPopupAsync()
+        {
+            if (notificationPopupPanel.IsPopupOpen)
+            {
+                notificationPopupPanel.HidePopup();
+                return;
+            }
+
+            PositionNotificationPopup();
+            await LoadNotificationPopupAsync();
+            notificationPopupPanel.ShowBeakForm(PositionNotificationPopup(), true, this);
+        }
+
+        private async Task LoadNotificationPopupAsync()
+        {
+            using subContext db = new();
+            NotificationService service = new(db);
+
+            List<NotificationInboxItem> items = (await service.GetInboxAsync(
+                Authorization.CurrAccCode,
+                new NotificationInboxFilter()))
+                .Where(x => x.NotificationStatus == NotificationStatuses.Active)
+                .Where(x => x.RecipientStatus == NotificationRecipientStatuses.Unread
+                         || x.RecipientStatus == NotificationRecipientStatuses.Read)
+                .OrderBy(x => x.RecipientStatus == NotificationRecipientStatuses.Read)
+                .ThenByDescending(x => x.LastRaisedDate)
+                .ToList();
+
+            PopulateNotificationPopup(items);
+            await RefreshNotificationBadgeAsync();
+        }
+
+        private void PopulateNotificationPopup(IReadOnlyCollection<NotificationInboxItem> items)
+        {
+            foreach (Control control in notificationPopupScroll.Controls.Cast<Control>().ToList())
+            {
+                notificationPopupScroll.Controls.Remove(control);
+                control.Dispose();
+            }
+
+            notificationPopupEmptyLabel.Visible = items.Count == 0;
+            notificationPopupScroll.Visible = items.Count > 0;
+
+            if (items.Count == 0)
+                return;
+
+            int top = 12;
+            int width = Math.Max(360, notificationPopupScroll.ClientSize.Width - 28);
+
+            foreach (NotificationInboxItem item in items)
+            {
+                UcNotificationPopupItem itemControl = new();
+                itemControl.Bind(item, LoadNotificationImage(item));
+                itemControl.NotificationClick += NotificationPopupItem_NotificationClick;
+                itemControl.Location = new Point(12, top);
+                itemControl.Width = width;
+                itemControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                notificationPopupScroll.Controls.Add(itemControl);
+                top += itemControl.Height + 10;
+            }
+        }
+
+        private Point PositionNotificationPopup()
+        {
+            int margin = 12;
+            int width = 430;
+            int y = parentRibbonControl.Bottom + margin;
+            int availableHeight = ClientSize.Height - y - ribbonStatusBar.Height - margin;
+            int height = Math.Min(430, Math.Max(240, availableHeight));
+            int x = Math.Max(aC_Root.Right + margin, ClientSize.Width - width - margin);
+
+            notificationPopupPanel.Size = new Size(width, height);
+            notificationPopupContent.Size = new Size(width, height);
+            notificationPopupEmptyLabel.Bounds = new Rectangle(18, 70, width - 36, height - 90);
+
+            int beakX = Math.Min(ClientSize.Width - 30, Math.Max(x + width - 54, x + 30));
+            return PointToScreen(new Point(beakX, y));
+        }
+
+        private Image? LoadNotificationImage(NotificationInboxItem item)
+        {
+            if (!string.Equals(item.EntityType, NotificationEntityTypes.Product, StringComparison.OrdinalIgnoreCase))
+                return null;
+
+            if (string.IsNullOrWhiteSpace(item.EntityKey))
+                return null;
+
+            string productsFolder = GetNotificationProductsFolder();
+            if (string.IsNullOrWhiteSpace(productsFolder))
+                return null;
+
+            string imageFilePath = CustomExtensions.CombinePath(productsFolder, item.EntityKey, item.EntityKey + ".jpg");
+            if (!File.Exists(imageFilePath))
+                return null;
+
+            try
+            {
+                using FileStream stream = new(imageFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                using Image image = Image.FromStream(stream);
+                return new Bitmap(image);
+            }
+            catch (Exception ex) when (ex is ArgumentException or IOException or UnauthorizedAccessException)
+            {
+                return null;
+            }
+        }
+
+        private string GetNotificationProductsFolder()
+        {
+            if (notificationProductsFolder != null)
+                return notificationProductsFolder;
+
+            SettingStore? settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            notificationProductsFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "Products");
+            return notificationProductsFolder;
+        }
+
+        private async void NotificationPopupItem_NotificationClick(object? sender, EventArgs e)
+        {
+            if (sender is not UcNotificationPopupItem itemControl || itemControl.NotificationItem == null)
+                return;
+
+            try
+            {
+                await OpenNotificationItemAsync(itemControl.NotificationItem);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    string.Format(Resources.ERP_OpenFormError, itemControl.NotificationItem.Title, ex.Message),
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        internal async Task OpenNotificationItemAsync(NotificationInboxItem item)
+        {
+            if (!string.Equals(item.EntityType, NotificationEntityTypes.Product, StringComparison.OrdinalIgnoreCase))
+                return;
+
+            if (string.IsNullOrWhiteSpace(item.EntityKey))
+                return;
+
+            notificationPopupPanel.HidePopup();
+            OpenNotificationProductForm(item.EntityKey);
+
+            if (!string.Equals(item.RecipientStatus, NotificationRecipientStatuses.Read, StringComparison.OrdinalIgnoreCase))
+            {
+                using subContext db = new();
+                await new NotificationService(db).MarkReadAsync(item.NotificationRecipientId, Authorization.CurrAccCode);
+                item.RecipientStatus = NotificationRecipientStatuses.Read;
+                await RefreshNotificationBadgeAsync();
+            }
+        }
+
+        private void OpenNotificationProductForm(string productCode)
+        {
+            object[] args = new object[] { (byte)1, productCode };
+            string formKey = BuildFormKey<FormProduct>(args);
+            FormProduct? openForm = Application.OpenForms
+                .OfType<FormProduct>()
+                .FirstOrDefault(x => x.Name == formKey && x.MdiParent == null);
+
+            if (openForm != null)
+            {
+                openForm.BringToFront();
+                openForm.Activate();
+                return;
+            }
+
+            FormProduct form = new(1, productCode)
+            {
+                Name = formKey,
+                StartPosition = FormStartPosition.CenterScreen
+            };
+
+            form.FormClosed += (s, args) => form.Dispose();
+            form.Show();
+            FormSizeHelper.Track(form);
         }
 
         private void InitializeReports()
@@ -444,7 +719,13 @@ namespace Foxoft
         private void FormERP_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (MessageBox.Show(Resources.Common_QuitProgram, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            {
                 e.Cancel = true;
+                return;
+            }
+
+            notificationPopupTimer?.Stop();
+            notificationPopupTimer?.Dispose();
         }
 
         private void BBI_ModeMouse_ItemClick(object sender, ItemClickEventArgs e)
@@ -524,6 +805,16 @@ namespace Foxoft
         private void bBI_Session_ItemClick(object sender, ItemClickEventArgs e)
         {
             ShowExistForm<FormDocumentLockList>();
+        }
+
+        private async void bBI_Notifications_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            await ToggleNotificationPopupAsync();
+        }
+
+        private void notificationPopupCloseButton_Click(object sender, EventArgs e)
+        {
+            notificationPopupPanel.HidePopup();
         }
 
         private void BBI_ChangeUser_ItemClick(object sender, ItemClickEventArgs e)

@@ -724,6 +724,7 @@ namespace Foxoft
             BalanceWarningLevelTextEdit.Name = "BalanceWarningLevelTextEdit";
             BalanceWarningLevelTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             BalanceWarningLevelTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
+            BalanceWarningLevelTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             BalanceWarningLevelTextEdit.Properties.Mask.EditMask = "G";
             BalanceWarningLevelTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             BalanceWarningLevelTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;

@@ -173,6 +173,7 @@ namespace Foxoft
             dcProduct.CreatedUserName = Authorization.CurrAccCode;
             dcProduct.LastUpdatedUserName = Authorization.CurrAccCode;
             dcProduct.DefaultUnitOfMeasureId = settingStore.DefaultUnitOfMeasureId;
+            dcProduct.BalanceWarningLevel = null;
 
             dcProductsBindingSource.DataSource = dcProduct;
 

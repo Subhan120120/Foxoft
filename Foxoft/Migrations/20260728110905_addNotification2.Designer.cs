@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260728110905_addNotification2")]
+    partial class addNotification2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5407,14 +5410,6 @@ namespace Foxoft.Migrations
                             ClaimDesc = "Bildiriş Qaydaları",
                             ClaimTypeId = (byte)1,
                             Id = 0
-                        },
-                        new
-                        {
-                            ClaimCode = "NotificationTemplates",
-                            CategoryId = 15,
-                            ClaimDesc = "Bildiriş Şablonları",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
                         });
                 });
 
@@ -6731,14 +6726,6 @@ namespace Foxoft.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
-                        },
-                        new
-                        {
-                            RoleClaimId = 211,
-                            ClaimCode = "NotificationTemplates",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleCode = "Admin"
                         });
                 });
 
@@ -7470,15 +7457,6 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            NotificationRecipientRuleId = 40,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsEnabled = true,
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NotificationTypeCode = "InstallmentDueToday",
-                            RoleCode = "Admin"
-                        },
-                        new
-                        {
                             NotificationRecipientRuleId = 1001,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsEnabled = true,
@@ -7950,14 +7928,14 @@ namespace Foxoft.Migrations
                         new
                         {
                             NotificationRuleId = 26,
-                            ChannelCodes = "InApp,WhatsApp",
+                            ChannelCodes = "InApp",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsEnabled = true,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NotificationTypeCode = "InstallmentDueSoon",
                             PopupMinSeverity = "High",
                             RuleName = "Installment Due Soon",
-                            ThrottleMinutes = 1440
+                            ThrottleMinutes = 60
                         },
                         new
                         {
@@ -8114,18 +8092,6 @@ namespace Foxoft.Migrations
                             PopupMinSeverity = "High",
                             RuleName = "User Login Failed Many Times",
                             ThrottleMinutes = 60
-                        },
-                        new
-                        {
-                            NotificationRuleId = 40,
-                            ChannelCodes = "InApp,WhatsApp",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsEnabled = true,
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NotificationTypeCode = "InstallmentDueToday",
-                            PopupMinSeverity = "High",
-                            RuleName = "Installment Due Today",
-                            ThrottleMinutes = 1440
                         });
                 });
 
@@ -8223,28 +8189,6 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NotificationTypeCode = "NegativeStock",
                             TitleTemplate = "Məhsul qalığı mənfidir"
-                        },
-                        new
-                        {
-                            NotificationTemplateId = 4,
-                            BodyTemplate = "Hörmətli müştəri! {StoreDesc} mağazasından götürdüyünüz məhsulun aylıq ödənişinə {day} gün qalıb. Əlaqə nömrəsi: {StorePhone}",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsEnabled = true,
-                            LanguageCode = "az",
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NotificationTypeCode = "InstallmentDueSoon",
-                            TitleTemplate = "Kredit ödənişinə xatırlatma"
-                        },
-                        new
-                        {
-                            NotificationTemplateId = 5,
-                            BodyTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun ödənişinin bu gün vaxtıdır. Xahiş edirik, ödənişinizi vaxtında ödəyəsiniz. Əlaqə nömrəsi: {StorePhone}",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsEnabled = true,
-                            LanguageCode = "az",
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NotificationTypeCode = "InstallmentDueToday",
-                            TitleTemplate = "Kredit ödəniş günü"
                         });
                 });
 
@@ -8778,18 +8722,6 @@ namespace Foxoft.Migrations
                             IsEnabled = true,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NotificationTypeDesc = "User Login Failed Many Times"
-                        },
-                        new
-                        {
-                            NotificationTypeCode = "InstallmentDueToday",
-                            AllowPopup = false,
-                            CategoryCode = "Installment",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DefaultSeverity = "Warning",
-                            DisplayOrder = 265,
-                            IsEnabled = true,
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NotificationTypeDesc = "Installment Due Today"
                         });
                 });
 

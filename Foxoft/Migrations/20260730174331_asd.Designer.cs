@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20260730174331_asd")]
+    partial class asd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5407,14 +5410,6 @@ namespace Foxoft.Migrations
                             ClaimDesc = "Bildiriş Qaydaları",
                             ClaimTypeId = (byte)1,
                             Id = 0
-                        },
-                        new
-                        {
-                            ClaimCode = "NotificationTemplates",
-                            CategoryId = 15,
-                            ClaimDesc = "Bildiriş Şablonları",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
                         });
                 });
 
@@ -6728,14 +6723,6 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 210,
                             ClaimCode = "NotificationRules",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleCode = "Admin"
-                        },
-                        new
-                        {
-                            RoleClaimId = 211,
-                            ClaimCode = "NotificationTemplates",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

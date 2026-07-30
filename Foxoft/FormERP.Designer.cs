@@ -23,6 +23,7 @@ namespace Foxoft
         {
             if (disposing && (components != null))
             {
+                notificationPopupPanel?.Dispose();
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -58,13 +59,24 @@ namespace Foxoft
             BBI_FavoriteRemove = new BarButtonItem();
             BEI_Language = new BarEditItem();
             repositoryItemLookUpEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            bBI_Notifications = new BarButtonItem();
+            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroupNotifications = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             repositoryItemImageComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
             repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            adornerUIManagerNotifications = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
+            notificationBadge = new DevExpress.Utils.VisualEffects.Badge();
+            notificationPopupPanel = new DevExpress.Utils.FlyoutPanel();
+            notificationPopupContent = new DevExpress.Utils.FlyoutPanelControl(notificationPopupPanel);
+            notificationPopupHeaderPanel = new PanelControl();
+            notificationPopupTitleLabel = new LabelControl();
+            notificationPopupCloseButton = new SimpleButton();
+            notificationPopupScroll = new XtraScrollableControl();
+            notificationPopupEmptyLabel = new LabelControl();
             popupMenuAccordian = new PopupMenu(components);
             aC_Root = new AccordionControl();
             ACG_Favorites = new AccordionControlElement();
@@ -121,7 +133,6 @@ namespace Foxoft
             ACE_InvoiceLineFeatureType = new AccordionControlElement();
             ACE_LoyaltyCards = new AccordionControlElement();
             ACE_CampaignList = new AccordionControlElement();
-            ACE_CrmActivityList = new AccordionControlElement();
             aCE_HumanResource = new AccordionControlElement();
             ACE_Departments = new AccordionControlElement();
             ACE_Positions = new AccordionControlElement();
@@ -131,6 +142,7 @@ namespace Foxoft
             ACE_PayrollPeriods = new AccordionControlElement();
             ACE_Attendances = new AccordionControlElement();
             ACE_PayrollList = new AccordionControlElement();
+            ACE_CrmActivityList = new AccordionControlElement();
             aCE_Reports = new AccordionControlElement();
             aCE_Setting = new AccordionControlElement();
             aCE_CurrAccRole = new AccordionControlElement();
@@ -144,12 +156,22 @@ namespace Foxoft
             ACE_PaymentMethodList = new AccordionControlElement();
             ACE_PaymentPlanList = new AccordionControlElement();
             ACE_WhatsAppMessageLog = new AccordionControlElement();
+            ACE_NotificationCenter = new AccordionControlElement();
+            ACE_NotificationRules = new AccordionControlElement();
+            ACE_NotificationTemplates = new AccordionControlElement();
             ACE_TransferApproval = new AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)adornerUIManagerNotifications).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)notificationPopupPanel).BeginInit();
+            notificationPopupPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)notificationPopupContent).BeginInit();
+            notificationPopupContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)notificationPopupHeaderPanel).BeginInit();
+            notificationPopupHeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)popupMenuAccordian).BeginInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).BeginInit();
             SuspendLayout();
@@ -157,9 +179,9 @@ namespace Foxoft
             // parentRibbonControl
             // 
             parentRibbonControl.ExpandCollapseItem.Id = 0;
-            parentRibbonControl.Items.AddRange(new BarItem[] { parentRibbonControl.ExpandCollapseItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch, bSI_TerminalName, BSI_CompanyDesc, bBI_Session, BSI_Report, BBI_FavoriteAdd, BBI_FavoriteRemove, BEI_Language });
+            parentRibbonControl.Items.AddRange(new BarItem[] { parentRibbonControl.ExpandCollapseItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch, bSI_TerminalName, BSI_CompanyDesc, bBI_Session, BSI_Report, BBI_FavoriteAdd, BBI_FavoriteRemove, BEI_Language, bBI_Notifications });
             parentRibbonControl.Location = new Point(0, 0);
-            parentRibbonControl.MaxItemId = 47;
+            parentRibbonControl.MaxItemId = 48;
             parentRibbonControl.Name = "parentRibbonControl";
             parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage_Home });
             parentRibbonControl.QuickToolbarItemLinks.Add(skinRibbonGalleryBarItem);
@@ -314,9 +336,23 @@ namespace Foxoft
             repositoryItemLookUpEdit1.Name = "repositoryItemLookUpEdit1";
             repositoryItemLookUpEdit1.ValueMember = "LanguageCode";
             // 
+            // bBI_Notifications
+            // 
+            bBI_Notifications.Caption = Resources.ERP_BBI_Notifications;
+            bBI_Notifications.Id = 47;
+            bBI_Notifications.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Notifications.ImageOptions.SvgImage");
+            bBI_Notifications.Name = "bBI_Notifications";
+            bBI_Notifications.ItemClick += bBI_Notifications_ItemClick;
+            // 
+            // svgImageCollection1
+            // 
+            svgImageCollection1.Add("properties", "image://svgimages/setup/properties.svg");
+            svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
+            svgImageCollection1.Add("add", "image://svgimages/icon builder/actions_add.svg");
+            // 
             // ribbonPage_Home
             // 
-            ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGr_Control, ribbonPageGroup1 });
+            ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGr_Control, ribbonPageGroupNotifications, ribbonPageGroup1 });
             ribbonPage_Home.MergeOrder = 0;
             ribbonPage_Home.Name = "ribbonPage_Home";
             ribbonPage_Home.Text = Resources.ERP_RibbonPage_Home;
@@ -327,6 +363,13 @@ namespace Foxoft
             ribbonPageGr_Control.ItemLinks.Add(bBI_CloseWindows);
             ribbonPageGr_Control.ItemLinks.Add(BSI_Report);
             ribbonPageGr_Control.Name = "ribbonPageGr_Control";
+            // 
+            // ribbonPageGroupNotifications
+            // 
+            ribbonPageGroupNotifications.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
+            ribbonPageGroupNotifications.ItemLinks.Add(bBI_Notifications);
+            ribbonPageGroupNotifications.Name = "ribbonPageGroupNotifications";
+            ribbonPageGroupNotifications.Text = Resources.ERP_RibbonPageGroup_Notifications;
             // 
             // ribbonPageGroup1
             // 
@@ -358,11 +401,112 @@ namespace Foxoft
             ribbonStatusBar.Ribbon = parentRibbonControl;
             ribbonStatusBar.Size = new Size(1023, 24);
             // 
-            // svgImageCollection1
+            // adornerUIManagerNotifications
             // 
-            svgImageCollection1.Add("properties", "image://svgimages/setup/properties.svg");
-            svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
-            svgImageCollection1.Add("add", "image://svgimages/icon builder/actions_add.svg");
+            adornerUIManagerNotifications.Elements.Add(notificationBadge);
+            adornerUIManagerNotifications.Owner = this;
+            // 
+            // notificationBadge
+            // 
+            notificationBadge.Properties.Location = ContentAlignment.TopRight;
+            notificationBadge.Properties.Offset = new Point(-5, 5);
+            notificationBadge.Properties.PaintStyle = DevExpress.Utils.VisualEffects.BadgePaintStyle.Critical;
+            notificationBadge.TargetElement = bBI_Notifications;
+            notificationBadge.Visible = false;
+            // 
+            // notificationPopupPanel
+            // 
+            notificationPopupPanel.Controls.Add(notificationPopupContent);
+            notificationPopupPanel.Name = "notificationPopupPanel";
+            notificationPopupPanel.Options.AnchorType = DevExpress.Utils.Win.PopupToolWindowAnchor.Manual;
+            notificationPopupPanel.Options.AnimationType = DevExpress.Utils.Win.PopupToolWindowAnimation.Fade;
+            notificationPopupPanel.Options.CloseOnHidingOwner = true;
+            notificationPopupPanel.Options.CloseOnOuterClick = true;
+            notificationPopupPanel.OptionsBeakPanel.AnimationType = DevExpress.Utils.Win.PopupToolWindowAnimation.Fade;
+            notificationPopupPanel.OptionsBeakPanel.BeakLocation = DevExpress.Utils.BeakPanelBeakLocation.Top;
+            notificationPopupPanel.OptionsBeakPanel.CloseOnOuterClick = true;
+            notificationPopupPanel.OwnerControl = this;
+            notificationPopupPanel.Size = new Size(430, 430);
+            notificationPopupPanel.TabIndex = 6;
+            notificationPopupPanel.Visible = false;
+            // 
+            // notificationPopupContent
+            // 
+            notificationPopupContent.Appearance.BackColor = Color.White;
+            notificationPopupContent.Appearance.Options.UseBackColor = true;
+            notificationPopupContent.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            notificationPopupContent.Controls.Add(notificationPopupScroll);
+            notificationPopupContent.Controls.Add(notificationPopupEmptyLabel);
+            notificationPopupContent.Controls.Add(notificationPopupHeaderPanel);
+            notificationPopupContent.Dock = DockStyle.Fill;
+            notificationPopupContent.FlyoutPanel = notificationPopupPanel;
+            notificationPopupContent.Location = new Point(0, 0);
+            notificationPopupContent.Name = "notificationPopupContent";
+            notificationPopupContent.Size = new Size(430, 430);
+            notificationPopupContent.TabIndex = 0;
+            // 
+            // notificationPopupHeaderPanel
+            // 
+            notificationPopupHeaderPanel.Appearance.BackColor = Color.FromArgb(248, 249, 251);
+            notificationPopupHeaderPanel.Appearance.Options.UseBackColor = true;
+            notificationPopupHeaderPanel.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            notificationPopupHeaderPanel.Controls.Add(notificationPopupTitleLabel);
+            notificationPopupHeaderPanel.Controls.Add(notificationPopupCloseButton);
+            notificationPopupHeaderPanel.Dock = DockStyle.Top;
+            notificationPopupHeaderPanel.Location = new Point(2, 2);
+            notificationPopupHeaderPanel.Name = "notificationPopupHeaderPanel";
+            notificationPopupHeaderPanel.Size = new Size(426, 48);
+            notificationPopupHeaderPanel.TabIndex = 0;
+            // 
+            // notificationPopupTitleLabel
+            // 
+            notificationPopupTitleLabel.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            notificationPopupTitleLabel.Appearance.Options.UseFont = true;
+            notificationPopupTitleLabel.Location = new Point(14, 15);
+            notificationPopupTitleLabel.Name = "notificationPopupTitleLabel";
+            notificationPopupTitleLabel.Size = new Size(100, 17);
+            notificationPopupTitleLabel.TabIndex = 0;
+            notificationPopupTitleLabel.Text = Resources.ERP_BBI_Notifications;
+            // 
+            // notificationPopupCloseButton
+            // 
+            notificationPopupCloseButton.AllowFocus = false;
+            notificationPopupCloseButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            notificationPopupCloseButton.ImageOptions.SvgImage = DevExpress.Utils.Svg.SvgImage.FromResources("DevExpress.Utils.Svg.SvgImages.Actions.Cancel.svg", typeof(DevExpress.Utils.Svg.SvgImage).Assembly);
+            notificationPopupCloseButton.Location = new Point(387, 10);
+            notificationPopupCloseButton.Name = "notificationPopupCloseButton";
+            notificationPopupCloseButton.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            notificationPopupCloseButton.Size = new Size(28, 28);
+            notificationPopupCloseButton.TabIndex = 1;
+            notificationPopupCloseButton.ToolTip = Resources.Common_Close;
+            notificationPopupCloseButton.Click += notificationPopupCloseButton_Click;
+            // 
+            // notificationPopupScroll
+            // 
+            notificationPopupScroll.Appearance.BackColor = Color.White;
+            notificationPopupScroll.Appearance.Options.UseBackColor = true;
+            notificationPopupScroll.Dock = DockStyle.Fill;
+            notificationPopupScroll.Location = new Point(2, 50);
+            notificationPopupScroll.Name = "notificationPopupScroll";
+            notificationPopupScroll.Size = new Size(426, 378);
+            notificationPopupScroll.TabIndex = 1;
+            // 
+            // notificationPopupEmptyLabel
+            // 
+            notificationPopupEmptyLabel.Appearance.Font = new Font("Segoe UI", 9F);
+            notificationPopupEmptyLabel.Appearance.ForeColor = Color.FromArgb(100, 100, 100);
+            notificationPopupEmptyLabel.Appearance.Options.UseFont = true;
+            notificationPopupEmptyLabel.Appearance.Options.UseForeColor = true;
+            notificationPopupEmptyLabel.Appearance.Options.UseTextOptions = true;
+            notificationPopupEmptyLabel.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            notificationPopupEmptyLabel.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            notificationPopupEmptyLabel.AutoSizeMode = LabelAutoSizeMode.None;
+            notificationPopupEmptyLabel.Location = new Point(18, 164);
+            notificationPopupEmptyLabel.Name = "notificationPopupEmptyLabel";
+            notificationPopupEmptyLabel.Size = new Size(392, 80);
+            notificationPopupEmptyLabel.TabIndex = 2;
+            notificationPopupEmptyLabel.Text = Resources.Common_NoMoreRecords;
+            notificationPopupEmptyLabel.Visible = false;
             // 
             // popupMenuAccordian
             // 
@@ -558,7 +702,7 @@ namespace Foxoft
             // 
             // aCE_ExpenseOfInvoice
             // 
-            aCE_ExpenseOfInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Expense.ImageOptions.SvgImage");
+            aCE_ExpenseOfInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_ExpenseOfInvoice.ImageOptions.SvgImage");
             aCE_ExpenseOfInvoice.Name = "aCE_ExpenseOfInvoice";
             aCE_ExpenseOfInvoice.Style = ElementStyle.Item;
             aCE_ExpenseOfInvoice.Text = Resources.ERP_ACE_ExpenseOfInvoice;
@@ -740,13 +884,6 @@ namespace Foxoft
             ACE_CampaignList.Style = ElementStyle.Item;
             ACE_CampaignList.Text = Resources.ERP_ACE_Campaigns;
             // 
-            // ACE_CrmActivityList
-            // 
-            ACE_CrmActivityList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CrmActivityList.ImageOptions.SvgImage");
-            ACE_CrmActivityList.Name = "ACE_CrmActivityList";
-            ACE_CrmActivityList.Style = ElementStyle.Item;
-            ACE_CrmActivityList.Text = "CRM Activity List";
-            // 
             // aCE_HumanResource
             // 
             aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances, ACE_PayrollList, ACE_CrmActivityList });
@@ -811,6 +948,13 @@ namespace Foxoft
             ACE_PayrollList.Style = ElementStyle.Item;
             ACE_PayrollList.Text = Resources.ERP_ACE_PayrollList;
             // 
+            // ACE_CrmActivityList
+            // 
+            ACE_CrmActivityList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CrmActivityList.ImageOptions.SvgImage");
+            ACE_CrmActivityList.Name = "ACE_CrmActivityList";
+            ACE_CrmActivityList.Style = ElementStyle.Item;
+            ACE_CrmActivityList.Text = "CRM Activity List";
+            // 
             // aCE_Reports
             // 
             aCE_Reports.Expanded = true;
@@ -820,7 +964,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_WhatsAppMessageLog, ACE_TransferApproval });
+            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_WhatsAppMessageLog, ACE_NotificationCenter, ACE_NotificationRules, ACE_NotificationTemplates, ACE_TransferApproval });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -900,6 +1044,24 @@ namespace Foxoft
             ACE_WhatsAppMessageLog.Style = ElementStyle.Item;
             ACE_WhatsAppMessageLog.Text = Resources.Form_WhatsAppMessageLog;
             // 
+            // ACE_NotificationCenter
+            // 
+            ACE_NotificationCenter.Name = "ACE_NotificationCenter";
+            ACE_NotificationCenter.Style = ElementStyle.Item;
+            ACE_NotificationCenter.Text = Resources.ERP_ACE_NotificationCenter;
+            // 
+            // ACE_NotificationRules
+            // 
+            ACE_NotificationRules.Name = "ACE_NotificationRules";
+            ACE_NotificationRules.Style = ElementStyle.Item;
+            ACE_NotificationRules.Text = Resources.ERP_ACE_NotificationRules;
+            // 
+            // ACE_NotificationTemplates
+            // 
+            ACE_NotificationTemplates.Name = "ACE_NotificationTemplates";
+            ACE_NotificationTemplates.Style = ElementStyle.Item;
+            ACE_NotificationTemplates.Text = Resources.ERP_ACE_NotificationTemplates;
+            // 
             // ACE_TransferApproval
             // 
             ACE_TransferApproval.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_TransferApproval.ImageOptions.SvgImage");
@@ -923,11 +1085,20 @@ namespace Foxoft
             WindowState = FormWindowState.Maximized;
             FormClosing += FormERP_FormClosing;
             MdiChildActivate += FormERP_MdiChildActivate;
+            Shown += FormERP_Shown;
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)adornerUIManagerNotifications).EndInit();
+            ((System.ComponentModel.ISupportInitialize)notificationPopupPanel).EndInit();
+            notificationPopupPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)notificationPopupContent).EndInit();
+            notificationPopupContent.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)notificationPopupHeaderPanel).EndInit();
+            notificationPopupHeaderPanel.ResumeLayout(false);
+            notificationPopupHeaderPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)popupMenuAccordian).EndInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).EndInit();
             ResumeLayout(false);
@@ -939,6 +1110,7 @@ namespace Foxoft
         public DevExpress.XtraBars.Ribbon.RibbonControl parentRibbonControl;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage_Home;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGr_Control;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupNotifications;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
         private DevExpress.XtraBars.Navigation.AccordionControl aC_Root;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Invoices;
@@ -1020,6 +1192,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CurrAccsDisabled;
         private BarEditItem BEI_Language;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit1;
+        private DevExpress.XtraBars.BarButtonItem bBI_Notifications;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WarehouseList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Count;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InventoryTransferReturnCustom;
@@ -1035,6 +1208,18 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PaymentMethodList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PaymentPlanList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WhatsAppMessageLog;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationCenter;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationRules;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationTemplates;
+        private DevExpress.Utils.VisualEffects.AdornerUIManager adornerUIManagerNotifications;
+        private DevExpress.Utils.VisualEffects.Badge notificationBadge;
+        private DevExpress.Utils.FlyoutPanel notificationPopupPanel;
+        private DevExpress.Utils.FlyoutPanelControl notificationPopupContent;
+        private DevExpress.XtraEditors.PanelControl notificationPopupHeaderPanel;
+        private DevExpress.XtraEditors.LabelControl notificationPopupTitleLabel;
+        private DevExpress.XtraEditors.SimpleButton notificationPopupCloseButton;
+        private DevExpress.XtraEditors.XtraScrollableControl notificationPopupScroll;
+        private DevExpress.XtraEditors.LabelControl notificationPopupEmptyLabel;
                 private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Departments;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Positions;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_EmploymentTypes;

@@ -1,4 +1,4 @@
-﻿using Foxoft.AppCode;
+using Foxoft.AppCode;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Models.Entity.RoleClaim;
@@ -126,6 +126,14 @@ namespace Foxoft.Models
         public DbSet<DcShortcut> DcShortcuts { get; set; }
         public DbSet<DcMessagingSetting> DcMessagingSettings { get; set; }
         public DbSet<DcPosButton> DcPosButtons { get; set; }
+        public DbSet<NotificationType> NotificationTypes { get; set; }
+        public DbSet<NotificationRule> NotificationRules { get; set; }
+        public DbSet<NotificationRecipientRule> NotificationRecipientRules { get; set; }
+        public DbSet<NotificationTemplate> NotificationTemplates { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<NotificationRecipient> NotificationRecipients { get; set; }
+        public DbSet<NotificationChannelOutbox> NotificationChannelOutboxes { get; set; }
+        public DbSet<NotificationAudit> NotificationAudits { get; set; }
 
         //CRM Model
         public DbSet<TrCrmActivity> TrCrmActivities { get; set; }
@@ -285,6 +293,7 @@ namespace Foxoft.Models
             base.OnModelCreating(modelBuilder);
 
             ConfigurePaymentTypeMappings(modelBuilder);
+            ConfigureNotificationModel(modelBuilder);
 
             InitializeHasData(modelBuilder);
 
@@ -544,6 +553,11 @@ namespace Foxoft.Models
                 new DcMessagingSetting { Id = 5, MessagingType = "CreditPayment", IsEnabled = false, MessageTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun {paid} AZN aylıq krediti ödəndi. Qalıq borcunuz {debit} AZN-dir." },
                 new DcMessagingSetting { Id = 6, MessagingType = "Birthday", IsEnabled = false, MessageTemplate = "Dəyərli müştərimiz, sizi ad günü münasibətilə {StoreDesc} adından təbrik edirik." }
             );
+
+            modelBuilder.Entity<NotificationType>().HasData(GetNotificationTypes());
+            modelBuilder.Entity<NotificationRule>().HasData(GetNotificationRules());
+            modelBuilder.Entity<NotificationTemplate>().HasData(GetNotificationTemplates());
+            modelBuilder.Entity<NotificationRecipientRule>().HasData(GetNotificationRecipientRules());
 
             // --- DcShortcut Seed Data ---
             modelBuilder.Entity<DcShortcut>().HasData(
@@ -822,7 +836,10 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "Shifts", ClaimDesc = "Növbələr", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "EmployeeShifts", ClaimDesc = "İşçi Növbələri", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "ChangeStore", ClaimDesc = "Mağaza Dəyişmə", ClaimTypeId = 1, CategoryId = 22 },
-                new DcClaim { ClaimCode = "DocumentLockTakeover", ClaimDesc = "Sənəd Kilidi Ələ Keçirmə", ClaimTypeId = 1, CategoryId = 15 }
+                new DcClaim { ClaimCode = "DocumentLockTakeover", ClaimDesc = "Sənəd Kilidi Ələ Keçirmə", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "NotificationCenter", ClaimDesc = "Bildiriş Mərkəzi", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "NotificationRules", ClaimDesc = "Bildiriş Qaydaları", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "NotificationTemplates", ClaimDesc = "Bildiriş Şablonları", ClaimTypeId = 1, CategoryId = 15 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -833,7 +850,10 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcRole>().HasData(
                 new DcRole { RoleCode = "Admin", RoleDesc = "Administrator" },
-                new DcRole { RoleCode = "MGZ", RoleDesc = "Mağaza İstifadəçisi" }
+                new DcRole { RoleCode = "MGZ", RoleDesc = "Mağaza İstifadəçisi" },
+                new DcRole { RoleCode = "StoreManager", RoleDesc = "Mağaza müdiri" },
+                new DcRole { RoleCode = "WarehouseUser", RoleDesc = "Anbarçı" },
+                new DcRole { RoleCode = "PurchaseManager", RoleDesc = "Satınalma meneceri" }
                 );
 
             modelBuilder.Entity<TrCurrAccRole>().HasData(
@@ -926,7 +946,10 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 205, RoleCode = "Admin", ClaimCode = "ChangeStore" },
                 new TrRoleClaim { RoleClaimId = 206, RoleCode = "Admin", ClaimCode = "DocumentLockTakeover" },
                 new TrRoleClaim { RoleClaimId = 207, RoleCode = "Admin", ClaimCode = "ChangeProductCode" },
-                new TrRoleClaim { RoleClaimId = 208, RoleCode = "Admin", ClaimCode = "ChangeCurrAccCode" }
+                new TrRoleClaim { RoleClaimId = 208, RoleCode = "Admin", ClaimCode = "ChangeCurrAccCode" },
+                new TrRoleClaim { RoleClaimId = 209, RoleCode = "Admin", ClaimCode = "NotificationCenter" },
+                new TrRoleClaim { RoleClaimId = 210, RoleCode = "Admin", ClaimCode = "NotificationRules" },
+                new TrRoleClaim { RoleClaimId = 211, RoleCode = "Admin", ClaimCode = "NotificationTemplates" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
@@ -1168,6 +1191,274 @@ namespace Foxoft.Models
                 new DcPosButton { Id = 17, ButtonName = "btn_CampaignLog",         ButtonDescription = "Kampaniya Log",      IsVisible = false, SortOrder = 16 },
                 new DcPosButton { Id = 18, ButtonName = "btn_PromoCode",           ButtonDescription = "Promo Kod",          IsVisible = false, SortOrder = 17 }
             );
+        }
+
+        private static void ConfigureNotificationModel(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<NotificationType>(entity =>
+            {
+                entity.ToTable("NotificationType");
+                entity.HasIndex(x => x.CategoryCode);
+            });
+
+            modelBuilder.Entity<NotificationRule>(entity =>
+            {
+                entity.ToTable("NotificationRule");
+                entity.HasIndex(x => new { x.NotificationTypeCode, x.StoreCode })
+                      .IsUnique()
+                      .HasFilter(null);
+            });
+
+            modelBuilder.Entity<NotificationRecipientRule>(entity =>
+            {
+                entity.ToTable("NotificationRecipientRule");
+                entity.HasIndex(x => new { x.NotificationTypeCode, x.RoleCode, x.StoreCode })
+                      .IsUnique()
+                      .HasFilter(null);
+            });
+
+            modelBuilder.Entity<NotificationTemplate>(entity =>
+            {
+                entity.ToTable("NotificationTemplate");
+                entity.HasIndex(x => new { x.NotificationTypeCode, x.LanguageCode })
+                      .IsUnique();
+            });
+
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.ToTable("Notification");
+                entity.HasIndex(x => x.NotificationKey)
+                      .IsUnique()
+                      .HasFilter("[Status] = N'Active'");
+                entity.HasIndex(x => new { x.NotificationTypeCode, x.Status, x.StoreCode });
+                entity.Property(x => x.Status)
+                      .HasDefaultValue(NotificationStatuses.Active);
+                entity.Property(x => x.LastRaisedDate)
+                      .HasDefaultValueSql("sysdatetime()");
+            });
+
+            modelBuilder.Entity<NotificationRecipient>(entity =>
+            {
+                entity.ToTable("NotificationRecipient");
+                entity.HasIndex(x => new { x.NotificationId, x.CurrAccCode })
+                      .IsUnique();
+                entity.HasIndex(x => new { x.CurrAccCode, x.Status });
+                entity.Property(x => x.Status)
+                      .HasDefaultValue(NotificationRecipientStatuses.Unread);
+            });
+
+            modelBuilder.Entity<NotificationChannelOutbox>(entity =>
+            {
+                entity.ToTable("NotificationChannelOutbox");
+                entity.HasIndex(x => new { x.Status, x.CreatedDate });
+                entity.Property(x => x.Status)
+                      .HasDefaultValue(NotificationOutboxStatuses.Pending);
+                entity.Property(x => x.TryCount)
+                      .HasDefaultValue(0);
+                entity.Property(x => x.CreatedDate)
+                      .HasDefaultValueSql("sysdatetime()");
+            });
+
+            modelBuilder.Entity<NotificationAudit>(entity =>
+            {
+                entity.ToTable("NotificationAudit");
+                entity.HasIndex(x => new { x.NotificationId, x.ActionDate });
+                entity.Property(x => x.ActionDate)
+                      .HasDefaultValueSql("sysdatetime()");
+            });
+        }
+
+        private static NotificationType[] GetNotificationTypes()
+        {
+            return new[]
+            {
+                CreateNotificationType(NotificationTypeCodes.ProductStockWarning, NotificationCategories.Stock, "Product Stock Warning Level", NotificationSeverities.Warning, false, 10),
+                CreateNotificationType(NotificationTypeCodes.ProductOutOfStock, NotificationCategories.Stock, "Product Out Of Stock", NotificationSeverities.Critical, true, 20),
+                CreateNotificationType(NotificationTypeCodes.NegativeStock, NotificationCategories.Stock, "Negative Stock", NotificationSeverities.Critical, true, 30),
+                CreateNotificationType(NotificationTypeCodes.OverStock, NotificationCategories.Stock, "Over Stock", NotificationSeverities.Warning, false, 40),
+                CreateNotificationType(NotificationTypeCodes.ExpiredProduct, NotificationCategories.Stock, "Expired Product", NotificationSeverities.High, true, 50),
+                CreateNotificationType(NotificationTypeCodes.ProductExpireSoon, NotificationCategories.Stock, "Product Expire Soon", NotificationSeverities.Warning, false, 60),
+                CreateNotificationType(NotificationTypeCodes.SerialImeiMissing, NotificationCategories.Stock, "Serial/Imei Missing", NotificationSeverities.Warning, false, 70),
+                CreateNotificationType(NotificationTypeCodes.StockTransferPending, NotificationCategories.Stock, "Stock Transfer Pending", NotificationSeverities.Info, false, 80),
+                CreateNotificationType(NotificationTypeCodes.StockTransferRejected, NotificationCategories.Stock, "Stock Transfer Rejected", NotificationSeverities.High, true, 90),
+                CreateNotificationType(NotificationTypeCodes.InventoryDifference, NotificationCategories.Stock, "Inventory Difference", NotificationSeverities.High, true, 100),
+                CreateNotificationType(NotificationTypeCodes.SaleBelowMinimumPrice, NotificationCategories.Sale, "Sale Below Minimum Price", NotificationSeverities.High, true, 110),
+                CreateNotificationType(NotificationTypeCodes.DiscountApprovalRequired, NotificationCategories.Sale, "Discount Approval Required", NotificationSeverities.Warning, false, 120),
+                CreateNotificationType(NotificationTypeCodes.InvoiceNotPosted, NotificationCategories.Sale, "Invoice Not Posted", NotificationSeverities.Warning, false, 130),
+                CreateNotificationType(NotificationTypeCodes.CustomerCreditLimitExceeded, NotificationCategories.Sale, "Customer Credit Limit Exceeded", NotificationSeverities.High, true, 140),
+                CreateNotificationType(NotificationTypeCodes.LargeSaleCreated, NotificationCategories.Sale, "Large Sale Created", NotificationSeverities.Info, false, 150),
+                CreateNotificationType(NotificationTypeCodes.ReturnCreated, NotificationCategories.Sale, "Return Created", NotificationSeverities.Info, false, 160),
+                CreateNotificationType(NotificationTypeCodes.PurchaseOrderPending, NotificationCategories.Purchase, "Purchase Order Pending", NotificationSeverities.Info, false, 170),
+                CreateNotificationType(NotificationTypeCodes.SupplierDebtDue, NotificationCategories.Purchase, "Supplier Debt Due", NotificationSeverities.Warning, false, 180),
+                CreateNotificationType(NotificationTypeCodes.PurchasePriceChanged, NotificationCategories.Purchase, "Purchase Price Changed", NotificationSeverities.Info, false, 190),
+                CreateNotificationType(NotificationTypeCodes.SupplierInvoiceMissing, NotificationCategories.Purchase, "Supplier Invoice Missing", NotificationSeverities.Warning, false, 200),
+                CreateNotificationType(NotificationTypeCodes.CashBalanceWarning, NotificationCategories.Payment, "Cash Balance Warning", NotificationSeverities.Warning, false, 210),
+                CreateNotificationType(NotificationTypeCodes.PaymentNotConfirmed, NotificationCategories.Payment, "Payment Not Confirmed", NotificationSeverities.Warning, false, 220),
+                CreateNotificationType(NotificationTypeCodes.BankPaymentImported, NotificationCategories.Payment, "Bank Payment Imported", NotificationSeverities.Info, false, 230),
+                CreateNotificationType(NotificationTypeCodes.CashboxClosingMissing, NotificationCategories.Payment, "Cashbox Closing Missing", NotificationSeverities.High, true, 240),
+                CreateNotificationType(NotificationTypeCodes.PaymentDifference, NotificationCategories.Payment, "Payment Difference", NotificationSeverities.High, true, 250),
+                CreateNotificationType(NotificationTypeCodes.InstallmentDueSoon, NotificationCategories.Installment, "Installment Due Soon", NotificationSeverities.Warning, false, 260),
+                CreateNotificationType(NotificationTypeCodes.InstallmentOverdue, NotificationCategories.Installment, "Installment Overdue", NotificationSeverities.High, true, 270),
+                CreateNotificationType(NotificationTypeCodes.InstallmentPaid, NotificationCategories.Installment, "Installment Paid", NotificationSeverities.Info, false, 280),
+                CreateNotificationType(NotificationTypeCodes.CreditClosed, NotificationCategories.Installment, "Credit Closed", NotificationSeverities.Info, false, 290),
+                CreateNotificationType(NotificationTypeCodes.CustomerDebtIncreased, NotificationCategories.Installment, "Customer Debt Increased", NotificationSeverities.Warning, false, 300),
+                CreateNotificationType(NotificationTypeCodes.CustomerBirthday, NotificationCategories.Customer, "Customer Birthday", NotificationSeverities.Info, false, 310),
+                CreateNotificationType(NotificationTypeCodes.CustomerInactive, NotificationCategories.Customer, "Customer Inactive", NotificationSeverities.Info, false, 320),
+                CreateNotificationType(NotificationTypeCodes.VipCustomerSale, NotificationCategories.Customer, "VIP Customer Sale", NotificationSeverities.Info, false, 330),
+                CreateNotificationType(NotificationTypeCodes.NewCustomerCreated, NotificationCategories.Customer, "New Customer Created", NotificationSeverities.Info, false, 340),
+                CreateNotificationType(NotificationTypeCodes.BackupFailed, NotificationCategories.System, "Backup Failed", NotificationSeverities.Critical, true, 350),
+                CreateNotificationType(NotificationTypeCodes.IntegrationFailed, NotificationCategories.System, "Integration Failed", NotificationSeverities.High, true, 360),
+                CreateNotificationType(NotificationTypeCodes.SyncFailed, NotificationCategories.System, "Sync Failed", NotificationSeverities.High, true, 370),
+                CreateNotificationType(NotificationTypeCodes.LicenseExpireSoon, NotificationCategories.System, "License Expire Soon", NotificationSeverities.Warning, false, 380),
+                CreateNotificationType(NotificationTypeCodes.UserLoginFailedManyTimes, NotificationCategories.System, "User Login Failed Many Times", NotificationSeverities.Critical, true, 390),
+                CreateNotificationType(NotificationTypeCodes.InstallmentDueToday, NotificationCategories.Installment, "Installment Due Today", NotificationSeverities.Warning, false, 265)
+            };
+        }
+
+        private static NotificationRule[] GetNotificationRules()
+        {
+            return GetNotificationTypes()
+                .Select((notificationType, index) => new NotificationRule
+                {
+                    NotificationRuleId = index + 1,
+                    RuleName = notificationType.NotificationTypeDesc,
+                    NotificationTypeCode = notificationType.NotificationTypeCode,
+                    StoreCode = null,
+                    IsEnabled = true,
+                    ThrottleMinutes = GetDefaultNotificationThrottleMinutes(notificationType.NotificationTypeCode),
+                    ChannelCodes = GetDefaultNotificationChannelCodes(notificationType),
+                    PopupMinSeverity = NotificationSeverities.High
+                })
+                .ToArray();
+        }
+
+        private static NotificationTemplate[] GetNotificationTemplates()
+        {
+            return new[]
+            {
+                new NotificationTemplate
+                {
+                    NotificationTemplateId = 1,
+                    NotificationTypeCode = NotificationTypeCodes.ProductStockWarning,
+                    LanguageCode = "az",
+                    TitleTemplate = "Məhsul qalığı azalıb",
+                    BodyTemplate = "{ProductDesc} məhsulunun {WarehouseDesc} anbarında qalığı xəbərdarlıq limitindən aşağı düşüb.\n\nMəhsul kodu: {ProductCode}\nMövcud qalıq: {AvailableQty}\nMinimum limit: {WarningQty}",
+                    IsEnabled = true
+                },
+                new NotificationTemplate
+                {
+                    NotificationTemplateId = 2,
+                    NotificationTypeCode = NotificationTypeCodes.ProductOutOfStock,
+                    LanguageCode = "az",
+                    TitleTemplate = "Məhsul anbarda bitib",
+                    BodyTemplate = "{ProductDesc} məhsulunun {WarehouseDesc} anbarında satışa yararlı qalığı 0-dır.\n\nMəhsul kodu: {ProductCode}\nAnbar: {WarehouseDesc}",
+                    IsEnabled = true
+                },
+                new NotificationTemplate
+                {
+                    NotificationTemplateId = 3,
+                    NotificationTypeCode = NotificationTypeCodes.NegativeStock,
+                    LanguageCode = "az",
+                    TitleTemplate = "Məhsul qalığı mənfidir",
+                    BodyTemplate = "{ProductDesc} məhsulunun {WarehouseDesc} anbarında qalığı mənfiyə düşüb.\n\nMəhsul kodu: {ProductCode}\nMövcud qalıq: {AvailableQty}",
+                    IsEnabled = true
+                },
+                new NotificationTemplate
+                {
+                    NotificationTemplateId = 4,
+                    NotificationTypeCode = NotificationTypeCodes.InstallmentDueSoon,
+                    LanguageCode = "az",
+                    TitleTemplate = "Kredit ödənişinə xatırlatma",
+                    BodyTemplate = "Hörmətli müştəri! {StoreDesc} mağazasından götürdüyünüz məhsulun aylıq ödənişinə {day} gün qalıb. Əlaqə nömrəsi: {StorePhone}",
+                    IsEnabled = true
+                },
+                new NotificationTemplate
+                {
+                    NotificationTemplateId = 5,
+                    NotificationTypeCode = NotificationTypeCodes.InstallmentDueToday,
+                    LanguageCode = "az",
+                    TitleTemplate = "Kredit ödəniş günü",
+                    BodyTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun ödənişinin bu gün vaxtıdır. Xahiş edirik, ödənişinizi vaxtında ödəyəsiniz. Əlaqə nömrəsi: {StorePhone}",
+                    IsEnabled = true
+                }
+            };
+        }
+
+        private static NotificationRecipientRule[] GetNotificationRecipientRules()
+        {
+            List<NotificationRecipientRule> rules = GetNotificationTypes()
+                .Select((notificationType, index) => new NotificationRecipientRule
+                {
+                    NotificationRecipientRuleId = index + 1,
+                    NotificationTypeCode = notificationType.NotificationTypeCode,
+                    RoleCode = "Admin",
+                    StoreCode = null,
+                    IsEnabled = true
+                })
+                .ToList();
+
+            rules.AddRange(new[]
+            {
+                CreateNotificationRecipientRule(1001, NotificationTypeCodes.ProductStockWarning, "PurchaseManager"),
+                CreateNotificationRecipientRule(1002, NotificationTypeCodes.ProductOutOfStock, "PurchaseManager"),
+                CreateNotificationRecipientRule(1003, NotificationTypeCodes.NegativeStock, "WarehouseUser"),
+                CreateNotificationRecipientRule(1004, NotificationTypeCodes.StockTransferPending, "WarehouseUser"),
+                CreateNotificationRecipientRule(1005, NotificationTypeCodes.StockTransferRejected, "WarehouseUser"),
+                CreateNotificationRecipientRule(1006, NotificationTypeCodes.InventoryDifference, "WarehouseUser"),
+                CreateNotificationRecipientRule(1101, NotificationTypeCodes.ProductStockWarning, "StoreManager", "MGZ01"),
+                CreateNotificationRecipientRule(1102, NotificationTypeCodes.ProductOutOfStock, "StoreManager", "MGZ01"),
+                CreateNotificationRecipientRule(1103, NotificationTypeCodes.ProductStockWarning, "WarehouseUser", "MGZ01"),
+                CreateNotificationRecipientRule(1104, NotificationTypeCodes.ProductOutOfStock, "WarehouseUser", "MGZ01")
+            });
+
+            return rules.ToArray();
+        }
+
+        private static NotificationType CreateNotificationType(string code, string category, string desc, string severity, bool allowPopup, int displayOrder)
+        {
+            return new NotificationType
+            {
+                NotificationTypeCode = code,
+                CategoryCode = category,
+                NotificationTypeDesc = desc,
+                DefaultSeverity = severity,
+                AllowPopup = allowPopup,
+                IsEnabled = true,
+                DisplayOrder = displayOrder
+            };
+        }
+
+        private static int GetDefaultNotificationThrottleMinutes(string notificationTypeCode)
+        {
+            if (notificationTypeCode == NotificationTypeCodes.CustomerBirthday
+                || notificationTypeCode == NotificationTypeCodes.InstallmentDueSoon
+                || notificationTypeCode == NotificationTypeCodes.InstallmentDueToday)
+                return 1440;
+
+            return 60;
+        }
+
+        private static string GetDefaultNotificationChannelCodes(NotificationType notificationType)
+        {
+            if (notificationType.NotificationTypeCode == NotificationTypeCodes.InstallmentDueSoon
+                || notificationType.NotificationTypeCode == NotificationTypeCodes.InstallmentDueToday)
+                return NotificationChannels.InApp + "," + NotificationChannels.WhatsApp;
+
+            return notificationType.AllowPopup
+                ? NotificationChannels.InApp + "," + NotificationChannels.Popup
+                : NotificationChannels.InApp;
+        }
+
+        private static NotificationRecipientRule CreateNotificationRecipientRule(int id, string notificationTypeCode, string roleCode, string? storeCode = null)
+        {
+            return new NotificationRecipientRule
+            {
+                NotificationRecipientRuleId = id,
+                NotificationTypeCode = notificationTypeCode,
+                RoleCode = roleCode,
+                StoreCode = storeCode,
+                IsEnabled = true
+            };
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

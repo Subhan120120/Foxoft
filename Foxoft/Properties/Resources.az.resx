@@ -4987,4 +4987,320 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   </data>
   <data name="Common_DragToReorder" xml:space="preserve">
     <value>Sıranı dəyişmək üçün sürükləyin</value>
-  </data></root>
+  </data>
+  <data name="Common_IsEnabled" xml:space="preserve">
+    <value>Aktivdir</value>
+  </data>
+  <data name="Common_Order" xml:space="preserve">
+    <value>Sıra</value>
+  </data>
+  <data name="Entity_NotificationType" xml:space="preserve">
+    <value>Bildiriş Növü</value>
+  </data>
+  <data name="Entity_NotificationType_Code" xml:space="preserve">
+    <value>Bildiriş Növü Kodu</value>
+  </data>
+  <data name="Entity_NotificationType_CategoryCode" xml:space="preserve">
+    <value>Kateqoriya</value>
+  </data>
+  <data name="Entity_NotificationType_Desc" xml:space="preserve">
+    <value>Bildiriş Növü</value>
+  </data>
+  <data name="Entity_NotificationType_DefaultSeverity" xml:space="preserve">
+    <value>Default Vaciblik</value>
+  </data>
+  <data name="Entity_NotificationType_AllowPopup" xml:space="preserve">
+    <value>Popup icazəsi</value>
+  </data>
+  <data name="Entity_NotificationRule" xml:space="preserve">
+    <value>Bildiriş Qaydası</value>
+  </data>
+  <data name="Entity_NotificationRule_Id" xml:space="preserve">
+    <value>Qayda Id</value>
+  </data>
+  <data name="Entity_NotificationRule_Name" xml:space="preserve">
+    <value>Qayda Adı</value>
+  </data>
+  <data name="Entity_NotificationRule_ThrottleMinutes" xml:space="preserve">
+    <value>Təkrar limiti (dəq.)</value>
+  </data>
+  <data name="Entity_NotificationRule_ChannelCodes" xml:space="preserve">
+    <value>Kanallar</value>
+  </data>
+  <data name="Entity_NotificationRule_PopupMinSeverity" xml:space="preserve">
+    <value>Popup minimum vaciblik</value>
+  </data>
+  <data name="Entity_NotificationRecipientRule" xml:space="preserve">
+    <value>Bildiriş Alıcı Qaydası</value>
+  </data>
+  <data name="Entity_NotificationRecipientRule_Id" xml:space="preserve">
+    <value>Alıcı Qayda Id</value>
+  </data>
+  <data name="Entity_NotificationTemplate" xml:space="preserve">
+    <value>Bildiriş Şablonu</value>
+  </data>
+  <data name="Entity_NotificationTemplate_Id" xml:space="preserve">
+    <value>Şablon Id</value>
+  </data>
+  <data name="Entity_NotificationTemplate_LanguageCode" xml:space="preserve">
+    <value>Dil</value>
+  </data>
+  <data name="Entity_NotificationTemplate_TitleTemplate" xml:space="preserve">
+    <value>Başlıq Şablonu</value>
+  </data>
+  <data name="Entity_NotificationTemplate_BodyTemplate" xml:space="preserve">
+    <value>Mətn Şablonu</value>
+  </data>
+  <data name="Entity_Notification" xml:space="preserve">
+    <value>Bildiriş</value>
+  </data>
+  <data name="Entity_Notification_Id" xml:space="preserve">
+    <value>Bildiriş Id</value>
+  </data>
+  <data name="Entity_Notification_Key" xml:space="preserve">
+    <value>Bildiriş Açarı</value>
+  </data>
+  <data name="Entity_Notification_Severity" xml:space="preserve">
+    <value>Vaciblik</value>
+  </data>
+  <data name="Entity_Notification_Title" xml:space="preserve">
+    <value>Başlıq</value>
+  </data>
+  <data name="Entity_Notification_Body" xml:space="preserve">
+    <value>Mətn</value>
+  </data>
+  <data name="Entity_Notification_EntityType" xml:space="preserve">
+    <value>Əlaqəli Tip</value>
+  </data>
+  <data name="Entity_Notification_EntityKey" xml:space="preserve">
+    <value>Əlaqəli Açar</value>
+  </data>
+  <data name="Entity_Notification_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Entity_Notification_LastRaisedDate" xml:space="preserve">
+    <value>Son Təkrarlanma Tarixi</value>
+  </data>
+  <data name="Entity_Notification_ResolvedDate" xml:space="preserve">
+    <value>Həll Tarixi</value>
+  </data>
+  <data name="Entity_Notification_ExpireDate" xml:space="preserve">
+    <value>Bitmə Tarixi</value>
+  </data>
+  <data name="Entity_NotificationRecipient" xml:space="preserve">
+    <value>Bildiriş Alıcısı</value>
+  </data>
+  <data name="Entity_NotificationRecipient_Id" xml:space="preserve">
+    <value>Alıcı Id</value>
+  </data>
+  <data name="Entity_NotificationRecipient_Status" xml:space="preserve">
+    <value>Alıcı Statusu</value>
+  </data>
+  <data name="Entity_NotificationRecipient_ReadDate" xml:space="preserve">
+    <value>Oxunma Tarixi</value>
+  </data>
+  <data name="Entity_NotificationRecipient_DismissedDate" xml:space="preserve">
+    <value>Gizlətmə Tarixi</value>
+  </data>
+  <data name="Entity_NotificationRecipient_SnoozedUntil" xml:space="preserve">
+    <value>Bu vaxta qədər gizlət</value>
+  </data>
+  <data name="Entity_NotificationRecipient_LastPopupShownDate" xml:space="preserve">
+    <value>Son Popup Tarixi</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox" xml:space="preserve">
+    <value>Bildiriş Kanal Outbox</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_Id" xml:space="preserve">
+    <value>Outbox Id</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_ChannelCode" xml:space="preserve">
+    <value>Kanal</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_Receiver" xml:space="preserve">
+    <value>Alıcı</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_Payload" xml:space="preserve">
+    <value>Payload</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_Status" xml:space="preserve">
+    <value>Outbox Statusu</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_TryCount" xml:space="preserve">
+    <value>Cəhd Sayı</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_LastTryDate" xml:space="preserve">
+    <value>Son Cəhd Tarixi</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_LastError" xml:space="preserve">
+    <value>Son Xəta</value>
+  </data>
+  <data name="Entity_NotificationAudit" xml:space="preserve">
+    <value>Bildiriş Auditi</value>
+  </data>
+  <data name="Entity_NotificationAudit_Id" xml:space="preserve">
+    <value>Audit Id</value>
+  </data>
+  <data name="Entity_NotificationAudit_ActionType" xml:space="preserve">
+    <value>Əməliyyat Tipi</value>
+  </data>
+  <data name="Entity_NotificationAudit_ActorCurrAccCode" xml:space="preserve">
+    <value>İcraçı</value>
+  </data>
+  <data name="Entity_NotificationAudit_ActionDate" xml:space="preserve">
+    <value>Əməliyyat Tarixi</value>
+  </data>
+  <data name="Entity_NotificationAudit_Note" xml:space="preserve">
+    <value>Qeyd</value>
+  </data>
+  <data name="Form_NotificationCenter" xml:space="preserve">
+    <value>Bildiriş Mərkəzi</value>
+  </data>
+  <data name="Form_NotificationCenter_MarkRead" xml:space="preserve">
+    <value>Oxundu et</value>
+  </data>
+  <data name="Form_NotificationCenter_MarkAllRead" xml:space="preserve">
+    <value>Hamısını oxundu et</value>
+  </data>
+  <data name="Form_NotificationCenter_Dismiss" xml:space="preserve">
+    <value>Gizlət</value>
+  </data>
+  <data name="Form_NotificationCenter_Snooze" xml:space="preserve">
+    <value>1 saat gizlət</value>
+  </data>
+  <data name="Form_NotificationCenter_Resolve" xml:space="preserve">
+    <value>Həll et</value>
+  </data>
+  <data name="Form_NotificationCenter_OpenRelated" xml:space="preserve">
+    <value>Əlaqəlini aç</value>
+  </data>
+  <data name="Form_NotificationCenter_RunStockCheck" xml:space="preserve">
+    <value>Stock yoxla</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_All" xml:space="preserve">
+    <value>Hamısı</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Unread" xml:space="preserve">
+    <value>Oxunmamış</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Critical" xml:space="preserve">
+    <value>Kritik</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Today" xml:space="preserve">
+    <value>Bu gün</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Payment" xml:space="preserve">
+    <value>Ödəniş</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Credit" xml:space="preserve">
+    <value>Kredit</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_System" xml:space="preserve">
+    <value>Sistem</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Store" xml:space="preserve">
+    <value>Mağaza</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_DateFrom" xml:space="preserve">
+    <value>Başlanğıc</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_DateTo" xml:space="preserve">
+    <value>Son</value>
+  </data>
+  <data name="Form_NotificationCenter_ApplyFilter" xml:space="preserve">
+    <value>Filtri tətbiq et</value>
+  </data>
+  <data name="Form_NotificationCenter_ClearFilter" xml:space="preserve">
+    <value>Filtri təmizlə</value>
+  </data>
+  <data name="Form_NotificationCenter_UnreadCount" xml:space="preserve">
+    <value>Oxunmamış: {0}</value>
+  </data>
+  <data name="Form_NotificationCenter_StockCheckResult" xml:space="preserve">
+    <value>Stock yoxlaması tamamlandı. Təsirlənən bildiriş sayı: {0}.</value>
+  </data>
+  <data name="Form_NotificationCenter_NoRelatedEntity" xml:space="preserve">
+    <value>Əlaqəli sənəd açıla bilmədi.</value>
+  </data>
+  <data name="Form_NotificationCenter_Filters" xml:space="preserve">
+    <value>Filterlər</value>
+  </data>
+  <data name="Form_NotificationCenter_AdvancedFilters" xml:space="preserve">
+    <value>Ətraflı filterlər</value>
+  </data>
+  <data name="ERP_BBI_Notifications" xml:space="preserve">
+    <value>Bildirişlər</value>
+  </data>
+  <data name="ERP_RibbonPageGroup_Notifications" xml:space="preserve">
+    <value>Bildirişlər</value>
+  </data>
+  <data name="Form_NotificationRule" xml:space="preserve">
+    <value>Bildiriş Qaydaları</value>
+  </data>
+  <data name="Form_NotificationRule_Rules" xml:space="preserve">
+    <value>Qaydalar</value>
+  </data>
+  <data name="Form_NotificationRule_Data" xml:space="preserve">
+    <value>Qayda tənzimləmələri</value>
+  </data>
+  <data name="Form_NotificationRule_AllStores" xml:space="preserve">
+    <value>Bütün mağazalar</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_InApp" xml:space="preserve">
+    <value>Proqram daxili</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_Popup" xml:space="preserve">
+    <value>Popup</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_SMS" xml:space="preserve">
+    <value>SMS</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_WhatsApp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
+  <data name="Form_NotificationRule_Severity_Info" xml:space="preserve">
+    <value>Məlumat</value>
+  </data>
+  <data name="Form_NotificationRule_Severity_Warning" xml:space="preserve">
+    <value>Xəbərdarlıq</value>
+  </data>
+  <data name="Form_NotificationRule_Severity_High" xml:space="preserve">
+    <value>Yüksək</value>
+  </data>
+  <data name="Form_NotificationRule_Severity_Critical" xml:space="preserve">
+    <value>Kritik</value>
+  </data>
+  <data name="Form_NotificationRule_DuplicateRule" xml:space="preserve">
+    <value>Eyni bildiriş növü və mağaza üçün qayda artıq mövcuddur.</value>
+  </data>
+  <data name="Form_NotificationRule_InvalidChannel" xml:space="preserve">
+    <value>Ən azı bir kanal seçin.</value>
+  </data>
+  <data name="ERP_ACE_NotificationCenter" xml:space="preserve">
+    <value>Bildiriş Mərkəzi</value>
+  </data>
+  <data name="ERP_ACE_NotificationRules" xml:space="preserve">
+    <value>Bildiriş Qaydaları</value>
+  </data>
+  <data name="Form_NotificationTemplate" xml:space="preserve">
+    <value>Bildiriş Şablonları</value>
+  </data>
+  <data name="Form_NotificationTemplate_Templates" xml:space="preserve">
+    <value>Şablonlar</value>
+  </data>
+  <data name="Form_NotificationTemplate_Data" xml:space="preserve">
+    <value>Şablon tənzimləmələri</value>
+  </data>
+  <data name="Form_NotificationTemplate_DuplicateTemplate" xml:space="preserve">
+    <value>Eyni bildiriş növü və dil üçün şablon artıq mövcuddur.</value>
+  </data>
+  <data name="ERP_ACE_NotificationTemplates" xml:space="preserve">
+    <value>Bildiriş Şablonları</value>
+  </data>
+</root>

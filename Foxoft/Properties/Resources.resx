@@ -4957,7 +4957,8 @@ Send a close request to the document owner?</value>
   </data>
   <data name="Form_Invoice_RelatedInvoices" xml:space="preserve">
     <value>Related Invoices</value>
-  </data>  <data name="Entity_PosButton" xml:space="preserve">
+  </data>
+  <data name="Entity_PosButton" xml:space="preserve">
     <value>POS Button</value>
   </data>
   <data name="Entity_PosButton_Id" xml:space="preserve">
@@ -4986,4 +4987,320 @@ Send a close request to the document owner?</value>
   </data>
   <data name="Common_DragToReorder" xml:space="preserve">
     <value>Drag rows to reorder</value>
-  </data></root>
+  </data>
+  <data name="Common_IsEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Common_Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Entity_NotificationType" xml:space="preserve">
+    <value>Notification Type</value>
+  </data>
+  <data name="Entity_NotificationType_Code" xml:space="preserve">
+    <value>Notification Type Code</value>
+  </data>
+  <data name="Entity_NotificationType_CategoryCode" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Entity_NotificationType_Desc" xml:space="preserve">
+    <value>Notification Type</value>
+  </data>
+  <data name="Entity_NotificationType_DefaultSeverity" xml:space="preserve">
+    <value>Default Severity</value>
+  </data>
+  <data name="Entity_NotificationType_AllowPopup" xml:space="preserve">
+    <value>Allow Popup</value>
+  </data>
+  <data name="Entity_NotificationRule" xml:space="preserve">
+    <value>Notification Rule</value>
+  </data>
+  <data name="Entity_NotificationRule_Id" xml:space="preserve">
+    <value>Rule Id</value>
+  </data>
+  <data name="Entity_NotificationRule_Name" xml:space="preserve">
+    <value>Rule Name</value>
+  </data>
+  <data name="Entity_NotificationRule_ThrottleMinutes" xml:space="preserve">
+    <value>Throttle Minutes</value>
+  </data>
+  <data name="Entity_NotificationRule_ChannelCodes" xml:space="preserve">
+    <value>Channels</value>
+  </data>
+  <data name="Entity_NotificationRule_PopupMinSeverity" xml:space="preserve">
+    <value>Popup Min Severity</value>
+  </data>
+  <data name="Entity_NotificationRecipientRule" xml:space="preserve">
+    <value>Notification Recipient Rule</value>
+  </data>
+  <data name="Entity_NotificationRecipientRule_Id" xml:space="preserve">
+    <value>Recipient Rule Id</value>
+  </data>
+  <data name="Entity_NotificationTemplate" xml:space="preserve">
+    <value>Notification Template</value>
+  </data>
+  <data name="Entity_NotificationTemplate_Id" xml:space="preserve">
+    <value>Template Id</value>
+  </data>
+  <data name="Entity_NotificationTemplate_LanguageCode" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Entity_NotificationTemplate_TitleTemplate" xml:space="preserve">
+    <value>Title Template</value>
+  </data>
+  <data name="Entity_NotificationTemplate_BodyTemplate" xml:space="preserve">
+    <value>Body Template</value>
+  </data>
+  <data name="Entity_Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="Entity_Notification_Id" xml:space="preserve">
+    <value>Notification Id</value>
+  </data>
+  <data name="Entity_Notification_Key" xml:space="preserve">
+    <value>Notification Key</value>
+  </data>
+  <data name="Entity_Notification_Severity" xml:space="preserve">
+    <value>Severity</value>
+  </data>
+  <data name="Entity_Notification_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Entity_Notification_Body" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="Entity_Notification_EntityType" xml:space="preserve">
+    <value>Entity Type</value>
+  </data>
+  <data name="Entity_Notification_EntityKey" xml:space="preserve">
+    <value>Entity Key</value>
+  </data>
+  <data name="Entity_Notification_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Entity_Notification_LastRaisedDate" xml:space="preserve">
+    <value>Last Raised Date</value>
+  </data>
+  <data name="Entity_Notification_ResolvedDate" xml:space="preserve">
+    <value>Resolved Date</value>
+  </data>
+  <data name="Entity_Notification_ExpireDate" xml:space="preserve">
+    <value>Expire Date</value>
+  </data>
+  <data name="Entity_NotificationRecipient" xml:space="preserve">
+    <value>Notification Recipient</value>
+  </data>
+  <data name="Entity_NotificationRecipient_Id" xml:space="preserve">
+    <value>Recipient Id</value>
+  </data>
+  <data name="Entity_NotificationRecipient_Status" xml:space="preserve">
+    <value>Recipient Status</value>
+  </data>
+  <data name="Entity_NotificationRecipient_ReadDate" xml:space="preserve">
+    <value>Read Date</value>
+  </data>
+  <data name="Entity_NotificationRecipient_DismissedDate" xml:space="preserve">
+    <value>Dismissed Date</value>
+  </data>
+  <data name="Entity_NotificationRecipient_SnoozedUntil" xml:space="preserve">
+    <value>Snoozed Until</value>
+  </data>
+  <data name="Entity_NotificationRecipient_LastPopupShownDate" xml:space="preserve">
+    <value>Last Popup Shown Date</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox" xml:space="preserve">
+    <value>Notification Channel Outbox</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_Id" xml:space="preserve">
+    <value>Outbox Id</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_ChannelCode" xml:space="preserve">
+    <value>Channel</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_Receiver" xml:space="preserve">
+    <value>Receiver</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_Payload" xml:space="preserve">
+    <value>Payload</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_Status" xml:space="preserve">
+    <value>Outbox Status</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_TryCount" xml:space="preserve">
+    <value>Try Count</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_LastTryDate" xml:space="preserve">
+    <value>Last Try Date</value>
+  </data>
+  <data name="Entity_NotificationChannelOutbox_LastError" xml:space="preserve">
+    <value>Last Error</value>
+  </data>
+  <data name="Entity_NotificationAudit" xml:space="preserve">
+    <value>Notification Audit</value>
+  </data>
+  <data name="Entity_NotificationAudit_Id" xml:space="preserve">
+    <value>Audit Id</value>
+  </data>
+  <data name="Entity_NotificationAudit_ActionType" xml:space="preserve">
+    <value>Action Type</value>
+  </data>
+  <data name="Entity_NotificationAudit_ActorCurrAccCode" xml:space="preserve">
+    <value>Actor</value>
+  </data>
+  <data name="Entity_NotificationAudit_ActionDate" xml:space="preserve">
+    <value>Action Date</value>
+  </data>
+  <data name="Entity_NotificationAudit_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Form_NotificationCenter" xml:space="preserve">
+    <value>Notification Center</value>
+  </data>
+  <data name="Form_NotificationCenter_MarkRead" xml:space="preserve">
+    <value>Mark Read</value>
+  </data>
+  <data name="Form_NotificationCenter_MarkAllRead" xml:space="preserve">
+    <value>Mark All Read</value>
+  </data>
+  <data name="Form_NotificationCenter_Dismiss" xml:space="preserve">
+    <value>Dismiss</value>
+  </data>
+  <data name="Form_NotificationCenter_Snooze" xml:space="preserve">
+    <value>Snooze 1 Hour</value>
+  </data>
+  <data name="Form_NotificationCenter_Resolve" xml:space="preserve">
+    <value>Resolve</value>
+  </data>
+  <data name="Form_NotificationCenter_OpenRelated" xml:space="preserve">
+    <value>Open Related</value>
+  </data>
+  <data name="Form_NotificationCenter_RunStockCheck" xml:space="preserve">
+    <value>Run Stock Check</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Unread" xml:space="preserve">
+    <value>Unread</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Critical" xml:space="preserve">
+    <value>Critical</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_Store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_DateFrom" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Form_NotificationCenter_Filter_DateTo" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Form_NotificationCenter_ApplyFilter" xml:space="preserve">
+    <value>Apply Filter</value>
+  </data>
+  <data name="Form_NotificationCenter_ClearFilter" xml:space="preserve">
+    <value>Clear Filter</value>
+  </data>
+  <data name="Form_NotificationCenter_UnreadCount" xml:space="preserve">
+    <value>Unread: {0}</value>
+  </data>
+  <data name="Form_NotificationCenter_StockCheckResult" xml:space="preserve">
+    <value>Stock check completed. Notifications affected: {0}.</value>
+  </data>
+  <data name="Form_NotificationCenter_NoRelatedEntity" xml:space="preserve">
+    <value>Related document could not be opened.</value>
+  </data>
+  <data name="Form_NotificationCenter_Filters" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="Form_NotificationCenter_AdvancedFilters" xml:space="preserve">
+    <value>Advanced Filters</value>
+  </data>
+  <data name="ERP_BBI_Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="ERP_RibbonPageGroup_Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Form_NotificationRule" xml:space="preserve">
+    <value>Notification Rules</value>
+  </data>
+  <data name="Form_NotificationRule_Rules" xml:space="preserve">
+    <value>Rules</value>
+  </data>
+  <data name="Form_NotificationRule_Data" xml:space="preserve">
+    <value>Rule Settings</value>
+  </data>
+  <data name="Form_NotificationRule_AllStores" xml:space="preserve">
+    <value>All stores</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_InApp" xml:space="preserve">
+    <value>In-app</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_Popup" xml:space="preserve">
+    <value>Popup</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_SMS" xml:space="preserve">
+    <value>SMS</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Form_NotificationRule_Channel_WhatsApp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
+  <data name="Form_NotificationRule_Severity_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Form_NotificationRule_Severity_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Form_NotificationRule_Severity_High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Form_NotificationRule_Severity_Critical" xml:space="preserve">
+    <value>Critical</value>
+  </data>
+  <data name="Form_NotificationRule_DuplicateRule" xml:space="preserve">
+    <value>A rule with the same notification type and store already exists.</value>
+  </data>
+  <data name="Form_NotificationRule_InvalidChannel" xml:space="preserve">
+    <value>Select at least one channel.</value>
+  </data>
+  <data name="ERP_ACE_NotificationCenter" xml:space="preserve">
+    <value>Notification Center</value>
+  </data>
+  <data name="ERP_ACE_NotificationRules" xml:space="preserve">
+    <value>Notification Rules</value>
+  </data>
+  <data name="Form_NotificationTemplate" xml:space="preserve">
+    <value>Notification Templates</value>
+  </data>
+  <data name="Form_NotificationTemplate_Templates" xml:space="preserve">
+    <value>Templates</value>
+  </data>
+  <data name="Form_NotificationTemplate_Data" xml:space="preserve">
+    <value>Template Settings</value>
+  </data>
+  <data name="Form_NotificationTemplate_DuplicateTemplate" xml:space="preserve">
+    <value>A template with the same notification type and language already exists.</value>
+  </data>
+  <data name="ERP_ACE_NotificationTemplates" xml:space="preserve">
+    <value>Notification Templates</value>
+  </data>
+</root>

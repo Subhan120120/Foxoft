@@ -8,6 +8,7 @@ using DevExpress.Spreadsheet;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using DevExpress.XtraSpreadsheet.Model;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
@@ -17,14 +18,18 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
     public class EfMethods
     {
+        private static readonly string[] StockNotificationBalanceProcessCodes = { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" };
+
         //private subContext db;
         public EfMethods()
         {
@@ -904,6 +909,7 @@ namespace Foxoft
 
             string editable = invoiceHeaderId.ToString();
             Guid transferHead = Guid.Parse(editable.Replace(editable.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+            List<(string ProductCode, string WarehouseCode)> stockNotificationTargets = SelectStockNotificationTargetsForInvoices(db, new[] { invoiceHeaderId, transferHead });
 
             TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId };
             db.TrInvoiceHeaders.Remove(trInvoiceHeader);
@@ -916,7 +922,55 @@ namespace Foxoft
             if (trInvoiceLine.Any())
                 db.TrInvoiceLines.Remove(trInvoiceLine.First());
 
-            return db.SaveChanges();
+            int result = db.SaveChanges();
+            ScanStockNotificationsAfterBalanceChange(stockNotificationTargets, deletedByUserName);
+
+            return result;
+        }
+
+        private static List<(string ProductCode, string WarehouseCode)> SelectStockNotificationTargetsForInvoices(subContext db, IReadOnlyCollection<Guid> invoiceHeaderIds)
+        {
+            var targetRows = db.TrInvoiceLines
+                .AsNoTracking()
+                .Where(x => invoiceHeaderIds.Contains(x.InvoiceHeaderId))
+                .Where(x => StockNotificationBalanceProcessCodes.Contains(x.TrInvoiceHeader.ProcessCode))
+                .Where(x => x.QtyIn != 0m || x.QtyOut != 0m)
+                .Select(x => new
+                {
+                    x.ProductCode,
+                    x.TrInvoiceHeader.WarehouseCode
+                })
+                .Distinct()
+                .ToList();
+
+            return targetRows
+                .Select(x => (x.ProductCode, x.WarehouseCode))
+                .ToList();
+        }
+
+        private static void ScanStockNotificationsAfterBalanceChange(
+            List<(string ProductCode, string WarehouseCode)> stockNotificationTargets,
+            string? actorCurrAccCode)
+        {
+            if (stockNotificationTargets.Count == 0)
+                return;
+
+            try
+            {
+                Task.Run(async () =>
+                {
+                    using subContext notificationContext = new();
+                    NotificationStockCheckerService stockChecker = new(notificationContext);
+                    await stockChecker.ScanProductStockWarningsAsync(stockNotificationTargets, actorCurrAccCode);
+                }).GetAwaiter().GetResult();
+
+                if (Application.OpenForms[nameof(FormERP)] is FormERP formERP)
+                    _ = formERP.RefreshNotificationBadgeAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"Stock notification scan after balance change failed: {ex.Message}");
+            }
         }
 
         public int DeleteMoneyTransfer(Guid paymentHeaderId)

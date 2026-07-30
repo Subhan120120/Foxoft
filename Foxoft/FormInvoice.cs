@@ -67,6 +67,7 @@ namespace Foxoft
         private byte[] productTypeArr;
         private decimal _currAccBalanceBefore;
         private bool _currAccBalanceCalculated;
+        private static readonly string[] StockBalanceProcessCodes = { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" };
         private decimal CurrAccBalanceBefore
         {
             get
@@ -1814,6 +1815,8 @@ namespace Foxoft
             if (IsInstallmentProcess())
                 EnsureInstallment();
 
+            List<(string ProductCode, string WarehouseCode)> stockWarningTargets = GetInvoiceStockWarningTargets();
+
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
             _isSaved = true;
 
@@ -1822,6 +1825,7 @@ namespace Foxoft
                 InitilizeTransfer();
 
             dbContext.ChangeTracker.AcceptAllChanges();
+            ScanProductStockWarningsAfterSave(stockWarningTargets);
 
             if (_pendingPaymentCurrAccUpdate)
             {
@@ -1880,6 +1884,213 @@ namespace Foxoft
             }
 
             return true;
+        }
+
+        private List<(string ProductCode, string WarehouseCode)> GetInvoiceStockWarningTargets()
+        {
+            dbContext.ChangeTracker.DetectChanges();
+
+            if (trInvoiceHeader is null)
+                return new List<(string ProductCode, string WarehouseCode)>();
+
+            EntityEntry<TrInvoiceHeader> headerEntry = dbContext.Entry(trInvoiceHeader);
+            string? originalProcessCode = GetOriginalString(headerEntry, nameof(TrInvoiceHeader.ProcessCode));
+
+            if (!IsStockBalanceProcess(trInvoiceHeader.ProcessCode)
+                && !IsStockBalanceProcess(originalProcessCode))
+                return new List<(string ProductCode, string WarehouseCode)>();
+
+            string? currentWarehouseCode = trInvoiceHeader.WarehouseCode;
+            string? originalWarehouseCode = GetOriginalString(headerEntry, nameof(TrInvoiceHeader.WarehouseCode));
+            if (headerEntry.State == EntityState.Added || headerEntry.State == EntityState.Detached)
+                originalWarehouseCode = null;
+
+            Dictionary<string, (string ProductCode, string WarehouseCode)> targets = new(StringComparer.OrdinalIgnoreCase);
+
+            foreach (EntityEntry<TrInvoiceLine> entry in dbContext.ChangeTracker.Entries<TrInvoiceLine>())
+            {
+                if (!LineBelongsToCurrentInvoice(entry)
+                    || !HasLineStockBalanceChange(entry))
+                    continue;
+
+                AddLineStockTargets(entry, currentWarehouseCode, originalWarehouseCode, targets);
+            }
+
+            if (HasHeaderWarehouseStockBalanceChange(headerEntry, currentWarehouseCode, originalWarehouseCode))
+            {
+                foreach (TrInvoiceLine line in EnumerateCurrentInvoiceLines())
+                {
+                    if (!HasStockQuantity(line.QtyIn, line.QtyOut))
+                        continue;
+
+                    AddStockTarget(line.ProductCode, currentWarehouseCode, targets);
+                    AddStockTarget(line.ProductCode, originalWarehouseCode, targets);
+                }
+            }
+
+            return targets.Values.ToList();
+        }
+
+        private bool LineBelongsToCurrentInvoice(EntityEntry<TrInvoiceLine> entry)
+        {
+            Guid? originalInvoiceHeaderId = GetOriginalGuid(entry, nameof(TrInvoiceLine.InvoiceHeaderId));
+
+            return entry.Entity.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId
+                || originalInvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId;
+        }
+
+        private static bool HasLineStockBalanceChange(EntityEntry<TrInvoiceLine> entry)
+        {
+            decimal currentQtyIn = entry.Entity.QtyIn;
+            decimal currentQtyOut = entry.Entity.QtyOut;
+
+            if (entry.State == EntityState.Added)
+                return HasStockQuantity(currentQtyIn, currentQtyOut);
+
+            decimal originalQtyIn = GetOriginalDecimal(entry, nameof(TrInvoiceLine.QtyIn));
+            decimal originalQtyOut = GetOriginalDecimal(entry, nameof(TrInvoiceLine.QtyOut));
+
+            if (entry.State == EntityState.Deleted)
+                return HasStockQuantity(originalQtyIn, originalQtyOut);
+
+            if (entry.State != EntityState.Modified)
+                return false;
+
+            bool hasStockQuantity = HasStockQuantity(currentQtyIn, currentQtyOut)
+                || HasStockQuantity(originalQtyIn, originalQtyOut);
+
+            return hasStockQuantity
+                && (HasPropertyValueChanged(entry, nameof(TrInvoiceLine.InvoiceHeaderId))
+                    || HasPropertyValueChanged(entry, nameof(TrInvoiceLine.ProductCode))
+                    || HasPropertyValueChanged(entry, nameof(TrInvoiceLine.QtyIn))
+                    || HasPropertyValueChanged(entry, nameof(TrInvoiceLine.QtyOut)));
+        }
+
+        private static bool HasHeaderWarehouseStockBalanceChange(
+            EntityEntry<TrInvoiceHeader> headerEntry,
+            string? currentWarehouseCode,
+            string? originalWarehouseCode)
+        {
+            return headerEntry.State == EntityState.Modified
+                && !string.Equals(currentWarehouseCode, originalWarehouseCode, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private IEnumerable<TrInvoiceLine> EnumerateCurrentInvoiceLines()
+        {
+            if (trInvoiceLinesBindingSource?.List is IEnumerable invoiceLines)
+            {
+                foreach (object item in invoiceLines)
+                {
+                    if (item is TrInvoiceLine line && line.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                        yield return line;
+                }
+            }
+            else if (trInvoiceHeader.TrInvoiceLines != null)
+            {
+                foreach (TrInvoiceLine line in trInvoiceHeader.TrInvoiceLines)
+                    yield return line;
+            }
+        }
+
+        private static void AddLineStockTargets(
+            EntityEntry<TrInvoiceLine> entry,
+            string? currentWarehouseCode,
+            string? originalWarehouseCode,
+            Dictionary<string, (string ProductCode, string WarehouseCode)> targets)
+        {
+            string? originalProductCode = GetOriginalString(entry, nameof(TrInvoiceLine.ProductCode));
+
+            AddStockTarget(entry.Entity.ProductCode, currentWarehouseCode, targets);
+            AddStockTarget(entry.Entity.ProductCode, originalWarehouseCode, targets);
+            AddStockTarget(originalProductCode, currentWarehouseCode, targets);
+            AddStockTarget(originalProductCode, originalWarehouseCode, targets);
+        }
+
+        private static void AddStockTarget(
+            string? productCode,
+            string? warehouseCode,
+            Dictionary<string, (string ProductCode, string WarehouseCode)> targets)
+        {
+            if (string.IsNullOrWhiteSpace(productCode) || string.IsNullOrWhiteSpace(warehouseCode))
+                return;
+
+            string trimmedProductCode = productCode.Trim();
+            string trimmedWarehouseCode = warehouseCode.Trim();
+            targets[$"{trimmedProductCode}\u001F{trimmedWarehouseCode}"] = (trimmedProductCode, trimmedWarehouseCode);
+        }
+
+        private static bool IsStockBalanceProcess(string? processCode)
+            => !string.IsNullOrWhiteSpace(processCode)
+                && StockBalanceProcessCodes.Contains(processCode, StringComparer.OrdinalIgnoreCase);
+
+        private static bool HasStockQuantity(decimal qtyIn, decimal qtyOut)
+            => qtyIn != 0m || qtyOut != 0m;
+
+        private static bool HasPropertyValueChanged<TEntity>(EntityEntry<TEntity> entry, string propertyName)
+            where TEntity : class
+        {
+            PropertyEntry property = entry.Property(propertyName);
+            return property.IsModified || !Equals(property.CurrentValue, property.OriginalValue);
+        }
+
+        private static string? GetOriginalString<TEntity>(EntityEntry<TEntity> entry, string propertyName)
+            where TEntity : class
+        {
+            if (entry.State == EntityState.Added || entry.State == EntityState.Detached)
+                return null;
+
+            return entry.Property(propertyName).OriginalValue?.ToString();
+        }
+
+        private static Guid? GetOriginalGuid<TEntity>(EntityEntry<TEntity> entry, string propertyName)
+            where TEntity : class
+        {
+            if (entry.State == EntityState.Added || entry.State == EntityState.Detached)
+                return null;
+
+            object? value = entry.Property(propertyName).OriginalValue;
+            if (value is Guid guid)
+                return guid;
+
+            return Guid.TryParse(value?.ToString(), out Guid parsedGuid) ? parsedGuid : null;
+        }
+
+        private static decimal GetOriginalDecimal<TEntity>(EntityEntry<TEntity> entry, string propertyName)
+            where TEntity : class
+        {
+            if (entry.State == EntityState.Added || entry.State == EntityState.Detached)
+                return 0m;
+
+            object? value = entry.Property(propertyName).OriginalValue;
+            if (value is decimal decimalValue)
+                return decimalValue;
+
+            return value == null ? 0m : Convert.ToDecimal(value, CultureInfo.InvariantCulture);
+        }
+
+        private void ScanProductStockWarningsAfterSave(List<(string ProductCode, string WarehouseCode)> stockWarningTargets)
+        {
+            if (stockWarningTargets.Count == 0)
+                return;
+
+            string actorCurrAccCode = Authorization.CurrAccCode;
+
+            try
+            {
+                Task.Run(async () =>
+                {
+                    using subContext notificationContext = new();
+                    NotificationStockCheckerService stockChecker = new(notificationContext);
+                    await stockChecker.ScanProductStockWarningsAsync(stockWarningTargets, actorCurrAccCode);
+                }).GetAwaiter().GetResult();
+
+                if (Application.OpenForms[nameof(FormERP)] is FormERP formERP)
+                    _ = formERP.RefreshNotificationBadgeAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"Stock warning notification scan failed: {ex.Message}");
+            }
         }
 
 
