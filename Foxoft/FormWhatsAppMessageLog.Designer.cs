@@ -240,6 +240,7 @@ namespace Foxoft
             colImagePreview.FieldName = "colImagePreview";
             colImagePreview.Name = "colImagePreview";
             colImagePreview.OptionsColumn.AllowEdit = false;
+            colImagePreview.OptionsColumn.FixedWidth = true;
             colImagePreview.UnboundDataType = typeof(object);
             colImagePreview.Visible = true;
             colImagePreview.VisibleIndex = 9;

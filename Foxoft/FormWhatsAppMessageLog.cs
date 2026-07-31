@@ -296,6 +296,15 @@ namespace Foxoft
         private void FormWhatsAppMessageLog_FormClosed(object sender, FormClosedEventArgs e)
         {
             dbContext?.Dispose();
+
+            lock (_imageCache)
+            {
+                foreach (var img in _imageCache.Values)
+                {
+                    img?.Dispose();
+                }
+                _imageCache.Clear();
+            }
         }
 
         private async Task UpdateSummaryAsync()
@@ -387,6 +396,7 @@ namespace Foxoft
         }
 
         private readonly Dictionary<string, Image> _imageCache = new();
+        private readonly HashSet<string> _loadingPaths = new();
 
         private void gV_WhatsAppMessageLogList_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
         {
@@ -414,27 +424,68 @@ namespace Foxoft
                 return;
             }
 
-            if (_imageCache.TryGetValue(filePath, out Image cached))
+            lock (_imageCache)
             {
-                e.Value = cached;
-                return;
-            }
-
-            try
-            {
-                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                if (_imageCache.TryGetValue(filePath, out Image cached))
                 {
-                    Image original = Image.FromStream(fs);
-                    Image thumbnail = original.GetThumbnailImage(80, 60, () => false, IntPtr.Zero);
-                    original.Dispose();
-                    _imageCache[filePath] = thumbnail;
-                    e.Value = thumbnail;
+                    e.Value = cached;
+                    return;
                 }
             }
-            catch
+
+            e.Value = null;
+
+            lock (_loadingPaths)
             {
-                e.Value = null;
+                if (_loadingPaths.Contains(filePath))
+                    return;
+
+                _loadingPaths.Add(filePath);
             }
+
+            int listSourceRowIndex = e.ListSourceRowIndex;
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        Image original = Image.FromStream(fs);
+                        Image thumbnail = original.GetThumbnailImage(80, 60, () => false, IntPtr.Zero);
+                        original.Dispose();
+
+                        lock (_imageCache)
+                        {
+                            _imageCache[filePath] = thumbnail;
+                        }
+                    }
+
+                    if (IsHandleCreated && !IsDisposed)
+                    {
+                        BeginInvoke(new Action(() =>
+                        {
+                            if (IsDisposed || view.GridControl == null || view.GridControl.IsDisposed) return;
+                            int rowHandle = view.GetRowHandle(listSourceRowIndex);
+                            if (rowHandle >= 0)
+                            {
+                                view.RefreshRowCell(rowHandle, e.Column);
+                            }
+                        }));
+                    }
+                }
+                catch
+                {
+                    // Ignore errors during image loading
+                }
+                finally
+                {
+                    lock (_loadingPaths)
+                    {
+                        _loadingPaths.Remove(filePath);
+                    }
+                }
+            });
         }
 
         private void gV_WhatsAppMessageLogList_DoubleClick(object sender, EventArgs e)
