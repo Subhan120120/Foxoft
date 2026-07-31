@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Foxoft.Migrations
 {
-    [Migration("20260730120000_AddInstallmentDueNotifications")]
-    public partial class AddInstallmentDueNotifications : Migration
+    [Migration("20260730120000_AddInstallmentDueNotificationsManual")]
+    public partial class AddInstallmentDueNotificationsManual : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

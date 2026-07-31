@@ -1273,7 +1273,7 @@ namespace Foxoft.Models
             return new[]
             {
                 CreateNotificationType(NotificationTypeCodes.ProductStockWarning, NotificationCategories.Stock, "Product Stock Warning Level", NotificationSeverities.Warning, false, 10),
-                CreateNotificationType(NotificationTypeCodes.ProductOutOfStock, NotificationCategories.Stock, "Product Out Of Stock", NotificationSeverities.Critical, true, 20),
+                CreateNotificationType(NotificationTypeCodes.ProductOutOfStock, NotificationCategories.Stock, "Product Out Of Stock", NotificationSeverities.Critical, true, 20, isEnabled: false),
                 CreateNotificationType(NotificationTypeCodes.NegativeStock, NotificationCategories.Stock, "Negative Stock", NotificationSeverities.Critical, true, 30),
                 CreateNotificationType(NotificationTypeCodes.OverStock, NotificationCategories.Stock, "Over Stock", NotificationSeverities.Warning, false, 40),
                 CreateNotificationType(NotificationTypeCodes.ExpiredProduct, NotificationCategories.Stock, "Expired Product", NotificationSeverities.High, true, 50),
@@ -1324,7 +1324,7 @@ namespace Foxoft.Models
                     RuleName = notificationType.NotificationTypeDesc,
                     NotificationTypeCode = notificationType.NotificationTypeCode,
                     StoreCode = null,
-                    IsEnabled = true,
+                    IsEnabled = notificationType.IsEnabled,
                     ThrottleMinutes = GetDefaultNotificationThrottleMinutes(notificationType.NotificationTypeCode),
                     ChannelCodes = GetDefaultNotificationChannelCodes(notificationType),
                     PopupMinSeverity = NotificationSeverities.High
@@ -1414,7 +1414,7 @@ namespace Foxoft.Models
             return rules.ToArray();
         }
 
-        private static NotificationType CreateNotificationType(string code, string category, string desc, string severity, bool allowPopup, int displayOrder)
+        private static NotificationType CreateNotificationType(string code, string category, string desc, string severity, bool allowPopup, int displayOrder, bool isEnabled = true)
         {
             return new NotificationType
             {
@@ -1423,7 +1423,7 @@ namespace Foxoft.Models
                 NotificationTypeDesc = desc,
                 DefaultSeverity = severity,
                 AllowPopup = allowPopup,
-                IsEnabled = true,
+                IsEnabled = isEnabled,
                 DisplayOrder = displayOrder
             };
         }
