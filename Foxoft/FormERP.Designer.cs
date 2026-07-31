@@ -192,6 +192,7 @@ namespace Foxoft
             parentRibbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemImageComboBox1, repositoryItemComboBox1, repositoryItemLookUpEdit1 });
             parentRibbonControl.Size = new Size(1023, 158);
             parentRibbonControl.StatusBar = ribbonStatusBar;
+            parentRibbonControl.SelectedPageChanged += parentRibbonControl_SelectedPageChanged;
             // 
             // skinRibbonGalleryBarItem
             // 

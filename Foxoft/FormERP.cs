@@ -32,6 +32,7 @@ namespace Foxoft
         private AccordionControlElement aCE_Active;
         private System.Windows.Forms.Timer? notificationPopupTimer;
         private string? notificationProductsFolder;
+        private int unreadNotificationCount;
 
         public FormERP()
         {
@@ -366,6 +367,14 @@ namespace Foxoft
             await ShowInitialNotificationsAsync();
         }
 
+        private void parentRibbonControl_SelectedPageChanged(object? sender, EventArgs e)
+        {
+            if (notificationPopupPanel?.IsPopupOpen == true)
+                notificationPopupPanel.HidePopup();
+
+            UpdateNotificationBadgeVisibility();
+        }
+
         private void ConfigureNotificationBadgeTarget()
         {
             foreach (BarItemLink link in ribbonPageGroupNotifications.ItemLinks)
@@ -373,11 +382,13 @@ namespace Foxoft
                 if (link.Item == bBI_Notifications)
                 {
                     notificationBadge.TargetElement = link;
+                    UpdateNotificationBadgeVisibility();
                     return;
                 }
             }
 
             notificationBadge.TargetElement = bBI_Notifications;
+            UpdateNotificationBadgeVisibility();
         }
 
         internal async Task RefreshNotificationBadgeAsync()
@@ -396,10 +407,22 @@ namespace Foxoft
 
         private void SetNotificationBadge(int unreadCount)
         {
-            notificationBadge.Visible = unreadCount > 0;
+            unreadNotificationCount = unreadCount;
             notificationBadge.Properties.Text = unreadCount > 99
                 ? "99+"
                 : unreadCount.ToString(CultureInfo.InvariantCulture);
+            UpdateNotificationBadgeVisibility();
+        }
+
+        private void UpdateNotificationBadgeVisibility()
+        {
+            if (unreadNotificationCount <= 0)
+            {
+                notificationBadge.Visible = false;
+                return;
+            }
+
+            notificationBadge.Visible = parentRibbonControl.SelectedPage == ribbonPage_Home;
         }
 
         protected override void OnResize(EventArgs e)
