@@ -217,6 +217,7 @@ namespace Foxoft
                 case "NotificationCenter": ShowExistForm<FormNotificationCenter>(); break;
                 case "NotificationRules": ShowExistForm<FormNotificationRule>(); break;
                 case "NotificationTemplates": ShowExistForm<FormNotificationTemplate>(); break;
+                case "NotificationRecipientRules": ShowExistForm<FormNotificationRecipientRule>(); break;
                 case "MessagingSettings": ShowExistForm<FormAppSetting>(); break;
                 case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
                 case "ReportNew": 
@@ -330,6 +331,7 @@ namespace Foxoft
             this.ACE_NotificationCenter.Name = "NotificationCenter";
             this.ACE_NotificationRules.Name = "NotificationRules";
             this.ACE_NotificationTemplates.Name = "NotificationTemplates";
+            this.ACE_NotificationRecipientRules.Name = "NotificationRecipientRules";
             this.ACE_TransferApproval.Name = "TransferApproval";
         }
 

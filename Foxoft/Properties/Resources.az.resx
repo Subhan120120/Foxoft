@@ -5303,4 +5303,22 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   <data name="ERP_ACE_NotificationTemplates" xml:space="preserve">
     <value>Bildiriş Şablonları</value>
   </data>
+  <data name="Form_NotificationRecipientRule" xml:space="preserve">
+    <value>Bildiriş Alıcı Qaydaları</value>
+  </data>
+  <data name="Form_NotificationRecipientRule_Rules" xml:space="preserve">
+    <value>Alıcı Qaydaları</value>
+  </data>
+  <data name="Form_NotificationRecipientRule_Data" xml:space="preserve">
+    <value>Qayda Parametrləri</value>
+  </data>
+  <data name="Form_NotificationRecipientRule_AllStores" xml:space="preserve">
+    <value>Bütün mağazalar</value>
+  </data>
+  <data name="Form_NotificationRecipientRule_DuplicateRule" xml:space="preserve">
+    <value>Eyni bildiriş növü, rol və mağaza üçün alıcı qaydası artıq mövcuddur.</value>
+  </data>
+  <data name="ERP_ACE_NotificationRecipientRules" xml:space="preserve">
+    <value>Bildiriş Alıcı Qaydaları</value>
+  </data>
 </root>

@@ -15059,5 +15059,59 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("ERP_ACE_NotificationTemplates", resourceCulture);
             }
         }
+            
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Recipient Rules.
+        /// </summary>
+        public static string Form_NotificationRecipientRule {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule", resourceCulture);
+            }
+        }
+            
+        /// <summary>
+        ///   Looks up a localized string similar to Recipient Rules.
+        /// </summary>
+        public static string Form_NotificationRecipientRule_Rules {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule_Rules", resourceCulture);
+            }
+        }
+            
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Settings.
+        /// </summary>
+        public static string Form_NotificationRecipientRule_Data {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule_Data", resourceCulture);
+            }
+        }
+            
+        /// <summary>
+        ///   Looks up a localized string similar to All stores.
+        /// </summary>
+        public static string Form_NotificationRecipientRule_AllStores {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule_AllStores", resourceCulture);
+            }
+        }
+            
+        /// <summary>
+        ///   Looks up a localized string similar to A recipient rule with the same notification type, role and store already exists..
+        /// </summary>
+        public static string Form_NotificationRecipientRule_DuplicateRule {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule_DuplicateRule", resourceCulture);
+            }
+        }
+            
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Recipient Rules.
+        /// </summary>
+        public static string ERP_ACE_NotificationRecipientRules {
+            get {
+                return ResourceManager.GetString("ERP_ACE_NotificationRecipientRules", resourceCulture);
+            }
+        }
     }
 }

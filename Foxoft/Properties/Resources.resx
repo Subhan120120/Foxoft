@@ -5303,4 +5303,22 @@ Send a close request to the document owner?</value>
   <data name="ERP_ACE_NotificationTemplates" xml:space="preserve">
     <value>Notification Templates</value>
   </data>
+  <data name="Form_NotificationRecipientRule" xml:space="preserve">
+    <value>Notification Recipient Rules</value>
+  </data>
+  <data name="Form_NotificationRecipientRule_Rules" xml:space="preserve">
+    <value>Recipient Rules</value>
+  </data>
+  <data name="Form_NotificationRecipientRule_Data" xml:space="preserve">
+    <value>Rule Settings</value>
+  </data>
+  <data name="Form_NotificationRecipientRule_AllStores" xml:space="preserve">
+    <value>All stores</value>
+  </data>
+  <data name="Form_NotificationRecipientRule_DuplicateRule" xml:space="preserve">
+    <value>A recipient rule with the same notification type, role and store already exists.</value>
+  </data>
+  <data name="ERP_ACE_NotificationRecipientRules" xml:space="preserve">
+    <value>Notification Recipient Rules</value>
+  </data>
 </root>
