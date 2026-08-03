@@ -1,5 +1,6 @@
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
+using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Properties;
 using System.ComponentModel;
 
@@ -30,11 +31,15 @@ namespace Foxoft
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
             bBI_Cancel = new DevExpress.XtraBars.BarButtonItem();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
+            bBI_NewRecipient = new DevExpress.XtraBars.BarButtonItem();
+            bBI_DeleteRecipient = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroupRules = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroupRecipients = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroupData = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroupExport = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             gC_NotificationRules = new MyGridControl();
             notificationRuleBindingSource = new BindingSource(components);
             gV_NotificationRules = new MyGridView();
@@ -57,8 +62,28 @@ namespace Foxoft
             repositoryItemImageComboBoxSeverity = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
             colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            gC_RecipientRules = new MyGridControl();
+            recipientRuleBindingSource = new BindingSource(components);
+            gV_RecipientRules = new MyGridView();
+            colRecipientRuleId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colRecipientNotificationTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repositoryItemLookUpEditRecipientNotificationType = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            colRecipientRoleCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repositoryItemLookUpEditRole = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            colRecipientStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repositoryItemLookUpEditRecipientStore = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            colRecipientIsEnabled = new DevExpress.XtraGrid.Columns.GridColumn();
+            repositoryItemCheckEditRecipient = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            colRecipientCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colRecipientLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             ((ISupportInitialize)svgImageCollection1).BeginInit();
             ((ISupportInitialize)ribbonControl1).BeginInit();
+            ((ISupportInitialize)splitContainerControl1).BeginInit();
+            ((ISupportInitialize)splitContainerControl1.Panel1).BeginInit();
+            splitContainerControl1.Panel1.SuspendLayout();
+            ((ISupportInitialize)splitContainerControl1.Panel2).BeginInit();
+            splitContainerControl1.Panel2.SuspendLayout();
+            splitContainerControl1.SuspendLayout();
             ((ISupportInitialize)gC_NotificationRules).BeginInit();
             ((ISupportInitialize)notificationRuleBindingSource).BeginInit();
             ((ISupportInitialize)gV_NotificationRules).BeginInit();
@@ -68,6 +93,13 @@ namespace Foxoft
             ((ISupportInitialize)repositoryItemSpinEditThrottleMinutes).BeginInit();
             ((ISupportInitialize)repositoryItemCheckedComboBoxEditChannels).BeginInit();
             ((ISupportInitialize)repositoryItemImageComboBoxSeverity).BeginInit();
+            ((ISupportInitialize)gC_RecipientRules).BeginInit();
+            ((ISupportInitialize)recipientRuleBindingSource).BeginInit();
+            ((ISupportInitialize)gV_RecipientRules).BeginInit();
+            ((ISupportInitialize)repositoryItemLookUpEditRecipientNotificationType).BeginInit();
+            ((ISupportInitialize)repositoryItemLookUpEditRole).BeginInit();
+            ((ISupportInitialize)repositoryItemLookUpEditRecipientStore).BeginInit();
+            ((ISupportInitialize)repositoryItemCheckEditRecipient).BeginInit();
             SuspendLayout();
             // 
             // svgImageCollection1
@@ -78,13 +110,15 @@ namespace Foxoft
             svgImageCollection1.Add("refresh", "image://svgimages/icon builder/actions_refresh.svg");
             svgImageCollection1.Add("cancel", "image://svgimages/actions/cancel.svg");
             svgImageCollection1.Add("export", "image://svgimages/export/exporttoxlsx.svg");
+            svgImageCollection1.Add("adduser", "image://svgimages/icon builder/actions_addcircled.svg");
+            svgImageCollection1.Add("deleteuser", "image://svgimages/icon builder/actions_deletecircled.svg");
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_New, bBI_Save, bBI_Delete, bBI_Refresh, bBI_Cancel, bBI_ExportXlsx });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_New, bBI_Save, bBI_Delete, bBI_Refresh, bBI_Cancel, bBI_ExportXlsx, bBI_NewRecipient, bBI_DeleteRecipient });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 7;
+            ribbonControl1.MaxItemId = 9;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(1180, 158);
@@ -138,9 +172,25 @@ namespace Foxoft
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
             bBI_ExportXlsx.ItemClick += bBI_ExportXlsx_ItemClick;
             // 
+            // bBI_NewRecipient
+            // 
+            bBI_NewRecipient.Caption = Resources.Common_New;
+            bBI_NewRecipient.Id = 7;
+            bBI_NewRecipient.ImageOptions.SvgImage = svgImageCollection1["adduser"];
+            bBI_NewRecipient.Name = "bBI_NewRecipient";
+            bBI_NewRecipient.ItemClick += bBI_NewRecipient_ItemClick;
+            // 
+            // bBI_DeleteRecipient
+            // 
+            bBI_DeleteRecipient.Caption = Resources.Common_Delete;
+            bBI_DeleteRecipient.Id = 8;
+            bBI_DeleteRecipient.ImageOptions.SvgImage = svgImageCollection1["deleteuser"];
+            bBI_DeleteRecipient.Name = "bBI_DeleteRecipient";
+            bBI_DeleteRecipient.ItemClick += bBI_DeleteRecipient_ItemClick;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroupRules, ribbonPageGroupData, ribbonPageGroupExport });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroupRules, ribbonPageGroupRecipients, ribbonPageGroupData, ribbonPageGroupExport });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.Form_NotificationRule;
             // 
@@ -151,6 +201,13 @@ namespace Foxoft
             ribbonPageGroupRules.ItemLinks.Add(bBI_Delete);
             ribbonPageGroupRules.Name = "ribbonPageGroupRules";
             ribbonPageGroupRules.Text = Resources.Form_NotificationRule_Rules;
+            // 
+            // ribbonPageGroupRecipients
+            // 
+            ribbonPageGroupRecipients.ItemLinks.Add(bBI_NewRecipient);
+            ribbonPageGroupRecipients.ItemLinks.Add(bBI_DeleteRecipient);
+            ribbonPageGroupRecipients.Name = "ribbonPageGroupRecipients";
+            ribbonPageGroupRecipients.Text = Resources.Form_NotificationRecipientRule_Rules;
             // 
             // ribbonPageGroupData
             // 
@@ -172,16 +229,35 @@ namespace Foxoft
             ribbonStatusBar1.Ribbon = ribbonControl1;
             ribbonStatusBar1.Size = new Size(1180, 24);
             // 
+            // splitContainerControl1
+            // 
+            splitContainerControl1.Dock = DockStyle.Fill;
+            splitContainerControl1.Horizontal = false;
+            splitContainerControl1.Location = new Point(0, 158);
+            splitContainerControl1.Name = "splitContainerControl1";
+            // 
+            // splitContainerControl1.Panel1
+            // 
+            splitContainerControl1.Panel1.Controls.Add(gC_NotificationRules);
+            splitContainerControl1.Panel1.Text = "Panel1";
+            // 
+            // splitContainerControl1.Panel2
+            // 
+            splitContainerControl1.Panel2.Controls.Add(gC_RecipientRules);
+            splitContainerControl1.Panel2.Text = "Panel2";
+            splitContainerControl1.Size = new Size(1180, 518);
+            splitContainerControl1.SplitterPosition = 300;
+            splitContainerControl1.TabIndex = 0;
+            // 
             // gC_NotificationRules
             // 
             gC_NotificationRules.DataSource = notificationRuleBindingSource;
             gC_NotificationRules.Dock = DockStyle.Fill;
-            gC_NotificationRules.Location = new Point(0, 158);
             gC_NotificationRules.MainView = gV_NotificationRules;
             gC_NotificationRules.MenuManager = ribbonControl1;
             gC_NotificationRules.Name = "gC_NotificationRules";
             gC_NotificationRules.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemLookUpEditNotificationType, repositoryItemLookUpEditStore, repositoryItemCheckEdit, repositoryItemSpinEditThrottleMinutes, repositoryItemCheckedComboBoxEditChannels, repositoryItemImageComboBoxSeverity });
-            gC_NotificationRules.Size = new Size(1180, 518);
+            gC_NotificationRules.Size = new Size(1180, 300);
             gC_NotificationRules.TabIndex = 0;
             gC_NotificationRules.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_NotificationRules });
             gC_NotificationRules.ProcessGridKey += gC_NotificationRules_ProcessGridKey;
@@ -202,6 +278,7 @@ namespace Foxoft
             gV_NotificationRules.OptionsView.ShowFooter = true;
             gV_NotificationRules.OptionsView.ShowGroupPanel = false;
             gV_NotificationRules.CellValueChanged += gV_NotificationRules_CellValueChanged;
+            gV_NotificationRules.FocusedRowChanged += gV_NotificationRules_FocusedRowChanged;
             gV_NotificationRules.RowCellStyle += gV_NotificationRules_RowCellStyle;
             gV_NotificationRules.ValidateRow += gV_NotificationRules_ValidateRow;
             gV_NotificationRules.InvalidRowException += gV_NotificationRules_InvalidRowException;
@@ -391,12 +468,152 @@ namespace Foxoft
             colLastUpdatedDate.VisibleIndex = 12;
             colLastUpdatedDate.Width = 120;
             // 
+            // gC_RecipientRules
+            // 
+            gC_RecipientRules.DataSource = recipientRuleBindingSource;
+            gC_RecipientRules.Dock = DockStyle.Fill;
+            gC_RecipientRules.MainView = gV_RecipientRules;
+            gC_RecipientRules.MenuManager = ribbonControl1;
+            gC_RecipientRules.Name = "gC_RecipientRules";
+            gC_RecipientRules.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemLookUpEditRecipientNotificationType, repositoryItemLookUpEditRole, repositoryItemLookUpEditRecipientStore, repositoryItemCheckEditRecipient });
+            gC_RecipientRules.TabIndex = 0;
+            gC_RecipientRules.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_RecipientRules });
+            gC_RecipientRules.ProcessGridKey += gC_RecipientRules_ProcessGridKey;
+            // 
+            // recipientRuleBindingSource
+            // 
+            recipientRuleBindingSource.DataSource = typeof(NotificationRecipientRule);
+            // 
+            // gV_RecipientRules
+            // 
+            gV_RecipientRules.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colRecipientRuleId, colRecipientNotificationTypeCode, colRecipientRoleCode, colRecipientStoreCode, colRecipientIsEnabled, colRecipientCreatedDate, colRecipientLastUpdatedDate });
+            gV_RecipientRules.GridControl = gC_RecipientRules;
+            gV_RecipientRules.Name = "gV_RecipientRules";
+            gV_RecipientRules.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+            gV_RecipientRules.OptionsFind.FindDelay = 100;
+            gV_RecipientRules.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
+            gV_RecipientRules.OptionsView.ShowAutoFilterRow = true;
+            gV_RecipientRules.OptionsView.ShowFooter = true;
+            gV_RecipientRules.OptionsView.ShowGroupPanel = false;
+            gV_RecipientRules.RowCellStyle += gV_RecipientRules_RowCellStyle;
+            gV_RecipientRules.ValidateRow += gV_RecipientRules_ValidateRow;
+            gV_RecipientRules.InvalidRowException += gV_RecipientRules_InvalidRowException;
+            // 
+            // colRecipientRuleId
+            // 
+            colRecipientRuleId.Caption = Resources.Entity_NotificationRecipientRule_Id;
+            colRecipientRuleId.FieldName = "NotificationRecipientRuleId";
+            colRecipientRuleId.Name = "colRecipientRuleId";
+            colRecipientRuleId.OptionsColumn.AllowEdit = false;
+            colRecipientRuleId.Visible = true;
+            colRecipientRuleId.VisibleIndex = 0;
+            colRecipientRuleId.Width = 80;
+            // 
+            // colRecipientNotificationTypeCode
+            // 
+            colRecipientNotificationTypeCode.Caption = Resources.Entity_NotificationType;
+            colRecipientNotificationTypeCode.ColumnEdit = repositoryItemLookUpEditRecipientNotificationType;
+            colRecipientNotificationTypeCode.FieldName = "NotificationTypeCode";
+            colRecipientNotificationTypeCode.Name = "colRecipientNotificationTypeCode";
+            colRecipientNotificationTypeCode.Visible = true;
+            colRecipientNotificationTypeCode.VisibleIndex = 1;
+            colRecipientNotificationTypeCode.Width = 220;
+            // 
+            // repositoryItemLookUpEditRecipientNotificationType
+            // 
+            repositoryItemLookUpEditRecipientNotificationType.AutoHeight = false;
+            repositoryItemLookUpEditRecipientNotificationType.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            repositoryItemLookUpEditRecipientNotificationType.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo(nameof(NotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code), new LookUpColumnInfo(nameof(NotificationType.NotificationTypeDesc), Resources.Entity_NotificationType_Desc) });
+            repositoryItemLookUpEditRecipientNotificationType.DisplayMember = nameof(NotificationType.NotificationTypeDesc);
+            repositoryItemLookUpEditRecipientNotificationType.Name = "repositoryItemLookUpEditRecipientNotificationType";
+            repositoryItemLookUpEditRecipientNotificationType.NullText = "";
+            repositoryItemLookUpEditRecipientNotificationType.SearchMode = SearchMode.AutoSearch;
+            repositoryItemLookUpEditRecipientNotificationType.ValueMember = nameof(NotificationType.NotificationTypeCode);
+            // 
+            // colRecipientRoleCode
+            // 
+            colRecipientRoleCode.Caption = Resources.Entity_Role_Code;
+            colRecipientRoleCode.ColumnEdit = repositoryItemLookUpEditRole;
+            colRecipientRoleCode.FieldName = "RoleCode";
+            colRecipientRoleCode.Name = "colRecipientRoleCode";
+            colRecipientRoleCode.Visible = true;
+            colRecipientRoleCode.VisibleIndex = 2;
+            colRecipientRoleCode.Width = 180;
+            // 
+            // repositoryItemLookUpEditRole
+            // 
+            repositoryItemLookUpEditRole.AutoHeight = false;
+            repositoryItemLookUpEditRole.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            repositoryItemLookUpEditRole.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo(nameof(DcRole.RoleCode), Resources.Entity_Role_Code), new LookUpColumnInfo(nameof(DcRole.RoleDesc), Resources.Entity_Role_Desc) });
+            repositoryItemLookUpEditRole.DisplayMember = nameof(DcRole.RoleDesc);
+            repositoryItemLookUpEditRole.Name = "repositoryItemLookUpEditRole";
+            repositoryItemLookUpEditRole.NullText = "";
+            repositoryItemLookUpEditRole.SearchMode = SearchMode.AutoSearch;
+            repositoryItemLookUpEditRole.ValueMember = nameof(DcRole.RoleCode);
+            // 
+            // colRecipientStoreCode
+            // 
+            colRecipientStoreCode.Caption = Resources.Entity_CurrAcc_StoreCode;
+            colRecipientStoreCode.ColumnEdit = repositoryItemLookUpEditRecipientStore;
+            colRecipientStoreCode.FieldName = "StoreCode";
+            colRecipientStoreCode.Name = "colRecipientStoreCode";
+            colRecipientStoreCode.Visible = true;
+            colRecipientStoreCode.VisibleIndex = 3;
+            colRecipientStoreCode.Width = 140;
+            // 
+            // repositoryItemLookUpEditRecipientStore
+            // 
+            repositoryItemLookUpEditRecipientStore.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            repositoryItemLookUpEditRecipientStore.AutoHeight = false;
+            repositoryItemLookUpEditRecipientStore.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            repositoryItemLookUpEditRecipientStore.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo(nameof(DcCurrAcc.CurrAccCode), Resources.Entity_CurrAcc_Code), new LookUpColumnInfo(nameof(DcCurrAcc.CurrAccDesc), Resources.Entity_CurrAcc_Desc) });
+            repositoryItemLookUpEditRecipientStore.DisplayMember = nameof(DcCurrAcc.CurrAccDesc);
+            repositoryItemLookUpEditRecipientStore.Name = "repositoryItemLookUpEditRecipientStore";
+            repositoryItemLookUpEditRecipientStore.NullText = Resources.Form_NotificationRecipientRule_AllStores;
+            repositoryItemLookUpEditRecipientStore.SearchMode = SearchMode.AutoSearch;
+            repositoryItemLookUpEditRecipientStore.ValueMember = nameof(DcCurrAcc.CurrAccCode);
+            // 
+            // colRecipientIsEnabled
+            // 
+            colRecipientIsEnabled.Caption = Resources.Common_IsEnabled;
+            colRecipientIsEnabled.ColumnEdit = repositoryItemCheckEditRecipient;
+            colRecipientIsEnabled.FieldName = "IsEnabled";
+            colRecipientIsEnabled.Name = "colRecipientIsEnabled";
+            colRecipientIsEnabled.Visible = true;
+            colRecipientIsEnabled.VisibleIndex = 4;
+            colRecipientIsEnabled.Width = 80;
+            // 
+            // repositoryItemCheckEditRecipient
+            // 
+            repositoryItemCheckEditRecipient.AutoHeight = false;
+            repositoryItemCheckEditRecipient.Name = "repositoryItemCheckEditRecipient";
+            // 
+            // colRecipientCreatedDate
+            // 
+            colRecipientCreatedDate.Caption = Resources.Entity_Base_CreatedDate;
+            colRecipientCreatedDate.FieldName = "CreatedDate";
+            colRecipientCreatedDate.Name = "colRecipientCreatedDate";
+            colRecipientCreatedDate.OptionsColumn.AllowEdit = false;
+            colRecipientCreatedDate.Visible = true;
+            colRecipientCreatedDate.VisibleIndex = 5;
+            colRecipientCreatedDate.Width = 120;
+            // 
+            // colRecipientLastUpdatedDate
+            // 
+            colRecipientLastUpdatedDate.Caption = Resources.Entity_Base_LastUpdatedDate;
+            colRecipientLastUpdatedDate.FieldName = "LastUpdatedDate";
+            colRecipientLastUpdatedDate.Name = "colRecipientLastUpdatedDate";
+            colRecipientLastUpdatedDate.OptionsColumn.AllowEdit = false;
+            colRecipientLastUpdatedDate.Visible = true;
+            colRecipientLastUpdatedDate.VisibleIndex = 6;
+            colRecipientLastUpdatedDate.Width = 120;
+            // 
             // FormNotificationRule
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1180, 700);
-            Controls.Add(gC_NotificationRules);
+            Controls.Add(splitContainerControl1);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
             Name = "FormNotificationRule";
@@ -407,6 +624,10 @@ namespace Foxoft
             Load += FormNotificationRule_Load;
             ((ISupportInitialize)svgImageCollection1).EndInit();
             ((ISupportInitialize)ribbonControl1).EndInit();
+            ((ISupportInitialize)splitContainerControl1.Panel1).EndInit();
+            ((ISupportInitialize)splitContainerControl1.Panel2).EndInit();
+            ((ISupportInitialize)splitContainerControl1).EndInit();
+            splitContainerControl1.ResumeLayout(false);
             ((ISupportInitialize)gC_NotificationRules).EndInit();
             ((ISupportInitialize)notificationRuleBindingSource).EndInit();
             ((ISupportInitialize)gV_NotificationRules).EndInit();
@@ -416,6 +637,13 @@ namespace Foxoft
             ((ISupportInitialize)repositoryItemSpinEditThrottleMinutes).EndInit();
             ((ISupportInitialize)repositoryItemCheckedComboBoxEditChannels).EndInit();
             ((ISupportInitialize)repositoryItemImageComboBoxSeverity).EndInit();
+            ((ISupportInitialize)gC_RecipientRules).EndInit();
+            ((ISupportInitialize)recipientRuleBindingSource).EndInit();
+            ((ISupportInitialize)gV_RecipientRules).EndInit();
+            ((ISupportInitialize)repositoryItemLookUpEditRecipientNotificationType).EndInit();
+            ((ISupportInitialize)repositoryItemLookUpEditRole).EndInit();
+            ((ISupportInitialize)repositoryItemLookUpEditRecipientStore).EndInit();
+            ((ISupportInitialize)repositoryItemCheckEditRecipient).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -430,11 +658,15 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_Refresh;
         private DevExpress.XtraBars.BarButtonItem bBI_Cancel;
         private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
+        private DevExpress.XtraBars.BarButtonItem bBI_NewRecipient;
+        private DevExpress.XtraBars.BarButtonItem bBI_DeleteRecipient;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupRules;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupRecipients;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupData;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupExport;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
+        private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
         private MyGridControl gC_NotificationRules;
         private MyGridView gV_NotificationRules;
         private BindingSource notificationRuleBindingSource;
@@ -457,5 +689,19 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEditThrottleMinutes;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit repositoryItemCheckedComboBoxEditChannels;
         private DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox repositoryItemImageComboBoxSeverity;
+        private MyGridControl gC_RecipientRules;
+        private MyGridView gV_RecipientRules;
+        private BindingSource recipientRuleBindingSource;
+        private DevExpress.XtraGrid.Columns.GridColumn colRecipientRuleId;
+        private DevExpress.XtraGrid.Columns.GridColumn colRecipientNotificationTypeCode;
+        private DevExpress.XtraGrid.Columns.GridColumn colRecipientRoleCode;
+        private DevExpress.XtraGrid.Columns.GridColumn colRecipientStoreCode;
+        private DevExpress.XtraGrid.Columns.GridColumn colRecipientIsEnabled;
+        private DevExpress.XtraGrid.Columns.GridColumn colRecipientCreatedDate;
+        private DevExpress.XtraGrid.Columns.GridColumn colRecipientLastUpdatedDate;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEditRecipientNotificationType;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEditRole;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEditRecipientStore;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEditRecipient;
     }
 }

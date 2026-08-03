@@ -159,7 +159,6 @@ namespace Foxoft
             ACE_NotificationCenter = new AccordionControlElement();
             ACE_NotificationRules = new AccordionControlElement();
             ACE_NotificationTemplates = new AccordionControlElement();
-            ACE_NotificationRecipientRules = new AccordionControlElement();
             ACE_TransferApproval = new AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
@@ -966,7 +965,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_WhatsAppMessageLog, ACE_NotificationCenter, ACE_NotificationRules, ACE_NotificationTemplates, ACE_NotificationRecipientRules, ACE_TransferApproval });
+            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_WhatsAppMessageLog, ACE_NotificationCenter, ACE_NotificationRules, ACE_NotificationTemplates, ACE_TransferApproval });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -1063,12 +1062,6 @@ namespace Foxoft
             ACE_NotificationTemplates.Name = "ACE_NotificationTemplates";
             ACE_NotificationTemplates.Style = ElementStyle.Item;
             ACE_NotificationTemplates.Text = Resources.ERP_ACE_NotificationTemplates;
-            // 
-            // ACE_NotificationRecipientRules
-            // 
-            ACE_NotificationRecipientRules.Name = "ACE_NotificationRecipientRules";
-            ACE_NotificationRecipientRules.Style = ElementStyle.Item;
-            ACE_NotificationRecipientRules.Text = Resources.ERP_ACE_NotificationRecipientRules;
             // 
             // ACE_TransferApproval
             // 
@@ -1219,7 +1212,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationCenter;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationRules;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationTemplates;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationRecipientRules;
         private DevExpress.Utils.VisualEffects.AdornerUIManager adornerUIManagerNotifications;
         private DevExpress.Utils.VisualEffects.Badge notificationBadge;
         private DevExpress.Utils.FlyoutPanel notificationPopupPanel;
