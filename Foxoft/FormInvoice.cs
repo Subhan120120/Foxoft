@@ -2746,6 +2746,9 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
         {
+            if (_isLoading)
+                return;
+
             if (sender is not ButtonEdit editor)
                 return;
 
