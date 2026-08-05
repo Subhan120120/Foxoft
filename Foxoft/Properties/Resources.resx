@@ -2966,6 +2966,9 @@ Do you want to return to the invoice?</value>
   <data name="Form_PaymentDetail_RibbonGroup_Control" xml:space="preserve">
     <value>Control</value>
   </data>
+  <data name="Form_PaymentDetail_RelatedDocuments" xml:space="preserve">
+    <value>Related Documents</value>
+  </data>
   <data name="Form_PaymentDetail_Button_DeletePayment" xml:space="preserve">
     <value>Delete Payment</value>
   </data>

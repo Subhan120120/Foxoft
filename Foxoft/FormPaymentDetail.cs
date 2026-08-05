@@ -228,6 +228,8 @@ namespace Foxoft
             ApplyPaymentGracePeriodLock(updateLayout: false);
 
             LCG_Payment.Enabled = !trPaymentHeader.IsLocked;
+
+            PopulateRelatedDocumentsMenu();
         }
 
         private bool IsPaymentGracePeriodExpired()
@@ -1067,5 +1069,153 @@ namespace Foxoft
 
             LoadPayment(adjacent.PaymentHeaderId);
         }
+
+        #region Related Documents
+
+        private void PopulateRelatedDocumentsMenu()
+        {
+            BSI_RelatedDocuments.ClearLinks();
+
+            if (trPaymentHeader is null || trPaymentHeader.PaymentHeaderId == Guid.Empty)
+                return;
+
+            using var ctx = new subContext();
+
+            // Related invoice
+            if (trPaymentHeader.InvoiceHeaderId.HasValue)
+            {
+                var invoice = ctx.TrInvoiceHeaders
+                    .Include(x => x.DcProcess)
+                    .FirstOrDefault(x => x.InvoiceHeaderId == trPaymentHeader.InvoiceHeaderId.Value);
+
+                if (invoice is not null)
+                {
+                    var item = new BarButtonItem();
+                    string processDesc = invoice.DcProcess?.ProcessDesc ?? invoice.ProcessCode;
+                    string returnMark = invoice.IsReturn ? "-" + Resources.Entity_InvoiceHeader_IsReturn : "";
+                    item.Caption = $"{processDesc}{returnMark} - {invoice.DocumentNumber} ({invoice.DocumentDate:dd.MM.yyyy})";
+                    item.ImageOptions.SvgImage = svgImageCollection1["relatedInvoice"];
+                    item.Tag = new RelatedDocumentTag { DocumentType = "Invoice", DocumentId = invoice.InvoiceHeaderId };
+                    item.ItemClick += BSI_RelatedDocuments_ItemClick;
+                    BSI_RelatedDocuments.AddItem(item);
+                }
+
+                // Sibling payments (other payments for the same invoice)
+                var siblingPayments = ctx.TrPaymentHeaders
+                    .Include(x => x.DcCurrAcc)
+                    .Where(x => x.InvoiceHeaderId == trPaymentHeader.InvoiceHeaderId.Value
+                             && x.PaymentHeaderId != trPaymentHeader.PaymentHeaderId)
+                    .OrderBy(x => x.DocumentDate)
+                    .ThenBy(x => x.DocumentNumber)
+                    .ToList();
+
+                foreach (var sibling in siblingPayments)
+                {
+                    var item = new BarButtonItem();
+                    item.Caption = $"{Resources.Entity_PaymentHeader} - {sibling.DocumentNumber} ({sibling.DocumentDate:dd.MM.yyyy})";
+                    item.ImageOptions.SvgImage = svgImageCollection1["relatedPayment"];
+                    item.Tag = new RelatedDocumentTag { DocumentType = "Payment", DocumentId = sibling.PaymentHeaderId };
+                    item.ItemClick += BSI_RelatedDocuments_ItemClick;
+                    BSI_RelatedDocuments.AddItem(item);
+                }
+            }
+        }
+
+        private void BSI_RelatedDocuments_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.Item.Tag is not RelatedDocumentTag tag)
+                return;
+
+            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+
+            if (tag.DocumentType == "Invoice")
+            {
+                Guid invoiceHeaderId = tag.DocumentId;
+
+                // Check if already open
+                if (formERP is not null)
+                {
+                    foreach (Form child in formERP.MdiChildren)
+                    {
+                        if (child is FormInvoice frm &&
+                            frm.trInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
+                        {
+                            frm.Activate();
+                            return;
+                        }
+                    }
+                }
+
+                TrInvoiceHeader relatedHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+                if (relatedHeader is null)
+                    return;
+
+                string claim = CustomExtensions.GetClaim(relatedHeader.ProcessCode);
+                if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim))
+                {
+                    XtraMessageBox.Show(Resources.Common_AccessDenied);
+                    return;
+                }
+
+                byte[] bytes = CustomExtensions.GetProductTypeArray(relatedHeader.ProcessCode);
+                FormInvoice invoiceFrm = new(relatedHeader.ProcessCode, null, bytes, null, invoiceHeaderId);
+
+                if (formERP is not null)
+                {
+                    invoiceFrm.MdiParent = formERP;
+                    invoiceFrm.WindowState = FormWindowState.Maximized;
+                    invoiceFrm.Show();
+
+                    if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                        formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+                else
+                {
+                    invoiceFrm.Show(this);
+                }
+            }
+            else if (tag.DocumentType == "Payment")
+            {
+                Guid paymentHeaderId = tag.DocumentId;
+
+                // Check if already open
+                if (formERP is not null)
+                {
+                    foreach (Form child in formERP.MdiChildren)
+                    {
+                        if (child is FormPaymentDetail frm &&
+                            frm.trPaymentHeader?.PaymentHeaderId == paymentHeaderId)
+                        {
+                            frm.Activate();
+                            return;
+                        }
+                    }
+                }
+
+                FormPaymentDetail paymentFrm = new(paymentHeaderId);
+
+                if (formERP is not null)
+                {
+                    paymentFrm.MdiParent = formERP;
+                    paymentFrm.WindowState = FormWindowState.Maximized;
+                    paymentFrm.Show();
+
+                    if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                        formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+                else
+                {
+                    paymentFrm.Show(this);
+                }
+            }
+        }
+
+        private class RelatedDocumentTag
+        {
+            public string DocumentType { get; set; }
+            public Guid DocumentId { get; set; }
+        }
+
+        #endregion
     }
 }

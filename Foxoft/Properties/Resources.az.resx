@@ -2966,6 +2966,9 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_PaymentDetail_RibbonGroup_Control" xml:space="preserve">
     <value>Nəzarət</value>
   </data>
+  <data name="Form_PaymentDetail_RelatedDocuments" xml:space="preserve">
+    <value>Əlaqəli Sənədlər</value>
+  </data>
   <data name="Form_PaymentDetail_Button_DeletePayment" xml:space="preserve">
     <value>Ödənişi Sil</value>
   </data>

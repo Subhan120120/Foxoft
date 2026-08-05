@@ -1,4 +1,4 @@
-using Foxoft.Models;
+﻿using Foxoft.Models;
 using Foxoft.Properties;
 
 namespace Foxoft
@@ -57,12 +57,13 @@ namespace Foxoft
             popupMenuPrinters = new DevExpress.XtraBars.PopupMenu(components);
             BBI_Previous = new DevExpress.XtraBars.BarButtonItem();
             BBI_Next = new DevExpress.XtraBars.BarButtonItem();
+            BSI_RelatedDocuments = new DevExpress.XtraBars.BarSubItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Report = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
@@ -151,9 +152,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Reports, BBI_EditPayment, bBI_reportPreview, BBI_ReportPrintFast, BBI_Previous, BBI_Next });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Reports, BBI_EditPayment, bBI_reportPreview, BBI_ReportPrintFast, BBI_Previous, BBI_Next, BSI_RelatedDocuments });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 21;
+            ribbonControl1.MaxItemId = 22;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(899, 158);
@@ -264,6 +265,14 @@ namespace Foxoft
             BBI_Next.Name = "BBI_Next";
             BBI_Next.ItemClick += BBI_Next_ItemClick;
             // 
+            // BSI_RelatedDocuments
+            // 
+            BSI_RelatedDocuments.Caption = Resources.Form_PaymentDetail_RelatedDocuments;
+            BSI_RelatedDocuments.Id = 21;
+            BSI_RelatedDocuments.ImageOptions.ImageUri.Uri = "ConvertTo";
+            BSI_RelatedDocuments.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_RelatedDocuments.ImageOptions.SvgImage");
+            BSI_RelatedDocuments.Name = "BSI_RelatedDocuments";
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, RPG_Report, ribbonPageGroup3, ribbonPageGroup4 });
@@ -277,12 +286,6 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_DeletePayment);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = Resources.Form_PaymentDetail_RibbonGroup_Payment;
-            // 
-            // ribbonPageGroup4
-            // 
-            ribbonPageGroup4.ItemLinks.Add(BBI_EditPayment);
-            ribbonPageGroup4.Name = "ribbonPageGroup4";
-            ribbonPageGroup4.Text = Resources.Form_PaymentDetail_RibbonGroup_Control;
             // 
             // ribbonPageGroup2
             // 
@@ -304,6 +307,13 @@ namespace Foxoft
             ribbonPageGroup3.ItemLinks.Add(BBI_Info);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = Resources.Form_PaymentDetail_RibbonGroup_Info;
+            // 
+            // ribbonPageGroup4
+            // 
+            ribbonPageGroup4.ItemLinks.Add(BBI_EditPayment);
+            ribbonPageGroup4.ItemLinks.Add(BSI_RelatedDocuments);
+            ribbonPageGroup4.Name = "ribbonPageGroup4";
+            ribbonPageGroup4.Text = Resources.Form_PaymentDetail_RibbonGroup_Control;
             // 
             // ribbonStatusBar
             // 
@@ -741,6 +751,7 @@ namespace Foxoft
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
             svgImageCollection1.Add("add", "image://svgimages/icon builder/actions_add.svg");
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
+            svgImageCollection1.Add("relatedInvoice", "image://svgimages/business objects/bo_invoice.svg");
             // 
             // FormPaymentDetail
             // 
@@ -864,5 +875,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_Next;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportPrintFast;
         private DevExpress.XtraBars.PopupMenu popupMenuPrinters;
+        private DevExpress.XtraBars.BarSubItem BSI_RelatedDocuments;
     }
 }
