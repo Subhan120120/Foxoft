@@ -2756,6 +2756,10 @@ namespace Foxoft
 
             string value = editor.Text?.Trim();
 
+            // Dəyər dəyişməyibsə validation çalışmasın
+            if (string.Equals(value, _CurrAccCodeOldValue, StringComparison.OrdinalIgnoreCase))
+                return;
+
             if (string.IsNullOrEmpty(value))
                 return;
 
