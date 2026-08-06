@@ -279,7 +279,6 @@ namespace Foxoft
             }
         }
 
-
         private async void FormInvoice_Shown(object sender, EventArgs e)
         {
             if (isNew)
@@ -3753,6 +3752,9 @@ namespace Foxoft
 
         private void BBI_InvoiceExpenses_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (!EnsureInvoiceSaved())
+                return;
+
             using FormInvoice formInvoice = new("EI", null, new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId, true);
             formInvoice.Name = CustomExtensions.GetClaim("EI");
             formInvoice.WindowState = FormWindowState.Normal;
