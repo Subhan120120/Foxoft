@@ -4089,6 +4089,8 @@ namespace Foxoft
 
                     for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                         gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, salesPersonCode);
+
+                    gV_InvoiceLine.UpdateCurrentRow(); //databazaya yazmaq üçün
                 }
             }
         }
