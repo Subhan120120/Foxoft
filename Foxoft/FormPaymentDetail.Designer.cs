@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Properties;
 
 namespace Foxoft

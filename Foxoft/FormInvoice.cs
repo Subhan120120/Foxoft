@@ -2673,11 +2673,15 @@ namespace Foxoft
         }
 
         private string _CurrAccCodeOldValue;
+
+        private void btnEdit_CurrAccCode_Enter(object sender, EventArgs e)
+        {
+            _CurrAccCodeOldValue = btnEdit_CurrAccCode.EditValue?.ToString();
+        }
+
         private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
         {
-            DcCurrAcc? curr = efMethods.SelectEntityById<DcCurrAcc>(e.OldValue?.ToString());
-            if (curr is null) return;
-            _CurrAccCodeOldValue = curr.CurrAccCode;
+            _CurrAccCodeOldValue = e.OldValue?.ToString();
         }
 
         private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)

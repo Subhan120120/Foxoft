@@ -1290,6 +1290,7 @@ namespace Foxoft
             btnEdit_CurrAccCode.InvalidValue += btnEdit_CurrAccCode_InvalidValue;
             btnEdit_CurrAccCode.EditValueChanged += btnEdit_CurrAccCode_EditValueChanged;
             btnEdit_CurrAccCode.EditValueChanging += btnEdit_CurrAccCode_EditValueChanging;
+            btnEdit_CurrAccCode.Enter += btnEdit_CurrAccCode_Enter;
             btnEdit_CurrAccCode.KeyDown += dataLayoutControls_KeyDown;
             btnEdit_CurrAccCode.Validating += btnEdit_CurrAccCode_Validating;
             // 
