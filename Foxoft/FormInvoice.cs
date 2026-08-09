@@ -746,6 +746,7 @@ namespace Foxoft
 
                 trInvoiceHeader.CashRegisterCode = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId);
                 btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
+                _ValidCurrAccCodeOldValue = trInvoiceHeader.CurrAccCode;
 
                 UpdatePaidLabels();
                 UpdateInstallmentLabels();
@@ -2672,12 +2673,12 @@ namespace Foxoft
             return null;
         }
 
-        private string _CurrAccCodeOldValue;
+        private string _ValidCurrAccCodeOldValue;
         private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
         {
-            DcCurrAcc? curr = efMethods.SelectEntityById<DcCurrAcc>(e.OldValue?.ToString());
-            if (curr is null) return;
-            _CurrAccCodeOldValue = curr.CurrAccCode;
+            //DcCurrAcc? curr = efMethods.SelectEntityById<DcCurrAcc>(e.OldValue?.ToString());
+            //if (curr is null) return;
+            //_CurrAccCodeOldValue = curr.CurrAccCode;
         }
 
         private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
@@ -2688,7 +2689,7 @@ namespace Foxoft
             if (curr is null) return;
 
             // Əgər həqiqətən dəyişməyibsə boşuna iş görmə
-            if (string.Equals(_CurrAccCodeOldValue, curr.CurrAccCode, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(_ValidCurrAccCodeOldValue, curr.CurrAccCode, StringComparison.OrdinalIgnoreCase))
                 return;
 
             trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
@@ -2712,7 +2713,7 @@ namespace Foxoft
             }
 
             // Kart varsa və yeni CurrAccCode kartın CurrAccCode-u ilə fərqlidirsə -> kartı ləğv et
-            if (trInvoiceHeader.LoyaltyCardId is Guid cardId && _CurrAccCodeOldValue is not null)
+            if (trInvoiceHeader.LoyaltyCardId is Guid cardId && _ValidCurrAccCodeOldValue is not null)
             {
                 DcLoyaltyCard? card = efMethods.SelectEntityById<DcLoyaltyCard>(cardId);
 
@@ -2756,8 +2757,9 @@ namespace Foxoft
             string value = editor.Text?.Trim();
 
             // Dəyər dəyişməyibsə validation çalışmasın
-            if (string.Equals(value, _CurrAccCodeOldValue, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(value, _ValidCurrAccCodeOldValue, StringComparison.OrdinalIgnoreCase))
                 return;
+
 
             if (string.IsNullOrEmpty(value))
                 return;
@@ -2840,6 +2842,7 @@ namespace Foxoft
             }
 
 
+            _ValidCurrAccCodeOldValue = value;
             dxErrorProvider1.SetError(editor, string.Empty);
         }
 
