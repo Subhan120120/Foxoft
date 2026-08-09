@@ -37,6 +37,9 @@ namespace Foxoft
 
         private CancellationTokenSource _cts;
 
+        private Guid? _lockedSourceInvoiceId;
+        private readonly Guid _handoverFormInstanceId = Guid.NewGuid();
+
         EfMethods efMethods = new();
 
         public sealed class DeliveryVM
@@ -115,11 +118,28 @@ namespace Foxoft
 
         private void ClearControls()
         {
+            ReleaseSourceInvoiceLock();
+
             deliveryInvoiceHeaderId = Guid.NewGuid();
             deliveryInvoHeader = new TrInvoiceHeader();
 
             gC_DeliveryInvoiceLine.DataSource = null;
             trInvoiceHeadersBindingSource.DataSource = new TrInvoiceHeader() { };
+        }
+
+        private void ReleaseSourceInvoiceLock()
+        {
+            if (_lockedSourceInvoiceId.HasValue)
+            {
+                _lockService.ReleaseLock(
+                    documentType: "HandOver",
+                    documentId: _lockedSourceInvoiceId.Value,
+                    userId: Authorization.CurrAccCode,
+                    machineName: Environment.MachineName,
+                    appInstanceId: _handoverFormInstanceId);
+
+                _lockedSourceInvoiceId = null;
+            }
         }
 
         // class fields
@@ -247,6 +267,7 @@ namespace Foxoft
         private void FormWaybill_FormClosing(object sender, FormClosingEventArgs e)
         {
             _cts?.Cancel();
+            ReleaseSourceInvoiceLock();
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
@@ -469,6 +490,30 @@ namespace Foxoft
                 {
                     if (!efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId))
                     {
+                        // Mənbə qaimə üçün lock əldə etməyə çalış
+                        var lockRes = _lockService.TryAcquireLock(
+                            documentType: "HandOver",
+                            documentId: invoiceHeaderId,
+                            userId: Authorization.CurrAccCode,
+                            machineName: Environment.MachineName,
+                            appInstanceId: _handoverFormInstanceId,
+                            formInstanceId: _handoverFormInstanceId,
+                            clientProcessId: Process.GetCurrentProcess().Id,
+                            timeout: TimeSpan.FromMinutes(30),
+                            reason: "HandOver creation");
+
+                        if (!lockRes.Acquired)
+                        {
+                            XtraMessageBox.Show(
+                                string.Format(Resources.Form_HandOver_InvoiceLockedByOther, lockRes.LockedByName),
+                                Resources.Common_Attention,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        _lockedSourceInvoiceId = invoiceHeaderId;
+
                         string NewDocNum = efMethods.GetNextDocNum(true, processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
 
                         deliveryInvoHeader = new();

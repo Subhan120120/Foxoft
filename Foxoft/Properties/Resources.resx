@@ -5324,4 +5324,8 @@ Send a close request to the document owner?</value>
   <data name="ERP_ACE_NotificationRecipientRules" xml:space="preserve">
     <value>Notification Recipient Rules</value>
   </data>
+  <data name="Form_HandOver_InvoiceLockedByOther" xml:space="preserve">
+    <value>This invoice is currently being processed by {0}.
+Please wait or choose another invoice.</value>
+  </data>
 </root>

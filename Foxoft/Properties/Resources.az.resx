@@ -5324,4 +5324,8 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   <data name="ERP_ACE_NotificationRecipientRules" xml:space="preserve">
     <value>Bildiriş Alıcı Qaydaları</value>
   </data>
+  <data name="Form_HandOver_InvoiceLockedByOther" xml:space="preserve">
+    <value>Bu qaimə hazırda {0} tərəfindən emal olunur.
+Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
+  </data>
 </root>

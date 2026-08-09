@@ -8959,6 +8959,16 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This invoice is currently being processed by {0}.
+        ///Please wait or choose another invoice..
+        /// </summary>
+        public static string Form_HandOver_InvoiceLockedByOther {
+            get {
+                return ResourceManager.GetString("Form_HandOver_InvoiceLockedByOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hierarchy Feature Types.
         /// </summary>
         public static string Form_HierarchyFeatureType_Caption {
