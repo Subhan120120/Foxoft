@@ -125,6 +125,8 @@ namespace Foxoft
 
             gC_DeliveryInvoiceLine.DataSource = null;
             trInvoiceHeadersBindingSource.DataSource = new TrInvoiceHeader() { };
+
+            btn_Ok.Enabled = false;
         }
 
         private void ReleaseSourceInvoiceLock()
@@ -530,6 +532,8 @@ namespace Foxoft
                         deliveryInvoHeader.IsMainTF = true;
 
                         efMethods.InsertEntity(deliveryInvoHeader);
+
+                        btn_Ok.Enabled = true;
 
                         trInvoiceHeadersBindingSource.DataSource = efMethods.SelectInvoiceHeader(invoiceHeaderId);
                     }
