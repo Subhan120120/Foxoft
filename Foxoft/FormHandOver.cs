@@ -127,6 +127,7 @@ namespace Foxoft
             trInvoiceHeadersBindingSource.DataSource = new TrInvoiceHeader() { };
 
             btn_Ok.Enabled = false;
+            btn_Cancel.Enabled = false;
         }
 
         private void ReleaseSourceInvoiceLock()
@@ -534,6 +535,7 @@ namespace Foxoft
                         efMethods.InsertEntity(deliveryInvoHeader);
 
                         btn_Ok.Enabled = true;
+                        btn_Cancel.Enabled = true;
 
                         trInvoiceHeadersBindingSource.DataSource = efMethods.SelectInvoiceHeader(invoiceHeaderId);
                     }
