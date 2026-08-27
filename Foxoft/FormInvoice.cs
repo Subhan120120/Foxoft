@@ -766,6 +766,8 @@ namespace Foxoft
                 }
 
                 PopulateRelatedInvoicesMenu();
+
+                UpdateWhatsAppIcon(invoiceHeaderId);
             }
             finally
             {
@@ -2488,6 +2490,8 @@ namespace Foxoft
                 foreach (string phoneNum in phoneNums)
                     SendWhatsApp(phoneNum, $"Faktura No: {trInvoiceHeader.DocumentNumber}");
             }
+
+            UpdateWhatsAppIcon(trInvoiceHeader.InvoiceHeaderId);
         }
 
         private async Task SendWhatsAppViaEvolutionApi(string number, MemoryStream memoryStream, string documentNumber = null)
@@ -2595,6 +2599,23 @@ namespace Foxoft
             {
                 Debug.Print($"WhatsApp Image save error: {ex.Message}");
                 return null;
+            }
+        }
+
+        private void UpdateWhatsAppIcon(Guid invoiceHeaderId)
+        {
+            try
+            {
+                using var ctx = new subContext();
+                bool isSent = ctx.TrWhatsAppMessageLogs
+                    .Any(x => x.DocumentHeaderId == invoiceHeaderId && x.IsSuccessful);
+
+                string svgKey = isSent ? "whatsapp_sent" : "whatsapp_unsend";
+                bBI_Whatsapp.ImageOptions.SvgImage = svgImageCollection1[svgKey];
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"WhatsApp icon update error: {ex.Message}");
             }
         }
 
