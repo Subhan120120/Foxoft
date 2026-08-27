@@ -2760,7 +2760,6 @@ namespace Foxoft
             if (string.Equals(value, _ValidCurrAccCodeOldValue, StringComparison.OrdinalIgnoreCase))
                 return;
 
-
             if (string.IsNullOrEmpty(value))
                 return;
 

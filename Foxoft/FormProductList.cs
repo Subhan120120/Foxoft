@@ -554,11 +554,27 @@ namespace Foxoft
 
                     if (CustomExtensions.DirectoryExist(productsFolder))
                     {
-                        string path = Path.Combine(productsFolder, dcProduct.ProductCode, dcProduct.ProductCode + ".jpg");
+                        string productDir = Path.Combine(productsFolder, dcProduct.ProductCode);
+
+                        // Clear all cached images for this product
+                        string path = Path.Combine(productDir, dcProduct.ProductCode + ".jpg");
                         if (imageCache.TryGetValue(path, out var oldImg))
                         {
                             oldImg?.Dispose();
                             imageCache.Remove(path);
+                        }
+
+                        // Delete the product's image folder from disk
+                        try
+                        {
+                            if (Directory.Exists(productDir))
+                                Directory.Delete(productDir, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            XtraMessageBox.Show(
+                                string.Format(Resources.Form_ProductList_Message_DeleteImageError, ex.Message),
+                                Resources.Common_ErrorTitle);
                         }
                     }
 

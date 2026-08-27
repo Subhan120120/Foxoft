@@ -3338,6 +3338,9 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_ProductList_Message_NoProductToDelete" xml:space="preserve">
     <value>Silinməli olan məhsul yoxdur.</value>
   </data>
+  <data name="Form_ProductList_Message_DeleteImageError" xml:space="preserve">
+    <value>Məhsul şəkli silinərkən xəta: {0}</value>
+  </data>
   <data name="Form_ProductList_Button_Test" xml:space="preserve">
     <value>Test</value>
   </data>

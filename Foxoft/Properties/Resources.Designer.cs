@@ -11954,6 +11954,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error deleting product image: {0}.
+        /// </summary>
+        public static string Form_ProductList_Message_DeleteImageError {
+            get {
+                return ResourceManager.GetString("Form_ProductList_Message_DeleteImageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to delete this product?
         ///{0}.
         /// </summary>
