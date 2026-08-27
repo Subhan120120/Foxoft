@@ -490,12 +490,25 @@ namespace Foxoft
         {
             if (e.Column == colVariableValueType)
             {
+                GridView view = sender as GridView;
                 string valueType = Convert.ToString(e.Value);
-                if (valueType == "System.Guid")
-                {
-                    GV_ReportVariables.SetRowCellValue(e.RowHandle, colVariableValue, Guid.Empty.ToString());
-                }
+                string defaultValue = GetDefaultValueForType(valueType);
+                view.SetRowCellValue(e.RowHandle, colVariableValue, defaultValue);
             }
+        }
+
+        private string GetDefaultValueForType(string valueType)
+        {
+            return valueType switch
+            {
+                "System.Int32" => "0",
+                "System.Decimal" => "0",
+                "System.Bool" => "false",
+                "System.String" => "",
+                "System.Guid" => Guid.NewGuid().ToString(),
+                "System.DateTime" => DateTime.Now.ToString("yyyy-MM-dd"),
+                _ => ""
+            };
         }
 
         private void gridView1_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
