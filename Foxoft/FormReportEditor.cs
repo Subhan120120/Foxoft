@@ -486,8 +486,16 @@ namespace Foxoft
             newRow.ReportId = dcReport.ReportId;
         }
 
-        private void gridView1_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        private void GV_ReportVariables_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
+            if (e.Column == colVariableValueType)
+            {
+                string valueType = Convert.ToString(e.Value);
+                if (valueType == "System.Guid")
+                {
+                    GV_ReportVariables.SetRowCellValue(e.RowHandle, colVariableValue, Guid.Empty.ToString());
+                }
+            }
         }
 
         private void gridView1_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)

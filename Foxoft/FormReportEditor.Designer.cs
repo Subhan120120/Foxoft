@@ -299,7 +299,7 @@ namespace Foxoft
             GV_ReportVariables.OptionsView.NewItemRowPosition = NewItemRowPosition.Bottom;
             GV_ReportVariables.CustomRowCellEdit += gridView1_CustomRowCellEdit;
             GV_ReportVariables.InitNewRow += gridView1_InitNewRow;
-            GV_ReportVariables.CellValueChanged += gridView1_CellValueChanged;
+            GV_ReportVariables.CellValueChanged += GV_ReportVariables_CellValueChanged;
             GV_ReportVariables.ValidateRow += gridView1_ValidateRow;
             GV_ReportVariables.ValidatingEditor += gridView1_ValidatingEditor;
             // 
