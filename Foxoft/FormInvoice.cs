@@ -357,6 +357,19 @@ namespace Foxoft
 
         private bool EnsureInvoiceSaved()
         {
+            if (trInvoiceHeader is not null && !_lockService.IsLockOwnedByMe("Invoice", trInvoiceHeader.InvoiceHeaderId,
+                Authorization.CurrAccCode, _appInstanceId, _formInstanceId))
+            {
+                _isClosingByLockEvent = true;
+                XtraMessageBox.Show(
+                    Resources.Message_DocumentLockOwnershipLost,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                Close();
+                return false;
+            }
+
             if (Settings.Default.AppSetting.AutoSave)
             {
                 if (!HasUnsavedChanges())
@@ -399,7 +412,8 @@ namespace Foxoft
                     trInvoiceHeader.InvoiceHeaderId,
                     Authorization.CurrAccCode,
                     Environment.MachineName,
-                    _appInstanceId);
+                    _appInstanceId,
+                    _formInstanceId);
             }
 
             dbContext = new subContext();
@@ -418,7 +432,8 @@ namespace Foxoft
                             oldInvoiceHeaderId,
                             Authorization.CurrAccCode,
                             Environment.MachineName,
-                            _appInstanceId);
+                            _appInstanceId,
+                            _formInstanceId);
                 }
             }
             else
@@ -610,7 +625,8 @@ namespace Foxoft
                         trInvoiceHeader.InvoiceHeaderId,
                         Authorization.CurrAccCode,
                         Environment.MachineName,
-                        _appInstanceId);
+                        _appInstanceId,
+                        _formInstanceId);
 
                     trInvoiceHeader = form.trInvoiceHeader;
                     await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
@@ -688,7 +704,8 @@ namespace Foxoft
                     trInvoiceHeader.InvoiceHeaderId,
                     Authorization.CurrAccCode,
                     Environment.MachineName,
-                    _appInstanceId);
+                    _appInstanceId,
+                    _formInstanceId);
 
                 trInvoiceHeader = adjacent;
                 await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
@@ -1825,7 +1842,12 @@ namespace Foxoft
             if (!_lockService.IsLockOwnedByMe("Invoice", trInvoiceHeader.InvoiceHeaderId,
                 Authorization.CurrAccCode, _appInstanceId, _formInstanceId))
             {
-                XtraMessageBox.Show("Sənəd artıq sizin deyil...");
+                _isClosingByLockEvent = true;
+                XtraMessageBox.Show(
+                    Resources.Message_DocumentLockOwnershipLost,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 Close();
                 return false;
             }
@@ -4561,7 +4583,8 @@ namespace Foxoft
                     trInvoiceHeader.InvoiceHeaderId,
                     Authorization.CurrAccCode,
                     Environment.MachineName,
-                    _appInstanceId);
+                    _appInstanceId,
+                    _formInstanceId);
             }
             catch
             {
@@ -4916,6 +4939,19 @@ namespace Foxoft
 
             if (!EnsureInvoiceCanBeChanged())
                 return;
+
+            if (!_lockService.IsLockOwnedByMe("Invoice", trInvoiceHeader.InvoiceHeaderId,
+                Authorization.CurrAccCode, _appInstanceId, _formInstanceId))
+            {
+                _isClosingByLockEvent = true;
+                XtraMessageBox.Show(
+                    Resources.Message_DocumentLockOwnershipLost,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                Close();
+                return;
+            }
 
             if (IsCampaignEnabled)
             {

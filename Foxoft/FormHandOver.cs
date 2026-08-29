@@ -141,7 +141,8 @@ namespace Foxoft
                     documentId: _lockedSourceInvoiceId.Value,
                     userId: Authorization.CurrAccCode,
                     machineName: Environment.MachineName,
-                    appInstanceId: _handoverFormInstanceId);
+                    appInstanceId: _handoverFormInstanceId,
+                    formInstanceId: _handoverFormInstanceId);
 
                 _lockedSourceInvoiceId = null;
             }

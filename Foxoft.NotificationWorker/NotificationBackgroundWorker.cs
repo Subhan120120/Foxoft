@@ -118,7 +118,12 @@ namespace Foxoft.NotificationWorker
                 return new subContext();
 
             DbContextOptionsBuilder<subContext> optionsBuilder = new();
-            optionsBuilder.UseSqlServer(SqlLanguageHelper.GetLocalizedConnectionString(_options.ConnectionString));
+            optionsBuilder.UseSqlServer(
+                SqlLanguageHelper.GetLocalizedConnectionString(_options.ConnectionString),
+                sqlOptions => sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 3,
+                    maxRetryDelay: TimeSpan.FromSeconds(5),
+                    errorNumbersToAdd: null));
             return new subContext(optionsBuilder.Options);
         }
     }

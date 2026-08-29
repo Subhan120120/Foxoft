@@ -369,13 +369,15 @@ namespace Foxoft.AppCode.Service
             Guid documentId,
             string userId,
             string? machineName,
-            Guid appInstanceId)
+            Guid appInstanceId,
+            Guid formInstanceId)
         {
             var deleted = _db.DocumentLocks
                 .Where(x => x.DocumentType == documentType
                          && x.DocumentId == documentId
                          && x.LockedByUserId == userId
-                         && x.AppInstanceId == appInstanceId)
+                         && x.AppInstanceId == appInstanceId
+                         && x.FormInstanceId == formInstanceId)
                 .ExecuteDelete();
 
             if (deleted == 1)
