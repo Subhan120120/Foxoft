@@ -399,9 +399,25 @@ namespace Foxoft
             if (string.IsNullOrEmpty(serialNumberCode))
                 return null;
             using subContext db = new();
+
+            string productCode = db.DcSerialNumbers
+                .Where(x => x.SerialNumberCode == serialNumberCode)
+                .Select(x => x.ProductCode)
+                .FirstOrDefault();
+
+            if (string.IsNullOrEmpty(productCode))
+            {
+                productCode = db.TrInvoiceLines
+                    .Where(x => x.SerialNumberCode == serialNumberCode)
+                    .Select(x => x.ProductCode)
+                    .FirstOrDefault();
+            }
+
+            if (string.IsNullOrEmpty(productCode))
+                return null;
+
             return QueryableSelectProducts(db)
-                                       .Where(x => x.DcSerialNumbers.Any(x => x.SerialNumberCode == serialNumberCode))
-                                       .FirstOrDefault();
+                .FirstOrDefault(x => x.ProductCode == productCode);
         }
 
         public DcProduct SelectProduct(string productCode, byte[] productTypeCode)
@@ -501,15 +517,38 @@ namespace Foxoft
             return products;
         }
 
-        public decimal SelectProductBalance(string productCode, string warehouseCode)
+        public decimal SelectProductBalance(string productCode, string warehouseCode, Guid? excludeLineId = null)
         {
             using subContext db = new();
 
-            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                    .Where(x => x.ProductCode == productCode)
-                                    .Where(x => x.TrInvoiceHeader.WarehouseCode == warehouseCode)
-                                    .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
-                                    .Sum(x => x.QtyIn - x.QtyOut);
+            var query = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                         .Where(x => x.ProductCode == productCode)
+                                         .Where(x => x.TrInvoiceHeader.WarehouseCode == warehouseCode)
+                                         .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode));
+
+            if (excludeLineId.HasValue && excludeLineId.Value != Guid.Empty)
+                query = query.Where(x => x.InvoiceLineId != excludeLineId.Value);
+
+            return query.Sum(x => (decimal?)x.QtyIn - (decimal?)x.QtyOut) ?? 0m;
+        }
+
+        public (decimal QtyIn, decimal QtyOut) SelectSerialNumberInOut(string productCode, string warehouseCode, string serialNumberCode, Guid? excludeLineId = null)
+        {
+            using subContext db = new();
+
+            var query = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                         .Where(x => x.ProductCode == productCode)
+                                         .Where(x => x.SerialNumberCode == serialNumberCode)
+                                         .Where(x => x.TrInvoiceHeader.WarehouseCode == warehouseCode)
+                                         .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode));
+
+            if (excludeLineId.HasValue && excludeLineId.Value != Guid.Empty)
+                query = query.Where(x => x.InvoiceLineId != excludeLineId.Value);
+
+            decimal qtyIn = query.Sum(x => (decimal?)x.QtyIn) ?? 0m;
+            decimal qtyOut = query.Sum(x => (decimal?)x.QtyOut) ?? 0m;
+
+            return (qtyIn, qtyOut);
         }
 
         public decimal SelectProductBalanceSerialNumber(string productCode, string warehouseCode, string serialNumberCode)
@@ -521,7 +560,7 @@ namespace Foxoft
                                     .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                                     .Where(x => x.SerialNumberCode == serialNumberCode)
                                     .Where(x => x.TrInvoiceHeader.WarehouseCode == warehouseCode)
-                                    .Sum(x => x.QtyIn - x.QtyOut);
+                                    .Sum(x => (decimal?)x.QtyIn - (decimal?)x.QtyOut) ?? 0m;
         }
 
         public List<DcProduct> SelectProductsByTypeByFilter(byte[] productTypeArr, bool? isDisabled, CriteriaOperator filterCriteria)

@@ -1102,7 +1102,15 @@ namespace Foxoft
             else if (e.Column == colBarcode)
                 product = efMethods.SelectProductByBarcode(value);
             else if (e.Column == colSerialNumberCode)
+            {
                 product = efMethods.SelectProductBySerialNumber(value);
+                if (product is null)
+                {
+                    string existingProductCode = gV_InvoiceLine.GetRowCellValue(e.RowHandle, col_ProductCode)?.ToString();
+                    if (!string.IsNullOrEmpty(existingProductCode))
+                        product = efMethods.SelectProduct(existingProductCode, productTypeArr);
+                }
+            }
 
             if (product is null)
                 return;
@@ -1217,7 +1225,7 @@ namespace Foxoft
 
             if (IsProductIdentityColumn())
             {
-                var product = ResolveProduct(column, input, out string errorMsg);
+                var product = ResolveProduct(column, input, tr, out string errorMsg);
                 if (product == null)
                 {
                     SetError(errorMsg);
@@ -1268,8 +1276,8 @@ namespace Foxoft
                     return;
                 }
 
-                // Stock check for qty edit: you were passing tr.Qty as delta; keeping same behavior
-                ValidateStock(tr.ProductCode, newQty, qtyDeltaForBalanceCalc: tr.Qty);
+                // Stock check for qty edit
+                ValidateStock(tr.ProductCode, newQty, qtyDeltaForBalanceCalc: 0);
                 if (!e.Valid) return;
 
                 // Return qty cannot be less than existing return operations
@@ -1345,7 +1353,7 @@ namespace Foxoft
                     if (warningProduct != null && warningProduct.BalanceWarningLevel > 0)
                     {
                         string wh = ResolveWarehouse();
-                        decimal remainingBalance = CalcProductBalance(tr, tr.ProductCode, wh, 0) - newQty + tr.Qty;
+                        decimal remainingBalance = CalcProductBalance(tr, tr.ProductCode, wh, 0) - newQty;
                         if (remainingBalance <= warningProduct.BalanceWarningLevel)
                         {
                             alertControl1.Show(this,
@@ -1398,7 +1406,7 @@ namespace Foxoft
             };
         }
 
-        private DcProduct ResolveProduct(GridColumn column, string input, out string errorMsg)
+        private DcProduct ResolveProduct(GridColumn column, string input, TrInvoiceLine tr, out string errorMsg)
         {
             errorMsg = null;
             DcProduct product = null;
@@ -1413,14 +1421,18 @@ namespace Foxoft
             }
             else if (column == colSerialNumberCode)
             {
-                bool exists = efMethods.EntityExists<DcSerialNumber>(input);
-                if (!exists)
+                product = efMethods.SelectProductBySerialNumber(input);
+
+                if (product == null && tr != null && !string.IsNullOrEmpty(tr.ProductCode))
+                {
+                    product = efMethods.SelectProduct(tr.ProductCode, productTypeArr);
+                }
+
+                if (product == null)
                 {
                     errorMsg = Resources.Form_Invoice_SerialNumberNotFound;
                     return null;
                 }
-
-                product = efMethods.SelectProductBySerialNumber(input);
             }
 
             if (product == null)
@@ -1516,15 +1528,27 @@ namespace Foxoft
             //return (decimal)colAmountLoc.SummaryItem.SummaryValue
         }
 
-        private decimal CalcProductBalance(TrInvoiceLine trInvoiceLine, string productCode, string wareHouse, decimal presentQty, string serialNumberOverride = null)
+        private decimal CalcProductBalance(TrInvoiceLine trInvoiceLine, string productCode, string wareHouse, decimal presentQty = 0, string serialNumberOverride = null)
         {
             if (trInvoiceLine is not null && !String.IsNullOrEmpty(productCode))
             {
+                Guid? excludeLineId = trInvoiceLine.InvoiceLineId != Guid.Empty ? trInvoiceLine.InvoiceLineId : null;
+
+                decimal productBalance = efMethods.SelectProductBalance(productCode, wareHouse, excludeLineId);
+
                 string serialNumber = serialNumberOverride ?? trInvoiceLine.SerialNumberCode;
                 if (!String.IsNullOrEmpty(serialNumber))
-                    return efMethods.SelectProductBalanceSerialNumber(productCode, wareHouse, serialNumber) + presentQty;
+                {
+                    var (snIn, snOut) = efMethods.SelectSerialNumberInOut(productCode, wareHouse, serialNumber, excludeLineId);
+
+                    decimal snAvailable = snIn - snOut;
+
+                    return Math.Min(productBalance, Math.Max(0m, snAvailable));
+                }
                 else
-                    return efMethods.SelectProductBalance(productCode, wareHouse) + presentQty;
+                {
+                    return productBalance;
+                }
             }
             else return 0;
         }
@@ -3818,7 +3842,7 @@ namespace Foxoft
                 var trInvoiceLine = gV_InvoiceLine.GetRow(i) as TrInvoiceLine;
                 if (trInvoiceLine != null)
                 {
-                    decimal productBalance = CalcProductBalance(trInvoiceLine, trInvoiceLine.ProductCode, warehouse.EditValue?.ToString(), trInvoiceLine.Qty);
+                    decimal productBalance = CalcProductBalance(trInvoiceLine, trInvoiceLine.ProductCode, warehouse.EditValue?.ToString(), 0);
 
                     if (productBalance < trInvoiceLine.Qty)
                     {
