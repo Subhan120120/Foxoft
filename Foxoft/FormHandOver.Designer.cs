@@ -534,6 +534,7 @@ namespace Foxoft
             // 
             // dataLayoutControl1
             // 
+            dataLayoutControl1.CausesValidation = false;
             dataLayoutControl1.Controls.Add(DocumentNumberTextEdit);
             dataLayoutControl1.Controls.Add(DocumentDateDateEdit);
             dataLayoutControl1.Controls.Add(DescriptionTextEdit);
@@ -554,14 +555,15 @@ namespace Foxoft
             // 
             // DocumentNumberTextEdit
             // 
+            DocumentNumberTextEdit.CausesValidation = false;
             DocumentNumberTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentNumber", true));
             DocumentNumberTextEdit.Location = new Point(131, 12);
             DocumentNumberTextEdit.Name = "DocumentNumberTextEdit";
-            DocumentNumberTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             DocumentNumberTextEdit.Properties.ReadOnly = true;
             DocumentNumberTextEdit.Size = new Size(133, 20);
             DocumentNumberTextEdit.StyleController = dataLayoutControl1;
             DocumentNumberTextEdit.TabIndex = 4;
+            DocumentNumberTextEdit.TabStop = false;
             // 
             // trInvoiceHeadersBindingSource
             // 
@@ -569,6 +571,7 @@ namespace Foxoft
             // 
             // DocumentDateDateEdit
             // 
+            DocumentDateDateEdit.CausesValidation = false;
             DocumentDateDateEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentDate", true));
             DocumentDateDateEdit.EditValue = null;
             DocumentDateDateEdit.Location = new Point(131, 36);
@@ -579,9 +582,11 @@ namespace Foxoft
             DocumentDateDateEdit.Size = new Size(133, 20);
             DocumentDateDateEdit.StyleController = dataLayoutControl1;
             DocumentDateDateEdit.TabIndex = 5;
+            DocumentDateDateEdit.TabStop = false;
             // 
             // DescriptionTextEdit
             // 
+            DescriptionTextEdit.CausesValidation = false;
             DescriptionTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "Description", true));
             DescriptionTextEdit.Location = new Point(387, 36);
             DescriptionTextEdit.Name = "DescriptionTextEdit";
@@ -589,9 +594,11 @@ namespace Foxoft
             DescriptionTextEdit.Size = new Size(602, 20);
             DescriptionTextEdit.StyleController = dataLayoutControl1;
             DescriptionTextEdit.TabIndex = 6;
+            DescriptionTextEdit.TabStop = false;
             // 
             // CurrAccCodeTextEdit
             // 
+            CurrAccCodeTextEdit.CausesValidation = false;
             CurrAccCodeTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "CurrAccCode", true));
             CurrAccCodeTextEdit.Location = new Point(387, 12);
             CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
@@ -599,20 +606,23 @@ namespace Foxoft
             CurrAccCodeTextEdit.Size = new Size(140, 20);
             CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
             CurrAccCodeTextEdit.TabIndex = 7;
+            CurrAccCodeTextEdit.TabStop = false;
             // 
             // StoreCodeTextEdit
             // 
+            StoreCodeTextEdit.CausesValidation = false;
             StoreCodeTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "StoreCode", true));
             StoreCodeTextEdit.Location = new Point(516, 36);
             StoreCodeTextEdit.Name = "StoreCodeTextEdit";
-            StoreCodeTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             StoreCodeTextEdit.Properties.ReadOnly = true;
             StoreCodeTextEdit.Size = new Size(456, 20);
             StoreCodeTextEdit.StyleController = dataLayoutControl1;
             StoreCodeTextEdit.TabIndex = 8;
+            StoreCodeTextEdit.TabStop = false;
             // 
             // CurrAccDescTextEdit
             // 
+            CurrAccDescTextEdit.CausesValidation = false;
             CurrAccDescTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DcCurrAcc.CurrAccDesc", true));
             CurrAccDescTextEdit.Location = new Point(650, 12);
             CurrAccDescTextEdit.MenuManager = ribbonControl1;
@@ -621,6 +631,7 @@ namespace Foxoft
             CurrAccDescTextEdit.Size = new Size(339, 20);
             CurrAccDescTextEdit.StyleController = dataLayoutControl1;
             CurrAccDescTextEdit.TabIndex = 9;
+            CurrAccDescTextEdit.TabStop = false;
             // 
             // ribbonControl1
             // 
@@ -977,6 +988,7 @@ namespace Foxoft
             lCI_InvoiceLine.Size = new Size(1029, 206);
             lCI_InvoiceLine.TextVisible = false;
             // 
+            // 
             // svgImageCollection1
             // 
             svgImageCollection1.Add("quickprint", "image://svgimages/diagramicons/quickprint.svg");
@@ -986,6 +998,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoValidate = AutoValidate.EnableAllowFocusChange;
             ClientSize = new Size(1049, 779);
             Controls.Add(lC_Root);
             Controls.Add(ribbonControl1);

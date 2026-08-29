@@ -128,6 +128,8 @@ namespace Foxoft
 
             btn_Ok.Enabled = false;
             btn_Cancel.Enabled = false;
+
+            gC_Invoice.Focus();
         }
 
         private void ReleaseSourceInvoiceLock()
