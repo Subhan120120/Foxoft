@@ -271,6 +271,8 @@ namespace Foxoft
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
+
+            UpdateWhatsAppIcon(paymentHeaderId);
         }
 
         private static string GetCurrAccDisplayName(DcCurrAcc currAcc)
@@ -450,6 +452,8 @@ namespace Foxoft
                 Clipboard.SetImage(Image.FromStream(memoryStream));
                 sendWhatsApp(phoneNum, GetWhatsAppCaption());
             }
+
+            UpdateWhatsAppIcon(trPaymentHeader.PaymentHeaderId);
         }
 
         private string PaymentText(string newLine)
@@ -723,6 +727,23 @@ namespace Foxoft
             {
                 Debug.Print($"WhatsApp image save error: {ex.Message}");
                 return null;
+            }
+        }
+
+        private void UpdateWhatsAppIcon(Guid paymentHeaderId)
+        {
+            try
+            {
+                using var ctx = new subContext();
+                bool isSent = ctx.TrWhatsAppMessageLogs
+                    .Any(x => x.DocumentHeaderId == paymentHeaderId && x.IsSuccessful);
+
+                string svgKey = isSent ? "whatsapp_sent" : "whatsapp_unsend";
+                bBI_SendWhatsapp.ImageOptions.SvgImage = svgImageCollection1[svgKey];
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"WhatsApp icon update error: {ex.Message}");
             }
         }
 

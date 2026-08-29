@@ -1,4 +1,4 @@
-using Foxoft.Properties;
+﻿using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -57,6 +57,7 @@ namespace Foxoft
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             lbl_CurrAccBalansBefore = new DevExpress.XtraEditors.LabelControl();
             lbl_CurrAccBalansAfter = new DevExpress.XtraEditors.LabelControl();
@@ -112,6 +113,7 @@ namespace Foxoft
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_PaymentLine).BeginInit();
@@ -263,6 +265,11 @@ namespace Foxoft
             ribbonStatusBar.Name = "ribbonStatusBar";
             ribbonStatusBar.Ribbon = ribbon;
             ribbonStatusBar.Size = new Size(899, 24);
+            // 
+            // svgImageCollection1
+            // 
+            svgImageCollection1.Add("whatsapp_unsend", (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgImageCollection1.whatsapp_unsend"));
+            svgImageCollection1.Add("whatsapp_sent", (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgImageCollection1.whatsapp_sent"));
             // 
             // dataLayoutControl1
             // 
@@ -757,6 +764,7 @@ namespace Foxoft
             Text = "Cash Register Transfer";
             ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gC_PaymentLine).EndInit();
@@ -863,6 +871,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_ReportPrintFast;
         private DevExpress.XtraBars.PopupMenu popupMenuPrinters;
         private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
+        private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
     }
 }
