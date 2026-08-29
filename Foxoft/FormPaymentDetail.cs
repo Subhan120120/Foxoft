@@ -230,6 +230,8 @@ namespace Foxoft
             LCG_Payment.Enabled = !trPaymentHeader.IsLocked;
 
             PopulateRelatedDocumentsMenu();
+
+            UpdateWhatsAppIcon(paymentHeaderId);
         }
 
         private bool IsPaymentGracePeriodExpired()
@@ -482,6 +484,8 @@ namespace Foxoft
                 foreach (string phoneNum in phoneNums)
                     sendWhatsApp(phoneNum, $"Ödəniş No: {trPaymentHeader.DocumentNumber}");
             }
+
+            UpdateWhatsAppIcon(trPaymentHeader.PaymentHeaderId);
         }
 
         private string PaymentText(string newLine)
@@ -744,6 +748,23 @@ namespace Foxoft
             {
                 Debug.Print($"WhatsApp image save error: {ex.Message}");
                 return null;
+            }
+        }
+
+        private void UpdateWhatsAppIcon(Guid paymentHeaderId)
+        {
+            try
+            {
+                using var ctx = new subContext();
+                bool isSent = ctx.TrWhatsAppMessageLogs
+                    .Any(x => x.DocumentHeaderId == paymentHeaderId && x.IsSuccessful);
+
+                string svgKey = isSent ? "whatsapp_sent" : "whatsapp_unsend";
+                bBI_SendWhatsapp.ImageOptions.SvgImage = svgImageCollection1[svgKey];
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"WhatsApp icon update error: {ex.Message}");
             }
         }
 

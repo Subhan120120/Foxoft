@@ -752,6 +752,8 @@ namespace Foxoft
             svgImageCollection1.Add("add", "image://svgimages/icon builder/actions_add.svg");
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
             svgImageCollection1.Add("relatedInvoice", "image://svgimages/business objects/bo_invoice.svg");
+            svgImageCollection1.Add("whatsapp_unsend", (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgImageCollection1.whatsapp_unsend"));
+            svgImageCollection1.Add("whatsapp_sent", (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SendWhatsapp.ImageOptions.SvgImage"));
             // 
             // FormPaymentDetail
             // 
