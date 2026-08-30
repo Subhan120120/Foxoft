@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.AppCode;
@@ -92,9 +92,25 @@ namespace Foxoft
 
         private void ApplyAllowedPaymentTypeState()
         {
+            bool hasBonusPaymentClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusPayment");
+
             bool onlyCash = _allowedPaymentTypes?.Count == 1 && _allowedPaymentTypes.Contains(PaymentType.Cash);
             bool onlyCashless = _allowedPaymentTypes?.Count == 1 && _allowedPaymentTypes.Contains(PaymentType.Cashless);
             bool onlyBonus = _allowedPaymentTypes.Contains(PaymentType.Bonus);
+
+            if (!hasBonusPaymentClaim)
+            {
+                txtEdit_Bonus.EditValue = 0m;
+                trPaymentLineBonus.Payment = 0m;
+                lCG_CustomerBonus.Visibility = LayoutVisibility.Never;
+                lCG_CustomerBonus.Enabled = false;
+
+                if (onlyBonus)
+                {
+                    onlyBonus = false;
+                    onlyCash = true;
+                }
+            }
 
             if (onlyCash)
             {
@@ -125,7 +141,7 @@ namespace Foxoft
                 lCG_Cashless.Enabled = true;
                 lCG_CustomerBonus.Enabled = false; // Disable Bonus
             }
-            else if (onlyBonus)
+            else if (onlyBonus && hasBonusPaymentClaim)
             {
                 lCG_Cash.Enabled = false;
                 lCG_Cashless.Enabled = false;
@@ -135,7 +151,7 @@ namespace Foxoft
             {
                 lCG_Cash.Enabled = true;
                 lCG_Cashless.Enabled = true;
-                lCG_CustomerBonus.Enabled = true; // Enable Bonus if both are available
+                lCG_CustomerBonus.Enabled = hasBonusPaymentClaim; // Enable Bonus if both are available
             }
         }
 
@@ -157,6 +173,11 @@ namespace Foxoft
                     break;
 
                 case PaymentType.Bonus:
+                    if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusPayment"))
+                    {
+                        trPaymentLineCash.Payment = absPay;
+                        break;
+                    }
                     var bonusToUse = Math.Min(absPay, availableBonus);
                     var remaining = absPay - bonusToUse;
                     trPaymentLineBonus.Payment = bonusToUse;
@@ -373,6 +394,7 @@ namespace Foxoft
 
             RecalcCashlessCommission();
         }
+
         private void btnEdit_BankAccout_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             object row = lUE_PaymentMethod.Properties.GetDataSourceRowByKeyValue(lUE_PaymentMethod.EditValue);
@@ -395,6 +417,7 @@ namespace Foxoft
 
         private void textEditBonus_Validating(object sender, CancelEventArgs e)
         {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusPayment")) { e.Cancel = true; return; }
             if (trInvoiceHeader.LoyaltyCardId is null) { e.Cancel = true; return; }
             if (trPaymentLineBonus.Payment < 0) { e.Cancel = true; return; }
 

@@ -5415,6 +5415,22 @@ namespace Foxoft.Migrations
                             ClaimDesc = "Bildiriş Şablonları",
                             ClaimTypeId = (byte)1,
                             Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "BonusEarn",
+                            CategoryId = 19,
+                            ClaimDesc = "Bonus Kartı Qazandırma",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "BonusPayment",
+                            CategoryId = 21,
+                            ClaimDesc = "Bonus Kartı ilə Ödəniş",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         });
                 });
 
@@ -6736,6 +6752,22 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 211,
                             ClaimCode = "NotificationTemplates",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 212,
+                            ClaimCode = "BonusEarn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 213,
+                            ClaimCode = "BonusPayment",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

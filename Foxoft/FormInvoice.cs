@@ -3087,6 +3087,10 @@ namespace Foxoft
             if (!currAccHasClaimsEditInvoice)
                 BBI_EditInvoice.Visibility = BarItemVisibility.Never;
 
+            bool currAccHasBonusEarn = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn");
+            if (!currAccHasBonusEarn)
+                BBI_LoyaltyCardInput.Visibility = BarItemVisibility.Never;
+
             if (colProductCost != null)
             {
                 bool currAccHasClaimsColumn = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, $"Column_{nameof(TrInvoiceLine.ProductCost)}");
@@ -4307,6 +4311,12 @@ namespace Foxoft
 
         private void BBI_LoyaltyCardInput_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var result = XtraInputBox.Show("Bonus Kart Daxil Edin:", "Bonus Kart", "");
 
             if (result == null)

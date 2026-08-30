@@ -30,6 +30,10 @@ namespace Foxoft
             }
             else
                 txtEdit_CurrAccCode.EditValue = efMethods.GetNextDocNum(true, "C", "CurrAccCode", "DcCurrAccs", 4);
+
+            bool hasBonusEarn = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn");
+            if (!hasBonusEarn)
+                lCI_CardNum.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)

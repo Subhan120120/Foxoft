@@ -2212,7 +2212,7 @@ namespace Foxoft
             svgImageCollection1.Add("relatedReturn", "image://svgimages/icon builder/actions_rollback.svg");
             svgImageCollection1.Add("relatedDelivery", "image://svgimages/outlook inspired/shipmenttransit.svg");
             svgImageCollection1.Add("whatsapp_unsend", (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgImageCollection1.whatsapp_unsend"));
-            svgImageCollection1.Add("whatsapp_sent", (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Whatsapp.ImageOptions.SvgImage"));
+            svgImageCollection1.Add("whatsapp_sent", (DevExpress.Utils.Svg.SvgImage)resources.GetObject("svgImageCollection1.whatsapp_sent"));
             // 
             // popupMenuInfoPayment
             // 

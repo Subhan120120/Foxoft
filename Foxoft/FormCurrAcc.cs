@@ -1,4 +1,4 @@
-using DevExpress.XtraDataLayout;
+﻿using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.DXErrorProvider;
@@ -38,8 +38,11 @@ namespace Foxoft
             bool currAccHasClaimCreditLimit = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "CurrAccCreditLimit");
             if (!currAccHasClaimCreditLimit)
                 ItemForCreditLimit.Visibility = LayoutVisibility.Never;
-        }
 
+            bool currAccHasBonusEarn = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn");
+            if (!currAccHasBonusEarn)
+                ItemForBonusCardNum.Visibility = LayoutVisibility.Never;
+        }
         public FormCurrAcc(string currAccCode)
             : this()
         {

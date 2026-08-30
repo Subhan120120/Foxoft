@@ -158,6 +158,12 @@ namespace Foxoft
             if (dbContext.ChangeTracker.HasChanges() && !EnsurePaymentCanBeChanged())
                 return false;
 
+            if (trPaymentHeader.TrPaymentLines.Any(x => x.PaymentTypeCode == PaymentType.Bonus) && !efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusPayment"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             try
             {
                 dbContext.SaveChanges();
@@ -822,6 +828,14 @@ namespace Foxoft
             }
 
             PaymentType paymentTypeCode = cashReg.CashRegPaymentTypeCode ?? PaymentType.Cash;
+            if (paymentTypeCode == PaymentType.Bonus && !efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusPayment"))
+            {
+                view.SetRowCellValue(rowHandle, colCashRegisterCode, null);
+                if (showMessage)
+                    XtraMessageBox.Show(Resources.Common_NoPermission, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             int paymentMethodId = efMethods.SelectDefaultPaymentMethodId(paymentTypeCode);
 
             view.SetRowCellValue(rowHandle, colPaymentTypeCode, paymentTypeCode);

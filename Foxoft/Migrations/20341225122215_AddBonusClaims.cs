@@ -5,7 +5,7 @@
 namespace Foxoft.Migrations
 {
     /// <inheritdoc />
-    public partial class AddNotificationTemplatesClaim : Migration
+    public partial class AddBonusClaims : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -13,12 +13,20 @@ namespace Foxoft.Migrations
             migrationBuilder.InsertData(
                 table: "DcClaims",
                 columns: new[] { "ClaimCode", "CategoryId", "ClaimDesc", "ClaimTypeId" },
-                values: new object[] { "NotificationTemplates", 15, "Bildiriş Şablonları", (byte)1 });
+                values: new object[,]
+                {
+                    { "BonusEarn", 19, "Bonus Kartı Qazandırma", (byte)1 },
+                    { "BonusPayment", 21, "Bonus Kartı ilə Ödəniş", (byte)1 }
+                });
 
             migrationBuilder.InsertData(
                 table: "TrRoleClaims",
                 columns: new[] { "RoleClaimId", "ClaimCode", "RoleCode" },
-                values: new object[] { 211, "NotificationTemplates", "Admin" });
+                values: new object[,]
+                {
+                    { 312, "BonusEarn", "Admin" },
+                    { 313, "BonusPayment", "Admin" }
+                });
         }
 
         /// <inheritdoc />
@@ -27,12 +35,22 @@ namespace Foxoft.Migrations
             migrationBuilder.DeleteData(
                 table: "TrRoleClaims",
                 keyColumn: "RoleClaimId",
-                keyValue: 211);
+                keyValue: 212);
+
+            migrationBuilder.DeleteData(
+                table: "TrRoleClaims",
+                keyColumn: "RoleClaimId",
+                keyValue: 213);
 
             migrationBuilder.DeleteData(
                 table: "DcClaims",
                 keyColumn: "ClaimCode",
-                keyValue: "NotificationTemplates");
+                keyValue: "BonusEarn");
+
+            migrationBuilder.DeleteData(
+                table: "DcClaims",
+                keyColumn: "ClaimCode",
+                keyValue: "BonusPayment");
         }
     }
 }

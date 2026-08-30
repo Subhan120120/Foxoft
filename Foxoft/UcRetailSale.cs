@@ -183,6 +183,16 @@ namespace Foxoft
             if (currAccHasClaims)
                 LCI_NewInvoice.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
 
+            bool currAccHasBonusPayment = efMethods.CurrAccHasClaims(
+                Authorization.CurrAccCode,
+                "BonusPayment");
+
+            if (!currAccHasBonusPayment)
+            {
+                lCI_CustomerBonus.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                btn_CustomerBonus.Enabled = false;
+            }
+
             ApplyCampaignVisibility();
         }
 
@@ -289,6 +299,16 @@ namespace Foxoft
                     // ForeColor
                     if (posBtn.ForeColorArgb.HasValue)
                         button.ForeColor = Color.FromArgb(posBtn.ForeColorArgb.Value);
+                }
+
+                bool currAccHasBonusEarn = efMethods.CurrAccHasClaims(
+                    Authorization.CurrAccCode,
+                    "BonusEarn");
+
+                if (!currAccHasBonusEarn)
+                {
+                    lCI_LoyaltyCard.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                    btn_LoyaltyCard.Enabled = false;
                 }
             }
             catch
@@ -651,7 +671,18 @@ namespace Foxoft
             if (sender == btn_Cashless)
                 paymentType = PaymentType.Cashless;
             else if (sender == btn_CustomerBonus)
+            {
+                if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusPayment"))
+                {
+                    XtraMessageBox.Show(
+                        Resources.Common_NoPermission,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
                 paymentType = PaymentType.Bonus;
+            }
 
             IEnumerable<int>? allowedPaymentMethodIds = null;
 
@@ -2326,6 +2357,16 @@ namespace Foxoft
 
         private void Btn_LoyaltyCard_Click(object sender, EventArgs e)
         {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn"))
+            {
+                XtraMessageBox.Show(
+                    Resources.Common_NoPermission,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             string bonusCardNum = Interaction.InputBox(
                 Properties.Resources.BonusCard_EnterNum,
                 Properties.Resources.BonusCard_Title,
