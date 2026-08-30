@@ -468,7 +468,7 @@ namespace Foxoft
             UpdatePaidLabels();
             UpdateInstallmentLabels();
 
-            lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
+            UpdateCurrAccDescription();
 
             trInvoiceHeader.IsReturn = isReturn;
 
@@ -505,6 +505,7 @@ namespace Foxoft
             }
 
             Tag = btnEdit_DocNum.EditValue;
+            _ValidCurrAccCodeOldValue = trInvoiceHeader.CurrAccCode;
             _isSaved = false;
 
             PopulateRelatedInvoicesMenu();
@@ -764,6 +765,7 @@ namespace Foxoft
                 trInvoiceHeader.CashRegisterCode = efMethods.CashRegFromExpense(trInvoiceHeader.InvoiceHeaderId);
                 btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
                 _ValidCurrAccCodeOldValue = trInvoiceHeader.CurrAccCode;
+                UpdateCurrAccDescription();
 
                 UpdatePaidLabels();
                 UpdateInstallmentLabels();
@@ -987,7 +989,7 @@ namespace Foxoft
                 return;
 
             btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-
+            UpdateCurrAccDescription();
         }
 
         private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -2741,6 +2743,21 @@ namespace Foxoft
         }
 
         private string _ValidCurrAccCodeOldValue;
+        private void UpdateCurrAccDescription()
+        {
+            string? currAccCode = btnEdit_CurrAccCode.EditValue?.ToString()?.Trim();
+            if (string.IsNullOrEmpty(currAccCode))
+            {
+                lbl_CurrAccDesc.Text = string.Empty;
+                return;
+            }
+
+            DcCurrAcc? curr = efMethods.SelectEntityById<DcCurrAcc>(currAccCode);
+            lbl_CurrAccDesc.Text = curr is null
+                ? string.Empty
+                : $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}".Trim();
+        }
+
         private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
         {
             //DcCurrAcc? curr = efMethods.SelectEntityById<DcCurrAcc>(e.OldValue?.ToString());
@@ -2750,17 +2767,31 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
         {
+            UpdateCurrAccDescription();
+
             if (trInvoiceHeader is null) return;
 
-            DcCurrAcc? curr = efMethods.SelectEntityById<DcCurrAcc>(btnEdit_CurrAccCode.EditValue?.ToString());
+            string? newCurrAccCode = btnEdit_CurrAccCode.EditValue?.ToString()?.Trim();
+            if (string.IsNullOrEmpty(newCurrAccCode))
+            {
+                trInvoiceHeader.CurrAccCode = null;
+                trInvoiceHeader.CurrAccDesc = null;
+                _ValidCurrAccCodeOldValue = null;
+                return;
+            }
+
+            DcCurrAcc? curr = efMethods.SelectEntityById<DcCurrAcc>(newCurrAccCode);
             if (curr is null) return;
 
-            // Əgər həqiqətən dəyişməyibsə boşuna iş görmə
-            if (string.Equals(_ValidCurrAccCodeOldValue, curr.CurrAccCode, StringComparison.OrdinalIgnoreCase))
-                return;
+            string? oldCurrAccCode = trInvoiceHeader.CurrAccCode;
+            bool hasChanged = !string.Equals(oldCurrAccCode, curr.CurrAccCode, StringComparison.OrdinalIgnoreCase);
 
             trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
-            lbl_CurrAccDesc.Text = $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}";
+            trInvoiceHeader.CurrAccDesc = curr.CurrAccDesc;
+            _ValidCurrAccCodeOldValue = curr.CurrAccCode;
+
+            if (!hasChanged)
+                return;
 
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
             lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
@@ -2780,7 +2811,7 @@ namespace Foxoft
             }
 
             // Kart varsa və yeni CurrAccCode kartın CurrAccCode-u ilə fərqlidirsə -> kartı ləğv et
-            if (trInvoiceHeader.LoyaltyCardId is Guid cardId && _ValidCurrAccCodeOldValue is not null)
+            if (trInvoiceHeader.LoyaltyCardId is Guid cardId && oldCurrAccCode is not null)
             {
                 DcLoyaltyCard? card = efMethods.SelectEntityById<DcLoyaltyCard>(cardId);
 
@@ -3491,18 +3522,7 @@ namespace Foxoft
         private void SyncImportedHeaderEditors(string previousCurrAccCode)
         {
             btnEdit_CurrAccCode.EditValue = trInvoiceHeader.CurrAccCode;
-
-            DcCurrAcc curr = null;
-            if (!string.IsNullOrWhiteSpace(trInvoiceHeader.CurrAccCode))
-            {
-                curr = string.Equals(dcProcess.ProcessCode, "IT", StringComparison.OrdinalIgnoreCase)
-                    ? efMethods.SelectStore(trInvoiceHeader.CurrAccCode)
-                    : efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
-            }
-
-            lbl_CurrAccDesc.Text = curr is null
-                ? string.Empty
-                : $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}";
+            UpdateCurrAccDescription();
 
             if (!string.Equals(previousCurrAccCode, trInvoiceHeader.CurrAccCode, StringComparison.OrdinalIgnoreCase))
                 _pendingPaymentCurrAccUpdate = true;
