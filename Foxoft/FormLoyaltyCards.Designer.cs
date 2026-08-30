@@ -29,6 +29,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLoyaltyCards));
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             BBI_New = new DevExpress.XtraBars.BarButtonItem();
             BBI_Edit = new DevExpress.XtraBars.BarButtonItem();
@@ -73,6 +74,7 @@ namespace Foxoft
             // 
             BBI_New.Caption = "Yeni";
             BBI_New.Id = 1;
+            BBI_New.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_New.ImageOptions.SvgImage");
             BBI_New.Name = "BBI_New";
             BBI_New.ItemClick += BBI_New_ItemClick;
             // 
@@ -80,6 +82,7 @@ namespace Foxoft
             // 
             BBI_Edit.Caption = "Dəyiş";
             BBI_Edit.Id = 2;
+            BBI_Edit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Edit.ImageOptions.SvgImage");
             BBI_Edit.Name = "BBI_Edit";
             BBI_Edit.ItemClick += BBI_Edit_ItemClick;
             // 
@@ -87,6 +90,7 @@ namespace Foxoft
             // 
             BBI_Refresh.Caption = "Yenilə";
             BBI_Refresh.Id = 3;
+            BBI_Refresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Refresh.ImageOptions.SvgImage");
             BBI_Refresh.Name = "BBI_Refresh";
             BBI_Refresh.ItemClick += BBI_Refresh_ItemClick;
             // 
@@ -94,6 +98,7 @@ namespace Foxoft
             // 
             BBI_Delete.Caption = "Sil";
             BBI_Delete.Id = 4;
+            BBI_Delete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Delete.ImageOptions.SvgImage");
             BBI_Delete.Name = "BBI_Delete";
             BBI_Delete.ItemClick += BBI_Delete_ItemClick;
             // 
@@ -134,6 +139,7 @@ namespace Foxoft
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
             gridView1.FocusedRowChanged += gridView1_FocusedRowChanged;
+            gridView1.DoubleClick += gridView1_DoubleClick;
             // 
             // colLoyaltyCardId
             // 

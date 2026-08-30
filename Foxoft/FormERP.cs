@@ -207,6 +207,7 @@ namespace Foxoft
                 case "Attendances": ShowExistForm<FormAttendanceList>(); break;
                 case "PayrollList": ShowExistForm<FormPayrollList>(); break;
                 case "LoyaltyCards": ShowNewForm<FormLoyaltyCards>(); break;
+                case "LoyaltyPrograms": ShowNewForm<FormLoyaltyPrograms>(); break;
                 case "TerminalList": ShowNewForm<FormTerminalList>(); break;
                 case "CrmActivityList": ShowExistForm<FormCrmActivityList>(); break;
                 case "CreditList": ShowExistForm<FormCreditList>(); break;
@@ -320,6 +321,7 @@ namespace Foxoft
             this.ACE_Attendances.Name = "Attendances";
             this.ACE_PayrollList.Name = "PayrollList";
             this.ACE_LoyaltyCards.Name = "LoyaltyCards";
+            this.ACE_LoyaltyPrograms.Name = "LoyaltyPrograms";
             this.ACE_TerminalList.Name = "TerminalList";
             this.ACE_CrmActivityList.Name = "CrmActivityList";
             this.ACE_CreditList.Name = "CreditList";

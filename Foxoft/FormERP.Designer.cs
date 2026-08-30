@@ -132,6 +132,7 @@ namespace Foxoft
             ACE_CurrAccFeatureType = new AccordionControlElement();
             ACE_InvoiceLineFeatureType = new AccordionControlElement();
             ACE_LoyaltyCards = new AccordionControlElement();
+            ACE_LoyaltyPrograms = new AccordionControlElement();
             ACE_CampaignList = new AccordionControlElement();
             aCE_HumanResource = new AccordionControlElement();
             ACE_Departments = new AccordionControlElement();
@@ -812,7 +813,7 @@ namespace Foxoft
             // 
             // aCE_Operation
             // 
-            aCE_Operation.Elements.AddRange(new AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_InvoiceLineFeatureType, ACE_LoyaltyCards, ACE_CampaignList });
+            aCE_Operation.Elements.AddRange(new AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_InvoiceLineFeatureType, ACE_LoyaltyCards, ACE_LoyaltyPrograms, ACE_CampaignList });
             aCE_Operation.Expanded = true;
             aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
             aCE_Operation.Name = "aCE_Operation";
@@ -877,6 +878,13 @@ namespace Foxoft
             ACE_LoyaltyCards.Name = "ACE_LoyaltyCards";
             ACE_LoyaltyCards.Style = ElementStyle.Item;
             ACE_LoyaltyCards.Text = "Bonus Kartlar";
+            // 
+            // ACE_LoyaltyPrograms
+            // 
+            ACE_LoyaltyPrograms.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_LoyaltyCards.ImageOptions.SvgImage");
+            ACE_LoyaltyPrograms.Name = "ACE_LoyaltyPrograms";
+            ACE_LoyaltyPrograms.Style = ElementStyle.Item;
+            ACE_LoyaltyPrograms.Text = Resources.ERP_ACE_LoyaltyPrograms;
             // 
             // ACE_CampaignList
             // 
@@ -1201,6 +1209,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator11;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PayrollList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_LoyaltyCards;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_LoyaltyPrograms;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_TerminalList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CampaignList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CrmActivityList;

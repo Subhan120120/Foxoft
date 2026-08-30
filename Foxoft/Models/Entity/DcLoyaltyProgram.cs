@@ -1,4 +1,4 @@
-﻿// File: Models/Dc/DcLoyaltyProgram.cs
+// File: Models/Dc/DcLoyaltyProgram.cs
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace Foxoft.Models
         public bool IsActive { get; set; } = true;
 
         [StringLength(200)]
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
         public virtual ICollection<DcLoyaltyCard> DcLoyaltyCards { get; set; } = new HashSet<DcLoyaltyCard>();
     }

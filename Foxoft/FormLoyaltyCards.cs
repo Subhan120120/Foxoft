@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraBars.Ribbon;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +30,7 @@ namespace Foxoft
             {
                 var loyaltyCards = context.DcLoyaltyCards
                     .Include(lc => lc.DcCurrAcc)
+                    .Include(lc => lc.DcLoyaltyProgram)
                     .ToList();
                 dcLoyaltyCardBindingSource.DataSource = loyaltyCards;
             }
@@ -37,14 +38,23 @@ namespace Foxoft
 
         private void BBI_New_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            FormCommon<DcLoyaltyCard> form = new FormCommon<DcLoyaltyCard>("", true, nameof(DcLoyaltyCard.LoyaltyCardId));
-            form.ShowDialog();
+            using FormLoyaltyCard form = new();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadData();
+            }
         }
 
         private void BBI_Edit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            FormCommon<DcLoyaltyCard> form = new ("", false, nameof(DcLoyaltyCard.LoyaltyCardId), dcLoyaltyCard.LoyaltyCardId.ToString());
-            form.ShowDialog();
+            if (dcLoyaltyCard == null)
+                return;
+
+            using FormLoyaltyCard form = new(dcLoyaltyCard.LoyaltyCardId);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadData();
+            }
         }
 
         private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
@@ -55,6 +65,14 @@ namespace Foxoft
             }
             else
                 dcLoyaltyCard = null;
+        }
+
+        private void gridView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (dcLoyaltyCard != null)
+            {
+                BBI_Edit.PerformClick();
+            }
         }
 
         private void BBI_Refresh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

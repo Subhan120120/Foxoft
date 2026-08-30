@@ -814,6 +814,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ChangePriceCI", ClaimDesc = "Sayım Artırma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "LoyaltyCards", ClaimDesc = "Bonus Kartlar", ClaimTypeId = 1, CategoryId = 19 },
+                new DcClaim { ClaimCode = "LoyaltyPrograms", ClaimDesc = "Loyallıq Proqramları", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "CreditList", ClaimDesc = "Kredit Əməliyyatları", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "CurrencyList", ClaimDesc = "Valyuta Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "PaymentMethodList", ClaimDesc = "Ödəniş Üsulları Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
@@ -953,7 +954,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 210, RoleCode = "Admin", ClaimCode = "NotificationRules" },
                 new TrRoleClaim { RoleClaimId = 211, RoleCode = "Admin", ClaimCode = "NotificationTemplates" },
                 new TrRoleClaim { RoleClaimId = 212, RoleCode = "Admin", ClaimCode = "BonusEarn" },
-                new TrRoleClaim { RoleClaimId = 213, RoleCode = "Admin", ClaimCode = "BonusPayment" }
+                new TrRoleClaim { RoleClaimId = 213, RoleCode = "Admin", ClaimCode = "BonusPayment" },
+                new TrRoleClaim { RoleClaimId = 214, RoleCode = "Admin", ClaimCode = "LoyaltyPrograms" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

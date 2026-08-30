@@ -5331,4 +5331,115 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
     <value>Bu qaimə hazırda {0} tərəfindən emal olunur.
 Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
+  <data name="Form_LoyaltyCard_Title" xml:space="preserve">
+    <value>Loyallıq Kartı</value>
+  </data>
+  <data name="Form_LoyaltyCard_Tab_Details" xml:space="preserve">
+    <value>Əsas Məlumatlar</value>
+  </data>
+  <data name="Form_LoyaltyCard_Tab_Transactions" xml:space="preserve">
+    <value>Əməliyyat Tarixçəsi</value>
+  </data>
+  <data name="Form_LoyaltyCard_Group_General" xml:space="preserve">
+    <value>Kart Məlumatları</value>
+  </data>
+  <data name="Form_LoyaltyCard_Group_Customer" xml:space="preserve">
+    <value>Müştəri Məlumatları</value>
+  </data>
+  <data name="Form_LoyaltyCard_CustomerName" xml:space="preserve">
+    <value>Müştəri Adı</value>
+  </data>
+  <data name="Form_LoyaltyCard_BonusBalance" xml:space="preserve">
+    <value>Cari Bonus Balansı</value>
+  </data>
+  <data name="Form_LoyaltyCard_GenerateCardNumber" xml:space="preserve">
+    <value>Avtomatik Yarat</value>
+  </data>
+  <data name="Form_LoyaltyCard_CardNumberRequired" xml:space="preserve">
+    <value>Kart nömrəsi daxil edilməlidir.</value>
+  </data>
+  <data name="Form_LoyaltyCard_CustomerRequired" xml:space="preserve">
+    <value>Müştəri seçilməlidir.</value>
+  </data>
+  <data name="Form_LoyaltyCard_CardNumberExists" xml:space="preserve">
+    <value>Bu kart nömrəsi artıq mövcuddur.</value>
+  </data>
+  <data name="Entity_DcLoyaltyCard_LoyaltyCardId" xml:space="preserve">
+    <value>Kart ID</value>
+  </data>
+  <data name="Entity_DcLoyaltyCard_CardNumber" xml:space="preserve">
+    <value>Kart Nömrəsi</value>
+  </data>
+  <data name="Entity_DcLoyaltyCard_CurrAccCode" xml:space="preserve">
+    <value>Müştəri Kodu</value>
+  </data>
+  <data name="Entity_DcLoyaltyCard_LoyaltyProgramId" xml:space="preserve">
+    <value>Loyallıq Proqramı</value>
+  </data>
+  <data name="Entity_DcLoyaltyCard_IsActive" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="Entity_DcLoyaltyCard_Note" xml:space="preserve">
+    <value>Qeyd</value>
+  </data>
+  <data name="Entity_TrLoyaltyTxn_DocumentDate" xml:space="preserve">
+    <value>Tarix</value>
+  </data>
+  <data name="Entity_TrLoyaltyTxn_TxnType" xml:space="preserve">
+    <value>Əməliyyat Növü</value>
+  </data>
+  <data name="Entity_TrLoyaltyTxn_Amount" xml:space="preserve">
+    <value>Məbləğ / Bonus</value>
+  </data>
+  <data name="Entity_TrLoyaltyTxn_ExpireAt" xml:space="preserve">
+    <value>Bitmə Tarixi</value>
+  </data>
+  <data name="Form_LoyaltyProgram_Title" xml:space="preserve">
+    <value>Loyallıq Proqramı</value>
+  </data>
+  <data name="Form_LoyaltyPrograms_Title" xml:space="preserve">
+    <value>Loyallıq Proqramları</value>
+  </data>
+  <data name="Form_LoyaltyProgram_Tab_Details" xml:space="preserve">
+    <value>Əsas Məlumatlar</value>
+  </data>
+  <data name="Form_LoyaltyProgram_Tab_Cards" xml:space="preserve">
+    <value>Bağlı Kartlar</value>
+  </data>
+  <data name="Form_LoyaltyProgram_NameRequired" xml:space="preserve">
+    <value>Proqram adı daxil edilməlidir.</value>
+  </data>
+  <data name="Form_LoyaltyProgram_NameExists" xml:space="preserve">
+    <value>Bu adda loyallıq proqramı artıq mövcuddur.</value>
+  </data>
+  <data name="Form_LoyaltyProgram_InvalidPercent" xml:space="preserve">
+    <value>Faiz 0 ilə 100 arasında olmalıdır.</value>
+  </data>
+  <data name="Form_LoyaltyProgram_DeleteHasCards" xml:space="preserve">
+    <value>Bu proqrama bağlı kartlar mövcuddur və silinə bilməz.</value>
+  </data>
+  <data name="Entity_DcLoyaltyProgram_Name" xml:space="preserve">
+    <value>Proqramın Adı</value>
+  </data>
+  <data name="Entity_DcLoyaltyProgram_EarnPercent" xml:space="preserve">
+    <value>Bonus Qazanma Faizi (%)</value>
+  </data>
+  <data name="Entity_DcLoyaltyProgram_ExpireDays" xml:space="preserve">
+    <value>Bonusun Yanma Müddəti (Gün)</value>
+  </data>
+  <data name="Entity_DcLoyaltyProgram_MaxRedeemPercent" xml:space="preserve">
+    <value>Maksimum Ödəniş Faizi (%)</value>
+  </data>
+  <data name="Entity_DcLoyaltyProgram_IsActive" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="Entity_DcLoyaltyProgram_Note" xml:space="preserve">
+    <value>Qeyd</value>
+  </data>
+  <data name="Entity_DcLoyaltyProgram_CardCount" xml:space="preserve">
+    <value>Kart Sayı</value>
+  </data>
+  <data name="ERP_ACE_LoyaltyPrograms" xml:space="preserve">
+    <value>Loyallıq Proqramları</value>
+  </data>
 </root>
