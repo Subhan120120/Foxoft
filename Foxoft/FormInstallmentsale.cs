@@ -1,4 +1,4 @@
-﻿using DevExpress.Data;
+using DevExpress.Data;
 using DevExpress.Data.Filtering;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;

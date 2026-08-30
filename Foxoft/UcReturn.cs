@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils.Menu;
+using DevExpress.Utils.Menu;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;

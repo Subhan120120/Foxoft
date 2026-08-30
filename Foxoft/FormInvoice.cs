@@ -2876,7 +2876,8 @@ namespace Foxoft
         {
             UpdateCurrAccDescription();
 
-            if (trInvoiceHeader is null) return;
+            if (_isLoading || trInvoiceHeader is null)
+                return;
 
             string? newCurrAccCode = btnEdit_CurrAccCode.EditValue?.ToString()?.Trim();
             if (string.IsNullOrEmpty(newCurrAccCode))
