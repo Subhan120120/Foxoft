@@ -2883,6 +2883,9 @@ namespace Foxoft
             {
                 trInvoiceHeader.CurrAccCode = null;
                 trInvoiceHeader.CurrAccDesc = null;
+                lUE_ToWarehouseCode.Properties.DataSource = null;
+                trInvoiceHeader.ToWarehouseCode = null;
+                lUE_ToWarehouseCode.EditValue = null;
                 return;
             }
 
@@ -2895,25 +2898,34 @@ namespace Foxoft
             trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
             trInvoiceHeader.CurrAccDesc = curr.CurrAccDesc;
 
-            if (!hasChanged)
-                return;
-
-            List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
+            List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(curr.CurrAccCode);
             lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
 
-            if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
-                trInvoiceHeader.ToWarehouseCode = null;
+            string? currentToWarehouseCode = trInvoiceHeader.ToWarehouseCode;
 
-            if (dcWarehouses is not null)
+            if (!string.IsNullOrWhiteSpace(currentToWarehouseCode)
+                && dcWarehouses.Any(x => x.WarehouseCode == currentToWarehouseCode))
             {
-                DcWarehouse dcWarehouse = dcWarehouses.FirstOrDefault(x => x.IsDefault == true);
+                lUE_ToWarehouseCode.EditValue = currentToWarehouseCode;
+            }
+            else
+            {
+                DcWarehouse? defaultWarehouse = dcWarehouses?.FirstOrDefault(x => x.IsDefault == true);
 
-                if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
+                if (defaultWarehouse is not null)
                 {
-                    trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
-                    //lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                    trInvoiceHeader.ToWarehouseCode = defaultWarehouse.WarehouseCode;
+                    lUE_ToWarehouseCode.EditValue = defaultWarehouse.WarehouseCode;
+                }
+                else
+                {
+                    trInvoiceHeader.ToWarehouseCode = null;
+                    lUE_ToWarehouseCode.EditValue = null;
                 }
             }
+
+            if (!hasChanged)
+                return;
 
             // Kart varsa və yeni CurrAccCode kartın CurrAccCode-u ilə fərqlidirsə -> kartı ləğv et
             if (trInvoiceHeader.LoyaltyCardId is Guid cardId && oldCurrAccCode is not null)
@@ -3721,20 +3733,25 @@ namespace Foxoft
             if (defaultWarehouse is not null)
             {
                 trInvoiceHeader.WarehouseCode = defaultWarehouse.WarehouseCode;
-                //lUE_WarehouseCode.EditValue = defaultWarehouse.WarehouseCode;
+                lUE_WarehouseCode.EditValue = defaultWarehouse.WarehouseCode;
+            }
+            else
+            {
+                trInvoiceHeader.WarehouseCode = null;
+                lUE_WarehouseCode.EditValue = null;
             }
         }
 
         private void lUE_WarehouseCode_EditValueChanged(object sender, EventArgs e)
         {
-            //if (trInvoiceHeader is not null)
-            //    trInvoiceHeader.WarehouseCode = lUE_WarehouseCode.EditValue?.ToString();
+            if (trInvoiceHeader is not null)
+                trInvoiceHeader.WarehouseCode = lUE_WarehouseCode.EditValue?.ToString();
         }
 
         private void lUE_ToWarehouseCode_EditValueChanged(object sender, EventArgs e)
         {
-            //if (trInvoiceHeader is not null)
-            //    trInvoiceHeader.ToWarehouseCode = lUE_ToWarehouseCode.EditValue?.ToString();
+            if (trInvoiceHeader is not null)
+                trInvoiceHeader.ToWarehouseCode = lUE_ToWarehouseCode.EditValue?.ToString();
         }
 
         private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
