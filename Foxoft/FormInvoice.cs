@@ -991,6 +991,8 @@ namespace Foxoft
 
             btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
             UpdateCurrAccDescription();
+            btnEdit_CurrAccCode.Focus();
+            btnEdit_CurrAccCode.DoValidate();
         }
 
         private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -1145,12 +1147,12 @@ namespace Foxoft
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
         {
-            decimal totalNetAmount = CalcNetAmountSummmaryValue();
-            if (CheckCreditLimitExceeded(trInvoiceHeader?.CurrAccCode, totalNetAmount, out _, out _))
-            {
-                e.Valid = false;
-                e.ErrorText = Resources.Form_Invoice_CreditLimitExceeded;
-            }
+            //decimal totalNetAmount = CalcNetAmountSummmaryValue();
+            //if (CheckCreditLimitExceeded(trInvoiceHeader?.CurrAccCode, totalNetAmount, out _, out _))
+            //{
+            //    e.Valid = false;
+            //    e.ErrorText = Resources.Form_Invoice_CreditLimitExceeded;
+            //}
         }
 
         private void gV_InvoiceLine_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
@@ -2881,7 +2883,6 @@ namespace Foxoft
             {
                 trInvoiceHeader.CurrAccCode = null;
                 trInvoiceHeader.CurrAccDesc = null;
-                _ValidCurrAccCodeOldValue = null;
                 return;
             }
 
@@ -2893,7 +2894,6 @@ namespace Foxoft
 
             trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
             trInvoiceHeader.CurrAccDesc = curr.CurrAccDesc;
-            _ValidCurrAccCodeOldValue = curr.CurrAccCode;
 
             if (!hasChanged)
                 return;
