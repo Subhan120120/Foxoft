@@ -77,7 +77,8 @@ namespace Foxoft
                 {
                     _currAccBalanceBefore = Math.Round(
                         efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode,
-                            trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime)), 2);
+                            trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime),
+                            trInvoiceHeader.InvoiceHeaderId), 2);
                     _currAccBalanceCalculated = true;
                 }
                 return _currAccBalanceBefore;
@@ -1144,10 +1145,18 @@ namespace Foxoft
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
         {
+            decimal totalNetAmount = CalcNetAmountSummmaryValue();
+            if (CheckCreditLimitExceeded(trInvoiceHeader?.CurrAccCode, totalNetAmount, out _, out _))
+            {
+                e.Valid = false;
+                e.ErrorText = Resources.Form_Invoice_CreditLimitExceeded;
+            }
         }
 
         private void gV_InvoiceLine_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
         {
+            e.ExceptionMode = ExceptionMode.DisplayError;
+            e.WindowCaption = Resources.Common_Attention;
         }
 
         private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
@@ -1284,6 +1293,20 @@ namespace Foxoft
                 ValidateStock(product.ProductCode, tr.Qty, qtyDeltaForBalanceCalc: 0, serialNumberCode: serialNumberForBalance);
                 if (!e.Valid) return;
 
+                // Credit limit check for product entry
+                decimal priceProduct = GetProductPriceByProcess(product);
+                decimal oldLineNet = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc) ?? 0);
+                decimal qty = tr.Qty != 0 ? tr.Qty : 1m;
+                decimal disc = tr.PosDiscount;
+                decimal newLineNet = qty * (priceProduct - (priceProduct * disc / 100));
+                decimal projectedInvoiceTotal = CalcNetAmountSummmaryValue() - oldLineNet + newLineNet;
+
+                if (CheckCreditLimitExceeded(trInvoiceHeader?.CurrAccCode, projectedInvoiceTotal, out _, out _))
+                {
+                    SetError(Resources.Form_Invoice_CreditLimitExceeded);
+                    return;
+                }
+
                 return;
             }
 
@@ -1345,22 +1368,17 @@ namespace Foxoft
                     return;
                 }
 
-                // Credit limit check (kept as-is, but now uses newQty)
-                if (!string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode)
-                    && new[] { "RP", "WP", "RS", "WS", "IS" }.Contains(trInvoiceHeader.ProcessCode))
-                {
-                    bool dirIn = Convert.ToBoolean(CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode));
-                    if ((!trInvoiceHeader.IsReturn && !dirIn) || (trInvoiceHeader.IsReturn && dirIn))
-                    {
-                        DcCurrAcc dc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
-                        decimal currAccBalance = CalcCurrAccCreditBalance(Convert.ToInt32(newQty));
+                // Credit limit check
+                decimal oldLineNet = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc) ?? 0);
+                decimal price = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colPriceLoc) ?? 0);
+                decimal disc = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(col_PosDiscount) ?? 0);
+                decimal newLineNet = newQty * (price - (price * disc / 100));
+                decimal projectedInvoiceTotal = CalcNetAmountSummmaryValue() - oldLineNet + newLineNet;
 
-                        if (Math.Abs(currAccBalance) > dc.CreditLimit && dc.CreditLimit != 0 && Convert.ToInt32(newQty) != 0)
-                        {
-                            SetError(Resources.Form_Invoice_CreditLimitExceeded);
-                            return;
-                        }
-                    }
+                if (CheckCreditLimitExceeded(trInvoiceHeader?.CurrAccCode, projectedInvoiceTotal, out _, out _))
+                {
+                    SetError(Resources.Form_Invoice_CreditLimitExceeded);
+                    return;
                 }
 
                 // Stock balance warning notification
@@ -1381,6 +1399,52 @@ namespace Foxoft
                                 "", (Image)null, null);
                         }
                     }
+                }
+
+                return;
+            }
+
+            if (column == col_Price || column == colPriceLoc)
+            {
+                if (!decimal.TryParse(e.Value?.ToString(), out decimal newPrice))
+                {
+                    SetError(Resources.Common_InvalidNumber);
+                    return;
+                }
+
+                decimal oldLineNet = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc) ?? 0);
+                decimal qty = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colQty) ?? 0);
+                decimal disc = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(col_PosDiscount) ?? 0);
+                decimal newLineNet = qty * (newPrice - (newPrice * disc / 100));
+                decimal projectedInvoiceTotal = CalcNetAmountSummmaryValue() - oldLineNet + newLineNet;
+
+                if (CheckCreditLimitExceeded(trInvoiceHeader?.CurrAccCode, projectedInvoiceTotal, out _, out _))
+                {
+                    SetError(Resources.Form_Invoice_CreditLimitExceeded);
+                    return;
+                }
+
+                return;
+            }
+
+            if (column == col_PosDiscount)
+            {
+                if (!decimal.TryParse(e.Value?.ToString(), out decimal newDisc))
+                {
+                    SetError(Resources.Common_InvalidNumber);
+                    return;
+                }
+
+                decimal oldLineNet = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc) ?? 0);
+                decimal qty = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colQty) ?? 0);
+                decimal price = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colPriceLoc) ?? 0);
+                decimal newLineNet = qty * (price - (price * newDisc / 100));
+                decimal projectedInvoiceTotal = CalcNetAmountSummmaryValue() - oldLineNet + newLineNet;
+
+                if (CheckCreditLimitExceeded(trInvoiceHeader?.CurrAccCode, projectedInvoiceTotal, out _, out _))
+                {
+                    SetError(Resources.Form_Invoice_CreditLimitExceeded);
+                    return;
                 }
 
                 return;
@@ -1502,17 +1566,47 @@ namespace Foxoft
             e.WindowCaption = Resources.Common_Attention;
         }
 
-        private decimal CalcCurrAccCreditBalance(int eValue)
+        private bool IsCreditLimitSensitiveProcess()
         {
-            object objPriceLoc = gV_InvoiceLine.GetFocusedRowCellValue(colPriceLoc);
-            decimal newNetAmountLoc = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
-            decimal oldNetAmountLoc = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc));
+            if (trInvoiceHeader is null) return false;
+            bool? dirIn = CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode, trInvoiceHeader.IsReturn);
+            return dirIn == false;
+        }
 
-            decimal newSummaryValue = newNetAmountLoc - oldNetAmountLoc; // + oldSummaryValue;
+        private bool CheckCreditLimitExceeded(string? currAccCode, decimal projectedInvoiceTotal, out decimal projectedBalance, out decimal creditLimit)
+        {
+            projectedBalance = 0;
+            creditLimit = 0;
 
-            decimal balanceAfter = CurrAccBalanceBefore - newSummaryValue;
+            if (string.IsNullOrWhiteSpace(currAccCode) || !IsCreditLimitSensitiveProcess())
+                return false;
 
-            return balanceAfter;
+            DcCurrAcc curr = efMethods.SelectCurrAcc(currAccCode);
+            if (curr is null || curr.CreditLimit <= 0)
+                return false;
+
+            creditLimit = curr.CreditLimit;
+            decimal balanceBefore = efMethods.SelectCurrAccBalance(
+                currAccCode,
+                trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime),
+                trInvoiceHeader.InvoiceHeaderId);
+
+            projectedBalance = balanceBefore - projectedInvoiceTotal;
+            return projectedBalance < -creditLimit;
+        }
+
+        private decimal GetProductPriceByProcess(DcProduct product)
+        {
+            if (product is null) return 0m;
+            return Settings.Default.AppSetting.UsePriceList
+                ? efMethods.SelectPriceByProcess(dcProcess.ProcessCode, product.ProductCode)
+                : dcProcess.ProcessCode switch
+                {
+                    "RP" or "CI" or "CO" => product.PurchasePrice,
+                    "RS" => product.RetailPrice,
+                    "WS" => product.WholesalePrice,
+                    _ => 0m
+                };
         }
 
         private decimal CalcNetAmountSummmaryValue()
@@ -1864,6 +1958,17 @@ namespace Foxoft
 
             if (IsInstallmentProcess())
                 EnsureInstallment();
+
+            decimal totalInvoiceAmount = CalcNetAmountSummmaryValue();
+            if (CheckCreditLimitExceeded(trInvoiceHeader.CurrAccCode, totalInvoiceAmount, out _, out _))
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_Invoice_CreditLimitExceeded,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return false;
+            }
 
             List<(string ProductCode, string WarehouseCode)> stockWarningTargets = GetInvoiceStockWarningTargets();
 
@@ -2898,9 +3003,7 @@ namespace Foxoft
                 }
 
                 decimal netAmountLocSum = CalcNetAmountSummmaryValue();
-                decimal currAccBalance = CurrAccBalanceBefore - netAmountLocSum;
-
-                if (!(bool)CustomExtensions.DirectionIsIn(dcProcess.ProcessCode) && curr.CreditLimit > 0 && Math.Abs(currAccBalance) > curr.CreditLimit)
+                if (CheckCreditLimitExceeded(curr.CurrAccCode, netAmountLocSum, out _, out _))
                 {
                     SetValidationError(editor, e, Resources.Form_Invoice_CreditLimitExceeded);
                     return;
@@ -3552,19 +3655,9 @@ namespace Foxoft
             gV_InvoiceLine.SetRowCellValue(rowHandle, colProductCost, product.ProductCost);
             gV_InvoiceLine.SetRowCellValue(rowHandle, colUnitOfMeasureId, product.DefaultUnitOfMeasureId);
 
-            decimal priceProduct = 0;
+            decimal priceProduct = GetProductPriceByProcess(product);
 
-            priceProduct = Settings.Default.AppSetting.UsePriceList
-                ? efMethods.SelectPriceByProcess(dcProcess.ProcessCode, product.ProductCode)
-                : dcProcess.ProcessCode switch
-                {
-                    "RP" or "CI" or "CO" => product.PurchasePrice,
-                    "RS" => product.RetailPrice,
-                    "WS" => product.WholesalePrice,
-                    _ => 0m
-                };
-
-            decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price));
+            decimal priceInvoice = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price) ?? 0);
             if (priceInvoice == 0)
                 gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);
 

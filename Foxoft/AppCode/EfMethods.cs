@@ -1693,7 +1693,7 @@ namespace Foxoft
                                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
-        public decimal SelectCurrAccBalance(string currAccCode, DateTime documentDate)
+        public decimal SelectCurrAccBalance(string currAccCode, DateTime documentDate, Guid? excludeInvoiceHeaderId = null)
         {
             using subContext db = new();
 
@@ -1702,19 +1702,33 @@ namespace Foxoft
             DateTime dateOnly = documentDate.Date;
             TimeSpan timeOnly = documentDate.TimeOfDay;
 
-            decimal invoiceSum = db.TrInvoiceLines
+            var invoiceLinesQuery = db.TrInvoiceLines
                                        .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
                                        .Where(x => processCodes.Contains(x.TrInvoiceHeader.ProcessCode))
                                        .Where(x => x.TrInvoiceHeader.DocumentDate < dateOnly
                                                  || (x.TrInvoiceHeader.DocumentDate == dateOnly
-                                                     && x.TrInvoiceHeader.DocumentTime < timeOnly))
+                                                     && x.TrInvoiceHeader.DocumentTime <= timeOnly));
+
+            if (excludeInvoiceHeaderId.HasValue && excludeInvoiceHeaderId.Value != Guid.Empty)
+            {
+                invoiceLinesQuery = invoiceLinesQuery.Where(x => x.InvoiceHeaderId != excludeInvoiceHeaderId.Value);
+            }
+
+            decimal invoiceSum = invoiceLinesQuery
                                        .Sum(x => (decimal?)((x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)))) ?? 0m;
 
-            decimal paymentSum = db.TrPaymentLines
+            var paymentLinesQuery = db.TrPaymentLines
                                        .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
                                        .Where(x => x.TrPaymentHeader.OperationDate < dateOnly
                                                  || (x.TrPaymentHeader.OperationDate == dateOnly
-                                                     && x.TrPaymentHeader.OperationTime < timeOnly))
+                                                     && x.TrPaymentHeader.OperationTime <= timeOnly));
+
+            if (excludeInvoiceHeaderId.HasValue && excludeInvoiceHeaderId.Value != Guid.Empty)
+            {
+                paymentLinesQuery = paymentLinesQuery.Where(x => x.TrPaymentHeader.InvoiceHeaderId != excludeInvoiceHeaderId.Value);
+            }
+
+            decimal paymentSum = paymentLinesQuery
                                        .Sum(x => (decimal?)x.PaymentLoc) ?? 0m;
 
             return paymentSum + invoiceSum;

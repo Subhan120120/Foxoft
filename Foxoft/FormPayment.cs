@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.AppCode;
@@ -581,14 +581,38 @@ namespace Foxoft
 
             var total = TotalPaidLoc();
 
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(
-                Authorization.CurrAccCode,
-                "AllowUnderPayment");
-
-            if (currAccHasClaims) return true;
-
             if ((total + PayTolerance) < expectedPayLoc)
             {
+                if (HasInvoice() && !string.IsNullOrWhiteSpace(trPaymentHeader.CurrAccCode))
+                {
+                    DcCurrAcc curr = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode);
+                    if (curr != null && curr.CreditLimit > 0)
+                    {
+                        decimal balanceBefore = efMethods.SelectCurrAccBalance(
+                            curr.CurrAccCode,
+                            trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime),
+                            trPaymentHeader.InvoiceHeaderId);
+                        decimal dueLoc = ResolveDueLoc();
+                        decimal projectedBalance = balanceBefore - dueLoc + total;
+                        if (projectedBalance < -curr.CreditLimit)
+                        {
+                            XtraMessageBox.Show(
+                                this,
+                                Resources.Form_Invoice_CreditLimitExceeded,
+                                Resources.Common_Attention,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                            return false;
+                        }
+                    }
+                }
+
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(
+                    Authorization.CurrAccCode,
+                    "AllowUnderPayment");
+
+                if (currAccHasClaims) return true;
+
                 var missing = expectedPayLoc - total;
 
                 XtraMessageBox.Show(
