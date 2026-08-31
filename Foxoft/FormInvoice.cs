@@ -77,7 +77,7 @@ namespace Foxoft
                 {
                     _currAccBalanceBefore = Math.Round(
                         efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode,
-                            trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime),
+                            trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.DocumentTime),
                             trInvoiceHeader.InvoiceHeaderId), 2);
                     _currAccBalanceCalculated = true;
                 }
@@ -720,6 +720,9 @@ namespace Foxoft
 
             try
             {
+                _currAccBalanceCalculated = false;
+                _currAccBalanceBefore = 0m;
+
                 dbContext = new subContext();
                 _loyaltyService = new LoyaltyService(dbContext);
 
@@ -1590,7 +1593,7 @@ namespace Foxoft
             creditLimit = curr.CreditLimit;
             decimal balanceBefore = efMethods.SelectCurrAccBalance(
                 currAccCode,
-                trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime),
+                trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.DocumentTime),
                 trInvoiceHeader.InvoiceHeaderId);
 
             projectedBalance = balanceBefore - projectedInvoiceTotal;
