@@ -1693,7 +1693,7 @@ namespace Foxoft
                                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
-        public decimal SelectCurrAccBalance(string currAccCode, DateTime documentDate, Guid? excludeInvoiceHeaderId = null)
+        public decimal SelectCurrAccBalance(string currAccCode, DateTime documentDate, Guid? excludeInvoiceHeaderId = null, Guid? excludePaymentHeaderId = null)
         {
             using subContext db = new();
 
@@ -1726,6 +1726,11 @@ namespace Foxoft
             if (excludeInvoiceHeaderId.HasValue && excludeInvoiceHeaderId.Value != Guid.Empty)
             {
                 paymentLinesQuery = paymentLinesQuery.Where(x => x.TrPaymentHeader.InvoiceHeaderId != excludeInvoiceHeaderId.Value);
+            }
+
+            if (excludePaymentHeaderId.HasValue && excludePaymentHeaderId.Value != Guid.Empty)
+            {
+                paymentLinesQuery = paymentLinesQuery.Where(x => x.PaymentHeaderId != excludePaymentHeaderId.Value);
             }
 
             decimal paymentSum = paymentLinesQuery

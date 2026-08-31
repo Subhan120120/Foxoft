@@ -549,8 +549,11 @@ namespace Foxoft
             // colRunningTotalBefore
             // 
             colRunningTotalBefore.Caption = Resources.Form_PaymentDetail_Label_CurrAccBalanceBefore;
+            colRunningTotalBefore.ColumnEdit = repoCalcEdit_MakePayment;
             colRunningTotalBefore.FieldName = "colRunningTotalBefore";
             colRunningTotalBefore.Name = "colRunningTotalBefore";
+            colRunningTotalBefore.OptionsColumn.AllowEdit = false;
+            colRunningTotalBefore.OptionsColumn.ReadOnly = true;
             colRunningTotalBefore.UnboundDataType = typeof(decimal);
             colRunningTotalBefore.Visible = true;
             colRunningTotalBefore.VisibleIndex = 7;
@@ -558,8 +561,11 @@ namespace Foxoft
             // colRunningTotal
             // 
             colRunningTotal.Caption = Resources.Form_PaymentDetail_Label_CurrAccBalanceAfter;
+            colRunningTotal.ColumnEdit = repoCalcEdit_MakePayment;
             colRunningTotal.FieldName = "colRunningTotal";
             colRunningTotal.Name = "colRunningTotal";
+            colRunningTotal.OptionsColumn.AllowEdit = false;
+            colRunningTotal.OptionsColumn.ReadOnly = true;
             colRunningTotal.UnboundDataType = typeof(decimal);
             colRunningTotal.Visible = true;
             colRunningTotal.VisibleIndex = 8;
@@ -577,6 +583,7 @@ namespace Foxoft
             OperationDateDateEdit.Size = new Size(300, 20);
             OperationDateDateEdit.StyleController = dataLayoutControl1;
             OperationDateDateEdit.TabIndex = 3;
+            OperationDateDateEdit.EditValueChanged += OperationDateDateEdit_EditValueChanged;
             OperationDateDateEdit.KeyDown += dataLayout_KeyDown;
             // 
             // OperationTimeTimeSpanEdit
@@ -591,6 +598,7 @@ namespace Foxoft
             OperationTimeTimeSpanEdit.Size = new Size(300, 20);
             OperationTimeTimeSpanEdit.StyleController = dataLayoutControl1;
             OperationTimeTimeSpanEdit.TabIndex = 5;
+            OperationTimeTimeSpanEdit.EditValueChanged += OperationTimeTimeSpanEdit_EditValueChanged;
             OperationTimeTimeSpanEdit.KeyDown += dataLayout_KeyDown;
             // 
             // DescriptionTextEdit

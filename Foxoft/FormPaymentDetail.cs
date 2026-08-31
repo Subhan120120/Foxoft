@@ -220,6 +220,23 @@ namespace Foxoft
             trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
             trPaymentHeader = trPaymentHeadersBindingSource.Current as TrPaymentHeader;
 
+            UpdateBalanceBefore();
+
+            if (trPaymentHeader?.DcCurrAcc != null)
+            {
+                lbl_CurrAccDesc.Text = $"{trPaymentHeader.DcCurrAcc.CurrAccDesc} {trPaymentHeader.DcCurrAcc.FirstName} {trPaymentHeader.DcCurrAcc.LastName}".Trim();
+            }
+            else if (!string.IsNullOrEmpty(trPaymentHeader?.CurrAccCode))
+            {
+                DcCurrAcc? curr = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode);
+                if (curr != null)
+                    lbl_CurrAccDesc.Text = $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}".Trim();
+            }
+            else
+            {
+                lbl_CurrAccDesc.Text = string.Empty;
+            }
+
             dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == paymentHeaderId)
                                     .OrderBy(x => x.CreatedDate)
                                     .LoadAsync()
@@ -227,6 +244,7 @@ namespace Foxoft
                                     {
                                         LocalView<TrPaymentLine> lV_paymentLine = dbContext.TrPaymentLines.Local;
                                         trPaymentLinesBindingSource.DataSource = lV_paymentLine.ToBindingList();
+                                        gV_PaymentLine.LayoutChanged();
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
@@ -916,16 +934,24 @@ namespace Foxoft
             {
                 GridView view = sender as GridView;
                 decimal runningTotal = BalanceBefore;
-                for (int i = 0; i <= e.ListSourceRowIndex; i++)
-                {
-                    decimal value = 0;
-                    if (e.Column == colRunningTotal)
-                        value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i, colPaymentLoc)), 2);
-                    else if (e.Column == colRunningTotalBefore)
-                        value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i - 1, colPaymentLoc)), 2);
 
-                    runningTotal += value;
+                if (e.Column == colRunningTotalBefore)
+                {
+                    for (int i = 0; i < e.ListSourceRowIndex; i++)
+                    {
+                        decimal value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i, colPaymentLoc)), 2);
+                        runningTotal += value;
+                    }
                 }
+                else if (e.Column == colRunningTotal)
+                {
+                    for (int i = 0; i <= e.ListSourceRowIndex; i++)
+                    {
+                        decimal value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i, colPaymentLoc)), 2);
+                        runningTotal += value;
+                    }
+                }
+
                 e.Value = runningTotal;
             }
         }
@@ -949,6 +975,21 @@ namespace Foxoft
             e.ExceptionMode = ExceptionMode.DisplayError;
         }
 
+        private void UpdateBalanceBefore()
+        {
+            BalanceBefore = 0;
+
+            if (trPaymentHeader is null || string.IsNullOrWhiteSpace(trPaymentHeader.CurrAccCode))
+                return;
+
+            DateTime opDateTime = trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime);
+            BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(
+                trPaymentHeader.CurrAccCode,
+                opDateTime,
+                trPaymentHeader.InvoiceHeaderId,
+                trPaymentHeader.PaymentHeaderId), 2);
+        }
+
         private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
         {
             string eValueStr = btnEdit_CurrAccCode.EditValue?.ToString();
@@ -958,14 +999,29 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(eValueStr))
             {
                 DcCurrAcc curr = efMethods.SelectCurrAcc(eValueStr);
-                trPaymentHeader.CurrAccCode = curr?.CurrAccCode;
+                if (trPaymentHeader != null)
+                    trPaymentHeader.CurrAccCode = curr?.CurrAccCode;
 
                 if (curr != null)
                 {
-                    lbl_CurrAccDesc.Text = $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}";
-                    BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+                    lbl_CurrAccDesc.Text = $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}".Trim();
+                    UpdateBalanceBefore();
                 }
             }
+
+            gV_PaymentLine.LayoutChanged();
+        }
+
+        private void OperationDateDateEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            UpdateBalanceBefore();
+            gV_PaymentLine.LayoutChanged();
+        }
+
+        private void OperationTimeTimeSpanEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            UpdateBalanceBefore();
+            gV_PaymentLine.LayoutChanged();
         }
 
         private void LUE_StoreCode_PopupFilter(object sender, PopupFilterEventArgs e)
