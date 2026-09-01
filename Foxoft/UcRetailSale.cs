@@ -952,27 +952,6 @@ namespace Foxoft
                 .Distinct()
                 .ToList();
         }
-
-        private PaymentType ResolvePaymentTypeByAllowedMethods(IEnumerable<int>? allowedPaymentMethodIds, PaymentType defaultPaymentType)
-        {
-            List<int> paymentMethodIds = allowedPaymentMethodIds?
-                .Distinct()
-                .ToList() ?? new List<int>();
-
-            if (!paymentMethodIds.Any())
-                return defaultPaymentType;
-
-            List<PaymentType> paymentTypes = efMethods.SelectEntities<DcPaymentMethod>()
-                .Where(x => paymentMethodIds.Contains(x.PaymentMethodId))
-                .Select(x => x.PaymentTypeCode)
-                .Distinct()
-                .ToList();
-
-            if (paymentTypes.Count == 1)
-                return paymentTypes.First();
-
-            return defaultPaymentType;
-        }
         //private List<int> GetAvailablePaymentMethodCampaignIds()
         //{
         //    using var db = new subContext();
@@ -1706,16 +1685,6 @@ namespace Foxoft
             }
         }
 
-        private void RemoveLoyaltyLinksAll(Guid invoiceHeaderId)
-        {
-            var txns = dbContext.TrLoyaltyTxns
-                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                .ToList();
-
-            if (txns.Count > 0)
-                dbContext.RemoveRange(txns);
-        }
-
         private void gC_Sale_DoubleClick(object sender, EventArgs e)
         {
             if (gV_InvoiceLine.FocusedColumn == col_Qty)
@@ -2194,81 +2163,6 @@ namespace Foxoft
             return true;
         }
 
-
-        private void SyncLoyaltyEarn(TrInvoiceHeader inv)
-        {
-            if (inv == null || inv.InvoiceHeaderId == Guid.Empty)
-                return;
-
-            // invoice-a bağlı bütün Earn txn-ləri tap (card dəyişsə də)
-            var earnTxn = dbContext.TrLoyaltyTxns
-                .FirstOrDefault(x => x.InvoiceHeaderId == inv.InvoiceHeaderId && x.TxnType == LoyaltyTxnType.Earn);
-
-            DcLoyaltyCard dcLoyaltyCard = efMethods.SelectEntityById<DcLoyaltyCard>(trInvoiceHeader.LoyaltyCardId);
-            // loyaltyCard yoxdursa -> Earn txn sil
-            if (dcLoyaltyCard == null)
-            {
-                if (earnTxn != null)
-                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
-
-                return;
-            }
-
-            // EarnPercent-i DB-dən təhlükəsiz götür (navigation-a güvənmə)
-            var earnPercent = dbContext.DcLoyaltyPrograms
-                .Where(p => p.LoyaltyProgramId == dcLoyaltyCard.LoyaltyProgramId)
-                .Select(p => (decimal?)p.EarnPercent)
-                .FirstOrDefault() ?? 0m;
-
-            if (earnPercent <= 0m)
-            {
-                if (earnTxn != null)
-                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
-                return;
-            }
-
-            // NetAmountLoc cəmi
-            decimal netLoc = dbContext.TrInvoiceLines
-                .Where(x => x.InvoiceHeaderId == inv.InvoiceHeaderId)
-                .Sum(x => (decimal?)x.NetAmountLoc) ?? 0m;
-
-            if (netLoc <= 0m)
-            {
-                if (earnTxn != null)
-                    dbContext.TrLoyaltyTxns.Remove(earnTxn);
-                return;
-            }
-
-            decimal amount = Math.Round(netLoc * earnPercent / 100m, 2);
-
-            if (earnTxn == null)
-            {
-                earnTxn = new TrLoyaltyTxn
-                {
-                    LoyaltyTxnId = Guid.NewGuid(),
-                    InvoiceHeaderId = inv.InvoiceHeaderId,
-                    LoyaltyCardId = dcLoyaltyCard.LoyaltyCardId,
-                    CurrAccCode = inv.CurrAccCode,
-                    DocumentDate = inv.DocumentDate,
-                    TxnType = LoyaltyTxnType.Earn,
-                    Amount = amount,
-                    CreatedUserName = Authorization.CurrAccCode,
-                    Note = $"Invoice: {inv.DocumentNumber}"
-                };
-                dbContext.TrLoyaltyTxns.Add(earnTxn);
-            }
-            else
-            {
-                // Upsert update
-                earnTxn.LoyaltyCardId = (Guid)trInvoiceHeader.LoyaltyCardId;
-                earnTxn.CurrAccCode = inv.CurrAccCode;
-                earnTxn.DocumentDate = inv.DocumentDate;
-                earnTxn.Amount = amount;
-                earnTxn.Note = $"Invoice: {inv.DocumentNumber}";
-
-                // tracked entitydirsə Entry.IsModified-ə ehtiyac yoxdur
-            }
-        }
 
         private void Btn_NewInvoice_Click(object sender, EventArgs e)
         {

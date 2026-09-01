@@ -75,12 +75,10 @@ namespace Foxoft
         private PaymentService _paymentService;
         private readonly Guid _appInstanceId;
         public Guid _formInstanceId;
-        private bool _closingByLock = false;
         private DateTime _lastInfoPaymentPopupAt = DateTime.MinValue;
         private int _pid => Process.GetCurrentProcess().Id;
 
         public bool isNew = false;
-        private bool _isSaved = false;
 
         private bool _isLoading = false;
         private bool _pendingPaymentCurrAccUpdate = false;
@@ -181,7 +179,7 @@ namespace Foxoft
                 ["bBI_New"] = bBI_New,
                 ["bBI_reportPreview"] = bBI_reportPreview,
                 ["bBI_DeleteInvoice"] = bBI_DeleteInvoice,
-                ["bBI_PaymentDelete"] = bBI_DeletePayment,
+                ["bBI_PaymentDelete"] = bBI_PaymentDelete,
                 ["bBI_CopyInvoice"] = bBI_CopyInvoice,
                 ["bBI_Whatsapp"] = bBI_Whatsapp,
                 ["BBI_EditInvoice"] = BBI_ModifyInvoice,
@@ -481,7 +479,6 @@ namespace Foxoft
 
             Tag = btnEdit_DocNum.EditValue;
             _ValidCurrAccCodeOldValue = trInvoiceHeader.CurrAccCode;
-            _isSaved = false;
 
             PopulateRelatedInvoicesMenu();
 
@@ -1949,7 +1946,6 @@ namespace Foxoft
             List<(string ProductCode, string WarehouseCode)> stockWarningTargets = GetInvoiceStockWarningTargets();
 
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
-            _isSaved = true;
 
             if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode)
                 && Settings.Default.AppSetting.TransferAutoApprove)
@@ -2379,27 +2375,6 @@ namespace Foxoft
         private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
             => bBI_Payment_ItemClick_WithCampaign(sender, e);
 
-        private PaymentType ResolvePaymentTypeByAllowedMethods(IEnumerable<int>? allowedPaymentMethodIds, PaymentType defaultPaymentType)
-        {
-            List<int> paymentMethodIds = allowedPaymentMethodIds?
-                .Distinct()
-                .ToList() ?? new List<int>();
-
-            if (!paymentMethodIds.Any())
-                return defaultPaymentType;
-
-            List<PaymentType> paymentTypes = efMethods.SelectEntities<DcPaymentMethod>()
-                .Where(x => paymentMethodIds.Contains(x.PaymentMethodId))
-                .Select(x => x.PaymentTypeCode)
-                .Distinct()
-                .ToList();
-
-            if (paymentTypes.Count == 1)
-                return paymentTypes.First();
-
-            return defaultPaymentType;
-        }
-
         private void bBI_DeleteInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (!efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
@@ -2453,7 +2428,6 @@ namespace Foxoft
                 bool currAccHasDeletePayClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeletePayment");
                 bool currAccHasExpenceClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
                 bool currAccHasDeleteEXClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeleteInvoiceEX");
-                bool currAccHasDeleteISClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeleteInvoiceIS");
 
                 if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
                     if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
@@ -2654,7 +2628,7 @@ namespace Foxoft
             {
                 using var client = new Foxoft.AppCode.EvolutionApiClient(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
 
-                string response = await client.SendImageBase64Async(formattedNumber, memoryStream, caption: caption);
+                await client.SendImageBase64Async(formattedNumber, memoryStream, caption: caption);
 
                 SaveWhatsAppLog(trInvoiceHeader.InvoiceHeaderId, formattedNumber, memoryStream, caption, isSuccessful: true);
 

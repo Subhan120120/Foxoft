@@ -210,9 +210,6 @@ namespace Foxoft
             }
         }
 
-        Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-        string nameConStr = "Foxoft.Properties.Settings.SubConnString";
-
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)
         {
             string localAddress = CustomExtensions.GetPhiscalAdress();

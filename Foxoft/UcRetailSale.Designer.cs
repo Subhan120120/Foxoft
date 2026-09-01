@@ -1880,11 +1880,9 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem LCI_CampaignDelete;
         private DevExpress.XtraLayout.LayoutControlItem LCI_CampaignLog;
         private DevExpress.XtraLayout.LayoutControlItem LCI_PromoCode;
-        private SimpleButton simpleButton1;
         private LayoutControlItem LCI_LineDesc;
         private SimpleButton btn_LineDesc;
         private SimpleButton btn_Desc;
         private LayoutControlItem LCI_Desc;
     }
 }
-

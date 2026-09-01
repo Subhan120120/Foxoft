@@ -495,7 +495,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceLineId;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colPrice;
         private DevExpress.XtraGrid.Columns.GridColumn colAmount;
         private DevExpress.XtraGrid.Columns.GridColumn colNetAmount;
         private DevExpress.XtraGrid.Columns.GridColumn colLineDescription;
@@ -513,7 +512,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentDate;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentTime;
         private DevExpress.XtraEditors.MemoEdit memoEdit_InvoiceDesc;
-        private DevExpress.XtraEditors.ButtonEdit btnEdit_CurrAccCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_ProductCode;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyIn;
         private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;

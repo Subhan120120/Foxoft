@@ -2413,7 +2413,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_Price;
         private DevExpress.XtraBars.BarButtonItem bBI_DeleteInvoice;
-        private DevExpress.XtraBars.BarButtonItem bBI_DeletePayment;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_CurrencyCode;
         private DevExpress.XtraGrid.Columns.GridColumn colExchangeRate;

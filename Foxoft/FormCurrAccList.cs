@@ -328,8 +328,6 @@ namespace Foxoft
             }
         }
 
-        // AutoFocus FindPanel
-        bool isFirstPaint = true;
         private void gC_CurrAccList_Paint(object sender, PaintEventArgs e)
         {
         }

@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Mask;
 using DevExpress.XtraGrid.Columns;
@@ -147,15 +147,6 @@ namespace Foxoft
             }
         }
 
-        private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
-        {
-            using (FormCurrAccList form = new(new byte[] { 2 }, false))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                    btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-            }
-        }
-
         private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
         {
             if (gV_InvoiceLine.SelectedRowsCount > 0)
@@ -212,7 +203,7 @@ namespace Foxoft
                     gV_InvoiceLine.CloseEditor();
                     gV_InvoiceLine.UpdateCurrentRow();
 
-                    gV_InvoiceLine.FocusedColumn = colPrice; // Price column
+                    gV_InvoiceLine.FocusedColumn = gridColumn2; // Price column
                 }
             }
             catch (Exception ex)
