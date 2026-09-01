@@ -2377,7 +2377,7 @@ namespace Foxoft
 
         private void bBI_DeleteInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
+            if (trInvoiceHeader is null || !efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
             {
                 XtraMessageBox.Show(Resources.Form_Invoice_NoInvoiceToDelete);
                 return;
@@ -2386,11 +2386,24 @@ namespace Foxoft
             if (!EnsureInvoiceCanBeChanged())
                 return;
 
+            if (!_lockService.IsLockOwnedByMe("Invoice", trInvoiceHeader.InvoiceHeaderId,
+                Authorization.CurrAccCode, _appInstanceId, _formInstanceId))
+            {
+                _isClosingByLockEvent = true;
+                XtraMessageBox.Show(
+                    Resources.Message_DocumentLockOwnershipLost,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                Close();
+                return;
+            }
+
             string claim = "DeleteInvoice" + dcProcess.ProcessCode;
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
             if (!currAccHasClaims)
             {
-                MessageBox.Show(Resources.Common_NoPermission);
+                XtraMessageBox.Show(Resources.Common_NoPermission);
                 return;
             }
 
@@ -2423,43 +2436,76 @@ namespace Foxoft
                     xtraMessageBox(
                         Resources.Common_Attention,
                         Resources.Form_Invoice_DeleteInvoiceQuestion,
-                        "DeleteInvoice")) == DialogResult.OK)
+                        "DeleteInvoice")) != DialogResult.OK)
             {
-                bool currAccHasDeletePayClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeletePayment");
-                bool currAccHasExpenceClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
-                bool currAccHasDeleteEXClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeleteInvoiceEX");
+                return;
+            }
 
-                if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
-                    if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                        efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
-                    else if (XtraMessageBox.Show(
-                                 xtraMessageBox(
-                                     Resources.Common_Attention,
-                                     Resources.Form_Invoice_DeletePaymentsForInvoiceQuestion,
-                                     "DeletePayment")) == DialogResult.OK)
-                        if (currAccHasDeletePayClaims)
-                            efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
-                        else
-                            XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionDeletePayment);
+            bool currAccHasDeletePayClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeletePayment");
+            bool currAccHasExpenceClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
+            bool currAccHasDeleteEXClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeleteInvoiceEX");
 
-                if (efMethods.ExpensesExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
+            if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
+            {
+                if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+                {
+                    efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
+                }
+                else
+                {
                     if (XtraMessageBox.Show(
                             xtraMessageBox(
                                 Resources.Common_Attention,
-                                Resources.Form_Invoice_DeleteExpensesForInvoiceQuestion,
-                                "DeleteExpenses")) == DialogResult.OK)
-                        if (currAccHasExpenceClaims)
-                            if (currAccHasDeleteEXClaims)
-                                efMethods.DeleteExpensesByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-                            else
-                                XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionDeleteExpense);
-                        else
-                            XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionExpense);
+                                Resources.Form_Invoice_DeletePaymentsForInvoiceQuestion,
+                                "DeletePayment")) != DialogResult.OK)
+                    {
+                        return;
+                    }
 
-                efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
+                    if (!currAccHasDeletePayClaims)
+                    {
+                        XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionDeletePayment);
+                        return;
+                    }
 
-                ClearControlsAddNew();
+                    efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
+                }
             }
+
+            if (efMethods.ExpensesExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
+            {
+                if (XtraMessageBox.Show(
+                        xtraMessageBox(
+                            Resources.Common_Attention,
+                            Resources.Form_Invoice_DeleteExpensesForInvoiceQuestion,
+                            "DeleteExpenses")) != DialogResult.OK)
+                {
+                    return;
+                }
+
+                if (!currAccHasExpenceClaims)
+                {
+                    XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionExpense);
+                    return;
+                }
+
+                if (!currAccHasDeleteEXClaims)
+                {
+                    XtraMessageBox.Show(Resources.Form_Invoice_NoPermissionDeleteExpense);
+                    return;
+                }
+
+                efMethods.DeleteExpensesByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+            }
+
+            if (efMethods.InstallmentsExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
+            {
+                efMethods.DeleteInstallmentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+            }
+
+            efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
+
+            ClearControlsAddNew();
         }
 
         private XtraMessageBoxArgs xtraMessageBox(string caption, string text, string imageName)
