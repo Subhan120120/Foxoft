@@ -65,30 +65,7 @@ namespace Foxoft
         Guid? relatedInvoiceId;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
-        private decimal _currAccBalanceBefore;
-        private bool _currAccBalanceCalculated;
         private static readonly string[] StockBalanceProcessCodes = { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" };
-        private decimal CurrAccBalanceBefore
-        {
-            get
-            {
-                if (!_currAccBalanceCalculated && trInvoiceHeader != null
-                    && !string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode))
-                {
-                    _currAccBalanceBefore = Math.Round(
-                        efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode,
-                            trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.DocumentTime),
-                            trInvoiceHeader.InvoiceHeaderId), 2);
-                    _currAccBalanceCalculated = true;
-                }
-                return _currAccBalanceBefore;
-            }
-            set
-            {
-                _currAccBalanceBefore = value;
-                _currAccBalanceCalculated = true;
-            }
-        }
         ReportClass reportClass;
         private string salesPersonCode;
         private FormProductList? productsForm;
@@ -459,9 +436,6 @@ namespace Foxoft
                 _isLoading = false;
             }
 
-            // Balans lazy hesablanacaq — form açılışında sorğu göndərilmir.
-            _currAccBalanceCalculated = false;
-
             trInvoiceLinesBindingSource.DataSource = null;
 
             this.Text = $"{dcProcess.ProcessDesc} - ({btnEdit_DocNum.EditValue})";
@@ -720,9 +694,6 @@ namespace Foxoft
 
             try
             {
-                _currAccBalanceCalculated = false;
-                _currAccBalanceBefore = 0m;
-
                 dbContext = new subContext();
                 _loyaltyService = new LoyaltyService(dbContext);
 
@@ -2956,9 +2927,6 @@ namespace Foxoft
             // ağır balans/anbar sorğularını işə salma — form tez açılsın.
             if (_isLoading)
                 return;
-
-            // Balans cache-ini invalidate et — növbəti istifadədə yenidən hesablanacaq.
-            _currAccBalanceCalculated = false;
 
             _pendingPaymentCurrAccUpdate = true;
         }
