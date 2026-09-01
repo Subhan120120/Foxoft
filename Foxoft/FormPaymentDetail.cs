@@ -986,7 +986,7 @@ namespace Foxoft
             BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(
                 trPaymentHeader.CurrAccCode,
                 opDateTime,
-                trPaymentHeader.InvoiceHeaderId,
+                null,
                 trPaymentHeader.PaymentHeaderId), 2);
         }
 
