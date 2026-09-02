@@ -714,10 +714,19 @@ namespace Foxoft
                 if (IsCampaignEnabled)
                     ReloadInvoiceCampaignValues();
 
+                Guid completedInvoiceId = trInvoiceHeader.InvoiceHeaderId;
+                string printerName = GetPrinterName(trInvoiceHeader?.DcTerminal?.PrinterName ?? efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId)?.PrinterName);
+
                 trInvoiceHeader.IsCompleted = true;
                 dbContext.SaveChanges();
 
                 CalcPaidAmount();
+
+                if (Settings.Default.AppSetting?.AutoPrint == true)
+                {
+                    _ = PrintFast(printerName, completedInvoiceId);
+                }
+
                 ClearControlsAddNew();
             }
             else if (IsCampaignEnabled && cashOnlyApplied)
@@ -1727,14 +1736,6 @@ namespace Foxoft
 
         private async void btn_Print_Click(object sender, EventArgs e)
         {
-            await PrintFast(GetPrinterName(trInvoiceHeader?.DcTerminal?.PrinterName));
-        }
-
-        private async Task PrintFast(string printerName)
-        {
-            if (_isPrintInProgress)
-                return;
-
             if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
             {
                 XtraMessageBox.Show(
@@ -1745,7 +1746,25 @@ namespace Foxoft
                 return;
             }
 
-            Guid invoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+            string printerName = GetPrinterName(trInvoiceHeader?.DcTerminal?.PrinterName ?? efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId)?.PrinterName);
+            await PrintFast(printerName, trInvoiceHeader.InvoiceHeaderId);
+        }
+
+        private async Task PrintFast(string printerName, Guid invoiceHeaderId)
+        {
+            if (_isPrintInProgress)
+                return;
+
+            if (invoiceHeaderId == Guid.Empty)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_NoInvoiceToPrint,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
             _isPrintInProgress = true;
             btn_Print.Enabled = false;
 
@@ -2166,7 +2185,15 @@ namespace Foxoft
 
         private void Btn_NewInvoice_Click(object sender, EventArgs e)
         {
+            Guid completedInvoiceId = trInvoiceHeader?.InvoiceHeaderId ?? Guid.Empty;
             efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+
+            if (gV_InvoiceLine.DataRowCount > 0 && Settings.Default.AppSetting?.AutoPrint == true && completedInvoiceId != Guid.Empty)
+            {
+                string printerName = GetPrinterName(trInvoiceHeader?.DcTerminal?.PrinterName ?? efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId)?.PrinterName);
+                _ = PrintFast(printerName, completedInvoiceId);
+            }
+
             ClearControlsAddNew();
         }
 
