@@ -1,4 +1,4 @@
-
+﻿
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -59,6 +59,9 @@ namespace Foxoft
             UseBarcodeCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             UseScalesCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             UseCampaignCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            UseWhatsAppCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            UseLoyaltyCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            UseInvoiceExpensesCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             WhatsAppProviderImageComboBoxEdit = new DevExpress.XtraEditors.ImageComboBoxEdit();
             ServerUrlTextEdit = new DevExpress.XtraEditors.TextEdit();
             dcWhatsAppProviderSettingBindingSource = new BindingSource(components);
@@ -84,6 +87,7 @@ namespace Foxoft
             ItemForInvoiceEditGraceDays = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPaymentEditGraceDays = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForAppFontSize = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForUseInvoiceExpenses = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlGroupPos = new DevExpress.XtraLayout.LayoutControlGroup();
             ItemForPOSShowQuantityDialog = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPOSShowSalesmanCodeDialog = new DevExpress.XtraLayout.LayoutControlItem();
@@ -92,9 +96,11 @@ namespace Foxoft
             ItemForUseBarcode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForUseScales = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForUseCampaign = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForUseLoyalty = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPOSFindProductBy = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForOverpaymentMode = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlGroupWhatsApp = new DevExpress.XtraLayout.LayoutControlGroup();
+            ItemForUseWhatsApp = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsAppProvider = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsappChromeProfileName = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForApiKey = new DevExpress.XtraLayout.LayoutControlItem();
@@ -144,6 +150,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)UseBarcodeCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UseScalesCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UseCampaignCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)UseWhatsAppCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)UseLoyaltyCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)UseInvoiceExpensesCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)WhatsAppProviderImageComboBoxEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ServerUrlTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcWhatsAppProviderSettingBindingSource).BeginInit();
@@ -167,6 +176,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForInvoiceEditGraceDays).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPaymentEditGraceDays).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForAppFontSize).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUseInvoiceExpenses).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroupPos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowQuantityDialog).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowSalesmanCodeDialog).BeginInit();
@@ -175,9 +185,11 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForUseBarcode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseScales).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseCampaign).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUseLoyalty).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSFindProductBy).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForOverpaymentMode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroupWhatsApp).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUseWhatsApp).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForApiKey).BeginInit();
@@ -242,6 +254,9 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(UseBarcodeCheckEdit);
             dataLayoutControl1.Controls.Add(UseScalesCheckEdit);
             dataLayoutControl1.Controls.Add(UseCampaignCheckEdit);
+            dataLayoutControl1.Controls.Add(UseWhatsAppCheckEdit);
+            dataLayoutControl1.Controls.Add(UseLoyaltyCheckEdit);
+            dataLayoutControl1.Controls.Add(UseInvoiceExpensesCheckEdit);
             dataLayoutControl1.Controls.Add(WhatsAppProviderImageComboBoxEdit);
             dataLayoutControl1.Controls.Add(ServerUrlTextEdit);
             dataLayoutControl1.Controls.Add(InstanceNameTextEdit);
@@ -533,6 +548,39 @@ namespace Foxoft
             UseCampaignCheckEdit.StyleController = dataLayoutControl1;
             UseCampaignCheckEdit.TabIndex = 20;
             // 
+            // UseWhatsAppCheckEdit
+            // 
+            UseWhatsAppCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UseWhatsApp", true));
+            UseWhatsAppCheckEdit.Location = new Point(24, 285);
+            UseWhatsAppCheckEdit.Name = "UseWhatsAppCheckEdit";
+            UseWhatsAppCheckEdit.Properties.Caption = Resources.Entity_AppSetting_UseWhatsApp;
+            UseWhatsAppCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            UseWhatsAppCheckEdit.Size = new Size(361, 20);
+            UseWhatsAppCheckEdit.StyleController = dataLayoutControl1;
+            UseWhatsAppCheckEdit.TabIndex = 35;
+            // 
+            // UseLoyaltyCheckEdit
+            // 
+            UseLoyaltyCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UseLoyalty", true));
+            UseLoyaltyCheckEdit.Location = new Point(413, 213);
+            UseLoyaltyCheckEdit.Name = "UseLoyaltyCheckEdit";
+            UseLoyaltyCheckEdit.Properties.Caption = Resources.Entity_AppSetting_UseLoyalty;
+            UseLoyaltyCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            UseLoyaltyCheckEdit.Size = new Size(361, 20);
+            UseLoyaltyCheckEdit.StyleController = dataLayoutControl1;
+            UseLoyaltyCheckEdit.TabIndex = 36;
+            // 
+            // UseInvoiceExpensesCheckEdit
+            // 
+            UseInvoiceExpensesCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UseInvoiceExpenses", true));
+            UseInvoiceExpensesCheckEdit.Location = new Point(24, 216);
+            UseInvoiceExpensesCheckEdit.Name = "UseInvoiceExpensesCheckEdit";
+            UseInvoiceExpensesCheckEdit.Properties.Caption = Resources.Entity_AppSetting_UseInvoiceExpenses;
+            UseInvoiceExpensesCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            UseInvoiceExpensesCheckEdit.Size = new Size(361, 20);
+            UseInvoiceExpensesCheckEdit.StyleController = dataLayoutControl1;
+            UseInvoiceExpensesCheckEdit.TabIndex = 37;
+            // 
             // WhatsAppProviderImageComboBoxEdit
             // 
             WhatsAppProviderImageComboBoxEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "WhatsAppProvider", true));
@@ -684,7 +732,7 @@ namespace Foxoft
             // 
             // layoutControlGroupGeneral
             // 
-            layoutControlGroupGeneral.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, ItemForAppFontSize });
+            layoutControlGroupGeneral.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, ItemForAppFontSize, ItemForUseInvoiceExpenses });
             layoutControlGroupGeneral.Location = new Point(0, 0);
             layoutControlGroupGeneral.Name = "layoutControlGroupGeneral";
             layoutControlGroupGeneral.Size = new Size(389, 261);
@@ -768,9 +816,17 @@ namespace Foxoft
             ItemForAppFontSize.Text = Resources.Entity_AppSetting_AppFontSize;
             ItemForAppFontSize.TextSize = new Size(152, 13);
             // 
+            // ItemForUseInvoiceExpenses
+            // 
+            ItemForUseInvoiceExpenses.Control = UseInvoiceExpensesCheckEdit;
+            ItemForUseInvoiceExpenses.Location = new Point(0, 216);
+            ItemForUseInvoiceExpenses.Name = "ItemForUseInvoiceExpenses";
+            ItemForUseInvoiceExpenses.Size = new Size(365, 24);
+            ItemForUseInvoiceExpenses.TextVisible = false;
+            // 
             // layoutControlGroupPos
             // 
-            layoutControlGroupPos.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSMergeSameProducts, ItemForProductsFormKeepActive, ItemForUseBarcode, ItemForUseScales, ItemForUseCampaign, ItemForPOSFindProductBy, ItemForOverpaymentMode });
+            layoutControlGroupPos.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPOSShowQuantityDialog, ItemForPOSShowSalesmanCodeDialog, ItemForPOSMergeSameProducts, ItemForProductsFormKeepActive, ItemForUseBarcode, ItemForUseScales, ItemForUseCampaign, ItemForUseLoyalty, ItemForPOSFindProductBy, ItemForOverpaymentMode });
             layoutControlGroupPos.Location = new Point(389, 0);
             layoutControlGroupPos.Name = "layoutControlGroupPos";
             layoutControlGroupPos.Size = new Size(389, 261);
@@ -850,13 +906,29 @@ namespace Foxoft
             ItemForOverpaymentMode.Text = Resources.Entity_AppSetting_OverpaymentMode;
             ItemForOverpaymentMode.TextSize = new Size(152, 13);
             // 
+            // ItemForUseLoyalty
+            // 
+            ItemForUseLoyalty.Control = UseLoyaltyCheckEdit;
+            ItemForUseLoyalty.Location = new Point(0, 216);
+            ItemForUseLoyalty.Name = "ItemForUseLoyalty";
+            ItemForUseLoyalty.Size = new Size(365, 24);
+            ItemForUseLoyalty.TextVisible = false;
+            // 
             // layoutControlGroupWhatsApp
             // 
-            layoutControlGroupWhatsApp.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForWhatsAppProvider, ItemForWhatsappChromeProfileName, ItemForApiKey, ItemForInstanceName, ItemForServerUrl, LCI_WhatsAppQrCodeButton, LCI_WhatsAppLogoutButton, ItemForWhatsAppQrCode });
+            layoutControlGroupWhatsApp.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForUseWhatsApp, ItemForWhatsAppProvider, ItemForWhatsappChromeProfileName, ItemForApiKey, ItemForInstanceName, ItemForServerUrl, LCI_WhatsAppQrCodeButton, LCI_WhatsAppLogoutButton, ItemForWhatsAppQrCode });
             layoutControlGroupWhatsApp.Location = new Point(0, 261);
             layoutControlGroupWhatsApp.Name = "layoutControlGroupWhatsApp";
             layoutControlGroupWhatsApp.Size = new Size(389, 414);
             layoutControlGroupWhatsApp.Text = Resources.Form_AppSetting_Group_WhatsApp;
+            // 
+            // ItemForUseWhatsApp
+            // 
+            ItemForUseWhatsApp.Control = UseWhatsAppCheckEdit;
+            ItemForUseWhatsApp.Location = new Point(0, 0);
+            ItemForUseWhatsApp.Name = "ItemForUseWhatsApp";
+            ItemForUseWhatsApp.Size = new Size(365, 24);
+            ItemForUseWhatsApp.TextVisible = false;
             // 
             // ItemForWhatsAppProvider
             // 
@@ -1081,6 +1153,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)UseBarcodeCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)UseScalesCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)UseCampaignCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)UseWhatsAppCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)UseLoyaltyCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)UseInvoiceExpensesCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)WhatsAppProviderImageComboBoxEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ServerUrlTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcWhatsAppProviderSettingBindingSource).EndInit();
@@ -1104,6 +1179,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForInvoiceEditGraceDays).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPaymentEditGraceDays).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForAppFontSize).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUseInvoiceExpenses).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroupPos).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowQuantityDialog).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSShowSalesmanCodeDialog).EndInit();
@@ -1112,9 +1188,11 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForUseBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseScales).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseCampaign).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUseLoyalty).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPOSFindProductBy).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForOverpaymentMode).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroupWhatsApp).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUseWhatsApp).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsAppProvider).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForApiKey).EndInit();
@@ -1195,6 +1273,12 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForUseScales;
         private DevExpress.XtraEditors.CheckEdit UseCampaignCheckEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForUseCampaign;
+        private DevExpress.XtraEditors.CheckEdit UseWhatsAppCheckEdit;
+        private DevExpress.XtraEditors.CheckEdit UseLoyaltyCheckEdit;
+        private DevExpress.XtraEditors.CheckEdit UseInvoiceExpensesCheckEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForUseWhatsApp;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForUseLoyalty;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForUseInvoiceExpenses;
         private DevExpress.XtraEditors.ImageComboBoxEdit WhatsAppProviderImageComboBoxEdit;
         private DevExpress.XtraEditors.TextEdit ServerUrlTextEdit;
         private DevExpress.XtraEditors.TextEdit InstanceNameTextEdit;

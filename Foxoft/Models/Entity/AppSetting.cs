@@ -86,6 +86,11 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_OverpaymentMode), ResourceType = typeof(Resources))]
         public OverpaymentMode OverpaymentMode { get; set; } = OverpaymentMode.AskEachTime;
 
+
+        [DefaultValueSql("1")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_UseWhatsApp), ResourceType = typeof(Resources))]
+        public bool UseWhatsApp { get; set; } = true;
+
         [DefaultValueSql("0")]
         [Display(Name = "WhatsApp Provider")]
         public WhatsAppProvider WhatsAppProvider { get; set; } = WhatsAppProvider.Chrome;
@@ -101,6 +106,14 @@ namespace Foxoft.Models
         [DefaultValueSql("1")]
         [Display(Name = nameof(Resources.Entity_AppSetting_TransferAutoApprove), ResourceType = typeof(Resources))]
         public bool TransferAutoApprove { get; set; } = true;
+
+        [DefaultValueSql("1")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_UseLoyalty), ResourceType = typeof(Resources))]
+        public bool UseLoyalty { get; set; } = true;
+
+        [DefaultValueSql("1")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_UseInvoiceExpenses), ResourceType = typeof(Resources))]
+        public bool UseInvoiceExpenses { get; set; } = true;
 
 
         [ForeignKey("LocalCurrencyCode")]

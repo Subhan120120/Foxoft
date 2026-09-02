@@ -86,6 +86,18 @@ namespace Foxoft
             => Settings.Default.AppSetting != null
             && Settings.Default.AppSetting.UseCampaign;
 
+        private bool IsWhatsAppEnabled
+            => Settings.Default.AppSetting == null
+            || Settings.Default.AppSetting.UseWhatsApp;
+
+        private bool IsLoyaltyEnabled
+            => Settings.Default.AppSetting == null
+            || Settings.Default.AppSetting.UseLoyalty;
+
+        private bool IsInvoiceExpensesEnabled
+            => Settings.Default.AppSetting == null
+            || Settings.Default.AppSetting.UseInvoiceExpenses;
+
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
@@ -3213,7 +3225,7 @@ namespace Foxoft
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutLineFilePath);
 
             bool currAccHasClaimsExpences = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ExpenseOfInvoice");
-            if (!currAccHasClaimsExpences)
+            if (!currAccHasClaimsExpences || !IsInvoiceExpensesEnabled)
                 BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
 
             bool currAccHasMakePayClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "MakePayment");
@@ -3226,8 +3238,18 @@ namespace Foxoft
                 BBI_EditInvoice.Visibility = BarItemVisibility.Never;
 
             bool currAccHasBonusEarn = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn");
-            if (!currAccHasBonusEarn)
+            if (!currAccHasBonusEarn || !IsLoyaltyEnabled)
                 BBI_LoyaltyCardInput.Visibility = BarItemVisibility.Never;
+
+            if (!IsLoyaltyEnabled)
+            {
+                LCI_LoyaltyEarn.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                LCI_LoyaltySumTxt.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                layoutControlItem1.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+            }
+
+            if (!IsWhatsAppEnabled)
+                bBI_Whatsapp.Visibility = BarItemVisibility.Never;
 
             if (colProductCost != null)
             {

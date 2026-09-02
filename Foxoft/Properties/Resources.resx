@@ -5442,4 +5442,13 @@ Please wait or choose another invoice.</value>
   <data name="ERP_ACE_LoyaltyPrograms" xml:space="preserve">
     <value>Loyalty Programs</value>
   </data>
+  <data name="Entity_AppSetting_UseWhatsApp" xml:space="preserve">
+    <value>Use WhatsApp</value>
+  </data>
+  <data name="Entity_AppSetting_UseLoyalty" xml:space="preserve">
+    <value>Use Loyalty Program</value>
+  </data>
+  <data name="Entity_AppSetting_UseInvoiceExpenses" xml:space="preserve">
+    <value>Use Invoice Expenses</value>
+  </data>
 </root>

@@ -5442,4 +5442,13 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="ERP_ACE_LoyaltyPrograms" xml:space="preserve">
     <value>Loyallıq Proqramları</value>
   </data>
+  <data name="Entity_AppSetting_UseWhatsApp" xml:space="preserve">
+    <value>WhatsApp istifadə et</value>
+  </data>
+  <data name="Entity_AppSetting_UseLoyalty" xml:space="preserve">
+    <value>Loyallıq / Bonus proqramından istifadə et</value>
+  </data>
+  <data name="Entity_AppSetting_UseInvoiceExpenses" xml:space="preserve">
+    <value>Qaimə xərclərindən istifadə et</value>
+  </data>
 </root>
