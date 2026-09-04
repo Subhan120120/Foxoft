@@ -1,10 +1,4 @@
-﻿
-
-
-
-
-
-select 	CurrAccDesc
+﻿select 	CurrAccDesc
 	--, ProductDesc
 	, NetAmountLoc
 	, PaymentLoc
@@ -16,6 +10,7 @@ select 	CurrAccDesc
 	, DocumentTime
 	, InvoiceHeaderId
 	, PaymentHeaderId
+	, PayrollHeaderId
 	, LineDescription
 	, IsReturn
 	, StoreCode
@@ -26,10 +21,11 @@ from (
 	--, ProductDesc
 	, ih.InvoiceHeaderId
 	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)
+	, PayrollHeaderId = cast(cast(0 as binary) as uniqueidentifier)
 	, NetAmountLoc = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd
 	, PaymentLoc= 0
 	, Summary = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd
-	, ProcessDesc = ProcessDesc
+	, ProcessDesc = IIF(IsReturn = 1, ProcessDesc + ' - Geri Qaytarma', ProcessDesc)
 	, DocumentNumber
 	, ih.StoreCode
 	, ih.CurrAccCode
@@ -65,10 +61,11 @@ from (
 	, CurrAccDesc = CurrAccDesc
 	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)
 	, TrPaymentHeaders.PaymentHeaderId
+	, PayrollHeaderId = cast(cast(0 as binary) as uniqueidentifier)
 	, NetAmountLoc = 0
 	, PaymentLoc
 	, Summary = PaymentLoc
-	, ProcessDesc = N'Ödəniş'
+	, ProcessDesc = IIF(PaymentTypeCode = 3, N'Bonus', N'Ödəniş')
 	, DocumentNumber
 	, TrPaymentHeaders.StoreCode
 	, TrPaymentHeaders.CurrAccCode
@@ -81,6 +78,29 @@ from (
 	from TrPaymentLines
 	left join TrPaymentHeaders on TrPaymentLines.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId
 	left join DcCurrAccs  on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode	
+
+	UNION ALL
+
+	select FirstName = DcCurrAccs.FirstName
+	, CurrAccDesc = DcCurrAccs.CurrAccDesc
+	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)
+	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)
+	, PayrollHeaderId = prh.Id
+	, NetAmountLoc = prh.NetSalary
+	, PaymentLoc = 0
+	, Summary = prh.NetSalary
+	, ProcessDesc = N'Əməkhaqqı'
+	, DocumentNumber = CONCAT('PR-', prp.PeriodYear, '-', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2))
+	, StoreCode = DcCurrAccs.StoreCode
+	, CurrAccCode = prh.CurrAccCode
+	, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))
+	, DocumentTime = CAST('00:00:00' AS TIME)
+	, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı')
+	, ProcessCode = 'PR'
+	, IsReturn = CAST(0 as bit)
+	from TrPayrollHeaders prh
+	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id
+	left join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode
 
 ) as CurrAccExtra where 1=1 {CurrAccCode}
 

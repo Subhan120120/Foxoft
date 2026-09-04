@@ -1,4 +1,4 @@
-using DevExpress.CodeParser;
+﻿using DevExpress.CodeParser;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
@@ -814,6 +814,39 @@ namespace Foxoft
                 .FirstOrDefault(x => x.Id == id.Value);
         }
 
+        public TrPayrollHeader? SelectPayrollHeaderByDocNum(string documentNumber, string? currAccCode = null)
+        {
+            using subContext db = new();
+
+            if (Guid.TryParse(documentNumber, out Guid id))
+            {
+                return db.TrPayrollHeaders
+                    .Include(x => x.Lines)
+                    .Include(x => x.PayrollPeriod)
+                    .FirstOrDefault(x => x.Id == id);
+            }
+
+            if (!string.IsNullOrWhiteSpace(documentNumber) && documentNumber.StartsWith("PR-", StringComparison.OrdinalIgnoreCase))
+            {
+                string[] parts = documentNumber.Split('-');
+                if (parts.Length >= 3 && int.TryParse(parts[1], out int year) && int.TryParse(parts[2], out int month))
+                {
+                    var query = db.TrPayrollHeaders
+                        .Include(x => x.Lines)
+                        .Include(x => x.PayrollPeriod)
+                        .Where(x => x.PayrollPeriod.PeriodYear == year && x.PayrollPeriod.PeriodMonth == month);
+
+                    if (!string.IsNullOrWhiteSpace(currAccCode))
+                        query = query.Where(x => x.CurrAccCode == currAccCode);
+
+                    return query.FirstOrDefault();
+                }
+            }
+
+            return null;
+        }
+
+        
         public bool ReturnExistByInvoiceLine(Guid relatedLineId)
         {
             using subContext db = new();

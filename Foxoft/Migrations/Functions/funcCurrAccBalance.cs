@@ -48,9 +48,22 @@ namespace Foxoft.Migrations
                                 ), 
                                 0
                             )
+
+                            -- Calculate the sum of payrolls (HR)
+                            DECLARE @payrollSum DECIMAL(18, 2)
+                            SET @payrollSum = ISNULL(
+                                (
+                                    SELECT SUM(prh.NetSalary)
+                                    FROM TrPayrollHeaders prh
+                                    LEFT JOIN DcPayrollPeriods prp ON prh.PayrollPeriodId = prp.Id
+                                    WHERE prh.CurrAccCode = @CurrAccCode
+                                      AND (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <= @DateTime
+                                ), 
+                                0
+                            )
                         
                             -- Calculate the result
-                            SET @result = @invoiceSum + @paymentSum
+                            SET @result = @invoiceSum + @paymentSum + @payrollSum
                         
                             RETURN @result
                         END

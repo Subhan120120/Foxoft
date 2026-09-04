@@ -1,8 +1,6 @@
-﻿
-
-select DcCurrAccs.CurrAccCode
+﻿select DcCurrAccs.CurrAccCode
 , CurrAccDesc
-, Balance =ISNULL(SUM(CAST(Amount as money)),0)
+, Balance = ISNULL(SUM(CAST(Amount as money)), 0)
 , PhoneNum
 , IsVIP
 , CurrAccTypeCode
@@ -29,6 +27,16 @@ left join
 	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	
 	where 1=1 AND pl.PaymentTypeCode != 4
 	--and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=
+	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
+
+	UNION ALL
+
+	select CurrAccCode = prh.CurrAccCode
+	, Amount = prh.NetSalary
+	from TrPayrollHeaders prh
+	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id
+	where 1 = 1
+	--and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=
 	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
 ) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode
 where 1 = 1 

@@ -1,4 +1,4 @@
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
@@ -133,6 +133,7 @@ namespace Foxoft
                 "EI" => "ExpenseOfInvoice",
                 "PA" => "PaymentDetail",
                 "CT" => "CashTransfer",
+                "PR" => "PayrollList",
                 _ => ""
             };
         }

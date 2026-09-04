@@ -1,4 +1,4 @@
-#region usings
+﻿#region usings
 using DevExpress.Data;
 using DevExpress.Utils;
 using DevExpress.Utils.Design;
@@ -15,6 +15,7 @@ using DevExpress.XtraGrid.Localization;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.UI;
@@ -88,6 +89,7 @@ namespace Foxoft
             gV_Report.CalcRowHeight += gV_Report_CalcRowHeight;
             gV_Report.ShowingEditor += gV_Report_ShowingEditor;
             gV_Report.CustomUnboundColumnData += gV_Report_CustomUnboundColumnData;
+            gV_Report.DoubleClick += gV_Report_DoubleClick;
         }
 
         public FormReportGrid(string query, string filter, DcReport dcReport)
@@ -342,10 +344,45 @@ namespace Foxoft
             return isOpen;
         }
 
+        private void gV_Report_DoubleClick(object sender, EventArgs e)
+        {
+            DXMouseEventArgs ea = e as DXMouseEventArgs;
+            GridView view = sender as GridView;
+            if (view == null || ea == null) return;
+
+            GridHitInfo info = view.CalcHitInfo(ea.Location);
+            if (info.InRow || info.InRowCell)
+            {
+                object objDocNum = view.GetRowCellValue(info.RowHandle, "DocumentNumber")
+                                ?? view.GetRowCellValue(info.RowHandle, "InvoiceNumber");
+                string strDocNum = objDocNum?.ToString();
+
+                if (!string.IsNullOrEmpty(strDocNum))
+                {
+                    bool isOpen = InvoiceIsOpen(strDocNum);
+                    if (!isOpen)
+                        OpenFormInvoice(strDocNum);
+                }
+            }
+        }
+
         private void OpenFormInvoice(string strDocNum)
         {
             TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
+            TrPayrollHeader trPayrollHeader = null;
+
+            object objCurrAcc = gV_Report.GetRowCellValue(gV_Report.FocusedRowHandle, "CurrAccCode");
+            string currAccCode = objCurrAcc?.ToString();
+
+            object objPayrollId = gV_Report.GetRowCellValue(gV_Report.FocusedRowHandle, "PayrollHeaderId");
+            if (objPayrollId is Guid gId && gId != Guid.Empty)
+                trPayrollHeader = efMethods.SelectEntityByIdWithLine(gId);
+            else if (objPayrollId is string sId && Guid.TryParse(sId, out Guid parsedGId) && parsedGId != Guid.Empty)
+                trPayrollHeader = efMethods.SelectEntityByIdWithLine(parsedGId);
+
+            if (trPayrollHeader == null)
+                trPayrollHeader = efMethods.SelectPayrollHeaderByDocNum(strDocNum, currAccCode);
 
             if (trInvoiceHeader is not null)
             {
@@ -404,10 +441,24 @@ namespace Foxoft
                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
                 }
             }
+            else if (trPayrollHeader is not null)
+            {
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PayrollList");
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show(Resources.Common_AccessDenied);
+                    return;
+                }
+
+                using FormPayrollEdit frm = new(trPayrollHeader.Id);
+                if (frm.ShowDialog(this) == DialogResult.OK)
+                {
+                    LoadData();
+                }
+            }
             else
                 MessageBox.Show(Resources.Common_NotFound);
         }
-
         private bool TryActivateOpenInvoiceWindow(Guid invoiceHeaderId, FormERP formERP)
         {
             if (formERP == null)

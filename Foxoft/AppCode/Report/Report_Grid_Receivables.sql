@@ -1,8 +1,4 @@
-﻿
-
-
-
---declare @EndDate date = dateadd(DAY, 1, getdate())
+﻿--declare @EndDate date = dateadd(DAY, 1, getdate())
 --declare @EndTime time =  '00:00:00.000'
 
 select DcCurrAccs.CurrAccCode
@@ -21,7 +17,6 @@ left join
 	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd
 	from TrInvoiceLines il
 	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId
-
 --	where 1=1
 --	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=
 --	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
@@ -32,9 +27,18 @@ left join
 	, Amount = PaymentLoc -- 200 usd
 	from TrPaymentLines pl
 	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId
-	
 --	where 1=1 
 --	and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=
+--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
+
+	UNION ALL
+
+	select CurrAccCode = prh.CurrAccCode
+	, Amount = prh.NetSalary
+	from TrPayrollHeaders prh
+	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id
+--	where 1=1
+--	and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=
 --	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
 ) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode
 join DcCurrAccTypes on DcCurrAccTypes.CurrAccTypeCode = DcCurrAccs.CurrAccTypeCode
@@ -50,15 +54,3 @@ group by DcCurrAccs.CurrAccCode
 
 having   sum(Amount) < 0
 order by CurrAccDesc
-
-
-
-
-
-
-
-
-
-
-
-
