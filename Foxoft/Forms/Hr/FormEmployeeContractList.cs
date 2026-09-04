@@ -42,7 +42,9 @@ namespace Foxoft
                 {
                     x.Id,
                     x.CurrAccCode,
-                    EmployeeName = (x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName).Trim(),
+                    EmployeeName = (!string.IsNullOrEmpty(x.DcCurrAcc.CurrAccDesc)
+                        ? x.DcCurrAcc.CurrAccDesc
+                        : ((x.DcCurrAcc.FirstName ?? "") + " " + (x.DcCurrAcc.LastName ?? "")).Trim()),
                     EmploymentTypeName = x.EmploymentType != null ? x.EmploymentType.TypeName : "",
                     x.StartDate,
                     x.EndDate,
@@ -53,6 +55,7 @@ namespace Foxoft
 
             gridControl1.DataSource = list;
 
+            if (gridView1.Columns["Id"] != null) gridView1.Columns["Id"].Visible = false;
             if (gridView1.Columns["CurrAccCode"] != null) gridView1.Columns["CurrAccCode"].Caption = Properties.Resources.Entity_TrEmployeeContract_CurrAccCode;
             if (gridView1.Columns["EmployeeName"] != null) gridView1.Columns["EmployeeName"].Caption = Properties.Resources.Common_EmployeeName;
             if (gridView1.Columns["EmploymentTypeName"] != null) gridView1.Columns["EmploymentTypeName"].Caption = Properties.Resources.Entity_TrEmployeeContract_EmploymentTypeId;

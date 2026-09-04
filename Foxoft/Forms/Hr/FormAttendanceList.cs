@@ -41,7 +41,9 @@ namespace Foxoft
                 {
                     x.Id,
                     x.CurrAccCode,
-                    EmployeeName = (x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName).Trim(),
+                    EmployeeName = (!string.IsNullOrEmpty(x.DcCurrAcc.CurrAccDesc)
+                        ? x.DcCurrAcc.CurrAccDesc
+                        : ((x.DcCurrAcc.FirstName ?? "") + " " + (x.DcCurrAcc.LastName ?? "")).Trim()),
                     x.WorkDate,
                     x.CheckInTime,
                     x.CheckOutTime,
@@ -51,6 +53,7 @@ namespace Foxoft
 
             gridControl1.DataSource = list;
 
+            if (gridView1.Columns["Id"] != null) gridView1.Columns["Id"].Visible = false;
             if (gridView1.Columns["CurrAccCode"] != null) gridView1.Columns["CurrAccCode"].Caption = Properties.Resources.Entity_TrAttendance_CurrAccCode;
             if (gridView1.Columns["EmployeeName"] != null) gridView1.Columns["EmployeeName"].Caption = Properties.Resources.Common_EmployeeName;
             if (gridView1.Columns["WorkDate"] != null) gridView1.Columns["WorkDate"].Caption = Properties.Resources.Entity_TrAttendance_WorkDate;

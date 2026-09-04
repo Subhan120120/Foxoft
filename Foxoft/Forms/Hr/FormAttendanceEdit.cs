@@ -37,7 +37,10 @@ namespace Foxoft
             if (formCommonList.ShowDialog() == DialogResult.OK)
             {
                 btnEmployee.EditValue = formCommonList.dcCurrAcc.CurrAccCode;
-                txtEmployeeName.Text = $"{formCommonList.dcCurrAcc.FirstName} {formCommonList.dcCurrAcc.LastName}".Trim();
+                string name = $"{formCommonList.dcCurrAcc.FirstName} {formCommonList.dcCurrAcc.LastName}".Trim();
+                if (string.IsNullOrWhiteSpace(name))
+                    name = formCommonList.dcCurrAcc.CurrAccDesc ?? string.Empty;
+                txtEmployeeName.Text = name;
             }
         }
 
@@ -69,7 +72,10 @@ namespace Foxoft
                 var emp = db.DcCurrAccs.AsNoTracking().FirstOrDefault(x => x.CurrAccCode == entity.CurrAccCode);
                 if (emp != null)
                 {
-                    txtEmployeeName.Text = $"{emp.FirstName} {emp.LastName}".Trim();
+                    string name = $"{emp.FirstName} {emp.LastName}".Trim();
+                    if (string.IsNullOrWhiteSpace(name))
+                        name = emp.CurrAccDesc ?? string.Empty;
+                    txtEmployeeName.Text = name;
                 }
             }
 
