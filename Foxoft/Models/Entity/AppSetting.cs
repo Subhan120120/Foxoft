@@ -89,7 +89,7 @@ namespace Foxoft.Models
 
         [DefaultValueSql("1")]
         [Display(Name = nameof(Resources.Entity_AppSetting_UseWhatsApp), ResourceType = typeof(Resources))]
-        public bool UseWhatsApp { get; set; } = true;
+        public bool UseWhatsApp { get; set; } = false;
 
         [DefaultValueSql("0")]
         [Display(Name = "WhatsApp Provider")]
@@ -109,11 +109,11 @@ namespace Foxoft.Models
 
         [DefaultValueSql("1")]
         [Display(Name = nameof(Resources.Entity_AppSetting_UseLoyalty), ResourceType = typeof(Resources))]
-        public bool UseLoyalty { get; set; } = true;
+        public bool UseLoyalty { get; set; } = false;
 
         [DefaultValueSql("1")]
         [Display(Name = nameof(Resources.Entity_AppSetting_UseInvoiceExpenses), ResourceType = typeof(Resources))]
-        public bool UseInvoiceExpenses { get; set; } = true;
+        public bool UseInvoiceExpenses { get; set; } = false;
 
 
         [ForeignKey("LocalCurrencyCode")]
