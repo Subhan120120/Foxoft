@@ -1,4 +1,4 @@
-﻿using DevExpress.CodeParser;
+using DevExpress.CodeParser;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
@@ -123,7 +123,7 @@ namespace Foxoft
 
                 InvoiceLines.ForEach(x =>
                 {
-                    x.ProductDesc = x.DcProduct.ProductDesc;
+                    x.ProductDesc = x.DcProduct?.ProductDesc;
                 });
 
                 return InvoiceLines;
@@ -173,7 +173,7 @@ namespace Foxoft
                     var returnedQty = returnedByRelatedId.TryGetValue(src.InvoiceLineId, out var rq) ? rq : 0m;
                     var deliveredQty = deliveredByRelatedId.TryGetValue(src.InvoiceLineId, out var dq) ? dq : 0m;
 
-                    dest.ProductDesc = src.DcProduct.ProductDesc;
+                    dest.ProductDesc = src.DcProduct?.ProductDesc;
                     dest.ReturnQty = returnedQty;
                     dest.RemainingQty = Math.Abs(src.QtyIn - src.QtyOut) - returnedQty;
                     dest.DeliveredQty = deliveredQty;
