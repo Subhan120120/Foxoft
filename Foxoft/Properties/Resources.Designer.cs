@@ -15499,5 +15499,131 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("ERP_ACE_LoyaltyPrograms", resourceCulture);
             }
         }
+
+        public static string Form_PayrollList_CalculatePayroll {
+            get {
+                return ResourceManager.GetString("Form_PayrollList_CalculatePayroll", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_Caption {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_WelcomeTitle {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_WelcomeTitle", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_WelcomeText {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_WelcomeText", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_EmployeesTitle {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_EmployeesTitle", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_EmployeesText {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_EmployeesText", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_CompletionTitle {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_CompletionTitle", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_CompletionText {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_CompletionText", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_SelectPeriod {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_SelectPeriod", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_NoPeriodSelected {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_NoPeriodSelected", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_NoEmployeesSelected {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_NoEmployeesSelected", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_SuccessMessage {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_SuccessMessage", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_Status_New {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_Status_New", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_Status_Exists {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_Status_Exists", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrPayrollHeader_Bonus {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollHeader_Bonus", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrPayrollHeader_Deduction {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollHeader_Deduction", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrPayrollHeader_BaseSalary {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollHeader_BaseSalary", resourceCulture);
+            }
+        }
+
+        public static string Common_SelectAll {
+            get {
+                return ResourceManager.GetString("Common_SelectAll", resourceCulture);
+            }
+        }
+
+        public static string Common_UnselectAll {
+            get {
+                return ResourceManager.GetString("Common_UnselectAll", resourceCulture);
+            }
+        }
+
+        public static string Common_Status {
+            get {
+                return ResourceManager.GetString("Common_Status", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollList_DeleteMultipleConfirm {
+            get {
+                return ResourceManager.GetString("Form_PayrollList_DeleteMultipleConfirm", resourceCulture);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿// File: Models/TrPayrollLine.cs
+// File: Models/TrPayrollLine.cs
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,6 +15,7 @@ namespace Foxoft.Models
         public Guid PayrollHeaderId { get; set; }
 
         [ForeignKey(nameof(PayrollHeaderId))]
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public TrPayrollHeader PayrollHeader { get; set; } = null!;
 
         [Required]

@@ -28,11 +28,13 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPayrollList));
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             btnNew = new DevExpress.XtraBars.BarButtonItem();
             btnEdit = new DevExpress.XtraBars.BarButtonItem();
             btnDelete = new DevExpress.XtraBars.BarButtonItem();
             btnRefresh = new DevExpress.XtraBars.BarButtonItem();
+            btnWizard = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             grid = new MyGridControl();
@@ -45,40 +47,52 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, btnNew, btnEdit, btnDelete, btnRefresh });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, btnNew, btnEdit, btnDelete, btnRefresh, btnWizard });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 6;
+            ribbonControl1.MaxItemId = 7;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(800, 158);
             // 
             // btnNew
             // 
-            btnNew.Caption = Foxoft.Properties.Resources.Common_New;
+            btnNew.Caption = Properties.Resources.Common_New;
             btnNew.Id = 1;
+            btnNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnNew.ImageOptions.SvgImage");
             btnNew.Name = "btnNew";
             btnNew.ItemClick += BtnNew_ItemClick;
             // 
             // btnEdit
             // 
-            btnEdit.Caption = Foxoft.Properties.Resources.Common_Edit;
+            btnEdit.Caption = Properties.Resources.Common_Edit;
             btnEdit.Id = 2;
+            btnEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnEdit.ImageOptions.SvgImage");
             btnEdit.Name = "btnEdit";
             btnEdit.ItemClick += BtnEdit_ItemClick;
             // 
             // btnDelete
             // 
-            btnDelete.Caption = Foxoft.Properties.Resources.Common_Delete;
+            btnDelete.Caption = Properties.Resources.Common_Delete;
             btnDelete.Id = 3;
+            btnDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnDelete.ImageOptions.SvgImage");
             btnDelete.Name = "btnDelete";
             btnDelete.ItemClick += BtnDelete_ItemClick;
             // 
             // btnRefresh
             // 
-            btnRefresh.Caption = Foxoft.Properties.Resources.Common_Refresh;
+            btnRefresh.Caption = Properties.Resources.Common_Refresh;
             btnRefresh.Id = 4;
+            btnRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnRefresh.ImageOptions.SvgImage");
             btnRefresh.Name = "btnRefresh";
             btnRefresh.ItemClick += BtnRefresh_ItemClick;
+            // 
+            // btnWizard
+            // 
+            btnWizard.Caption = Properties.Resources.Form_PayrollList_CalculatePayroll;
+            btnWizard.Id = 5;
+            btnWizard.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnNew.ImageOptions.SvgImage");
+            btnWizard.Name = "btnWizard";
+            btnWizard.ItemClick += BtnWizard_ItemClick;
             // 
             // ribbonPage1
             // 
@@ -92,6 +106,7 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(btnEdit);
             ribbonPageGroup1.ItemLinks.Add(btnDelete);
             ribbonPageGroup1.ItemLinks.Add(btnRefresh);
+            ribbonPageGroup1.ItemLinks.Add(btnWizard);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Payroll";
             // 
@@ -110,10 +125,15 @@ namespace Foxoft
             // 
             view.GridControl = grid;
             view.Name = "view";
-            view.OptionsBehavior.Editable = false;
+            view.OptionsSelection.MultiSelect = true;
+            view.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+            view.OptionsSelection.ShowCheckBoxSelectorInColumnHeader = DevExpress.Utils.DefaultBoolean.True;
             view.OptionsView.ColumnAutoWidth = false;
             view.OptionsView.ShowAutoFilterRow = true;
             view.CustomDrawRowIndicator += View_CustomDrawRowIndicator;
+            view.PopupMenuShowing += View_PopupMenuShowing;
+            view.ShowingEditor += View_ShowingEditor;
+            view.DoubleClick += View_DoubleClick;
             // 
             // FormPayrollList
             // 
@@ -124,7 +144,7 @@ namespace Foxoft
             Controls.Add(ribbonControl1);
             Name = "FormPayrollList";
             Ribbon = ribbonControl1;
-            Text = Foxoft.Properties.Resources.Form_PayrollList_Caption;
+            Text = "Payrolls";
             Load += FormPayrollList_Load;
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)grid).EndInit();
@@ -145,6 +165,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem btnEdit;
         private DevExpress.XtraBars.BarButtonItem btnDelete;
         private DevExpress.XtraBars.BarButtonItem btnRefresh;
+        private DevExpress.XtraBars.BarButtonItem btnWizard;
 
         private MyGridControl grid;
         private MyGridView view;

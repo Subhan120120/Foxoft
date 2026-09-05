@@ -1,4 +1,4 @@
-﻿
+
 
 SELECT 
  Menfeet = Satis - Maya
@@ -74,6 +74,67 @@ left join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPer
 
 where TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'WS', 'RS', 'IS', 'EX')
 --and DocumentNumber = 'RS-000012'
+
+UNION ALL
+
+select InvoiceLineId = cast(cast(0 as binary) as uniqueidentifier)
+, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)
+, ProductCode = ''
+, ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)
+, Price = prh.GrossSalary
+, PriceLoc = prh.GrossSalary
+, Amount = prh.GrossSalary
+, NetAmountLoc = prh.GrossSalary
+, PosDiscount = cast(0 as decimal(18, 2))
+, QtyIn = cast(0 as decimal(18, 4))
+, QtyOut = cast(0 as decimal(18, 4))
+, Satis = cast(0 as decimal(18, 2))
+, Maya = cast(0 as decimal(18, 2))
+, Xərc = prh.GrossSalary
+, Artirma = cast(0 as decimal(18, 2))
+, Silinme = cast(0 as decimal(18, 2))
+, IsReturn = cast(0 as bit)
+, ProductCost = cast(0 as decimal(18, 2))
+, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')
+, SalesPersonCode = ''
+, CurrencyCode = 'AZN'
+, ExchangeRate = cast(1 as decimal(18, 4))
+, ProcessCode = 'PR'
+, ProcessDesc = N'Əməkhaqqı'
+, InvoiceNumber = CONCAT('PR-', prp.PeriodYear, '-', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2))
+, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))
+, DocumentTime = CAST('00:00:00' AS TIME)
+, OperationDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))
+, OperationTime = CAST('00:00:00' AS TIME)
+, Description = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı')
+, CurrAccCode = prh.CurrAccCode
+, CurrAccDesc = DcCurrAccs.CurrAccDesc
+, CurrAccTypeDesc = DcCurrAccTypes.CurrAccTypeDesc
+, CurrAccTypeCode = DcCurrAccs.CurrAccTypeCode
+, OfficeCode = ''
+, StoreCode = DcCurrAccs.StoreCode
+, WarehouseCode = ''
+, CustomsDocumentNumber = ''
+, PosTerminalId = cast(null as int)
+, IsSuspended = cast(0 as bit)
+, IsCompleted = cast(1 as bit)
+, IsSalesViaInternet = cast(0 as bit)
+, IsLocked = prp.IsClosed
+, ProductTypeCode = cast(null as int)
+, ProductTypeDesc = ''
+, UsePos = cast(0 as bit)
+, PromotionCode = ''
+, TaxRate = cast(0 as decimal(18, 2))
+, RetailPrice = cast(0 as decimal(18, 2))
+, PurchasePrice = cast(0 as decimal(18, 2))
+, WholesalePrice = cast(0 as decimal(18, 2))
+, CreatedDate = cast(null as datetime)
+, CreatedUserName = ''
+, PriceDiscountedLoc = cast(0 as decimal(18, 2))
+from TrPayrollHeaders prh
+left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id
+left join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode
+left join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode
 ) Dvijok
 order by Dvijok.DocumentDate
 

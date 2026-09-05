@@ -798,8 +798,9 @@ namespace Foxoft
                 .Select(x => new
                 {
                     x.Id,
+                    x.CurrAccCode,
                     Period = x.PayrollPeriod.PeriodYear.ToString() + "-" + x.PayrollPeriod.PeriodMonth.ToString("00"),
-                    Employee = x.DcCurrAcc.CurrAccCode + " - " + x.DcCurrAcc.CurrAccDesc + " - " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName,
+                    Employee = (!string.IsNullOrEmpty(x.DcCurrAcc.CurrAccDesc) ? x.DcCurrAcc.CurrAccDesc : (x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName)).Trim(),
                     x.GrossSalary,
                     x.NetSalary
                 })
@@ -1497,149 +1498,6 @@ namespace Foxoft
         }
 
 
-        //public decimal SelectInstallmentsSumByInvoice(Guid invoiceHeaderId)
-        //{
-        //    using subContext db = new();
-
-        //    return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-        //                            .Sum(s => s.AmountLoc);
-        //}
-
-        //public decimal SelectInstallmentCommissionsSumByInvoice(Guid invoiceHeaderId)
-        //{
-        //    using subContext db = new();
-
-        //    return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-        //                            .Sum(s => s.Commission / (decimal)s.ExchangeRate);
-        //}
-
-        //public decimal SelectInstallmentsTotalSumByInvoice(Guid invoiceHeaderId)
-        //{
-        //    using subContext db = new();
-
-        //    return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-        //                            .Sum(s => s.AmountLoc + (s.Commission / (decimal)s.ExchangeRate));
-        //}
-
-        //public List<TrInstallmentViewModel> SelectInstallmentsVM()
-        //{
-        //    using subContext db = new();
-
-        //    DateTime currentDate = DateTime.Now;
-
-        //    var installments = db.TrInstallments
-        //        .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
-        //        .Include(x => x.DcInstallmentPlan)
-        //        .Select(installment => new
-        //        {
-        //            Installment = installment,
-        //            PaymentLinesSum = db.TrPaymentLines
-        //                .Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
-        //                            x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
-        //                .Sum(s => s.PaymentLoc)
-        //        })
-        //        .AsEnumerable() // Materialize query to client-side (switch from SQL to LINQ to Objects)
-        //        .Select(temp =>
-        //        {
-        //            var installment = temp.Installment;
-        //            var totalPaid = temp.PaymentLinesSum;
-        //            var AmountWithComLoc = installment.AmountLoc + installment.Commission;
-        //            var monthlyPayment = AmountWithComLoc / installment.DcInstallmentPlan.DurationInMonths;
-        //            var monthsPaid = (int)(totalPaid / monthlyPayment);
-        //            var overdueDate = installment.DocumentDate.AddMonths(monthsPaid + 1);
-        //            var overdueDays = currentDate > overdueDate ? (currentDate - overdueDate).Days : 0;
-
-        //            return new TrInstallmentViewModel
-        //            {
-        //                InstallmentId = installment.InstallmentId,
-        //                InvoiceHeaderId = installment.InvoiceHeaderId,
-        //                CurrAccCode = installment.TrInvoiceHeader.CurrAccCode,
-        //                DocumentDate = installment.DocumentDate,
-        //                PaymentPlanCode = installment.InstallmentPlanCode,
-        //                Amount = installment.Amount,
-        //                AmountLoc = AmountWithComLoc,
-        //                CurrencyCode = installment.CurrencyCode,
-        //                ExchangeRate = installment.ExchangeRate,
-        //                TotalPaid = totalPaid,
-        //                RemainingBalance = AmountWithComLoc - totalPaid,
-        //                MonthlyPayment = monthlyPayment,
-        //                DueAmount = totalPaid - (currentDate - installment.DocumentDate).Days / 30 * monthlyPayment,
-        //                OverdueDate = overdueDate,
-        //                OverdueDays = overdueDays
-        //            };
-        //        })
-        //        .ToList();
-
-        //    return installments;
-        //}
-
-        public List<DcCurrAcc> SelectCurrAccs(byte[] currAccTypeArr)
-        {
-            using subContext db = new();
-
-            CurrAccType[] types = currAccTypeArr.Select(x => (CurrAccType)x).ToArray();
-
-            List<DcCurrAcc> asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false
-                                              && types.Contains(x.CurrAccTypeCode)
-                                              && x.CurrAccTypeCode != CurrAccType.CashRegister) // kassanin balansi ayri hesablanir , ona gore yazilib
-                       .OrderBy(x => x.CreatedDate)
-                       .Select(x => new DcCurrAcc
-                       {
-                           CurrAccCode = x.CurrAccCode,
-                           CurrAccDesc = x.CurrAccDesc,
-                           CreditLimit = x.CreditLimit,
-                           CurrAccTypeCode = x.CurrAccTypeCode,
-                           IsVip = x.IsVip,
-                           PhoneNum = x.PhoneNum,
-                           Address = x.Address,
-                           StoreCode = x.StoreCode,
-                           FirstName = x.FirstName,
-                           LastName = x.LastName,
-                           CreatedDate = x.CreatedDate,
-                           CreatedUserName = x.CreatedUserName,
-                           LastUpdatedDate = x.LastUpdatedDate,
-                           LastUpdatedUserName = x.LastUpdatedUserName,
-                           Balance = db.TrInvoiceLines.Include(l => l.TrInvoiceHeader)
-                                                     .Where(l => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(l.TrInvoiceHeader.ProcessCode))
-                                                     .Where(l => l.TrInvoiceHeader.CurrAccCode == x.CurrAccCode)
-                                                     .Sum(s => (s.QtyIn - s.QtyOut) * (s.PriceLoc - (s.PriceLoc * s.PosDiscount / 100)))
-                                  + db.TrPaymentLines.Include(l => l.TrPaymentHeader)
-                                                     .Where(l => l.TrPaymentHeader.CurrAccCode == x.CurrAccCode)
-                                                     .Sum(s => s.PaymentLoc),
-                       })
-                       .ToList();
-
-            List<DcCurrAcc> asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false
-                                                && x.CurrAccTypeCode == CurrAccType.CashRegister // kassanin balansi ayri hesablanir , ona gore yazilib
-                                                && types.Contains(x.CurrAccTypeCode))
-                       .OrderBy(x => x.CreatedDate)
-                       .Select(x => new DcCurrAcc
-                       {
-                           CurrAccCode = x.CurrAccCode,
-                           CurrAccDesc = x.CurrAccDesc,
-                           CreditLimit = x.CreditLimit,
-                           CurrAccTypeCode = x.CurrAccTypeCode,
-                           IsVip = x.IsVip,
-                           PhoneNum = x.PhoneNum,
-                           Address = x.Address,
-                           StoreCode = x.StoreCode,
-                           FirstName = x.FirstName,
-                           LastName = x.LastName,
-                           CreatedDate = x.CreatedDate,
-                           CreatedUserName = x.CreatedUserName,
-                           LastUpdatedDate = x.LastUpdatedDate,
-                           LastUpdatedUserName = x.LastUpdatedUserName,
-                           Balance = db.TrPaymentLines.Include(l => l.TrPaymentHeader)
-                                                     .Where(l => l.CashRegisterCode == x.CurrAccCode)
-                                                     .Sum(s => s.PaymentLoc),
-                       })
-                       .ToList();
-
-            asdasd.AddRange(asdasd2);
-
-            return asdasd;
-        }
-
         public DcCurrAcc SelectCurrAcc(string currAccCode)
         {
             using subContext db = new();
@@ -1769,7 +1627,13 @@ namespace Foxoft
             decimal paymentSum = paymentLinesQuery
                                        .Sum(x => (decimal?)x.PaymentLoc) ?? 0m;
 
-            return paymentSum + invoiceSum;
+            decimal payrollSum = db.TrPayrollHeaders
+                                       .Where(x => x.CurrAccCode == currAccCode)
+                                       .Where(x => x.PayrollPeriod.PeriodYear < dateOnly.Year
+                                                || (x.PayrollPeriod.PeriodYear == dateOnly.Year && x.PayrollPeriod.PeriodMonth <= dateOnly.Month))
+                                       .Sum(x => (decimal?)x.NetSalary) ?? 0m;
+
+            return paymentSum + invoiceSum + payrollSum;
         }
 
         public decimal SelectCashRegBalance(string cashRegCode, DateTime documentDate)
