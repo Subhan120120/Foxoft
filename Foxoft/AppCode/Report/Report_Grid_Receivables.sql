@@ -43,6 +43,7 @@ left join
 ) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode
 join DcCurrAccTypes on DcCurrAccTypes.CurrAccTypeCode = DcCurrAccs.CurrAccTypeCode
 where 1 = 1 
+	and DcCurrAccs.CurrAccTypeCode in (1, 2, 3)
 	--and DcCurrAccs.IsVIP = 1 
 	--and balance.CurrAccCode = '1403'
 group by DcCurrAccs.CurrAccCode
