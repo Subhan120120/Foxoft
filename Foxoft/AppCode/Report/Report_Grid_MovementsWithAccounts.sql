@@ -1,4 +1,4 @@
-﻿select 	CurrAccDesc
+select 	CurrAccDesc
 	--, ProductDesc
 	, NetAmountLoc
 	, PaymentLoc
@@ -94,7 +94,7 @@ from (
 	, StoreCode = DcCurrAccs.StoreCode
 	, CurrAccCode = prh.CurrAccCode
 	, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))
-	, DocumentTime = CAST('00:00:00' AS TIME)
+	, DocumentTime = CAST('23:59:59' AS TIME)
 	, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı')
 	, ProcessCode = 'PR'
 	, IsReturn = CAST(0 as bit)
