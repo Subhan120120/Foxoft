@@ -4,9 +4,9 @@ param(
     [string]$AzValue
 )
 
-$resBase = "C:\Users\Subhan\source\repos\Foxoft\Foxoft\Properties\Resources.resx"
-$resAz = "C:\Users\Subhan\source\repos\Foxoft\Foxoft\Properties\Resources.az.resx"
-$designer = "C:\Users\Subhan\source\repos\Foxoft\Foxoft\Properties\Resources.Designer.cs"
+$resBase = Join-Path $PSScriptRoot "..\Properties\Resources.resx"
+$resAz = Join-Path $PSScriptRoot "..\Properties\Resources.az.resx"
+$designer = Join-Path $PSScriptRoot "..\Properties\Resources.Designer.cs"
 
 function Add-ToResx($file, $key, $value) {
     [xml]$xml = Get-Content $file -Encoding UTF8

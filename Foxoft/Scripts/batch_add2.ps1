@@ -65,9 +65,9 @@ $items = @(
     @("Credit_Usage", "Usage", "Xərc")
 )
 
-$resBase = "C:\Users\Subhan\source\repos\Foxoft\Foxoft\Properties\Resources.resx"
-$resAz = "C:\Users\Subhan\source\repos\Foxoft\Foxoft\Properties\Resources.az.resx"
-$designer = "C:\Users\Subhan\source\repos\Foxoft\Foxoft\Properties\Resources.Designer.cs"
+$resBase = Join-Path $PSScriptRoot "..\Properties\Resources.resx"
+$resAz = Join-Path $PSScriptRoot "..\Properties\Resources.az.resx"
+$designer = Join-Path $PSScriptRoot "..\Properties\Resources.Designer.cs"
 
 [xml]$xmlBase = Get-Content $resBase -Encoding UTF8
 [xml]$xmlAz = Get-Content $resAz -Encoding UTF8

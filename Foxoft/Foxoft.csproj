@@ -353,16 +353,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="FormCurrAccFeature.cs">
+		<Compile Update="FormCurrAcc\FormCurrAccFeature.cs">
 			<SubType>Form</SubType>
 		</Compile>
-		<Compile Update="FormClaimCategoryList.cs">
+		<Compile Update="FormSecurity\FormClaimCategoryList.cs">
 			<SubType>Form</SubType>
 		</Compile>
-		<Compile Update="FormInvoiceLineUndeliveredList.cs">
+		<Compile Update="FormInvoice\FormInvoiceLineUndeliveredList.cs">
 			<SubType>Form</SubType>
 		</Compile>
-		<Compile Update="FormProductStaticPrice.cs">
+		<Compile Update="FormProduct\FormProductStaticPrice.cs">
 			<SubType>Form</SubType>
 		</Compile>
 		<Compile Update="Properties\Resources.Designer.cs">
@@ -375,7 +375,6 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Settings.settings</DependentUpon>
 		</Compile>
-		<Compile Update="FormWaybill.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
