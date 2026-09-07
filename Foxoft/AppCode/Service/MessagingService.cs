@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Properties;
 using Foxoft.AppCode;
 using Microsoft.Data.SqlClient;
@@ -372,11 +372,12 @@ namespace Foxoft.AppCode.Service
             string formattedNumber = phoneNum.Trim().Replace("+", "").Replace(" ", "");
 
             using var db = new subContext();
-            var logEntry = new TrWhatsAppMessageLog
+            var logEntry = new TrMessageLog
             {
-                WhatsAppMessageLogId = Guid.NewGuid(),
+                MessageLogId = Guid.NewGuid(),
                 DocumentHeaderId = documentHeaderId,
                 ReceiverPhoneNumber = formattedNumber,
+                ChannelCode = NotificationChannels.WhatsApp,
                 MessageType = messageType,
                 Message = message,
                 Sender = Authorization.CurrAccCode,
@@ -386,7 +387,7 @@ namespace Foxoft.AppCode.Service
             {
                 logEntry.IsSuccessful = false;
 
-                db.TrWhatsAppMessageLogs.Add(logEntry);
+                db.TrMessageLogs.Add(logEntry);
                 db.SaveChanges();
                 return false;
             }
@@ -400,14 +401,15 @@ namespace Foxoft.AppCode.Service
 
                 db.TrCredits.Add(WhatsAppCreditService.CreateUsage(messageType, formattedNumber));
 
-                db.TrWhatsAppMessageLogs.Add(logEntry);
+                db.TrMessageLogs.Add(logEntry);
                 db.SaveChanges();
                 return true;
             }
             catch (Exception ex)
             {
                 logEntry.IsSuccessful = false;
-                db.TrWhatsAppMessageLogs.Add(logEntry);
+                logEntry.ErrorMessage = ex.Message;
+                db.TrMessageLogs.Add(logEntry);
                 db.SaveChanges();
 
                 var mainForm = System.Windows.Forms.Application.OpenForms.OfType<System.Windows.Forms.Form>().FirstOrDefault();

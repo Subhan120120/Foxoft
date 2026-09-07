@@ -214,7 +214,8 @@ namespace Foxoft
                 case "CurrencyList": ShowExistForm<FormCommonList<DcCurrency>>("", nameof(DcCurrency.CurrencyCode)); break;
                 case "PaymentMethodList": ShowExistForm<FormPaymentMethodList>(); break;
                 case "PaymentPlanList": ShowExistForm<FormPaymentPlanList>(); break;
-                case "WhatsAppMessageLog": ShowExistForm<FormWhatsAppMessageLog>(); break;
+                case "MessageLog": ShowExistForm<FormMessageLog>(); break;
+                case "WhatsAppMessageLog": ShowExistForm<FormMessageLog>(); break;
                 case "NotificationCenter": ShowExistForm<FormNotificationCenter>(); break;
                 case "NotificationRules": ShowExistForm<FormNotificationRule>(); break;
                 case "NotificationTemplates": ShowExistForm<FormNotificationTemplate>(); break;
@@ -328,7 +329,7 @@ namespace Foxoft
             this.ACE_CurrencyList.Name = "CurrencyList";
             this.ACE_PaymentMethodList.Name = "PaymentMethodList";
             this.ACE_PaymentPlanList.Name = "PaymentPlanList";
-            this.ACE_WhatsAppMessageLog.Name = "WhatsAppMessageLog";
+            this.ACE_MessageLog.Name = "MessageLog";
             this.ACE_NotificationCenter.Name = "NotificationCenter";
             this.ACE_NotificationRules.Name = "NotificationRules";
             this.ACE_NotificationTemplates.Name = "NotificationTemplates";

@@ -185,7 +185,7 @@ namespace Foxoft
                     gridView1.Columns.Add(gridColumn);
                 }
             }
-            else if (column.FieldName == nameof(TrWhatsAppMessageLog.CurrAccCode))
+            else if (column.FieldName == nameof(TrMessageLog.CurrAccCode))
             {
                 if (gridView1.Columns["CurrAccDesc"] is null)
                 {
@@ -390,7 +390,7 @@ namespace Foxoft
             }
             else if (e.Column.FieldName == "CurrAccDesc" && e.IsGetData)
             {
-                object value = view.GetRowCellValue(rowInd, nameof(TrWhatsAppMessageLog.CurrAccCode));
+                object value = view.GetRowCellValue(rowInd, nameof(TrMessageLog.CurrAccCode));
 
                 if (value is not null)
                 {

@@ -15625,5 +15625,203 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_PayrollList_DeleteMultipleConfirm", resourceCulture);
             }
         }
+
+        public static string Entity_TrMessageLog_MessageLogId {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_MessageLogId", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrMessageLog_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_CurrAccCode", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrMessageLog_MessageType {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_MessageType", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrMessageLog_ChannelCode {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_ChannelCode", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrMessageLog_ReceiverPhoneNumber {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_ReceiverPhoneNumber", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrMessageLog_Message {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_Message", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrMessageLog_IsSuccessful {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_IsSuccessful", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrMessageLog_ImageFileName {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_ImageFileName", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrMessageLog_ErrorMessage {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_ErrorMessage", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog {
+            get {
+                return ResourceManager.GetString("Form_MessageLog", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Channel {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Channel", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Summary_Balance_Subtitle {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Balance_Subtitle", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Summary_Balance_Title {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Balance_Title", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Summary_Last30Days_Subtitle {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Last30Days_Subtitle", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Summary_Last30Days_Title {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Last30Days_Title", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Summary_Today_Subtitle {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Today_Subtitle", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Summary_Today_Title {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Today_Title", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Summary_Total_Subtitle {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Total_Subtitle", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Summary_Total_Title {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Total_Title", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_SendSelected {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendSelected", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_SendAgain {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendAgain", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_Action {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Action", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_SendAllUnsent {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendAllUnsent", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_SendAllUnsentConfirm {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendAllUnsentConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_SendResult {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendResult", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_NoUnsentMessages {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_NoUnsentMessages", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_AlreadySent {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_AlreadySent", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_NotFound {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_NotFound", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_PhoneRequired {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_PhoneRequired", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_ImageFileNotFound {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_ImageFileNotFound", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_MessageRequired {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_MessageRequired", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_ImagePreview {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_ImagePreview", resourceCulture);
+            }
+        }
+
+        public static string Form_MessageLog_NoImage {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_NoImage", resourceCulture);
+            }
+        }
     }
 }

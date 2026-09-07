@@ -121,7 +121,7 @@ namespace Foxoft.Models
         public DbSet<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
         public DbSet<TrInvoiceCampaignHeader> TrInvoiceCampaignHeaders { get; set; }
         public DbSet<DcWhatsAppProviderSetting> DcWhatsAppProviderSettings { get; set; }
-        public DbSet<TrWhatsAppMessageLog> TrWhatsAppMessageLogs { get; set; }
+        public DbSet<TrMessageLog> TrMessageLogs { get; set; }
         public DbSet<TrCredit> TrCredits { get; set; }
         public DbSet<DcShortcut> DcShortcuts { get; set; }
         public DbSet<DcMessagingSetting> DcMessagingSettings { get; set; }
@@ -483,7 +483,7 @@ namespace Foxoft.Models
                       .HasColumnType("tinyint");
             });
 
-            modelBuilder.Entity<TrWhatsAppMessageLog>(entity =>
+            modelBuilder.Entity<TrMessageLog>(entity =>
             {
                 entity.ToTable(tb => tb.UseSqlOutputClause(false));
             });
@@ -820,7 +820,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PaymentMethodList", ClaimDesc = "Ödəniş Üsulları Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "PaymentPlanList", ClaimDesc = "Ödəniş Planları Siyahısı", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "ChangeExchangeRate", ClaimDesc = "Məzənnə Kursu Dəyişmə", ClaimTypeId = 1, CategoryId = 2 },
-                new DcClaim { ClaimCode = "WhatsAppMessageLog", ClaimDesc = "WhatsApp Mesaj Jurnalı", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "MessageLog", ClaimDesc = "Mesaj Jurnalı", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "MessagingSettings", ClaimDesc = "Mesajlaşma Tənzimləmələri", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "Departments", ClaimDesc = "Şöbələr", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "Positions", ClaimDesc = "Vəzifələr", ClaimTypeId = 1, CategoryId = 23 },
@@ -944,7 +944,7 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 66, RoleCode = "Admin", ClaimCode = "CurrencyList" },
                 new TrRoleClaim { RoleClaimId = 67, RoleCode = "Admin", ClaimCode = "PaymentMethodList" },
                 new TrRoleClaim { RoleClaimId = 68, RoleCode = "Admin", ClaimCode = "PaymentPlanList" },
-                new TrRoleClaim { RoleClaimId = 69, RoleCode = "Admin", ClaimCode = "WhatsAppMessageLog" },
+                new TrRoleClaim { RoleClaimId = 69, RoleCode = "Admin", ClaimCode = "MessageLog" },
                 new TrRoleClaim { RoleClaimId = 204, RoleCode = "Admin", ClaimCode = "InvoiceLineFeatureType" },
                 new TrRoleClaim { RoleClaimId = 205, RoleCode = "Admin", ClaimCode = "ChangeStore" },
                 new TrRoleClaim { RoleClaimId = 206, RoleCode = "Admin", ClaimCode = "DocumentLockTakeover" },

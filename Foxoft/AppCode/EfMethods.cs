@@ -2681,12 +2681,12 @@ namespace Foxoft
                 .Where(x => x.CurrAccCode == sourceCurrAccCode)
                 .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-            // 14. TrWhatsAppMessageLogs
-            context.TrWhatsAppMessageLogs
+            // 14. TrMessageLogs
+            context.TrMessageLogs
                 .Where(x => x.CurrAccCode == sourceCurrAccCode)
                 .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-            context.TrWhatsAppMessageLogs
+            context.TrMessageLogs
                 .Where(x => x.Sender == sourceCurrAccCode)
                 .ExecuteUpdate(s => s.SetProperty(p => p.Sender, targetCurrAccCode));
 

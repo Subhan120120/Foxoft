@@ -5511,7 +5511,103 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Common_Status" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="Form_PayrollList_DeleteMultipleConfirm" xml:space="preserve">
-    <value>Seçilmiş {0} sayda maaş qeydini silmək istəyirsiniz?</value>
+  <data name="Entity_TrMessageLog_MessageLogId" xml:space="preserve">
+    <value>İd</value>
+  </data>
+  <data name="Entity_TrMessageLog_CurrAccCode" xml:space="preserve">
+    <value>Cari Hesab</value>
+  </data>
+  <data name="Entity_TrMessageLog_MessageType" xml:space="preserve">
+    <value>Mesaj Növü</value>
+  </data>
+  <data name="Entity_TrMessageLog_ChannelCode" xml:space="preserve">
+    <value>Kanal</value>
+  </data>
+  <data name="Entity_TrMessageLog_ReceiverPhoneNumber" xml:space="preserve">
+    <value>Qəbul Edən Telefon</value>
+  </data>
+  <data name="Entity_TrMessageLog_Message" xml:space="preserve">
+    <value>Mesaj</value>
+  </data>
+  <data name="Entity_TrMessageLog_IsSuccessful" xml:space="preserve">
+    <value>Uğurludur</value>
+  </data>
+  <data name="Entity_TrMessageLog_ImageFileName" xml:space="preserve">
+    <value>Şəkil Fayl Adı</value>
+  </data>
+  <data name="Entity_TrMessageLog_ErrorMessage" xml:space="preserve">
+    <value>Xəta Mətni</value>
+  </data>
+  <data name="Form_MessageLog" xml:space="preserve">
+    <value>Mesaj Jurnalı</value>
+  </data>
+  <data name="Form_MessageLog_Channel" xml:space="preserve">
+    <value>Kanal</value>
+  </data>
+  <data name="Form_MessageLog_Summary_Balance_Subtitle" xml:space="preserve">
+    <value>Mövcud Balans</value>
+  </data>
+  <data name="Form_MessageLog_Summary_Balance_Title" xml:space="preserve">
+    <value>Balans</value>
+  </data>
+  <data name="Form_MessageLog_Summary_Last30Days_Subtitle" xml:space="preserve">
+    <value>Son 30 gündə göndərildi</value>
+  </data>
+  <data name="Form_MessageLog_Summary_Last30Days_Title" xml:space="preserve">
+    <value>Son 30 Gün</value>
+  </data>
+  <data name="Form_MessageLog_Summary_Today_Subtitle" xml:space="preserve">
+    <value>Bugünkü Gün</value>
+  </data>
+  <data name="Form_MessageLog_Summary_Today_Title" xml:space="preserve">
+    <value>Bu gün göndərildi</value>
+  </data>
+  <data name="Form_MessageLog_Summary_Total_Subtitle" xml:space="preserve">
+    <value>Cəmi göndərilən mesaj</value>
+  </data>
+  <data name="Form_MessageLog_Summary_Total_Title" xml:space="preserve">
+    <value>Cəmi Göndərilən</value>
+  </data>
+  <data name="Form_MessageLog_SendSelected" xml:space="preserve">
+    <value>Seçiləni göndər</value>
+  </data>
+  <data name="Form_MessageLog_SendAgain" xml:space="preserve">
+    <value>Yenidən göndər</value>
+  </data>
+  <data name="Form_MessageLog_Action" xml:space="preserve">
+    <value>Əməliyyat</value>
+  </data>
+  <data name="Form_MessageLog_SendAllUnsent" xml:space="preserve">
+    <value>Göndərilməyənlərin hamısını göndər</value>
+  </data>
+  <data name="Form_MessageLog_SendAllUnsentConfirm" xml:space="preserve">
+    <value>Bütün göndərilməyən mesajlar göndərilsin?</value>
+  </data>
+  <data name="Form_MessageLog_SendResult" xml:space="preserve">
+    <value>Göndərildi: {0}, Uğursuz: {1}</value>
+  </data>
+  <data name="Form_MessageLog_NoUnsentMessages" xml:space="preserve">
+    <value>Göndərilməyən mesaj yoxdur.</value>
+  </data>
+  <data name="Form_MessageLog_AlreadySent" xml:space="preserve">
+    <value>Seçilmiş mesaj artıq göndərilib.</value>
+  </data>
+  <data name="Form_MessageLog_NotFound" xml:space="preserve">
+    <value>Mesaj loqu tapılmadı.</value>
+  </data>
+  <data name="Form_MessageLog_PhoneRequired" xml:space="preserve">
+    <value>Qəbul edən telefon nömrəsi mütləqdir.</value>
+  </data>
+  <data name="Form_MessageLog_ImageFileNotFound" xml:space="preserve">
+    <value>Mesajın şəkil faylı tapılmadı.</value>
+  </data>
+  <data name="Form_MessageLog_MessageRequired" xml:space="preserve">
+    <value>Mesaj mətni mütləqdir.</value>
+  </data>
+  <data name="Form_MessageLog_ImagePreview" xml:space="preserve">
+    <value>Şəkil Önizləmə</value>
+  </data>
+  <data name="Form_MessageLog_NoImage" xml:space="preserve">
+    <value>Şəkil Yoxdur</value>
   </data>
 </root>

@@ -156,7 +156,7 @@ namespace Foxoft
             ACE_CurrencyList = new AccordionControlElement();
             ACE_PaymentMethodList = new AccordionControlElement();
             ACE_PaymentPlanList = new AccordionControlElement();
-            ACE_WhatsAppMessageLog = new AccordionControlElement();
+            ACE_MessageLog = new AccordionControlElement();
             ACE_NotificationCenter = new AccordionControlElement();
             ACE_NotificationRules = new AccordionControlElement();
             ACE_NotificationTemplates = new AccordionControlElement();
@@ -973,7 +973,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_WhatsAppMessageLog, ACE_NotificationCenter, ACE_NotificationRules, ACE_NotificationTemplates, ACE_TransferApproval });
+            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_MessageLog, ACE_NotificationCenter, ACE_NotificationRules, ACE_NotificationTemplates, ACE_TransferApproval });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -1046,12 +1046,12 @@ namespace Foxoft
             ACE_PaymentPlanList.Style = ElementStyle.Item;
             ACE_PaymentPlanList.Text = Resources.Entity_PaymentPlan;
             // 
-            // ACE_WhatsAppMessageLog
+            // ACE_MessageLog
             // 
-            ACE_WhatsAppMessageLog.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WhatsAppMessageLog.ImageOptions.SvgImage");
-            ACE_WhatsAppMessageLog.Name = "ACE_WhatsAppMessageLog";
-            ACE_WhatsAppMessageLog.Style = ElementStyle.Item;
-            ACE_WhatsAppMessageLog.Text = Resources.Form_WhatsAppMessageLog;
+            ACE_MessageLog.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_MessageLog.ImageOptions.SvgImage");
+            ACE_MessageLog.Name = "ACE_MessageLog";
+            ACE_MessageLog.Style = ElementStyle.Item;
+            ACE_MessageLog.Text = Resources.Form_MessageLog;
             // 
             // ACE_NotificationCenter
             // 
@@ -1217,7 +1217,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CurrencyList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PaymentMethodList;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PaymentPlanList;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WhatsAppMessageLog;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_MessageLog;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationCenter;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationRules;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_NotificationTemplates;

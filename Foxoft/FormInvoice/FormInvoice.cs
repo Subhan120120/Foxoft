@@ -2713,11 +2713,12 @@ namespace Foxoft
 
                 using var ctx = new subContext();
 
-                ctx.TrWhatsAppMessageLogs.Add(new TrWhatsAppMessageLog
+                ctx.TrMessageLogs.Add(new TrMessageLog
                 {
-                    WhatsAppMessageLogId = Guid.NewGuid(),
+                    MessageLogId = Guid.NewGuid(),
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = receiverPhone,
+                    ChannelCode = NotificationChannels.WhatsApp,
                     MessageType = dcProcess?.ProcessDesc,
                     Message = message,
                     Sender = Authorization.CurrAccCode,
@@ -2768,8 +2769,8 @@ namespace Foxoft
             try
             {
                 using var ctx = new subContext();
-                bool isSent = ctx.TrWhatsAppMessageLogs
-                    .Any(x => x.DocumentHeaderId == invoiceHeaderId && x.IsSuccessful);
+                bool isSent = ctx.TrMessageLogs
+                    .Any(x => x.DocumentHeaderId == invoiceHeaderId && x.ChannelCode == NotificationChannels.WhatsApp && x.IsSuccessful);
 
                 string svgKey = isSent ? "whatsapp_sent" : "whatsapp_unsend";
                 bBI_Whatsapp.ImageOptions.SvgImage = svgImageCollection1[svgKey];

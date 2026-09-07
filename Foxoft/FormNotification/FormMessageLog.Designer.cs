@@ -1,4 +1,4 @@
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.Utils.Svg;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Foxoft
 {
-    partial class FormWhatsAppMessageLog
+    partial class FormMessageLog
     {
         private IContainer components = null;
 
@@ -23,10 +23,12 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new Container();
-            gC_WhatsAppMessageLogList = new MyGridControl();
-            trWhatsAppMessageLogBindingSource = new BindingSource(components);
-            gV_WhatsAppMessageLogList = new MyGridView();
-            colWhatsAppMessageLogId = new DevExpress.XtraGrid.Columns.GridColumn();
+            gC_MessageLogList = new MyGridControl();
+            trMessageLogBindingSource = new BindingSource(components);
+            gV_MessageLogList = new MyGridView();
+            colMessageLogId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colChannelCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            colErrorMessage = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -75,9 +77,9 @@ namespace Foxoft
             lblCardTotal_Subtitle = new DevExpress.XtraEditors.LabelControl();
             lblCardTotal_Value = new DevExpress.XtraEditors.LabelControl();
             lblCardTotal_Title = new DevExpress.XtraEditors.LabelControl();
-            ((ISupportInitialize)gC_WhatsAppMessageLogList).BeginInit();
-            ((ISupportInitialize)trWhatsAppMessageLogBindingSource).BeginInit();
-            ((ISupportInitialize)gV_WhatsAppMessageLogList).BeginInit();
+            ((ISupportInitialize)gC_MessageLogList).BeginInit();
+            ((ISupportInitialize)trMessageLogBindingSource).BeginInit();
+            ((ISupportInitialize)gV_MessageLogList).BeginInit();
             ((ISupportInitialize)repoPictureEdit).BeginInit();
             ((ISupportInitialize)repoBtn_SendAgain).BeginInit();
             ((ISupportInitialize)ribbonControl1).BeginInit();
@@ -99,46 +101,62 @@ namespace Foxoft
             ((ISupportInitialize)svgCardTotal_ImageBox).BeginInit();
             SuspendLayout();
             // 
-            // gC_WhatsAppMessageLogList
+            // gC_MessageLogList
             // 
-            gC_WhatsAppMessageLogList.DataSource = trWhatsAppMessageLogBindingSource;
-            gC_WhatsAppMessageLogList.Dock = DockStyle.Fill;
-            gC_WhatsAppMessageLogList.Location = new Point(0, 258);
-            gC_WhatsAppMessageLogList.MainView = gV_WhatsAppMessageLogList;
-            gC_WhatsAppMessageLogList.MenuManager = ribbonControl1;
-            gC_WhatsAppMessageLogList.Name = "gC_WhatsAppMessageLogList";
-            gC_WhatsAppMessageLogList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoPictureEdit, repoBtn_SendAgain, repoTextEmpty });
-            gC_WhatsAppMessageLogList.Size = new Size(1100, 362);
-            gC_WhatsAppMessageLogList.TabIndex = 0;
-            gC_WhatsAppMessageLogList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_WhatsAppMessageLogList });
-            gC_WhatsAppMessageLogList.ProcessGridKey += gC_WhatsAppMessageLogList_ProcessGridKey;
+            gC_MessageLogList.DataSource = trMessageLogBindingSource;
+            gC_MessageLogList.Dock = DockStyle.Fill;
+            gC_MessageLogList.Location = new Point(0, 258);
+            gC_MessageLogList.MainView = gV_MessageLogList;
+            gC_MessageLogList.MenuManager = ribbonControl1;
+            gC_MessageLogList.Name = "gC_MessageLogList";
+            gC_MessageLogList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoPictureEdit, repoBtn_SendAgain, repoTextEmpty });
+            gC_MessageLogList.Size = new Size(1100, 362);
+            gC_MessageLogList.TabIndex = 0;
+            gC_MessageLogList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_MessageLogList });
+            gC_MessageLogList.ProcessGridKey += gC_MessageLogList_ProcessGridKey;
             // 
-            // trWhatsAppMessageLogBindingSource
+            // trMessageLogBindingSource
             // 
-            trWhatsAppMessageLogBindingSource.DataSource = typeof(TrWhatsAppMessageLog);
+            trMessageLogBindingSource.DataSource = typeof(TrMessageLog);
             // 
-            // gV_WhatsAppMessageLogList
+            // gV_MessageLogList
             // 
-            gV_WhatsAppMessageLogList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colWhatsAppMessageLogId, colDocumentHeaderId, colCreatedDate, colCreatedUserName, colCurrAccCode, colCurrAccDesc, colReceiverPhoneNumber, colMessageType, colMessage, colIsSuccessful, colSender, colSenderName, colImagePreview, colSendAgain, colImageFileName });
-            gV_WhatsAppMessageLogList.GridControl = gC_WhatsAppMessageLogList;
-            gV_WhatsAppMessageLogList.Name = "gV_WhatsAppMessageLogList";
-            gV_WhatsAppMessageLogList.OptionsFind.FindDelay = 100;
-            gV_WhatsAppMessageLogList.OptionsView.RowAutoHeight = true;
-            gV_WhatsAppMessageLogList.OptionsView.ShowAutoFilterRow = true;
-            gV_WhatsAppMessageLogList.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
-            gV_WhatsAppMessageLogList.OptionsView.ShowFooter = true;
-            gV_WhatsAppMessageLogList.OptionsView.ShowGroupPanel = false;
-            gV_WhatsAppMessageLogList.RowHeight = 60;
-            gV_WhatsAppMessageLogList.CustomRowCellEdit += gV_WhatsAppMessageLogList_CustomRowCellEdit;
-            gV_WhatsAppMessageLogList.PopupMenuShowing += gV_WhatsAppMessageLogList_PopupMenuShowing;
-            gV_WhatsAppMessageLogList.CustomUnboundColumnData += gV_WhatsAppMessageLogList_CustomUnboundColumnData;
-            gV_WhatsAppMessageLogList.DoubleClick += gV_WhatsAppMessageLogList_DoubleClick;
+            gV_MessageLogList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colMessageLogId, colChannelCode, colDocumentHeaderId, colCreatedDate, colCreatedUserName, colCurrAccCode, colCurrAccDesc, colReceiverPhoneNumber, colMessageType, colMessage, colIsSuccessful, colSender, colSenderName, colImagePreview, colSendAgain, colImageFileName, colErrorMessage });
+            gV_MessageLogList.GridControl = gC_MessageLogList;
+            gV_MessageLogList.Name = "gV_MessageLogList";
+            gV_MessageLogList.OptionsFind.FindDelay = 100;
+            gV_MessageLogList.OptionsView.RowAutoHeight = true;
+            gV_MessageLogList.OptionsView.ShowAutoFilterRow = true;
+            gV_MessageLogList.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+            gV_MessageLogList.OptionsView.ShowFooter = true;
+            gV_MessageLogList.OptionsView.ShowGroupPanel = false;
+            gV_MessageLogList.RowHeight = 60;
+            gV_MessageLogList.CustomRowCellEdit += gV_MessageLogList_CustomRowCellEdit;
+            gV_MessageLogList.PopupMenuShowing += gV_MessageLogList_PopupMenuShowing;
+            gV_MessageLogList.CustomUnboundColumnData += gV_MessageLogList_CustomUnboundColumnData;
+            gV_MessageLogList.DoubleClick += gV_MessageLogList_DoubleClick;
             // 
-            // colWhatsAppMessageLogId
+            // colMessageLogId
             // 
-            colWhatsAppMessageLogId.FieldName = "WhatsAppMessageLogId";
-            colWhatsAppMessageLogId.Name = "colWhatsAppMessageLogId";
-            colWhatsAppMessageLogId.OptionsColumn.AllowEdit = false;
+            colMessageLogId.FieldName = "MessageLogId";
+            colMessageLogId.Name = "colMessageLogId";
+            colMessageLogId.OptionsColumn.AllowEdit = false;
+            // 
+            // colChannelCode
+            // 
+            colChannelCode.Caption = Resources.Form_MessageLog_Channel;
+            colChannelCode.FieldName = "ChannelCode";
+            colChannelCode.Name = "colChannelCode";
+            colChannelCode.OptionsColumn.AllowEdit = false;
+            colChannelCode.Visible = true;
+            colChannelCode.VisibleIndex = 1;
+            // 
+            // colErrorMessage
+            // 
+            colErrorMessage.Caption = Resources.Entity_TrMessageLog_ErrorMessage;
+            colErrorMessage.FieldName = "ErrorMessage";
+            colErrorMessage.Name = "colErrorMessage";
+            colErrorMessage.OptionsColumn.AllowEdit = false;
             // 
             // colDocumentHeaderId
             // 
@@ -308,14 +326,14 @@ namespace Foxoft
             // 
             // bBI_SendSelected
             // 
-            bBI_SendSelected.Caption = Resources.Form_WhatsAppMessageLog_SendSelected;
+            bBI_SendSelected.Caption = Resources.Form_MessageLog_SendSelected;
             bBI_SendSelected.Id = 3;
             bBI_SendSelected.Name = "bBI_SendSelected";
             bBI_SendSelected.ItemClick += bBI_SendSelected_ItemClick;
             // 
             // bBI_SendAllUnsent
             // 
-            bBI_SendAllUnsent.Caption = Resources.Form_WhatsAppMessageLog_SendAllUnsent;
+            bBI_SendAllUnsent.Caption = Resources.Form_MessageLog_SendAllUnsent;
             bBI_SendAllUnsent.Id = 4;
             bBI_SendAllUnsent.Name = "bBI_SendAllUnsent";
             bBI_SendAllUnsent.ItemClick += bBI_SendAllUnsent_ItemClick;
@@ -324,7 +342,7 @@ namespace Foxoft
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = Resources.Form_WhatsAppMessageLog;
+            ribbonPage1.Text = Resources.Form_MessageLog;
             // 
             // ribbonPageGroup1
             // 
@@ -590,24 +608,24 @@ namespace Foxoft
             lblCardTotal_Title.Size = new Size(0, 13);
             lblCardTotal_Title.TabIndex = 6;
             // 
-            // FormWhatsAppMessageLog
+            // FormMessageLog
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1100, 644);
-            Controls.Add(gC_WhatsAppMessageLogList);
+            Controls.Add(gC_MessageLogList);
             Controls.Add(panelSummary);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
-            Name = "FormWhatsAppMessageLog";
+            Name = "FormMessageLog";
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            FormClosed += FormWhatsAppMessageLog_FormClosed;
-            Load += FormWhatsAppMessageLog_Load;
-            ((ISupportInitialize)gC_WhatsAppMessageLogList).EndInit();
-            ((ISupportInitialize)trWhatsAppMessageLogBindingSource).EndInit();
-            ((ISupportInitialize)gV_WhatsAppMessageLogList).EndInit();
+            FormClosed += FormMessageLog_FormClosed;
+            Load += FormMessageLog_Load;
+            ((ISupportInitialize)gC_MessageLogList).EndInit();
+            ((ISupportInitialize)trMessageLogBindingSource).EndInit();
+            ((ISupportInitialize)gV_MessageLogList).EndInit();
             ((ISupportInitialize)repoPictureEdit).EndInit();
             ((ISupportInitialize)repoBtn_SendAgain).EndInit();
             ((ISupportInitialize)ribbonControl1).EndInit();
@@ -637,9 +655,9 @@ namespace Foxoft
 
         #endregion
 
-        private MyGridControl gC_WhatsAppMessageLogList;
-        private BindingSource trWhatsAppMessageLogBindingSource;
-        private MyGridView gV_WhatsAppMessageLogList;
+        private MyGridControl gC_MessageLogList;
+        private BindingSource trMessageLogBindingSource;
+        private MyGridView gV_MessageLogList;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
         private DevExpress.XtraBars.BarButtonItem bBI_Refresh;
@@ -651,7 +669,9 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
-        private DevExpress.XtraGrid.Columns.GridColumn colWhatsAppMessageLogId;
+        private DevExpress.XtraGrid.Columns.GridColumn colMessageLogId;
+        private DevExpress.XtraGrid.Columns.GridColumn colChannelCode;
+        private DevExpress.XtraGrid.Columns.GridColumn colErrorMessage;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn colReceiverPhoneNumber;
         private DevExpress.XtraGrid.Columns.GridColumn colMessageType;

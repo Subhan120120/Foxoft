@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using System.Drawing.Drawing2D;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -17,13 +17,13 @@ using System.IO;
 
 namespace Foxoft
 {
-    public partial class FormWhatsAppMessageLog : RibbonForm
+    public partial class FormMessageLog : RibbonForm
     {
         private subContext dbContext;
         private bool layoutLoaded;
         private readonly string? whatsAppImageFolder;
 
-        public FormWhatsAppMessageLog()
+        public FormMessageLog()
         {
             InitializeComponent();
 
@@ -44,22 +44,22 @@ namespace Foxoft
 
         private void DesignComponentNames()
         {
-            Text = Resources.Form_WhatsAppMessageLog;
+            Text = Resources.Form_MessageLog;
 
-            lblCardBalance_Title.Text = Resources.Form_WhatsAppMessageLog_Summary_Balance_Title;
-            lblCardBalance_Subtitle.Text = Resources.Form_WhatsAppMessageLog_Summary_Balance_Subtitle;
+            lblCardBalance_Title.Text = Resources.Form_MessageLog_Summary_Balance_Title;
+            lblCardBalance_Subtitle.Text = Resources.Form_MessageLog_Summary_Balance_Subtitle;
 
-            lblCardToday_Title.Text = Resources.Form_WhatsAppMessageLog_Summary_Today_Title;
-            lblCardToday_Subtitle.Text = Resources.Form_WhatsAppMessageLog_Summary_Today_Subtitle;
+            lblCardToday_Title.Text = Resources.Form_MessageLog_Summary_Today_Title;
+            lblCardToday_Subtitle.Text = Resources.Form_MessageLog_Summary_Today_Subtitle;
 
-            lblCardLast30Days_Title.Text = Resources.Form_WhatsAppMessageLog_Summary_Last30Days_Title;
-            lblCardLast30Days_Subtitle.Text = Resources.Form_WhatsAppMessageLog_Summary_Last30Days_Subtitle;
+            lblCardLast30Days_Title.Text = Resources.Form_MessageLog_Summary_Last30Days_Title;
+            lblCardLast30Days_Subtitle.Text = Resources.Form_MessageLog_Summary_Last30Days_Subtitle;
 
-            lblCardTotal_Title.Text = Resources.Form_WhatsAppMessageLog_Summary_Total_Title;
-            lblCardTotal_Subtitle.Text = Resources.Form_WhatsAppMessageLog_Summary_Total_Subtitle;
+            lblCardTotal_Title.Text = Resources.Form_MessageLog_Summary_Total_Title;
+            lblCardTotal_Subtitle.Text = Resources.Form_MessageLog_Summary_Total_Subtitle;
         }
 
-        private async void FormWhatsAppMessageLog_Load(object sender, EventArgs e)
+        private async void FormMessageLog_Load(object sender, EventArgs e)
         {
             await LoadDataAsync();
             LoadLayout();
@@ -71,24 +71,24 @@ namespace Foxoft
             dbContext = new subContext();
 
             var list = await Task.Run(() =>
-                dbContext.TrWhatsAppMessageLogs
+                dbContext.TrMessageLogs
                     .AsNoTracking()
                     .Include(x => x.DcCurrAcc)
                     .Include(x => x.DcSender)
                     .OrderByDescending(x => x.CreatedDate)
                     .ToList());
 
-            trWhatsAppMessageLogBindingSource.DataSource = list;
+            trMessageLogBindingSource.DataSource = list;
 
             if (!layoutLoaded)
-                gV_WhatsAppMessageLogList.BestFitColumns();
+                gV_MessageLogList.BestFitColumns();
 
             await UpdateSummaryAsync();
         }
 
         private void LoadLayout()
         {
-            string fileName = "FormWhatsAppMessageLogLayout.xml";
+            string fileName = "FormMessageLogLayout.xml";
             string layoutFilePath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 "Foxoft",
@@ -98,7 +98,7 @@ namespace Foxoft
 
             if (File.Exists(layoutFilePath))
             {
-                gV_WhatsAppMessageLogList.RestoreLayoutFromXml(layoutFilePath);
+                gV_MessageLogList.RestoreLayoutFromXml(layoutFilePath);
                 layoutLoaded = true;
             }
 
@@ -107,7 +107,7 @@ namespace Foxoft
 
         private void SaveLayout()
         {
-            string fileName = "FormWhatsAppMessageLogLayout.xml";
+            string fileName = "FormMessageLogLayout.xml";
             string layoutFileDir = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 "Foxoft",
@@ -117,7 +117,7 @@ namespace Foxoft
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
 
-            gV_WhatsAppMessageLogList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+            gV_MessageLogList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
             layoutLoaded = true;
         }
 
@@ -128,15 +128,15 @@ namespace Foxoft
 
         private async void bBI_SendSelected_ItemClick(object sender, ItemClickEventArgs e)
         {
-            await SendAgainAsync(gV_WhatsAppMessageLogList.GetFocusedRow() as TrWhatsAppMessageLog);
+            await SendAgainAsync(gV_MessageLogList.GetFocusedRow() as TrMessageLog);
         }
 
         private async void repoBtn_SendAgain_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            await SendAgainAsync(gV_WhatsAppMessageLogList.GetFocusedRow() as TrWhatsAppMessageLog);
+            await SendAgainAsync(gV_MessageLogList.GetFocusedRow() as TrMessageLog);
         }
 
-        private async Task SendAgainAsync(TrWhatsAppMessageLog? log)
+        private async Task SendAgainAsync(TrMessageLog? log)
         {
             if (log == null)
             {
@@ -146,15 +146,15 @@ namespace Foxoft
 
             if (log.IsSuccessful)
             {
-                XtraMessageBox.Show(Resources.Form_WhatsAppMessageLog_AlreadySent, Resources.Common_Attention);
+                XtraMessageBox.Show(Resources.Form_MessageLog_AlreadySent, Resources.Common_Attention);
                 return;
             }
 
             SetSendButtonsEnabled(false);
             try
             {
-                await WhatsAppMessageLogService.ResendAsync(log.WhatsAppMessageLogId);
-                XtraMessageBox.Show(Resources.Common_SentSuccessfully, Resources.Form_WhatsAppMessageLog, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                await MessageLogService.ResendAsync(log.MessageLogId);
+                XtraMessageBox.Show(Resources.Common_SentSuccessfully, Resources.Form_MessageLog, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 await LoadDataAsync();
             }
             catch (Exception ex)
@@ -169,21 +169,21 @@ namespace Foxoft
 
         private async void bBI_SendAllUnsent_ItemClick(object sender, ItemClickEventArgs e)
         {
-            List<Guid> unsentLogIds = dbContext.TrWhatsAppMessageLogs
+            List<Guid> unsentLogIds = dbContext.TrMessageLogs
                 .AsNoTracking()
                 .Where(x => !x.IsSuccessful)
                 .OrderBy(x => x.CreatedDate)
-                .Select(x => x.WhatsAppMessageLogId)
+                .Select(x => x.MessageLogId)
                 .ToList();
 
             if (unsentLogIds.Count == 0)
             {
-                XtraMessageBox.Show(Resources.Form_WhatsAppMessageLog_NoUnsentMessages, Resources.Common_Attention);
+                XtraMessageBox.Show(Resources.Form_MessageLog_NoUnsentMessages, Resources.Common_Attention);
                 return;
             }
 
             DialogResult result = XtraMessageBox.Show(
-                Resources.Form_WhatsAppMessageLog_SendAllUnsentConfirm,
+                Resources.Form_MessageLog_SendAllUnsentConfirm,
                 Resources.Common_Confirm,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -201,7 +201,7 @@ namespace Foxoft
                 {
                     try
                     {
-                        await WhatsAppMessageLogService.ResendAsync(logId);
+                        await MessageLogService.ResendAsync(logId);
                         sent++;
                     }
                     catch (Exception ex)
@@ -212,8 +212,8 @@ namespace Foxoft
                 }
 
                 XtraMessageBox.Show(
-                    string.Format(Resources.Form_WhatsAppMessageLog_SendResult, sent, failed),
-                    Resources.Form_WhatsAppMessageLog,
+                    string.Format(Resources.Form_MessageLog_SendResult, sent, failed),
+                    Resources.Form_MessageLog,
                     MessageBoxButtons.OK,
                     failed == 0 ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
 
@@ -236,16 +236,16 @@ namespace Foxoft
         private void EnsureSendAgainColumnVisible()
         {
             colSendAgain.Visible = true;
-            colSendAgain.VisibleIndex = Math.Max(0, gV_WhatsAppMessageLogList.VisibleColumns.Count - 1);
+            colSendAgain.VisibleIndex = Math.Max(0, gV_MessageLogList.VisibleColumns.Count - 1);
             colSendAgain.Width = 110;
         }
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CustomExtensions.ExportToExcel(this, Resources.Form_WhatsAppMessageLog, gC_WhatsAppMessageLogList);
+            CustomExtensions.ExportToExcel(this, Resources.Form_MessageLog, gC_MessageLogList);
         }
 
-        private async void gC_WhatsAppMessageLogList_ProcessGridKey(object sender, KeyEventArgs e)
+        private async void gC_MessageLogList_ProcessGridKey(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
             {
@@ -254,7 +254,7 @@ namespace Foxoft
             }
         }
 
-        private void gV_WhatsAppMessageLogList_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        private void gV_MessageLogList_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
             if (e.MenuType == GridMenuType.Column)
             {
@@ -293,7 +293,7 @@ namespace Foxoft
             public GridColumn Column;
         }
 
-        private void FormWhatsAppMessageLog_FormClosed(object sender, FormClosedEventArgs e)
+        private void FormMessageLog_FormClosed(object sender, FormClosedEventArgs e)
         {
             dbContext?.Dispose();
 
@@ -313,7 +313,7 @@ namespace Foxoft
             int countLast30Days = 0;
             int countTotal = 0;
 
-            if (trWhatsAppMessageLogBindingSource.DataSource is List<TrWhatsAppMessageLog> list)
+            if (trMessageLogBindingSource.DataSource is List<TrMessageLog> list)
             {
                 foreach (var log in list)
                 {
@@ -398,16 +398,16 @@ namespace Foxoft
         private readonly Dictionary<string, Image> _imageCache = new();
         private readonly HashSet<string> _loadingPaths = new();
 
-        private void gV_WhatsAppMessageLogList_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
+        private void gV_MessageLogList_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
         {
             if (e.Column != colSendAgain || e.RowHandle < 0)
                 return;
 
-            bool isSuccessful = Convert.ToBoolean(gV_WhatsAppMessageLogList.GetRowCellValue(e.RowHandle, colIsSuccessful) ?? false);
+            bool isSuccessful = Convert.ToBoolean(gV_MessageLogList.GetRowCellValue(e.RowHandle, colIsSuccessful) ?? false);
             e.RepositoryItem = isSuccessful ? repoTextEmpty : repoBtn_SendAgain;
         }
 
-        private void gV_WhatsAppMessageLogList_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
+        private void gV_MessageLogList_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
         {
             if (e.Column.FieldName != "colImagePreview" || !e.IsGetData)
                 return;
@@ -488,12 +488,12 @@ namespace Foxoft
             });
         }
 
-        private void gV_WhatsAppMessageLogList_DoubleClick(object sender, EventArgs e)
+        private void gV_MessageLogList_DoubleClick(object sender, EventArgs e)
         {
             var view = sender as GridView;
             if (view == null) return;
 
-            var hitInfo = view.CalcHitInfo(gC_WhatsAppMessageLogList.PointToClient(Control.MousePosition));
+            var hitInfo = view.CalcHitInfo(gC_MessageLogList.PointToClient(Control.MousePosition));
             if (!hitInfo.InRow) return;
 
             string fileName = view.GetRowCellValue(hitInfo.RowHandle, colImageFileName)?.ToString();
