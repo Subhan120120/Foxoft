@@ -38,6 +38,10 @@ namespace Foxoft
             //if (!Debugger.IsAttached)
             //    RegistryWriteValue(@"SOFTWARE\Foxoft", "InstallLocation", AppContext.BaseDirectory); // for service
 
+
+            //if (!Debugger.IsAttached)
+            //    RegistryWriteValue(@"SOFTWARE\Foxoft", "InstallLocation", AppContext.BaseDirectory); // for service
+
             if (SqlServerConnected())
             {
                 mainContext mainDb = new();

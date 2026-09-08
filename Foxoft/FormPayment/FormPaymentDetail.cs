@@ -689,7 +689,7 @@ namespace Foxoft
 
             if (!WhatsAppCreditService.HasEnoughBalance())
             {
-                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false);
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false, errorMessage: Properties.Resources.Common_InsufficientBalance);
                 XtraMessageBox.Show(Properties.Resources.Common_InsufficientBalance);
                 return;
             }
@@ -706,13 +706,13 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false);
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false, errorMessage: ex.Message);
                 XtraMessageBox.Show(Properties.Resources.Common_ErrorOccurred + " " + ex.Message);
             }
         }
 
         private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, MemoryStream? imageStream = null,
-            string? message = null, bool isSuccessful = false)
+            string? message = null, bool isSuccessful = false, string? errorMessage = null)
         {
             try
             {
@@ -736,7 +736,9 @@ namespace Foxoft
                     Sender = Authorization.CurrAccCode,
                     CurrAccCode = trPaymentHeader?.CurrAccCode,
                     ImageFileName = imageFileName,
-                    IsSuccessful = isSuccessful
+                    IsSuccessful = isSuccessful,
+                    LastError = errorMessage,
+                    LastTryDate = isSuccessful ? null : DateTime.Now
                 });
 
                 if (isSuccessful)
