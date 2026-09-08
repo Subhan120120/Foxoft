@@ -121,6 +121,7 @@ namespace Foxoft.Models
         public DbSet<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
         public DbSet<TrInvoiceCampaignHeader> TrInvoiceCampaignHeaders { get; set; }
         public DbSet<DcWhatsAppProviderSetting> DcWhatsAppProviderSettings { get; set; }
+        public DbSet<DcSmsProviderSetting> DcSmsProviderSettings { get; set; }
         public DbSet<TrMessageLog> TrMessageLogs { get; set; }
         public DbSet<TrCredit> TrCredits { get; set; }
         public DbSet<DcShortcut> DcShortcuts { get; set; }
@@ -266,7 +267,11 @@ namespace Foxoft.Models
             if (!optionsBuilder.IsConfigured)
             {
                 string subConnString = Properties.Settings.Default.SubConnString;
-                optionsBuilder.UseSqlServer(Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(subConnString));
+                optionsBuilder.UseSqlServer(Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(subConnString),
+                    sqlOptions => sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: System.TimeSpan.FromSeconds(5),
+                        errorNumbersToAdd: new[] { 233 }));
             }
         }
 

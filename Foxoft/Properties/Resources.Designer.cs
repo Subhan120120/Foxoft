@@ -15823,5 +15823,107 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_MessageLog_NoImage", resourceCulture);
             }
         }
+
+        public static string Entity_AppSetting_AutoSendUnsentMessages {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AutoSendUnsentMessages", resourceCulture);
+            }
+        }
+
+        public static string Entity_AppSetting_AutoSendIntervalSeconds {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AutoSendIntervalSeconds", resourceCulture);
+            }
+        }
+
+        public static string Entity_AppSetting_AutoSendMaxRetries {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AutoSendMaxRetries", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_AutoSendSection {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_AutoSendSection", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_AutoSendToggle {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_AutoSendToggle", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_IntervalSeconds {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_IntervalSeconds", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_MaxRetries {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_MaxRetries", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_ServiceStatus {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStatus", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_ServiceRunning {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceRunning", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_ServiceStopped {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStopped", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_ServiceStart {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStart", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_ServiceStop {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStop", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_SmsSection {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsSection", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_SmsEnabled {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsEnabled", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_SmsServerUrl {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsServerUrl", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_SmsApiKey {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsApiKey", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_SmsSenderTitle {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsSenderTitle", resourceCulture);
+            }
+        }
     }
 }

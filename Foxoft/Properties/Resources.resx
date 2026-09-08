@@ -5610,4 +5610,55 @@ Please wait or choose another invoice.</value>
   <data name="Form_MessageLog_NoImage" xml:space="preserve">
     <value>No Image</value>
   </data>
+  <data name="Entity_AppSetting_AutoSendUnsentMessages" xml:space="preserve">
+    <value>Auto-send unsent messages</value>
+  </data>
+  <data name="Entity_AppSetting_AutoSendIntervalSeconds" xml:space="preserve">
+    <value>Auto-send check interval (seconds)</value>
+  </data>
+  <data name="Entity_AppSetting_AutoSendMaxRetries" xml:space="preserve">
+    <value>Maximum retry attempts</value>
+  </data>
+  <data name="Form_MessagingSettings_AutoSendSection" xml:space="preserve">
+    <value>Automatic Sending &amp; Service Control</value>
+  </data>
+  <data name="Form_MessagingSettings_AutoSendToggle" xml:space="preserve">
+    <value>Auto-send interrupted/unsent messages (SMS, WhatsApp)</value>
+  </data>
+  <data name="Form_MessagingSettings_IntervalSeconds" xml:space="preserve">
+    <value>Check Interval (sec):</value>
+  </data>
+  <data name="Form_MessagingSettings_MaxRetries" xml:space="preserve">
+    <value>Max Retries:</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStatus" xml:space="preserve">
+    <value>Service Status:</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceRunning" xml:space="preserve">
+    <value>Running</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStopped" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStart" xml:space="preserve">
+    <value>Start Service</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStop" xml:space="preserve">
+    <value>Stop Service</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsSection" xml:space="preserve">
+    <value>SMS Provider Configuration</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsEnabled" xml:space="preserve">
+    <value>Enable SMS Provider</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsServerUrl" xml:space="preserve">
+    <value>SMS Server URL:</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsApiKey" xml:space="preserve">
+    <value>SMS API Key:</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsSenderTitle" xml:space="preserve">
+    <value>Sender Title:</value>
+  </data>
 </root>

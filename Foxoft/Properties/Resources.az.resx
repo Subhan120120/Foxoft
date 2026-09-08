@@ -5610,4 +5610,55 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Form_MessageLog_NoImage" xml:space="preserve">
     <value>Şəkil Yoxdur</value>
   </data>
+  <data name="Entity_AppSetting_AutoSendUnsentMessages" xml:space="preserve">
+    <value>Kəsilmiş/Göndərilməyən mesajları avtomatik göndər</value>
+  </data>
+  <data name="Entity_AppSetting_AutoSendIntervalSeconds" xml:space="preserve">
+    <value>Avtomatik göndərmə intervalı (saniyə)</value>
+  </data>
+  <data name="Entity_AppSetting_AutoSendMaxRetries" xml:space="preserve">
+    <value>Maksimum cəhd sayı</value>
+  </data>
+  <data name="Form_MessagingSettings_AutoSendSection" xml:space="preserve">
+    <value>Avtomatik Göndərmə və Servis İdarəetməsi</value>
+  </data>
+  <data name="Form_MessagingSettings_AutoSendToggle" xml:space="preserve">
+    <value>Kəsilmiş/Göndərilməyən mesajları avtomatik göndər (SMS, WhatsApp)</value>
+  </data>
+  <data name="Form_MessagingSettings_IntervalSeconds" xml:space="preserve">
+    <value>Yoxlama intervalı (san):</value>
+  </data>
+  <data name="Form_MessagingSettings_MaxRetries" xml:space="preserve">
+    <value>Maksimum cəhd:</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStatus" xml:space="preserve">
+    <value>Xidmətin statusu:</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceRunning" xml:space="preserve">
+    <value>İşləyir</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStopped" xml:space="preserve">
+    <value>Dayandırılıb</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStart" xml:space="preserve">
+    <value>Servisi Başlat</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStop" xml:space="preserve">
+    <value>Servisi Dayandır</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsSection" xml:space="preserve">
+    <value>SMS Provayder Tənzimləmələri</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsEnabled" xml:space="preserve">
+    <value>SMS provayderi aktiv et</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsServerUrl" xml:space="preserve">
+    <value>SMS Server URL:</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsApiKey" xml:space="preserve">
+    <value>SMS API Açarı:</value>
+  </data>
+  <data name="Form_MessagingSettings_SmsSenderTitle" xml:space="preserve">
+    <value>Göndərən Başlığı:</value>
+  </data>
 </root>

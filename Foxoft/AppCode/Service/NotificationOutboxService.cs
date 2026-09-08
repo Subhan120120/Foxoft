@@ -1,6 +1,10 @@
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Foxoft.AppCode.Service
 {
@@ -15,6 +19,13 @@ namespace Foxoft.AppCode.Service
 
         public async Task<(int Sent, int Failed)> ProcessPendingAsync(int take = 50, CancellationToken ct = default)
         {
+            // If internet is not available, do not burn retry counts!
+            bool isOnline = await NetworkConnectivityHelper.IsInternetAvailableAsync(ct);
+            if (!isOnline)
+            {
+                return (0, 0);
+            }
+
             int sent = 0;
             int failed = 0;
 
@@ -27,6 +38,9 @@ namespace Foxoft.AppCode.Service
 
             foreach (NotificationChannelOutbox outbox in outboxes)
             {
+                if (ct.IsCancellationRequested)
+                    break;
+
                 if (outbox.Notification.Status != NotificationStatuses.Active
                     || !await IsEffectiveRuleEnabledAsync(outbox.Notification, ct))
                 {
@@ -46,6 +60,8 @@ namespace Foxoft.AppCode.Service
                     outbox.LastError = null;
                     AddAudit(outbox, NotificationActionTypes.ChannelSent, null);
                     sent++;
+
+                    await Task.Delay(500, ct);
                 }
                 catch (Exception ex)
                 {
@@ -98,6 +114,20 @@ namespace Foxoft.AppCode.Service
                 string message = ExtractMessage(outbox.Payload);
                 using EvolutionApiClient client = new(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
                 await client.SendTextAsync(NormalizeReceiver(outbox.Receiver), message, ct);
+                return;
+            }
+            else if (outbox.ChannelCode.Equals(NotificationChannels.Sms, StringComparison.OrdinalIgnoreCase))
+            {
+                DcSmsProviderSetting? smsSetting = await _db.DcSmsProviderSettings
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.Id == 1, ct);
+
+                if (smsSetting == null || !smsSetting.IsEnabled)
+                    throw new InvalidOperationException("SMS provayder tənzimləmələri aktiv deyil və ya daxil edilməyib.");
+
+                string message = ExtractMessage(outbox.Payload);
+                using SmsClient client = new(smsSetting);
+                await client.SendSmsAsync(outbox.Receiver, message, ct);
                 return;
             }
 

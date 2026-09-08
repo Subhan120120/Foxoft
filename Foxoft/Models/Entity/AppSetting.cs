@@ -115,6 +115,18 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_UseInvoiceExpenses), ResourceType = typeof(Resources))]
         public bool UseInvoiceExpenses { get; set; } = false;
 
+        [DefaultValueSql("1")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_AutoSendUnsentMessages), ResourceType = typeof(Resources))]
+        public bool AutoSendUnsentMessages { get; set; } = true;
+
+        [DefaultValueSql("30")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_AutoSendIntervalSeconds), ResourceType = typeof(Resources))]
+        public int AutoSendIntervalSeconds { get; set; } = 30;
+
+        [DefaultValueSql("5")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_AutoSendMaxRetries), ResourceType = typeof(Resources))]
+        public int AutoSendMaxRetries { get; set; } = 5;
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }

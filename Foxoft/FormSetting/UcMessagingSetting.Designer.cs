@@ -1,4 +1,4 @@
-﻿namespace Foxoft
+namespace Foxoft
 {
     partial class UcMessagingSetting
     {
@@ -18,6 +18,26 @@
         private void InitializeComponent()
         {
             messagingScrollPanel = new DevExpress.XtraEditors.XtraScrollableControl();
+            messagingPanelSms = new DevExpress.XtraEditors.PanelControl();
+            toggleSmsEnabled = new DevExpress.XtraEditors.ToggleSwitch();
+            lblSmsSectionTitle = new DevExpress.XtraEditors.LabelControl();
+            lblSmsServerUrl = new DevExpress.XtraEditors.LabelControl();
+            txtSmsServerUrl = new DevExpress.XtraEditors.TextEdit();
+            lblSmsApiKey = new DevExpress.XtraEditors.LabelControl();
+            txtSmsApiKey = new DevExpress.XtraEditors.TextEdit();
+            lblSmsSenderTitle = new DevExpress.XtraEditors.LabelControl();
+            txtSmsSenderTitle = new DevExpress.XtraEditors.TextEdit();
+            messagingPanelAutoSend = new DevExpress.XtraEditors.PanelControl();
+            toggleAutoSend = new DevExpress.XtraEditors.ToggleSwitch();
+            lblAutoSend = new DevExpress.XtraEditors.LabelControl();
+            lblAutoSendInterval = new DevExpress.XtraEditors.LabelControl();
+            spinAutoSendInterval = new DevExpress.XtraEditors.SpinEdit();
+            lblAutoSendMaxRetries = new DevExpress.XtraEditors.LabelControl();
+            spinAutoSendMaxRetries = new DevExpress.XtraEditors.SpinEdit();
+            lblServiceStatusTitle = new DevExpress.XtraEditors.LabelControl();
+            lblServiceStatus = new DevExpress.XtraEditors.LabelControl();
+            btnStartService = new DevExpress.XtraEditors.SimpleButton();
+            btnStopService = new DevExpress.XtraEditors.SimpleButton();
             messagingPanelRow6 = new DevExpress.XtraEditors.PanelControl();
             toggleBirthday = new DevExpress.XtraEditors.ToggleSwitch();
             lblBirthday = new DevExpress.XtraEditors.LabelControl();
@@ -54,6 +74,17 @@
             btnSendNow = new DevExpress.XtraEditors.SimpleButton();
             btnSaveMessaging = new DevExpress.XtraEditors.SimpleButton();
             messagingScrollPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)messagingPanelSms).BeginInit();
+            messagingPanelSms.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)toggleSmsEnabled.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtSmsServerUrl.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtSmsApiKey.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtSmsSenderTitle.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)messagingPanelAutoSend).BeginInit();
+            messagingPanelAutoSend.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)toggleAutoSend.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)spinAutoSendInterval.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)spinAutoSendMaxRetries.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)messagingPanelRow6).BeginInit();
             messagingPanelRow6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)toggleBirthday.Properties).BeginInit();
@@ -85,6 +116,8 @@
             // 
             // messagingScrollPanel
             // 
+            messagingScrollPanel.Controls.Add(messagingPanelSms);
+            messagingScrollPanel.Controls.Add(messagingPanelAutoSend);
             messagingScrollPanel.Controls.Add(messagingPanelRow6);
             messagingScrollPanel.Controls.Add(messagingPanelRow5);
             messagingScrollPanel.Controls.Add(messagingPanelRow4);
@@ -94,8 +127,195 @@
             messagingScrollPanel.Dock = DockStyle.Fill;
             messagingScrollPanel.Location = new Point(0, 0);
             messagingScrollPanel.Name = "messagingScrollPanel";
-            messagingScrollPanel.Size = new Size(1051, 506);
+            messagingScrollPanel.Size = new Size(1051, 680);
             messagingScrollPanel.TabIndex = 0;
+            // 
+            // messagingPanelSms
+            // 
+            messagingPanelSms.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            messagingPanelSms.Controls.Add(toggleSmsEnabled);
+            messagingPanelSms.Controls.Add(lblSmsSectionTitle);
+            messagingPanelSms.Controls.Add(lblSmsServerUrl);
+            messagingPanelSms.Controls.Add(txtSmsServerUrl);
+            messagingPanelSms.Controls.Add(lblSmsApiKey);
+            messagingPanelSms.Controls.Add(txtSmsApiKey);
+            messagingPanelSms.Controls.Add(lblSmsSenderTitle);
+            messagingPanelSms.Controls.Add(txtSmsSenderTitle);
+            messagingPanelSms.Dock = DockStyle.Top;
+            messagingPanelSms.Location = new Point(0, 570);
+            messagingPanelSms.Name = "messagingPanelSms";
+            messagingPanelSms.Size = new Size(1051, 95);
+            messagingPanelSms.TabIndex = 8;
+            // 
+            // toggleSmsEnabled
+            // 
+            toggleSmsEnabled.Location = new Point(12, 10);
+            toggleSmsEnabled.Name = "toggleSmsEnabled";
+            toggleSmsEnabled.Properties.OffText = Foxoft.Properties.Resources.Common_Off;
+            toggleSmsEnabled.Properties.OnText = Foxoft.Properties.Resources.Common_On;
+            toggleSmsEnabled.Size = new Size(50, 18);
+            toggleSmsEnabled.TabIndex = 0;
+            // 
+            // lblSmsSectionTitle
+            // 
+            lblSmsSectionTitle.Appearance.Font = new Font("Tahoma", 9F, FontStyle.Bold);
+            lblSmsSectionTitle.Appearance.Options.UseFont = true;
+            lblSmsSectionTitle.Location = new Point(68, 12);
+            lblSmsSectionTitle.Name = "lblSmsSectionTitle";
+            lblSmsSectionTitle.Size = new Size(200, 14);
+            lblSmsSectionTitle.TabIndex = 1;
+            // 
+            // lblSmsServerUrl
+            // 
+            lblSmsServerUrl.Location = new Point(68, 38);
+            lblSmsServerUrl.Name = "lblSmsServerUrl";
+            lblSmsServerUrl.Size = new Size(80, 13);
+            lblSmsServerUrl.TabIndex = 2;
+            // 
+            // txtSmsServerUrl
+            // 
+            txtSmsServerUrl.Location = new Point(170, 35);
+            txtSmsServerUrl.Name = "txtSmsServerUrl";
+            txtSmsServerUrl.Size = new Size(260, 20);
+            txtSmsServerUrl.TabIndex = 3;
+            // 
+            // lblSmsApiKey
+            // 
+            lblSmsApiKey.Location = new Point(450, 38);
+            lblSmsApiKey.Name = "lblSmsApiKey";
+            lblSmsApiKey.Size = new Size(70, 13);
+            lblSmsApiKey.TabIndex = 4;
+            // 
+            // txtSmsApiKey
+            // 
+            txtSmsApiKey.Location = new Point(530, 35);
+            txtSmsApiKey.Name = "txtSmsApiKey";
+            txtSmsApiKey.Properties.PasswordChar = '•';
+            txtSmsApiKey.Size = new Size(200, 20);
+            txtSmsApiKey.TabIndex = 5;
+            // 
+            // lblSmsSenderTitle
+            // 
+            lblSmsSenderTitle.Location = new Point(68, 66);
+            lblSmsSenderTitle.Name = "lblSmsSenderTitle";
+            lblSmsSenderTitle.Size = new Size(85, 13);
+            lblSmsSenderTitle.TabIndex = 6;
+            // 
+            // txtSmsSenderTitle
+            // 
+            txtSmsSenderTitle.Location = new Point(170, 63);
+            txtSmsSenderTitle.Name = "txtSmsSenderTitle";
+            txtSmsSenderTitle.Size = new Size(160, 20);
+            txtSmsSenderTitle.TabIndex = 7;
+            // 
+            // messagingPanelAutoSend
+            // 
+            messagingPanelAutoSend.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            messagingPanelAutoSend.Controls.Add(toggleAutoSend);
+            messagingPanelAutoSend.Controls.Add(lblAutoSend);
+            messagingPanelAutoSend.Controls.Add(lblAutoSendInterval);
+            messagingPanelAutoSend.Controls.Add(spinAutoSendInterval);
+            messagingPanelAutoSend.Controls.Add(lblAutoSendMaxRetries);
+            messagingPanelAutoSend.Controls.Add(spinAutoSendMaxRetries);
+            messagingPanelAutoSend.Controls.Add(lblServiceStatusTitle);
+            messagingPanelAutoSend.Controls.Add(lblServiceStatus);
+            messagingPanelAutoSend.Controls.Add(btnStartService);
+            messagingPanelAutoSend.Controls.Add(btnStopService);
+            messagingPanelAutoSend.Dock = DockStyle.Top;
+            messagingPanelAutoSend.Location = new Point(0, 480);
+            messagingPanelAutoSend.Name = "messagingPanelAutoSend";
+            messagingPanelAutoSend.Size = new Size(1051, 90);
+            messagingPanelAutoSend.TabIndex = 7;
+            // 
+            // toggleAutoSend
+            // 
+            toggleAutoSend.Location = new Point(12, 12);
+            toggleAutoSend.Name = "toggleAutoSend";
+            toggleAutoSend.Properties.OffText = Foxoft.Properties.Resources.Common_Off;
+            toggleAutoSend.Properties.OnText = Foxoft.Properties.Resources.Common_On;
+            toggleAutoSend.Size = new Size(50, 18);
+            toggleAutoSend.TabIndex = 0;
+            // 
+            // lblAutoSend
+            // 
+            lblAutoSend.Appearance.Font = new Font("Tahoma", 9F, FontStyle.Bold);
+            lblAutoSend.Appearance.Options.UseFont = true;
+            lblAutoSend.Location = new Point(68, 14);
+            lblAutoSend.Name = "lblAutoSend";
+            lblAutoSend.Size = new Size(380, 14);
+            lblAutoSend.TabIndex = 1;
+            // 
+            // lblAutoSendInterval
+            // 
+            lblAutoSendInterval.Location = new Point(68, 48);
+            lblAutoSendInterval.Name = "lblAutoSendInterval";
+            lblAutoSendInterval.Size = new Size(120, 13);
+            lblAutoSendInterval.TabIndex = 2;
+            // 
+            // spinAutoSendInterval
+            // 
+            spinAutoSendInterval.EditValue = new decimal(new int[] { 30, 0, 0, 0 });
+            spinAutoSendInterval.Location = new Point(195, 45);
+            spinAutoSendInterval.Name = "spinAutoSendInterval";
+            spinAutoSendInterval.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            spinAutoSendInterval.Properties.IsFloatValue = false;
+            spinAutoSendInterval.Properties.MaskSettings.Set("mask", "N0");
+            spinAutoSendInterval.Properties.MaxValue = new decimal(new int[] { 3600, 0, 0, 0 });
+            spinAutoSendInterval.Properties.MinValue = new decimal(new int[] { 5, 0, 0, 0 });
+            spinAutoSendInterval.Size = new Size(70, 20);
+            spinAutoSendInterval.TabIndex = 3;
+            // 
+            // lblAutoSendMaxRetries
+            // 
+            lblAutoSendMaxRetries.Location = new Point(285, 48);
+            lblAutoSendMaxRetries.Name = "lblAutoSendMaxRetries";
+            lblAutoSendMaxRetries.Size = new Size(80, 13);
+            lblAutoSendMaxRetries.TabIndex = 4;
+            // 
+            // spinAutoSendMaxRetries
+            // 
+            spinAutoSendMaxRetries.EditValue = new decimal(new int[] { 5, 0, 0, 0 });
+            spinAutoSendMaxRetries.Location = new Point(375, 45);
+            spinAutoSendMaxRetries.Name = "spinAutoSendMaxRetries";
+            spinAutoSendMaxRetries.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            spinAutoSendMaxRetries.Properties.IsFloatValue = false;
+            spinAutoSendMaxRetries.Properties.MaskSettings.Set("mask", "N0");
+            spinAutoSendMaxRetries.Properties.MaxValue = new decimal(new int[] { 50, 0, 0, 0 });
+            spinAutoSendMaxRetries.Properties.MinValue = new decimal(new int[] { 1, 0, 0, 0 });
+            spinAutoSendMaxRetries.Size = new Size(60, 20);
+            spinAutoSendMaxRetries.TabIndex = 5;
+            // 
+            // lblServiceStatusTitle
+            // 
+            lblServiceStatusTitle.Location = new Point(480, 15);
+            lblServiceStatusTitle.Name = "lblServiceStatusTitle";
+            lblServiceStatusTitle.Size = new Size(75, 13);
+            lblServiceStatusTitle.TabIndex = 6;
+            // 
+            // lblServiceStatus
+            // 
+            lblServiceStatus.Appearance.Font = new Font("Tahoma", 8.25F, FontStyle.Bold);
+            lblServiceStatus.Appearance.Options.UseFont = true;
+            lblServiceStatus.Location = new Point(565, 15);
+            lblServiceStatus.Name = "lblServiceStatus";
+            lblServiceStatus.Size = new Size(120, 13);
+            lblServiceStatus.TabIndex = 7;
+            // 
+            // btnStartService
+            // 
+            btnStartService.Location = new Point(480, 42);
+            btnStartService.Name = "btnStartService";
+            btnStartService.Size = new Size(95, 25);
+            btnStartService.TabIndex = 8;
+            btnStartService.Click += btnStartService_Click;
+            // 
+            // btnStopService
+            // 
+            btnStopService.Location = new Point(585, 42);
+            btnStopService.Name = "btnStopService";
+            btnStopService.Size = new Size(95, 25);
+            btnStopService.TabIndex = 9;
+            btnStopService.Click += btnStopService_Click;
             // 
             // messagingPanelRow6
             // 
@@ -108,7 +328,7 @@
             messagingPanelRow6.Location = new Point(0, 400);
             messagingPanelRow6.Name = "messagingPanelRow6";
             messagingPanelRow6.Size = new Size(1051, 80);
-            messagingPanelRow6.TabIndex = 0;
+            messagingPanelRow6.TabIndex = 6;
             // 
             // toggleBirthday
             // 
@@ -141,9 +361,9 @@
             // 
             // memoBirthday
             // 
-            memoBirthday.Location = new Point(290, 22);
+            memoBirthday.Location = new Point(290, 23);
             memoBirthday.Name = "memoBirthday";
-            memoBirthday.Size = new Size(975, 55);
+            memoBirthday.Size = new Size(462, 50);
             memoBirthday.TabIndex = 3;
             // 
             // messagingPanelRow5
@@ -157,7 +377,7 @@
             messagingPanelRow5.Location = new Point(0, 320);
             messagingPanelRow5.Name = "messagingPanelRow5";
             messagingPanelRow5.Size = new Size(1051, 80);
-            messagingPanelRow5.TabIndex = 1;
+            messagingPanelRow5.TabIndex = 5;
             // 
             // togglePayment
             // 
@@ -190,9 +410,9 @@
             // 
             // memoPayment
             // 
-            memoPayment.Location = new Point(290, 22);
+            memoPayment.Location = new Point(290, 23);
             memoPayment.Name = "memoPayment";
-            memoPayment.Size = new Size(975, 55);
+            memoPayment.Size = new Size(462, 50);
             memoPayment.TabIndex = 3;
             // 
             // messagingPanelRow4
@@ -206,7 +426,7 @@
             messagingPanelRow4.Location = new Point(0, 240);
             messagingPanelRow4.Name = "messagingPanelRow4";
             messagingPanelRow4.Size = new Size(1051, 80);
-            messagingPanelRow4.TabIndex = 2;
+            messagingPanelRow4.TabIndex = 4;
             // 
             // toggleClosed
             // 
@@ -239,9 +459,9 @@
             // 
             // memoClosed
             // 
-            memoClosed.Location = new Point(290, 22);
+            memoClosed.Location = new Point(290, 23);
             memoClosed.Name = "memoClosed";
-            memoClosed.Size = new Size(975, 55);
+            memoClosed.Size = new Size(462, 50);
             memoClosed.TabIndex = 3;
             // 
             // messagingPanelRow3
@@ -288,9 +508,9 @@
             // 
             // memoPurchase
             // 
-            memoPurchase.Location = new Point(290, 22);
+            memoPurchase.Location = new Point(290, 23);
             memoPurchase.Name = "memoPurchase";
-            memoPurchase.Size = new Size(975, 55);
+            memoPurchase.Size = new Size(462, 50);
             memoPurchase.TabIndex = 3;
             // 
             // messagingPanelRow2
@@ -304,7 +524,7 @@
             messagingPanelRow2.Location = new Point(0, 80);
             messagingPanelRow2.Name = "messagingPanelRow2";
             messagingPanelRow2.Size = new Size(1051, 80);
-            messagingPanelRow2.TabIndex = 4;
+            messagingPanelRow2.TabIndex = 2;
             // 
             // toggleDueDay
             // 
@@ -320,7 +540,7 @@
             lblDueDay.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             lblDueDay.Location = new Point(68, 23);
             lblDueDay.Name = "lblDueDay";
-            lblDueDay.Size = new Size(130, 20);
+            lblDueDay.Size = new Size(155, 20);
             lblDueDay.TabIndex = 1;
             // 
             // lblSmsDueDay
@@ -337,9 +557,9 @@
             // 
             // memoDueDay
             // 
-            memoDueDay.Location = new Point(290, 22);
+            memoDueDay.Location = new Point(290, 23);
             memoDueDay.Name = "memoDueDay";
-            memoDueDay.Size = new Size(975, 55);
+            memoDueDay.Size = new Size(462, 50);
             memoDueDay.TabIndex = 3;
             // 
             // messagingPanelRow1
@@ -355,7 +575,7 @@
             messagingPanelRow1.Location = new Point(0, 0);
             messagingPanelRow1.Name = "messagingPanelRow1";
             messagingPanelRow1.Size = new Size(1051, 80);
-            messagingPanelRow1.TabIndex = 5;
+            messagingPanelRow1.TabIndex = 1;
             // 
             // toggleReminder
             // 
@@ -371,7 +591,7 @@
             lblReminder.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             lblReminder.Location = new Point(68, 23);
             lblReminder.Name = "lblReminder";
-            lblReminder.Size = new Size(130, 20);
+            lblReminder.Size = new Size(115, 20);
             lblReminder.TabIndex = 1;
             // 
             // lblDaysBefore
@@ -380,22 +600,22 @@
             lblDaysBefore.Appearance.ForeColor = Color.Gray;
             lblDaysBefore.Appearance.Options.UseFont = true;
             lblDaysBefore.Appearance.Options.UseForeColor = true;
-            lblDaysBefore.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            lblDaysBefore.Location = new Point(200, 5);
+            lblDaysBefore.Location = new Point(190, 8);
             lblDaysBefore.Name = "lblDaysBefore";
-            lblDaysBefore.Size = new Size(80, 15);
+            lblDaysBefore.Size = new Size(45, 12);
             lblDaysBefore.TabIndex = 2;
             // 
             // spinDaysBefore
             // 
-            spinDaysBefore.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
-            spinDaysBefore.Location = new Point(200, 22);
+            spinDaysBefore.EditValue = new decimal(new int[] { 2, 0, 0, 0 });
+            spinDaysBefore.Location = new Point(190, 23);
             spinDaysBefore.Name = "spinDaysBefore";
             spinDaysBefore.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             spinDaysBefore.Properties.IsFloatValue = false;
+            spinDaysBefore.Properties.MaskSettings.Set("mask", "N0");
             spinDaysBefore.Properties.MaxValue = new decimal(new int[] { 30, 0, 0, 0 });
             spinDaysBefore.Properties.MinValue = new decimal(new int[] { 1, 0, 0, 0 });
-            spinDaysBefore.Size = new Size(80, 20);
+            spinDaysBefore.Size = new Size(50, 20);
             spinDaysBefore.TabIndex = 3;
             // 
             // lblSmsReminder
@@ -412,9 +632,9 @@
             // 
             // memoReminder
             // 
-            memoReminder.Location = new Point(290, 22);
+            memoReminder.Location = new Point(290, 23);
             memoReminder.Name = "memoReminder";
-            memoReminder.Size = new Size(975, 55);
+            memoReminder.Size = new Size(462, 50);
             memoReminder.TabIndex = 5;
             // 
             // messagingPanelBottom
@@ -425,24 +645,23 @@
             messagingPanelBottom.Dock = DockStyle.Bottom;
             messagingPanelBottom.Location = new Point(0, 506);
             messagingPanelBottom.Name = "messagingPanelBottom";
-            messagingPanelBottom.Padding = new Padding(10);
             messagingPanelBottom.Size = new Size(1051, 50);
             messagingPanelBottom.TabIndex = 1;
             // 
             // btnSendNow
             // 
-            btnSendNow.Location = new Point(300, 10);
+            btnSendNow.Location = new Point(410, 10);
             btnSendNow.Name = "btnSendNow";
-            btnSendNow.Size = new Size(120, 30);
-            btnSendNow.TabIndex = 0;
+            btnSendNow.Size = new Size(110, 30);
+            btnSendNow.TabIndex = 1;
             btnSendNow.Click += btnSendNow_Click;
             // 
             // btnSaveMessaging
             // 
-            btnSaveMessaging.Location = new Point(190, 10);
+            btnSaveMessaging.Location = new Point(290, 10);
             btnSaveMessaging.Name = "btnSaveMessaging";
             btnSaveMessaging.Size = new Size(100, 30);
-            btnSaveMessaging.TabIndex = 1;
+            btnSaveMessaging.TabIndex = 0;
             btnSaveMessaging.Click += btnSaveMessaging_Click;
             // 
             // UcMessagingSetting
@@ -455,6 +674,19 @@
             Size = new Size(1051, 556);
             Load += UcMessagingSetting_Load;
             messagingScrollPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)messagingPanelSms).EndInit();
+            messagingPanelSms.ResumeLayout(false);
+            messagingPanelSms.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)toggleSmsEnabled.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtSmsServerUrl.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtSmsApiKey.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtSmsSenderTitle.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)messagingPanelAutoSend).EndInit();
+            messagingPanelAutoSend.ResumeLayout(false);
+            messagingPanelAutoSend.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)toggleAutoSend.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)spinAutoSendInterval.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)spinAutoSendMaxRetries.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)messagingPanelRow6).EndInit();
             messagingPanelRow6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)toggleBirthday.Properties).EndInit();
@@ -520,6 +752,26 @@
         private DevExpress.XtraEditors.LabelControl lblBirthday;
         private DevExpress.XtraEditors.LabelControl lblSmsBirthday;
         private DevExpress.XtraEditors.MemoEdit memoBirthday;
+        private DevExpress.XtraEditors.PanelControl messagingPanelAutoSend;
+        private DevExpress.XtraEditors.ToggleSwitch toggleAutoSend;
+        private DevExpress.XtraEditors.LabelControl lblAutoSend;
+        private DevExpress.XtraEditors.LabelControl lblAutoSendInterval;
+        private DevExpress.XtraEditors.SpinEdit spinAutoSendInterval;
+        private DevExpress.XtraEditors.LabelControl lblAutoSendMaxRetries;
+        private DevExpress.XtraEditors.SpinEdit spinAutoSendMaxRetries;
+        private DevExpress.XtraEditors.LabelControl lblServiceStatusTitle;
+        private DevExpress.XtraEditors.LabelControl lblServiceStatus;
+        private DevExpress.XtraEditors.SimpleButton btnStartService;
+        private DevExpress.XtraEditors.SimpleButton btnStopService;
+        private DevExpress.XtraEditors.PanelControl messagingPanelSms;
+        private DevExpress.XtraEditors.ToggleSwitch toggleSmsEnabled;
+        private DevExpress.XtraEditors.LabelControl lblSmsSectionTitle;
+        private DevExpress.XtraEditors.LabelControl lblSmsServerUrl;
+        private DevExpress.XtraEditors.TextEdit txtSmsServerUrl;
+        private DevExpress.XtraEditors.LabelControl lblSmsApiKey;
+        private DevExpress.XtraEditors.TextEdit txtSmsApiKey;
+        private DevExpress.XtraEditors.LabelControl lblSmsSenderTitle;
+        private DevExpress.XtraEditors.TextEdit txtSmsSenderTitle;
         private DevExpress.XtraEditors.PanelControl messagingPanelBottom;
         private DevExpress.XtraEditors.SimpleButton btnSaveMessaging;
         private DevExpress.XtraEditors.SimpleButton btnSendNow;
