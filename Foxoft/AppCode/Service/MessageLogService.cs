@@ -94,13 +94,26 @@ namespace Foxoft.AppCode.Service
             }
         }
 
+        public static int GetRequiredBackoffSeconds(int tryCount)
+        {
+            return tryCount switch
+            {
+                0 => 0,
+                1 => 30,       // 30 sec
+                2 => 120,      // 2 min
+                3 => 300,      // 5 min
+                4 => 900,      // 15 min
+                _ => 1800      // 30 min
+            };
+        }
+
         public static async Task<(int Sent, int Failed)> ProcessUnsentMessagesAsync(
             subContext db,
             int batchSize = 50,
             int maxRetries = 5,
             CancellationToken ct = default)
         {
-            // Check internet connectivity first. If no internet, do not burn retry attempts!
+            // Check internet connectivity first. If no internet, do not attempt or burn retry attempts!
             bool isOnline = await NetworkConnectivityHelper.IsInternetAvailableAsync(ct);
             if (!isOnline)
             {
@@ -109,14 +122,25 @@ namespace Foxoft.AppCode.Service
 
             int sentCount = 0;
             int failedCount = 0;
+            DateTime now = DateTime.Now;
 
-            List<TrMessageLog> unsentLogs = await db.TrMessageLogs
+            // Load candidate unsent logs ordered by creation date
+            List<TrMessageLog> candidateLogs = await db.TrMessageLogs
                 .Where(x => !x.IsSuccessful && x.TryCount < maxRetries)
                 .OrderBy(x => x.CreatedDate)
-                .Take(batchSize)
+                .Take(batchSize * 2)
                 .ToListAsync(ct);
 
-            if (unsentLogs.Count == 0)
+            if (candidateLogs.Count == 0)
+                return (0, 0);
+
+            // Filter by exponential backoff delay so we don't spam failing messages
+            List<TrMessageLog> eligibleLogs = candidateLogs
+                .Where(x => x.LastTryDate == null || (now - x.LastTryDate.Value).TotalSeconds >= GetRequiredBackoffSeconds(x.TryCount))
+                .Take(batchSize)
+                .ToList();
+
+            if (eligibleLogs.Count == 0)
                 return (0, 0);
 
             DcWhatsAppProviderSetting? waSetting = await db.DcWhatsAppProviderSettings
@@ -127,18 +151,39 @@ namespace Foxoft.AppCode.Service
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == 1, ct);
 
-            foreach (TrMessageLog log in unsentLogs)
+            // Pre-check provider reachability to avoid burning attempts when provider container/server is down
+            bool isWaReachable = waSetting != null && await NetworkConnectivityHelper.IsProviderReachableAsync(waSetting.ServerUrl, ct);
+            bool isSmsReachable = smsSetting != null && smsSetting.IsEnabled && await NetworkConnectivityHelper.IsProviderReachableAsync(smsSetting.ServerUrl, ct);
+
+            foreach (TrMessageLog log in eligibleLogs)
             {
                 if (ct.IsCancellationRequested)
                     break;
 
-                log.TryCount += 1;
+                bool isWhatsApp = string.Equals(log.ChannelCode, NotificationChannels.WhatsApp, StringComparison.OrdinalIgnoreCase)
+                    || string.IsNullOrEmpty(log.ChannelCode);
+                bool isSms = string.Equals(log.ChannelCode, NotificationChannels.Sms, StringComparison.OrdinalIgnoreCase);
+
+                // If the specific provider server is down, skip and don't burn retry counts
+                if (isWhatsApp && !isWaReachable)
+                {
+                    log.LastError = "WhatsApp serverinə qoşulmaq mümkün olmadı (Server əlçatan deyil).";
+                    log.LastTryDate = DateTime.Now;
+                    continue;
+                }
+
+                if (isSms && !isSmsReachable)
+                {
+                    log.LastError = "SMS serverinə qoşulmaq mümkün olmadı (Server əlçatan deyil).";
+                    log.LastTryDate = DateTime.Now;
+                    continue;
+                }
+
                 log.LastTryDate = DateTime.Now;
 
                 try
                 {
-                    if (string.Equals(log.ChannelCode, NotificationChannels.WhatsApp, StringComparison.OrdinalIgnoreCase) ||
-                        string.IsNullOrEmpty(log.ChannelCode))
+                    if (isWhatsApp)
                     {
                         ValidateApiSettings(waSetting);
 
@@ -158,7 +203,7 @@ namespace Foxoft.AppCode.Service
                         db.TrCredits.Add(WhatsAppCreditService.CreateUsage(log.MessageType ?? string.Empty, log.ReceiverPhoneNumber!));
                         sentCount++;
                     }
-                    else if (string.Equals(log.ChannelCode, NotificationChannels.Sms, StringComparison.OrdinalIgnoreCase))
+                    else if (isSms)
                     {
                         if (smsSetting == null || !smsSetting.IsEnabled)
                         {
@@ -170,6 +215,7 @@ namespace Foxoft.AppCode.Service
                         if (string.IsNullOrWhiteSpace(log.ReceiverPhoneNumber) || string.IsNullOrWhiteSpace(log.Message))
                         {
                             log.LastError = "Nömrə və ya mesaj mətni boşdur.";
+                            log.TryCount = maxRetries; // Permanent failure
                             failedCount++;
                             continue;
                         }
@@ -184,18 +230,51 @@ namespace Foxoft.AppCode.Service
                     }
 
                     // Rate-limiting delay to avoid flooding provider
-                    await Task.Delay(500, ct);
+                    await Task.Delay(1000, ct);
                 }
                 catch (Exception ex)
                 {
                     log.LastError = ex.Message;
                     log.LastUpdatedDate = DateTime.Now;
-                    failedCount++;
+
+                    if (IsPermanentDataError(ex))
+                    {
+                        // Permanent error (e.g. image file missing, invalid number): mark max retries to stop looping
+                        log.TryCount = maxRetries;
+                        failedCount++;
+                    }
+                    else if (IsTransientNetworkError(ex))
+                    {
+                        // Network/outage error: don't exhaust retry limits immediately; break batch loop
+                        failedCount++;
+                        break;
+                    }
+                    else
+                    {
+                        log.TryCount += 1;
+                        failedCount++;
+                    }
                 }
             }
 
             await db.SaveChangesAsync(ct);
             return (sentCount, failedCount);
+        }
+
+        private static bool IsTransientNetworkError(Exception ex)
+        {
+            return ex is System.Net.Http.HttpRequestException
+                || ex is System.Net.Sockets.SocketException
+                || ex is TimeoutException
+                || ex is TaskCanceledException
+                || (ex.InnerException != null && IsTransientNetworkError(ex.InnerException));
+        }
+
+        private static bool IsPermanentDataError(Exception ex)
+        {
+            return ex is FileNotFoundException
+                || ex is ArgumentException
+                || ex is FormatException;
         }
 
         public static async Task SendLoggedWhatsAppMessageAsync(

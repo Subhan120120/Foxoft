@@ -11,11 +11,18 @@ namespace Foxoft.NotificationWorker
     public sealed class NotificationBackgroundWorker
     {
         private readonly NotificationWorkerOptions _options;
-        private bool _wasOffline = false;
+        private readonly AsyncAutoResetEvent _wakeUpSignal = new();
 
         public NotificationBackgroundWorker(NotificationWorkerOptions options)
         {
             _options = options;
+            NetworkConnectivityHelper.InternetRestored += OnInternetRestored;
+        }
+
+        private void OnInternetRestored()
+        {
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] İnternet bağlantısı bərpa olundu! Mesajlar dərhal göndərilir...");
+            _wakeUpSignal.Set();
         }
 
         public async Task RunAsync(CancellationToken stoppingToken)
@@ -83,6 +90,8 @@ namespace Foxoft.NotificationWorker
             Func<CancellationToken, Task> work,
             CancellationToken stoppingToken)
         {
+            bool loopWasOffline = false;
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 NotificationWorkerManager.WriteHeartbeat(Environment.ProcessId);
@@ -95,18 +104,18 @@ namespace Foxoft.NotificationWorker
                         bool isOnline = await NetworkConnectivityHelper.IsInternetAvailableAsync(stoppingToken);
                         if (!isOnline)
                         {
-                            if (!_wasOffline)
+                            if (!loopWasOffline)
                             {
                                 Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] İnternet bağlantısı yoxdur. {workerName} gözləmə rejiminə keçir...");
-                                _wasOffline = true;
+                                loopWasOffline = true;
                             }
-                            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+                            await _wakeUpSignal.WaitAsync(TimeSpan.FromSeconds(5), stoppingToken);
                             continue;
                         }
-                        else if (_wasOffline)
+                        else if (loopWasOffline)
                         {
                             Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] İnternet bağlantısı bərpa olundu! {workerName} işə salınır...");
-                            _wasOffline = false;
+                            loopWasOffline = false;
                         }
 
                         await work(stoppingToken);
@@ -124,7 +133,7 @@ namespace Foxoft.NotificationWorker
                 TimeSpan interval = getInterval();
                 try
                 {
-                    await Task.Delay(interval, stoppingToken);
+                    await _wakeUpSignal.WaitAsync(interval, stoppingToken);
                 }
                 catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
                 {
@@ -244,6 +253,39 @@ namespace Foxoft.NotificationWorker
                     maxRetryDelay: TimeSpan.FromSeconds(5),
                     errorNumbersToAdd: new[] { 233 }));
             return new subContext(optionsBuilder.Options);
+        }
+    }
+
+    internal sealed class AsyncAutoResetEvent
+    {
+        private TaskCompletionSource<bool> _tcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public void Set()
+        {
+            _tcs.TrySetResult(true);
+        }
+
+        public async Task<bool> WaitAsync(TimeSpan timeout, CancellationToken ct)
+        {
+            TaskCompletionSource<bool> curTcs = _tcs;
+            if (curTcs.Task.IsCompleted)
+            {
+                _tcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
+                return true;
+            }
+
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            Task delayTask = Task.Delay(timeout, cts.Token);
+            Task completed = await Task.WhenAny(curTcs.Task, delayTask);
+
+            if (completed == curTcs.Task)
+            {
+                cts.Cancel();
+                _tcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
+                return true;
+            }
+
+            return false;
         }
     }
 }

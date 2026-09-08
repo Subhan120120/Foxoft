@@ -177,6 +177,9 @@ namespace Foxoft
             smsSetting.SenderTitle = txtSmsSenderTitle.Text.Trim();
 
             db.SaveChanges();
+
+            NotificationWorkerManager.EnsureRunning(toggleAutoSend.IsOn);
+            UpdateServiceStatusDisplay();
         }
 
         private void SaveRow(subContext db,
@@ -286,31 +289,78 @@ namespace Foxoft
             }
         }
 
-        private void btnStartService_Click(object sender, EventArgs e)
-        {
-            bool started = NotificationWorkerManager.Start();
-            System.Threading.Thread.Sleep(500);
-            UpdateServiceStatusDisplay();
+        private System.Windows.Forms.Timer? statusTimer;
 
-            if (started)
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (Visible)
             {
-                XtraMessageBox.Show("Xidmət uğurla başladıldı.", Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                UpdateServiceStatusDisplay();
+                StartStatusTimer();
             }
             else
             {
-                XtraMessageBox.Show("Xidmət başladıla bilmədi. İcra faylının mövcudluğunu yoxlayın.", Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                StopStatusTimer();
             }
         }
 
-        private void btnStopService_Click(object sender, EventArgs e)
+        private void StartStatusTimer()
         {
-            bool stopped = NotificationWorkerManager.Stop();
-            System.Threading.Thread.Sleep(500);
-            UpdateServiceStatusDisplay();
-
-            if (stopped)
+            if (statusTimer == null)
             {
-                XtraMessageBox.Show("Xidmət dayandırıldı.", Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                statusTimer = new System.Windows.Forms.Timer { Interval = 3000 };
+                statusTimer.Tick += (s, ev) => UpdateServiceStatusDisplay();
+            }
+            statusTimer.Start();
+        }
+
+        private void StopStatusTimer()
+        {
+            statusTimer?.Stop();
+        }
+
+        private async void btnStartService_Click(object sender, EventArgs e)
+        {
+            btnStartService.Enabled = false;
+            try
+            {
+                bool started = NotificationWorkerManager.Start();
+                await Task.Delay(800);
+                UpdateServiceStatusDisplay();
+
+                if (started)
+                {
+                    XtraMessageBox.Show(Resources.Form_MessagingSettings_ServiceStartSuccess, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    XtraMessageBox.Show(Resources.Form_MessagingSettings_ServiceStartFailed, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            finally
+            {
+                UpdateServiceStatusDisplay();
+            }
+        }
+
+        private async void btnStopService_Click(object sender, EventArgs e)
+        {
+            btnStopService.Enabled = false;
+            try
+            {
+                bool stopped = NotificationWorkerManager.Stop();
+                await Task.Delay(800);
+                UpdateServiceStatusDisplay();
+
+                if (stopped)
+                {
+                    XtraMessageBox.Show(Resources.Form_MessagingSettings_ServiceStopSuccess, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            finally
+            {
+                UpdateServiceStatusDisplay();
             }
         }
     }

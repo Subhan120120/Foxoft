@@ -15925,5 +15925,23 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_MessagingSettings_SmsSenderTitle", resourceCulture);
             }
         }
+
+        public static string Form_MessagingSettings_ServiceStartSuccess {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStartSuccess", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_ServiceStartFailed {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStartFailed", resourceCulture);
+            }
+        }
+
+        public static string Form_MessagingSettings_ServiceStopSuccess {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStopSuccess", resourceCulture);
+            }
+        }
     }
 }

@@ -5661,4 +5661,13 @@ Please wait or choose another invoice.</value>
   <data name="Form_MessagingSettings_SmsSenderTitle" xml:space="preserve">
     <value>Sender Title:</value>
   </data>
+  <data name="Form_MessagingSettings_ServiceStartSuccess" xml:space="preserve">
+    <value>Service started successfully.</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStartFailed" xml:space="preserve">
+    <value>Service could not be started. Check if the executable exists.</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStopSuccess" xml:space="preserve">
+    <value>Service stopped.</value>
+  </data>
 </root>

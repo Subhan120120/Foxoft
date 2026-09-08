@@ -12,10 +12,12 @@ using Foxoft.Models.ViewModel;
 using Foxoft.Properties;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft
 {
@@ -80,6 +82,7 @@ namespace Foxoft
             InitializeReports();
             InitializeFavorites();
             StartNotificationPopupTimer();
+            StartNotificationWorkerIfEnabled();
         }
 
         private void InitializeACEClaims()
@@ -355,6 +358,24 @@ namespace Foxoft
             };
 
             notificationPopupTimer.Start();
+        }
+
+        private void StartNotificationWorkerIfEnabled()
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    using var db = new subContext();
+                    var setting = db.AppSettings.AsNoTracking().FirstOrDefault(x => x.Id == 1);
+                    bool autoSend = setting?.AutoSendUnsentMessages ?? Settings.Default.AppSetting?.AutoSendUnsentMessages ?? true;
+                    NotificationWorkerManager.EnsureRunning(autoSend);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Failed to ensure NotificationWorker: {ex.Message}");
+                }
+            });
         }
 
         private async Task ShowInitialNotificationsAsync()

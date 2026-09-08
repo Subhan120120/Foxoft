@@ -67,13 +67,19 @@ namespace Foxoft.AppCode.Service
                 }
                 catch (Exception ex)
                 {
-                    outbox.Status = IsPermanentFailure(ex)
+                    bool isPermanent = IsPermanentFailure(ex) || outbox.TryCount >= 5;
+                    outbox.Status = isPermanent
                         ? NotificationOutboxStatuses.Failed
                         : NotificationOutboxStatuses.Pending;
                     outbox.LastError = ex.Message;
                     AddAudit(outbox, NotificationActionTypes.ChannelFailed, ex.Message);
 
-                    LogFailedMessage(outbox, ex.Message);
+                    // Only record in TrMessageLog if permanently failed to prevent duplicate logs/retries
+                    if (isPermanent)
+                    {
+                        LogFailedMessage(outbox, ex.Message);
+                    }
+
                     NotifyFailureIfInUi(ex.Message);
 
                     failed++;
@@ -164,6 +170,29 @@ namespace Foxoft.AppCode.Service
                 string message = ExtractMessage(outbox.Payload);
                 using SmsClient client = new(smsSetting);
                 await client.SendSmsAsync(outbox.Receiver, message, ct);
+
+                Guid? documentHeaderId = null;
+                if (outbox.Notification.EntityType == NotificationEntityTypes.Invoice &&
+                    Guid.TryParse(outbox.Notification.EntityKey, out Guid parsedId))
+                {
+                    documentHeaderId = parsedId;
+                }
+
+                _db.TrMessageLogs.Add(new TrMessageLog
+                {
+                    MessageLogId = Guid.NewGuid(),
+                    DocumentHeaderId = documentHeaderId,
+                    ReceiverPhoneNumber = outbox.Receiver,
+                    ChannelCode = NotificationChannels.Sms,
+                    MessageType = outbox.Notification.NotificationTypeCode,
+                    Message = message,
+                    IsSuccessful = true,
+                    Sender = Authorization.CurrAccCode,
+                    CurrAccCode = outbox.Notification.EntityType == NotificationEntityTypes.Customer ? outbox.Notification.EntityKey : null,
+                    TryCount = outbox.TryCount,
+                    LastTryDate = DateTime.Now
+                });
+
                 return;
             }
 

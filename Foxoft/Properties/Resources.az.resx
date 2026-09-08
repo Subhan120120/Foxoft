@@ -5661,4 +5661,13 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Form_MessagingSettings_SmsSenderTitle" xml:space="preserve">
     <value>Göndərən Başlığı:</value>
   </data>
+  <data name="Form_MessagingSettings_ServiceStartSuccess" xml:space="preserve">
+    <value>Xidmət uğurla başladıldı.</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStartFailed" xml:space="preserve">
+    <value>Xidmət başladıla bilmədi. İcra faylının mövcudluğunu yoxlayın.</value>
+  </data>
+  <data name="Form_MessagingSettings_ServiceStopSuccess" xml:space="preserve">
+    <value>Xidmət dayandırıldı.</value>
+  </data>
 </root>

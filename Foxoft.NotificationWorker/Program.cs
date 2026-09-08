@@ -25,6 +25,14 @@ if (args.Length > 0)
 
 NotificationWorkerOptions options = NotificationWorkerOptions.Load(args);
 
+const string MutexName = @"Global\Foxoft_NotificationWorker_SingleInstance";
+using var mutex = new Mutex(true, MutexName, out bool isNewInstance);
+if (!isNewInstance)
+{
+    Console.WriteLine("Foxoft Notification Worker is already running. Exiting duplicate instance.");
+    return;
+}
+
 // If running as a Windows Service or with --service flag
 if (!Environment.UserInteractive || args.Any(a => a.Equals("--service", StringComparison.OrdinalIgnoreCase)))
 {

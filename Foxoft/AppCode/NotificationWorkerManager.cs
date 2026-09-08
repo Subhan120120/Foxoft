@@ -123,6 +123,37 @@ namespace Foxoft.AppCode
             return null;
         }
 
+        public static bool IsRunning()
+        {
+            var status = GetStatus();
+            return status == NotificationWorkerStatus.RunningAsService || status == NotificationWorkerStatus.RunningAsProcess;
+        }
+
+        public static void EnsureRunning(bool autoSendEnabled)
+        {
+            try
+            {
+                if (autoSendEnabled)
+                {
+                    if (!IsRunning())
+                    {
+                        Start();
+                    }
+                }
+                else
+                {
+                    if (IsRunning())
+                    {
+                        Stop();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"NotificationWorkerManager.EnsureRunning error: {ex.Message}");
+            }
+        }
+
         public static bool Start()
         {
             try
@@ -133,6 +164,10 @@ namespace Foxoft.AppCode
                 {
                     sc.Start();
                     sc.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
+                    return true;
+                }
+                else if (sc.Status == ServiceControllerStatus.Running)
+                {
                     return true;
                 }
             }
@@ -150,6 +185,18 @@ namespace Foxoft.AppCode
                 return true;
 
             string conn = Properties.Settings.Default.SubConnString;
+            if (string.IsNullOrWhiteSpace(conn))
+            {
+                try
+                {
+                    using var tempCtx = new Models.subContext();
+                    conn = Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.GetConnectionString(tempCtx.Database) ?? string.Empty;
+                }
+                catch
+                {
+                }
+            }
+
             var startInfo = new ProcessStartInfo
             {
                 FileName = exePath,
