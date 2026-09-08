@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using System.Drawing.Drawing2D;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -197,8 +197,9 @@ namespace Foxoft
             SetSendButtonsEnabled(false);
             try
             {
-                foreach (Guid logId in unsentLogIds)
+                for (int i = 0; i < unsentLogIds.Count; i++)
                 {
+                    Guid logId = unsentLogIds[i];
                     try
                     {
                         await MessageLogService.ResendAsync(logId);
@@ -208,6 +209,12 @@ namespace Foxoft
                     {
                         Debug.Print($"WhatsApp resend error: {ex.Message}");
                         failed++;
+                    }
+
+                    // If more than 1 unsent message, send sequentially: 1 per second
+                    if (unsentLogIds.Count > 1 && i < unsentLogIds.Count - 1)
+                    {
+                        await Task.Delay(1000);
                     }
                 }
 

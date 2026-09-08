@@ -155,8 +155,10 @@ namespace Foxoft.AppCode.Service
             bool isWaReachable = waSetting != null && await NetworkConnectivityHelper.IsProviderReachableAsync(waSetting.ServerUrl, ct);
             bool isSmsReachable = smsSetting != null && smsSetting.IsEnabled && await NetworkConnectivityHelper.IsProviderReachableAsync(smsSetting.ServerUrl, ct);
 
-            foreach (TrMessageLog log in eligibleLogs)
+            for (int i = 0; i < eligibleLogs.Count; i++)
             {
+                TrMessageLog log = eligibleLogs[i];
+
                 if (ct.IsCancellationRequested)
                     break;
 
@@ -228,9 +230,6 @@ namespace Foxoft.AppCode.Service
                         log.LastUpdatedDate = DateTime.Now;
                         sentCount++;
                     }
-
-                    // Rate-limiting delay to avoid flooding provider
-                    await Task.Delay(1000, ct);
                 }
                 catch (Exception ex)
                 {
@@ -253,6 +252,14 @@ namespace Foxoft.AppCode.Service
                     {
                         log.TryCount += 1;
                         failedCount++;
+                    }
+                }
+                finally
+                {
+                    // If more than 1 unsent message, do not send in bulk; throttle strictly to 1 message per second
+                    if (eligibleLogs.Count > 1 && i < eligibleLogs.Count - 1 && !ct.IsCancellationRequested)
+                    {
+                        await Task.Delay(1000, ct);
                     }
                 }
             }

@@ -38,8 +38,10 @@ namespace Foxoft.AppCode.Service
                 .Take(take)
                 .ToListAsync(ct);
 
-            foreach (NotificationChannelOutbox outbox in outboxes)
+            for (int i = 0; i < outboxes.Count; i++)
             {
+                NotificationChannelOutbox outbox = outboxes[i];
+
                 if (ct.IsCancellationRequested)
                     break;
 
@@ -62,8 +64,6 @@ namespace Foxoft.AppCode.Service
                     outbox.LastError = null;
                     AddAudit(outbox, NotificationActionTypes.ChannelSent, null);
                     sent++;
-
-                    await Task.Delay(500, ct);
                 }
                 catch (Exception ex)
                 {
@@ -83,6 +83,14 @@ namespace Foxoft.AppCode.Service
                     NotifyFailureIfInUi(ex.Message);
 
                     failed++;
+                }
+                finally
+                {
+                    // If more than 1 message, send sequentially: 1 message per second
+                    if (outboxes.Count > 1 && i < outboxes.Count - 1 && !ct.IsCancellationRequested)
+                    {
+                        await Task.Delay(1000, ct);
+                    }
                 }
             }
 
