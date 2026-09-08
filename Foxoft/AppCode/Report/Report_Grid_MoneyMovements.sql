@@ -1,32 +1,32 @@
 ﻿select  PaymentLineId
-, TrPaymentHeaders.PaymentHeaderId
-, TrPaymentHeaders.InvoiceHeaderId
-, InvoiceNumber = tph.DocumentNumber
+, ph.PaymentHeaderId
+, ph.InvoiceHeaderId
+, InvoiceNumber = ih.DocumentNumber
 , DcPaymentTypes.PaymentTypeCode
 , PaymentTypeDesc
 , PaymentLoc
 , Payment
-, tpl.CurrencyCode
-, tpl.LineDescription
-, TrPaymentHeaders.DocumentNumber
-, TrPaymentHeaders.DocumentDate
-, TrPaymentHeaders.DocumentTime
-, TrPaymentHeaders.OperationDate
-, TrPaymentHeaders.OperationTime
+, pl.CurrencyCode
+, pl.LineDescription
+, ph.DocumentNumber
+, ph.DocumentDate
+, ph.DocumentTime
+, ph.OperationDate
+, ph.OperationTime
 , PaymentKindId
-, TrPaymentHeaders.CurrAccCode
+, ph.CurrAccCode
 , CashRegisterCode
 , FirstName
-, DcCurrAccs.CurrAccDesc
-, TrPaymentHeaders.StoreCode
-, tpl.CreatedDate
-, tpl.CreatedUserName
-, tpl.ExchangeRate
+, ph.StoreCode
+, pl.CreatedDate
+, pl.CreatedUserName
+, pl.ExchangeRate
 , OperationType
 , CurrAccTypeCode
-, tph.Description
+, ih.Description
 
-, CurrAccDesc = Case when tph.ProcessCode NOT IN ('EX', 'EI') then DcCurrAccs.CurrAccDesc else DcProducts.ProductDesc end
+, CurrAccDesc = Case when ih.ProcessCode IN ('EX', 'EI') then DcProducts.ProductDesc else DcCurrAccs.CurrAccDesc end 
+
 --, [Cari Hesab Balansı] = (
 --	ISNULL((
 --		select sum((QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100)))
@@ -57,11 +57,11 @@
 --	), 0)
 --)
 
-from TrPaymentLines tpl
-left join TrPaymentHeaders on tpl.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId
-left join TrInvoiceHeaders tph on TrPaymentHeaders.InvoiceHeaderId = tph.InvoiceHeaderId
-left join DcCurrAccs on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode
-left join DcPaymentTypes on tpl.PaymentTypeCode = DcPaymentTypes.PaymentTypeCode
-left join TrInvoiceLines il on il.InvoiceLineId = tpl.PaymentLineId
+from TrPaymentLines pl
+left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId
+left join TrInvoiceHeaders ih on ph.InvoiceHeaderId = ih.InvoiceHeaderId
+left join DcCurrAccs on ph.CurrAccCode = DcCurrAccs.CurrAccCode
+left join DcPaymentTypes on pl.PaymentTypeCode = DcPaymentTypes.PaymentTypeCode
+left join TrInvoiceLines il on il.InvoiceLineId = pl.PaymentLineId
 left Join DcProducts on il.ProductCode = DcProducts.ProductCode
-order by TrPaymentHeaders.OperationDate asc, TrPaymentHeaders.OperationTime asc
+order by ph.OperationDate asc, ph.OperationTime asc

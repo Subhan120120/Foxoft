@@ -124,7 +124,6 @@ namespace Foxoft.Models
         public DbSet<TrMessageLog> TrMessageLogs { get; set; }
         public DbSet<TrCredit> TrCredits { get; set; }
         public DbSet<DcShortcut> DcShortcuts { get; set; }
-        public DbSet<DcMessagingSetting> DcMessagingSettings { get; set; }
         public DbSet<DcPosButton> DcPosButtons { get; set; }
         public DbSet<NotificationType> NotificationTypes { get; set; }
         public DbSet<NotificationRule> NotificationRules { get; set; }
@@ -542,16 +541,6 @@ namespace Foxoft.Models
         {
             modelBuilder.Entity<DcWhatsAppProviderSetting>().HasData(
                 new DcWhatsAppProviderSetting { Id = 1, ServerUrl = "https://evolution.tokla.az", InstanceName = "tokla", ApiKey = "2fdqo0JtF6dnG23N7JbnZ9wMoVMRvRkh" }
-            );
-
-            // --- DcMessagingSetting Seed Data ---
-            modelBuilder.Entity<DcMessagingSetting>().HasData(
-                new DcMessagingSetting { Id = 1, MessagingType = "InstallmentReminder", IsEnabled = false, DaysBefore = 2, MessageTemplate = "Hörmətli müştəri! {StoreDesc} mağazasından götürdüyünüz məhsulun aylıq ödənişinə {day} gün qalıb. Əlaqə nömrəsi: {StorePhone}" },
-                new DcMessagingSetting { Id = 2, MessagingType = "InstallmentDueDay", IsEnabled = false, MessageTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun ödənişinin bu gün vaxtıdır. Xahiş edirik, ödənişinizi vaxtında ödəyəsiniz. Əlaqə nömrəsi: {StorePhone}" },
-                new DcMessagingSetting { Id = 3, MessagingType = "ProductPurchase", IsEnabled = false, MessageTemplate = "Yeni cihazınız xeyirli olsun. Bizi seçdiyiniz üçün təşəkkür edirik." },
-                new DcMessagingSetting { Id = 4, MessagingType = "CreditClosed", IsEnabled = false, MessageTemplate = "Hörmətli müştəri, sizin kreditiniz tam bağlandı. Bizi seçdiyiniz üçün təşəkkürlər! {StorePhone}" },
-                new DcMessagingSetting { Id = 5, MessagingType = "CreditPayment", IsEnabled = false, MessageTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun {paid} AZN aylıq krediti ödəndi. Qalıq borcunuz {debit} AZN-dir." },
-                new DcMessagingSetting { Id = 6, MessagingType = "Birthday", IsEnabled = false, MessageTemplate = "Dəyərli müştərimiz, sizi ad günü münasibətilə {StoreDesc} adından təbrik edirik." }
             );
 
             modelBuilder.Entity<NotificationType>().HasData(GetNotificationTypes());
@@ -1293,6 +1282,7 @@ namespace Foxoft.Models
                 CreateNotificationType(NotificationTypeCodes.InvoiceNotPosted, NotificationCategories.Sale, "Invoice Not Posted", NotificationSeverities.Warning, false, 130),
                 CreateNotificationType(NotificationTypeCodes.CustomerCreditLimitExceeded, NotificationCategories.Sale, "Customer Credit Limit Exceeded", NotificationSeverities.High, true, 140),
                 CreateNotificationType(NotificationTypeCodes.LargeSaleCreated, NotificationCategories.Sale, "Large Sale Created", NotificationSeverities.Info, false, 150),
+                CreateNotificationType(NotificationTypeCodes.ProductPurchase, NotificationCategories.Sale, "Product Purchase", NotificationSeverities.Info, false, 155),
                 CreateNotificationType(NotificationTypeCodes.ReturnCreated, NotificationCategories.Sale, "Return Created", NotificationSeverities.Info, false, 160),
                 CreateNotificationType(NotificationTypeCodes.PurchaseOrderPending, NotificationCategories.Purchase, "Purchase Order Pending", NotificationSeverities.Info, false, 170),
                 CreateNotificationType(NotificationTypeCodes.SupplierDebtDue, NotificationCategories.Purchase, "Supplier Debt Due", NotificationSeverities.Warning, false, 180),
@@ -1386,6 +1376,42 @@ namespace Foxoft.Models
                     TitleTemplate = "Kredit ödəniş günü",
                     BodyTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun ödənişinin bu gün vaxtıdır. Xahiş edirik, ödənişinizi vaxtında ödəyəsiniz. Əlaqə nömrəsi: {StorePhone}",
                     IsEnabled = true
+                },
+                new NotificationTemplate
+                {
+                    NotificationTemplateId = 6,
+                    NotificationTypeCode = NotificationTypeCodes.ProductPurchase,
+                    LanguageCode = "az",
+                    TitleTemplate = "Məhsul satışı",
+                    BodyTemplate = "Yeni cihazınız xeyirli olsun. Bizi seçdiyiniz üçün təşəkkür edirik.",
+                    IsEnabled = true
+                },
+                new NotificationTemplate
+                {
+                    NotificationTemplateId = 7,
+                    NotificationTypeCode = NotificationTypeCodes.CreditClosed,
+                    LanguageCode = "az",
+                    TitleTemplate = "Kredit bağlandı",
+                    BodyTemplate = "Hörmətli müştəri, sizin kreditiniz tam bağlandı. Bizi seçdiyiniz üçün təşəkkürlər! {StorePhone}",
+                    IsEnabled = true
+                },
+                new NotificationTemplate
+                {
+                    NotificationTemplateId = 8,
+                    NotificationTypeCode = NotificationTypeCodes.InstallmentPaid,
+                    LanguageCode = "az",
+                    TitleTemplate = "Kredit ödənişi",
+                    BodyTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun {paid} AZN aylıq krediti ödəndi. Qalıq borcunuz {debit} AZN-dir.",
+                    IsEnabled = true
+                },
+                new NotificationTemplate
+                {
+                    NotificationTemplateId = 9,
+                    NotificationTypeCode = NotificationTypeCodes.CustomerBirthday,
+                    LanguageCode = "az",
+                    TitleTemplate = "Ad günü təbriki",
+                    BodyTemplate = "Dəyərli müştərimiz, sizi ad günü münasibətilə {StoreDesc} adından təbrik edirik.",
+                    IsEnabled = true
                 }
             };
         }
@@ -1447,7 +1473,11 @@ namespace Foxoft.Models
         private static string GetDefaultNotificationChannelCodes(NotificationType notificationType)
         {
             if (notificationType.NotificationTypeCode == NotificationTypeCodes.InstallmentDueSoon
-                || notificationType.NotificationTypeCode == NotificationTypeCodes.InstallmentDueToday)
+                || notificationType.NotificationTypeCode == NotificationTypeCodes.InstallmentDueToday
+                || notificationType.NotificationTypeCode == NotificationTypeCodes.InstallmentPaid
+                || notificationType.NotificationTypeCode == NotificationTypeCodes.CreditClosed
+                || notificationType.NotificationTypeCode == NotificationTypeCodes.ProductPurchase
+                || notificationType.NotificationTypeCode == NotificationTypeCodes.CustomerBirthday)
                 return NotificationChannels.InApp + "," + NotificationChannels.WhatsApp;
 
             return notificationType.AllowPopup

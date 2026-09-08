@@ -17,6 +17,7 @@ namespace Foxoft.Models
         public const string InvoiceNotPosted = "InvoiceNotPosted";
         public const string CustomerCreditLimitExceeded = "CustomerCreditLimitExceeded";
         public const string LargeSaleCreated = "LargeSaleCreated";
+        public const string ProductPurchase = "ProductPurchase";
         public const string ReturnCreated = "ReturnCreated";
         public const string PurchaseOrderPending = "PurchaseOrderPending";
         public const string SupplierDebtDue = "SupplierDebtDue";

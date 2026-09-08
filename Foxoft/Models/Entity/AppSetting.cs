@@ -54,6 +54,8 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_PaymentEditGraceDays), ResourceType = typeof(Resources))]
         public int? PaymentEditGraceDays { get; set; }
 
+        public int? InstallmentReminderDaysBefore { get; set; } = 2;
+
         [ForeignKey("DcUnitOfMeasure")]
         [Display(Name = nameof(Resources.Entity_AppSetting_DefaultUnitOfMeasureId), ResourceType = typeof(Resources))]
         public int DefaultUnitOfMeasureId { get; set; }

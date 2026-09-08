@@ -1989,7 +1989,7 @@ namespace Foxoft
                 UpdateInstallmentLabels();
             }
 
-            // Send WhatsApp product purchase message for IS process
+            // Send WhatsApp product purchase notification for IS process
             if (new[] { "IS" }.Contains(trInvoiceHeader.ProcessCode) && !string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode))
             {
                 string currAccCode = trInvoiceHeader.CurrAccCode;
@@ -1999,15 +1999,54 @@ namespace Foxoft
                 {
                     _ = Task.Run(async () =>
                     {
-                        var messagingService = new AppCode.Service.MessagingService();
-
-                        foreach (string phoneNum in phoneNums)
+                        try
                         {
-                            try
+                            using subContext notifyDb = new();
+                            Foxoft.AppCode.Service.NotificationService notificationService = new(notifyDb);
+
+                            var customer = notifyDb.DcCurrAccs.FirstOrDefault(c => c.CurrAccCode == currAccCode);
+                            var store = customer != null ? notifyDb.DcCurrAccs.FirstOrDefault(c => c.CurrAccCode == trInvoiceHeader.StoreCode || c.CurrAccCode == customer.StoreCode) : null;
+                            if (store == null)
+                                store = notifyDb.DcCurrAccs.FirstOrDefault(c => c.CurrAccCode == Authorization.StoreCode);
+
+                            var receivers = phoneNums
+                                .Where(p => !string.IsNullOrWhiteSpace(p))
+                                .Select(p => new NotificationChannelReceiver(NotificationChannels.WhatsApp, p, BodyOnly: true))
+                                .ToList();
+
+                            if (receivers.Count > 0)
                             {
-                                await messagingService.SendProductPurchaseMessageAsync(currAccCode, phoneNum);
+                                var placeholders = new Dictionary<string, string>
+                                {
+                                    ["CurrAccCode"] = currAccCode,
+                                    ["CurrAccDesc"] = customer?.CurrAccDesc ?? string.Empty,
+                                    ["PhoneNum"] = customer?.PhoneNum ?? string.Empty,
+                                    ["StoreCode"] = trInvoiceHeader.StoreCode ?? string.Empty,
+                                    ["StoreDesc"] = store?.CurrAccDesc ?? trInvoiceHeader.StoreCode ?? string.Empty,
+                                    ["StorePhone"] = store?.PhoneNum ?? string.Empty,
+                                    ["DocumentNumber"] = trInvoiceHeader.DocumentNumber ?? string.Empty
+                                };
+
+                                string notificationKey = $"{NotificationTypeCodes.ProductPurchase}:Invoice:{trInvoiceHeader.InvoiceHeaderId}";
+
+                                await notificationService.CreateOrUpdateAsync(new NotificationCreateRequest(
+                                    NotificationTypeCode: NotificationTypeCodes.ProductPurchase,
+                                    NotificationKey: notificationKey,
+                                    Severity: NotificationSeverities.Info,
+                                    EntityType: NotificationEntityTypes.Invoice,
+                                    EntityKey: trInvoiceHeader.InvoiceHeaderId.ToString(),
+                                    StoreCode: trInvoiceHeader.StoreCode,
+                                    Placeholders: placeholders,
+                                    ChannelReceivers: receivers
+                                ));
+
+                                NotificationOutboxService outboxService = new(notifyDb);
+                                await outboxService.ProcessPendingAsync();
                             }
-                            catch (Exception ex) { System.Diagnostics.Debug.Print($"ProductPurchase message error: {ex.Message}"); }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.Print($"ProductPurchase notification error: {ex.Message}");
                         }
                     });
                 }

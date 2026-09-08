@@ -1,6 +1,12 @@
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Foxoft.AppCode.Service
 {
@@ -54,6 +60,10 @@ namespace Foxoft.AppCode.Service
                         : NotificationOutboxStatuses.Pending;
                     outbox.LastError = ex.Message;
                     AddAudit(outbox, NotificationActionTypes.ChannelFailed, ex.Message);
+
+                    LogFailedMessage(outbox, ex.Message);
+                    NotifyFailureIfInUi(ex.Message);
+
                     failed++;
                 }
             }
@@ -93,15 +103,101 @@ namespace Foxoft.AppCode.Service
                     string.IsNullOrWhiteSpace(apiSetting.ServerUrl) ||
                     string.IsNullOrWhiteSpace(apiSetting.InstanceName) ||
                     string.IsNullOrWhiteSpace(apiSetting.ApiKey))
-                    throw new InvalidOperationException(Properties.Resources.Payment_ApiSettingsIncomplete);
+                    throw new InvalidOperationException(Resources.Payment_ApiSettingsIncomplete);
+
+                if (!WhatsAppCreditService.HasEnoughBalance(_db))
+                    throw new InvalidOperationException(Resources.Common_InsufficientBalance);
 
                 string message = ExtractMessage(outbox.Payload);
+                string normalizedReceiver = NormalizeReceiver(outbox.Receiver);
+
                 using EvolutionApiClient client = new(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
-                await client.SendTextAsync(NormalizeReceiver(outbox.Receiver), message, ct);
+                await client.SendTextAsync(normalizedReceiver, message, ct);
+
+                _db.TrCredits.Add(WhatsAppCreditService.CreateUsage(outbox.Notification.NotificationTypeCode, normalizedReceiver));
+
+                Guid? documentHeaderId = null;
+                if (outbox.Notification.EntityType == NotificationEntityTypes.Invoice &&
+                    Guid.TryParse(outbox.Notification.EntityKey, out Guid parsedId))
+                {
+                    documentHeaderId = parsedId;
+                }
+
+                _db.TrMessageLogs.Add(new TrMessageLog
+                {
+                    MessageLogId = Guid.NewGuid(),
+                    DocumentHeaderId = documentHeaderId,
+                    ReceiverPhoneNumber = normalizedReceiver,
+                    ChannelCode = NotificationChannels.WhatsApp,
+                    MessageType = outbox.Notification.NotificationTypeCode,
+                    Message = message,
+                    IsSuccessful = true,
+                    Sender = Authorization.CurrAccCode,
+                    CurrAccCode = outbox.Notification.EntityType == NotificationEntityTypes.Customer ? outbox.Notification.EntityKey : null,
+                    TryCount = outbox.TryCount,
+                    LastTryDate = DateTime.Now
+                });
+
                 return;
             }
 
             throw new NotSupportedException(outbox.ChannelCode);
+        }
+
+        private void LogFailedMessage(NotificationChannelOutbox outbox, string errorMessage)
+        {
+            try
+            {
+                Guid? documentHeaderId = null;
+                if (outbox.Notification.EntityType == NotificationEntityTypes.Invoice &&
+                    Guid.TryParse(outbox.Notification.EntityKey, out Guid parsedId))
+                {
+                    documentHeaderId = parsedId;
+                }
+
+                string normalizedReceiver = NormalizeReceiver(outbox.Receiver);
+                string message = ExtractMessage(outbox.Payload);
+
+                _db.TrMessageLogs.Add(new TrMessageLog
+                {
+                    MessageLogId = Guid.NewGuid(),
+                    DocumentHeaderId = documentHeaderId,
+                    ReceiverPhoneNumber = normalizedReceiver,
+                    ChannelCode = outbox.ChannelCode,
+                    MessageType = outbox.Notification.NotificationTypeCode,
+                    Message = message,
+                    IsSuccessful = false,
+                    LastError = errorMessage,
+                    Sender = Authorization.CurrAccCode,
+                    CurrAccCode = outbox.Notification.EntityType == NotificationEntityTypes.Customer ? outbox.Notification.EntityKey : null,
+                    TryCount = outbox.TryCount,
+                    LastTryDate = DateTime.Now
+                });
+            }
+            catch
+            {
+            }
+        }
+
+        private static void NotifyFailureIfInUi(string errorMessage)
+        {
+            try
+            {
+                var mainForm = System.Windows.Forms.Application.OpenForms?.OfType<System.Windows.Forms.Form>().FirstOrDefault();
+                if (mainForm != null && mainForm.IsHandleCreated)
+                {
+                    mainForm.BeginInvoke((Action)(() =>
+                    {
+                        var alertControl = new DevExpress.XtraBars.Alerter.AlertControl();
+                        alertControl.AutoFormDelay = 4000;
+                        alertControl.FormDisplaySpeed = DevExpress.XtraBars.Alerter.AlertFormDisplaySpeed.Fast;
+                        alertControl.Show(mainForm, Resources.Common_ErrorTitle, string.Format(Resources.Common_WhatsAppSendError, errorMessage));
+                    }));
+                }
+            }
+            catch
+            {
+            }
         }
 
         private static string ExtractMessage(string payload)

@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -47,77 +47,123 @@ namespace Foxoft
         public void LoadMessagingSettings()
         {
             using var db = new subContext();
-            var settings = db.DcMessagingSettings.ToList();
+            var templates = db.NotificationTemplates.ToList();
+            var rules = db.NotificationRules.Where(r => r.StoreCode == null).ToList();
+            var appSetting = db.AppSettings.FirstOrDefault(x => x.Id == 1);
 
-            var reminder = settings.FirstOrDefault(s => s.MessagingType == "InstallmentReminder");
-            if (reminder != null)
+            spinDaysBefore.Value = appSetting?.InstallmentReminderDaysBefore ?? 2;
+
+            LoadRow(templates, rules, NotificationTypeCodes.InstallmentDueSoon, toggleReminder, memoReminder);
+            LoadRow(templates, rules, NotificationTypeCodes.InstallmentDueToday, toggleDueDay, memoDueDay);
+            LoadRow(templates, rules, NotificationTypeCodes.ProductPurchase, togglePurchase, memoPurchase);
+            LoadRow(templates, rules, NotificationTypeCodes.CreditClosed, toggleClosed, memoClosed);
+            LoadRow(templates, rules, NotificationTypeCodes.InstallmentPaid, togglePayment, memoPayment);
+            LoadRow(templates, rules, NotificationTypeCodes.CustomerBirthday, toggleBirthday, memoBirthday);
+        }
+
+        private void LoadRow(System.Collections.Generic.List<NotificationTemplate> templates,
+            System.Collections.Generic.List<NotificationRule> rules,
+            string typeCode, ToggleSwitch toggle, MemoEdit memo)
+        {
+            var template = templates.FirstOrDefault(t => t.NotificationTypeCode == typeCode && t.LanguageCode == "az")
+                        ?? templates.FirstOrDefault(t => t.NotificationTypeCode == typeCode);
+            var rule = rules.FirstOrDefault(r => r.NotificationTypeCode == typeCode);
+
+            if (template != null)
             {
-                toggleReminder.IsOn = reminder.IsEnabled;
-                spinDaysBefore.Value = reminder.DaysBefore ?? 2;
-                memoReminder.Text = reminder.MessageTemplate ?? "";
+                memo.Text = template.BodyTemplate ?? string.Empty;
+                toggle.IsOn = template.IsEnabled && (rule == null || rule.IsEnabled);
             }
-
-            var dueDay = settings.FirstOrDefault(s => s.MessagingType == "InstallmentDueDay");
-            if (dueDay != null)
+            else if (rule != null)
             {
-                toggleDueDay.IsOn = dueDay.IsEnabled;
-                memoDueDay.Text = dueDay.MessageTemplate ?? "";
-            }
-
-            var purchase = settings.FirstOrDefault(s => s.MessagingType == "ProductPurchase");
-            if (purchase != null)
-            {
-                togglePurchase.IsOn = purchase.IsEnabled;
-                memoPurchase.Text = purchase.MessageTemplate ?? "";
-            }
-
-            var closed = settings.FirstOrDefault(s => s.MessagingType == "CreditClosed");
-            if (closed != null)
-            {
-                toggleClosed.IsOn = closed.IsEnabled;
-                memoClosed.Text = closed.MessageTemplate ?? "";
-            }
-
-            var payment = settings.FirstOrDefault(s => s.MessagingType == "CreditPayment");
-            if (payment != null)
-            {
-                togglePayment.IsOn = payment.IsEnabled;
-                memoPayment.Text = payment.MessageTemplate ?? "";
-            }
-
-            var birthday = settings.FirstOrDefault(s => s.MessagingType == "Birthday");
-            if (birthday != null)
-            {
-                toggleBirthday.IsOn = birthday.IsEnabled;
-                memoBirthday.Text = birthday.MessageTemplate ?? "";
+                toggle.IsOn = rule.IsEnabled;
             }
         }
 
         public void SaveMessagingSettings()
         {
             using var db = new subContext();
-            var settings = db.DcMessagingSettings.ToList();
+            var templates = db.NotificationTemplates.ToList();
+            var rules = db.NotificationRules.Where(r => r.StoreCode == null).ToList();
+            var appSetting = db.AppSettings.FirstOrDefault(x => x.Id == 1);
 
-            UpdateMessagingSetting(settings, "InstallmentReminder", toggleReminder.IsOn, memoReminder.Text, (int)spinDaysBefore.Value);
-            UpdateMessagingSetting(settings, "InstallmentDueDay", toggleDueDay.IsOn, memoDueDay.Text, null);
-            UpdateMessagingSetting(settings, "ProductPurchase", togglePurchase.IsOn, memoPurchase.Text, null);
-            UpdateMessagingSetting(settings, "CreditClosed", toggleClosed.IsOn, memoClosed.Text, null);
-            UpdateMessagingSetting(settings, "CreditPayment", togglePayment.IsOn, memoPayment.Text, null);
-            UpdateMessagingSetting(settings, "Birthday", toggleBirthday.IsOn, memoBirthday.Text, null);
+            if (appSetting != null)
+            {
+                appSetting.InstallmentReminderDaysBefore = (int)spinDaysBefore.Value;
+            }
+
+            SaveRow(db, templates, rules, NotificationTypeCodes.InstallmentDueSoon, toggleReminder.IsOn, memoReminder.Text, "Kredit ödənişinə xatırlatma");
+            SaveRow(db, templates, rules, NotificationTypeCodes.InstallmentDueToday, toggleDueDay.IsOn, memoDueDay.Text, "Kredit ödəniş günü");
+            SaveRow(db, templates, rules, NotificationTypeCodes.ProductPurchase, togglePurchase.IsOn, memoPurchase.Text, "Məhsul satışı");
+            SaveRow(db, templates, rules, NotificationTypeCodes.CreditClosed, toggleClosed.IsOn, memoClosed.Text, "Kredit bağlandı");
+            SaveRow(db, templates, rules, NotificationTypeCodes.InstallmentPaid, togglePayment.IsOn, memoPayment.Text, "Kredit ödənişi");
+            SaveRow(db, templates, rules, NotificationTypeCodes.CustomerBirthday, toggleBirthday.IsOn, memoBirthday.Text, "Ad günü təbriki");
 
             db.SaveChanges();
         }
 
-        private void UpdateMessagingSetting(System.Collections.Generic.List<DcMessagingSetting> settings,
-            string type, bool isEnabled, string messageTemplate, int? daysBefore)
+        private void SaveRow(subContext db,
+            System.Collections.Generic.List<NotificationTemplate> templates,
+            System.Collections.Generic.List<NotificationRule> rules,
+            string typeCode, bool isEnabled, string bodyTemplate, string defaultTitle)
         {
-            var setting = settings.FirstOrDefault(s => s.MessagingType == type);
-            if (setting != null)
+            DateTime now = DateTime.Now;
+            var template = templates.FirstOrDefault(t => t.NotificationTypeCode == typeCode && t.LanguageCode == "az");
+            if (template != null)
             {
-                setting.IsEnabled = isEnabled;
-                setting.MessageTemplate = messageTemplate;
-                if (daysBefore.HasValue)
-                    setting.DaysBefore = daysBefore.Value;
+                template.BodyTemplate = bodyTemplate?.Trim() ?? string.Empty;
+                template.IsEnabled = isEnabled;
+                template.LastUpdatedDate = now;
+                template.LastUpdatedUserName = Authorization.CurrAccCode;
+            }
+            else
+            {
+                template = new NotificationTemplate
+                {
+                    NotificationTypeCode = typeCode,
+                    LanguageCode = "az",
+                    TitleTemplate = defaultTitle,
+                    BodyTemplate = bodyTemplate?.Trim() ?? string.Empty,
+                    IsEnabled = isEnabled,
+                    CreatedDate = now,
+                    LastUpdatedDate = now,
+                    CreatedUserName = Authorization.CurrAccCode,
+                    LastUpdatedUserName = Authorization.CurrAccCode
+                };
+                db.NotificationTemplates.Add(template);
+            }
+
+            var rule = rules.FirstOrDefault(r => r.NotificationTypeCode == typeCode);
+            if (rule != null)
+            {
+                rule.IsEnabled = isEnabled;
+                if (!rule.ChannelCodes.Contains(NotificationChannels.WhatsApp, StringComparison.OrdinalIgnoreCase))
+                {
+                    rule.ChannelCodes = string.IsNullOrWhiteSpace(rule.ChannelCodes)
+                        ? NotificationChannels.WhatsApp
+                        : rule.ChannelCodes + "," + NotificationChannels.WhatsApp;
+                }
+                rule.LastUpdatedDate = now;
+                rule.LastUpdatedUserName = Authorization.CurrAccCode;
+            }
+            else
+            {
+                var notifType = db.NotificationTypes.FirstOrDefault(x => x.NotificationTypeCode == typeCode);
+                rule = new NotificationRule
+                {
+                    RuleName = notifType?.NotificationTypeDesc ?? typeCode,
+                    NotificationTypeCode = typeCode,
+                    StoreCode = null,
+                    IsEnabled = isEnabled,
+                    ThrottleMinutes = 1440,
+                    ChannelCodes = NotificationChannels.InApp + "," + NotificationChannels.WhatsApp,
+                    PopupMinSeverity = NotificationSeverities.High,
+                    CreatedDate = now,
+                    LastUpdatedDate = now,
+                    CreatedUserName = Authorization.CurrAccCode,
+                    LastUpdatedUserName = Authorization.CurrAccCode
+                };
+                db.NotificationRules.Add(rule);
             }
         }
 
@@ -136,8 +182,17 @@ namespace Foxoft
 
             try
             {
-                var service = new MessagingService();
-                var result = await service.SendScheduledMessagesAsync();
+                using var db = new subContext();
+                int daysBefore = (int)spinDaysBefore.Value;
+
+                var installmentChecker = new NotificationInstallmentCheckerService(db);
+                await installmentChecker.ScanInstallmentPaymentNotificationsAsync(daysBefore, Authorization.CurrAccCode);
+
+                var customerChecker = new NotificationCustomerCheckerService(db);
+                await customerChecker.ScanBirthdayNotificationsAsync(Authorization.CurrAccCode);
+
+                var outboxService = new NotificationOutboxService(db);
+                var result = await outboxService.ProcessPendingAsync();
 
                 string message = string.Format(Resources.Form_MessagingSettings_SendResult, result.Sent, result.Failed);
                 XtraMessageBox.Show(message, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);

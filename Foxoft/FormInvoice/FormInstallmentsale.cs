@@ -591,10 +591,8 @@ namespace Foxoft
                             var installment = tempDb.TrInstallments.FirstOrDefault(i => i.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
                             if (installment != null)
                             {
-                                var messagingService = new AppCode.Service.MessagingService();
-                                // Get remaining: we use the paid amount and query the remaining from the DB
+                                // Query remaining balance from DB
                                 decimal remaining = 0;
-                                // Find remaining from grid data after reload - use DB query instead
                                 var adoMethods = new AdoMethods();
                                 string query = @"
                                     SELECT 
@@ -625,7 +623,65 @@ namespace Foxoft
                                 if (dt.Rows.Count > 0 && dt.Rows[0]["RemainingAmount"] != DBNull.Value)
                                     remaining = Convert.ToDecimal(dt.Rows[0]["RemainingAmount"]);
 
-                                await messagingService.SendPaymentMessageAsync(trInvoiceHeader.InvoiceHeaderId, confirmedPay, remaining);
+                                NotificationService notificationService = new(tempDb);
+                                var header = tempDb.TrInvoiceHeaders.FirstOrDefault(h => h.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId);
+                                var currAcc = header != null ? tempDb.DcCurrAccs.FirstOrDefault(c => c.CurrAccCode == header.CurrAccCode) : null;
+                                var store = header != null ? tempDb.DcCurrAccs.FirstOrDefault(c => c.CurrAccCode == header.StoreCode) : null;
+                                if (store == null)
+                                    store = tempDb.DcCurrAccs.FirstOrDefault(c => c.CurrAccCode == Authorization.StoreCode);
+
+                                if (currAcc != null && !string.IsNullOrEmpty(currAcc.PhoneNum))
+                                {
+                                    var receivers = new[]
+                                    {
+                                        new NotificationChannelReceiver(NotificationChannels.WhatsApp, currAcc.PhoneNum, BodyOnly: true)
+                                    };
+
+                                    var placeholders = new Dictionary<string, string>
+                                    {
+                                        ["paid"] = confirmedPay.ToString("N2"),
+                                        ["debit"] = remaining.ToString("N2"),
+                                        ["CurrAccCode"] = currAcc.CurrAccCode,
+                                        ["CurrAccDesc"] = currAcc.CurrAccDesc ?? string.Empty,
+                                        ["PhoneNum"] = currAcc.PhoneNum ?? string.Empty,
+                                        ["StoreCode"] = store?.CurrAccCode ?? string.Empty,
+                                        ["StoreDesc"] = store?.CurrAccDesc ?? string.Empty,
+                                        ["StorePhone"] = store?.PhoneNum ?? string.Empty,
+                                        ["DocumentNumber"] = header?.DocumentNumber ?? string.Empty
+                                    };
+
+                                    // 1. Installment payment notification
+                                    string paymentKey = $"{NotificationTypeCodes.InstallmentPaid}:Invoice:{header.InvoiceHeaderId}:Payment:{Guid.NewGuid()}";
+                                    await notificationService.CreateOrUpdateAsync(new NotificationCreateRequest(
+                                        NotificationTypeCode: NotificationTypeCodes.InstallmentPaid,
+                                        NotificationKey: paymentKey,
+                                        Severity: NotificationSeverities.Info,
+                                        EntityType: NotificationEntityTypes.Invoice,
+                                        EntityKey: header.InvoiceHeaderId.ToString(),
+                                        StoreCode: header.StoreCode,
+                                        Placeholders: placeholders,
+                                        ChannelReceivers: receivers
+                                    ));
+
+                                    // 2. Credit closed notification if balance is fully paid
+                                    if (remaining <= 0)
+                                    {
+                                        string closedKey = $"{NotificationTypeCodes.CreditClosed}:Invoice:{header.InvoiceHeaderId}";
+                                        await notificationService.CreateOrUpdateAsync(new NotificationCreateRequest(
+                                            NotificationTypeCode: NotificationTypeCodes.CreditClosed,
+                                            NotificationKey: closedKey,
+                                            Severity: NotificationSeverities.Info,
+                                            EntityType: NotificationEntityTypes.Invoice,
+                                            EntityKey: header.InvoiceHeaderId.ToString(),
+                                            StoreCode: header.StoreCode,
+                                            Placeholders: placeholders,
+                                            ChannelReceivers: receivers
+                                        ));
+                                    }
+
+                                    NotificationOutboxService outboxService = new(tempDb);
+                                    await outboxService.ProcessPendingAsync();
+                                }
                             }
                         }
                         catch (Exception ex) { System.Diagnostics.Debug.Print($"CreditPayment message error: {ex.Message}"); }
