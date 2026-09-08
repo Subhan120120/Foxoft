@@ -33,6 +33,7 @@ namespace Foxoft
         public readonly Guid _appInstanceId = Guid.NewGuid();
         private AccordionControlElement aCE_Active;
         private System.Windows.Forms.Timer? notificationPopupTimer;
+        private System.Windows.Forms.Timer? messageToastTimer;
         private string? notificationProductsFolder;
         private int unreadNotificationCount;
 
@@ -83,6 +84,7 @@ namespace Foxoft
             InitializeFavorites();
             StartNotificationPopupTimer();
             StartNotificationWorkerIfEnabled();
+            StartMessageToastTimer();
         }
 
         private void InitializeACEClaims()
@@ -376,6 +378,26 @@ namespace Foxoft
                     Debug.WriteLine($"Failed to ensure NotificationWorker: {ex.Message}");
                 }
             });
+        }
+
+        private void StartMessageToastTimer()
+        {
+            messageToastTimer = new System.Windows.Forms.Timer { Interval = 3000 };
+            messageToastTimer.Tick += async (sender, args) =>
+            {
+                messageToastTimer.Stop();
+                try
+                {
+                    await MessageToastService.CheckRecentMessageLogsAsync(this, Authorization.CurrAccCode);
+                }
+                finally
+                {
+                    if (!IsDisposed)
+                        messageToastTimer.Start();
+                }
+            };
+
+            messageToastTimer.Start();
         }
 
         private async Task ShowInitialNotificationsAsync()
@@ -928,7 +950,7 @@ namespace Foxoft
             //}
         }
 
-        private void ShowExistForm<T>(params object[] args) where T : Form
+        public void ShowExistForm<T>(params object[] args) where T : Form
         {
             string formKey = BuildFormKey<T>(args);
             T form = Application.OpenForms[formKey] as T;

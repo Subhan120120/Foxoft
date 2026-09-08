@@ -5670,4 +5670,16 @@ Please wait or choose another invoice.</value>
   <data name="Form_MessagingSettings_ServiceStopSuccess" xml:space="preserve">
     <value>Service stopped.</value>
   </data>
+  <data name="Common_Toast_MessageSent" xml:space="preserve">
+    <value>Message Sent</value>
+  </data>
+  <data name="Common_Toast_MessageUnsent" xml:space="preserve">
+    <value>Message Unsent (Failed)</value>
+  </data>
+  <data name="Common_Toast_Receiver" xml:space="preserve">
+    <value>Receiver: {0}</value>
+  </data>
+  <data name="Common_Toast_Error" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
 </root>

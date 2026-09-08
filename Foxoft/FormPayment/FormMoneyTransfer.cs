@@ -12,6 +12,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
@@ -642,10 +643,12 @@ namespace Foxoft
             string formattedNumber = number.Trim().Replace("+", "").Replace(" ", "");
             string caption = GetWhatsAppCaption();
 
+            Guid messageLogId = Guid.NewGuid();
+
             if (!WhatsAppCreditService.HasEnoughBalance())
             {
-                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false, errorMessage: Resources.Common_InsufficientBalance);
-                XtraMessageBox.Show(Resources.Common_InsufficientBalance);
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false, errorMessage: Resources.Common_InsufficientBalance, messageLogId: messageLogId);
+                MessageToastService.ShowUnsentToast(NotificationChannels.WhatsApp, formattedNumber, Resources.Common_InsufficientBalance, messageLogId);
                 return;
             }
 
@@ -655,19 +658,19 @@ namespace Foxoft
 
                 await client.SendImageBase64Async(formattedNumber, memoryStream, caption: caption);
 
-                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: true);
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: true, messageLogId: messageLogId);
 
-                XtraMessageBox.Show(Resources.Common_SentSuccessfully, Resources.Form_MoneyTransfer_Button_SendWhatsapp, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageToastService.ShowSentToast(NotificationChannels.WhatsApp, formattedNumber, caption, messageLogId);
             }
             catch (Exception ex)
             {
-                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false, errorMessage: ex.Message);
-                XtraMessageBox.Show(Resources.Common_ErrorOccurred + " " + ex.Message);
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false, errorMessage: ex.Message, messageLogId: messageLogId);
+                MessageToastService.ShowUnsentToast(NotificationChannels.WhatsApp, formattedNumber, ex.Message, messageLogId);
             }
         }
 
         private void SaveWhatsAppLog(Guid documentHeaderId, string receiverPhone, MemoryStream? imageStream = null,
-            string? message = null, bool isSuccessful = false, string? errorMessage = null)
+            string? message = null, bool isSuccessful = false, string? errorMessage = null, Guid? messageLogId = null)
         {
             try
             {
@@ -682,7 +685,7 @@ namespace Foxoft
 
                 ctx.TrMessageLogs.Add(new TrMessageLog
                 {
-                    MessageLogId = Guid.NewGuid(),
+                    MessageLogId = messageLogId ?? Guid.NewGuid(),
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = receiverPhone,
                     ChannelCode = NotificationChannels.WhatsApp,
@@ -693,7 +696,7 @@ namespace Foxoft
                     ImageFileName = imageFileName,
                     IsSuccessful = isSuccessful,
                     LastError = errorMessage,
-                    LastTryDate = isSuccessful ? null : DateTime.Now
+                    LastTryDate = DateTime.Now
                 });
 
                 if (isSuccessful)

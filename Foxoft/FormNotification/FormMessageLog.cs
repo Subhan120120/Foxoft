@@ -154,11 +154,13 @@ namespace Foxoft
             try
             {
                 await MessageLogService.ResendAsync(log.MessageLogId);
+                MessageToastService.ShowSentToast(log.ChannelCode ?? "WhatsApp", log.ReceiverPhoneNumber ?? string.Empty, log.MessageType, log.MessageLogId);
                 XtraMessageBox.Show(Resources.Common_SentSuccessfully, Resources.Form_MessageLog, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 await LoadDataAsync();
             }
             catch (Exception ex)
             {
+                MessageToastService.ShowUnsentToast(log.ChannelCode ?? "WhatsApp", log.ReceiverPhoneNumber ?? string.Empty, ex.Message, log.MessageLogId);
                 XtraMessageBox.Show(string.Format(Resources.Common_WhatsAppSendError, ex.Message), Resources.Common_Attention);
             }
             finally
@@ -200,15 +202,21 @@ namespace Foxoft
                 for (int i = 0; i < unsentLogIds.Count; i++)
                 {
                     Guid logId = unsentLogIds[i];
+                    var curr = dbContext.TrMessageLogs.Find(logId);
+                    string channel = curr?.ChannelCode ?? "WhatsApp";
+                    string phone = curr?.ReceiverPhoneNumber ?? string.Empty;
+
                     try
                     {
                         await MessageLogService.ResendAsync(logId);
                         sent++;
+                        MessageToastService.ShowSentToast(channel, phone, curr?.MessageType, logId);
                     }
                     catch (Exception ex)
                     {
                         Debug.Print($"WhatsApp resend error: {ex.Message}");
                         failed++;
+                        MessageToastService.ShowUnsentToast(channel, phone, ex.Message, logId);
                     }
 
                     // If more than 1 unsent message, send sequentially: 1 per second

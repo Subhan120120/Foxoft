@@ -15943,5 +15943,29 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_MessagingSettings_ServiceStopSuccess", resourceCulture);
             }
         }
+
+        public static string Common_Toast_MessageSent {
+            get {
+                return ResourceManager.GetString("Common_Toast_MessageSent", resourceCulture);
+            }
+        }
+
+        public static string Common_Toast_MessageUnsent {
+            get {
+                return ResourceManager.GetString("Common_Toast_MessageUnsent", resourceCulture);
+            }
+        }
+
+        public static string Common_Toast_Receiver {
+            get {
+                return ResourceManager.GetString("Common_Toast_Receiver", resourceCulture);
+            }
+        }
+
+        public static string Common_Toast_Error {
+            get {
+                return ResourceManager.GetString("Common_Toast_Error", resourceCulture);
+            }
+        }
     }
 }

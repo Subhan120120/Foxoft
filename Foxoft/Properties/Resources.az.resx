@@ -5670,4 +5670,16 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Form_MessagingSettings_ServiceStopSuccess" xml:space="preserve">
     <value>Xidmət dayandırıldı.</value>
   </data>
+  <data name="Common_Toast_MessageSent" xml:space="preserve">
+    <value>Mesaj göndərildi</value>
+  </data>
+  <data name="Common_Toast_MessageUnsent" xml:space="preserve">
+    <value>Mesaj göndərilmədi</value>
+  </data>
+  <data name="Common_Toast_Receiver" xml:space="preserve">
+    <value>Alıcı: {0}</value>
+  </data>
+  <data name="Common_Toast_Error" xml:space="preserve">
+    <value>Xəta: {0}</value>
+  </data>
 </root>
