@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,7 +58,7 @@ namespace Foxoft.Models.ViewModel
         public decimal Price { get; set; }
 
         [Display(Name = nameof(Resources.Entity_InvoiceLine_CurrencyCode), ResourceType = typeof(Resources))]
-        public string CurrencyCode { get; set; } = Settings.Default.AppSetting.LocalCurrencyCode;
+        public string CurrencyCode { get; set; } = Settings.Default.AppSetting?.LocalCurrencyCode ;
 
         [DefaultValueSql("1")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_ExchangeRate), ResourceType = typeof(Resources))]

@@ -27,7 +27,7 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Entity_PriceListLine_CurrencyCode), ResourceType = typeof(Resources))]
         [ForeignKey(nameof(DcCurrency))]
-        public string CurrencyCode { get; set; } = Properties.Settings.Default.AppSetting.LocalCurrencyCode;
+        public string CurrencyCode { get; set; } = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ;
 
         [Display(Name = nameof(Resources.Entity_PriceListLine_LineDescription), ResourceType = typeof(Resources))]
         [StringLength(100, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]

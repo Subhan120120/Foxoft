@@ -109,8 +109,8 @@ namespace Foxoft
             _lockService = new DocumentLockService(dbContext);
             _paymentService = new PaymentService(dcProcess);
 
-            FormERP parent = Application.OpenForms["FormERP"] as FormERP;
-            _appInstanceId = parent._appInstanceId;
+            FormERP? parent = Application.OpenForms["FormERP"] as FormERP;
+            _appInstanceId = parent?._appInstanceId ?? Guid.NewGuid();
 
             InitializeComponent();
 

@@ -112,8 +112,6 @@ namespace Foxoft.AppCode.Service
 
                 if (now - existing.LastHeartbeatAtUtc >= timeout)
                 {
-                    using var tx = _db.Database.BeginTransaction();
-
                     var rows = _db.DocumentLocks
                         .Where(x => x.DocumentType == documentType
                                  && x.DocumentId == documentId
@@ -138,8 +136,6 @@ namespace Foxoft.AppCode.Service
                         AddAudit(documentType, documentId, "TAKEOVER", userId, machineName,
                             $"Timeout takeover. Previous: {existing.LockedByUserId}");
 
-                        tx.Commit();
-
                         return new LockResult(
                             Acquired: true,
                             TakenOver: true,
@@ -153,8 +149,6 @@ namespace Foxoft.AppCode.Service
                             Message: "LOCK_TAKEN_OVER_DUE_TO_TIMEOUT"
                         );
                     }
-
-                    tx.Rollback();
 
                     existing = _db.DocumentLocks.AsNoTracking()
                         .FirstOrDefault(x => x.DocumentType == documentType && x.DocumentId == documentId);
@@ -275,7 +269,7 @@ namespace Foxoft.AppCode.Service
             if (lockRow == null)
                 return new LockCheckResult(LockCloseReason.LOCK_REMOVED);
 
-            string CurrentOwnerUserName = _db.DcCurrAccs.FirstOrDefault(x => x.CurrAccCode == lockRow.LockedByUserId).CurrAccDesc;
+            string? CurrentOwnerUserName = _db.DcCurrAccs.FirstOrDefault(x => x.CurrAccCode == lockRow.LockedByUserId)?.CurrAccDesc;
 
             // 2) Ownership dəyişibsə → bağla
             if (lockRow.LockedByUserId != userId
