@@ -16,10 +16,13 @@ namespace Foxoft.AppCode.Service
 {
     public static class MessageToastService
     {
-        private static readonly ConcurrentDictionary<Guid, byte> _shownLogIds = new();
+        private static readonly ConcurrentDictionary<(Guid LogId, bool IsSuccessful), byte> _shownLogCache = new();
         private static DateTime _lastCheckedTime = DateTime.Now.AddSeconds(-5);
         private static readonly SemaphoreSlim _checkLock = new(1, 1);
         private static AlertControl? _alertControl;
+
+        public static bool IsInCache(Guid messageLogId, bool isSuccessful) =>
+            _shownLogCache.ContainsKey((messageLogId, isSuccessful));
 
         private static AlertControl GetAlertControl()
         {
@@ -60,7 +63,7 @@ namespace Foxoft.AppCode.Service
         {
             if (messageLogId.HasValue)
             {
-                _shownLogIds.TryAdd(messageLogId.Value, 0);
+                _shownLogCache.TryAdd((messageLogId.Value, true), 0);
             }
 
             string caption = $"<b>✓ {channel} - {Resources.Common_Toast_MessageSent}</b>";
@@ -77,7 +80,7 @@ namespace Foxoft.AppCode.Service
         {
             if (messageLogId.HasValue)
             {
-                _shownLogIds.TryAdd(messageLogId.Value, 0);
+                _shownLogCache.TryAdd((messageLogId.Value, false), 0);
             }
 
             string caption = $"<b><color=red>⚠ {channel} - {Resources.Common_Toast_MessageUnsent}</color></b>";
@@ -101,7 +104,7 @@ namespace Foxoft.AppCode.Service
 
             try
             {
-                DateTime checkThreshold = _lastCheckedTime;
+                DateTime checkThreshold = _lastCheckedTime.AddSeconds(-2);
                 using var db = new subContext();
 
                 var recentLogs = await db.TrMessageLogs
@@ -114,16 +117,21 @@ namespace Foxoft.AppCode.Service
                     .ToListAsync(ct);
 
                 if (recentLogs.Count == 0)
+                {
+                    DateTime safeThreshold = DateTime.Now.AddSeconds(-5);
+                    if (safeThreshold > _lastCheckedTime)
+                        _lastCheckedTime = safeThreshold;
                     return;
+                }
 
-                DateTime maxTime = checkThreshold;
+                DateTime maxTime = _lastCheckedTime;
                 foreach (TrMessageLog log in recentLogs)
                 {
                     DateTime logTime = log.LastTryDate ?? log.CreatedDate;
                     if (logTime > maxTime)
                         maxTime = logTime;
 
-                    if (!_shownLogIds.TryAdd(log.MessageLogId, 0))
+                    if (!_shownLogCache.TryAdd((log.MessageLogId, log.IsSuccessful), 0))
                         continue;
 
                     string channel = string.IsNullOrWhiteSpace(log.ChannelCode) ? "WhatsApp" : log.ChannelCode;
@@ -131,7 +139,9 @@ namespace Foxoft.AppCode.Service
 
                     if (log.IsSuccessful)
                     {
-                        string detail = !string.IsNullOrWhiteSpace(log.MessageType) ? log.MessageType : log.Message ?? string.Empty;
+                        string detail = !string.IsNullOrWhiteSpace(log.Message)
+                            ? log.Message
+                            : (!string.IsNullOrWhiteSpace(log.MessageType) ? log.MessageType : string.Empty);
                         if (detail.Length > 80)
                             detail = detail.Substring(0, 77) + "...";
 
@@ -146,9 +156,9 @@ namespace Foxoft.AppCode.Service
                 _lastCheckedTime = maxTime;
 
                 // Prevent unbounded growth of memory cache
-                if (_shownLogIds.Count > 1000)
+                if (_shownLogCache.Count > 2000)
                 {
-                    _shownLogIds.Clear();
+                    _shownLogCache.Clear();
                 }
             }
             catch
