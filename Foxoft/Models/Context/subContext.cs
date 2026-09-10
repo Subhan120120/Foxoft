@@ -126,14 +126,14 @@ namespace Foxoft.Models
         public DbSet<TrCredit> TrCredits { get; set; }
         public DbSet<DcShortcut> DcShortcuts { get; set; }
         public DbSet<DcPosButton> DcPosButtons { get; set; }
-        public DbSet<NotificationType> NotificationTypes { get; set; }
-        public DbSet<NotificationRule> NotificationRules { get; set; }
-        public DbSet<NotificationRecipientRule> NotificationRecipientRules { get; set; }
-        public DbSet<NotificationTemplate> NotificationTemplates { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
-        public DbSet<NotificationRecipient> NotificationRecipients { get; set; }
-        public DbSet<NotificationChannelOutbox> NotificationChannelOutboxes { get; set; }
-        public DbSet<NotificationAudit> NotificationAudits { get; set; }
+        public DbSet<DcNotificationType> DcNotificationTypes { get; set; }
+        public DbSet<DcNotificationRule> DcNotificationRules { get; set; }
+        public DbSet<DcNotificationRecipientRule> DcNotificationRecipientRules { get; set; }
+        public DbSet<DcNotificationTemplate> DcNotificationTemplates { get; set; }
+        public DbSet<TrNotification> TrNotifications { get; set; }
+        public DbSet<TrNotificationRecipient> TrNotificationRecipients { get; set; }
+        public DbSet<TrNotificationChannelOutbox> TrNotificationChannelOutboxes { get; set; }
+        public DbSet<TrNotificationAudit> TrNotificationAudits { get; set; }
 
         //CRM Model
         public DbSet<TrCrmActivity> TrCrmActivities { get; set; }
@@ -548,10 +548,10 @@ namespace Foxoft.Models
                 new DcWhatsAppProviderSetting { Id = 1, ServerUrl = "https://evolution.tokla.az", InstanceName = "tokla", ApiKey = "2fdqo0JtF6dnG23N7JbnZ9wMoVMRvRkh" }
             );
 
-            modelBuilder.Entity<NotificationType>().HasData(GetNotificationTypes());
-            modelBuilder.Entity<NotificationRule>().HasData(GetNotificationRules());
-            modelBuilder.Entity<NotificationTemplate>().HasData(GetNotificationTemplates());
-            modelBuilder.Entity<NotificationRecipientRule>().HasData(GetNotificationRecipientRules());
+            modelBuilder.Entity<DcNotificationType>().HasData(GetNotificationTypes());
+            modelBuilder.Entity<DcNotificationRule>().HasData(GetNotificationRules());
+            modelBuilder.Entity<DcNotificationTemplate>().HasData(GetNotificationTemplates());
+            modelBuilder.Entity<DcNotificationRecipientRule>().HasData(GetNotificationRecipientRules());
 
             // --- DcShortcut Seed Data ---
             modelBuilder.Entity<DcShortcut>().HasData(
@@ -1195,38 +1195,38 @@ namespace Foxoft.Models
 
         private static void ConfigureNotificationModel(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<NotificationType>(entity =>
+            modelBuilder.Entity<DcNotificationType>(entity =>
             {
-                entity.ToTable("NotificationType");
+                entity.ToTable("DcNotificationTypes");
                 entity.HasIndex(x => x.CategoryCode);
             });
 
-            modelBuilder.Entity<NotificationRule>(entity =>
+            modelBuilder.Entity<DcNotificationRule>(entity =>
             {
-                entity.ToTable("NotificationRule");
+                entity.ToTable("DcNotificationRules");
                 entity.HasIndex(x => new { x.NotificationTypeCode, x.StoreCode })
                       .IsUnique()
                       .HasFilter(null);
             });
 
-            modelBuilder.Entity<NotificationRecipientRule>(entity =>
+            modelBuilder.Entity<DcNotificationRecipientRule>(entity =>
             {
-                entity.ToTable("NotificationRecipientRule");
+                entity.ToTable("DcNotificationRecipientRules");
                 entity.HasIndex(x => new { x.NotificationTypeCode, x.RoleCode, x.StoreCode })
                       .IsUnique()
                       .HasFilter(null);
             });
 
-            modelBuilder.Entity<NotificationTemplate>(entity =>
+            modelBuilder.Entity<DcNotificationTemplate>(entity =>
             {
-                entity.ToTable("NotificationTemplate");
+                entity.ToTable("DcNotificationTemplates");
                 entity.HasIndex(x => new { x.NotificationTypeCode, x.LanguageCode })
                       .IsUnique();
             });
 
-            modelBuilder.Entity<Notification>(entity =>
+            modelBuilder.Entity<TrNotification>(entity =>
             {
-                entity.ToTable("Notification");
+                entity.ToTable("TrNotifications");
                 entity.HasIndex(x => x.NotificationKey)
                       .IsUnique()
                       .HasFilter("[Status] = N'Active'");
@@ -1237,9 +1237,9 @@ namespace Foxoft.Models
                       .HasDefaultValueSql("sysdatetime()");
             });
 
-            modelBuilder.Entity<NotificationRecipient>(entity =>
+            modelBuilder.Entity<TrNotificationRecipient>(entity =>
             {
-                entity.ToTable("NotificationRecipient");
+                entity.ToTable("TrNotificationRecipients");
                 entity.HasIndex(x => new { x.NotificationId, x.CurrAccCode })
                       .IsUnique();
                 entity.HasIndex(x => new { x.CurrAccCode, x.Status });
@@ -1247,9 +1247,9 @@ namespace Foxoft.Models
                       .HasDefaultValue(NotificationRecipientStatuses.Unread);
             });
 
-            modelBuilder.Entity<NotificationChannelOutbox>(entity =>
+            modelBuilder.Entity<TrNotificationChannelOutbox>(entity =>
             {
-                entity.ToTable("NotificationChannelOutbox");
+                entity.ToTable("TrNotificationChannelOutboxes");
                 entity.HasIndex(x => new { x.Status, x.CreatedDate });
                 entity.Property(x => x.Status)
                       .HasDefaultValue(NotificationOutboxStatuses.Pending);
@@ -1259,16 +1259,16 @@ namespace Foxoft.Models
                       .HasDefaultValueSql("sysdatetime()");
             });
 
-            modelBuilder.Entity<NotificationAudit>(entity =>
+            modelBuilder.Entity<TrNotificationAudit>(entity =>
             {
-                entity.ToTable("NotificationAudit");
+                entity.ToTable("TrNotificationAudits");
                 entity.HasIndex(x => new { x.NotificationId, x.ActionDate });
                 entity.Property(x => x.ActionDate)
                       .HasDefaultValueSql("sysdatetime()");
             });
         }
 
-        private static NotificationType[] GetNotificationTypes()
+        private static DcNotificationType[] GetNotificationTypes()
         {
             return new[]
             {
@@ -1316,10 +1316,10 @@ namespace Foxoft.Models
             };
         }
 
-        private static NotificationRule[] GetNotificationRules()
+        private static DcNotificationRule[] GetNotificationRules()
         {
             return GetNotificationTypes()
-                .Select((notificationType, index) => new NotificationRule
+                .Select((notificationType, index) => new DcNotificationRule
                 {
                     NotificationRuleId = index + 1,
                     RuleName = notificationType.NotificationTypeDesc,
@@ -1333,11 +1333,11 @@ namespace Foxoft.Models
                 .ToArray();
         }
 
-        private static NotificationTemplate[] GetNotificationTemplates()
+        private static DcNotificationTemplate[] GetNotificationTemplates()
         {
             return new[]
             {
-                new NotificationTemplate
+                new DcNotificationTemplate
                 {
                     NotificationTemplateId = 1,
                     NotificationTypeCode = NotificationTypeCodes.ProductStockWarning,
@@ -1346,7 +1346,7 @@ namespace Foxoft.Models
                     BodyTemplate = "{ProductDesc} məhsulunun {WarehouseDesc} anbarında qalığı xəbərdarlıq limitindən aşağı düşüb.\n\nMəhsul kodu: {ProductCode}\nMövcud qalıq: {AvailableQty}\nMinimum limit: {WarningQty}",
                     IsEnabled = true
                 },
-                new NotificationTemplate
+                new DcNotificationTemplate
                 {
                     NotificationTemplateId = 2,
                     NotificationTypeCode = NotificationTypeCodes.ProductOutOfStock,
@@ -1355,7 +1355,7 @@ namespace Foxoft.Models
                     BodyTemplate = "{ProductDesc} məhsulunun {WarehouseDesc} anbarında satışa yararlı qalığı 0-dır.\n\nMəhsul kodu: {ProductCode}\nAnbar: {WarehouseDesc}",
                     IsEnabled = true
                 },
-                new NotificationTemplate
+                new DcNotificationTemplate
                 {
                     NotificationTemplateId = 3,
                     NotificationTypeCode = NotificationTypeCodes.NegativeStock,
@@ -1364,7 +1364,7 @@ namespace Foxoft.Models
                     BodyTemplate = "{ProductDesc} məhsulunun {WarehouseDesc} anbarında qalığı mənfiyə düşüb.\n\nMəhsul kodu: {ProductCode}\nMövcud qalıq: {AvailableQty}",
                     IsEnabled = true
                 },
-                new NotificationTemplate
+                new DcNotificationTemplate
                 {
                     NotificationTemplateId = 4,
                     NotificationTypeCode = NotificationTypeCodes.InstallmentDueSoon,
@@ -1373,7 +1373,7 @@ namespace Foxoft.Models
                     BodyTemplate = "Hörmətli müştəri! {StoreDesc} mağazasından götürdüyünüz məhsulun aylıq ödənişinə {day} gün qalıb. Əlaqə nömrəsi: {StorePhone}",
                     IsEnabled = true
                 },
-                new NotificationTemplate
+                new DcNotificationTemplate
                 {
                     NotificationTemplateId = 5,
                     NotificationTypeCode = NotificationTypeCodes.InstallmentDueToday,
@@ -1382,7 +1382,7 @@ namespace Foxoft.Models
                     BodyTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun ödənişinin bu gün vaxtıdır. Xahiş edirik, ödənişinizi vaxtında ödəyəsiniz. Əlaqə nömrəsi: {StorePhone}",
                     IsEnabled = true
                 },
-                new NotificationTemplate
+                new DcNotificationTemplate
                 {
                     NotificationTemplateId = 6,
                     NotificationTypeCode = NotificationTypeCodes.ProductPurchase,
@@ -1391,7 +1391,7 @@ namespace Foxoft.Models
                     BodyTemplate = "Yeni cihazınız xeyirli olsun. Bizi seçdiyiniz üçün təşəkkür edirik.",
                     IsEnabled = true
                 },
-                new NotificationTemplate
+                new DcNotificationTemplate
                 {
                     NotificationTemplateId = 7,
                     NotificationTypeCode = NotificationTypeCodes.CreditClosed,
@@ -1400,7 +1400,7 @@ namespace Foxoft.Models
                     BodyTemplate = "Hörmətli müştəri, sizin kreditiniz tam bağlandı. Bizi seçdiyiniz üçün təşəkkürlər! {StorePhone}",
                     IsEnabled = true
                 },
-                new NotificationTemplate
+                new DcNotificationTemplate
                 {
                     NotificationTemplateId = 8,
                     NotificationTypeCode = NotificationTypeCodes.InstallmentPaid,
@@ -1409,7 +1409,7 @@ namespace Foxoft.Models
                     BodyTemplate = "{StoreDesc} mağazasından götürdüyünüz məhsulun {paid} AZN aylıq krediti ödəndi. Qalıq borcunuz {debit} AZN-dir.",
                     IsEnabled = true
                 },
-                new NotificationTemplate
+                new DcNotificationTemplate
                 {
                     NotificationTemplateId = 9,
                     NotificationTypeCode = NotificationTypeCodes.CustomerBirthday,
@@ -1421,10 +1421,10 @@ namespace Foxoft.Models
             };
         }
 
-        private static NotificationRecipientRule[] GetNotificationRecipientRules()
+        private static DcNotificationRecipientRule[] GetNotificationRecipientRules()
         {
-            List<NotificationRecipientRule> rules = GetNotificationTypes()
-                .Select((notificationType, index) => new NotificationRecipientRule
+            List<DcNotificationRecipientRule> rules = GetNotificationTypes()
+                .Select((notificationType, index) => new DcNotificationRecipientRule
                 {
                     NotificationRecipientRuleId = index + 1,
                     NotificationTypeCode = notificationType.NotificationTypeCode,
@@ -1451,9 +1451,9 @@ namespace Foxoft.Models
             return rules.ToArray();
         }
 
-        private static NotificationType CreateNotificationType(string code, string category, string desc, string severity, bool allowPopup, int displayOrder, bool isEnabled = true)
+        private static DcNotificationType CreateNotificationType(string code, string category, string desc, string severity, bool allowPopup, int displayOrder, bool isEnabled = true)
         {
-            return new NotificationType
+            return new DcNotificationType
             {
                 NotificationTypeCode = code,
                 CategoryCode = category,
@@ -1475,7 +1475,7 @@ namespace Foxoft.Models
             return 60;
         }
 
-        private static string GetDefaultNotificationChannelCodes(NotificationType notificationType)
+        private static string GetDefaultNotificationChannelCodes(DcNotificationType notificationType)
         {
             if (notificationType.NotificationTypeCode == NotificationTypeCodes.InstallmentDueSoon
                 || notificationType.NotificationTypeCode == NotificationTypeCodes.InstallmentDueToday
@@ -1490,9 +1490,9 @@ namespace Foxoft.Models
                 : NotificationChannels.InApp;
         }
 
-        private static NotificationRecipientRule CreateNotificationRecipientRule(int id, string notificationTypeCode, string roleCode, string? storeCode = null)
+        private static DcNotificationRecipientRule CreateNotificationRecipientRule(int id, string notificationTypeCode, string roleCode, string? storeCode = null)
         {
-            return new NotificationRecipientRule
+            return new DcNotificationRecipientRule
             {
                 NotificationRecipientRuleId = id,
                 NotificationTypeCode = notificationTypeCode,

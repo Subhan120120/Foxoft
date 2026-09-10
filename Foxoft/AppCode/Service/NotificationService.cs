@@ -42,9 +42,9 @@ namespace Foxoft.AppCode.Service
             _db = db;
         }
 
-        public async Task<Notification?> CreateOrUpdateAsync(NotificationCreateRequest request, CancellationToken ct = default)
+        public async Task<TrNotification?> CreateOrUpdateAsync(NotificationCreateRequest request, CancellationToken ct = default)
         {
-            NotificationType? notificationType = await _db.NotificationTypes
+            DcNotificationType? notificationType = await _db.DcNotificationTypes
                 .FirstOrDefaultAsync(x => x.NotificationTypeCode == request.NotificationTypeCode && x.IsEnabled, ct);
 
             if (notificationType == null)
@@ -53,7 +53,7 @@ namespace Foxoft.AppCode.Service
                 return null;
             }
 
-            NotificationRule? rule = await ResolveRuleAsync(request.NotificationTypeCode, request.StoreCode, ct);
+            DcNotificationRule? rule = await ResolveRuleAsync(request.NotificationTypeCode, request.StoreCode, ct);
             if (rule == null || !rule.IsEnabled)
             {
                 await CancelActiveByKeyAsync(request.NotificationKey, ct);
@@ -65,8 +65,8 @@ namespace Foxoft.AppCode.Service
             (string title, string body) = await ResolveTextAsync(notificationType.NotificationTypeCode, request, ct);
             bool shouldCreateOutbox = false;
 
-            Notification? notification = await _db.Notifications
-                .Include(x => x.NotificationRecipients)
+            TrNotification? notification = await _db.TrNotifications
+                .Include(x => x.TrNotificationRecipients)
                 .FirstOrDefaultAsync(x => x.NotificationKey == request.NotificationKey
                                        && x.Status == NotificationStatuses.Active, ct);
 
@@ -94,7 +94,7 @@ namespace Foxoft.AppCode.Service
             }
             else
             {
-                notification = new Notification
+                notification = new TrNotification
                 {
                     NotificationKey = request.NotificationKey,
                     NotificationTypeCode = notificationType.NotificationTypeCode,
@@ -110,7 +110,7 @@ namespace Foxoft.AppCode.Service
                     ExpireDate = request.ExpireDate
                 };
 
-                _db.Notifications.Add(notification);
+                _db.TrNotifications.Add(notification);
                 await _db.SaveChangesAsync(ct);
 
                 AddAudit(notification.NotificationId, null, NotificationActionTypes.Created, null, null, null);
@@ -130,71 +130,71 @@ namespace Foxoft.AppCode.Service
         {
             DateTime now = DateTime.Now;
 
-            IQueryable<NotificationRecipient> query = _db.NotificationRecipients
+            IQueryable<TrNotificationRecipient> query = _db.TrNotificationRecipients
                 .AsNoTracking()
-                .Include(x => x.Notification)
-                    .ThenInclude(x => x.NotificationType)
+                .Include(x => x.TrNotification)
+                    .ThenInclude(x => x.DcNotificationType)
                 .Where(x => x.CurrAccCode == currAccCode)
-                .Where(x => x.Notification.NotificationType.IsEnabled)
-                .Where(x => x.Notification.Status == NotificationStatuses.Active
-                         || x.Notification.Status == NotificationStatuses.Resolved)
+                .Where(x => x.TrNotification.DcNotificationType.IsEnabled)
+                .Where(x => x.TrNotification.Status == NotificationStatuses.Active
+                         || x.TrNotification.Status == NotificationStatuses.Resolved)
                 .Where(x => x.Status != NotificationRecipientStatuses.Dismissed)
                 .Where(x => x.Status != NotificationRecipientStatuses.Snoozed || x.SnoozedUntil <= now);
 
             query = WhereEffectiveRuleIsEnabled(query);
 
             if (filter.DateFrom.HasValue)
-                query = query.Where(x => x.Notification.CreatedDate >= filter.DateFrom.Value.Date);
+                query = query.Where(x => x.TrNotification.CreatedDate >= filter.DateFrom.Value.Date);
 
             if (filter.DateTo.HasValue)
             {
                 DateTime dateTo = filter.DateTo.Value.Date.AddDays(1);
-                query = query.Where(x => x.Notification.CreatedDate < dateTo);
+                query = query.Where(x => x.TrNotification.CreatedDate < dateTo);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.StoreCode))
-                query = query.Where(x => x.Notification.StoreCode == filter.StoreCode);
+                query = query.Where(x => x.TrNotification.StoreCode == filter.StoreCode);
 
             if (!string.IsNullOrWhiteSpace(filter.CategoryCode))
-                query = query.Where(x => x.Notification.NotificationType.CategoryCode == filter.CategoryCode);
+                query = query.Where(x => x.TrNotification.DcNotificationType.CategoryCode == filter.CategoryCode);
 
             switch (filter.Preset)
             {
                 case "Unread":
-                    query = query.Where(x => x.Notification.Status == NotificationStatuses.Active
+                    query = query.Where(x => x.TrNotification.Status == NotificationStatuses.Active
                                           && x.Status == NotificationRecipientStatuses.Unread);
                     break;
                 case "Critical":
-                    query = query.Where(x => x.Notification.Status == NotificationStatuses.Active
-                                          && x.Notification.Severity == NotificationSeverities.Critical);
+                    query = query.Where(x => x.TrNotification.Status == NotificationStatuses.Active
+                                          && x.TrNotification.Severity == NotificationSeverities.Critical);
                     break;
                 case "Today":
                     DateTime today = DateTime.Today;
                     DateTime tomorrow = today.AddDays(1);
-                    query = query.Where(x => x.Notification.CreatedDate >= today && x.Notification.CreatedDate < tomorrow);
+                    query = query.Where(x => x.TrNotification.CreatedDate >= today && x.TrNotification.CreatedDate < tomorrow);
                     break;
             }
 
             return await query
-                .OrderByDescending(x => x.Notification.CreatedDate)
+                .OrderByDescending(x => x.TrNotification.CreatedDate)
                 .Select(x => new NotificationInboxItem
                 {
                     NotificationId = x.NotificationId,
                     NotificationRecipientId = x.NotificationRecipientId,
-                    CreatedDate = x.Notification.CreatedDate,
-                    NotificationTypeCode = x.Notification.NotificationTypeCode,
-                    NotificationTypeDesc = x.Notification.NotificationType.NotificationTypeDesc,
-                    CategoryCode = x.Notification.NotificationType.CategoryCode,
-                    Severity = x.Notification.Severity,
-                    StoreCode = x.Notification.StoreCode,
-                    Title = x.Notification.Title,
-                    Body = x.Notification.Body,
-                    NotificationStatus = x.Notification.Status,
+                    CreatedDate = x.TrNotification.CreatedDate,
+                    NotificationTypeCode = x.TrNotification.NotificationTypeCode,
+                    NotificationTypeDesc = x.TrNotification.DcNotificationType.NotificationTypeDesc,
+                    CategoryCode = x.TrNotification.DcNotificationType.CategoryCode,
+                    Severity = x.TrNotification.Severity,
+                    StoreCode = x.TrNotification.StoreCode,
+                    Title = x.TrNotification.Title,
+                    Body = x.TrNotification.Body,
+                    NotificationStatus = x.TrNotification.Status,
                     RecipientStatus = x.Status,
-                    EntityType = x.Notification.EntityType,
-                    EntityKey = x.Notification.EntityKey,
+                    EntityType = x.TrNotification.EntityType,
+                    EntityKey = x.TrNotification.EntityKey,
                     SnoozedUntil = x.SnoozedUntil,
-                    LastRaisedDate = x.Notification.LastRaisedDate
+                    LastRaisedDate = x.TrNotification.LastRaisedDate
                 })
                 .ToListAsync(ct);
         }
@@ -202,11 +202,11 @@ namespace Foxoft.AppCode.Service
         public Task<int> GetUnreadCountAsync(string currAccCode, CancellationToken ct = default)
         {
             DateTime now = DateTime.Now;
-            IQueryable<NotificationRecipient> query = _db.NotificationRecipients
+            IQueryable<TrNotificationRecipient> query = _db.TrNotificationRecipients
                 .AsNoTracking()
                 .Where(x => x.CurrAccCode == currAccCode)
-                .Where(x => x.Notification.NotificationType.IsEnabled)
-                .Where(x => x.Notification.Status == NotificationStatuses.Active)
+                .Where(x => x.TrNotification.DcNotificationType.IsEnabled)
+                .Where(x => x.TrNotification.Status == NotificationStatuses.Active)
                 .Where(x => x.Status == NotificationRecipientStatuses.Unread)
                 .Where(x => x.SnoozedUntil == null || x.SnoozedUntil <= now);
 
@@ -216,49 +216,49 @@ namespace Foxoft.AppCode.Service
         public Task<List<NotificationInboxItem>> GetPopupCandidatesAsync(string currAccCode, CancellationToken ct = default)
         {
             DateTime now = DateTime.Now;
-            IQueryable<NotificationRecipient> query = _db.NotificationRecipients
+            IQueryable<TrNotificationRecipient> query = _db.TrNotificationRecipients
                 .AsNoTracking()
-                .Include(x => x.Notification)
-                    .ThenInclude(x => x.NotificationType)
+                .Include(x => x.TrNotification)
+                    .ThenInclude(x => x.DcNotificationType)
                 .Where(x => x.CurrAccCode == currAccCode)
                 .Where(x => x.Status == NotificationRecipientStatuses.Unread)
-                .Where(x => x.Notification.NotificationType.IsEnabled)
-                .Where(x => x.Notification.Status == NotificationStatuses.Active)
-                .Where(x => x.Notification.NotificationType.AllowPopup)
+                .Where(x => x.TrNotification.DcNotificationType.IsEnabled)
+                .Where(x => x.TrNotification.Status == NotificationStatuses.Active)
+                .Where(x => x.TrNotification.DcNotificationType.AllowPopup)
                 .Where(x => x.LastPopupShownDate == null || x.LastPopupShownDate.Value.AddMinutes(30) <= now)
                 .Where(x => x.SnoozedUntil == null || x.SnoozedUntil <= now)
-                .Where(x => x.Notification.Severity == NotificationSeverities.High
-                         || x.Notification.Severity == NotificationSeverities.Critical);
+                .Where(x => x.TrNotification.Severity == NotificationSeverities.High
+                         || x.TrNotification.Severity == NotificationSeverities.Critical);
 
             return WhereEffectiveRuleIsEnabled(query)
-                .OrderByDescending(x => x.Notification.Severity == NotificationSeverities.Critical)
-                .ThenByDescending(x => x.Notification.CreatedDate)
+                .OrderByDescending(x => x.TrNotification.Severity == NotificationSeverities.Critical)
+                .ThenByDescending(x => x.TrNotification.CreatedDate)
                 .Take(5)
                 .Select(x => new NotificationInboxItem
                 {
                     NotificationId = x.NotificationId,
                     NotificationRecipientId = x.NotificationRecipientId,
-                    CreatedDate = x.Notification.CreatedDate,
-                    NotificationTypeCode = x.Notification.NotificationTypeCode,
-                    NotificationTypeDesc = x.Notification.NotificationType.NotificationTypeDesc,
-                    CategoryCode = x.Notification.NotificationType.CategoryCode,
-                    Severity = x.Notification.Severity,
-                    StoreCode = x.Notification.StoreCode,
-                    Title = x.Notification.Title,
-                    Body = x.Notification.Body,
-                    NotificationStatus = x.Notification.Status,
+                    CreatedDate = x.TrNotification.CreatedDate,
+                    NotificationTypeCode = x.TrNotification.NotificationTypeCode,
+                    NotificationTypeDesc = x.TrNotification.DcNotificationType.NotificationTypeDesc,
+                    CategoryCode = x.TrNotification.DcNotificationType.CategoryCode,
+                    Severity = x.TrNotification.Severity,
+                    StoreCode = x.TrNotification.StoreCode,
+                    Title = x.TrNotification.Title,
+                    Body = x.TrNotification.Body,
+                    NotificationStatus = x.TrNotification.Status,
                     RecipientStatus = x.Status,
-                    EntityType = x.Notification.EntityType,
-                    EntityKey = x.Notification.EntityKey,
+                    EntityType = x.TrNotification.EntityType,
+                    EntityKey = x.TrNotification.EntityKey,
                     SnoozedUntil = x.SnoozedUntil,
-                    LastRaisedDate = x.Notification.LastRaisedDate
+                    LastRaisedDate = x.TrNotification.LastRaisedDate
                 })
                 .ToListAsync(ct);
         }
 
         public async Task MarkPopupShownAsync(long notificationRecipientId, string actorCurrAccCode, CancellationToken ct = default)
         {
-            NotificationRecipient? recipient = await _db.NotificationRecipients
+            TrNotificationRecipient? recipient = await _db.TrNotificationRecipients
                 .FirstOrDefaultAsync(x => x.NotificationRecipientId == notificationRecipientId, ct);
 
             if (recipient == null)
@@ -271,7 +271,7 @@ namespace Foxoft.AppCode.Service
 
         public async Task MarkReadAsync(long notificationRecipientId, string actorCurrAccCode, CancellationToken ct = default)
         {
-            NotificationRecipient? recipient = await _db.NotificationRecipients
+            TrNotificationRecipient? recipient = await _db.TrNotificationRecipients
                 .FirstOrDefaultAsync(x => x.NotificationRecipientId == notificationRecipientId, ct);
 
             if (recipient == null)
@@ -286,14 +286,14 @@ namespace Foxoft.AppCode.Service
 
         public async Task MarkAllReadAsync(string currAccCode, CancellationToken ct = default)
         {
-            List<NotificationRecipient> recipients = await _db.NotificationRecipients
+            List<TrNotificationRecipient> recipients = await _db.TrNotificationRecipients
                 .Where(x => x.CurrAccCode == currAccCode
-                         && x.Notification.Status == NotificationStatuses.Active
+                         && x.TrNotification.Status == NotificationStatuses.Active
                          && x.Status == NotificationRecipientStatuses.Unread)
                 .ToListAsync(ct);
 
             DateTime now = DateTime.Now;
-            foreach (NotificationRecipient recipient in recipients)
+            foreach (TrNotificationRecipient recipient in recipients)
             {
                 recipient.Status = NotificationRecipientStatuses.Read;
                 recipient.ReadDate = now;
@@ -305,7 +305,7 @@ namespace Foxoft.AppCode.Service
 
         public async Task DismissAsync(long notificationRecipientId, string actorCurrAccCode, CancellationToken ct = default)
         {
-            NotificationRecipient? recipient = await _db.NotificationRecipients
+            TrNotificationRecipient? recipient = await _db.TrNotificationRecipients
                 .FirstOrDefaultAsync(x => x.NotificationRecipientId == notificationRecipientId, ct);
 
             if (recipient == null)
@@ -320,7 +320,7 @@ namespace Foxoft.AppCode.Service
 
         public async Task SnoozeAsync(long notificationRecipientId, string actorCurrAccCode, DateTime snoozedUntil, CancellationToken ct = default)
         {
-            NotificationRecipient? recipient = await _db.NotificationRecipients
+            TrNotificationRecipient? recipient = await _db.TrNotificationRecipients
                 .FirstOrDefaultAsync(x => x.NotificationRecipientId == notificationRecipientId, ct);
 
             if (recipient == null)
@@ -334,7 +334,7 @@ namespace Foxoft.AppCode.Service
 
         public async Task ResolveAsync(long notificationId, string actorCurrAccCode, CancellationToken ct = default)
         {
-            Notification? notification = await _db.Notifications
+            TrNotification? notification = await _db.TrNotifications
                 .FirstOrDefaultAsync(x => x.NotificationId == notificationId, ct);
 
             if (notification == null || notification.Status != NotificationStatuses.Active)
@@ -355,7 +355,7 @@ namespace Foxoft.AppCode.Service
             DateTime? maxLastRaisedDate = null)
         {
             HashSet<string> keySet = activeKeys.ToHashSet(StringComparer.OrdinalIgnoreCase);
-            IQueryable<Notification> query = _db.Notifications
+            IQueryable<TrNotification> query = _db.TrNotifications
                 .Where(x => notificationTypeCodes.Contains(x.NotificationTypeCode)
                          && x.Status == NotificationStatuses.Active);
 
@@ -375,10 +375,10 @@ namespace Foxoft.AppCode.Service
                 query = query.Where(x => scopedKeyList.Contains(x.NotificationKey));
             }
 
-            List<Notification> notifications = await query.ToListAsync(ct);
+            List<TrNotification> notifications = await query.ToListAsync(ct);
 
             DateTime now = DateTime.Now;
-            foreach (Notification notification in notifications)
+            foreach (TrNotification notification in notifications)
             {
                 if (keySet.Contains(notification.NotificationKey))
                     continue;
@@ -391,44 +391,44 @@ namespace Foxoft.AppCode.Service
             await _db.SaveChangesAsync(ct);
         }
 
-        private async Task<NotificationRule?> ResolveRuleAsync(string notificationTypeCode, string? storeCode, CancellationToken ct)
+        private async Task<DcNotificationRule?> ResolveRuleAsync(string notificationTypeCode, string? storeCode, CancellationToken ct)
         {
-            NotificationRule? storeRule = null;
+            DcNotificationRule? storeRule = null;
             if (!string.IsNullOrWhiteSpace(storeCode))
             {
-                storeRule = await _db.NotificationRules
+                storeRule = await _db.DcNotificationRules
                     .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.NotificationTypeCode == notificationTypeCode
                                            && x.StoreCode == storeCode, ct);
             }
 
-            return storeRule ?? await _db.NotificationRules
+            return storeRule ?? await _db.DcNotificationRules
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.NotificationTypeCode == notificationTypeCode
                                        && x.StoreCode == null, ct);
         }
 
-        private IQueryable<NotificationRecipient> WhereEffectiveRuleIsEnabled(IQueryable<NotificationRecipient> query)
+        private IQueryable<TrNotificationRecipient> WhereEffectiveRuleIsEnabled(IQueryable<TrNotificationRecipient> query)
         {
             return query.Where(recipient =>
-                _db.NotificationRules.Any(rule =>
-                    rule.NotificationTypeCode == recipient.Notification.NotificationTypeCode
+                _db.DcNotificationRules.Any(rule =>
+                    rule.NotificationTypeCode == recipient.TrNotification.NotificationTypeCode
                     && rule.IsEnabled
-                    && ((rule.StoreCode == null && recipient.Notification.StoreCode == null)
-                        || rule.StoreCode == recipient.Notification.StoreCode))
-                || (!_db.NotificationRules.Any(rule =>
-                        rule.NotificationTypeCode == recipient.Notification.NotificationTypeCode
-                        && ((rule.StoreCode == null && recipient.Notification.StoreCode == null)
-                            || rule.StoreCode == recipient.Notification.StoreCode))
-                    && _db.NotificationRules.Any(rule =>
-                        rule.NotificationTypeCode == recipient.Notification.NotificationTypeCode
+                    && ((rule.StoreCode == null && recipient.TrNotification.StoreCode == null)
+                        || rule.StoreCode == recipient.TrNotification.StoreCode))
+                || (!_db.DcNotificationRules.Any(rule =>
+                        rule.NotificationTypeCode == recipient.TrNotification.NotificationTypeCode
+                        && ((rule.StoreCode == null && recipient.TrNotification.StoreCode == null)
+                            || rule.StoreCode == recipient.TrNotification.StoreCode))
+                    && _db.DcNotificationRules.Any(rule =>
+                        rule.NotificationTypeCode == recipient.TrNotification.NotificationTypeCode
                         && rule.StoreCode == null
                         && rule.IsEnabled)));
         }
 
         private async Task CancelActiveByKeyAsync(string notificationKey, CancellationToken ct)
         {
-            Notification? notification = await _db.Notifications
+            TrNotification? notification = await _db.TrNotifications
                 .FirstOrDefaultAsync(x => x.NotificationKey == notificationKey
                                        && x.Status == NotificationStatuses.Active, ct);
 
@@ -439,12 +439,12 @@ namespace Foxoft.AppCode.Service
             notification.Status = NotificationStatuses.Cancelled;
             notification.LastUpdatedDate = now;
 
-            List<NotificationChannelOutbox> pendingOutboxes = await _db.NotificationChannelOutboxes
+            List<TrNotificationChannelOutbox> pendingOutboxes = await _db.TrNotificationChannelOutboxes
                 .Where(x => x.NotificationId == notification.NotificationId
                          && x.Status == NotificationOutboxStatuses.Pending)
                 .ToListAsync(ct);
 
-            foreach (NotificationChannelOutbox outbox in pendingOutboxes)
+            foreach (TrNotificationChannelOutbox outbox in pendingOutboxes)
             {
                 outbox.Status = NotificationOutboxStatuses.Cancelled;
                 outbox.LastTryDate = now;
@@ -460,7 +460,7 @@ namespace Foxoft.AppCode.Service
             string languageCode = request.LanguageCode
                 ?? Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
 
-            NotificationTemplate? template = await _db.NotificationTemplates
+            DcNotificationTemplate? template = await _db.DcNotificationTemplates
                 .AsNoTracking()
                 .Where(x => x.NotificationTypeCode == notificationTypeCode && x.IsEnabled)
                 .OrderByDescending(x => x.LanguageCode == languageCode)
@@ -474,9 +474,9 @@ namespace Foxoft.AppCode.Service
             return (ApplyPlaceholders(title, placeholders), ApplyPlaceholders(body, placeholders));
         }
 
-        private async Task EnsureRecipientsAsync(Notification notification, NotificationRule rule, CancellationToken ct)
+        private async Task EnsureRecipientsAsync(TrNotification notification, DcNotificationRule rule, CancellationToken ct)
         {
-            HashSet<string> existingRecipients = notification.NotificationRecipients
+            HashSet<string> existingRecipients = notification.TrNotificationRecipients
                 .Select(x => x.CurrAccCode)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
@@ -487,21 +487,21 @@ namespace Foxoft.AppCode.Service
                 if (existingRecipients.Contains(currAcc.CurrAccCode))
                     continue;
 
-                NotificationRecipient recipient = new()
+                TrNotificationRecipient recipient = new()
                 {
                     NotificationId = notification.NotificationId,
                     CurrAccCode = currAcc.CurrAccCode,
                     Status = NotificationRecipientStatuses.Unread
                 };
 
-                _db.NotificationRecipients.Add(recipient);
+                _db.TrNotificationRecipients.Add(recipient);
                 AddAudit(notification.NotificationId, null, NotificationActionTypes.Assigned, currAcc.CurrAccCode, null, null);
             }
         }
 
         private async Task<List<DcCurrAcc>> ResolveRecipientsAsync(string notificationTypeCode, string? storeCode, CancellationToken ct)
         {
-            List<NotificationRecipientRule> rules = await _db.NotificationRecipientRules
+            List<DcNotificationRecipientRule> rules = await _db.DcNotificationRecipientRules
                 .AsNoTracking()
                 .Where(x => x.NotificationTypeCode == notificationTypeCode && x.IsEnabled)
                 .Where(x => x.StoreCode == null || x.StoreCode == storeCode)
@@ -509,7 +509,7 @@ namespace Foxoft.AppCode.Service
 
             Dictionary<string, DcCurrAcc> users = new(StringComparer.OrdinalIgnoreCase);
 
-            foreach (NotificationRecipientRule rule in rules)
+            foreach (DcNotificationRecipientRule rule in rules)
             {
                 IQueryable<DcCurrAcc> query = _db.TrCurrAccRoles
                     .AsNoTracking()
@@ -529,7 +529,7 @@ namespace Foxoft.AppCode.Service
             return users.Values.ToList();
         }
 
-        private async Task EnsureOutboxAsync(Notification notification, NotificationRule rule, NotificationCreateRequest request, CancellationToken ct)
+        private async Task EnsureOutboxAsync(TrNotification notification, DcNotificationRule rule, NotificationCreateRequest request, CancellationToken ct)
         {
             string[] channels = rule.ChannelCodes
                 .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
@@ -550,7 +550,7 @@ namespace Foxoft.AppCode.Service
             bool hasDirectReceivers = request.ChannelReceivers?.Any() == true;
             if (!hasDirectReceivers)
             {
-                List<NotificationRecipient> recipients = await _db.NotificationRecipients
+                List<TrNotificationRecipient> recipients = await _db.TrNotificationRecipients
                     .Include(x => x.DcCurrAcc)
                         .ThenInclude(x => x.DcCurrAccContactDetails)
                     .Where(x => x.NotificationId == notification.NotificationId)
@@ -558,7 +558,7 @@ namespace Foxoft.AppCode.Service
 
                 foreach (string channel in deliveryChannels)
                 {
-                    foreach (NotificationRecipient recipient in recipients)
+                    foreach (TrNotificationRecipient recipient in recipients)
                     {
                         string? receiver = ResolveReceiver(recipient.DcCurrAcc, channel);
                         if (string.IsNullOrWhiteSpace(receiver))
@@ -597,7 +597,7 @@ namespace Foxoft.AppCode.Service
         }
 
         private async Task QueueOutboxAsync(
-            Notification notification,
+            TrNotification notification,
             string channel,
             string receiver,
             string payload,
@@ -605,7 +605,7 @@ namespace Foxoft.AppCode.Service
             string? actorCurrAccCode,
             CancellationToken ct)
         {
-            bool alreadyQueued = await _db.NotificationChannelOutboxes
+            bool alreadyQueued = await _db.TrNotificationChannelOutboxes
                 .AnyAsync(x => x.NotificationId == notification.NotificationId
                             && x.ChannelCode == channel
                             && x.Receiver == receiver
@@ -614,7 +614,7 @@ namespace Foxoft.AppCode.Service
             if (alreadyQueued)
                 return;
 
-            _db.NotificationChannelOutboxes.Add(new NotificationChannelOutbox
+            _db.TrNotificationChannelOutboxes.Add(new TrNotificationChannelOutbox
             {
                 NotificationId = notification.NotificationId,
                 ChannelCode = channel,
@@ -639,7 +639,7 @@ namespace Foxoft.AppCode.Service
             return null;
         }
 
-        private static string BuildPayload(Notification notification, bool bodyOnly = false)
+        private static string BuildPayload(TrNotification notification, bool bodyOnly = false)
         {
             return JsonSerializer.Serialize(new
             {
@@ -666,7 +666,7 @@ namespace Foxoft.AppCode.Service
 
         private void AddAudit(long? notificationId, long? notificationRecipientId, string actionType, string? actorCurrAccCode, string? channelCode, string? note)
         {
-            _db.NotificationAudits.Add(new NotificationAudit
+            _db.TrNotificationAudits.Add(new TrNotificationAudit
             {
                 NotificationId = notificationId,
                 NotificationRecipientId = notificationRecipientId,

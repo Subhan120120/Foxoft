@@ -28,9 +28,9 @@ namespace Foxoft
         };
 
         private subContext? dbContext;
-        private List<NotificationType> notificationTypes = new();
+        private List<DcNotificationType> notificationTypes = new();
         private List<DcRole> roles = new();
-        private List<NotificationRecipientRule> allRecipientRules = new();
+        private List<DcNotificationRecipientRule> allRecipientRules = new();
         private bool layoutLoaded;
 
         public FormNotificationRule()
@@ -61,7 +61,7 @@ namespace Foxoft
             dbContext?.Dispose();
             dbContext = new subContext();
 
-            notificationTypes = await dbContext.NotificationTypes
+            notificationTypes = await dbContext.DcNotificationTypes
                 .AsNoTracking()
                 .Where(x => x.IsEnabled)
                 .OrderBy(x => x.CategoryCode)
@@ -81,22 +81,22 @@ namespace Foxoft
             repositoryItemLookUpEditRole.DataSource = roles;
             repositoryItemLookUpEditRecipientStore.DataSource = stores;
 
-            await dbContext.NotificationRules
-                .Include(x => x.NotificationType)
+            await dbContext.DcNotificationRules
+                .Include(x => x.DcNotificationType)
                 .Include(x => x.DcStore)
-                .OrderBy(x => x.NotificationType.CategoryCode)
-                .ThenBy(x => x.NotificationType.DisplayOrder)
+                .OrderBy(x => x.DcNotificationType.CategoryCode)
+                .ThenBy(x => x.DcNotificationType.DisplayOrder)
                 .ThenBy(x => x.StoreCode)
                 .LoadAsync();
 
-            notificationRuleBindingSource.DataSource = dbContext.NotificationRules.Local.ToBindingList();
+            notificationRuleBindingSource.DataSource = dbContext.DcNotificationRules.Local.ToBindingList();
 
-            allRecipientRules = await dbContext.NotificationRecipientRules
-                .Include(x => x.NotificationType)
+            allRecipientRules = await dbContext.DcNotificationRecipientRules
+                .Include(x => x.DcNotificationType)
                 .Include(x => x.DcRole)
                 .Include(x => x.DcStore)
-                .OrderBy(x => x.NotificationType.CategoryCode)
-                .ThenBy(x => x.NotificationType.DisplayOrder)
+                .OrderBy(x => x.DcNotificationType.CategoryCode)
+                .ThenBy(x => x.DcNotificationType.DisplayOrder)
                 .ThenBy(x => x.RoleCode)
                 .ThenBy(x => x.StoreCode)
                 .ToListAsync();
@@ -112,7 +112,7 @@ namespace Foxoft
 
         private void RefreshRecipientGrid()
         {
-            NotificationRule? rule = FocusedRule();
+            DcNotificationRule? rule = FocusedRule();
             if (rule != null && !string.IsNullOrWhiteSpace(rule.NotificationTypeCode))
             {
                 recipientRuleBindingSource.DataSource = allRecipientRules
@@ -125,14 +125,14 @@ namespace Foxoft
             }
         }
 
-        private NotificationRule? FocusedRule()
+        private DcNotificationRule? FocusedRule()
         {
-            return gV_NotificationRules.GetFocusedRow() as NotificationRule;
+            return gV_NotificationRules.GetFocusedRow() as DcNotificationRule;
         }
 
-        private NotificationRecipientRule? FocusedRecipientRule()
+        private DcNotificationRecipientRule? FocusedRecipientRule()
         {
-            return gV_RecipientRules.GetFocusedRow() as NotificationRecipientRule;
+            return gV_RecipientRules.GetFocusedRow() as DcNotificationRecipientRule;
         }
 
         #region NotificationRule CRUD
@@ -142,8 +142,8 @@ namespace Foxoft
             if (dbContext == null)
                 return;
 
-            NotificationType? selectedType = FocusedRule()?.NotificationType ?? notificationTypes.FirstOrDefault();
-            NotificationRule rule = new()
+            DcNotificationType? selectedType = FocusedRule()?.DcNotificationType ?? notificationTypes.FirstOrDefault();
+            DcNotificationRule rule = new()
             {
                 RuleName = selectedType?.NotificationTypeDesc ?? string.Empty,
                 NotificationTypeCode = selectedType?.NotificationTypeCode ?? string.Empty,
@@ -158,7 +158,7 @@ namespace Foxoft
                 LastUpdatedUserName = Authorization.CurrAccCode
             };
 
-            dbContext.NotificationRules.Add(rule);
+            dbContext.DcNotificationRules.Add(rule);
             notificationRuleBindingSource.MoveLast();
             gV_NotificationRules.FocusedColumn = colStoreCode;
             gV_NotificationRules.ShowEditor();
@@ -202,7 +202,7 @@ namespace Foxoft
                 return;
 
             DateTime now = DateTime.Now;
-            foreach (var entry in dbContext.ChangeTracker.Entries<NotificationRule>())
+            foreach (var entry in dbContext.ChangeTracker.Entries<DcNotificationRule>())
             {
                 if (entry.State == EntityState.Added)
                 {
@@ -226,7 +226,7 @@ namespace Foxoft
                 }
             }
 
-            foreach (var entry in dbContext.ChangeTracker.Entries<NotificationRecipientRule>())
+            foreach (var entry in dbContext.ChangeTracker.Entries<DcNotificationRecipientRule>())
             {
                 if (entry.State == EntityState.Added)
                 {
@@ -252,13 +252,13 @@ namespace Foxoft
             if (dbContext == null)
                 return false;
 
-            List<NotificationRule> rules = dbContext.ChangeTracker
-                .Entries<NotificationRule>()
+            List<DcNotificationRule> rules = dbContext.ChangeTracker
+                .Entries<DcNotificationRule>()
                 .Where(x => x.State != EntityState.Deleted)
                 .Select(x => x.Entity)
                 .ToList();
 
-            foreach (NotificationRule rule in rules)
+            foreach (DcNotificationRule rule in rules)
             {
                 if (string.IsNullOrWhiteSpace(rule.RuleName)
                     || string.IsNullOrWhiteSpace(rule.NotificationTypeCode)
@@ -312,7 +312,7 @@ namespace Foxoft
             if (dbContext == null)
                 return;
 
-            NotificationRule? rule = FocusedRule();
+            DcNotificationRule? rule = FocusedRule();
             if (rule == null)
             {
                 XtraMessageBox.Show(Resources.Message_NoRowSelected, Resources.Common_Attention);
@@ -326,7 +326,7 @@ namespace Foxoft
                     MessageBoxIcon.Question) != DialogResult.OK)
                 return;
 
-            dbContext.NotificationRules.Remove(rule);
+            dbContext.DcNotificationRules.Remove(rule);
             await dbContext.SaveChangesAsync();
             await LoadDataAsync();
         }
@@ -340,11 +340,11 @@ namespace Foxoft
             if (dbContext == null)
                 return;
 
-            NotificationRule? selectedRule = FocusedRule();
+            DcNotificationRule? selectedRule = FocusedRule();
             string notificationTypeCode = selectedRule?.NotificationTypeCode ?? notificationTypes.FirstOrDefault()?.NotificationTypeCode ?? string.Empty;
             DcRole? defaultRole = roles.FirstOrDefault(x => x.RoleCode == "Admin") ?? roles.FirstOrDefault();
 
-            NotificationRecipientRule recipientRule = new()
+            DcNotificationRecipientRule recipientRule = new()
             {
                 NotificationTypeCode = notificationTypeCode,
                 RoleCode = defaultRole?.RoleCode ?? string.Empty,
@@ -356,7 +356,7 @@ namespace Foxoft
                 LastUpdatedUserName = Authorization.CurrAccCode
             };
 
-            dbContext.NotificationRecipientRules.Add(recipientRule);
+            dbContext.DcNotificationRecipientRules.Add(recipientRule);
             allRecipientRules.Add(recipientRule);
             RefreshRecipientGrid();
             recipientRuleBindingSource.MoveLast();
@@ -369,7 +369,7 @@ namespace Foxoft
             if (dbContext == null)
                 return;
 
-            NotificationRecipientRule? recipientRule = FocusedRecipientRule();
+            DcNotificationRecipientRule? recipientRule = FocusedRecipientRule();
             if (recipientRule == null)
             {
                 XtraMessageBox.Show(Resources.Message_NoRowSelected, Resources.Common_Attention);
@@ -383,7 +383,7 @@ namespace Foxoft
                     MessageBoxIcon.Question) != DialogResult.OK)
                 return;
 
-            dbContext.NotificationRecipientRules.Remove(recipientRule);
+            dbContext.DcNotificationRecipientRules.Remove(recipientRule);
             await dbContext.SaveChangesAsync();
             await LoadDataAsync();
         }
@@ -393,13 +393,13 @@ namespace Foxoft
             if (dbContext == null)
                 return false;
 
-            List<NotificationRecipientRule> recipientRules = dbContext.ChangeTracker
-                .Entries<NotificationRecipientRule>()
+            List<DcNotificationRecipientRule> recipientRules = dbContext.ChangeTracker
+                .Entries<DcNotificationRecipientRule>()
                 .Where(x => x.State != EntityState.Deleted)
                 .Select(x => x.Entity)
                 .ToList();
 
-            foreach (NotificationRecipientRule rule in recipientRules)
+            foreach (DcNotificationRecipientRule rule in recipientRules)
             {
                 if (string.IsNullOrWhiteSpace(rule.NotificationTypeCode)
                     || string.IsNullOrWhiteSpace(rule.RoleCode))
@@ -430,7 +430,7 @@ namespace Foxoft
 
         private void gV_RecipientRules_RowCellStyle(object sender, RowCellStyleEventArgs e)
         {
-            NotificationRecipientRule? rule = gV_RecipientRules.GetRow(e.RowHandle) as NotificationRecipientRule;
+            DcNotificationRecipientRule? rule = gV_RecipientRules.GetRow(e.RowHandle) as DcNotificationRecipientRule;
             if (rule == null)
                 return;
 
@@ -440,7 +440,7 @@ namespace Foxoft
 
         private void gV_RecipientRules_ValidateRow(object sender, ValidateRowEventArgs e)
         {
-            NotificationRecipientRule? rule = e.Row as NotificationRecipientRule;
+            DcNotificationRecipientRule? rule = e.Row as DcNotificationRecipientRule;
             if (rule == null)
                 return;
 
@@ -516,11 +516,11 @@ namespace Foxoft
             if (e.Column != colNotificationTypeCode)
                 return;
 
-            NotificationRule? rule = gV_NotificationRules.GetRow(e.RowHandle) as NotificationRule;
+            DcNotificationRule? rule = gV_NotificationRules.GetRow(e.RowHandle) as DcNotificationRule;
             if (rule == null || !string.IsNullOrWhiteSpace(rule.RuleName))
                 return;
 
-            NotificationType? notificationType = notificationTypes.FirstOrDefault(x => x.NotificationTypeCode == rule.NotificationTypeCode);
+            DcNotificationType? notificationType = notificationTypes.FirstOrDefault(x => x.NotificationTypeCode == rule.NotificationTypeCode);
             if (notificationType != null)
                 rule.RuleName = notificationType.NotificationTypeDesc;
         }
@@ -532,7 +532,7 @@ namespace Foxoft
 
         private void gV_NotificationRules_RowCellStyle(object sender, RowCellStyleEventArgs e)
         {
-            NotificationRule? rule = gV_NotificationRules.GetRow(e.RowHandle) as NotificationRule;
+            DcNotificationRule? rule = gV_NotificationRules.GetRow(e.RowHandle) as DcNotificationRule;
             if (rule == null)
                 return;
 
@@ -542,7 +542,7 @@ namespace Foxoft
 
         private void gV_NotificationRules_ValidateRow(object sender, ValidateRowEventArgs e)
         {
-            NotificationRule? rule = e.Row as NotificationRule;
+            DcNotificationRule? rule = e.Row as DcNotificationRule;
             if (rule == null)
                 return;
 

@@ -55,7 +55,7 @@ namespace Foxoft.AppCode.Service
                 }
 
                 string notificationKey = BuildNotificationKey(notificationTypeCode, row.InstallmentId, row.DueDate);
-                Notification? notification = await notificationService.CreateOrUpdateAsync(
+                TrNotification? notification = await notificationService.CreateOrUpdateAsync(
                     new NotificationCreateRequest(
                         NotificationTypeCode: notificationTypeCode,
                         NotificationKey: notificationKey,

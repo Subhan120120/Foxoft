@@ -31,8 +31,8 @@ namespace Foxoft.AppCode.Service
             int sent = 0;
             int failed = 0;
 
-            List<NotificationChannelOutbox> outboxes = await _db.NotificationChannelOutboxes
-                .Include(x => x.Notification)
+            List<TrNotificationChannelOutbox> outboxes = await _db.TrNotificationChannelOutboxes
+                .Include(x => x.TrNotification)
                 .Where(x => x.Status == NotificationOutboxStatuses.Pending)
                 .OrderBy(x => x.CreatedDate)
                 .Take(take)
@@ -40,13 +40,13 @@ namespace Foxoft.AppCode.Service
 
             for (int i = 0; i < outboxes.Count; i++)
             {
-                NotificationChannelOutbox outbox = outboxes[i];
+                TrNotificationChannelOutbox outbox = outboxes[i];
 
                 if (ct.IsCancellationRequested)
                     break;
 
-                if (outbox.Notification.Status != NotificationStatuses.Active
-                    || !await IsEffectiveRuleEnabledAsync(outbox.Notification, ct))
+                if (outbox.TrNotification.Status != NotificationStatuses.Active
+                    || !await IsEffectiveRuleEnabledAsync(outbox.TrNotification, ct))
                 {
                     outbox.Status = NotificationOutboxStatuses.Cancelled;
                     outbox.LastTryDate = DateTime.Now;
@@ -98,18 +98,18 @@ namespace Foxoft.AppCode.Service
             return (sent, failed);
         }
 
-        private async Task<bool> IsEffectiveRuleEnabledAsync(Notification notification, CancellationToken ct)
+        private async Task<bool> IsEffectiveRuleEnabledAsync(TrNotification notification, CancellationToken ct)
         {
-            NotificationRule? storeRule = null;
+            DcNotificationRule? storeRule = null;
             if (!string.IsNullOrWhiteSpace(notification.StoreCode))
             {
-                storeRule = await _db.NotificationRules
+                storeRule = await _db.DcNotificationRules
                     .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.NotificationTypeCode == notification.NotificationTypeCode
                                            && x.StoreCode == notification.StoreCode, ct);
             }
 
-            NotificationRule? rule = storeRule ?? await _db.NotificationRules
+            DcNotificationRule? rule = storeRule ?? await _db.DcNotificationRules
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.NotificationTypeCode == notification.NotificationTypeCode
                                        && x.StoreCode == null, ct);
@@ -117,7 +117,7 @@ namespace Foxoft.AppCode.Service
             return rule?.IsEnabled == true;
         }
 
-        private async Task SendAsync(NotificationChannelOutbox outbox, CancellationToken ct)
+        private async Task SendAsync(TrNotificationChannelOutbox outbox, CancellationToken ct)
         {
             if (outbox.ChannelCode.Equals(NotificationChannels.WhatsApp, StringComparison.OrdinalIgnoreCase))
             {
@@ -140,11 +140,11 @@ namespace Foxoft.AppCode.Service
                 using EvolutionApiClient client = new(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
                 await client.SendTextAsync(normalizedReceiver, message, ct);
 
-                _db.TrCredits.Add(WhatsAppCreditService.CreateUsage(outbox.Notification.NotificationTypeCode, normalizedReceiver));
+                _db.TrCredits.Add(WhatsAppCreditService.CreateUsage(outbox.TrNotification.NotificationTypeCode, normalizedReceiver));
 
                 Guid? documentHeaderId = null;
-                if (outbox.Notification.EntityType == NotificationEntityTypes.Invoice &&
-                    Guid.TryParse(outbox.Notification.EntityKey, out Guid parsedId))
+                if (outbox.TrNotification.EntityType == NotificationEntityTypes.Invoice &&
+                    Guid.TryParse(outbox.TrNotification.EntityKey, out Guid parsedId))
                 {
                     documentHeaderId = parsedId;
                 }
@@ -155,11 +155,11 @@ namespace Foxoft.AppCode.Service
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = normalizedReceiver,
                     ChannelCode = NotificationChannels.WhatsApp,
-                    MessageType = outbox.Notification.NotificationTypeCode,
+                    MessageType = outbox.TrNotification.NotificationTypeCode,
                     Message = message,
                     IsSuccessful = true,
                     Sender = Authorization.CurrAccCode,
-                    CurrAccCode = outbox.Notification.EntityType == NotificationEntityTypes.Customer ? outbox.Notification.EntityKey : null,
+                    CurrAccCode = outbox.TrNotification.EntityType == NotificationEntityTypes.Customer ? outbox.TrNotification.EntityKey : null,
                     TryCount = outbox.TryCount,
                     LastTryDate = DateTime.Now
                 });
@@ -180,8 +180,8 @@ namespace Foxoft.AppCode.Service
                 await client.SendSmsAsync(outbox.Receiver, message, ct);
 
                 Guid? documentHeaderId = null;
-                if (outbox.Notification.EntityType == NotificationEntityTypes.Invoice &&
-                    Guid.TryParse(outbox.Notification.EntityKey, out Guid parsedId))
+                if (outbox.TrNotification.EntityType == NotificationEntityTypes.Invoice &&
+                    Guid.TryParse(outbox.TrNotification.EntityKey, out Guid parsedId))
                 {
                     documentHeaderId = parsedId;
                 }
@@ -192,11 +192,11 @@ namespace Foxoft.AppCode.Service
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = outbox.Receiver,
                     ChannelCode = NotificationChannels.Sms,
-                    MessageType = outbox.Notification.NotificationTypeCode,
+                    MessageType = outbox.TrNotification.NotificationTypeCode,
                     Message = message,
                     IsSuccessful = true,
                     Sender = Authorization.CurrAccCode,
-                    CurrAccCode = outbox.Notification.EntityType == NotificationEntityTypes.Customer ? outbox.Notification.EntityKey : null,
+                    CurrAccCode = outbox.TrNotification.EntityType == NotificationEntityTypes.Customer ? outbox.TrNotification.EntityKey : null,
                     TryCount = outbox.TryCount,
                     LastTryDate = DateTime.Now
                 });
@@ -207,13 +207,13 @@ namespace Foxoft.AppCode.Service
             throw new NotSupportedException(outbox.ChannelCode);
         }
 
-        private void LogFailedMessage(NotificationChannelOutbox outbox, string errorMessage)
+        private void LogFailedMessage(TrNotificationChannelOutbox outbox, string errorMessage)
         {
             try
             {
                 Guid? documentHeaderId = null;
-                if (outbox.Notification.EntityType == NotificationEntityTypes.Invoice &&
-                    Guid.TryParse(outbox.Notification.EntityKey, out Guid parsedId))
+                if (outbox.TrNotification.EntityType == NotificationEntityTypes.Invoice &&
+                    Guid.TryParse(outbox.TrNotification.EntityKey, out Guid parsedId))
                 {
                     documentHeaderId = parsedId;
                 }
@@ -227,12 +227,12 @@ namespace Foxoft.AppCode.Service
                     DocumentHeaderId = documentHeaderId,
                     ReceiverPhoneNumber = normalizedReceiver,
                     ChannelCode = outbox.ChannelCode,
-                    MessageType = outbox.Notification.NotificationTypeCode,
+                    MessageType = outbox.TrNotification.NotificationTypeCode,
                     Message = message,
                     IsSuccessful = false,
                     LastError = errorMessage,
                     Sender = Authorization.CurrAccCode,
-                    CurrAccCode = outbox.Notification.EntityType == NotificationEntityTypes.Customer ? outbox.Notification.EntityKey : null,
+                    CurrAccCode = outbox.TrNotification.EntityType == NotificationEntityTypes.Customer ? outbox.TrNotification.EntityKey : null,
                     TryCount = outbox.TryCount,
                     LastTryDate = DateTime.Now
                 });
@@ -290,9 +290,9 @@ namespace Foxoft.AppCode.Service
                 || ex is ArgumentException;
         }
 
-        private void AddAudit(NotificationChannelOutbox outbox, string actionType, string? note)
+        private void AddAudit(TrNotificationChannelOutbox outbox, string actionType, string? note)
         {
-            _db.NotificationAudits.Add(new NotificationAudit
+            _db.TrNotificationAudits.Add(new TrNotificationAudit
             {
                 NotificationId = outbox.NotificationId,
                 ActionType = actionType,

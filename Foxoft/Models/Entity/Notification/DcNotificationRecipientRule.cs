@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Foxoft.Models
 {
     [Display(Name = nameof(Resources.Entity_NotificationRecipientRule), ResourceType = typeof(Resources))]
-    public class NotificationRecipientRule : BaseEntity
+    public class DcNotificationRecipientRule : BaseEntity
     {
         [Key]
         [Display(Name = nameof(Resources.Entity_NotificationRecipientRule_Id), ResourceType = typeof(Resources))]
@@ -15,7 +15,7 @@ namespace Foxoft.Models
 
         [Required]
         [StringLength(50)]
-        [ForeignKey(nameof(NotificationType))]
+        [ForeignKey(nameof(DcNotificationType))]
         [Display(Name = nameof(Resources.Entity_NotificationType_Code), ResourceType = typeof(Resources))]
         public string NotificationTypeCode { get; set; } = string.Empty;
 
@@ -34,7 +34,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Common_IsEnabled), ResourceType = typeof(Resources))]
         public bool IsEnabled { get; set; } = true;
 
-        public virtual NotificationType NotificationType { get; set; } = null!;
+        public virtual DcNotificationType DcNotificationType { get; set; } = null!;
         public virtual DcRole DcRole { get; set; } = null!;
         public virtual DcCurrAcc? DcStore { get; set; }
     }

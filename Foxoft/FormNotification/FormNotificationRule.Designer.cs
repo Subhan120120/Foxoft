@@ -264,7 +264,7 @@ namespace Foxoft
             // 
             // notificationRuleBindingSource
             // 
-            notificationRuleBindingSource.DataSource = typeof(NotificationRule);
+            notificationRuleBindingSource.DataSource = typeof(DcNotificationRule);
             // 
             // gV_NotificationRules
             // 
@@ -317,17 +317,17 @@ namespace Foxoft
             // 
             repositoryItemLookUpEditNotificationType.AutoHeight = false;
             repositoryItemLookUpEditNotificationType.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
-            repositoryItemLookUpEditNotificationType.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo(nameof(NotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code), new LookUpColumnInfo(nameof(NotificationType.CategoryCode), Resources.Entity_NotificationType_CategoryCode), new LookUpColumnInfo(nameof(NotificationType.NotificationTypeDesc), Resources.Entity_NotificationType_Desc), new LookUpColumnInfo(nameof(NotificationType.DefaultSeverity), Resources.Entity_NotificationType_DefaultSeverity) });
-            repositoryItemLookUpEditNotificationType.DisplayMember = nameof(NotificationType.NotificationTypeDesc);
+            repositoryItemLookUpEditNotificationType.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code), new LookUpColumnInfo(nameof(DcNotificationType.CategoryCode), Resources.Entity_NotificationType_CategoryCode), new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeDesc), Resources.Entity_NotificationType_Desc), new LookUpColumnInfo(nameof(DcNotificationType.DefaultSeverity), Resources.Entity_NotificationType_DefaultSeverity) });
+            repositoryItemLookUpEditNotificationType.DisplayMember = nameof(DcNotificationType.NotificationTypeDesc);
             repositoryItemLookUpEditNotificationType.Name = "repositoryItemLookUpEditNotificationType";
             repositoryItemLookUpEditNotificationType.NullText = "";
             repositoryItemLookUpEditNotificationType.SearchMode = SearchMode.AutoSearch;
-            repositoryItemLookUpEditNotificationType.ValueMember = nameof(NotificationType.NotificationTypeCode);
+            repositoryItemLookUpEditNotificationType.ValueMember = nameof(DcNotificationType.NotificationTypeCode);
             // 
             // colNotificationCategoryCode
             // 
             colNotificationCategoryCode.Caption = Resources.Entity_NotificationType_CategoryCode;
-            colNotificationCategoryCode.FieldName = "NotificationType.CategoryCode";
+            colNotificationCategoryCode.FieldName = "DcNotificationType.CategoryCode";
             colNotificationCategoryCode.Name = "colNotificationCategoryCode";
             colNotificationCategoryCode.OptionsColumn.AllowEdit = false;
             colNotificationCategoryCode.Visible = true;
@@ -337,7 +337,7 @@ namespace Foxoft
             // colDefaultSeverity
             // 
             colDefaultSeverity.Caption = Resources.Entity_NotificationType_DefaultSeverity;
-            colDefaultSeverity.FieldName = "NotificationType.DefaultSeverity";
+            colDefaultSeverity.FieldName = "DcNotificationType.DefaultSeverity";
             colDefaultSeverity.Name = "colDefaultSeverity";
             colDefaultSeverity.OptionsColumn.AllowEdit = false;
             colDefaultSeverity.Visible = true;
@@ -348,7 +348,7 @@ namespace Foxoft
             // 
             colAllowPopup.Caption = Resources.Entity_NotificationType_AllowPopup;
             colAllowPopup.ColumnEdit = repositoryItemCheckEdit;
-            colAllowPopup.FieldName = "NotificationType.AllowPopup";
+            colAllowPopup.FieldName = "DcNotificationType.AllowPopup";
             colAllowPopup.Name = "colAllowPopup";
             colAllowPopup.OptionsColumn.AllowEdit = false;
             colAllowPopup.Visible = true;
@@ -482,7 +482,7 @@ namespace Foxoft
             // 
             // recipientRuleBindingSource
             // 
-            recipientRuleBindingSource.DataSource = typeof(NotificationRecipientRule);
+            recipientRuleBindingSource.DataSource = typeof(DcNotificationRecipientRule);
             // 
             // gV_RecipientRules
             // 
@@ -523,12 +523,12 @@ namespace Foxoft
             // 
             repositoryItemLookUpEditRecipientNotificationType.AutoHeight = false;
             repositoryItemLookUpEditRecipientNotificationType.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
-            repositoryItemLookUpEditRecipientNotificationType.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo(nameof(NotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code), new LookUpColumnInfo(nameof(NotificationType.NotificationTypeDesc), Resources.Entity_NotificationType_Desc) });
-            repositoryItemLookUpEditRecipientNotificationType.DisplayMember = nameof(NotificationType.NotificationTypeDesc);
+            repositoryItemLookUpEditRecipientNotificationType.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code), new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeDesc), Resources.Entity_NotificationType_Desc) });
+            repositoryItemLookUpEditRecipientNotificationType.DisplayMember = nameof(DcNotificationType.NotificationTypeDesc);
             repositoryItemLookUpEditRecipientNotificationType.Name = "repositoryItemLookUpEditRecipientNotificationType";
             repositoryItemLookUpEditRecipientNotificationType.NullText = "";
             repositoryItemLookUpEditRecipientNotificationType.SearchMode = SearchMode.AutoSearch;
-            repositoryItemLookUpEditRecipientNotificationType.ValueMember = nameof(NotificationType.NotificationTypeCode);
+            repositoryItemLookUpEditRecipientNotificationType.ValueMember = nameof(DcNotificationType.NotificationTypeCode);
             // 
             // colRecipientRoleCode
             // 

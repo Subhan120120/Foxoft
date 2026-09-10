@@ -19,7 +19,7 @@ namespace Foxoft
         private readonly EfMethods efMethods = new();
 
         private subContext? dbContext;
-        private List<NotificationType> notificationTypes = new();
+        private List<DcNotificationType> notificationTypes = new();
         private bool layoutLoaded;
 
         public FormNotificationTemplate()
@@ -47,7 +47,7 @@ namespace Foxoft
             dbContext?.Dispose();
             dbContext = new subContext();
 
-            notificationTypes = await dbContext.NotificationTypes
+            notificationTypes = await dbContext.DcNotificationTypes
                 .AsNoTracking()
                 .Where(x => x.IsEnabled)
                 .OrderBy(x => x.CategoryCode)
@@ -56,22 +56,22 @@ namespace Foxoft
 
             repositoryItemLookUpEditNotificationType.DataSource = notificationTypes;
 
-            await dbContext.NotificationTemplates
-                .Include(x => x.NotificationType)
-                .OrderBy(x => x.NotificationType.CategoryCode)
-                .ThenBy(x => x.NotificationType.DisplayOrder)
+            await dbContext.DcNotificationTemplates
+                .Include(x => x.DcNotificationType)
+                .OrderBy(x => x.DcNotificationType.CategoryCode)
+                .ThenBy(x => x.DcNotificationType.DisplayOrder)
                 .ThenBy(x => x.LanguageCode)
                 .LoadAsync();
 
-            notificationTemplateBindingSource.DataSource = dbContext.NotificationTemplates.Local.ToBindingList();
+            notificationTemplateBindingSource.DataSource = dbContext.DcNotificationTemplates.Local.ToBindingList();
 
             if (!layoutLoaded)
                 gV_NotificationTemplates.BestFitColumns();
         }
 
-        private NotificationTemplate? FocusedTemplate()
+        private DcNotificationTemplate? FocusedTemplate()
         {
-            return gV_NotificationTemplates.GetFocusedRow() as NotificationTemplate;
+            return gV_NotificationTemplates.GetFocusedRow() as DcNotificationTemplate;
         }
 
         private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
@@ -79,8 +79,8 @@ namespace Foxoft
             if (dbContext == null)
                 return;
 
-            NotificationType? selectedType = FocusedTemplate()?.NotificationType ?? notificationTypes.FirstOrDefault();
-            NotificationTemplate template = new()
+            DcNotificationType? selectedType = FocusedTemplate()?.DcNotificationType ?? notificationTypes.FirstOrDefault();
+            DcNotificationTemplate template = new()
             {
                 NotificationTypeCode = selectedType?.NotificationTypeCode ?? string.Empty,
                 LanguageCode = "az",
@@ -93,7 +93,7 @@ namespace Foxoft
                 LastUpdatedUserName = Authorization.CurrAccCode
             };
 
-            dbContext.NotificationTemplates.Add(template);
+            dbContext.DcNotificationTemplates.Add(template);
             notificationTemplateBindingSource.MoveLast();
             gV_NotificationTemplates.FocusedColumn = colLanguageCode;
             gV_NotificationTemplates.ShowEditor();
@@ -132,7 +132,7 @@ namespace Foxoft
                 return;
 
             DateTime now = DateTime.Now;
-            foreach (var entry in dbContext.ChangeTracker.Entries<NotificationTemplate>())
+            foreach (var entry in dbContext.ChangeTracker.Entries<DcNotificationTemplate>())
             {
                 if (entry.State == EntityState.Added)
                 {
@@ -157,13 +157,13 @@ namespace Foxoft
             if (dbContext == null)
                 return false;
 
-            List<NotificationTemplate> templates = dbContext.ChangeTracker
-                .Entries<NotificationTemplate>()
+            List<DcNotificationTemplate> templates = dbContext.ChangeTracker
+                .Entries<DcNotificationTemplate>()
                 .Where(x => x.State != EntityState.Deleted)
                 .Select(x => x.Entity)
                 .ToList();
 
-            foreach (NotificationTemplate template in templates)
+            foreach (DcNotificationTemplate template in templates)
             {
                 if (string.IsNullOrWhiteSpace(template.NotificationTypeCode)
                     || string.IsNullOrWhiteSpace(template.LanguageCode)
@@ -197,7 +197,7 @@ namespace Foxoft
             if (dbContext == null)
                 return;
 
-            NotificationTemplate? template = FocusedTemplate();
+            DcNotificationTemplate? template = FocusedTemplate();
             if (template == null)
             {
                 XtraMessageBox.Show(Resources.Message_NoRowSelected, Resources.Common_Attention);
@@ -211,7 +211,7 @@ namespace Foxoft
                     MessageBoxIcon.Question) != DialogResult.OK)
                 return;
 
-            dbContext.NotificationTemplates.Remove(template);
+            dbContext.DcNotificationTemplates.Remove(template);
             await dbContext.SaveChangesAsync();
             await LoadDataAsync();
         }
@@ -248,7 +248,7 @@ namespace Foxoft
 
         private void gV_NotificationTemplates_RowCellStyle(object sender, RowCellStyleEventArgs e)
         {
-            NotificationTemplate? template = gV_NotificationTemplates.GetRow(e.RowHandle) as NotificationTemplate;
+            DcNotificationTemplate? template = gV_NotificationTemplates.GetRow(e.RowHandle) as DcNotificationTemplate;
             if (template == null)
                 return;
 
@@ -258,7 +258,7 @@ namespace Foxoft
 
         private void gV_NotificationTemplates_ValidateRow(object sender, ValidateRowEventArgs e)
         {
-            NotificationTemplate? template = e.Row as NotificationTemplate;
+            DcNotificationTemplate? template = e.Row as DcNotificationTemplate;
             if (template == null)
                 return;
 

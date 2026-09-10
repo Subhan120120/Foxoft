@@ -70,7 +70,7 @@ namespace Foxoft.AppCode.Service
                     new NotificationChannelReceiver(NotificationChannels.WhatsApp, customer.PhoneNum, BodyOnly: true)
                 };
 
-                Notification? notification = await notificationService.CreateOrUpdateAsync(
+                TrNotification? notification = await notificationService.CreateOrUpdateAsync(
                     new NotificationCreateRequest(
                         NotificationTypeCode: NotificationTypeCodes.CustomerBirthday,
                         NotificationKey: notificationKey,

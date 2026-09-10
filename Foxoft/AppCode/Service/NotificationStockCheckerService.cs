@@ -146,7 +146,7 @@ namespace Foxoft.AppCode.Service
                     ["WarningQty"] = product.BalanceWarningLevel.Value.ToString("0.####")
                 };
 
-                Notification? stockWarningNotification = await notificationService.CreateOrUpdateAsync(
+                TrNotification? stockWarningNotification = await notificationService.CreateOrUpdateAsync(
                     new NotificationCreateRequest(
                         NotificationTypeCode: NotificationTypeCodes.ProductStockWarning,
                         NotificationKey: productStockWarningKey,
@@ -165,7 +165,7 @@ namespace Foxoft.AppCode.Service
 
                 if (outOfStock)
                 {
-                    Notification? outOfStockNotification = await notificationService.CreateOrUpdateAsync(
+                    TrNotification? outOfStockNotification = await notificationService.CreateOrUpdateAsync(
                         new NotificationCreateRequest(
                             NotificationTypeCode: NotificationTypeCodes.ProductOutOfStock,
                             NotificationKey: productOutOfStockKey,

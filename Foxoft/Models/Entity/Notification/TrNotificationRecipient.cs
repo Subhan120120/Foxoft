@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Foxoft.Models
 {
     [Display(Name = nameof(Resources.Entity_NotificationRecipient), ResourceType = typeof(Resources))]
-    public class NotificationRecipient : BaseEntity
+    public class TrNotificationRecipient : BaseEntity
     {
         [Key]
         [Display(Name = nameof(Resources.Entity_NotificationRecipient_Id), ResourceType = typeof(Resources))]
         public long NotificationRecipientId { get; set; }
 
-        [ForeignKey(nameof(Notification))]
+        [ForeignKey(nameof(TrNotification))]
         [Display(Name = nameof(Resources.Entity_Notification_Id), ResourceType = typeof(Resources))]
         public long NotificationId { get; set; }
 
@@ -42,7 +42,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_NotificationRecipient_LastPopupShownDate), ResourceType = typeof(Resources))]
         public DateTime? LastPopupShownDate { get; set; }
 
-        public virtual Notification Notification { get; set; } = null!;
+        public virtual TrNotification TrNotification { get; set; } = null!;
         public virtual DcCurrAcc DcCurrAcc { get; set; } = null!;
     }
 }

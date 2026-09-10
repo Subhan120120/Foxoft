@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Foxoft.Models
 {
     [Display(Name = nameof(Resources.Entity_Notification), ResourceType = typeof(Resources))]
-    public class Notification : BaseEntity
+    public class TrNotification : BaseEntity
     {
-        public Notification()
+        public TrNotification()
         {
-            NotificationRecipients = new HashSet<NotificationRecipient>();
-            NotificationChannelOutboxes = new HashSet<NotificationChannelOutbox>();
-            NotificationAudits = new HashSet<NotificationAudit>();
+            TrNotificationRecipients = new HashSet<TrNotificationRecipient>();
+            TrNotificationChannelOutboxes = new HashSet<TrNotificationChannelOutbox>();
+            TrNotificationAudits = new HashSet<TrNotificationAudit>();
         }
 
         [Key]
@@ -25,7 +25,7 @@ namespace Foxoft.Models
 
         [Required]
         [StringLength(50)]
-        [ForeignKey(nameof(NotificationType))]
+        [ForeignKey(nameof(DcNotificationType))]
         [Display(Name = nameof(Resources.Entity_NotificationType_Code), ResourceType = typeof(Resources))]
         public string NotificationTypeCode { get; set; } = string.Empty;
 
@@ -73,10 +73,10 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_Notification_ExpireDate), ResourceType = typeof(Resources))]
         public DateTime? ExpireDate { get; set; }
 
-        public virtual NotificationType NotificationType { get; set; } = null!;
+        public virtual DcNotificationType DcNotificationType { get; set; } = null!;
         public virtual DcCurrAcc? DcStore { get; set; }
-        public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
-        public virtual ICollection<NotificationChannelOutbox> NotificationChannelOutboxes { get; set; }
-        public virtual ICollection<NotificationAudit> NotificationAudits { get; set; }
+        public virtual ICollection<TrNotificationRecipient> TrNotificationRecipients { get; set; }
+        public virtual ICollection<TrNotificationChannelOutbox> TrNotificationChannelOutboxes { get; set; }
+        public virtual ICollection<TrNotificationAudit> TrNotificationAudits { get; set; }
     }
 }

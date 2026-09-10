@@ -5,14 +5,14 @@ using System.ComponentModel.DataAnnotations;
 namespace Foxoft.Models
 {
     [Display(Name = nameof(Resources.Entity_NotificationType), ResourceType = typeof(Resources))]
-    public class NotificationType : BaseEntity
+    public class DcNotificationType : BaseEntity
     {
-        public NotificationType()
+        public DcNotificationType()
         {
-            NotificationRules = new HashSet<NotificationRule>();
-            NotificationTemplates = new HashSet<NotificationTemplate>();
-            NotificationRecipientRules = new HashSet<NotificationRecipientRule>();
-            Notifications = new HashSet<Notification>();
+            DcNotificationRules = new HashSet<DcNotificationRule>();
+            DcNotificationTemplates = new HashSet<DcNotificationTemplate>();
+            DcNotificationRecipientRules = new HashSet<DcNotificationRecipientRule>();
+            TrNotifications = new HashSet<TrNotification>();
         }
 
         [Key]
@@ -43,9 +43,9 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Common_Order), ResourceType = typeof(Resources))]
         public int DisplayOrder { get; set; }
 
-        public virtual ICollection<NotificationRule> NotificationRules { get; set; }
-        public virtual ICollection<NotificationTemplate> NotificationTemplates { get; set; }
-        public virtual ICollection<NotificationRecipientRule> NotificationRecipientRules { get; set; }
-        public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<DcNotificationRule> DcNotificationRules { get; set; }
+        public virtual ICollection<DcNotificationTemplate> DcNotificationTemplates { get; set; }
+        public virtual ICollection<DcNotificationRecipientRule> DcNotificationRecipientRules { get; set; }
+        public virtual ICollection<TrNotification> TrNotifications { get; set; }
     }
 }

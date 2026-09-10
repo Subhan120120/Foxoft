@@ -5,17 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Foxoft.Models
 {
     [Display(Name = nameof(Resources.Entity_NotificationAudit), ResourceType = typeof(Resources))]
-    public class NotificationAudit
+    public class TrNotificationAudit
     {
         [Key]
         [Display(Name = nameof(Resources.Entity_NotificationAudit_Id), ResourceType = typeof(Resources))]
         public long NotificationAuditId { get; set; }
 
-        [ForeignKey(nameof(Notification))]
+        [ForeignKey(nameof(TrNotification))]
         [Display(Name = nameof(Resources.Entity_Notification_Id), ResourceType = typeof(Resources))]
         public long? NotificationId { get; set; }
 
-        [ForeignKey(nameof(NotificationRecipient))]
+        [ForeignKey(nameof(TrNotificationRecipient))]
         [Display(Name = nameof(Resources.Entity_NotificationRecipient_Id), ResourceType = typeof(Resources))]
         public long? NotificationRecipientId { get; set; }
 
@@ -40,8 +40,8 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_NotificationAudit_Note), ResourceType = typeof(Resources))]
         public string? Note { get; set; }
 
-        public virtual Notification? Notification { get; set; }
-        public virtual NotificationRecipient? NotificationRecipient { get; set; }
+        public virtual TrNotification? TrNotification { get; set; }
+        public virtual TrNotificationRecipient? TrNotificationRecipient { get; set; }
         public virtual DcCurrAcc? ActorCurrAcc { get; set; }
     }
 }
