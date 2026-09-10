@@ -2391,6 +2391,39 @@
   <data name="Form_HierarchyFeatureType_NoHierarchySelected" xml:space="preserve">
     <value>Kateqoriya seçilməyib</value>
   </data>
+  <data name="Form_HierarchyFeatureType_AllHierarchiesGlobal" xml:space="preserve">
+    <value>Bütün Kateqoriyalar (Qlobal)</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Scope" xml:space="preserve">
+    <value>Aidiyyat Növü</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ScopeGlobal" xml:space="preserve">
+    <value>Qlobal (Bütün kateqoriyalar)</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ScopeSpecific" xml:space="preserve">
+    <value>Bu kateqoriyaya xüsusi</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ScopeNone" xml:space="preserve">
+    <value>Təyin edilməyib</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_MakeGlobal" xml:space="preserve">
+    <value>Qlobal Et</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_MakeGlobalConfirm" xml:space="preserve">
+    <value>'{0}' xüsusiyyət tipi bütün kateqoriyalara şamil edilsin (Qlobal edilsin)?</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_GlobalInfo" xml:space="preserve">
+    <value>Bu xüsusiyyət tipi qlobaldır və bütün kateqoriyalara aiddir. Qlobal xüsusiyyətləri idarə etmək üçün sol tərəfdəki 'Bütün Kateqoriyalar (Qlobal)' qovluğuna keçin.</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_GlobalStats" xml:space="preserve">
+    <value>Qlobal: {0} / Cəmi: {1}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_StatsDetail" xml:space="preserve">
+    <value>Təyin edilib: {0} ({1} Qlobal, {2} Xüsusi) / Cəmi: {3}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_MadeGlobal" xml:space="preserve">
+    <value>'{0}' artıq bütün kateqoriyalara aiddir.</value>
+  </data>
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>İyerarxiya</value>
   </data>

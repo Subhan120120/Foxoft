@@ -9131,6 +9131,105 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Categories (Global).
+        /// </summary>
+        public static string Form_HierarchyFeatureType_AllHierarchiesGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_AllHierarchiesGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scope.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_Scope {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_Scope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global (All Categories).
+        /// </summary>
+        public static string Form_HierarchyFeatureType_ScopeGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_ScopeGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Specific.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_ScopeSpecific {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_ScopeSpecific", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Assigned.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_ScopeNone {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_ScopeNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make Global.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_MakeGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_MakeGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to make '{0}' global so it applies to all categories?.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_MakeGlobalConfirm {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_MakeGlobalConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This feature type is global and already applies to all categories. To manage global feature types, select 'All Categories (Global)' in the left tree..
+        /// </summary>
+        public static string Form_HierarchyFeatureType_GlobalInfo {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_GlobalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global: {0} / Total: {1}.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_GlobalStats {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_GlobalStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assigned: {0} ({1} Global, {2} Specific) / Total: {3}.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_StatsDetail {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_StatsDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to '{0}' now applies to all categories..
+        /// </summary>
+        public static string Form_HierarchyFeatureType_MadeGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_MadeGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Child.
         /// </summary>
         public static string Form_HierarchyList_AddChild {

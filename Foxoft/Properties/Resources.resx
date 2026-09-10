@@ -2391,6 +2391,39 @@
   <data name="Form_HierarchyFeatureType_NoHierarchySelected" xml:space="preserve">
     <value>No category selected</value>
   </data>
+  <data name="Form_HierarchyFeatureType_AllHierarchiesGlobal" xml:space="preserve">
+    <value>All Categories (Global)</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Scope" xml:space="preserve">
+    <value>Scope</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ScopeGlobal" xml:space="preserve">
+    <value>Global (All Categories)</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ScopeSpecific" xml:space="preserve">
+    <value>Category Specific</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ScopeNone" xml:space="preserve">
+    <value>Not Assigned</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_MakeGlobal" xml:space="preserve">
+    <value>Make Global</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_MakeGlobalConfirm" xml:space="preserve">
+    <value>Do you want to make '{0}' global so it applies to all categories?</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_GlobalInfo" xml:space="preserve">
+    <value>This feature type is global and already applies to all categories. To manage global feature types, select 'All Categories (Global)' in the left tree.</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_GlobalStats" xml:space="preserve">
+    <value>Global: {0} / Total: {1}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_StatsDetail" xml:space="preserve">
+    <value>Assigned: {0} ({1} Global, {2} Specific) / Total: {3}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_MadeGlobal" xml:space="preserve">
+    <value>'{0}' now applies to all categories.</value>
+  </data>
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>Hierarchy</value>
   </data>

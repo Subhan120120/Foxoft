@@ -34,6 +34,7 @@ namespace Foxoft
             BBI_SelectAll = new DevExpress.XtraBars.BarButtonItem();
             BBI_ClearSelection = new DevExpress.XtraBars.BarButtonItem();
             BBI_CopyFromParent = new DevExpress.XtraBars.BarButtonItem();
+            BBI_MakeGlobal = new DevExpress.XtraBars.BarButtonItem();
             BBI_ManageFeatureTypes = new DevExpress.XtraBars.BarButtonItem();
             BBI_ExpandAll = new DevExpress.XtraBars.BarButtonItem();
             BBI_CollapseAll = new DevExpress.XtraBars.BarButtonItem();
@@ -59,6 +60,7 @@ namespace Foxoft
             colIsSelected = new DevExpress.XtraGrid.Columns.GridColumn();
             repoCheckEditSelect = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             colFeatureTypeName = new DevExpress.XtraGrid.Columns.GridColumn();
+            colScope = new DevExpress.XtraGrid.Columns.GridColumn();
             colFilterable = new DevExpress.XtraGrid.Columns.GridColumn();
             repoCheckEditFilterable = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             colOrder = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -93,6 +95,7 @@ namespace Foxoft
                 BBI_SelectAll,
                 BBI_ClearSelection,
                 BBI_CopyFromParent,
+                BBI_MakeGlobal,
                 BBI_ManageFeatureTypes,
                 BBI_ExpandAll,
                 BBI_CollapseAll,
@@ -103,7 +106,7 @@ namespace Foxoft
                 BSI_CountInfo
             });
             ribbon.Location = new System.Drawing.Point(0, 0);
-            ribbon.MaxItemId = 12;
+            ribbon.MaxItemId = 13;
             ribbon.Name = "ribbon";
             ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
                 ribbonPage1
@@ -135,10 +138,18 @@ namespace Foxoft
             BBI_CopyFromParent.Name = "BBI_CopyFromParent";
             BBI_CopyFromParent.ItemClick += BBI_CopyFromParent_ItemClick;
             // 
+            // BBI_MakeGlobal
+            // 
+            BBI_MakeGlobal.Caption = Foxoft.Properties.Resources.Form_HierarchyFeatureType_MakeGlobal;
+            BBI_MakeGlobal.Id = 4;
+            BBI_MakeGlobal.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Update.ImageOptions.SvgImage");
+            BBI_MakeGlobal.Name = "BBI_MakeGlobal";
+            BBI_MakeGlobal.ItemClick += BBI_MakeGlobal_ItemClick;
+            // 
             // BBI_ManageFeatureTypes
             // 
             BBI_ManageFeatureTypes.Caption = Foxoft.Properties.Resources.Form_HierarchyFeatureType_ManageFeatureTypes;
-            BBI_ManageFeatureTypes.Id = 4;
+            BBI_ManageFeatureTypes.Id = 5;
             BBI_ManageFeatureTypes.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Add.ImageOptions.SvgImage");
             BBI_ManageFeatureTypes.Name = "BBI_ManageFeatureTypes";
             BBI_ManageFeatureTypes.ItemClick += BBI_ManageFeatureTypes_ItemClick;
@@ -146,28 +157,28 @@ namespace Foxoft
             // BBI_ExpandAll
             // 
             BBI_ExpandAll.Caption = Foxoft.Properties.Resources.Form_HierarchyFeatureType_ExpandAll;
-            BBI_ExpandAll.Id = 5;
+            BBI_ExpandAll.Id = 6;
             BBI_ExpandAll.Name = "BBI_ExpandAll";
             BBI_ExpandAll.ItemClick += BBI_ExpandAll_ItemClick;
             // 
             // BBI_CollapseAll
             // 
             BBI_CollapseAll.Caption = Foxoft.Properties.Resources.Form_HierarchyFeatureType_CollapseAll;
-            BBI_CollapseAll.Id = 6;
+            BBI_CollapseAll.Id = 7;
             BBI_CollapseAll.Name = "BBI_CollapseAll";
             BBI_CollapseAll.ItemClick += BBI_CollapseAll_ItemClick;
             // 
             // BCI_ShowAssignedOnly
             // 
             BCI_ShowAssignedOnly.Caption = Foxoft.Properties.Resources.Form_HierarchyFeatureType_AssignedOnly;
-            BCI_ShowAssignedOnly.Id = 7;
+            BCI_ShowAssignedOnly.Id = 8;
             BCI_ShowAssignedOnly.Name = "BCI_ShowAssignedOnly";
             BCI_ShowAssignedOnly.CheckedChanged += BCI_ShowAssignedOnly_CheckedChanged;
             // 
             // BBI_Refresh
             // 
             BBI_Refresh.Caption = Foxoft.Properties.Resources.Common_Refresh;
-            BBI_Refresh.Id = 8;
+            BBI_Refresh.Id = 9;
             BBI_Refresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Update.ImageOptions.SvgImage");
             BBI_Refresh.Name = "BBI_Refresh";
             BBI_Refresh.ItemClick += BBI_Refresh_ItemClick;
@@ -175,21 +186,21 @@ namespace Foxoft
             // BSI_Status
             // 
             BSI_Status.Caption = "";
-            BSI_Status.Id = 9;
+            BSI_Status.Id = 10;
             BSI_Status.Name = "BSI_Status";
             // 
             // BSI_HierarchyInfo
             // 
             BSI_HierarchyInfo.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             BSI_HierarchyInfo.Caption = "";
-            BSI_HierarchyInfo.Id = 10;
+            BSI_HierarchyInfo.Id = 11;
             BSI_HierarchyInfo.Name = "BSI_HierarchyInfo";
             // 
             // BSI_CountInfo
             // 
             BSI_CountInfo.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             BSI_CountInfo.Caption = "";
-            BSI_CountInfo.Id = 11;
+            BSI_CountInfo.Id = 12;
             BSI_CountInfo.Name = "BSI_CountInfo";
             // 
             // ribbonPage1
@@ -213,6 +224,7 @@ namespace Foxoft
             // 
             // rpgFeatureTypes
             // 
+            rpgFeatureTypes.ItemLinks.Add(BBI_MakeGlobal);
             rpgFeatureTypes.ItemLinks.Add(BBI_ManageFeatureTypes);
             rpgFeatureTypes.Name = "rpgFeatureTypes";
             rpgFeatureTypes.Text = Foxoft.Properties.Resources.Form_HierarchyFeatureType_FeatureTypes;
@@ -347,6 +359,7 @@ namespace Foxoft
             gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
                 colIsSelected,
                 colFeatureTypeName,
+                colScope,
                 colFilterable,
                 colOrder,
                 colFeatureTypeId
@@ -360,6 +373,7 @@ namespace Foxoft
             gridView1.OptionsView.ShowIndicator = true;
             gridView1.CellValueChanged += gridView1_CellValueChanged;
             gridView1.CustomDrawRowIndicator += gridView1_CustomDrawRowIndicator;
+            gridView1.RowCellStyle += gridView1_RowCellStyle;
             // 
             // colIsSelected
             // 
@@ -386,7 +400,17 @@ namespace Foxoft
             colFeatureTypeName.OptionsColumn.AllowEdit = false;
             colFeatureTypeName.Visible = true;
             colFeatureTypeName.VisibleIndex = 1;
-            colFeatureTypeName.Width = 260;
+            colFeatureTypeName.Width = 240;
+            // 
+            // colScope
+            // 
+            colScope.Caption = Foxoft.Properties.Resources.Form_HierarchyFeatureType_Scope;
+            colScope.FieldName = "ScopeText";
+            colScope.Name = "colScope";
+            colScope.OptionsColumn.AllowEdit = false;
+            colScope.Visible = true;
+            colScope.VisibleIndex = 2;
+            colScope.Width = 160;
             // 
             // colFilterable
             // 
@@ -396,8 +420,8 @@ namespace Foxoft
             colFilterable.Name = "colFilterable";
             colFilterable.OptionsColumn.AllowEdit = false;
             colFilterable.Visible = true;
-            colFilterable.VisibleIndex = 2;
-            colFilterable.Width = 100;
+            colFilterable.VisibleIndex = 3;
+            colFilterable.Width = 90;
             // 
             // repoCheckEditFilterable
             // 
@@ -412,8 +436,8 @@ namespace Foxoft
             colOrder.Name = "colOrder";
             colOrder.OptionsColumn.AllowEdit = false;
             colOrder.Visible = true;
-            colOrder.VisibleIndex = 3;
-            colOrder.Width = 80;
+            colOrder.VisibleIndex = 4;
+            colOrder.Width = 70;
             // 
             // colFeatureTypeId
             // 
@@ -501,6 +525,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_SelectAll;
         private DevExpress.XtraBars.BarButtonItem BBI_ClearSelection;
         private DevExpress.XtraBars.BarButtonItem BBI_CopyFromParent;
+        private DevExpress.XtraBars.BarButtonItem BBI_MakeGlobal;
         private DevExpress.XtraBars.BarButtonItem BBI_ManageFeatureTypes;
         private DevExpress.XtraBars.BarButtonItem BBI_ExpandAll;
         private DevExpress.XtraBars.BarButtonItem BBI_CollapseAll;
@@ -522,6 +547,7 @@ namespace Foxoft
         private MyGridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn colIsSelected;
         private DevExpress.XtraGrid.Columns.GridColumn colFeatureTypeName;
+        private DevExpress.XtraGrid.Columns.GridColumn colScope;
         private DevExpress.XtraGrid.Columns.GridColumn colFilterable;
         private DevExpress.XtraGrid.Columns.GridColumn colOrder;
         private DevExpress.XtraGrid.Columns.GridColumn colFeatureTypeId;
