@@ -2349,6 +2349,48 @@
   <data name="Form_HierarchyFeatureType_Caption" xml:space="preserve">
     <value>İyerarxiya Özəllik Tipləri</value>
   </data>
+  <data name="Form_HierarchyFeatureType_Hierarchies" xml:space="preserve">
+    <value>Kateqoriyalar</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_FeatureTypes" xml:space="preserve">
+    <value>Xüsusiyyət Tipləri</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_SelectedHierarchy" xml:space="preserve">
+    <value>Seçilmiş Kateqoriya: {0}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Stats" xml:space="preserve">
+    <value>Təyin edilib: {0} / {1}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_CopyFromParent" xml:space="preserve">
+    <value>Üst Kateqoriyadan Kopyala</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_CopyConfirm" xml:space="preserve">
+    <value>Üst kateqoriyanın ('{0}') xüsusiyyət tipləri bu kateqoriyaya kopyalansın?</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_NoParent" xml:space="preserve">
+    <value>Bu kateqoriyanın üst kateqoriyası yoxdur.</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_AssignedOnly" xml:space="preserve">
+    <value>Yalnız Təyin Edilmişlər</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ManageFeatureTypes" xml:space="preserve">
+    <value>Özəllik Tiplərini İdarə Et</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_TreeOperations" xml:space="preserve">
+    <value>Ağac Əməliyyatları</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ExpandAll" xml:space="preserve">
+    <value>Budaqları Aç</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_CollapseAll" xml:space="preserve">
+    <value>Budaqları Bağla</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_CopiedCount" xml:space="preserve">
+    <value>Üst kateqoriyadan {0} xüsusiyyət tipi kopyalandı.</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_NoHierarchySelected" xml:space="preserve">
+    <value>Kateqoriya seçilməyib</value>
+  </data>
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>İyerarxiya</value>
   </data>

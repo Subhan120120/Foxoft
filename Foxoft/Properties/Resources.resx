@@ -2349,6 +2349,48 @@
   <data name="Form_HierarchyFeatureType_Caption" xml:space="preserve">
     <value>Hierarchy Feature Types</value>
   </data>
+  <data name="Form_HierarchyFeatureType_Hierarchies" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_FeatureTypes" xml:space="preserve">
+    <value>Feature Types</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_SelectedHierarchy" xml:space="preserve">
+    <value>Selected Category: {0}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Stats" xml:space="preserve">
+    <value>Assigned: {0} / {1}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_CopyFromParent" xml:space="preserve">
+    <value>Copy from Parent</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_CopyConfirm" xml:space="preserve">
+    <value>Copy feature types from parent category ('{0}')?</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_NoParent" xml:space="preserve">
+    <value>This category has no parent category.</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_AssignedOnly" xml:space="preserve">
+    <value>Show Only Assigned</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ManageFeatureTypes" xml:space="preserve">
+    <value>Manage Feature Types</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_TreeOperations" xml:space="preserve">
+    <value>Tree View</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_CollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_CopiedCount" xml:space="preserve">
+    <value>{0} feature type(s) copied from parent category.</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_NoHierarchySelected" xml:space="preserve">
+    <value>No category selected</value>
+  </data>
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>Hierarchy</value>
   </data>

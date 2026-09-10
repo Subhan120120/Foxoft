@@ -9005,6 +9005,132 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Categories.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_Hierarchies {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_Hierarchies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Types.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_FeatureTypes {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_FeatureTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected Category: {0}.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_SelectedHierarchy {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_SelectedHierarchy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assigned: {0} / {1}.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_Stats {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_Stats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy from Parent.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_CopyFromParent {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_CopyFromParent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy feature types from parent category ('{0}')?.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_CopyConfirm {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_CopyConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This category has no parent category..
+        /// </summary>
+        public static string Form_HierarchyFeatureType_NoParent {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_NoParent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Only Assigned.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_AssignedOnly {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_AssignedOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Feature Types.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_ManageFeatureTypes {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_ManageFeatureTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tree View.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_TreeOperations {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_TreeOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand All.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_ExpandAll {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_ExpandAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collapse All.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_CollapseAll {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_CollapseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} feature type(s) copied from parent category..
+        /// </summary>
+        public static string Form_HierarchyFeatureType_CopiedCount {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_CopiedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No category selected.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_NoHierarchySelected {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_NoHierarchySelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Child.
         /// </summary>
         public static string Form_HierarchyList_AddChild {
