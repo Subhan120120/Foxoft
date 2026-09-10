@@ -2349,6 +2349,57 @@
   <data name="Form_HierarchyFeatureType_Caption" xml:space="preserve">
     <value>Hierarchy Feature Types</value>
   </data>
+  <data name="Form_HierarchyFeatureType_MakeGlobal" xml:space="preserve">
+    <value>Make Global</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RemoveGlobal" xml:space="preserve">
+    <value>Remove from Global</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_GlobalFeatures" xml:space="preserve">
+    <value>Global Feature Types (All Categories)</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_IsGlobal" xml:space="preserve">
+    <value>Global</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_IsAssigned" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_StatusGlobal" xml:space="preserve">
+    <value>Global (All Categories)</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_StatusAssigned" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_StatusNotAssigned" xml:space="preserve">
+    <value>Unselected</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ConfirmDelete" xml:space="preserve">
+    <value>Are you sure you want to delete the selected feature type?</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ConfirmSaveChanges" xml:space="preserve">
+    <value>There are unsaved changes. Do you want to save them?</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_SelectHierarchyToAssign" xml:space="preserve">
+    <value>Select the category to assign the feature type removed from global.</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Scope" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_FilterSelected" xml:space="preserve">
+    <value>Filter Selected</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RibbonGroup_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RibbonGroup_Hierarchy" xml:space="preserve">
+    <value>Hierarchy</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Hierarchy" xml:space="preserve">
+    <value>Hierarchy</value>
+  </data>
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>Hierarchy</value>
   </data>
@@ -4550,6 +4601,9 @@ Apply it?</value>
   </data>
   <data name="Form_PayrollList_DeleteConfirm" xml:space="preserve">
     <value>Delete selected payroll?</value>
+  </data>
+  <data name="Form_PayrollList_DeleteMultipleConfirm" xml:space="preserve">
+    <value>Delete {0} selected payroll records?</value>
   </data>
   <data name="Form_AttendanceList_DeleteConfirm" xml:space="preserve">
     <value>Delete selected attendance record?</value>

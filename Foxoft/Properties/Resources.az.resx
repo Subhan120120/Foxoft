@@ -2349,6 +2349,48 @@
   <data name="Form_HierarchyFeatureType_Caption" xml:space="preserve">
     <value>İyerarxiya Özəllik Tipləri</value>
   </data>
+  <data name="Form_HierarchyFeatureType_MakeGlobal" xml:space="preserve">
+    <value>Qlobala Sal</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RemoveGlobal" xml:space="preserve">
+    <value>Qlobaldan Çıxar</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_GlobalFeatures" xml:space="preserve">
+    <value>Qlobal Özəlliklər (Bütün Kateqoriyalar)</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_IsGlobal" xml:space="preserve">
+    <value>Qlobal</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_IsAssigned" xml:space="preserve">
+    <value>Seçilib</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_StatusGlobal" xml:space="preserve">
+    <value>Qlobal (Bütün kateqoriyalar)</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_StatusAssigned" xml:space="preserve">
+    <value>Seçilib</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_StatusNotAssigned" xml:space="preserve">
+    <value>Seçilməyib</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ConfirmDelete" xml:space="preserve">
+    <value>Seçilmiş özəllik tipini silmək istədiyinizdən əminsiniz?</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_ConfirmSaveChanges" xml:space="preserve">
+    <value>Yadda saxlanılmamış dəyişikliklər var. Yadda saxlanılsın?</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_SelectHierarchyToAssign" xml:space="preserve">
+    <value>Qlobaldan çıxarılan özəllik tipinin təyin ediləcəyi kateqoriyanı seçin.</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Scope" xml:space="preserve">
+    <value>Tətbiq Statusu</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_FilterSelected" xml:space="preserve">
+    <value>Yalnız Seçilənlər</value>
+  </data>
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>İyerarxiya</value>
   </data>
@@ -4551,6 +4593,9 @@ Tətbiq edilsin?</value>
   <data name="Form_PayrollList_DeleteConfirm" xml:space="preserve">
     <value>Seçilmiş maaş hesablamasını silmək istəyirsiniz?</value>
   </data>
+  <data name="Form_PayrollList_DeleteMultipleConfirm" xml:space="preserve">
+    <value>Seçilmiş {0} maaş hesablamasını silmək istəyirsiniz?</value>
+  </data>
   <data name="Form_AttendanceList_DeleteConfirm" xml:space="preserve">
     <value>Seçilmiş davamiyyət qeydini silmək istəyirsiniz?</value>
   </data>
@@ -5681,5 +5726,14 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Common_Toast_Error" xml:space="preserve">
     <value>Xəta: {0}</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RibbonGroup_Filter" xml:space="preserve">
+    <value>Filtr</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RibbonGroup_Hierarchy" xml:space="preserve">
+    <value>İyerarxiya</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Hierarchy" xml:space="preserve">
+    <value>İyerarxiya</value>
   </data>
 </root>

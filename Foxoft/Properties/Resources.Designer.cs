@@ -453,6 +453,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drag rows to reorder.
+        /// </summary>
+        public static string Common_DragToReorder {
+            get {
+                return ResourceManager.GetString("Common_DragToReorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Common_Edit {
@@ -651,6 +660,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Common_IsEnabled {
+            get {
+                return ResourceManager.GetString("Common_IsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Common_Language {
@@ -813,6 +831,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Common_Order {
+            get {
+                return ResourceManager.GetString("Common_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Common_Password {
@@ -966,6 +993,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Common_Reset {
+            get {
+                return ResourceManager.GetString("Common_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guid Id.
         /// </summary>
         public static string Common_RowGuid {
@@ -980,15 +1016,6 @@ namespace Foxoft.Properties {
         public static string Common_Save {
             get {
                 return ResourceManager.GetString("Common_Save", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reset.
-        /// </summary>
-        public static string Common_Reset {
-            get {
-                return ResourceManager.GetString("Common_Reset", resourceCulture);
             }
         }
         
@@ -1034,6 +1061,15 @@ namespace Foxoft.Properties {
         public static string Common_Select {
             get {
                 return ResourceManager.GetString("Common_Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select All.
+        /// </summary>
+        public static string Common_SelectAll {
+            get {
+                return ResourceManager.GetString("Common_SelectAll", resourceCulture);
             }
         }
         
@@ -1092,6 +1128,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Common_Status {
+            get {
+                return ResourceManager.GetString("Common_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Completed.
         /// </summary>
         public static string Common_Status_Completed {
@@ -1137,11 +1182,56 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error: {0}.
+        /// </summary>
+        public static string Common_Toast_Error {
+            get {
+                return ResourceManager.GetString("Common_Toast_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message Sent.
+        /// </summary>
+        public static string Common_Toast_MessageSent {
+            get {
+                return ResourceManager.GetString("Common_Toast_MessageSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message Unsent (Failed).
+        /// </summary>
+        public static string Common_Toast_MessageUnsent {
+            get {
+                return ResourceManager.GetString("Common_Toast_MessageUnsent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receiver: {0}.
+        /// </summary>
+        public static string Common_Toast_Receiver {
+            get {
+                return ResourceManager.GetString("Common_Toast_Receiver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tools.
         /// </summary>
         public static string Common_Tools {
             get {
                 return ResourceManager.GetString("Common_Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unselect All.
+        /// </summary>
+        public static string Common_UnselectAll {
+            get {
+                return ResourceManager.GetString("Common_UnselectAll", resourceCulture);
             }
         }
         
@@ -1376,6 +1466,33 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_AutoSave {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_AutoSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-send check interval (seconds).
+        /// </summary>
+        public static string Entity_AppSetting_AutoSendIntervalSeconds {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AutoSendIntervalSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum retry attempts.
+        /// </summary>
+        public static string Entity_AppSetting_AutoSendMaxRetries {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AutoSendMaxRetries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-send unsent messages.
+        /// </summary>
+        public static string Entity_AppSetting_AutoSendUnsentMessages {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AutoSendUnsentMessages", resourceCulture);
             }
         }
         
@@ -1623,11 +1740,11 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use WhatsApp.
+        ///   Looks up a localized string similar to Use Invoice Expenses.
         /// </summary>
-        public static string Entity_AppSetting_UseWhatsApp {
+        public static string Entity_AppSetting_UseInvoiceExpenses {
             get {
-                return ResourceManager.GetString("Entity_AppSetting_UseWhatsApp", resourceCulture);
+                return ResourceManager.GetString("Entity_AppSetting_UseInvoiceExpenses", resourceCulture);
             }
         }
         
@@ -1637,15 +1754,6 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_UseLoyalty {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_UseLoyalty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use Invoice Expenses.
-        /// </summary>
-        public static string Entity_AppSetting_UseInvoiceExpenses {
-            get {
-                return ResourceManager.GetString("Entity_AppSetting_UseInvoiceExpenses", resourceCulture);
             }
         }
         
@@ -1664,6 +1772,15 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_UseScales {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_UseScales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use WhatsApp.
+        /// </summary>
+        public static string Entity_AppSetting_UseWhatsApp {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_UseWhatsApp", resourceCulture);
             }
         }
         
@@ -2618,6 +2735,123 @@ namespace Foxoft.Properties {
         public static string Entity_DcEmploymentType_TypeName {
             get {
                 return ResourceManager.GetString("Entity_DcEmploymentType_TypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Number.
+        /// </summary>
+        public static string Entity_DcLoyaltyCard_CardNumber {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyCard_CardNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Code.
+        /// </summary>
+        public static string Entity_DcLoyaltyCard_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyCard_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Entity_DcLoyaltyCard_IsActive {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyCard_IsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card ID.
+        /// </summary>
+        public static string Entity_DcLoyaltyCard_LoyaltyCardId {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyCard_LoyaltyCardId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loyalty Program.
+        /// </summary>
+        public static string Entity_DcLoyaltyCard_LoyaltyProgramId {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyCard_LoyaltyProgramId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        public static string Entity_DcLoyaltyCard_Note {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyCard_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Count.
+        /// </summary>
+        public static string Entity_DcLoyaltyProgram_CardCount {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyProgram_CardCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bonus Earn Percent (%).
+        /// </summary>
+        public static string Entity_DcLoyaltyProgram_EarnPercent {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyProgram_EarnPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bonus Expiry (Days).
+        /// </summary>
+        public static string Entity_DcLoyaltyProgram_ExpireDays {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyProgram_ExpireDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Entity_DcLoyaltyProgram_IsActive {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyProgram_IsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Payment Percent (%).
+        /// </summary>
+        public static string Entity_DcLoyaltyProgram_MaxRedeemPercent {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyProgram_MaxRedeemPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program Name.
+        /// </summary>
+        public static string Entity_DcLoyaltyProgram_Name {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyProgram_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        public static string Entity_DcLoyaltyProgram_Note {
+            get {
+                return ResourceManager.GetString("Entity_DcLoyaltyProgram_Note", resourceCulture);
             }
         }
         
@@ -3936,6 +4170,483 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        public static string Entity_Notification {
+            get {
+                return ResourceManager.GetString("Entity_Notification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Body.
+        /// </summary>
+        public static string Entity_Notification_Body {
+            get {
+                return ResourceManager.GetString("Entity_Notification_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entity Key.
+        /// </summary>
+        public static string Entity_Notification_EntityKey {
+            get {
+                return ResourceManager.GetString("Entity_Notification_EntityKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entity Type.
+        /// </summary>
+        public static string Entity_Notification_EntityType {
+            get {
+                return ResourceManager.GetString("Entity_Notification_EntityType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expire Date.
+        /// </summary>
+        public static string Entity_Notification_ExpireDate {
+            get {
+                return ResourceManager.GetString("Entity_Notification_ExpireDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Id.
+        /// </summary>
+        public static string Entity_Notification_Id {
+            get {
+                return ResourceManager.GetString("Entity_Notification_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Key.
+        /// </summary>
+        public static string Entity_Notification_Key {
+            get {
+                return ResourceManager.GetString("Entity_Notification_Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Raised Date.
+        /// </summary>
+        public static string Entity_Notification_LastRaisedDate {
+            get {
+                return ResourceManager.GetString("Entity_Notification_LastRaisedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolved Date.
+        /// </summary>
+        public static string Entity_Notification_ResolvedDate {
+            get {
+                return ResourceManager.GetString("Entity_Notification_ResolvedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Severity.
+        /// </summary>
+        public static string Entity_Notification_Severity {
+            get {
+                return ResourceManager.GetString("Entity_Notification_Severity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Entity_Notification_Status {
+            get {
+                return ResourceManager.GetString("Entity_Notification_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Entity_Notification_Title {
+            get {
+                return ResourceManager.GetString("Entity_Notification_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Audit.
+        /// </summary>
+        public static string Entity_NotificationAudit {
+            get {
+                return ResourceManager.GetString("Entity_NotificationAudit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action Date.
+        /// </summary>
+        public static string Entity_NotificationAudit_ActionDate {
+            get {
+                return ResourceManager.GetString("Entity_NotificationAudit_ActionDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action Type.
+        /// </summary>
+        public static string Entity_NotificationAudit_ActionType {
+            get {
+                return ResourceManager.GetString("Entity_NotificationAudit_ActionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actor.
+        /// </summary>
+        public static string Entity_NotificationAudit_ActorCurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_NotificationAudit_ActorCurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audit Id.
+        /// </summary>
+        public static string Entity_NotificationAudit_Id {
+            get {
+                return ResourceManager.GetString("Entity_NotificationAudit_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        public static string Entity_NotificationAudit_Note {
+            get {
+                return ResourceManager.GetString("Entity_NotificationAudit_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Channel Outbox.
+        /// </summary>
+        public static string Entity_NotificationChannelOutbox {
+            get {
+                return ResourceManager.GetString("Entity_NotificationChannelOutbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel.
+        /// </summary>
+        public static string Entity_NotificationChannelOutbox_ChannelCode {
+            get {
+                return ResourceManager.GetString("Entity_NotificationChannelOutbox_ChannelCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outbox Id.
+        /// </summary>
+        public static string Entity_NotificationChannelOutbox_Id {
+            get {
+                return ResourceManager.GetString("Entity_NotificationChannelOutbox_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Error.
+        /// </summary>
+        public static string Entity_NotificationChannelOutbox_LastError {
+            get {
+                return ResourceManager.GetString("Entity_NotificationChannelOutbox_LastError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Try Date.
+        /// </summary>
+        public static string Entity_NotificationChannelOutbox_LastTryDate {
+            get {
+                return ResourceManager.GetString("Entity_NotificationChannelOutbox_LastTryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payload.
+        /// </summary>
+        public static string Entity_NotificationChannelOutbox_Payload {
+            get {
+                return ResourceManager.GetString("Entity_NotificationChannelOutbox_Payload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receiver.
+        /// </summary>
+        public static string Entity_NotificationChannelOutbox_Receiver {
+            get {
+                return ResourceManager.GetString("Entity_NotificationChannelOutbox_Receiver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outbox Status.
+        /// </summary>
+        public static string Entity_NotificationChannelOutbox_Status {
+            get {
+                return ResourceManager.GetString("Entity_NotificationChannelOutbox_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try Count.
+        /// </summary>
+        public static string Entity_NotificationChannelOutbox_TryCount {
+            get {
+                return ResourceManager.GetString("Entity_NotificationChannelOutbox_TryCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Recipient.
+        /// </summary>
+        public static string Entity_NotificationRecipient {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRecipient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dismissed Date.
+        /// </summary>
+        public static string Entity_NotificationRecipient_DismissedDate {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRecipient_DismissedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipient Id.
+        /// </summary>
+        public static string Entity_NotificationRecipient_Id {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRecipient_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Popup Shown Date.
+        /// </summary>
+        public static string Entity_NotificationRecipient_LastPopupShownDate {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRecipient_LastPopupShownDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read Date.
+        /// </summary>
+        public static string Entity_NotificationRecipient_ReadDate {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRecipient_ReadDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snoozed Until.
+        /// </summary>
+        public static string Entity_NotificationRecipient_SnoozedUntil {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRecipient_SnoozedUntil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipient Status.
+        /// </summary>
+        public static string Entity_NotificationRecipient_Status {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRecipient_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Recipient Rule.
+        /// </summary>
+        public static string Entity_NotificationRecipientRule {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRecipientRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipient Rule Id.
+        /// </summary>
+        public static string Entity_NotificationRecipientRule_Id {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRecipientRule_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Rule.
+        /// </summary>
+        public static string Entity_NotificationRule {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channels.
+        /// </summary>
+        public static string Entity_NotificationRule_ChannelCodes {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRule_ChannelCodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Id.
+        /// </summary>
+        public static string Entity_NotificationRule_Id {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRule_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Name.
+        /// </summary>
+        public static string Entity_NotificationRule_Name {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRule_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popup Min Severity.
+        /// </summary>
+        public static string Entity_NotificationRule_PopupMinSeverity {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRule_PopupMinSeverity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Throttle Minutes.
+        /// </summary>
+        public static string Entity_NotificationRule_ThrottleMinutes {
+            get {
+                return ResourceManager.GetString("Entity_NotificationRule_ThrottleMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Template.
+        /// </summary>
+        public static string Entity_NotificationTemplate {
+            get {
+                return ResourceManager.GetString("Entity_NotificationTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Body Template.
+        /// </summary>
+        public static string Entity_NotificationTemplate_BodyTemplate {
+            get {
+                return ResourceManager.GetString("Entity_NotificationTemplate_BodyTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Id.
+        /// </summary>
+        public static string Entity_NotificationTemplate_Id {
+            get {
+                return ResourceManager.GetString("Entity_NotificationTemplate_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Entity_NotificationTemplate_LanguageCode {
+            get {
+                return ResourceManager.GetString("Entity_NotificationTemplate_LanguageCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title Template.
+        /// </summary>
+        public static string Entity_NotificationTemplate_TitleTemplate {
+            get {
+                return ResourceManager.GetString("Entity_NotificationTemplate_TitleTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Type.
+        /// </summary>
+        public static string Entity_NotificationType {
+            get {
+                return ResourceManager.GetString("Entity_NotificationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Popup.
+        /// </summary>
+        public static string Entity_NotificationType_AllowPopup {
+            get {
+                return ResourceManager.GetString("Entity_NotificationType_AllowPopup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string Entity_NotificationType_CategoryCode {
+            get {
+                return ResourceManager.GetString("Entity_NotificationType_CategoryCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Type Code.
+        /// </summary>
+        public static string Entity_NotificationType_Code {
+            get {
+                return ResourceManager.GetString("Entity_NotificationType_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Severity.
+        /// </summary>
+        public static string Entity_NotificationType_DefaultSeverity {
+            get {
+                return ResourceManager.GetString("Entity_NotificationType_DefaultSeverity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Type.
+        /// </summary>
+        public static string Entity_NotificationType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_NotificationType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office.
         /// </summary>
         public static string Entity_Office {
@@ -4589,6 +5300,78 @@ namespace Foxoft.Properties {
         public static string Entity_PersonalType_Desc {
             get {
                 return ResourceManager.GetString("Entity_PersonalType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POS Button.
+        /// </summary>
+        public static string Entity_PosButton {
+            get {
+                return ResourceManager.GetString("Entity_PosButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back Color.
+        /// </summary>
+        public static string Entity_PosButton_BackColor {
+            get {
+                return ResourceManager.GetString("Entity_PosButton_BackColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Entity_PosButton_ButtonDescription {
+            get {
+                return ResourceManager.GetString("Entity_PosButton_ButtonDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Button Name.
+        /// </summary>
+        public static string Entity_PosButton_ButtonName {
+            get {
+                return ResourceManager.GetString("Entity_PosButton_ButtonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Color.
+        /// </summary>
+        public static string Entity_PosButton_ForeColor {
+            get {
+                return ResourceManager.GetString("Entity_PosButton_ForeColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_PosButton_Id {
+            get {
+                return ResourceManager.GetString("Entity_PosButton_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible.
+        /// </summary>
+        public static string Entity_PosButton_IsVisible {
+            get {
+                return ResourceManager.GetString("Entity_PosButton_IsVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Entity_PosButton_SortOrder {
+            get {
+                return ResourceManager.GetString("Entity_PosButton_SortOrder", resourceCulture);
             }
         }
         
@@ -6636,11 +7419,155 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        public static string Entity_TrLoyaltyTxn_Amount {
+            get {
+                return ResourceManager.GetString("Entity_TrLoyaltyTxn_Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Entity_TrLoyaltyTxn_DocumentDate {
+            get {
+                return ResourceManager.GetString("Entity_TrLoyaltyTxn_DocumentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expiration Date.
+        /// </summary>
+        public static string Entity_TrLoyaltyTxn_ExpireAt {
+            get {
+                return ResourceManager.GetString("Entity_TrLoyaltyTxn_ExpireAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Type.
+        /// </summary>
+        public static string Entity_TrLoyaltyTxn_TxnType {
+            get {
+                return ResourceManager.GetString("Entity_TrLoyaltyTxn_TxnType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel.
+        /// </summary>
+        public static string Entity_TrMessageLog_ChannelCode {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_ChannelCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account.
+        /// </summary>
+        public static string Entity_TrMessageLog_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error Message.
+        /// </summary>
+        public static string Entity_TrMessageLog_ErrorMessage {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image File Name.
+        /// </summary>
+        public static string Entity_TrMessageLog_ImageFileName {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_ImageFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Successful.
+        /// </summary>
+        public static string Entity_TrMessageLog_IsSuccessful {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_IsSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string Entity_TrMessageLog_Message {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_TrMessageLog_MessageLogId {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_MessageLogId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message Type.
+        /// </summary>
+        public static string Entity_TrMessageLog_MessageType {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_MessageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receiver Phone.
+        /// </summary>
+        public static string Entity_TrMessageLog_ReceiverPhoneNumber {
+            get {
+                return ResourceManager.GetString("Entity_TrMessageLog_ReceiverPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base Salary.
+        /// </summary>
+        public static string Entity_TrPayrollHeader_BaseSalary {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollHeader_BaseSalary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bonus.
+        /// </summary>
+        public static string Entity_TrPayrollHeader_Bonus {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollHeader_Bonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Employee.
         /// </summary>
         public static string Entity_TrPayrollHeader_CurrAccCode {
             get {
                 return ResourceManager.GetString("Entity_TrPayrollHeader_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deduction.
+        /// </summary>
+        public static string Entity_TrPayrollHeader_Deduction {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollHeader_Deduction", resourceCulture);
             }
         }
         
@@ -7194,20 +8121,20 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expenses.
-        /// </summary>
-        public static string ERP_ACE_Expenses {
-            get {
-                return ResourceManager.GetString("ERP_ACE_Expenses", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Invoice Expenses.
         /// </summary>
         public static string ERP_ACE_ExpenseOfInvoice {
             get {
                 return ResourceManager.GetString("ERP_ACE_ExpenseOfInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expenses.
+        /// </summary>
+        public static string ERP_ACE_Expenses {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Expenses", resourceCulture);
             }
         }
         
@@ -7307,6 +8234,51 @@ namespace Foxoft.Properties {
         public static string ERP_ACE_Leaves {
             get {
                 return ResourceManager.GetString("ERP_ACE_Leaves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loyalty Programs.
+        /// </summary>
+        public static string ERP_ACE_LoyaltyPrograms {
+            get {
+                return ResourceManager.GetString("ERP_ACE_LoyaltyPrograms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Center.
+        /// </summary>
+        public static string ERP_ACE_NotificationCenter {
+            get {
+                return ResourceManager.GetString("ERP_ACE_NotificationCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Recipient Rules.
+        /// </summary>
+        public static string ERP_ACE_NotificationRecipientRules {
+            get {
+                return ResourceManager.GetString("ERP_ACE_NotificationRecipientRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Rules.
+        /// </summary>
+        public static string ERP_ACE_NotificationRules {
+            get {
+                return ResourceManager.GetString("ERP_ACE_NotificationRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Templates.
+        /// </summary>
+        public static string ERP_ACE_NotificationTemplates {
+            get {
+                return ResourceManager.GetString("ERP_ACE_NotificationTemplates", resourceCulture);
             }
         }
         
@@ -7635,6 +8607,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string ERP_BBI_Notifications {
+            get {
+                return ResourceManager.GetString("ERP_BBI_Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report.
         /// </summary>
         public static string ERP_BSI_Reports {
@@ -7694,6 +8675,15 @@ namespace Foxoft.Properties {
         public static string ERP_RibbonPage_Home {
             get {
                 return ResourceManager.GetString("ERP_RibbonPage_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string ERP_RibbonPageGroup_Notifications {
+            get {
+                return ResourceManager.GetString("ERP_RibbonPageGroup_Notifications", resourceCulture);
             }
         }
         
@@ -8310,6 +9300,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge.
+        /// </summary>
+        public static string Form_CurrAcc_Button_MergeCurrAcc {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Button_MergeCurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Additional.
         /// </summary>
         public static string Form_CurrAcc_Group_Extra {
@@ -8333,6 +9332,15 @@ namespace Foxoft.Properties {
         public static string Form_CurrAcc_Input_NewCurrAccCode {
             get {
                 return ResourceManager.GetString("Form_CurrAcc_Input_NewCurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A current account cannot be merged with itself..
+        /// </summary>
+        public static string Form_CurrAcc_Message_CannotMergeSameCurrAcc {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_CannotMergeSameCurrAcc", resourceCulture);
             }
         }
         
@@ -8369,24 +9377,6 @@ namespace Foxoft.Properties {
         public static string Form_CurrAcc_Message_CurrAccCodeExists {
             get {
                 return ResourceManager.GetString("Form_CurrAcc_Message_CurrAccCodeExists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Merge.
-        /// </summary>
-        public static string Form_CurrAcc_Button_MergeCurrAcc {
-            get {
-                return ResourceManager.GetString("Form_CurrAcc_Button_MergeCurrAcc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A current account cannot be merged with itself..
-        /// </summary>
-        public static string Form_CurrAcc_Message_CannotMergeSameCurrAcc {
-            get {
-                return ResourceManager.GetString("Form_CurrAcc_Message_CannotMergeSameCurrAcc", resourceCulture);
             }
         }
         
@@ -8931,6 +9921,16 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This invoice is currently being processed by {0}.
+        ///Please wait or choose another invoice..
+        /// </summary>
+        public static string Form_HandOver_InvoiceLockedByOther {
+            get {
+                return ResourceManager.GetString("Form_HandOver_InvoiceLockedByOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No such document exists..
         /// </summary>
         public static string Form_HandOver_NoDocument {
@@ -8986,21 +9986,164 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This invoice is currently being processed by {0}.
-        ///Please wait or choose another invoice..
-        /// </summary>
-        public static string Form_HandOver_InvoiceLockedByOther {
-            get {
-                return ResourceManager.GetString("Form_HandOver_InvoiceLockedByOther", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Hierarchy Feature Types.
         /// </summary>
         public static string Form_HierarchyFeatureType_Caption {
             get {
                 return ResourceManager.GetString("Form_HierarchyFeatureType_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the selected feature type?.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_ConfirmDelete {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_ConfirmDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are unsaved changes. Do you want to save them?.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_ConfirmSaveChanges {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_ConfirmSaveChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter Selected.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_FilterSelected {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_FilterSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global Feature Types (All Categories).
+        /// </summary>
+        public static string Form_HierarchyFeatureType_GlobalFeatures {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_GlobalFeatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applied.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_IsAssigned {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_IsAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_IsGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_IsGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make Global.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_MakeGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_MakeGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove from Global.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_RemoveGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_RemoveGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_RibbonGroup_Filter {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_RibbonGroup_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_RibbonGroup_Hierarchy {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_RibbonGroup_Hierarchy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_Hierarchy {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_Hierarchy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_Scope {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_Scope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the category to assign the feature type removed from global..
+        /// </summary>
+        public static string Form_HierarchyFeatureType_SelectHierarchyToAssign {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_SelectHierarchyToAssign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_Status {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assigned to this Category.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_StatusAssigned {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_StatusAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global (All Categories).
+        /// </summary>
+        public static string Form_HierarchyFeatureType_StatusGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_StatusGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Assigned.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_StatusNotAssigned {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_StatusNotAssigned", resourceCulture);
             }
         }
         
@@ -10146,11 +11289,416 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active Bonus Balance.
+        /// </summary>
+        public static string Form_LoyaltyCard_BonusBalance {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_BonusBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This card number already exists..
+        /// </summary>
+        public static string Form_LoyaltyCard_CardNumberExists {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_CardNumberExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card number is required..
+        /// </summary>
+        public static string Form_LoyaltyCard_CardNumberRequired {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_CardNumberRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Name.
+        /// </summary>
+        public static string Form_LoyaltyCard_CustomerName {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_CustomerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer is required..
+        /// </summary>
+        public static string Form_LoyaltyCard_CustomerRequired {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_CustomerRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate.
+        /// </summary>
+        public static string Form_LoyaltyCard_GenerateCardNumber {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_GenerateCardNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Information.
+        /// </summary>
+        public static string Form_LoyaltyCard_Group_Customer {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_Group_Customer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Information.
+        /// </summary>
+        public static string Form_LoyaltyCard_Group_General {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_Group_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Details.
+        /// </summary>
+        public static string Form_LoyaltyCard_Tab_Details {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_Tab_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction History.
+        /// </summary>
+        public static string Form_LoyaltyCard_Tab_Transactions {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_Tab_Transactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loyalty Card.
+        /// </summary>
+        public static string Form_LoyaltyCard_Title {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyCard_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This program has associated cards and cannot be deleted..
+        /// </summary>
+        public static string Form_LoyaltyProgram_DeleteHasCards {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyProgram_DeleteHasCards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percentage must be between 0 and 100..
+        /// </summary>
+        public static string Form_LoyaltyProgram_InvalidPercent {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyProgram_InvalidPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A loyalty program with this name already exists..
+        /// </summary>
+        public static string Form_LoyaltyProgram_NameExists {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyProgram_NameExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program name is required..
+        /// </summary>
+        public static string Form_LoyaltyProgram_NameRequired {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyProgram_NameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Associated Cards.
+        /// </summary>
+        public static string Form_LoyaltyProgram_Tab_Cards {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyProgram_Tab_Cards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program Details.
+        /// </summary>
+        public static string Form_LoyaltyProgram_Tab_Details {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyProgram_Tab_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loyalty Program.
+        /// </summary>
+        public static string Form_LoyaltyProgram_Title {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyProgram_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loyalty Programs.
+        /// </summary>
+        public static string Form_LoyaltyPrograms_Title {
+            get {
+                return ResourceManager.GetString("Form_LoyaltyPrograms_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message Log.
+        /// </summary>
+        public static string Form_MessageLog {
+            get {
+                return ResourceManager.GetString("Form_MessageLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Form_MessageLog_Action {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected message has already been sent..
+        /// </summary>
+        public static string Form_MessageLog_AlreadySent {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_AlreadySent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel.
+        /// </summary>
+        public static string Form_MessageLog_Channel {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Channel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message image file was not found..
+        /// </summary>
+        public static string Form_MessageLog_ImageFileNotFound {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_ImageFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Preview.
+        /// </summary>
+        public static string Form_MessageLog_ImagePreview {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_ImagePreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message text is required..
+        /// </summary>
+        public static string Form_MessageLog_MessageRequired {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_MessageRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Image.
+        /// </summary>
+        public static string Form_MessageLog_NoImage {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_NoImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message log was not found..
+        /// </summary>
+        public static string Form_MessageLog_NotFound {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no unsent messages..
+        /// </summary>
+        public static string Form_MessageLog_NoUnsentMessages {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_NoUnsentMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receiver phone number is required..
+        /// </summary>
+        public static string Form_MessageLog_PhoneRequired {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_PhoneRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Again.
+        /// </summary>
+        public static string Form_MessageLog_SendAgain {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send All Unsent.
+        /// </summary>
+        public static string Form_MessageLog_SendAllUnsent {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendAllUnsent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send all unsent messages?.
+        /// </summary>
+        public static string Form_MessageLog_SendAllUnsentConfirm {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendAllUnsentConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent: {0}, Failed: {1}.
+        /// </summary>
+        public static string Form_MessageLog_SendResult {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Selected.
+        /// </summary>
+        public static string Form_MessageLog_SendSelected {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_SendSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Balance.
+        /// </summary>
+        public static string Form_MessageLog_Summary_Balance_Subtitle {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Balance_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        public static string Form_MessageLog_Summary_Balance_Title {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Balance_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent in last 30 days.
+        /// </summary>
+        public static string Form_MessageLog_Summary_Last30Days_Subtitle {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Last30Days_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last 30 Days.
+        /// </summary>
+        public static string Form_MessageLog_Summary_Last30Days_Title {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Last30Days_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Day.
+        /// </summary>
+        public static string Form_MessageLog_Summary_Today_Subtitle {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Today_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent Today.
+        /// </summary>
+        public static string Form_MessageLog_Summary_Today_Title {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Today_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total messages sent.
+        /// </summary>
+        public static string Form_MessageLog_Summary_Total_Subtitle {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Total_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Sent.
+        /// </summary>
+        public static string Form_MessageLog_Summary_Total_Title {
+            get {
+                return ResourceManager.GetString("Form_MessageLog_Summary_Total_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Messaging Settings.
         /// </summary>
         public static string Form_MessagingSettings {
             get {
                 return ResourceManager.GetString("Form_MessagingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic Sending &amp; Service Control.
+        /// </summary>
+        public static string Form_MessagingSettings_AutoSendSection {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_AutoSendSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-send interrupted/unsent messages (SMS, WhatsApp).
+        /// </summary>
+        public static string Form_MessagingSettings_AutoSendToggle {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_AutoSendToggle", resourceCulture);
             }
         }
         
@@ -10209,11 +11757,29 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check Interval (sec):.
+        /// </summary>
+        public static string Form_MessagingSettings_IntervalSeconds {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_IntervalSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
         public static string Form_MessagingSettings_IsEnabled {
             get {
                 return ResourceManager.GetString("Form_MessagingSettings_IsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Retries:.
+        /// </summary>
+        public static string Form_MessagingSettings_MaxRetries {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_MaxRetries", resourceCulture);
             }
         }
         
@@ -10295,6 +11861,123 @@ namespace Foxoft.Properties {
         public static string Form_MessagingSettings_SendSuccess {
             get {
                 return ResourceManager.GetString("Form_MessagingSettings_SendSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Running.
+        /// </summary>
+        public static string Form_MessagingSettings_ServiceRunning {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Service.
+        /// </summary>
+        public static string Form_MessagingSettings_ServiceStart {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service could not be started. Check if the executable exists..
+        /// </summary>
+        public static string Form_MessagingSettings_ServiceStartFailed {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service started successfully..
+        /// </summary>
+        public static string Form_MessagingSettings_ServiceStartSuccess {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStartSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Status:.
+        /// </summary>
+        public static string Form_MessagingSettings_ServiceStatus {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop Service.
+        /// </summary>
+        public static string Form_MessagingSettings_ServiceStop {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stopped.
+        /// </summary>
+        public static string Form_MessagingSettings_ServiceStopped {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service stopped..
+        /// </summary>
+        public static string Form_MessagingSettings_ServiceStopSuccess {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_ServiceStopSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMS API Key:.
+        /// </summary>
+        public static string Form_MessagingSettings_SmsApiKey {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsApiKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable SMS Provider.
+        /// </summary>
+        public static string Form_MessagingSettings_SmsEnabled {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMS Provider Configuration.
+        /// </summary>
+        public static string Form_MessagingSettings_SmsSection {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sender Title:.
+        /// </summary>
+        public static string Form_MessagingSettings_SmsSenderTitle {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsSenderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMS Server URL:.
+        /// </summary>
+        public static string Form_MessagingSettings_SmsServerUrl {
+            get {
+                return ResourceManager.GetString("Form_MessagingSettings_SmsServerUrl", resourceCulture);
             }
         }
         
@@ -10496,6 +12179,456 @@ namespace Foxoft.Properties {
         public static string Form_MoneyTransfer_SaveError {
             get {
                 return ResourceManager.GetString("Form_MoneyTransfer_SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Center.
+        /// </summary>
+        public static string Form_NotificationCenter {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Filters.
+        /// </summary>
+        public static string Form_NotificationCenter_AdvancedFilters {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_AdvancedFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply Filter.
+        /// </summary>
+        public static string Form_NotificationCenter_ApplyFilter {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_ApplyFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Filter.
+        /// </summary>
+        public static string Form_NotificationCenter_ClearFilter {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_ClearFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dismiss.
+        /// </summary>
+        public static string Form_NotificationCenter_Dismiss {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Dismiss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_All {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credit.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_Credit {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_Credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Critical.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_Critical {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_Critical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_DateFrom {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_DateFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_DateTo {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_DateTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_Payment {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stock.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_Stock {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_Stock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_Store {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_Store", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_System {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_Today {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unread.
+        /// </summary>
+        public static string Form_NotificationCenter_Filter_Unread {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filter_Unread", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filters.
+        /// </summary>
+        public static string Form_NotificationCenter_Filters {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark All Read.
+        /// </summary>
+        public static string Form_NotificationCenter_MarkAllRead {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_MarkAllRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark Read.
+        /// </summary>
+        public static string Form_NotificationCenter_MarkRead {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_MarkRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related document could not be opened..
+        /// </summary>
+        public static string Form_NotificationCenter_NoRelatedEntity {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_NoRelatedEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Related.
+        /// </summary>
+        public static string Form_NotificationCenter_OpenRelated {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_OpenRelated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolve.
+        /// </summary>
+        public static string Form_NotificationCenter_Resolve {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Resolve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run Stock Check.
+        /// </summary>
+        public static string Form_NotificationCenter_RunStockCheck {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_RunStockCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snooze 1 Hour.
+        /// </summary>
+        public static string Form_NotificationCenter_Snooze {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_Snooze", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stock check completed. Notifications affected: {0}..
+        /// </summary>
+        public static string Form_NotificationCenter_StockCheckResult {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_StockCheckResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unread: {0}.
+        /// </summary>
+        public static string Form_NotificationCenter_UnreadCount {
+            get {
+                return ResourceManager.GetString("Form_NotificationCenter_UnreadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Recipient Rules.
+        /// </summary>
+        public static string Form_NotificationRecipientRule {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All stores.
+        /// </summary>
+        public static string Form_NotificationRecipientRule_AllStores {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule_AllStores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Settings.
+        /// </summary>
+        public static string Form_NotificationRecipientRule_Data {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A recipient rule with the same notification type, role and store already exists..
+        /// </summary>
+        public static string Form_NotificationRecipientRule_DuplicateRule {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule_DuplicateRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipient Rules.
+        /// </summary>
+        public static string Form_NotificationRecipientRule_Rules {
+            get {
+                return ResourceManager.GetString("Form_NotificationRecipientRule_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Rules.
+        /// </summary>
+        public static string Form_NotificationRule {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All stores.
+        /// </summary>
+        public static string Form_NotificationRule_AllStores {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_AllStores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Form_NotificationRule_Channel_Email {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Channel_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In-app.
+        /// </summary>
+        public static string Form_NotificationRule_Channel_InApp {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Channel_InApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popup.
+        /// </summary>
+        public static string Form_NotificationRule_Channel_Popup {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Channel_Popup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMS.
+        /// </summary>
+        public static string Form_NotificationRule_Channel_SMS {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Channel_SMS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WhatsApp.
+        /// </summary>
+        public static string Form_NotificationRule_Channel_WhatsApp {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Channel_WhatsApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Settings.
+        /// </summary>
+        public static string Form_NotificationRule_Data {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A rule with the same notification type and store already exists..
+        /// </summary>
+        public static string Form_NotificationRule_DuplicateRule {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_DuplicateRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select at least one channel..
+        /// </summary>
+        public static string Form_NotificationRule_InvalidChannel {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_InvalidChannel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rules.
+        /// </summary>
+        public static string Form_NotificationRule_Rules {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Critical.
+        /// </summary>
+        public static string Form_NotificationRule_Severity_Critical {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Severity_Critical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High.
+        /// </summary>
+        public static string Form_NotificationRule_Severity_High {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Severity_High", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string Form_NotificationRule_Severity_Info {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Severity_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Form_NotificationRule_Severity_Warning {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Severity_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Templates.
+        /// </summary>
+        public static string Form_NotificationTemplate {
+            get {
+                return ResourceManager.GetString("Form_NotificationTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Settings.
+        /// </summary>
+        public static string Form_NotificationTemplate_Data {
+            get {
+                return ResourceManager.GetString("Form_NotificationTemplate_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A template with the same notification type and language already exists..
+        /// </summary>
+        public static string Form_NotificationTemplate_DuplicateTemplate {
+            get {
+                return ResourceManager.GetString("Form_NotificationTemplate_DuplicateTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Templates.
+        /// </summary>
+        public static string Form_NotificationTemplate_Templates {
+            get {
+                return ResourceManager.GetString("Form_NotificationTemplate_Templates", resourceCulture);
             }
         }
         
@@ -10870,20 +13003,20 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Control.
-        /// </summary>
-        public static string Form_PaymentDetail_RibbonGroup_Control {
-            get {
-                return ResourceManager.GetString("Form_PaymentDetail_RibbonGroup_Control", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Related Documents.
         /// </summary>
         public static string Form_PaymentDetail_RelatedDocuments {
             get {
                 return ResourceManager.GetString("Form_PaymentDetail_RelatedDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control.
+        /// </summary>
+        public static string Form_PaymentDetail_RibbonGroup_Control {
+            get {
+                return ResourceManager.GetString("Form_PaymentDetail_RibbonGroup_Control", resourceCulture);
             }
         }
         
@@ -11266,6 +13399,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calculate Payroll.
+        /// </summary>
+        public static string Form_PayrollList_CalculatePayroll {
+            get {
+                return ResourceManager.GetString("Form_PayrollList_CalculatePayroll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payrolls.
         /// </summary>
         public static string Form_PayrollList_Caption {
@@ -11280,6 +13422,15 @@ namespace Foxoft.Properties {
         public static string Form_PayrollList_DeleteConfirm {
             get {
                 return ResourceManager.GetString("Form_PayrollList_DeleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete {0} selected payroll records?.
+        /// </summary>
+        public static string Form_PayrollList_DeleteMultipleConfirm {
+            get {
+                return ResourceManager.GetString("Form_PayrollList_DeleteMultipleConfirm", resourceCulture);
             }
         }
         
@@ -11325,6 +13476,123 @@ namespace Foxoft.Properties {
         public static string Form_PayrollPeriodList_DeleteConfirm {
             get {
                 return ResourceManager.GetString("Form_PayrollPeriodList_DeleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payroll Calculation Wizard.
+        /// </summary>
+        public static string Form_PayrollWizard_Caption {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payroll calculation is ready. Click Finish to save payrolls..
+        /// </summary>
+        public static string Form_PayrollWizard_CompletionText {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_CompletionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salary Calculation Completed.
+        /// </summary>
+        public static string Form_PayrollWizard_CompletionTitle {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_CompletionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review and adjust salary amounts for selected employees..
+        /// </summary>
+        public static string Form_PayrollWizard_EmployeesText {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_EmployeesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee Salaries.
+        /// </summary>
+        public static string Form_PayrollWizard_EmployeesTitle {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_EmployeesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select at least one employee..
+        /// </summary>
+        public static string Form_PayrollWizard_NoEmployeesSelected {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_NoEmployeesSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a payroll period..
+        /// </summary>
+        public static string Form_PayrollWizard_NoPeriodSelected {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_NoPeriodSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Payroll Period.
+        /// </summary>
+        public static string Form_PayrollWizard_SelectPeriod {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_SelectPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exists.
+        /// </summary>
+        public static string Form_PayrollWizard_Status_Exists {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_Status_Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string Form_PayrollWizard_Status_New {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_Status_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} payroll records saved successfully..
+        /// </summary>
+        public static string Form_PayrollWizard_SuccessMessage {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_SuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This wizard allows you to automatically calculate salaries for employees based on active contracts..
+        /// </summary>
+        public static string Form_PayrollWizard_WelcomeText {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_WelcomeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Payroll Calculation Wizard.
+        /// </summary>
+        public static string Form_PayrollWizard_WelcomeTitle {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_WelcomeTitle", resourceCulture);
             }
         }
         
@@ -11388,6 +13656,15 @@ namespace Foxoft.Properties {
         public static string Form_POS_Page_Sale {
             get {
                 return ResourceManager.GetString("Form_POS_Page_Sale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POS Button Settings.
+        /// </summary>
+        public static string Form_PosButtonSetting_Caption {
+            get {
+                return ResourceManager.GetString("Form_PosButtonSetting_Caption", resourceCulture);
             }
         }
         
@@ -11680,6 +13957,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge.
+        /// </summary>
+        public static string Form_Product_Button_MergeProduct {
+            get {
+                return ResourceManager.GetString("Form_Product_Button_MergeProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product.
         /// </summary>
         public static string Form_Product_Caption {
@@ -11694,6 +13980,15 @@ namespace Foxoft.Properties {
         public static string Form_Product_Input_NewProductCode {
             get {
                 return ResourceManager.GetString("Form_Product_Input_NewProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A product cannot be merged with itself..
+        /// </summary>
+        public static string Form_Product_Message_CannotMergeSameProduct {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_CannotMergeSameProduct", resourceCulture);
             }
         }
         
@@ -11721,6 +14016,33 @@ namespace Foxoft.Properties {
         public static string Form_Product_Message_FileDoesNotExist {
             get {
                 return ResourceManager.GetString("Form_Product_Message_FileDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All data of &apos;{0}&apos; ({1}) will be transferred to &apos;{2}&apos; ({3}) and &apos;{0}&apos; will be deleted. Do you want to continue?.
+        /// </summary>
+        public static string Form_Product_Message_MergeConfirm {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_MergeConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error merging products: {0}.
+        /// </summary>
+        public static string Form_Product_Message_MergeError {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_MergeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products merged successfully..
+        /// </summary>
+        public static string Form_Product_Message_MergeSuccess {
+            get {
+                return ResourceManager.GetString("Form_Product_Message_MergeSuccess", resourceCulture);
             }
         }
         
@@ -11793,51 +14115,6 @@ namespace Foxoft.Properties {
         public static string Form_Product_Validation_ProductNameExists {
             get {
                 return ResourceManager.GetString("Form_Product_Validation_ProductNameExists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Merge.
-        /// </summary>
-        public static string Form_Product_Button_MergeProduct {
-            get {
-                return ResourceManager.GetString("Form_Product_Button_MergeProduct", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A product cannot be merged with itself..
-        /// </summary>
-        public static string Form_Product_Message_CannotMergeSameProduct {
-            get {
-                return ResourceManager.GetString("Form_Product_Message_CannotMergeSameProduct", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All data of &apos;{0}&apos; ({1}) will be transferred to &apos;{2}&apos; ({3}) and &apos;{0}&apos; will be deleted. Do you want to continue?.
-        /// </summary>
-        public static string Form_Product_Message_MergeConfirm {
-            get {
-                return ResourceManager.GetString("Form_Product_Message_MergeConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error merging products: {0}.
-        /// </summary>
-        public static string Form_Product_Message_MergeError {
-            get {
-                return ResourceManager.GetString("Form_Product_Message_MergeError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Products merged successfully..
-        /// </summary>
-        public static string Form_Product_Message_MergeSuccess {
-            get {
-                return ResourceManager.GetString("Form_Product_Message_MergeSuccess", resourceCulture);
             }
         }
         
@@ -13073,7 +15350,7 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright Â© 2021 Subhan Huseynzade.
+        ///   Looks up a localized string similar to Copyright © 2021 Subhan Huseynzade.
         /// </summary>
         public static string Form_Splash_Copyright {
             get {
@@ -14577,1394 +16854,6 @@ namespace Foxoft.Properties {
         public static string Validation_StringLength_Max {
             get {
                 return ResourceManager.GetString("Validation_StringLength_Max", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to POS Button.
-        /// </summary>
-        public static string Entity_PosButton {
-            get {
-                return ResourceManager.GetString("Entity_PosButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Id.
-        /// </summary>
-        public static string Entity_PosButton_Id {
-            get {
-                return ResourceManager.GetString("Entity_PosButton_Id", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Button Name.
-        /// </summary>
-        public static string Entity_PosButton_ButtonName {
-            get {
-                return ResourceManager.GetString("Entity_PosButton_ButtonName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Description.
-        /// </summary>
-        public static string Entity_PosButton_ButtonDescription {
-            get {
-                return ResourceManager.GetString("Entity_PosButton_ButtonDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Visible.
-        /// </summary>
-        public static string Entity_PosButton_IsVisible {
-            get {
-                return ResourceManager.GetString("Entity_PosButton_IsVisible", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Order.
-        /// </summary>
-        public static string Entity_PosButton_SortOrder {
-            get {
-                return ResourceManager.GetString("Entity_PosButton_SortOrder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Back Color.
-        /// </summary>
-        public static string Entity_PosButton_BackColor {
-            get {
-                return ResourceManager.GetString("Entity_PosButton_BackColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text Color.
-        /// </summary>
-        public static string Entity_PosButton_ForeColor {
-            get {
-                return ResourceManager.GetString("Entity_PosButton_ForeColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to POS Button Settings.
-        /// </summary>
-        public static string Form_PosButtonSetting_Caption {
-            get {
-                return ResourceManager.GetString("Form_PosButtonSetting_Caption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Drag rows to reorder.
-        /// </summary>
-        public static string Common_DragToReorder {
-            get {
-                return ResourceManager.GetString("Common_DragToReorder", resourceCulture);
-            }
-        }
-
-        public static string Common_IsEnabled {
-            get { return ResourceManager.GetString("Common_IsEnabled", resourceCulture); }
-        }
-
-        public static string Common_Order {
-            get { return ResourceManager.GetString("Common_Order", resourceCulture); }
-        }
-
-        public static string Entity_NotificationType {
-            get { return ResourceManager.GetString("Entity_NotificationType", resourceCulture); }
-        }
-
-        public static string Entity_NotificationType_Code {
-            get { return ResourceManager.GetString("Entity_NotificationType_Code", resourceCulture); }
-        }
-
-        public static string Entity_NotificationType_CategoryCode {
-            get { return ResourceManager.GetString("Entity_NotificationType_CategoryCode", resourceCulture); }
-        }
-
-        public static string Entity_NotificationType_Desc {
-            get { return ResourceManager.GetString("Entity_NotificationType_Desc", resourceCulture); }
-        }
-
-        public static string Entity_NotificationType_DefaultSeverity {
-            get { return ResourceManager.GetString("Entity_NotificationType_DefaultSeverity", resourceCulture); }
-        }
-
-        public static string Entity_NotificationType_AllowPopup {
-            get { return ResourceManager.GetString("Entity_NotificationType_AllowPopup", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRule {
-            get { return ResourceManager.GetString("Entity_NotificationRule", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRule_Id {
-            get { return ResourceManager.GetString("Entity_NotificationRule_Id", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRule_Name {
-            get { return ResourceManager.GetString("Entity_NotificationRule_Name", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRule_ThrottleMinutes {
-            get { return ResourceManager.GetString("Entity_NotificationRule_ThrottleMinutes", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRule_ChannelCodes {
-            get { return ResourceManager.GetString("Entity_NotificationRule_ChannelCodes", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRule_PopupMinSeverity {
-            get { return ResourceManager.GetString("Entity_NotificationRule_PopupMinSeverity", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRecipientRule {
-            get { return ResourceManager.GetString("Entity_NotificationRecipientRule", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRecipientRule_Id {
-            get { return ResourceManager.GetString("Entity_NotificationRecipientRule_Id", resourceCulture); }
-        }
-
-        public static string Entity_NotificationTemplate {
-            get { return ResourceManager.GetString("Entity_NotificationTemplate", resourceCulture); }
-        }
-
-        public static string Entity_NotificationTemplate_Id {
-            get { return ResourceManager.GetString("Entity_NotificationTemplate_Id", resourceCulture); }
-        }
-
-        public static string Entity_NotificationTemplate_LanguageCode {
-            get { return ResourceManager.GetString("Entity_NotificationTemplate_LanguageCode", resourceCulture); }
-        }
-
-        public static string Entity_NotificationTemplate_TitleTemplate {
-            get { return ResourceManager.GetString("Entity_NotificationTemplate_TitleTemplate", resourceCulture); }
-        }
-
-        public static string Entity_NotificationTemplate_BodyTemplate {
-            get { return ResourceManager.GetString("Entity_NotificationTemplate_BodyTemplate", resourceCulture); }
-        }
-
-        public static string Entity_Notification {
-            get { return ResourceManager.GetString("Entity_Notification", resourceCulture); }
-        }
-
-        public static string Entity_Notification_Id {
-            get { return ResourceManager.GetString("Entity_Notification_Id", resourceCulture); }
-        }
-
-        public static string Entity_Notification_Key {
-            get { return ResourceManager.GetString("Entity_Notification_Key", resourceCulture); }
-        }
-
-        public static string Entity_Notification_Severity {
-            get { return ResourceManager.GetString("Entity_Notification_Severity", resourceCulture); }
-        }
-
-        public static string Entity_Notification_Title {
-            get { return ResourceManager.GetString("Entity_Notification_Title", resourceCulture); }
-        }
-
-        public static string Entity_Notification_Body {
-            get { return ResourceManager.GetString("Entity_Notification_Body", resourceCulture); }
-        }
-
-        public static string Entity_Notification_EntityType {
-            get { return ResourceManager.GetString("Entity_Notification_EntityType", resourceCulture); }
-        }
-
-        public static string Entity_Notification_EntityKey {
-            get { return ResourceManager.GetString("Entity_Notification_EntityKey", resourceCulture); }
-        }
-
-        public static string Entity_Notification_Status {
-            get { return ResourceManager.GetString("Entity_Notification_Status", resourceCulture); }
-        }
-
-        public static string Entity_Notification_LastRaisedDate {
-            get { return ResourceManager.GetString("Entity_Notification_LastRaisedDate", resourceCulture); }
-        }
-
-        public static string Entity_Notification_ResolvedDate {
-            get { return ResourceManager.GetString("Entity_Notification_ResolvedDate", resourceCulture); }
-        }
-
-        public static string Entity_Notification_ExpireDate {
-            get { return ResourceManager.GetString("Entity_Notification_ExpireDate", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRecipient {
-            get { return ResourceManager.GetString("Entity_NotificationRecipient", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRecipient_Id {
-            get { return ResourceManager.GetString("Entity_NotificationRecipient_Id", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRecipient_Status {
-            get { return ResourceManager.GetString("Entity_NotificationRecipient_Status", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRecipient_ReadDate {
-            get { return ResourceManager.GetString("Entity_NotificationRecipient_ReadDate", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRecipient_DismissedDate {
-            get { return ResourceManager.GetString("Entity_NotificationRecipient_DismissedDate", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRecipient_SnoozedUntil {
-            get { return ResourceManager.GetString("Entity_NotificationRecipient_SnoozedUntil", resourceCulture); }
-        }
-
-        public static string Entity_NotificationRecipient_LastPopupShownDate {
-            get { return ResourceManager.GetString("Entity_NotificationRecipient_LastPopupShownDate", resourceCulture); }
-        }
-
-        public static string Entity_NotificationChannelOutbox {
-            get { return ResourceManager.GetString("Entity_NotificationChannelOutbox", resourceCulture); }
-        }
-
-        public static string Entity_NotificationChannelOutbox_Id {
-            get { return ResourceManager.GetString("Entity_NotificationChannelOutbox_Id", resourceCulture); }
-        }
-
-        public static string Entity_NotificationChannelOutbox_ChannelCode {
-            get { return ResourceManager.GetString("Entity_NotificationChannelOutbox_ChannelCode", resourceCulture); }
-        }
-
-        public static string Entity_NotificationChannelOutbox_Receiver {
-            get { return ResourceManager.GetString("Entity_NotificationChannelOutbox_Receiver", resourceCulture); }
-        }
-
-        public static string Entity_NotificationChannelOutbox_Payload {
-            get { return ResourceManager.GetString("Entity_NotificationChannelOutbox_Payload", resourceCulture); }
-        }
-
-        public static string Entity_NotificationChannelOutbox_Status {
-            get { return ResourceManager.GetString("Entity_NotificationChannelOutbox_Status", resourceCulture); }
-        }
-
-        public static string Entity_NotificationChannelOutbox_TryCount {
-            get { return ResourceManager.GetString("Entity_NotificationChannelOutbox_TryCount", resourceCulture); }
-        }
-
-        public static string Entity_NotificationChannelOutbox_LastTryDate {
-            get { return ResourceManager.GetString("Entity_NotificationChannelOutbox_LastTryDate", resourceCulture); }
-        }
-
-        public static string Entity_NotificationChannelOutbox_LastError {
-            get { return ResourceManager.GetString("Entity_NotificationChannelOutbox_LastError", resourceCulture); }
-        }
-
-        public static string Entity_NotificationAudit {
-            get { return ResourceManager.GetString("Entity_NotificationAudit", resourceCulture); }
-        }
-
-        public static string Entity_NotificationAudit_Id {
-            get { return ResourceManager.GetString("Entity_NotificationAudit_Id", resourceCulture); }
-        }
-
-        public static string Entity_NotificationAudit_ActionType {
-            get { return ResourceManager.GetString("Entity_NotificationAudit_ActionType", resourceCulture); }
-        }
-
-        public static string Entity_NotificationAudit_ActorCurrAccCode {
-            get { return ResourceManager.GetString("Entity_NotificationAudit_ActorCurrAccCode", resourceCulture); }
-        }
-
-        public static string Entity_NotificationAudit_ActionDate {
-            get { return ResourceManager.GetString("Entity_NotificationAudit_ActionDate", resourceCulture); }
-        }
-
-        public static string Entity_NotificationAudit_Note {
-            get { return ResourceManager.GetString("Entity_NotificationAudit_Note", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter {
-            get { return ResourceManager.GetString("Form_NotificationCenter", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_MarkRead {
-            get { return ResourceManager.GetString("Form_NotificationCenter_MarkRead", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_MarkAllRead {
-            get { return ResourceManager.GetString("Form_NotificationCenter_MarkAllRead", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Dismiss {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Dismiss", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Snooze {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Snooze", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Resolve {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Resolve", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_OpenRelated {
-            get { return ResourceManager.GetString("Form_NotificationCenter_OpenRelated", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_RunStockCheck {
-            get { return ResourceManager.GetString("Form_NotificationCenter_RunStockCheck", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_All {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_All", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_Unread {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_Unread", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_Critical {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_Critical", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_Today {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_Today", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_Stock {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_Stock", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_Payment {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_Payment", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_Credit {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_Credit", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_System {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_System", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_Store {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_Store", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_DateFrom {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_DateFrom", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filter_DateTo {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filter_DateTo", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_ApplyFilter {
-            get { return ResourceManager.GetString("Form_NotificationCenter_ApplyFilter", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_ClearFilter {
-            get { return ResourceManager.GetString("Form_NotificationCenter_ClearFilter", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_UnreadCount {
-            get { return ResourceManager.GetString("Form_NotificationCenter_UnreadCount", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_StockCheckResult {
-            get { return ResourceManager.GetString("Form_NotificationCenter_StockCheckResult", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_NoRelatedEntity {
-            get { return ResourceManager.GetString("Form_NotificationCenter_NoRelatedEntity", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_Filters {
-            get { return ResourceManager.GetString("Form_NotificationCenter_Filters", resourceCulture); }
-        }
-
-        public static string Form_NotificationCenter_AdvancedFilters {
-            get { return ResourceManager.GetString("Form_NotificationCenter_AdvancedFilters", resourceCulture); }
-        }
-
-        public static string ERP_BBI_Notifications {
-            get { return ResourceManager.GetString("ERP_BBI_Notifications", resourceCulture); }
-        }
-
-        public static string ERP_RibbonPageGroup_Notifications {
-            get { return ResourceManager.GetString("ERP_RibbonPageGroup_Notifications", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule {
-            get { return ResourceManager.GetString("Form_NotificationRule", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Rules {
-            get { return ResourceManager.GetString("Form_NotificationRule_Rules", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Data {
-            get { return ResourceManager.GetString("Form_NotificationRule_Data", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_AllStores {
-            get { return ResourceManager.GetString("Form_NotificationRule_AllStores", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Channel_InApp {
-            get { return ResourceManager.GetString("Form_NotificationRule_Channel_InApp", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Channel_Popup {
-            get { return ResourceManager.GetString("Form_NotificationRule_Channel_Popup", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Channel_SMS {
-            get { return ResourceManager.GetString("Form_NotificationRule_Channel_SMS", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Channel_Email {
-            get { return ResourceManager.GetString("Form_NotificationRule_Channel_Email", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Channel_WhatsApp {
-            get { return ResourceManager.GetString("Form_NotificationRule_Channel_WhatsApp", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Severity_Info {
-            get { return ResourceManager.GetString("Form_NotificationRule_Severity_Info", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Severity_Warning {
-            get { return ResourceManager.GetString("Form_NotificationRule_Severity_Warning", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Severity_High {
-            get { return ResourceManager.GetString("Form_NotificationRule_Severity_High", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_Severity_Critical {
-            get { return ResourceManager.GetString("Form_NotificationRule_Severity_Critical", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_DuplicateRule {
-            get { return ResourceManager.GetString("Form_NotificationRule_DuplicateRule", resourceCulture); }
-        }
-
-        public static string Form_NotificationRule_InvalidChannel {
-            get { return ResourceManager.GetString("Form_NotificationRule_InvalidChannel", resourceCulture); }
-        }
-
-        public static string ERP_ACE_NotificationCenter {
-            get { return ResourceManager.GetString("ERP_ACE_NotificationCenter", resourceCulture); }
-        }
-
-        public static string ERP_ACE_NotificationRules {
-            get { return ResourceManager.GetString("ERP_ACE_NotificationRules", resourceCulture); }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Notification Templates.
-        /// </summary>
-        public static string Form_NotificationTemplate {
-            get {
-                return ResourceManager.GetString("Form_NotificationTemplate", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Templates.
-        /// </summary>
-        public static string Form_NotificationTemplate_Templates {
-            get {
-                return ResourceManager.GetString("Form_NotificationTemplate_Templates", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Template Settings.
-        /// </summary>
-        public static string Form_NotificationTemplate_Data {
-            get {
-                return ResourceManager.GetString("Form_NotificationTemplate_Data", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to A template with the same notification type and language already exists..
-        /// </summary>
-        public static string Form_NotificationTemplate_DuplicateTemplate {
-            get {
-                return ResourceManager.GetString("Form_NotificationTemplate_DuplicateTemplate", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Notification Templates.
-        /// </summary>
-        public static string ERP_ACE_NotificationTemplates {
-            get {
-                return ResourceManager.GetString("ERP_ACE_NotificationTemplates", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Notification Recipient Rules.
-        /// </summary>
-        public static string Form_NotificationRecipientRule {
-            get {
-                return ResourceManager.GetString("Form_NotificationRecipientRule", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Recipient Rules.
-        /// </summary>
-        public static string Form_NotificationRecipientRule_Rules {
-            get {
-                return ResourceManager.GetString("Form_NotificationRecipientRule_Rules", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Rule Settings.
-        /// </summary>
-        public static string Form_NotificationRecipientRule_Data {
-            get {
-                return ResourceManager.GetString("Form_NotificationRecipientRule_Data", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to All stores.
-        /// </summary>
-        public static string Form_NotificationRecipientRule_AllStores {
-            get {
-                return ResourceManager.GetString("Form_NotificationRecipientRule_AllStores", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to A recipient rule with the same notification type, role and store already exists..
-        /// </summary>
-        public static string Form_NotificationRecipientRule_DuplicateRule {
-            get {
-                return ResourceManager.GetString("Form_NotificationRecipientRule_DuplicateRule", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Notification Recipient Rules.
-        /// </summary>
-        public static string ERP_ACE_NotificationRecipientRules {
-            get {
-                return ResourceManager.GetString("ERP_ACE_NotificationRecipientRules", resourceCulture);
-            }
-        }
-        /// <summary>
-        ///   Looks up a localized string similar to Loyalty Card.
-        /// </summary>
-        public static string Form_LoyaltyCard_Title {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_Title", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Card Details.
-        /// </summary>
-        public static string Form_LoyaltyCard_Tab_Details {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_Tab_Details", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Transaction History.
-        /// </summary>
-        public static string Form_LoyaltyCard_Tab_Transactions {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_Tab_Transactions", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Card Information.
-        /// </summary>
-        public static string Form_LoyaltyCard_Group_General {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_Group_General", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Customer Information.
-        /// </summary>
-        public static string Form_LoyaltyCard_Group_Customer {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_Group_Customer", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Customer Name.
-        /// </summary>
-        public static string Form_LoyaltyCard_CustomerName {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_CustomerName", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Active Bonus Balance.
-        /// </summary>
-        public static string Form_LoyaltyCard_BonusBalance {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_BonusBalance", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Generate.
-        /// </summary>
-        public static string Form_LoyaltyCard_GenerateCardNumber {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_GenerateCardNumber", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Card number is required..
-        /// </summary>
-        public static string Form_LoyaltyCard_CardNumberRequired {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_CardNumberRequired", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Customer is required..
-        /// </summary>
-        public static string Form_LoyaltyCard_CustomerRequired {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_CustomerRequired", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to This card number already exists..
-        /// </summary>
-        public static string Form_LoyaltyCard_CardNumberExists {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyCard_CardNumberExists", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Card ID.
-        /// </summary>
-        public static string Entity_DcLoyaltyCard_LoyaltyCardId {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyCard_LoyaltyCardId", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Card Number.
-        /// </summary>
-        public static string Entity_DcLoyaltyCard_CardNumber {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyCard_CardNumber", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Customer Code.
-        /// </summary>
-        public static string Entity_DcLoyaltyCard_CurrAccCode {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyCard_CurrAccCode", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Loyalty Program.
-        /// </summary>
-        public static string Entity_DcLoyaltyCard_LoyaltyProgramId {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyCard_LoyaltyProgramId", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Active.
-        /// </summary>
-        public static string Entity_DcLoyaltyCard_IsActive {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyCard_IsActive", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Note.
-        /// </summary>
-        public static string Entity_DcLoyaltyCard_Note {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyCard_Note", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Date.
-        /// </summary>
-        public static string Entity_TrLoyaltyTxn_DocumentDate {
-            get {
-                return ResourceManager.GetString("Entity_TrLoyaltyTxn_DocumentDate", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Transaction Type.
-        /// </summary>
-        public static string Entity_TrLoyaltyTxn_TxnType {
-            get {
-                return ResourceManager.GetString("Entity_TrLoyaltyTxn_TxnType", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Amount.
-        /// </summary>
-        public static string Entity_TrLoyaltyTxn_Amount {
-            get {
-                return ResourceManager.GetString("Entity_TrLoyaltyTxn_Amount", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Expiration Date.
-        /// </summary>
-        public static string Entity_TrLoyaltyTxn_ExpireAt {
-            get {
-                return ResourceManager.GetString("Entity_TrLoyaltyTxn_ExpireAt", resourceCulture);
-            }
-        }
-        /// <summary>
-        ///   Looks up a localized string similar to Loyalty Program.
-        /// </summary>
-        public static string Form_LoyaltyProgram_Title {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyProgram_Title", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Loyalty Programs.
-        /// </summary>
-        public static string Form_LoyaltyPrograms_Title {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyPrograms_Title", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Program Details.
-        /// </summary>
-        public static string Form_LoyaltyProgram_Tab_Details {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyProgram_Tab_Details", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Associated Cards.
-        /// </summary>
-        public static string Form_LoyaltyProgram_Tab_Cards {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyProgram_Tab_Cards", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Program name is required..
-        /// </summary>
-        public static string Form_LoyaltyProgram_NameRequired {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyProgram_NameRequired", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to A loyalty program with this name already exists..
-        /// </summary>
-        public static string Form_LoyaltyProgram_NameExists {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyProgram_NameExists", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Percentage must be between 0 and 100..
-        /// </summary>
-        public static string Form_LoyaltyProgram_InvalidPercent {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyProgram_InvalidPercent", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to This program has associated cards and cannot be deleted..
-        /// </summary>
-        public static string Form_LoyaltyProgram_DeleteHasCards {
-            get {
-                return ResourceManager.GetString("Form_LoyaltyProgram_DeleteHasCards", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Program Name.
-        /// </summary>
-        public static string Entity_DcLoyaltyProgram_Name {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyProgram_Name", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Bonus Earn Percent (%).
-        /// </summary>
-        public static string Entity_DcLoyaltyProgram_EarnPercent {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyProgram_EarnPercent", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Bonus Expiry (Days).
-        /// </summary>
-        public static string Entity_DcLoyaltyProgram_ExpireDays {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyProgram_ExpireDays", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Max Payment Percent (%).
-        /// </summary>
-        public static string Entity_DcLoyaltyProgram_MaxRedeemPercent {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyProgram_MaxRedeemPercent", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Active.
-        /// </summary>
-        public static string Entity_DcLoyaltyProgram_IsActive {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyProgram_IsActive", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Note.
-        /// </summary>
-        public static string Entity_DcLoyaltyProgram_Note {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyProgram_Note", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Card Count.
-        /// </summary>
-        public static string Entity_DcLoyaltyProgram_CardCount {
-            get {
-                return ResourceManager.GetString("Entity_DcLoyaltyProgram_CardCount", resourceCulture);
-            }
-        }
-            
-        /// <summary>
-        ///   Looks up a localized string similar to Loyalty Programs.
-        /// </summary>
-        public static string ERP_ACE_LoyaltyPrograms {
-            get {
-                return ResourceManager.GetString("ERP_ACE_LoyaltyPrograms", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollList_CalculatePayroll {
-            get {
-                return ResourceManager.GetString("Form_PayrollList_CalculatePayroll", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_Caption {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_Caption", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_WelcomeTitle {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_WelcomeTitle", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_WelcomeText {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_WelcomeText", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_EmployeesTitle {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_EmployeesTitle", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_EmployeesText {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_EmployeesText", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_CompletionTitle {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_CompletionTitle", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_CompletionText {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_CompletionText", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_SelectPeriod {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_SelectPeriod", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_NoPeriodSelected {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_NoPeriodSelected", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_NoEmployeesSelected {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_NoEmployeesSelected", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_SuccessMessage {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_SuccessMessage", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_Status_New {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_Status_New", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollWizard_Status_Exists {
-            get {
-                return ResourceManager.GetString("Form_PayrollWizard_Status_Exists", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrPayrollHeader_Bonus {
-            get {
-                return ResourceManager.GetString("Entity_TrPayrollHeader_Bonus", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrPayrollHeader_Deduction {
-            get {
-                return ResourceManager.GetString("Entity_TrPayrollHeader_Deduction", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrPayrollHeader_BaseSalary {
-            get {
-                return ResourceManager.GetString("Entity_TrPayrollHeader_BaseSalary", resourceCulture);
-            }
-        }
-
-        public static string Common_SelectAll {
-            get {
-                return ResourceManager.GetString("Common_SelectAll", resourceCulture);
-            }
-        }
-
-        public static string Common_UnselectAll {
-            get {
-                return ResourceManager.GetString("Common_UnselectAll", resourceCulture);
-            }
-        }
-
-        public static string Common_Status {
-            get {
-                return ResourceManager.GetString("Common_Status", resourceCulture);
-            }
-        }
-
-        public static string Form_PayrollList_DeleteMultipleConfirm {
-            get {
-                return ResourceManager.GetString("Form_PayrollList_DeleteMultipleConfirm", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrMessageLog_MessageLogId {
-            get {
-                return ResourceManager.GetString("Entity_TrMessageLog_MessageLogId", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrMessageLog_CurrAccCode {
-            get {
-                return ResourceManager.GetString("Entity_TrMessageLog_CurrAccCode", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrMessageLog_MessageType {
-            get {
-                return ResourceManager.GetString("Entity_TrMessageLog_MessageType", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrMessageLog_ChannelCode {
-            get {
-                return ResourceManager.GetString("Entity_TrMessageLog_ChannelCode", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrMessageLog_ReceiverPhoneNumber {
-            get {
-                return ResourceManager.GetString("Entity_TrMessageLog_ReceiverPhoneNumber", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrMessageLog_Message {
-            get {
-                return ResourceManager.GetString("Entity_TrMessageLog_Message", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrMessageLog_IsSuccessful {
-            get {
-                return ResourceManager.GetString("Entity_TrMessageLog_IsSuccessful", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrMessageLog_ImageFileName {
-            get {
-                return ResourceManager.GetString("Entity_TrMessageLog_ImageFileName", resourceCulture);
-            }
-        }
-
-        public static string Entity_TrMessageLog_ErrorMessage {
-            get {
-                return ResourceManager.GetString("Entity_TrMessageLog_ErrorMessage", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog {
-            get {
-                return ResourceManager.GetString("Form_MessageLog", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Channel {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Channel", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Summary_Balance_Subtitle {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Summary_Balance_Subtitle", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Summary_Balance_Title {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Summary_Balance_Title", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Summary_Last30Days_Subtitle {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Summary_Last30Days_Subtitle", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Summary_Last30Days_Title {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Summary_Last30Days_Title", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Summary_Today_Subtitle {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Summary_Today_Subtitle", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Summary_Today_Title {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Summary_Today_Title", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Summary_Total_Subtitle {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Summary_Total_Subtitle", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Summary_Total_Title {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Summary_Total_Title", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_SendSelected {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_SendSelected", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_SendAgain {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_SendAgain", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_Action {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_Action", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_SendAllUnsent {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_SendAllUnsent", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_SendAllUnsentConfirm {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_SendAllUnsentConfirm", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_SendResult {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_SendResult", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_NoUnsentMessages {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_NoUnsentMessages", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_AlreadySent {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_AlreadySent", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_NotFound {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_NotFound", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_PhoneRequired {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_PhoneRequired", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_ImageFileNotFound {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_ImageFileNotFound", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_MessageRequired {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_MessageRequired", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_ImagePreview {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_ImagePreview", resourceCulture);
-            }
-        }
-
-        public static string Form_MessageLog_NoImage {
-            get {
-                return ResourceManager.GetString("Form_MessageLog_NoImage", resourceCulture);
-            }
-        }
-
-        public static string Entity_AppSetting_AutoSendUnsentMessages {
-            get {
-                return ResourceManager.GetString("Entity_AppSetting_AutoSendUnsentMessages", resourceCulture);
-            }
-        }
-
-        public static string Entity_AppSetting_AutoSendIntervalSeconds {
-            get {
-                return ResourceManager.GetString("Entity_AppSetting_AutoSendIntervalSeconds", resourceCulture);
-            }
-        }
-
-        public static string Entity_AppSetting_AutoSendMaxRetries {
-            get {
-                return ResourceManager.GetString("Entity_AppSetting_AutoSendMaxRetries", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_AutoSendSection {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_AutoSendSection", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_AutoSendToggle {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_AutoSendToggle", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_IntervalSeconds {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_IntervalSeconds", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_MaxRetries {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_MaxRetries", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_ServiceStatus {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_ServiceStatus", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_ServiceRunning {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_ServiceRunning", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_ServiceStopped {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_ServiceStopped", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_ServiceStart {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_ServiceStart", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_ServiceStop {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_ServiceStop", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_SmsSection {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_SmsSection", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_SmsEnabled {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_SmsEnabled", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_SmsServerUrl {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_SmsServerUrl", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_SmsApiKey {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_SmsApiKey", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_SmsSenderTitle {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_SmsSenderTitle", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_ServiceStartSuccess {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_ServiceStartSuccess", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_ServiceStartFailed {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_ServiceStartFailed", resourceCulture);
-            }
-        }
-
-        public static string Form_MessagingSettings_ServiceStopSuccess {
-            get {
-                return ResourceManager.GetString("Form_MessagingSettings_ServiceStopSuccess", resourceCulture);
-            }
-        }
-
-        public static string Common_Toast_MessageSent {
-            get {
-                return ResourceManager.GetString("Common_Toast_MessageSent", resourceCulture);
-            }
-        }
-
-        public static string Common_Toast_MessageUnsent {
-            get {
-                return ResourceManager.GetString("Common_Toast_MessageUnsent", resourceCulture);
-            }
-        }
-
-        public static string Common_Toast_Receiver {
-            get {
-                return ResourceManager.GetString("Common_Toast_Receiver", resourceCulture);
-            }
-        }
-
-        public static string Common_Toast_Error {
-            get {
-                return ResourceManager.GetString("Common_Toast_Error", resourceCulture);
             }
         }
     }
