@@ -5,7 +5,9 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -25,35 +27,34 @@ namespace Foxoft
 
         private void DesignMessagingComponentNames()
         {
-            lblReminder.Text = Resources.Form_MessagingSettings_InstallmentReminder;
-            lblDueDay.Text = Resources.Form_MessagingSettings_InstallmentDueDay;
-            lblPurchase.Text = Resources.Form_MessagingSettings_ProductPurchase;
-            lblClosed.Text = Resources.Form_MessagingSettings_CreditClosed;
-            lblPayment.Text = Resources.Form_MessagingSettings_CreditPayment;
-            lblBirthday.Text = Resources.Form_MessagingSettings_Birthday;
+            // SMS
+            layoutControlGroupSms.Text = Resources.Form_MessagingSettings_SmsSection;
+            ItemForSmsEnabled.Text = Resources.Form_MessagingSettings_SmsEnabled;
+            ItemForSmsServerUrl.Text = Resources.Form_MessagingSettings_SmsServerUrl;
+            ItemForSmsApiKey.Text = Resources.Form_MessagingSettings_SmsApiKey;
+            ItemForSmsSenderTitle.Text = Resources.Form_MessagingSettings_SmsSenderTitle;
 
-            lblDaysBefore.Text = Resources.Form_MessagingSettings_DaysBefore;
-
-            string smsLabel = Resources.Form_MessagingSettings_MessageTemplate;
-            lblSmsReminder.Text = smsLabel;
-            lblSmsDueDay.Text = smsLabel;
-            lblSmsPurchase.Text = smsLabel;
-            lblSmsClosed.Text = smsLabel;
-            lblSmsPayment.Text = smsLabel;
-            lblSmsBirthday.Text = smsLabel;
-
-            lblAutoSend.Text = Resources.Form_MessagingSettings_AutoSendToggle;
-            lblAutoSendInterval.Text = Resources.Form_MessagingSettings_IntervalSeconds;
-            lblAutoSendMaxRetries.Text = Resources.Form_MessagingSettings_MaxRetries;
-            lblServiceStatusTitle.Text = Resources.Form_MessagingSettings_ServiceStatus;
+            // Auto-send & Service
+            layoutControlGroupAutoSend.Text = Resources.Form_MessagingSettings_AutoSendSection;
+            ItemForAutoSend.Text = Resources.Form_MessagingSettings_AutoSendToggle;
+            ItemForAutoSendInterval.Text = Resources.Form_MessagingSettings_IntervalSeconds;
+            ItemForAutoSendMaxRetries.Text = Resources.Form_MessagingSettings_MaxRetries;
+            ItemForServiceStatus.Text = Resources.Form_MessagingSettings_ServiceStatus;
             btnStartService.Text = Resources.Form_MessagingSettings_ServiceStart;
             btnStopService.Text = Resources.Form_MessagingSettings_ServiceStop;
 
-            lblSmsSectionTitle.Text = Resources.Form_MessagingSettings_SmsSection;
-            lblSmsServerUrl.Text = Resources.Form_MessagingSettings_SmsServerUrl;
-            lblSmsApiKey.Text = Resources.Form_MessagingSettings_SmsApiKey;
-            lblSmsSenderTitle.Text = Resources.Form_MessagingSettings_SmsSenderTitle;
+            // WhatsApp
+            layoutControlGroupWhatsApp.Text = Resources.Form_AppSetting_Group_WhatsApp;
+            ItemForUseWhatsApp.Text = Resources.Entity_AppSetting_UseWhatsApp;
+            ItemForWhatsAppProvider.Text = Resources.Entity_AppSetting_WhatsAppProvider;
+            ItemForWhatsappChromeProfileName.Text = Resources.Entity_AppSetting_WhatsappChromeProfileName;
+            ItemForWhatsAppServerUrl.Text = Resources.Entity_DcWhatsAppProviderSetting_ServerUrl;
+            ItemForWhatsAppInstanceName.Text = Resources.Entity_DcWhatsAppProviderSetting_InstanceName;
+            ItemForWhatsAppApiKey.Text = Resources.Entity_DcWhatsAppProviderSetting_ApiKey;
+            btnWhatsAppQrCode.Text = Resources.Form_AppSetting_WhatsAppGetQrCode;
+            btnWhatsAppLogout.Text = Resources.Form_AppSetting_WhatsAppLogout;
 
+            // Bottom panel
             btnSaveMessaging.Text = Resources.Form_MessagingSettings_Save;
             btnSendNow.Text = Resources.Form_MessagingSettings_SendNow;
         }
@@ -61,25 +62,18 @@ namespace Foxoft
         public void LoadMessagingSettings()
         {
             using var db = new subContext();
-            var templates = db.NotificationTemplates.ToList();
-            var rules = db.NotificationRules.Where(r => r.StoreCode == null).ToList();
             var appSetting = db.AppSettings.FirstOrDefault(x => x.Id == 1);
 
-            spinDaysBefore.Value = appSetting?.InstallmentReminderDaysBefore ?? 2;
-
-            LoadRow(templates, rules, NotificationTypeCodes.InstallmentDueSoon, toggleReminder, memoReminder);
-            LoadRow(templates, rules, NotificationTypeCodes.InstallmentDueToday, toggleDueDay, memoDueDay);
-            LoadRow(templates, rules, NotificationTypeCodes.ProductPurchase, togglePurchase, memoPurchase);
-            LoadRow(templates, rules, NotificationTypeCodes.CreditClosed, toggleClosed, memoClosed);
-            LoadRow(templates, rules, NotificationTypeCodes.InstallmentPaid, togglePayment, memoPayment);
-            LoadRow(templates, rules, NotificationTypeCodes.CustomerBirthday, toggleBirthday, memoBirthday);
-
-            // Load Auto-Send AppSetting
+            // Load Auto-Send and WhatsApp AppSetting
             if (appSetting != null)
             {
                 toggleAutoSend.IsOn = appSetting.AutoSendUnsentMessages;
                 spinAutoSendInterval.Value = appSetting.AutoSendIntervalSeconds > 0 ? appSetting.AutoSendIntervalSeconds : 30;
                 spinAutoSendMaxRetries.Value = appSetting.AutoSendMaxRetries > 0 ? appSetting.AutoSendMaxRetries : 5;
+
+                toggleUseWhatsApp.IsOn = appSetting.UseWhatsApp;
+                cmbWhatsAppProvider.EditValue = appSetting.WhatsAppProvider;
+                txtWhatsappChromeProfileName.Text = appSetting.WhatsappChromeProfileName ?? "";
             }
 
             // Load SMS Provider Setting
@@ -92,26 +86,16 @@ namespace Foxoft
                 txtSmsSenderTitle.Text = smsSetting.SenderTitle ?? "";
             }
 
+            // Load WhatsApp Provider Setting
+            var whatsAppSetting = db.DcWhatsAppProviderSettings.FirstOrDefault(x => x.Id == 1);
+            if (whatsAppSetting != null)
+            {
+                txtWhatsAppServerUrl.Text = whatsAppSetting.ServerUrl ?? "";
+                txtWhatsAppInstanceName.Text = whatsAppSetting.InstanceName ?? "";
+                txtWhatsAppApiKey.Text = whatsAppSetting.ApiKey ?? "";
+            }
+
             UpdateServiceStatusDisplay();
-        }
-
-        private void LoadRow(System.Collections.Generic.List<NotificationTemplate> templates,
-            System.Collections.Generic.List<NotificationRule> rules,
-            string typeCode, ToggleSwitch toggle, MemoEdit memo)
-        {
-            var template = templates.FirstOrDefault(t => t.NotificationTypeCode == typeCode && t.LanguageCode == "az")
-                        ?? templates.FirstOrDefault(t => t.NotificationTypeCode == typeCode);
-            var rule = rules.FirstOrDefault(r => r.NotificationTypeCode == typeCode);
-
-            if (template != null)
-            {
-                memo.Text = template.BodyTemplate ?? string.Empty;
-                toggle.IsOn = template.IsEnabled && (rule == null || rule.IsEnabled);
-            }
-            else if (rule != null)
-            {
-                toggle.IsOn = rule.IsEnabled;
-            }
         }
 
         private void UpdateServiceStatusDisplay()
@@ -138,8 +122,6 @@ namespace Foxoft
         public void SaveMessagingSettings()
         {
             using var db = new subContext();
-            var templates = db.NotificationTemplates.ToList();
-            var rules = db.NotificationRules.Where(r => r.StoreCode == null).ToList();
             var appSetting = db.AppSettings.FirstOrDefault(x => x.Id == 1);
 
             if (appSetting == null)
@@ -148,17 +130,20 @@ namespace Foxoft
                 db.AppSettings.Add(appSetting);
             }
 
-            appSetting.InstallmentReminderDaysBefore = (int)spinDaysBefore.Value;
+            // Auto-send
             appSetting.AutoSendUnsentMessages = toggleAutoSend.IsOn;
             appSetting.AutoSendIntervalSeconds = (int)spinAutoSendInterval.Value;
             appSetting.AutoSendMaxRetries = (int)spinAutoSendMaxRetries.Value;
 
-            SaveRow(db, templates, rules, NotificationTypeCodes.InstallmentDueSoon, toggleReminder.IsOn, memoReminder.Text, "Kredit ödənişinə xatırlatma");
-            SaveRow(db, templates, rules, NotificationTypeCodes.InstallmentDueToday, toggleDueDay.IsOn, memoDueDay.Text, "Kredit ödəniş günü");
-            SaveRow(db, templates, rules, NotificationTypeCodes.ProductPurchase, togglePurchase.IsOn, memoPurchase.Text, "Məhsul satışı");
-            SaveRow(db, templates, rules, NotificationTypeCodes.CreditClosed, toggleClosed.IsOn, memoClosed.Text, "Kredit bağlandı");
-            SaveRow(db, templates, rules, NotificationTypeCodes.InstallmentPaid, togglePayment.IsOn, memoPayment.Text, "Kredit ödənişi");
-            SaveRow(db, templates, rules, NotificationTypeCodes.CustomerBirthday, toggleBirthday.IsOn, memoBirthday.Text, "Ad günü təbriki");
+            // WhatsApp on AppSetting
+            appSetting.UseWhatsApp = toggleUseWhatsApp.IsOn;
+            if (cmbWhatsAppProvider.EditValue is WhatsAppProvider provider)
+                appSetting.WhatsAppProvider = provider;
+            else if (cmbWhatsAppProvider.EditValue is byte providerByte)
+                appSetting.WhatsAppProvider = (WhatsAppProvider)providerByte;
+            else if (cmbWhatsAppProvider.EditValue is int providerInt)
+                appSetting.WhatsAppProvider = (WhatsAppProvider)providerInt;
+            appSetting.WhatsappChromeProfileName = txtWhatsappChromeProfileName.Text.Trim();
 
             Settings.Default.AppSetting = appSetting;
             Settings.Default.Save();
@@ -176,75 +161,22 @@ namespace Foxoft
             smsSetting.ApiKey = txtSmsApiKey.Text.Trim();
             smsSetting.SenderTitle = txtSmsSenderTitle.Text.Trim();
 
+            // Save WhatsApp Provider Setting
+            var whatsAppSetting = db.DcWhatsAppProviderSettings.FirstOrDefault(x => x.Id == 1);
+            if (whatsAppSetting == null)
+            {
+                whatsAppSetting = new DcWhatsAppProviderSetting { Id = 1 };
+                db.DcWhatsAppProviderSettings.Add(whatsAppSetting);
+            }
+
+            whatsAppSetting.ServerUrl = txtWhatsAppServerUrl.Text.Trim();
+            whatsAppSetting.InstanceName = txtWhatsAppInstanceName.Text.Trim();
+            whatsAppSetting.ApiKey = txtWhatsAppApiKey.Text.Trim();
+
             db.SaveChanges();
 
             NotificationWorkerManager.EnsureRunning(toggleAutoSend.IsOn);
             UpdateServiceStatusDisplay();
-        }
-
-        private void SaveRow(subContext db,
-            System.Collections.Generic.List<NotificationTemplate> templates,
-            System.Collections.Generic.List<NotificationRule> rules,
-            string typeCode, bool isEnabled, string bodyTemplate, string defaultTitle)
-        {
-            DateTime now = DateTime.Now;
-            var template = templates.FirstOrDefault(t => t.NotificationTypeCode == typeCode && t.LanguageCode == "az");
-            if (template != null)
-            {
-                template.BodyTemplate = bodyTemplate?.Trim() ?? string.Empty;
-                template.IsEnabled = isEnabled;
-                template.LastUpdatedDate = now;
-                template.LastUpdatedUserName = Authorization.CurrAccCode;
-            }
-            else
-            {
-                template = new NotificationTemplate
-                {
-                    NotificationTypeCode = typeCode,
-                    LanguageCode = "az",
-                    TitleTemplate = defaultTitle,
-                    BodyTemplate = bodyTemplate?.Trim() ?? string.Empty,
-                    IsEnabled = isEnabled,
-                    CreatedDate = now,
-                    LastUpdatedDate = now,
-                    CreatedUserName = Authorization.CurrAccCode,
-                    LastUpdatedUserName = Authorization.CurrAccCode
-                };
-                db.NotificationTemplates.Add(template);
-            }
-
-            var rule = rules.FirstOrDefault(r => r.NotificationTypeCode == typeCode);
-            if (rule != null)
-            {
-                rule.IsEnabled = isEnabled;
-                if (!rule.ChannelCodes.Contains(NotificationChannels.WhatsApp, StringComparison.OrdinalIgnoreCase))
-                {
-                    rule.ChannelCodes = string.IsNullOrWhiteSpace(rule.ChannelCodes)
-                        ? NotificationChannels.WhatsApp
-                        : rule.ChannelCodes + "," + NotificationChannels.WhatsApp;
-                }
-                rule.LastUpdatedDate = now;
-                rule.LastUpdatedUserName = Authorization.CurrAccCode;
-            }
-            else
-            {
-                var notifType = db.NotificationTypes.FirstOrDefault(x => x.NotificationTypeCode == typeCode);
-                rule = new NotificationRule
-                {
-                    RuleName = notifType?.NotificationTypeDesc ?? typeCode,
-                    NotificationTypeCode = typeCode,
-                    StoreCode = null,
-                    IsEnabled = isEnabled,
-                    ThrottleMinutes = 1440,
-                    ChannelCodes = NotificationChannels.InApp + "," + NotificationChannels.WhatsApp,
-                    PopupMinSeverity = NotificationSeverities.High,
-                    CreatedDate = now,
-                    LastUpdatedDate = now,
-                    CreatedUserName = Authorization.CurrAccCode,
-                    LastUpdatedUserName = Authorization.CurrAccCode
-                };
-                db.NotificationRules.Add(rule);
-            }
         }
 
         private void btnSaveMessaging_Click(object sender, EventArgs e)
@@ -263,7 +195,8 @@ namespace Foxoft
             try
             {
                 using var db = new subContext();
-                int daysBefore = (int)spinDaysBefore.Value;
+                var appSetting = db.AppSettings.FirstOrDefault(x => x.Id == 1);
+                int daysBefore = appSetting?.InstallmentReminderDaysBefore ?? 2;
 
                 var installmentChecker = new NotificationInstallmentCheckerService(db);
                 await installmentChecker.ScanInstallmentPaymentNotificationsAsync(daysBefore, Authorization.CurrAccCode);
@@ -362,6 +295,154 @@ namespace Foxoft
             {
                 UpdateServiceStatusDisplay();
             }
+        }
+
+        private async void btnWhatsAppQrCode_Click(object sender, EventArgs e)
+        {
+            string serverUrl = txtWhatsAppServerUrl.Text.Trim();
+            string instanceName = txtWhatsAppInstanceName.Text.Trim();
+            string apiKey = txtWhatsAppApiKey.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(serverUrl) || string.IsNullOrWhiteSpace(instanceName) || string.IsNullOrWhiteSpace(apiKey))
+            {
+                XtraMessageBox.Show(Resources.Message_WhatsAppQrCodeSettingsRequired, Resources.Common_Attention);
+                return;
+            }
+
+            btnWhatsAppQrCode.Enabled = false;
+            try
+            {
+                using EvolutionApiClient client = new(serverUrl, instanceName, apiKey);
+                EvolutionQrCodeResult qrCode = await client.GetConnectionQrCodeAsync();
+                ShowWhatsAppQrCode(qrCode);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_Attention);
+            }
+            finally
+            {
+                btnWhatsAppQrCode.Enabled = true;
+            }
+        }
+
+        private async void btnWhatsAppLogout_Click(object sender, EventArgs e)
+        {
+            string serverUrl = txtWhatsAppServerUrl.Text.Trim();
+            string instanceName = txtWhatsAppInstanceName.Text.Trim();
+            string apiKey = txtWhatsAppApiKey.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(serverUrl) || string.IsNullOrWhiteSpace(instanceName) || string.IsNullOrWhiteSpace(apiKey))
+            {
+                XtraMessageBox.Show(Resources.Message_WhatsAppLogoutSettingsRequired, Resources.Common_Attention);
+                return;
+            }
+
+            DialogResult result = XtraMessageBox.Show(
+                Resources.Message_WhatsAppLogoutConfirm,
+                Resources.Common_Confirm,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            btnWhatsAppLogout.Enabled = false;
+            try
+            {
+                using EvolutionApiClient client = new(serverUrl, instanceName, apiKey);
+                await client.LogoutAsync();
+                ClearWhatsAppQrCode();
+                XtraMessageBox.Show(Resources.Message_WhatsAppLogoutSucceeded, Resources.Common_Attention);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_Attention);
+            }
+            finally
+            {
+                btnWhatsAppLogout.Enabled = true;
+            }
+        }
+
+        private void ShowWhatsAppQrCode(EvolutionQrCodeResult qrCode)
+        {
+            if (qrCode.IsConnected)
+            {
+                ClearWhatsAppQrCode();
+                XtraMessageBox.Show(
+                    Resources.Common_WhatsAppAlreadyConnected,
+                    Resources.Common_Info,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            if (!qrCode.HasQrCode)
+            {
+                XtraMessageBox.Show(string.Format(Resources.Message_WhatsAppQrCodeNotFound, qrCode.Body), Resources.Common_Attention);
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(qrCode.Base64) && TryShowWhatsAppQrCodeImage(qrCode.Base64))
+                return;
+
+            if (string.IsNullOrWhiteSpace(qrCode.Code))
+            {
+                XtraMessageBox.Show(string.Format(Resources.Message_WhatsAppQrCodeNotFound, qrCode.Body), Resources.Common_Attention);
+                return;
+            }
+
+            barcodeWhatsAppQrCode.Text = qrCode.Code ?? "";
+            picWhatsAppQrCode.Visible = false;
+            barcodeWhatsAppQrCode.Visible = true;
+        }
+
+        private void ClearWhatsAppQrCode()
+        {
+            Image? oldImage = picWhatsAppQrCode.Image;
+            picWhatsAppQrCode.Image = null;
+            oldImage?.Dispose();
+            picWhatsAppQrCode.Visible = false;
+            barcodeWhatsAppQrCode.Text = "";
+            barcodeWhatsAppQrCode.Visible = false;
+        }
+
+        private bool TryShowWhatsAppQrCodeImage(string base64)
+        {
+            try
+            {
+                Image image = CreateImageFromBase64(base64);
+                Image? oldImage = picWhatsAppQrCode.Image;
+                picWhatsAppQrCode.Image = image;
+                oldImage?.Dispose();
+                barcodeWhatsAppQrCode.Visible = false;
+                picWhatsAppQrCode.Visible = true;
+
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+
+        private static Image CreateImageFromBase64(string base64)
+        {
+            string imageBase64 = base64.Trim();
+            int commaIndex = imageBase64.IndexOf(',');
+            if (commaIndex >= 0)
+                imageBase64 = imageBase64[(commaIndex + 1)..];
+
+            byte[] bytes = Convert.FromBase64String(imageBase64);
+            using MemoryStream stream = new(bytes);
+            using Image image = Image.FromStream(stream);
+
+            return new Bitmap(image);
         }
     }
 }
