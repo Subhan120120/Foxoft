@@ -31,10 +31,10 @@ namespace Foxoft
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHierarchyFeatureType));
             ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            BBI_Save = new DevExpress.XtraBars.BarButtonItem();
             BBI_SelectAll = new DevExpress.XtraBars.BarButtonItem();
             BBI_ClearSelection = new DevExpress.XtraBars.BarButtonItem();
             BBI_CopyFromParent = new DevExpress.XtraBars.BarButtonItem();
-            BBI_MakeGlobal = new DevExpress.XtraBars.BarButtonItem();
             BBI_ManageFeatureTypes = new DevExpress.XtraBars.BarButtonItem();
             BBI_ExpandAll = new DevExpress.XtraBars.BarButtonItem();
             BBI_CollapseAll = new DevExpress.XtraBars.BarButtonItem();
@@ -44,6 +44,7 @@ namespace Foxoft
             BSI_HierarchyInfo = new DevExpress.XtraBars.BarStaticItem();
             BSI_CountInfo = new DevExpress.XtraBars.BarStaticItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            rpgOperations = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             rpgSelection = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             rpgFeatureTypes = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             rpgTreeView = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -92,10 +93,10 @@ namespace Foxoft
             ribbon.ExpandCollapseItem.Id = 0;
             ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
                 ribbon.ExpandCollapseItem,
+                BBI_Save,
                 BBI_SelectAll,
                 BBI_ClearSelection,
                 BBI_CopyFromParent,
-                BBI_MakeGlobal,
                 BBI_ManageFeatureTypes,
                 BBI_ExpandAll,
                 BBI_CollapseAll,
@@ -106,13 +107,22 @@ namespace Foxoft
                 BSI_CountInfo
             });
             ribbon.Location = new System.Drawing.Point(0, 0);
-            ribbon.MaxItemId = 13;
+            ribbon.MaxItemId = 15;
             ribbon.Name = "ribbon";
             ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
                 ribbonPage1
             });
             ribbon.Size = new System.Drawing.Size(1236, 158);
             ribbon.StatusBar = ribbonStatusBar;
+            // 
+            // BBI_Save
+            // 
+            BBI_Save.Caption = Foxoft.Properties.Resources.Common_Save;
+            BBI_Save.Id = 14;
+            BBI_Save.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Save.ImageOptions.SvgImage");
+            BBI_Save.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S));
+            BBI_Save.Name = "BBI_Save";
+            BBI_Save.ItemClick += BBI_Save_ItemClick;
             // 
             // BBI_SelectAll
             // 
@@ -137,14 +147,6 @@ namespace Foxoft
             BBI_CopyFromParent.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Update.ImageOptions.SvgImage");
             BBI_CopyFromParent.Name = "BBI_CopyFromParent";
             BBI_CopyFromParent.ItemClick += BBI_CopyFromParent_ItemClick;
-            // 
-            // BBI_MakeGlobal
-            // 
-            BBI_MakeGlobal.Caption = Foxoft.Properties.Resources.Form_HierarchyFeatureType_MakeGlobal;
-            BBI_MakeGlobal.Id = 4;
-            BBI_MakeGlobal.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Update.ImageOptions.SvgImage");
-            BBI_MakeGlobal.Name = "BBI_MakeGlobal";
-            BBI_MakeGlobal.ItemClick += BBI_MakeGlobal_ItemClick;
             // 
             // BBI_ManageFeatureTypes
             // 
@@ -206,6 +208,7 @@ namespace Foxoft
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+                rpgOperations,
                 rpgSelection,
                 rpgFeatureTypes,
                 rpgTreeView,
@@ -213,6 +216,12 @@ namespace Foxoft
             });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Foxoft.Properties.Resources.Form_HierarchyFeatureType_Caption;
+            // 
+            // rpgOperations
+            // 
+            rpgOperations.ItemLinks.Add(BBI_Save);
+            rpgOperations.Name = "rpgOperations";
+            rpgOperations.Text = Foxoft.Properties.Resources.Common_Operations;
             // 
             // rpgSelection
             // 
@@ -224,7 +233,6 @@ namespace Foxoft
             // 
             // rpgFeatureTypes
             // 
-            rpgFeatureTypes.ItemLinks.Add(BBI_MakeGlobal);
             rpgFeatureTypes.ItemLinks.Add(BBI_ManageFeatureTypes);
             rpgFeatureTypes.Name = "rpgFeatureTypes";
             rpgFeatureTypes.Text = Foxoft.Properties.Resources.Form_HierarchyFeatureType_FeatureTypes;
@@ -490,6 +498,7 @@ namespace Foxoft
             Ribbon = ribbon;
             StatusBar = ribbonStatusBar;
             Text = Foxoft.Properties.Resources.Form_HierarchyFeatureType_Caption;
+            FormClosing += FormHierarchyFeatureType_FormClosing;
             ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
             ((System.ComponentModel.ISupportInitialize)splitContainerControl1.Panel1).EndInit();
             splitContainerControl1.Panel1.ResumeLayout(false);
@@ -517,15 +526,16 @@ namespace Foxoft
 
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rpgOperations;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rpgSelection;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rpgFeatureTypes;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rpgTreeView;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rpgView;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
+        private DevExpress.XtraBars.BarButtonItem BBI_Save;
         private DevExpress.XtraBars.BarButtonItem BBI_SelectAll;
         private DevExpress.XtraBars.BarButtonItem BBI_ClearSelection;
         private DevExpress.XtraBars.BarButtonItem BBI_CopyFromParent;
-        private DevExpress.XtraBars.BarButtonItem BBI_MakeGlobal;
         private DevExpress.XtraBars.BarButtonItem BBI_ManageFeatureTypes;
         private DevExpress.XtraBars.BarButtonItem BBI_ExpandAll;
         private DevExpress.XtraBars.BarButtonItem BBI_CollapseAll;

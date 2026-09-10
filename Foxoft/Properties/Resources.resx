@@ -2424,6 +2424,21 @@
   <data name="Form_HierarchyFeatureType_MadeGlobal" xml:space="preserve">
     <value>'{0}' now applies to all categories.</value>
   </data>
+  <data name="Form_HierarchyFeatureType_RemoveGlobal" xml:space="preserve">
+    <value>Remove from Global</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_NotGlobal" xml:space="preserve">
+    <value>This feature type is already not global.</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RemoveGlobalSelectCategory" xml:space="preserve">
+    <value>To remove '{0}' from global, select the category it should belong to:</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RemoveGlobalToThisCategoryConfirm" xml:space="preserve">
+    <value>'{0}' is currently global (applies to all categories).&#xD;&#xA;&#xD;&#xA;Do you want to remove it from global and assign it only to '{1}'?</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RemovedFromGlobal" xml:space="preserve">
+    <value>'{0}' was removed from global and assigned to '{1}'.</value>
+  </data>
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>Hierarchy</value>
   </data>
@@ -4041,6 +4056,15 @@ To delete, cancel the receipt!</value>
   </data>
   <data name="Common_SavedSuccessfully" xml:space="preserve">
     <value>Saved successfully.</value>
+  </data>
+  <data name="Common_UnsavedChanges" xml:space="preserve">
+    <value>There are unsaved changes.</value>
+  </data>
+  <data name="Common_UnsavedChangesQuestion" xml:space="preserve">
+    <value>There are unsaved changes. Do you want to save them?</value>
+  </data>
+  <data name="Common_NoChanges" xml:space="preserve">
+    <value>There are no changes to save.</value>
   </data>
   <data name="Common_SentSuccessfully" xml:space="preserve">
     <value>Sent successfully.</value>

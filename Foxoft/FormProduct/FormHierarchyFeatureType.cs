@@ -6,6 +6,7 @@ using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -24,6 +25,10 @@ namespace Foxoft
         private List<HierarchyFeatureTypeViewModel> featureTypeViewModels = new();
         private bool isInternalChange;
 
+        private readonly HashSet<AssignmentKey> originalAssignments = new();
+        private readonly HashSet<AssignmentKey> workingAssignments = new();
+        private List<DcFeatureType> allFeatureTypes = new();
+
         public FormHierarchyFeatureType()
         {
             InitializeComponent();
@@ -39,7 +44,34 @@ namespace Foxoft
 
         private void FormHierarchyFeatureType_Load(object? sender, EventArgs e)
         {
+            LoadDataFromDatabase();
+        }
+
+        private void LoadDataFromDatabase()
+        {
+            using subContext db = new();
+
+            allFeatureTypes = db.DcFeatureTypes
+                .AsNoTracking()
+                .OrderBy(x => x.Order)
+                .ThenBy(x => x.FeatureTypeName)
+                .ToList();
+
+            List<TrHierarchyFeatureType> dbAssignments = db.TrHierarchyFeatureTypes
+                .AsNoTracking()
+                .ToList();
+
+            originalAssignments.Clear();
+            workingAssignments.Clear();
+            foreach (TrHierarchyFeatureType r in dbAssignments)
+            {
+                AssignmentKey key = new(r.HierarchyCode, r.FeatureTypeId);
+                originalAssignments.Add(key);
+                workingAssignments.Add(key);
+            }
+
             LoadHierarchies();
+            UpdateDirtyState();
         }
 
         private void LoadHierarchies()
@@ -92,6 +124,29 @@ namespace Foxoft
 
         private bool IsGlobalNode => currentHierarchyCode == GlobalHierarchyCode;
 
+        private bool HasChanges()
+        {
+            return !workingAssignments.SetEquals(originalAssignments);
+        }
+
+        private void UpdateDirtyState()
+        {
+            bool dirty = HasChanges();
+            BBI_Save.Enabled = dirty;
+
+            string baseCaption = Resources.Form_HierarchyFeatureType_Caption;
+            Text = dirty ? $"{baseCaption} *" : baseCaption;
+
+            if (dirty)
+            {
+                BSI_Status.Caption = Resources.Common_UnsavedChanges;
+            }
+            else
+            {
+                BSI_Status.Caption = Resources.Common_SavedSuccessfully;
+            }
+        }
+
         private void UpdateHeaderInfo()
         {
             if (string.IsNullOrEmpty(currentHierarchyCode))
@@ -128,24 +183,15 @@ namespace Foxoft
                 return;
             }
 
-            using subContext db = new();
-            List<DcFeatureType> allFeatureTypes = db.DcFeatureTypes
-                .OrderBy(x => x.Order)
-                .ThenBy(x => x.FeatureTypeName)
-                .ToList();
-
-            // Distinct feature type IDs that have at least one hierarchy assigned
-            HashSet<int> featureTypeIdsWithHierarchies = db.TrHierarchyFeatureTypes
+            HashSet<int> featureTypeIdsWithHierarchies = workingAssignments
                 .Select(x => x.FeatureTypeId)
-                .Distinct()
                 .ToHashSet();
 
-            // Feature type IDs specifically assigned to current hierarchy
             HashSet<int> assignedToCurrentHierarchy = new();
             if (!IsGlobalNode)
             {
-                assignedToCurrentHierarchy = db.TrHierarchyFeatureTypes
-                    .Where(x => x.HierarchyCode == currentHierarchyCode)
+                assignedToCurrentHierarchy = workingAssignments
+                    .Where(x => string.Equals(x.HierarchyCode, currentHierarchyCode, StringComparison.OrdinalIgnoreCase))
                     .Select(x => x.FeatureTypeId)
                     .ToHashSet();
             }
@@ -253,91 +299,42 @@ namespace Foxoft
 
         private void HandleGlobalNodeCheckboxChange(HierarchyFeatureTypeViewModel vm)
         {
-            using subContext db = new();
-
             if (vm.IsSelected)
             {
-                // Making it global: clear any category restrictions
-                List<TrHierarchyFeatureType> existing = db.TrHierarchyFeatureTypes
-                    .Where(x => x.FeatureTypeId == vm.FeatureTypeId)
-                    .ToList();
-
-                if (existing.Count > 0)
-                {
-                    db.TrHierarchyFeatureTypes.RemoveRange(existing);
-                    db.SaveChanges();
-                }
+                // Making it global: clear any category restrictions from workingAssignments
+                workingAssignments.RemoveWhere(x => x.FeatureTypeId == vm.FeatureTypeId);
 
                 vm.IsGlobal = true;
                 vm.ScopeText = Resources.Form_HierarchyFeatureType_ScopeGlobal;
 
-                string msg = string.Format(Resources.Form_HierarchyFeatureType_MadeGlobal, vm.FeatureTypeName);
-                BSI_Status.Caption = msg;
+                UpdateDirtyState();
+                UpdateStats();
             }
             else
             {
-                // Cannot uncheck a global feature without assigning it to a category
-                XtraMessageBox.Show(this,
-                    "Xüsusiyyət tipini qloballıqdan çıxarmaq üçün sol tərəfdəki ağacdan onu aid etmək istədiyiniz konkret kateqoriyaya keçib orada seçin.",
-                    Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                isInternalChange = true;
-                vm.IsSelected = true;
-                gridView1.RefreshRow(gridView1.FocusedRowHandle);
-                isInternalChange = false;
-                return;
+                // Removing from global: choose which category it should belong to
+                RemoveFeatureFromGlobalWithPicker(vm, null);
             }
-
-            UpdateStats();
         }
 
         private void HandleSpecificCategoryCheckboxChange(HierarchyFeatureTypeViewModel vm)
         {
             if (vm.IsGlobal)
             {
-                // User clicked a global feature in a specific category
-                XtraMessageBox.Show(this,
-                    Resources.Form_HierarchyFeatureType_GlobalInfo,
-                    Resources.Common_Info,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-
-                isInternalChange = true;
-                vm.IsSelected = true;
-                gridView1.RefreshRow(gridView1.FocusedRowHandle);
-                isInternalChange = false;
+                // User clicked a global feature in a specific category: offer to remove from global and assign to this category
+                RemoveFeatureFromGlobalWithPicker(vm, currentHierarchyCode);
                 return;
             }
 
-            using subContext db = new();
-
             if (vm.IsSelected)
             {
-                bool exists = db.TrHierarchyFeatureTypes.Any(x => x.HierarchyCode == currentHierarchyCode && x.FeatureTypeId == vm.FeatureTypeId);
-                if (!exists)
-                {
-                    db.TrHierarchyFeatureTypes.Add(new TrHierarchyFeatureType
-                    {
-                        HierarchyCode = currentHierarchyCode!,
-                        FeatureTypeId = vm.FeatureTypeId
-                    });
-                    db.SaveChanges();
-                }
-
+                workingAssignments.Add(new AssignmentKey(currentHierarchyCode!, vm.FeatureTypeId));
                 vm.IsSpecificallyAssigned = true;
                 vm.ScopeText = Resources.Form_HierarchyFeatureType_ScopeSpecific;
             }
             else
             {
-                TrHierarchyFeatureType? existing = db.TrHierarchyFeatureTypes
-                    .FirstOrDefault(x => x.HierarchyCode == currentHierarchyCode && x.FeatureTypeId == vm.FeatureTypeId);
-
-                if (existing is not null)
-                {
-                    db.TrHierarchyFeatureTypes.Remove(existing);
-                    db.SaveChanges();
-                }
-
+                workingAssignments.Remove(new AssignmentKey(currentHierarchyCode!, vm.FeatureTypeId));
                 vm.IsSpecificallyAssigned = false;
                 vm.ScopeText = Resources.Form_HierarchyFeatureType_ScopeNone;
             }
@@ -350,45 +347,122 @@ namespace Foxoft
                 masterItem.ScopeText = vm.ScopeText;
             }
 
-            BSI_Status.Caption = Resources.Common_SavedSuccessfully;
+            UpdateDirtyState();
             UpdateStats();
         }
 
-        private void BBI_MakeGlobal_ItemClick(object sender, ItemClickEventArgs e)
+        private void RemoveFeatureFromGlobalWithPicker(HierarchyFeatureTypeViewModel vm, string? suggestedHierarchyCode)
         {
-            if (gridView1.GetFocusedRow() is not HierarchyFeatureTypeViewModel vm)
-                return;
-
-            if (vm.IsGlobal)
+            if (!string.IsNullOrEmpty(suggestedHierarchyCode) && suggestedHierarchyCode != GlobalHierarchyCode)
             {
-                XtraMessageBox.Show(this,
-                    Resources.Form_HierarchyFeatureType_GlobalInfo,
-                    Resources.Common_Info,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                return;
+                string question = string.Format(Resources.Form_HierarchyFeatureType_RemoveGlobalToThisCategoryConfirm, vm.FeatureTypeName, currentHierarchyDesc);
+                DialogResult dr = XtraMessageBox.Show(this, question, Resources.Common_Confirm, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                if (dr == DialogResult.Yes)
+                {
+                    workingAssignments.Add(new AssignmentKey(suggestedHierarchyCode, vm.FeatureTypeId));
+
+                    LoadFeatureTypesForCurrentHierarchy();
+                    UpdateDirtyState();
+                    return;
+                }
+                else if (dr == DialogResult.Cancel)
+                {
+                    RevertCheckbox(vm, true);
+                    return;
+                }
+                // If "No", proceed to open category picker below
             }
 
-            string confirmMsg = string.Format(Resources.Form_HierarchyFeatureType_MakeGlobalConfirm, vm.FeatureTypeName);
-            if (XtraMessageBox.Show(this, confirmMsg, Resources.Common_Confirm, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                return;
+            XtraMessageBox.Show(this,
+                string.Format(Resources.Form_HierarchyFeatureType_RemoveGlobalSelectCategory, vm.FeatureTypeName),
+                Resources.Common_Info,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
 
-            using subContext db = new();
-            List<TrHierarchyFeatureType> existing = db.TrHierarchyFeatureTypes
-                .Where(x => x.FeatureTypeId == vm.FeatureTypeId)
-                .ToList();
-
-            if (existing.Count > 0)
+            using FormHierarchyList form = new();
+            if (form.ShowDialog(this) == DialogResult.OK && form.DcHierarchy is not null)
             {
-                db.TrHierarchyFeatureTypes.RemoveRange(existing);
+                string targetCode = form.DcHierarchy.HierarchyCode;
+                workingAssignments.Add(new AssignmentKey(targetCode, vm.FeatureTypeId));
+
+                LoadFeatureTypesForCurrentHierarchy();
+                UpdateDirtyState();
+            }
+            else
+            {
+                RevertCheckbox(vm, true);
+            }
+        }
+
+        private void RevertCheckbox(HierarchyFeatureTypeViewModel vm, bool value)
+        {
+            isInternalChange = true;
+            vm.IsSelected = value;
+            gridView1.RefreshRow(gridView1.FocusedRowHandle);
+            isInternalChange = false;
+        }
+
+        private void BBI_Save_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SaveAllChanges();
+        }
+
+        private bool SaveAllChanges()
+        {
+            if (!HasChanges())
+            {
+                XtraMessageBox.Show(this, Resources.Common_NoChanges, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
+
+            try
+            {
+                using subContext db = new();
+                using var tx = db.Database.BeginTransaction();
+
+                // 1. Assignments to remove
+                List<AssignmentKey> toRemove = originalAssignments.Except(workingAssignments).ToList();
+                if (toRemove.Count > 0)
+                {
+                    HashSet<AssignmentKey> toRemoveSet = toRemove.ToHashSet();
+                    List<TrHierarchyFeatureType> dbRecords = db.TrHierarchyFeatureTypes.ToList();
+                    List<TrHierarchyFeatureType> entitiesToDelete = dbRecords
+                        .Where(x => toRemoveSet.Contains(new AssignmentKey(x.HierarchyCode, x.FeatureTypeId)))
+                        .ToList();
+
+                    if (entitiesToDelete.Count > 0)
+                        db.TrHierarchyFeatureTypes.RemoveRange(entitiesToDelete);
+                }
+
+                // 2. Assignments to add
+                List<AssignmentKey> toAdd = workingAssignments.Except(originalAssignments).ToList();
+                if (toAdd.Count > 0)
+                {
+                    List<TrHierarchyFeatureType> entitiesToAdd = toAdd.Select(x => new TrHierarchyFeatureType
+                    {
+                        HierarchyCode = x.HierarchyCode,
+                        FeatureTypeId = x.FeatureTypeId
+                    }).ToList();
+
+                    db.TrHierarchyFeatureTypes.AddRange(entitiesToAdd);
+                }
+
                 db.SaveChanges();
+                tx.Commit();
+
+                originalAssignments.Clear();
+                originalAssignments.UnionWith(workingAssignments);
+
+                UpdateDirtyState();
+                XtraMessageBox.Show(this, Resources.Common_SavedSuccessfully, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
             }
-
-            LoadFeatureTypesForCurrentHierarchy();
-
-            string successMsg = string.Format(Resources.Form_HierarchyFeatureType_MadeGlobal, vm.FeatureTypeName);
-            BSI_Status.Caption = successMsg;
-            XtraMessageBox.Show(this, successMsg, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(this, ex.Message, Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         private void BBI_SelectAll_ItemClick(object sender, ItemClickEventArgs e)
@@ -396,34 +470,23 @@ namespace Foxoft
             if (string.IsNullOrEmpty(currentHierarchyCode) || featureTypeViewModels.Count == 0 || IsGlobalNode)
                 return;
 
-            using subContext db = new();
-            HashSet<int> existingIds = db.TrHierarchyFeatureTypes
-                .Where(x => x.HierarchyCode == currentHierarchyCode)
-                .Select(x => x.FeatureTypeId)
-                .ToHashSet();
-
             foreach (HierarchyFeatureTypeViewModel vm in featureTypeViewModels)
             {
-                if (!vm.IsGlobal && !existingIds.Contains(vm.FeatureTypeId))
+                if (!vm.IsGlobal)
                 {
-                    db.TrHierarchyFeatureTypes.Add(new TrHierarchyFeatureType
-                    {
-                        HierarchyCode = currentHierarchyCode,
-                        FeatureTypeId = vm.FeatureTypeId
-                    });
+                    workingAssignments.Add(new AssignmentKey(currentHierarchyCode, vm.FeatureTypeId));
                     vm.IsSpecificallyAssigned = true;
                     vm.ScopeText = Resources.Form_HierarchyFeatureType_ScopeSpecific;
                 }
                 vm.IsSelected = true;
             }
-            db.SaveChanges();
 
             isInternalChange = true;
             ApplyFilterAndBind();
             isInternalChange = false;
 
+            UpdateDirtyState();
             UpdateStats();
-            BSI_Status.Caption = Resources.Common_SavedSuccessfully;
         }
 
         private void BBI_ClearSelection_ItemClick(object sender, ItemClickEventArgs e)
@@ -431,21 +494,11 @@ namespace Foxoft
             if (string.IsNullOrEmpty(currentHierarchyCode) || featureTypeViewModels.Count == 0 || IsGlobalNode)
                 return;
 
-            using subContext db = new();
-            List<TrHierarchyFeatureType> existing = db.TrHierarchyFeatureTypes
-                .Where(x => x.HierarchyCode == currentHierarchyCode)
-                .ToList();
-
-            if (existing.Count > 0)
-            {
-                db.TrHierarchyFeatureTypes.RemoveRange(existing);
-                db.SaveChanges();
-            }
-
             foreach (HierarchyFeatureTypeViewModel vm in featureTypeViewModels)
             {
                 if (!vm.IsGlobal)
                 {
+                    workingAssignments.Remove(new AssignmentKey(currentHierarchyCode, vm.FeatureTypeId));
                     vm.IsSelected = false;
                     vm.IsSpecificallyAssigned = false;
                     vm.ScopeText = Resources.Form_HierarchyFeatureType_ScopeNone;
@@ -456,8 +509,8 @@ namespace Foxoft
             ApplyFilterAndBind();
             isInternalChange = false;
 
+            UpdateDirtyState();
             UpdateStats();
-            BSI_Status.Caption = Resources.Common_SavedSuccessfully;
         }
 
         private void BBI_CopyFromParent_ItemClick(object sender, ItemClickEventArgs e)
@@ -483,36 +536,25 @@ namespace Foxoft
             if (XtraMessageBox.Show(this, confirmMsg, Resources.Common_Confirm, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            using subContext db = new();
-            List<int> parentFeatureTypeIds = db.TrHierarchyFeatureTypes
-                .Where(x => x.HierarchyCode == parentCode)
+            List<int> parentFeatureTypeIds = workingAssignments
+                .Where(x => string.Equals(x.HierarchyCode, parentCode, StringComparison.OrdinalIgnoreCase))
                 .Select(x => x.FeatureTypeId)
                 .ToList();
-
-            HashSet<int> currentFeatureTypeIds = db.TrHierarchyFeatureTypes
-                .Where(x => x.HierarchyCode == currentHierarchyCode)
-                .Select(x => x.FeatureTypeId)
-                .ToHashSet();
 
             int addedCount = 0;
             foreach (int ftId in parentFeatureTypeIds)
             {
-                if (!currentFeatureTypeIds.Contains(ftId))
+                if (workingAssignments.Add(new AssignmentKey(currentHierarchyCode, ftId)))
                 {
-                    db.TrHierarchyFeatureTypes.Add(new TrHierarchyFeatureType
-                    {
-                        HierarchyCode = currentHierarchyCode,
-                        FeatureTypeId = ftId
-                    });
                     addedCount++;
                 }
             }
-            db.SaveChanges();
 
             LoadFeatureTypesForCurrentHierarchy();
-            string successMsg = string.Format(Resources.Form_HierarchyFeatureType_CopiedCount, addedCount);
-            BSI_Status.Caption = successMsg;
-            XtraMessageBox.Show(this, successMsg, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            UpdateDirtyState();
+
+            string msg = string.Format(Resources.Form_HierarchyFeatureType_CopiedCount, addedCount);
+            XtraMessageBox.Show(this, msg, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BBI_ManageFeatureTypes_ItemClick(object sender, ItemClickEventArgs e)
@@ -520,6 +562,13 @@ namespace Foxoft
             using FormCommonList<DcFeatureType> form = new("", nameof(DcFeatureType.FeatureTypeId));
             if (form.ShowDialog(this) == DialogResult.OK)
             {
+                using subContext db = new();
+                allFeatureTypes = db.DcFeatureTypes
+                    .AsNoTracking()
+                    .OrderBy(x => x.Order)
+                    .ThenBy(x => x.FeatureTypeName)
+                    .ToList();
+
                 LoadFeatureTypesForCurrentHierarchy();
             }
         }
@@ -541,7 +590,51 @@ namespace Foxoft
 
         private void BBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
-            LoadHierarchies();
+            if (HasChanges())
+            {
+                DialogResult dr = XtraMessageBox.Show(
+                    this,
+                    Resources.Common_UnsavedChangesQuestion,
+                    Resources.Common_Confirm,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
+
+                if (dr == DialogResult.Yes)
+                {
+                    if (!SaveAllChanges())
+                        return;
+                }
+                else if (dr == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+
+            LoadDataFromDatabase();
+        }
+
+        private void FormHierarchyFeatureType_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (!HasChanges())
+                return;
+
+            DialogResult dr = XtraMessageBox.Show(
+                this,
+                Resources.Common_UnsavedChangesQuestion,
+                Resources.Common_Confirm,
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            if (dr == DialogResult.Yes)
+            {
+                bool success = SaveAllChanges();
+                if (!success)
+                    e.Cancel = true;
+            }
+            else if (dr == DialogResult.Cancel)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void gridView1_CustomDrawRowIndicator(object sender, RowIndicatorCustomDrawEventArgs e)
@@ -572,6 +665,28 @@ namespace Foxoft
                 }
             }
         }
+    }
+
+    public readonly struct AssignmentKey : IEquatable<AssignmentKey>
+    {
+        public string HierarchyCode { get; }
+        public int FeatureTypeId { get; }
+
+        public AssignmentKey(string hierarchyCode, int featureTypeId)
+        {
+            HierarchyCode = hierarchyCode ?? string.Empty;
+            FeatureTypeId = featureTypeId;
+        }
+
+        public bool Equals(AssignmentKey other) =>
+            string.Equals(HierarchyCode, other.HierarchyCode, StringComparison.OrdinalIgnoreCase) &&
+            FeatureTypeId == other.FeatureTypeId;
+
+        public override bool Equals(object? obj) =>
+            obj is AssignmentKey other && Equals(other);
+
+        public override int GetHashCode() =>
+            HashCode.Combine(StringComparer.OrdinalIgnoreCase.GetHashCode(HierarchyCode), FeatureTypeId);
     }
 
     public class HierarchyFeatureTypeViewModel

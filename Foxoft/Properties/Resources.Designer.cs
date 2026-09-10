@@ -1002,6 +1002,33 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are unsaved changes..
+        /// </summary>
+        public static string Common_UnsavedChanges {
+            get {
+                return ResourceManager.GetString("Common_UnsavedChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are unsaved changes. Do you want to save them?.
+        /// </summary>
+        public static string Common_UnsavedChangesQuestion {
+            get {
+                return ResourceManager.GetString("Common_UnsavedChangesQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no changes to save..
+        /// </summary>
+        public static string Common_NoChanges {
+            get {
+                return ResourceManager.GetString("Common_NoChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save Layout.
         /// </summary>
         public static string Common_SaveLayout {
@@ -9226,6 +9253,51 @@ namespace Foxoft.Properties {
         public static string Form_HierarchyFeatureType_MadeGlobal {
             get {
                 return ResourceManager.GetString("Form_HierarchyFeatureType_MadeGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove from Global.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_RemoveGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_RemoveGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This feature type is already not global..
+        /// </summary>
+        public static string Form_HierarchyFeatureType_NotGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_NotGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To remove '{0}' from global, select the category it should belong to:.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_RemoveGlobalSelectCategory {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_RemoveGlobalSelectCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to '{0}' is currently global (applies to all categories).&#xD;&#xA;&#xD;&#xA;Do you want to remove it from global and assign it only to '{1}'?.
+        /// </summary>
+        public static string Form_HierarchyFeatureType_RemoveGlobalToThisCategoryConfirm {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_RemoveGlobalToThisCategoryConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to '{0}' was removed from global and assigned to '{1}'..
+        /// </summary>
+        public static string Form_HierarchyFeatureType_RemovedFromGlobal {
+            get {
+                return ResourceManager.GetString("Form_HierarchyFeatureType_RemovedFromGlobal", resourceCulture);
             }
         }
         
