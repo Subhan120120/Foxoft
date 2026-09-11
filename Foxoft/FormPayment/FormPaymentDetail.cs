@@ -314,6 +314,9 @@ namespace Foxoft
             if (!IsPaymentGracePeriodExpired())
                 return true;
 
+            if (efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "UnlockGracePeriodPayment"))
+                return true;
+
             ApplyPaymentGracePeriodLock(updateLayout: true);
 
             XtraMessageBox.Show(
@@ -1096,21 +1099,36 @@ namespace Foxoft
 
         private void BBI_EditPayment_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "EditLockedPayment");
-            if (!currAccHasClaims)
+            bool canEditLocked = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "EditLockedPayment");
+            bool canUnlockGrace = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "UnlockGracePeriodPayment");
+            if (!canEditLocked && !canUnlockGrace)
             {
                 MessageBox.Show(Resources.Common_AccessDenied);
                 return;
             }
 
             if (LCG_Payment.Enabled)
+            {
                 LCG_Payment.Enabled = false;
+                if (trPaymentHeader is not null)
+                {
+                    trPaymentHeader.IsLocked = true;
+                    if (efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
+                        efMethods.UpdatePaymentIsLocked(trPaymentHeader.PaymentHeaderId, true);
+                }
+            }
             else
             {
                 if (!EnsurePaymentCanBeChanged())
                     return;
 
                 LCG_Payment.Enabled = true;
+                if (trPaymentHeader is not null)
+                {
+                    trPaymentHeader.IsLocked = false;
+                    if (efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
+                        efMethods.UpdatePaymentIsLocked(trPaymentHeader.PaymentHeaderId, false);
+                }
             }
         }
 

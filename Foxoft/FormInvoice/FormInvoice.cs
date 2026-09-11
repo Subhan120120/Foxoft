@@ -833,6 +833,9 @@ namespace Foxoft
             if (!IsInvoiceGracePeriodExpired())
                 return true;
 
+            if (efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "UnlockGracePeriodInvoice"))
+                return true;
+
             ApplyInvoiceGracePeriodLock(updateLayout: true);
 
             XtraMessageBox.Show(
@@ -3125,10 +3128,23 @@ namespace Foxoft
                     return;
 
                 SetLayoutGroupReadOnly(LCG_Invoice, false);
+                if (trInvoiceHeader is not null)
+                {
+                    trInvoiceHeader.IsLocked = false;
+                    if (efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
+                        efMethods.UpdateInvoiceIsLocked(trInvoiceHeader.InvoiceHeaderId, false);
+                }
             }
-
             else
+            {
                 SetLayoutGroupReadOnly(LCG_Invoice, true);
+                if (trInvoiceHeader is not null)
+                {
+                    trInvoiceHeader.IsLocked = true;
+                    if (efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
+                        efMethods.UpdateInvoiceIsLocked(trInvoiceHeader.InvoiceHeaderId, true);
+                }
+            }
         }
 
         private void SetLayoutGroupReadOnly(LayoutControlGroup group, bool isReadOnly)
@@ -3278,7 +3294,8 @@ namespace Foxoft
                 bBI_Payment.Visibility = BarItemVisibility.Always;
 
             bool currAccHasClaimsEditInvoice = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "EditLockedInvoice");
-            if (!currAccHasClaimsEditInvoice)
+            bool currAccHasClaimsUnlockGrace = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "UnlockGracePeriodInvoice");
+            if (!currAccHasClaimsEditInvoice && !currAccHasClaimsUnlockGrace)
                 BBI_EditInvoice.Visibility = BarItemVisibility.Never;
 
             bool currAccHasBonusEarn = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn");
