@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
@@ -207,7 +207,7 @@ namespace Foxoft
                         new(editor.EditValue?.ToString());
 
                     if (form.ShowDialog() == DialogResult.OK)
-                        editor.EditValue = form.DcHierarchy.HierarchyCode;
+                        editor.EditValue = form.DcHierarchy?.HierarchyCode;
                 }
                 catch (Exception ex)
                 {

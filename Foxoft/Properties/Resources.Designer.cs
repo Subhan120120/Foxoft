@@ -10157,11 +10157,110 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Root.
+        /// </summary>
+        public static string Form_HierarchyList_AddRoot {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_AddRoot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Sibling.
+        /// </summary>
+        public static string Form_HierarchyList_AddSibling {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_AddSibling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hierarchy.
         /// </summary>
         public static string Form_HierarchyList_Caption {
             get {
                 return ResourceManager.GetString("Form_HierarchyList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collapse All.
+        /// </summary>
+        public static string Form_HierarchyList_CollapseAll {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_CollapseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete hierarchy '{0}'?.
+        /// </summary>
+        public static string Form_HierarchyList_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_DeleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand All.
+        /// </summary>
+        public static string Form_HierarchyList_ExpandAll {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_ExpandAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This hierarchy item has child items. Please delete or move child items first..
+        /// </summary>
+        public static string Form_HierarchyList_HasChildrenWarning {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_HasChildrenWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are products associated with this hierarchy. Cannot delete..
+        /// </summary>
+        public static string Form_HierarchyList_HasProductsWarning {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_HasProductsWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Hierarchy.
+        /// </summary>
+        public static string Form_HierarchyList_Input_EditTitle {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_Input_EditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter hierarchy code:.
+        /// </summary>
+        public static string Form_HierarchyList_Input_Prompt {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_Input_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This hierarchy code already exists. Please enter a unique code..
+        /// </summary>
+        public static string Form_HierarchyList_CodeExistsWarning {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_CodeExistsWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Hierarchy.
+        /// </summary>
+        public static string Form_HierarchyList_Input_Title {
+            get {
+                return ResourceManager.GetString("Form_HierarchyList_Input_Title", resourceCulture);
             }
         }
         

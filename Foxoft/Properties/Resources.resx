@@ -2403,11 +2403,44 @@
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>Hierarchy</value>
   </data>
+  <data name="Form_HierarchyList_AddRoot" xml:space="preserve">
+    <value>Add Root</value>
+  </data>
+  <data name="Form_HierarchyList_AddSibling" xml:space="preserve">
+    <value>Add Sibling</value>
+  </data>
   <data name="Form_HierarchyList_AddChild" xml:space="preserve">
     <value>Add Child</value>
   </data>
   <data name="Form_HierarchyList_NewDesc" xml:space="preserve">
     <value>New</value>
+  </data>
+  <data name="Form_HierarchyList_ExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
+  <data name="Form_HierarchyList_CollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="Form_HierarchyList_DeleteConfirm" xml:space="preserve">
+    <value>Are you sure you want to delete hierarchy '{0}'?</value>
+  </data>
+  <data name="Form_HierarchyList_HasChildrenWarning" xml:space="preserve">
+    <value>This hierarchy item has child items. Please delete or move child items first.</value>
+  </data>
+  <data name="Form_HierarchyList_HasProductsWarning" xml:space="preserve">
+    <value>There are products associated with this hierarchy. Cannot delete.</value>
+  </data>
+  <data name="Form_HierarchyList_Input_Prompt" xml:space="preserve">
+    <value>Enter hierarchy code:</value>
+  </data>
+  <data name="Form_HierarchyList_CodeExistsWarning" xml:space="preserve">
+    <value>This hierarchy code already exists. Please enter a unique code.</value>
+  </data>
+  <data name="Form_HierarchyList_Input_Title" xml:space="preserve">
+    <value>New Hierarchy</value>
+  </data>
+  <data name="Form_HierarchyList_Input_EditTitle" xml:space="preserve">
+    <value>Edit Hierarchy</value>
   </data>
   <data name="Form_Image_Caption" xml:space="preserve">
     <value>Images</value>

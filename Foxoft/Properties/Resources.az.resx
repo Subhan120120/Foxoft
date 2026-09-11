@@ -2394,11 +2394,44 @@
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>İyerarxiya</value>
   </data>
+  <data name="Form_HierarchyList_AddRoot" xml:space="preserve">
+    <value>Kök bənd əlavə et</value>
+  </data>
+  <data name="Form_HierarchyList_AddSibling" xml:space="preserve">
+    <value>Bərabər bənd əlavə et</value>
+  </data>
   <data name="Form_HierarchyList_AddChild" xml:space="preserve">
-    <value>Uşaq əlavə et</value>
+    <value>Alt bənd əlavə et</value>
   </data>
   <data name="Form_HierarchyList_NewDesc" xml:space="preserve">
     <value>Yeni</value>
+  </data>
+  <data name="Form_HierarchyList_ExpandAll" xml:space="preserve">
+    <value>Hamısını aç</value>
+  </data>
+  <data name="Form_HierarchyList_CollapseAll" xml:space="preserve">
+    <value>Hamısını bağla</value>
+  </data>
+  <data name="Form_HierarchyList_DeleteConfirm" xml:space="preserve">
+    <value>'{0}' iyerarxiyasını silmək istədiyinizə əminsiniz?</value>
+  </data>
+  <data name="Form_HierarchyList_HasChildrenWarning" xml:space="preserve">
+    <value>Bu iyerarxiyanın alt bəndləri var. Əvvəlcə alt bəndləri silməli və ya başqa yerə köçürməlisiniz.</value>
+  </data>
+  <data name="Form_HierarchyList_HasProductsWarning" xml:space="preserve">
+    <value>Bu iyerarxiyaya bağlı məhsullar mövcuddur. Silmək mümkün deyil.</value>
+  </data>
+  <data name="Form_HierarchyList_Input_Prompt" xml:space="preserve">
+    <value>İyerarxiya kodunu daxil edin:</value>
+  </data>
+  <data name="Form_HierarchyList_CodeExistsWarning" xml:space="preserve">
+    <value>Bu iyerarxiya kodu artıq mövcuddur. Zəhmət olmasa unikal kod daxil edin.</value>
+  </data>
+  <data name="Form_HierarchyList_Input_Title" xml:space="preserve">
+    <value>Yeni İyerarxiya</value>
+  </data>
+  <data name="Form_HierarchyList_Input_EditTitle" xml:space="preserve">
+    <value>İyerarxiyanı dəyiş</value>
   </data>
   <data name="Form_Image_Caption" xml:space="preserve">
     <value>Şəkillər</value>

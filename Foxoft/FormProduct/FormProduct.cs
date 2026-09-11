@@ -1,4 +1,4 @@
-using DevExpress.Utils.Extensions;
+﻿using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -276,7 +276,7 @@ namespace Foxoft
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormHierarchyList form = new())
+            using (FormHierarchyList form = new(buttonEdit.EditValue?.ToString()))
                 if (form.ShowDialog(this) == DialogResult.OK)
                     buttonEdit.EditValue = form.DcHierarchy?.HierarchyCode;
         }
