@@ -269,49 +269,10 @@ namespace Foxoft
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            //lC_Root.RegisterUserCustomizationForm(typeof(Form1));
         }
 
         private async void bbi_test_ItemClick(object sender, EventArgs e)
         {
-            await SendWhatsappMessageAsync("994773628800", "Salam, test mesajıdır.");
-        }
-
-        private async Task SendWhatsappMessageAsync(string phoneNumber, string message)
-        {
-            string serverUrl = "https://evolution.tokla.az"; 
-            string instanceName = "tokla";
-            string apiKey = "2fdqo0JtF6dnG23N7JbnZ9wMoVMRvRkh";
-
-            string url = $"{serverUrl}/message/sendText/{instanceName}";
-
-            var body = new
-            {
-                number = phoneNumber,
-                text = message,
-                delay = 1000,
-                linkPreview = false
-            };
-
-            string json = JsonSerializer.Serialize(body);
-
-            using HttpClient client = new HttpClient();
-
-            client.DefaultRequestHeaders.Add("apikey", apiKey);
-
-            using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response = await client.PostAsync(url, content);
-
-            string result = await response.Content.ReadAsStringAsync();
-
-            if (!response.IsSuccessStatusCode)
-            {
-                MessageBox.Show("Xəta: " + result);
-                return;
-            }
-
-            MessageBox.Show("Mesaj göndərildi: " + result);
         }
     }
 }
