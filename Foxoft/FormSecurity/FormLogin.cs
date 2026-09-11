@@ -71,120 +71,111 @@ namespace Foxoft
 
         private void btn_POS_Click(object sender, EventArgs e)
         {
-            if (Settings.Default.AppSetting.LocalCurrencyCode is null)
+            if (Settings.Default.AppSetting?.LocalCurrencyCode is null)
                 XtraMessageBox.Show(Resources.Form_Login_LocalCurrencyNotSet);
 
-            if (CheckLicense())
+            string? selectedCompany = LUE_Company.EditValue?.ToString();
+            if (string.IsNullOrWhiteSpace(selectedCompany))
             {
-                if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
-                {
-                    SessionSave(
-                        txtEdit_UserName.Text,
-                        txtEdit_Password.Text,
-                        checkEdit_RemindMe.Checked,
-                        Convert.ToInt32(LUE_Terminal.EditValue),
-                        LUE_Company.EditValue?.ToString(),
-                        LUE_Language.EditValue?.ToString());
-
-                    CultureInfo culture = CultureInfo.CreateSpecificCulture(LUE_Language.EditValue?.ToString());
-                    Thread.CurrentThread.CurrentUICulture = culture;
-                    Thread.CurrentThread.CurrentCulture = culture;
-                    CultureInfo.DefaultThreadCurrentCulture = culture;
-                    CultureInfo.DefaultThreadCurrentUICulture = culture;
-
-                    if (Convert.ToInt32(LUE_Terminal.EditValue) != 0)
-                    {
-                        FormPOS formPos = new();
-                        Hide();
-                        formPos.ShowDialog();
-                        Close();
-                    }
-                    else
-                        XtraMessageBox.Show(Resources.Form_Login_TerminalRequired);
-                }
+                XtraMessageBox.Show(Resources.Form_Login_CompanyRequired, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
-                XtraMessageBox.Show(Resources.Form_Login_LicenseInactive);
 
+            LicenseValidationResult licenseResult = CheckLicense(selectedCompany);
+            if (!licenseResult.IsValid)
+            {
+                XtraMessageBox.Show(licenseResult.Message, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (licenseResult.IsExpiringSoon)
+            {
+                _ = LicenseService.PublishExpiringSoonNotificationAsync(selectedCompany, licenseResult, txtEdit_UserName.Text.Trim());
+            }
+
+            if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
+            {
+                SessionSave(
+                    txtEdit_UserName.Text,
+                    txtEdit_Password.Text,
+                    checkEdit_RemindMe.Checked,
+                    Convert.ToInt32(LUE_Terminal.EditValue),
+                    selectedCompany,
+                    LUE_Language.EditValue?.ToString());
+
+                CultureInfo culture = CultureInfo.CreateSpecificCulture(LUE_Language.EditValue?.ToString());
+                Thread.CurrentThread.CurrentUICulture = culture;
+                Thread.CurrentThread.CurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+                if (Convert.ToInt32(LUE_Terminal.EditValue) != 0)
+                {
+                    FormPOS formPos = new();
+                    Hide();
+                    formPos.ShowDialog();
+                    Close();
+                }
+                else
+                    XtraMessageBox.Show(Resources.Form_Login_TerminalRequired);
+            }
         }
 
         private void btn_ERP_Click(object sender, EventArgs e)
         {
-            if (Settings.Default.AppSetting.LocalCurrencyCode is null)
+            if (Settings.Default.AppSetting?.LocalCurrencyCode is null)
                 XtraMessageBox.Show(Resources.Form_Login_LocalCurrencyNotSet);
 
-            if (CheckLicense())
+            string? selectedCompany = LUE_Company.EditValue?.ToString();
+            if (string.IsNullOrWhiteSpace(selectedCompany))
             {
-                if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
-                {
-                    SessionSave(
-                        txtEdit_UserName.Text,
-                        txtEdit_Password.Text,
-                        checkEdit_RemindMe.Checked,
-                        Convert.ToInt32(LUE_Terminal.EditValue),
-                        LUE_Company.EditValue?.ToString(),
-                        LUE_Language.EditValue?.ToString());
-
-                    CultureInfo culture = CultureInfo.CreateSpecificCulture(LUE_Language.EditValue?.ToString());
-                    Thread.CurrentThread.CurrentUICulture = culture;
-                    Thread.CurrentThread.CurrentCulture = culture;
-                    CultureInfo.DefaultThreadCurrentCulture = culture;
-                    CultureInfo.DefaultThreadCurrentUICulture = culture;
-
-                    if (Convert.ToInt32(LUE_Terminal.EditValue) != 0)
-                    {
-                        FormERP formERP = new();
-                        Hide();
-                        formERP.ShowDialog();
-                        Close();
-                    }
-                    else
-                        XtraMessageBox.Show(Resources.Form_Login_TerminalRequired);
-                }
+                XtraMessageBox.Show(Resources.Form_Login_CompanyRequired, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
+
+            LicenseValidationResult licenseResult = CheckLicense(selectedCompany);
+            if (!licenseResult.IsValid)
             {
-                using subContext db = new();
-                string databaseName = db.Database.GetDbConnection().Database;
-                XtraMessageBox.Show(string.Format(Resources.Form_Login_LicenseInactiveDb, databaseName));
+                XtraMessageBox.Show(licenseResult.Message, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (licenseResult.IsExpiringSoon)
+            {
+                _ = LicenseService.PublishExpiringSoonNotificationAsync(selectedCompany, licenseResult, txtEdit_UserName.Text.Trim());
+            }
+
+            if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
+            {
+                SessionSave(
+                    txtEdit_UserName.Text,
+                    txtEdit_Password.Text,
+                    checkEdit_RemindMe.Checked,
+                    Convert.ToInt32(LUE_Terminal.EditValue),
+                    selectedCompany,
+                    LUE_Language.EditValue?.ToString());
+
+                CultureInfo culture = CultureInfo.CreateSpecificCulture(LUE_Language.EditValue?.ToString());
+                Thread.CurrentThread.CurrentUICulture = culture;
+                Thread.CurrentThread.CurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+                if (Convert.ToInt32(LUE_Terminal.EditValue) != 0)
+                {
+                    FormERP formERP = new();
+                    Hide();
+                    formERP.ShowDialog();
+                    Close();
+                }
+                else
+                    XtraMessageBox.Show(Resources.Form_Login_TerminalRequired);
             }
         }
 
-        private bool CheckLicense()
+        private LicenseValidationResult CheckLicense(string? companyCode)
         {
-            string encrypt = efMethods.SelectEntityById<AppSetting>(1).License;
-
-            if (string.IsNullOrEmpty(encrypt))
-                return false;
-            else
-            {
-                try
-                {
-                    string key = "FoxoftIsTheBestP";
-                    string iv = "ThisIsAnInitVect";
-
-                    CustomMethods cM = new();
-                    string decrypted = cM.DecryptString(encrypt, key, iv);
-                    string databaseName = decrypted.Split('+')[0];
-                    string localAddress = decrypted.Split('+')[1];
-                    string date = decrypted.Split('+')[2];
-                    DateTime dateTime = DateTime.ParseExact(date, "yyyyMMdd", null);
-
-                    subContext db = new();
-                    return databaseName == db.Database.GetDbConnection().Database &&
-                        localAddress == CustomExtensions.GetPhiscalAdress() &&
-                        dateTime > DateTime.Now;
-                }
-                catch (FormatException ex)
-                {
-                    XtraMessageBox.Show(string.Format(Resources.Form_Login_LicenseDateInvalid, ex.Message));
-                    return false;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            }
+            return LicenseService.ValidateLicense(companyCode);
         }
 
         private static void SessionSave(string user, string password, bool Checked, int terminalId, string companyCode, string langCode)
@@ -212,8 +203,9 @@ namespace Foxoft
 
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string localAddress = CustomExtensions.GetPhiscalAdress();
-            System.Windows.Clipboard.SetText(localAddress);
+            string hardwareId = LicenseService.GetHardwareId();
+            System.Windows.Clipboard.SetText(hardwareId);
+            XtraMessageBox.Show(Resources.Form_Login_KeyCopiedToClipboard, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void LUE_Terminal_EditValueChanged(object sender, EventArgs e)
@@ -252,7 +244,11 @@ namespace Foxoft
         private void LUE_Company_EditValueChanged(object sender, EventArgs e)
         {
             if (LUE_Company.EditValue is not null)
+            {
+                Settings.Default.CompanyCode = LUE_Company.EditValue.ToString();
+                Settings.Default.Save();
                 LoadDataByDatabase();
+            }
         }
 
         private void SaveConnectionString(string constr)

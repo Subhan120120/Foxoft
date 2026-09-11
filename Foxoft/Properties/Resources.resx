@@ -2876,6 +2876,36 @@ Do you want to return to the invoice?</value>
   <data name="Form_Login_GetKey" xml:space="preserve">
     <value>Get Key</value>
   </data>
+  <data name="Form_Login_CompanyRequired" xml:space="preserve">
+    <value>Company is not selected!</value>
+  </data>
+  <data name="Form_Login_LicenseNotFound" xml:space="preserve">
+    <value>License not found!</value>
+  </data>
+  <data name="Form_Login_LicenseExpired" xml:space="preserve">
+    <value>License expired on {0}!</value>
+  </data>
+  <data name="Form_Login_LicenseHardwareMismatch" xml:space="preserve">
+    <value>License is not valid for this computer!</value>
+  </data>
+  <data name="Form_Login_LicenseCompanyMismatch" xml:space="preserve">
+    <value>License is not valid for the selected company ({0})!</value>
+  </data>
+  <data name="Form_Login_LicenseExpiringSoon" xml:space="preserve">
+    <value>Attention: License will expire in {0} days ({1})!</value>
+  </data>
+  <data name="Form_Login_KeyCopiedToClipboard" xml:space="preserve">
+    <value>License key copied to clipboard.</value>
+  </data>
+  <data name="Form_Login_LicenseCorrupted" xml:space="preserve">
+    <value>License data is corrupted or invalid!</value>
+  </data>
+  <data name="Form_Login_DatabaseConnectionFailed" xml:space="preserve">
+    <value>Could not connect to database: {0}</value>
+  </data>
+  <data name="Notification_LicenseExpireSoon_Title" xml:space="preserve">
+    <value>License Expiration Warning</value>
+  </data>
   <data name="Form_Login_Test" xml:space="preserve">
     <value>Run</value>
   </data>

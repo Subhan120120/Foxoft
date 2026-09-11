@@ -11352,6 +11352,96 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Company is not selected!.
+        /// </summary>
+        public static string Form_Login_CompanyRequired {
+            get {
+                return ResourceManager.GetString("Form_Login_CompanyRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License not found!.
+        /// </summary>
+        public static string Form_Login_LicenseNotFound {
+            get {
+                return ResourceManager.GetString("Form_Login_LicenseNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License expired on {0}!.
+        /// </summary>
+        public static string Form_Login_LicenseExpired {
+            get {
+                return ResourceManager.GetString("Form_Login_LicenseExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License is not valid for this computer!.
+        /// </summary>
+        public static string Form_Login_LicenseHardwareMismatch {
+            get {
+                return ResourceManager.GetString("Form_Login_LicenseHardwareMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License is not valid for the selected company ({0})!.
+        /// </summary>
+        public static string Form_Login_LicenseCompanyMismatch {
+            get {
+                return ResourceManager.GetString("Form_Login_LicenseCompanyMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attention: License will expire in {0} days ({1})!.
+        /// </summary>
+        public static string Form_Login_LicenseExpiringSoon {
+            get {
+                return ResourceManager.GetString("Form_Login_LicenseExpiringSoon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License key copied to clipboard..
+        /// </summary>
+        public static string Form_Login_KeyCopiedToClipboard {
+            get {
+                return ResourceManager.GetString("Form_Login_KeyCopiedToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License data is corrupted or invalid!.
+        /// </summary>
+        public static string Form_Login_LicenseCorrupted {
+            get {
+                return ResourceManager.GetString("Form_Login_LicenseCorrupted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not connect to database: {0}.
+        /// </summary>
+        public static string Form_Login_DatabaseConnectionFailed {
+            get {
+                return ResourceManager.GetString("Form_Login_DatabaseConnectionFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License Expiration Warning.
+        /// </summary>
+        public static string Notification_LicenseExpireSoon_Title {
+            get {
+                return ResourceManager.GetString("Notification_LicenseExpireSoon_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local currency is not set..
         /// </summary>
         public static string Form_Login_LocalCurrencyNotSet {

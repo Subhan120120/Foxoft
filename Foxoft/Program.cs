@@ -148,20 +148,18 @@ namespace Foxoft
                     if (string.IsNullOrEmpty(companyCode) || string.IsNullOrEmpty(license) || string.IsNullOrEmpty(dueDate))
                         continue;
 
-                    if (license == CustomExtensions.GetPhiscalAdress())
+                    if (LicenseService.IsHardwareMatching(license))
                     {
-                        string licenseString = companyCode + "+" + license + "+" + dueDate;
-                        string key = "FoxoftIsTheBestP";
-                        string iv = "ThisIsAnInitVect";
-
-                        CustomMethods cM = new();
-                        string encrypt = cM.EncryptString(licenseString, key, iv);
-
-                        foreach (DcCompany company in companies)
+                        if (DateTime.TryParseExact(dueDate, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDueDate))
                         {
-                            if (company.CompanyCode == companyCode)
+                            string encrypt = LicenseService.EncryptLicense(companyCode, license, parsedDueDate);
+
+                            foreach (DcCompany company in companies)
                             {
-                                efMethods.UpdateAppSettingLicense(encrypt, company.CompanyCode);
+                                if (string.Equals(company.CompanyCode, companyCode, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    efMethods.UpdateAppSettingLicense(encrypt, company.CompanyCode);
+                                }
                             }
                         }
                     }

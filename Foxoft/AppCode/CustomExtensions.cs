@@ -1,10 +1,11 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using System.Diagnostics;
 using System.IO;
@@ -214,19 +215,7 @@ namespace Foxoft
 
         public static string GetPhiscalAdress()
         {
-            string fiscal = String.Empty;
-            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
-
-                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet && nic.Name.StartsWith("Ethernet"))
-                    fiscal = nic.Id + pInterfaceProperties;
-
-                else if (nic.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 && nic.Name.StartsWith("Wi-Fi"))
-                    fiscal = nic.Id + pInterfaceProperties;
-            }
-
-            return fiscal;
+            return LicenseService.GetHardwareId();
         }
 
         public static string ExportToExcel(Form form, string fileNameText, GridControl gridControl)

@@ -2867,6 +2867,36 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_Login_GetKey" xml:space="preserve">
     <value>Açarı götür</value>
   </data>
+  <data name="Form_Login_CompanyRequired" xml:space="preserve">
+    <value>Şirkət seçilməyib!</value>
+  </data>
+  <data name="Form_Login_LicenseNotFound" xml:space="preserve">
+    <value>Lisenziya tapılmadı!</value>
+  </data>
+  <data name="Form_Login_LicenseExpired" xml:space="preserve">
+    <value>Lisenziyanın müddəti {0} tarixində bitmişdir!</value>
+  </data>
+  <data name="Form_Login_LicenseHardwareMismatch" xml:space="preserve">
+    <value>Lisenziya bu kompüter üçün etibarsızdır!</value>
+  </data>
+  <data name="Form_Login_LicenseCompanyMismatch" xml:space="preserve">
+    <value>Lisenziya seçilmiş şirkət ({0}) üçün etibarsızdır!</value>
+  </data>
+  <data name="Form_Login_LicenseExpiringSoon" xml:space="preserve">
+    <value>Diqqət: Lisenziyanın bitməsinə {0} gün qaldı ({1})!</value>
+  </data>
+  <data name="Form_Login_KeyCopiedToClipboard" xml:space="preserve">
+    <value>Açar mübadilə buferinə kopyalandı.</value>
+  </data>
+  <data name="Form_Login_LicenseCorrupted" xml:space="preserve">
+    <value>Lisenziya məlumatları zədələnib və ya etibarsızdır!</value>
+  </data>
+  <data name="Form_Login_DatabaseConnectionFailed" xml:space="preserve">
+    <value>Verilənlər bazasına qoşulmaq mümkün olmadı: {0}</value>
+  </data>
+  <data name="Notification_LicenseExpireSoon_Title" xml:space="preserve">
+    <value>Lisenziya Xəbərdarlığı</value>
+  </data>
   <data name="Form_Login_Test" xml:space="preserve">
     <value>Run</value>
   </data>
