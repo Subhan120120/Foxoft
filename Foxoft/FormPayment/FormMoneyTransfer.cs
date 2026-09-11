@@ -85,6 +85,8 @@ namespace Foxoft
             dataLayoutControl1.IsValid(out List<string> errorList);
 
             gV_PaymentLine.Focus();
+
+            UpdateWhatsAppIcon(paymentHeaderId);
         }
 
         private void trPaymentHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -740,9 +742,13 @@ namespace Foxoft
         {
             try
             {
-                using var ctx = new subContext();
-                bool isSent = ctx.TrMessageLogs
-                    .Any(x => x.DocumentHeaderId == paymentHeaderId && x.ChannelCode == NotificationChannels.WhatsApp && x.IsSuccessful);
+                bool isSent = false;
+                if (paymentHeaderId != Guid.Empty)
+                {
+                    using var ctx = new subContext();
+                    isSent = ctx.TrMessageLogs
+                        .Any(x => x.DocumentHeaderId == paymentHeaderId && x.ChannelCode == NotificationChannels.WhatsApp && x.IsSuccessful);
+                }
 
                 string svgKey = isSent ? "whatsapp_sent" : "whatsapp_unsend";
                 bBI_SendWhatsapp.ImageOptions.SvgImage = svgImageCollection1[svgKey];

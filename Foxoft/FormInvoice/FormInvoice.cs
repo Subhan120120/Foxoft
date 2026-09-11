@@ -495,6 +495,8 @@ namespace Foxoft
             PopulateRelatedInvoicesMenu();
 
             SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
+
+            UpdateWhatsAppIcon(trInvoiceHeader.InvoiceHeaderId);
         }
 
         private void ClearInstallmentGarantorsAddNew()
@@ -2814,9 +2816,13 @@ namespace Foxoft
         {
             try
             {
-                using var ctx = new subContext();
-                bool isSent = ctx.TrMessageLogs
-                    .Any(x => x.DocumentHeaderId == invoiceHeaderId && x.ChannelCode == NotificationChannels.WhatsApp && x.IsSuccessful);
+                bool isSent = false;
+                if (invoiceHeaderId != Guid.Empty)
+                {
+                    using var ctx = new subContext();
+                    isSent = ctx.TrMessageLogs
+                        .Any(x => x.DocumentHeaderId == invoiceHeaderId && x.ChannelCode == NotificationChannels.WhatsApp && x.IsSuccessful);
+                }
 
                 string svgKey = isSent ? "whatsapp_sent" : "whatsapp_unsend";
                 bBI_Whatsapp.ImageOptions.SvgImage = svgImageCollection1[svgKey];
