@@ -15,20 +15,37 @@ namespace Foxoft.AppCode
         private static readonly TimeSpan CacheDuration = TimeSpan.FromSeconds(5);
         private static readonly SemaphoreSlim _lock = new(1, 1);
 
+        private static readonly SocketsHttpHandler _httpHandler = new()
+        {
+            ConnectTimeout = TimeSpan.FromSeconds(2),
+            PooledConnectionLifetime = TimeSpan.FromMinutes(15)
+        };
+
+        private static readonly HttpClient _httpClient = new(_httpHandler)
+        {
+            Timeout = TimeSpan.FromSeconds(3)
+        };
+
         public static event Action? InternetRestored;
 
         /// <summary>
         /// Checks if an active network interface is present and can reach the internet.
         /// </summary>
-        public static async Task<bool> IsInternetAvailableAsync(CancellationToken ct = default)
+        public static Task<bool> IsInternetAvailableAsync(CancellationToken ct = default)
+            => IsInternetAvailableAsync(forceRefresh: false, ct);
+
+        /// <summary>
+        /// Checks if an active network interface is present and can reach the internet, with optional cache bypass.
+        /// </summary>
+        public static async Task<bool> IsInternetAvailableAsync(bool forceRefresh, CancellationToken ct = default)
         {
-            if (DateTime.UtcNow - _lastCheckedTime < CacheDuration)
+            if (!forceRefresh && DateTime.UtcNow - _lastCheckedTime < CacheDuration)
                 return _lastKnownStatus;
 
-            await _lock.WaitAsync(ct);
+            await _lock.WaitAsync(ct).ConfigureAwait(false);
             try
             {
-                if (DateTime.UtcNow - _lastCheckedTime < CacheDuration)
+                if (!forceRefresh && DateTime.UtcNow - _lastCheckedTime < CacheDuration)
                     return _lastKnownStatus;
 
                 if (!NetworkInterface.GetIsNetworkAvailable())
@@ -39,7 +56,7 @@ namespace Foxoft.AppCode
                 }
 
                 bool wasOffline = !_lastKnownStatus;
-                bool probeSuccess = await ProbeConnectivityAsync(ct);
+                bool probeSuccess = await ProbeConnectivityAsync(ct).ConfigureAwait(false);
 
                 _lastKnownStatus = probeSuccess;
                 _lastCheckedTime = DateTime.UtcNow;
@@ -58,6 +75,10 @@ namespace Foxoft.AppCode
 
                 return probeSuccess;
             }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
             catch
             {
                 _lastKnownStatus = false;
@@ -72,18 +93,26 @@ namespace Foxoft.AppCode
 
         /// <summary>
         /// Synchronous wrapper for internet availability check.
+        /// Executes on a thread pool thread to prevent deadlocks on WinForms UI thread.
         /// </summary>
-        public static bool IsInternetAvailable()
+        public static bool IsInternetAvailable(int timeoutMs = 3000, bool forceRefresh = false)
         {
             try
             {
-                return IsInternetAvailableAsync().GetAwaiter().GetResult();
+                using var cts = new CancellationTokenSource(timeoutMs);
+                return Task.Run(() => IsInternetAvailableAsync(forceRefresh, cts.Token)).GetAwaiter().GetResult();
             }
             catch
             {
                 return false;
             }
         }
+
+        /// <summary>
+        /// Professional replacement for legacy CheckForInternetConnection method.
+        /// </summary>
+        public static bool CheckForInternetConnection(int timeoutMs = 3000)
+            => IsInternetAvailable(timeoutMs);
 
         /// <summary>
         /// Checks whether a specific provider service (e.g. WhatsApp Evolution API or SMS gateway) is reachable.
@@ -103,7 +132,7 @@ namespace Foxoft.AppCode
                 cts.CancelAfter(TimeSpan.FromSeconds(3));
 
                 int port = uri.Port > 0 ? uri.Port : (uri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase) ? 443 : 80);
-                await client.ConnectAsync(uri.Host, port, cts.Token);
+                await client.ConnectAsync(uri.Host, port, cts.Token).ConfigureAwait(false);
                 return true;
             }
             catch
@@ -114,32 +143,68 @@ namespace Foxoft.AppCode
 
         private static async Task<bool> ProbeConnectivityAsync(CancellationToken ct)
         {
-            // 1. Fast TCP probe to public DNS (1.1.1.1:53 or 8.8.8.8:53) - reliable and fast (<200ms)
-            if (await ProbeTcpPortAsync("1.1.1.1", 53, TimeSpan.FromSeconds(2), ct))
-                return true;
+            // 1. Fast parallel TCP handshake to primary anycast DNS/HTTPS servers (port 443)
+            // Port 443 is used because port 53 is often blocked on corporate/guest Wi-Fi networks.
+            try
+            {
+                using var fastCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+                fastCts.CancelAfter(TimeSpan.FromMilliseconds(1500));
 
-            if (await ProbeTcpPortAsync("8.8.8.8", 53, TimeSpan.FromSeconds(2), ct))
-                return true;
+                var probe1 = ProbeTcpPortAsync("1.1.1.1", 443, fastCts.Token);
+                var probe2 = ProbeTcpPortAsync("8.8.8.8", 443, fastCts.Token);
 
-            // 2. HTTP probe to standard generate_204 endpoints
-            if (await ProbeHttpEndpointAsync("http://www.gstatic.com/generate_204", TimeSpan.FromSeconds(3), ct))
-                return true;
+                var completed = await Task.WhenAny(probe1, probe2).ConfigureAwait(false);
+                if (await completed.ConfigureAwait(false))
+                {
+                    fastCts.Cancel();
+                    return true;
+                }
 
-            if (await ProbeHttpEndpointAsync("http://www.msftconnecttest.com/connecttest.txt", TimeSpan.FromSeconds(3), ct))
-                return true;
+                var remaining = (completed == probe1) ? probe2 : probe1;
+                if (await remaining.ConfigureAwait(false))
+                    return true;
+            }
+            catch (OperationCanceledException) when (!ct.IsCancellationRequested)
+            {
+                // Fast probe timed out, fall through to HTTP fallback
+            }
+            catch
+            {
+                // Fall through to HTTP fallback
+            }
 
-            return false;
+            // 2. HTTP probe fallback to standard NCSI / generate_204 endpoints
+            // Handles enterprise proxies and captive portal environments.
+            try
+            {
+                using var httpCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+                httpCts.CancelAfter(TimeSpan.FromSeconds(2));
+
+                var http1 = ProbeHttpEndpointAsync("http://www.gstatic.com/generate_204", httpCts.Token);
+                var http2 = ProbeHttpEndpointAsync("http://www.msftconnecttest.com/connecttest.txt", httpCts.Token);
+
+                var completedHttp = await Task.WhenAny(http1, http2).ConfigureAwait(false);
+                if (await completedHttp.ConfigureAwait(false))
+                {
+                    httpCts.Cancel();
+                    return true;
+                }
+
+                var remainingHttp = (completedHttp == http1) ? http2 : http1;
+                return await remainingHttp.ConfigureAwait(false);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        private static async Task<bool> ProbeTcpPortAsync(string host, int port, TimeSpan timeout, CancellationToken ct)
+        private static async Task<bool> ProbeTcpPortAsync(string host, int port, CancellationToken ct)
         {
             try
             {
                 using var client = new TcpClient();
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
-                cts.CancelAfter(timeout);
-
-                await client.ConnectAsync(host, port, cts.Token);
+                await client.ConnectAsync(host, port, ct).ConfigureAwait(false);
                 return true;
             }
             catch
@@ -148,21 +213,12 @@ namespace Foxoft.AppCode
             }
         }
 
-        private static async Task<bool> ProbeHttpEndpointAsync(string url, TimeSpan timeout, CancellationToken ct)
+        private static async Task<bool> ProbeHttpEndpointAsync(string url, CancellationToken ct)
         {
             try
             {
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
-                cts.CancelAfter(timeout);
-
-                using var handler = new SocketsHttpHandler
-                {
-                    ConnectTimeout = timeout
-                };
-                using var client = new HttpClient(handler);
-                client.Timeout = timeout;
-
-                using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+                using var request = new HttpRequestMessage(HttpMethod.Get, url);
+                using var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false);
                 return response.IsSuccessStatusCode;
             }
             catch

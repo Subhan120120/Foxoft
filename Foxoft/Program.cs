@@ -11,7 +11,6 @@ using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
-using System.Net;
 
 namespace Foxoft
 {
@@ -101,7 +100,7 @@ namespace Foxoft
 
             bool UpdateLicense()
             {
-                if (!CheckForInternetConnection(1000, "http://www.google.com"))
+                if (!NetworkConnectivityHelper.IsInternetAvailable(1500))
                     return false;
 
                 using GoogleDriveAPI googleDriveAPI = new();
@@ -167,23 +166,6 @@ namespace Foxoft
 
                 return true;
             }
-
-            bool CheckForInternetConnection(int timeoutMs = 10000, string url = null)
-            {
-                try
-                {
-                    var request = (HttpWebRequest)WebRequest.Create(url);
-                    request.KeepAlive = false;
-                    request.Timeout = timeoutMs;
-                    using (var response = (HttpWebResponse)request.GetResponse())
-                        return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-
         }
     }
 }

@@ -7,7 +7,6 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.IO;
-using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -81,7 +80,7 @@ namespace Foxoft
             }
 
             // Internet yoxla
-            if (!CheckInternet())
+            if (!NetworkConnectivityHelper.IsInternetAvailable())
             {
                 XtraMessageBox.Show(
                     Properties.Resources.Credit_NoInternet,
@@ -322,22 +321,6 @@ namespace Foxoft
             for (int i = 0; i < bytes.Length; i++)
                 builder.Append(bytes[i].ToString("x2"));
             return builder.ToString();
-        }
-
-        private static bool CheckInternet()
-        {
-            try
-            {
-                var request = (HttpWebRequest)WebRequest.Create("http://www.google.com");
-                request.KeepAlive = false;
-                request.Timeout = 3000;
-                using var response = (HttpWebResponse)request.GetResponse();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         private static string GetEnumDescription<TEnum>(TEnum value) where TEnum : struct, Enum
