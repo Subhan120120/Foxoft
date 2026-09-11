@@ -80,7 +80,7 @@ namespace Foxoft.AppCode.Service
                         LogFailedMessage(outbox, ex.Message);
                     }
 
-                    NotifyFailureIfInUi(ex.Message);
+                    NotifyFailureIfInUi(outbox.ChannelCode, outbox.Receiver, ex.Message);
 
                     failed++;
                 }
@@ -242,21 +242,11 @@ namespace Foxoft.AppCode.Service
             }
         }
 
-        private static void NotifyFailureIfInUi(string errorMessage)
+        private static void NotifyFailureIfInUi(string channel, string receiver, string errorMessage)
         {
             try
             {
-                var mainForm = System.Windows.Forms.Application.OpenForms?.OfType<System.Windows.Forms.Form>().FirstOrDefault();
-                if (mainForm != null && mainForm.IsHandleCreated)
-                {
-                    mainForm.BeginInvoke((Action)(() =>
-                    {
-                        var alertControl = new DevExpress.XtraBars.Alerter.AlertControl();
-                        alertControl.AutoFormDelay = 4000;
-                        alertControl.FormDisplaySpeed = DevExpress.XtraBars.Alerter.AlertFormDisplaySpeed.Fast;
-                        alertControl.Show(mainForm, Resources.Common_ErrorTitle, string.Format(Resources.Common_WhatsAppSendError, errorMessage));
-                    }));
-                }
+                MessageToastService.ShowUnsentToast(channel, receiver, errorMessage);
             }
             catch
             {

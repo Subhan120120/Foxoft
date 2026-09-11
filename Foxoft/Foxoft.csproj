@@ -334,6 +334,17 @@
 		<EmbeddedResource Include="Resources\fox_007.ico" />
 		<EmbeddedResource Include="Resources\NoPhoto.png" />
 		<EmbeddedResource Include="Resources\startup550x363.png.png" />
+		<EmbeddedResource Include="Resources\SMS.svg" />
+		<EmbeddedResource Include="Resources\WhatsApp.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Resources\SMS.svg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Resources\WhatsApp.svg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>

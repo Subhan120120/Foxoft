@@ -1,3 +1,4 @@
+using DevExpress.Utils.Svg;
 using DevExpress.XtraBars.Alerter;
 using Foxoft.AppCode;
 using Foxoft.Models;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,8 +23,128 @@ namespace Foxoft.AppCode.Service
         private static readonly SemaphoreSlim _checkLock = new(1, 1);
         private static AlertControl? _alertControl;
 
+        private static SvgImage? _whatsAppSvg;
+        private static SvgImage? _smsSvg;
+        private static Image? _whatsAppIcon;
+        private static Image? _smsIcon;
+        private static readonly object _iconLock = new();
+
         public static bool IsInCache(Guid messageLogId, bool isSuccessful) =>
             _shownLogCache.ContainsKey((messageLogId, isSuccessful));
+
+        public static Image? GetWhatsAppIcon()
+        {
+            if (_whatsAppIcon == null)
+            {
+                lock (_iconLock)
+                {
+                    if (_whatsAppIcon == null)
+                    {
+                        _whatsAppSvg ??= LoadSvg("WhatsApp.svg");
+                        _whatsAppIcon = RenderSvgToImage(_whatsAppSvg, 36, 36);
+                    }
+                }
+            }
+            return _whatsAppIcon != null ? (Image)_whatsAppIcon.Clone() : null;
+        }
+
+        public static Image? GetSmsIcon()
+        {
+            if (_smsIcon == null)
+            {
+                lock (_iconLock)
+                {
+                    if (_smsIcon == null)
+                    {
+                        _smsSvg ??= LoadSvg("SMS.svg");
+                        _smsIcon = RenderSvgToImage(_smsSvg, 36, 36);
+                    }
+                }
+            }
+            return _smsIcon != null ? (Image)_smsIcon.Clone() : null;
+        }
+
+        public static Image? GetChannelOrProviderIcon(string? channel, string? provider = null)
+        {
+            string target = $"{channel} {provider}".Trim();
+
+            if (string.IsNullOrWhiteSpace(target))
+                return GetWhatsAppIcon();
+
+            if (target.IndexOf("sms", StringComparison.OrdinalIgnoreCase) >= 0)
+                return GetSmsIcon();
+
+            if (target.IndexOf("whatsapp", StringComparison.OrdinalIgnoreCase) >= 0)
+                return GetWhatsAppIcon();
+
+            return GetWhatsAppIcon();
+        }
+
+        private static SvgImage? LoadSvg(string fileName)
+        {
+            try
+            {
+                string[] candidateDirs = new[]
+                {
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources"),
+                    Path.Combine(Application.StartupPath, "Resources"),
+                    Path.Combine(AppContext.BaseDirectory, "Resources"),
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Resources"),
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "Foxoft", "Resources"),
+                    AppDomain.CurrentDomain.BaseDirectory
+                };
+
+                foreach (string dir in candidateDirs)
+                {
+                    try
+                    {
+                        string fullPath = Path.Combine(dir, fileName);
+                        if (File.Exists(fullPath))
+                        {
+                            return SvgImage.FromFile(fullPath);
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                var assembly = typeof(MessageToastService).Assembly;
+                string resName = $"Foxoft.Resources.{fileName}";
+                using Stream? stream = assembly.GetManifestResourceStream(resName);
+                if (stream != null)
+                {
+                    return SvgImage.FromStream(stream);
+                }
+            }
+            catch
+            {
+            }
+
+            return null;
+        }
+
+        private static Image? RenderSvgToImage(SvgImage? svg, int width = 36, int height = 36)
+        {
+            if (svg == null)
+                return null;
+
+            try
+            {
+                SvgBitmap bitmap = new(svg);
+                return bitmap.Render(new Size(width, height), null);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         private static AlertControl GetAlertControl()
         {
@@ -59,7 +181,7 @@ namespace Foxoft.AppCode.Service
             return _alertControl;
         }
 
-        public static void ShowSentToast(string channel, string receiver, string? detail = null, Guid? messageLogId = null)
+        public static void ShowSentToast(string channel, string receiver, string? detail = null, Guid? messageLogId = null, string? provider = null)
         {
             if (messageLogId.HasValue)
             {
@@ -73,10 +195,11 @@ namespace Foxoft.AppCode.Service
                 text += $"\n{detail}";
             }
 
-            ShowToastInternal(caption, text);
+            Image? icon = GetChannelOrProviderIcon(channel, provider);
+            ShowToastInternal(caption, text, icon);
         }
 
-        public static void ShowUnsentToast(string channel, string receiver, string? errorMessage = null, Guid? messageLogId = null)
+        public static void ShowUnsentToast(string channel, string receiver, string? errorMessage = null, Guid? messageLogId = null, string? provider = null)
         {
             if (messageLogId.HasValue)
             {
@@ -90,7 +213,8 @@ namespace Foxoft.AppCode.Service
                 text += $"\n{string.Format(Resources.Common_Toast_Error, errorMessage)}";
             }
 
-            ShowToastInternal(caption, text);
+            Image? icon = GetChannelOrProviderIcon(channel, provider);
+            ShowToastInternal(caption, text, icon);
         }
 
         public static async Task CheckRecentMessageLogsAsync(Form? owner = null, string? currAccCode = null, CancellationToken ct = default)
@@ -171,7 +295,7 @@ namespace Foxoft.AppCode.Service
             }
         }
 
-        private static void ShowToastInternal(string caption, string text)
+        private static void ShowToastInternal(string caption, string text, Image? icon = null)
         {
             try
             {
@@ -184,7 +308,8 @@ namespace Foxoft.AppCode.Service
                     try
                     {
                         AlertControl ac = GetAlertControl();
-                        ac.Show(mainForm, new AlertInfo(caption, text));
+                        var info = new AlertInfo(caption, text, icon);
+                        ac.Show(mainForm, info);
                     }
                     catch
                     {
