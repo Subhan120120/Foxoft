@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -388,6 +388,7 @@ namespace Foxoft
             repoLUE_PaymentTypeCode.AutoHeight = false;
             repoLUE_PaymentTypeCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
             repoLUE_PaymentTypeCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoLUE_PaymentTypeCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeCode", Resources.Entity_PaymentType_Code), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeDesc", Resources.Entity_PaymentType_Desc) });
             repoLUE_PaymentTypeCode.DisplayMember = "PaymentTypeDesc";
             repoLUE_PaymentTypeCode.Name = "repoLUE_PaymentTypeCode";
             repoLUE_PaymentTypeCode.NullText = "";
@@ -436,7 +437,7 @@ namespace Foxoft
             repoLUE_CurrencyCode.AutoHeight = false;
             repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
             repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "") });
+            repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", Resources.Entity_Currency_Code), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", Resources.Entity_Currency_Desc) });
             repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
             repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
             repoLUE_CurrencyCode.NullText = "";
