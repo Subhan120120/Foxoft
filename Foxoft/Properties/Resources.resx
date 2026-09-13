@@ -5799,4 +5799,226 @@ Please wait or choose another invoice.</value>
   <data name="Common_Toast_Error" xml:space="preserve">
     <value>Error: {0}</value>
   </data>
+  <data name="Entity_AppSetting_AutoBackupEnabled" xml:space="preserve">
+    <value>Auto Backup Enabled</value>
+  </data>
+  <data name="Entity_AppSetting_RarExePath" xml:space="preserve">
+    <value>WinRAR Executable Path</value>
+  </data>
+  <data name="Entity_DcBackupJob_JobName" xml:space="preserve">
+    <value>Job Name</value>
+  </data>
+  <data name="Entity_DcBackupJob_IsEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Entity_DcBackupJob_DatabaseNames" xml:space="preserve">
+    <value>Databases</value>
+  </data>
+  <data name="Entity_DcBackupJob_BackupType" xml:space="preserve">
+    <value>Backup Type</value>
+  </data>
+  <data name="Entity_DcBackupJob_CompressionType" xml:space="preserve">
+    <value>Compression</value>
+  </data>
+  <data name="Entity_DcBackupJob_LocalPath" xml:space="preserve">
+    <value>Local Path</value>
+  </data>
+  <data name="Entity_DcBackupJob_UploadToCloud" xml:space="preserve">
+    <value>Upload to Cloud</value>
+  </data>
+  <data name="Entity_DcBackupJob_CloudFolderId" xml:space="preserve">
+    <value>Cloud Folder</value>
+  </data>
+  <data name="Entity_DcBackupJob_RetentionDays" xml:space="preserve">
+    <value>Retention (Days)</value>
+  </data>
+  <data name="Entity_DcBackupJob_ScheduleType" xml:space="preserve">
+    <value>Schedule Type</value>
+  </data>
+  <data name="Entity_DcBackupJob_IntervalMinutes" xml:space="preserve">
+    <value>Interval (Minutes)</value>
+  </data>
+  <data name="Entity_DcBackupJob_StartTime" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
+  <data name="Entity_DcBackupJob_EndTime" xml:space="preserve">
+    <value>End Time</value>
+  </data>
+  <data name="Entity_DcBackupJob_DailyTime" xml:space="preserve">
+    <value>Daily Time</value>
+  </data>
+  <data name="Entity_DcBackupJob_SelectedDaysOfWeek" xml:space="preserve">
+    <value>Days of Week</value>
+  </data>
+  <data name="Entity_DcBackupJob_LastRunTime" xml:space="preserve">
+    <value>Last Run</value>
+  </data>
+  <data name="Entity_DcBackupJob_NextRunTime" xml:space="preserve">
+    <value>Next Run</value>
+  </data>
+  <data name="Entity_DcBackupJob_LastStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Entity_DcBackupJob_LastErrorMessage" xml:space="preserve">
+    <value>Last Error</value>
+  </data>
+  <data name="Form_BackupManager_Title" xml:space="preserve">
+    <value>Backup Management</value>
+  </data>
+  <data name="Form_BackupJobEdit_Title" xml:space="preserve">
+    <value>Backup Job</value>
+  </data>
+  <data name="Form_BackupManager_NewJob" xml:space="preserve">
+    <value>New Job</value>
+  </data>
+  <data name="Form_BackupManager_EditJob" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Form_BackupManager_DeleteJob" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Form_BackupManager_RunNow" xml:space="preserve">
+    <value>Run Now</value>
+  </data>
+  <data name="Form_BackupManager_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Form_BackupManager_ServiceStatus" xml:space="preserve">
+    <value>Service Status</value>
+  </data>
+  <data name="Form_BackupManager_StartService" xml:space="preserve">
+    <value>Start Service</value>
+  </data>
+  <data name="Form_BackupManager_StopService" xml:space="preserve">
+    <value>Stop Service</value>
+  </data>
+  <data name="Form_BackupManager_InstallService" xml:space="preserve">
+    <value>Install Service</value>
+  </data>
+  <data name="Form_BackupManager_UninstallService" xml:space="preserve">
+    <value>Uninstall Service</value>
+  </data>
+  <data name="Form_BackupManager_StatusRunningService" xml:space="preserve">
+    <value>Running (Windows Service)</value>
+  </data>
+  <data name="Form_BackupManager_StatusRunningProcess" xml:space="preserve">
+    <value>Running (Background Process)</value>
+  </data>
+  <data name="Form_BackupManager_StatusStopped" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="Form_BackupManager_StatusNotInstalled" xml:space="preserve">
+    <value>Not Installed</value>
+  </data>
+  <data name="Form_BackupManager_ConfirmDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this backup job?</value>
+  </data>
+  <data name="Form_BackupManager_RunStarted" xml:space="preserve">
+    <value>Backup job started.</value>
+  </data>
+  <data name="Form_BackupManager_LogsTitle" xml:space="preserve">
+    <value>Execution Logs</value>
+  </data>
+  <data name="Form_BackupJobEdit_AllDatabases" xml:space="preserve">
+    <value>All Databases (Dynamic Scan)</value>
+  </data>
+  <data name="Form_BackupJobEdit_SelectDatabases" xml:space="preserve">
+    <value>Select Databases</value>
+  </data>
+  <data name="Form_BackupJobEdit_Full" xml:space="preserve">
+    <value>Full Backup</value>
+  </data>
+  <data name="Form_BackupJobEdit_Diff" xml:space="preserve">
+    <value>Differential Backup</value>
+  </data>
+  <data name="Form_BackupJobEdit_NoCompression" xml:space="preserve">
+    <value>No Compression (.bak)</value>
+  </data>
+  <data name="Form_BackupJobEdit_TestCloud" xml:space="preserve">
+    <value>Test Connection</value>
+  </data>
+  <data name="Form_BackupJobEdit_BrowseFolder" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="Form_BackupJobEdit_ScheduleInterval" xml:space="preserve">
+    <value>Interval (every N minutes)</value>
+  </data>
+  <data name="Form_BackupJobEdit_ScheduleDaily" xml:space="preserve">
+    <value>Daily at scheduled time</value>
+  </data>
+  <data name="Form_BackupJobEdit_GeneralGroup" xml:space="preserve">
+    <value>General Settings</value>
+  </data>
+  <data name="Form_BackupJobEdit_DatabasesGroup" xml:space="preserve">
+    <value>Databases</value>
+  </data>
+  <data name="Form_BackupJobEdit_StrategyGroup" xml:space="preserve">
+    <value>Strategy &amp; Compression</value>
+  </data>
+  <data name="Form_BackupJobEdit_StorageGroup" xml:space="preserve">
+    <value>Storage &amp; Cloud</value>
+  </data>
+  <data name="Form_BackupJobEdit_ScheduleGroup" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="Form_BackupJobEdit_RetentionGroup" xml:space="preserve">
+    <value>Retention Policy</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysMonday" xml:space="preserve">
+    <value>Mon</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysTuesday" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysWednesday" xml:space="preserve">
+    <value>Wed</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysThursday" xml:space="preserve">
+    <value>Thu</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysFriday" xml:space="preserve">
+    <value>Fri</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysSaturday" xml:space="preserve">
+    <value>Sat</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysSunday" xml:space="preserve">
+    <value>Sun</value>
+  </data>
+  <data name="Form_ERP_BackupSettings" xml:space="preserve">
+    <value>Backup Service</value>
+  </data>
+  <data name="Entity_TrBackupLog_StartTime" xml:space="preserve">
+    <value>Date / Time</value>
+  </data>
+  <data name="Entity_TrBackupLog_JobName" xml:space="preserve">
+    <value>Job</value>
+  </data>
+  <data name="Entity_TrBackupLog_DatabaseName" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="Entity_TrBackupLog_BackupType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Entity_TrBackupLog_BackupFileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="Entity_TrBackupLog_FileSizeMb" xml:space="preserve">
+    <value>Initial Size (MB)</value>
+  </data>
+  <data name="Entity_TrBackupLog_CompressedSizeMb" xml:space="preserve">
+    <value>Compressed Size (MB)</value>
+  </data>
+  <data name="Entity_TrBackupLog_DurationSeconds" xml:space="preserve">
+    <value>Duration (sec)</value>
+  </data>
+  <data name="Entity_TrBackupLog_IsUploadedToCloud" xml:space="preserve">
+    <value>Cloud</value>
+  </data>
+  <data name="Entity_TrBackupLog_IsSuccess" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="Entity_TrBackupLog_ErrorMessage" xml:space="preserve">
+    <value>Error Message</value>
+  </data>
 </root>

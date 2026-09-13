@@ -17045,5 +17045,450 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Validation_StringLength_Max", resourceCulture);
             }
         }
+
+        public static string Entity_AppSetting_AutoBackupEnabled {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AutoBackupEnabled", resourceCulture);
+            }
+        }
+
+        public static string Entity_AppSetting_RarExePath {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_RarExePath", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_JobName {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_JobName", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_IsEnabled {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_IsEnabled", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_DatabaseNames {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_DatabaseNames", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_BackupType {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_BackupType", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_CompressionType {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_CompressionType", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_LocalPath {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_LocalPath", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_UploadToCloud {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_UploadToCloud", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_CloudFolderId {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_CloudFolderId", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_RetentionDays {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_RetentionDays", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_ScheduleType {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_ScheduleType", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_IntervalMinutes {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_IntervalMinutes", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_StartTime {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_StartTime", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_EndTime {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_EndTime", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_DailyTime {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_DailyTime", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_SelectedDaysOfWeek {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_SelectedDaysOfWeek", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_LastRunTime {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_LastRunTime", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_NextRunTime {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_NextRunTime", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_LastStatus {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_LastStatus", resourceCulture);
+            }
+        }
+
+        public static string Entity_DcBackupJob_LastErrorMessage {
+            get {
+                return ResourceManager.GetString("Entity_DcBackupJob_LastErrorMessage", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_Title {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_Title", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_Title {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_Title", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_NewJob {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_NewJob", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_EditJob {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_EditJob", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_DeleteJob {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_DeleteJob", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_RunNow {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_RunNow", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_Refresh {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_Refresh", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_ServiceStatus {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_ServiceStatus", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_StartService {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_StartService", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_StopService {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_StopService", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_InstallService {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_InstallService", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_UninstallService {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_UninstallService", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_StatusRunningService {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_StatusRunningService", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_StatusRunningProcess {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_StatusRunningProcess", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_StatusStopped {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_StatusStopped", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_StatusNotInstalled {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_StatusNotInstalled", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_ConfirmDelete {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_ConfirmDelete", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_RunStarted {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_RunStarted", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupManager_LogsTitle {
+            get {
+                return ResourceManager.GetString("Form_BackupManager_LogsTitle", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_AllDatabases {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_AllDatabases", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_SelectDatabases {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_SelectDatabases", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_Full {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_Full", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_Diff {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_Diff", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_NoCompression {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_NoCompression", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_TestCloud {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_TestCloud", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_BrowseFolder {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_BrowseFolder", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_ScheduleInterval {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_ScheduleInterval", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_ScheduleDaily {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_ScheduleDaily", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_GeneralGroup {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_GeneralGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_DatabasesGroup {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_DatabasesGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_StrategyGroup {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_StrategyGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_StorageGroup {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_StorageGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_ScheduleGroup {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_ScheduleGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_RetentionGroup {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_RetentionGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_DaysMonday {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_DaysMonday", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_DaysTuesday {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_DaysTuesday", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_DaysWednesday {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_DaysWednesday", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_DaysThursday {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_DaysThursday", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_DaysFriday {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_DaysFriday", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_DaysSaturday {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_DaysSaturday", resourceCulture);
+            }
+        }
+
+        public static string Form_BackupJobEdit_DaysSunday {
+            get {
+                return ResourceManager.GetString("Form_BackupJobEdit_DaysSunday", resourceCulture);
+            }
+        }
+
+        public static string Form_ERP_BackupSettings {
+            get {
+                return ResourceManager.GetString("Form_ERP_BackupSettings", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_StartTime {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_StartTime", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_JobName {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_JobName", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_DatabaseName {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_DatabaseName", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_BackupType {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_BackupType", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_BackupFileName {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_BackupFileName", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_FileSizeMb {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_FileSizeMb", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_CompressedSizeMb {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_CompressedSizeMb", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_DurationSeconds {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_DurationSeconds", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_IsUploadedToCloud {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_IsUploadedToCloud", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_IsSuccess {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_IsSuccess", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrBackupLog_ErrorMessage {
+            get {
+                return ResourceManager.GetString("Entity_TrBackupLog_ErrorMessage", resourceCulture);
+            }
+        }
     }
 }
+

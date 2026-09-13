@@ -84,6 +84,7 @@ namespace Foxoft
             InitializeFavorites();
             StartNotificationPopupTimer();
             StartNotificationWorkerIfEnabled();
+            StartBackupWorkerIfEnabled();
             StartMessageToastTimer();
         }
 
@@ -226,6 +227,7 @@ namespace Foxoft
                 case "NotificationTemplates": ShowExistForm<FormNotificationTemplate>(); break;
                 case "MessagingSettings": ShowExistForm<FormAppSetting>(); break;
                 case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
+                case "BackupSettings": ShowExistForm<FormBackupManager>(); break;
                 case "ReportNew": 
                     FormReportEditor formQueryEditor = new(0);
                     if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
@@ -339,6 +341,7 @@ namespace Foxoft
             this.ACE_NotificationRules.Name = "NotificationRules";
             this.ACE_NotificationTemplates.Name = "NotificationTemplates";
             this.ACE_TransferApproval.Name = "TransferApproval";
+            this.ACE_BackupSettings.Name = "BackupSettings";
         }
 
         private void StartNotificationPopupTimer()
@@ -376,6 +379,24 @@ namespace Foxoft
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Failed to ensure NotificationWorker: {ex.Message}");
+                }
+            });
+        }
+
+        private void StartBackupWorkerIfEnabled()
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    using var db = new subContext();
+                    var setting = db.AppSettings.AsNoTracking().FirstOrDefault(x => x.Id == 1);
+                    bool autoBackup = setting?.AutoBackupEnabled ?? true;
+                    BackupWorkerManager.EnsureRunning(autoBackup);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Failed to ensure BackupWorker: {ex.Message}");
                 }
             });
         }

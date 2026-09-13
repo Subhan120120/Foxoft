@@ -5799,4 +5799,226 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Form_HierarchyFeatureType_Hierarchy" xml:space="preserve">
     <value>İyerarxiya</value>
   </data>
+  <data name="Entity_AppSetting_AutoBackupEnabled" xml:space="preserve">
+    <value>Avtomatik Backup Aktivdir</value>
+  </data>
+  <data name="Entity_AppSetting_RarExePath" xml:space="preserve">
+    <value>WinRAR İcra Faylı Yolu</value>
+  </data>
+  <data name="Entity_DcBackupJob_JobName" xml:space="preserve">
+    <value>Tapşırığın Adı</value>
+  </data>
+  <data name="Entity_DcBackupJob_IsEnabled" xml:space="preserve">
+    <value>Aktivdir</value>
+  </data>
+  <data name="Entity_DcBackupJob_DatabaseNames" xml:space="preserve">
+    <value>Verilənlər Bazaları</value>
+  </data>
+  <data name="Entity_DcBackupJob_BackupType" xml:space="preserve">
+    <value>Backup Növü</value>
+  </data>
+  <data name="Entity_DcBackupJob_CompressionType" xml:space="preserve">
+    <value>Sıxılma Formatı</value>
+  </data>
+  <data name="Entity_DcBackupJob_LocalPath" xml:space="preserve">
+    <value>Yerli Qovluq</value>
+  </data>
+  <data name="Entity_DcBackupJob_UploadToCloud" xml:space="preserve">
+    <value>Buluda Yüklə</value>
+  </data>
+  <data name="Entity_DcBackupJob_CloudFolderId" xml:space="preserve">
+    <value>Bulud Qovluğu</value>
+  </data>
+  <data name="Entity_DcBackupJob_RetentionDays" xml:space="preserve">
+    <value>Saxlama Müddəti (Gün)</value>
+  </data>
+  <data name="Entity_DcBackupJob_ScheduleType" xml:space="preserve">
+    <value>Cədvəl Növü</value>
+  </data>
+  <data name="Entity_DcBackupJob_IntervalMinutes" xml:space="preserve">
+    <value>İnterval (Dəqiqə)</value>
+  </data>
+  <data name="Entity_DcBackupJob_StartTime" xml:space="preserve">
+    <value>Başlama Saatı</value>
+  </data>
+  <data name="Entity_DcBackupJob_EndTime" xml:space="preserve">
+    <value>Bitmə Saatı</value>
+  </data>
+  <data name="Entity_DcBackupJob_DailyTime" xml:space="preserve">
+    <value>Gündəlik Saat</value>
+  </data>
+  <data name="Entity_DcBackupJob_SelectedDaysOfWeek" xml:space="preserve">
+    <value>Həftənin Günləri</value>
+  </data>
+  <data name="Entity_DcBackupJob_LastRunTime" xml:space="preserve">
+    <value>Son İcra</value>
+  </data>
+  <data name="Entity_DcBackupJob_NextRunTime" xml:space="preserve">
+    <value>Növbəti İcra</value>
+  </data>
+  <data name="Entity_DcBackupJob_LastStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Entity_DcBackupJob_LastErrorMessage" xml:space="preserve">
+    <value>Son Xəta</value>
+  </data>
+  <data name="Form_BackupManager_Title" xml:space="preserve">
+    <value>Baza Nüsxələnməsi (Backup) İdarəetməsi</value>
+  </data>
+  <data name="Form_BackupJobEdit_Title" xml:space="preserve">
+    <value>Backup Tapşırığı</value>
+  </data>
+  <data name="Form_BackupManager_NewJob" xml:space="preserve">
+    <value>Yeni Tapşırıq</value>
+  </data>
+  <data name="Form_BackupManager_EditJob" xml:space="preserve">
+    <value>Düzəliş et</value>
+  </data>
+  <data name="Form_BackupManager_DeleteJob" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="Form_BackupManager_RunNow" xml:space="preserve">
+    <value>İndi İcra Et</value>
+  </data>
+  <data name="Form_BackupManager_Refresh" xml:space="preserve">
+    <value>Yenilə</value>
+  </data>
+  <data name="Form_BackupManager_ServiceStatus" xml:space="preserve">
+    <value>Servis Statusu</value>
+  </data>
+  <data name="Form_BackupManager_StartService" xml:space="preserve">
+    <value>Servisi Başlat</value>
+  </data>
+  <data name="Form_BackupManager_StopService" xml:space="preserve">
+    <value>Servisi Dayandır</value>
+  </data>
+  <data name="Form_BackupManager_InstallService" xml:space="preserve">
+    <value>Windows Servisi Quraşdır</value>
+  </data>
+  <data name="Form_BackupManager_UninstallService" xml:space="preserve">
+    <value>Servisi Sil</value>
+  </data>
+  <data name="Form_BackupManager_StatusRunningService" xml:space="preserve">
+    <value>İşləyir (Windows Service)</value>
+  </data>
+  <data name="Form_BackupManager_StatusRunningProcess" xml:space="preserve">
+    <value>İşləyir (Fon Prosesi)</value>
+  </data>
+  <data name="Form_BackupManager_StatusStopped" xml:space="preserve">
+    <value>Dayandırılıb</value>
+  </data>
+  <data name="Form_BackupManager_StatusNotInstalled" xml:space="preserve">
+    <value>Quraşdırılmayıb</value>
+  </data>
+  <data name="Form_BackupManager_ConfirmDelete" xml:space="preserve">
+    <value>Bu backup tapşırığını silmək istədiyinizə əminsiniz?</value>
+  </data>
+  <data name="Form_BackupManager_RunStarted" xml:space="preserve">
+    <value>Backup tapşırığı arxa fonda işə salındı.</value>
+  </data>
+  <data name="Form_BackupManager_LogsTitle" xml:space="preserve">
+    <value>İcra Tarixçəsi və Jurnal</value>
+  </data>
+  <data name="Form_BackupJobEdit_AllDatabases" xml:space="preserve">
+    <value>Bütün Bazalar (Dinamik Skan)</value>
+  </data>
+  <data name="Form_BackupJobEdit_SelectDatabases" xml:space="preserve">
+    <value>Bazaları Seçin</value>
+  </data>
+  <data name="Form_BackupJobEdit_Full" xml:space="preserve">
+    <value>Tam (Full) Backup</value>
+  </data>
+  <data name="Form_BackupJobEdit_Diff" xml:space="preserve">
+    <value>Diferensial (Differential) Backup</value>
+  </data>
+  <data name="Form_BackupJobEdit_NoCompression" xml:space="preserve">
+    <value>Sıxılmasın (.bak)</value>
+  </data>
+  <data name="Form_BackupJobEdit_TestCloud" xml:space="preserve">
+    <value>Bulud Əlaqəsini Yoxla</value>
+  </data>
+  <data name="Form_BackupJobEdit_BrowseFolder" xml:space="preserve">
+    <value>Qovluq Seç...</value>
+  </data>
+  <data name="Form_BackupJobEdit_ScheduleInterval" xml:space="preserve">
+    <value>İnterval (hər N dəqiqədən bir)</value>
+  </data>
+  <data name="Form_BackupJobEdit_ScheduleDaily" xml:space="preserve">
+    <value>Gündəlik təyin olunmuş saatda</value>
+  </data>
+  <data name="Form_BackupJobEdit_GeneralGroup" xml:space="preserve">
+    <value>Ümumi Məlumatlar</value>
+  </data>
+  <data name="Form_BackupJobEdit_DatabasesGroup" xml:space="preserve">
+    <value>Bazalar</value>
+  </data>
+  <data name="Form_BackupJobEdit_StrategyGroup" xml:space="preserve">
+    <value>Strategiya və Arxivləmə</value>
+  </data>
+  <data name="Form_BackupJobEdit_StorageGroup" xml:space="preserve">
+    <value>Saxlama və Bulud</value>
+  </data>
+  <data name="Form_BackupJobEdit_ScheduleGroup" xml:space="preserve">
+    <value>Cədvəl və Tezlik</value>
+  </data>
+  <data name="Form_BackupJobEdit_RetentionGroup" xml:space="preserve">
+    <value>Saxlama Müddəti (Retention)</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysMonday" xml:space="preserve">
+    <value>B.E.</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysTuesday" xml:space="preserve">
+    <value>Ç.A.</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysWednesday" xml:space="preserve">
+    <value>Ç.</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysThursday" xml:space="preserve">
+    <value>C.A.</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysFriday" xml:space="preserve">
+    <value>C.</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysSaturday" xml:space="preserve">
+    <value>Ş.</value>
+  </data>
+  <data name="Form_BackupJobEdit_DaysSunday" xml:space="preserve">
+    <value>B.</value>
+  </data>
+  <data name="Form_ERP_BackupSettings" xml:space="preserve">
+    <value>Baza Nüsxələnməsi (Backup)</value>
+  </data>
+  <data name="Entity_TrBackupLog_StartTime" xml:space="preserve">
+    <value>Tarix / Saat</value>
+  </data>
+  <data name="Entity_TrBackupLog_JobName" xml:space="preserve">
+    <value>Tapşırıq</value>
+  </data>
+  <data name="Entity_TrBackupLog_DatabaseName" xml:space="preserve">
+    <value>Baza</value>
+  </data>
+  <data name="Entity_TrBackupLog_BackupType" xml:space="preserve">
+    <value>Növ</value>
+  </data>
+  <data name="Entity_TrBackupLog_BackupFileName" xml:space="preserve">
+    <value>Fayl Adı</value>
+  </data>
+  <data name="Entity_TrBackupLog_FileSizeMb" xml:space="preserve">
+    <value>İlkin Ölçü (MB)</value>
+  </data>
+  <data name="Entity_TrBackupLog_CompressedSizeMb" xml:space="preserve">
+    <value>Sıxılmış Ölçü (MB)</value>
+  </data>
+  <data name="Entity_TrBackupLog_DurationSeconds" xml:space="preserve">
+    <value>Müddət (san)</value>
+  </data>
+  <data name="Entity_TrBackupLog_IsUploadedToCloud" xml:space="preserve">
+    <value>Bulud</value>
+  </data>
+  <data name="Entity_TrBackupLog_IsSuccess" xml:space="preserve">
+    <value>Nəticə</value>
+  </data>
+  <data name="Entity_TrBackupLog_ErrorMessage" xml:space="preserve">
+    <value>Xəta Mesajı</value>
+  </data>
 </root>

@@ -21,6 +21,8 @@ namespace Foxoft.Models
             : base(options) { }
 
         public DbSet<DcUILanguage> DcUILanguages { get; set; }
+        public DbSet<DcBackupJob> DcBackupJobs { get; set; }
+        public DbSet<TrBackupLog> TrBackupLogs { get; set; }
         public DbSet<DcClaim> DcClaims { get; set; }
         public DbSet<DcClaimType> DcClaimTypes { get; set; }
         public DbSet<TrClaimReport> TrClaimReports { get; set; }
@@ -838,7 +840,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "BonusEarn", ClaimDesc = "Bonus Kartı Qazandırma", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "BonusPayment", ClaimDesc = "Bonus Kartı ilə Ödəniş", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "UnlockGracePeriodInvoice", ClaimDesc = "Müddəti Bitmiş Qaiməni Dəyiş", ClaimTypeId = 1, CategoryId = 2 },
-                new DcClaim { ClaimCode = "UnlockGracePeriodPayment", ClaimDesc = "Müddəti Bitmiş Ödənişi Dəyiş", ClaimTypeId = 1, CategoryId = 21 }
+                new DcClaim { ClaimCode = "UnlockGracePeriodPayment", ClaimDesc = "Müddəti Bitmiş Ödənişi Dəyiş", ClaimTypeId = 1, CategoryId = 21 },
+                new DcClaim { ClaimCode = "BackupSettings", ClaimDesc = "Baza Nüsxələnməsi (Backup)", ClaimTypeId = 1, CategoryId = 15 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -953,7 +956,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 213, RoleCode = "Admin", ClaimCode = "BonusPayment" },
                 new TrRoleClaim { RoleClaimId = 214, RoleCode = "Admin", ClaimCode = "LoyaltyPrograms" },
                 new TrRoleClaim { RoleClaimId = 215, RoleCode = "Admin", ClaimCode = "UnlockGracePeriodInvoice" },
-                new TrRoleClaim { RoleClaimId = 216, RoleCode = "Admin", ClaimCode = "UnlockGracePeriodPayment" }
+                new TrRoleClaim { RoleClaimId = 216, RoleCode = "Admin", ClaimCode = "UnlockGracePeriodPayment" },
+                new TrRoleClaim { RoleClaimId = 217, RoleCode = "Admin", ClaimCode = "BackupSettings" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

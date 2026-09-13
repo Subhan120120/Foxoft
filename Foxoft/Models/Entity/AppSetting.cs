@@ -129,6 +129,14 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_AutoSendMaxRetries), ResourceType = typeof(Resources))]
         public int AutoSendMaxRetries { get; set; } = 5;
 
+        [DefaultValueSql("1")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_AutoBackupEnabled), ResourceType = typeof(Resources))]
+        public bool AutoBackupEnabled { get; set; } = true;
+
+        [Display(Name = nameof(Resources.Entity_AppSetting_RarExePath), ResourceType = typeof(Resources))]
+        public string? RarExePath { get; set; }
+
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }
