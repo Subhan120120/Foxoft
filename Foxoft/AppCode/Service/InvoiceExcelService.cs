@@ -216,9 +216,6 @@ namespace Foxoft.AppCode.Services
                 c.SerialNumberCode,
                 c.SalesPersonCode,
                 c.WorkerCode,
-                c.ProductCost,
-                c.Benefit,
-                c.TotalBenefit,
             };
 
             WriteRow(sheet, 0, headers);
@@ -250,9 +247,6 @@ namespace Foxoft.AppCode.Services
                     line.SerialNumberCode,
                     line.SalesPersonCode,
                     line.WorkerCode,
-                    line.ProductCost,
-                    line.Benefit,
-                    line.TotalBenefit,
                 };
 
                 WriteRow(sheet, row, values);
