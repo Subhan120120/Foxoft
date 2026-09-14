@@ -2080,6 +2080,30 @@
   <data name="Form_ClaimCategoryList_Button_Claims" xml:space="preserve">
     <value>Claims</value>
   </data>
+  <data name="Common_ExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
+  <data name="Common_CollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="Common_Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Form_ClaimCategoryList_Summary" xml:space="preserve">
+    <value>Total claims: {0} | Selected: {1}</value>
+  </data>
+  <data name="Form_ClaimCategoryList_RoleRequired" xml:space="preserve">
+    <value>Please select a role.</value>
+  </data>
+  <data name="Form_ClaimCategoryList_UnsavedChanges" xml:space="preserve">
+    <value>There are unsaved changes. Do you want to save them?</value>
+  </data>
+  <data name="Form_ClaimCategoryList_ColCategory" xml:space="preserve">
+    <value>Category / Claim Code</value>
+  </data>
+  <data name="Form_ClaimCategoryList_ColDescription" xml:space="preserve">
+    <value>Claim Description</value>
+  </data>
   <data name="Form_Common_Exists" xml:space="preserve">
     <value>Data with this code already exists.</value>
   </data>
@@ -2229,7 +2253,10 @@
     <value>Excel File|*.xlsx</value>
   </data>
   <data name="Form_CurrAccProfile_Caption" xml:space="preserve">
-    <value>Current Account Profile</value>
+    <value>Current Account Permissions</value>
+  </data>
+  <data name="Form_CurrAccPermission_Caption" xml:space="preserve">
+    <value>Current Account Permissions</value>
   </data>
   <data name="Form_CurrAccProfile_RibbonPage_Main" xml:space="preserve">
     <value>Account Authorization</value>
@@ -2245,6 +2272,63 @@
   </data>
   <data name="Form_CurrAccProfile_Label_ClaimReport" xml:space="preserve">
     <value>Report Permission</value>
+  </data>
+  <data name="Form_CurrAccProfile_Tab_RoleClaims" xml:space="preserve">
+    <value>Role Permissions</value>
+  </data>
+  <data name="Form_CurrAccProfile_Tab_EffectiveClaims" xml:space="preserve">
+    <value>Effective Permissions</value>
+  </data>
+  <data name="Form_CurrAccProfile_Tab_ReportClaims" xml:space="preserve">
+    <value>Report Permissions</value>
+  </data>
+  <data name="Form_CurrAccProfile_RolesGroup" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Form_CurrAccProfile_SaveRoles" xml:space="preserve">
+    <value>Save Roles</value>
+  </data>
+  <data name="Form_CurrAccProfile_SavePassword" xml:space="preserve">
+    <value>Save Password</value>
+  </data>
+  <data name="Form_CurrAccProfile_PasswordChangedSuccessfully" xml:space="preserve">
+    <value>Password changed successfully.</value>
+  </data>
+  <data name="Form_CurrAccProfile_RolesSavedSuccessfully" xml:space="preserve">
+    <value>Roles saved successfully.</value>
+  </data>
+  <data name="Form_CurrAccProfile_SelectCurrAccFirst" xml:space="preserve">
+    <value>Please select a current account first.</value>
+  </data>
+  <data name="Form_CurrAccProfile_EffectiveSummary" xml:space="preserve">
+    <value>Total claims: {0}, Granted: {1}</value>
+  </data>
+  <data name="Form_CurrAccProfile_SelectedRolePrefix" xml:space="preserve">
+    <value>Selected Role: {0}</value>
+  </data>
+  <data name="Form_CurrAccProfile_Assigned" xml:space="preserve">
+    <value>Assigned</value>
+  </data>
+  <data name="Form_CurrAccProfile_SaveRoleClaims" xml:space="preserve">
+    <value>Save Role Permissions</value>
+  </data>
+  <data name="Form_CurrAccProfile_RoleClaimsSavedSuccessfully" xml:space="preserve">
+    <value>Role permissions saved successfully.</value>
+  </data>
+  <data name="Form_CurrAccProfile_NoRoleSelected" xml:space="preserve">
+    <value>No role selected.</value>
+  </data>
+  <data name="Form_CurrAccProfile_PasswordRequired" xml:space="preserve">
+    <value>Please enter a new password.</value>
+  </data>
+  <data name="Form_CurrAccProfile_NewRole" xml:space="preserve">
+    <value>New Role</value>
+  </data>
+  <data name="Form_CurrAccProfile_EditRole" xml:space="preserve">
+    <value>Edit Role</value>
+  </data>
+  <data name="Form_CurrAccProfile_DeleteRole" xml:space="preserve">
+    <value>Delete Role</value>
   </data>
   <data name="Common_NewPassword" xml:space="preserve">
     <value>New Password</value>

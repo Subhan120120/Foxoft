@@ -9048,6 +9048,78 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expand All.
+        /// </summary>
+        public static string Common_ExpandAll {
+            get {
+                return ResourceManager.GetString("Common_ExpandAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Collapse All.
+        /// </summary>
+        public static string Common_CollapseAll {
+            get {
+                return ResourceManager.GetString("Common_CollapseAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string Common_Role {
+            get {
+                return ResourceManager.GetString("Common_Role", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Total claims: {0} | Selected: {1}.
+        /// </summary>
+        public static string Form_ClaimCategoryList_Summary {
+            get {
+                return ResourceManager.GetString("Form_ClaimCategoryList_Summary", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a role..
+        /// </summary>
+        public static string Form_ClaimCategoryList_RoleRequired {
+            get {
+                return ResourceManager.GetString("Form_ClaimCategoryList_RoleRequired", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to There are unsaved changes. Do you want to save them?.
+        /// </summary>
+        public static string Form_ClaimCategoryList_UnsavedChanges {
+            get {
+                return ResourceManager.GetString("Form_ClaimCategoryList_UnsavedChanges", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Category / Claim Code.
+        /// </summary>
+        public static string Form_ClaimCategoryList_ColCategory {
+            get {
+                return ResourceManager.GetString("Form_ClaimCategoryList_ColCategory", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Description.
+        /// </summary>
+        public static string Form_ClaimCategoryList_ColDescription {
+            get {
+                return ResourceManager.GetString("Form_ClaimCategoryList_ColDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data with this code already exists..
         /// </summary>
         public static string Form_Common_Exists {
@@ -9534,11 +9606,20 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current Account Profile.
+        ///   Looks up a localized string similar to Current Account Permissions.
         /// </summary>
         public static string Form_CurrAccProfile_Caption {
             get {
                 return ResourceManager.GetString("Form_CurrAccProfile_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Permissions.
+        /// </summary>
+        public static string Form_CurrAccPermission_Caption {
+            get {
+                return ResourceManager.GetString("Form_CurrAccPermission_Caption", resourceCulture);
             }
         }
         
@@ -9575,6 +9656,177 @@ namespace Foxoft.Properties {
         public static string Form_CurrAccProfile_RibbonPage_Main {
             get {
                 return ResourceManager.GetString("Form_CurrAccProfile_RibbonPage_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Permissions.
+        /// </summary>
+        public static string Form_CurrAccProfile_Tab_RoleClaims {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_Tab_RoleClaims", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Effective Permissions.
+        /// </summary>
+        public static string Form_CurrAccProfile_Tab_EffectiveClaims {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_Tab_EffectiveClaims", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Report Permissions.
+        /// </summary>
+        public static string Form_CurrAccProfile_Tab_ReportClaims {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_Tab_ReportClaims", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Roles.
+        /// </summary>
+        public static string Form_CurrAccProfile_RolesGroup {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_RolesGroup", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Save Roles.
+        /// </summary>
+        public static string Form_CurrAccProfile_SaveRoles {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_SaveRoles", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Save Password.
+        /// </summary>
+        public static string Form_CurrAccProfile_SavePassword {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_SavePassword", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Password changed successfully..
+        /// </summary>
+        public static string Form_CurrAccProfile_PasswordChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_PasswordChangedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Roles saved successfully..
+        /// </summary>
+        public static string Form_CurrAccProfile_RolesSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_RolesSavedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a current account first..
+        /// </summary>
+        public static string Form_CurrAccProfile_SelectCurrAccFirst {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_SelectCurrAccFirst", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Total claims: {0}, Granted: {1}.
+        /// </summary>
+        public static string Form_CurrAccProfile_EffectiveSummary {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_EffectiveSummary", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Selected Role: {0}.
+        /// </summary>
+        public static string Form_CurrAccProfile_SelectedRolePrefix {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_SelectedRolePrefix", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Assigned.
+        /// </summary>
+        public static string Form_CurrAccProfile_Assigned {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_Assigned", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Save Role Permissions.
+        /// </summary>
+        public static string Form_CurrAccProfile_SaveRoleClaims {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_SaveRoleClaims", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Role permissions saved successfully..
+        /// </summary>
+        public static string Form_CurrAccProfile_RoleClaimsSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_RoleClaimsSavedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No role selected..
+        /// </summary>
+        public static string Form_CurrAccProfile_NoRoleSelected {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_NoRoleSelected", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a new password..
+        /// </summary>
+        public static string Form_CurrAccProfile_PasswordRequired {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_PasswordRequired", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to New Role.
+        /// </summary>
+        public static string Form_CurrAccProfile_NewRole {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_NewRole", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Role.
+        /// </summary>
+        public static string Form_CurrAccProfile_EditRole {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_EditRole", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Role.
+        /// </summary>
+        public static string Form_CurrAccProfile_DeleteRole {
+            get {
+                return ResourceManager.GetString("Form_CurrAccProfile_DeleteRole", resourceCulture);
             }
         }
         

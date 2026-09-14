@@ -199,7 +199,7 @@ namespace Foxoft
                 case "ProductFeatureType": ShowExistForm<FormHierarchyFeatureType>(); break;
                 case "CurrAccFeatureType": ShowExistForm<FormCommonList<DcCurrAccFeatureType>>("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId)); break;
                 case "InvoiceLineFeatureType": ShowExistForm<FormCommonList<DcInvoiceLineFeatureType>>("", nameof(DcInvoiceLineFeatureType.InvoiceLineFeatureTypeId)); break;
-                case "CurrAccClaim": ShowExistForm<FormCurrAccProfile>(); break;
+                case "CurrAccClaim": ShowExistForm<FormCurrAccPermission>(); break;
                 case "Parameters": ShowExistForm<FormAppSetting>(); break;
                 case "StoreList": ShowExistForm<FormStoreList>(); break;
                 case "WarehouseList": ShowExistForm<FormWarehouseList>(); break;

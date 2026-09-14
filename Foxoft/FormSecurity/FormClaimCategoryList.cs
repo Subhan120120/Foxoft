@@ -1,7 +1,6 @@
-﻿using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraTreeList;
-using DevExpress.XtraTreeList.Columns;
 using DevExpress.XtraTreeList.Nodes;
 using Foxoft.Models;
 using Foxoft.Models.Entity.RoleClaim;
@@ -11,95 +10,187 @@ namespace Foxoft
 {
     public partial class FormClaimCategoryList : XtraForm
     {
-        private EfMethods efMethods = new();
-        private string RoleCode;
+        private readonly EfMethods efMethods = new();
+        private string? _roleCode;
+        private bool _isModified = false;
+        private bool _isUpdatingCheckState = false;
+        private bool _isLoading = false;
 
-        public DcClaimCategory DcClaimCategory;
+        public DcClaimCategory? DcClaimCategory;
 
         public FormClaimCategoryList()
         {
             InitializeComponent();
 
             treeList1.GetStateImage += TreeList_GetStateImage;
-
-            // Enable multi-select with checkboxes
-            treeList1.OptionsSelection.MultiSelect = true;
-            treeList1.OptionsSelection.EnableAppearanceFocusedRow = false;
-
-            RepositoryItemCheckEdit repoCheck = new RepositoryItemCheckEdit
-            {
-                AllowGrayed = false,             // enables indeterminate
-                ValueChecked = true,            // maps to true
-                ValueUnchecked = false,         // maps to false
-                ValueGrayed = null              // maps to null
-            };
-
-            // Add an unbound checkbox column
-            TreeListColumn checkBoxColumn = new();
-            checkBoxColumn.Caption = Resources.Common_Select; // was "Select"
-            checkBoxColumn.FieldName = "IsSelected"; // Must match model property
-            checkBoxColumn.ColumnEdit = repoCheck;
-            checkBoxColumn.VisibleIndex = 1;
-            checkBoxColumn.UnboundType = DevExpress.XtraTreeList.Data.UnboundColumnType.Boolean;
-            treeList1.BestFitColumns();
-
-            treeList1.Columns.Add(checkBoxColumn);
-
-            treeList1.CellValueChanged += TreeList1_CellValueChanged;
+            treeList1.AfterExpand += (_, _) => treeList1.Invalidate();
+            treeList1.AfterCollapse += (_, _) => treeList1.Invalidate();
         }
 
-        public FormClaimCategoryList(string roleCode)
+        public FormClaimCategoryList(string? roleCode)
             : this()
         {
-            RoleCode = roleCode;
+            _roleCode = roleCode;
+        }
+
+        private void FormClaimCategoryList_Load(object sender, EventArgs e)
+        {
+            _isLoading = true;
+            try
+            {
+                LoadRoles();
+
+                if (!string.IsNullOrEmpty(_roleCode))
+                {
+                    lue_Role.EditValue = _roleCode;
+                }
+                else if (lue_Role.Properties.DataSource is List<DcRole> roles && roles.Count > 0)
+                {
+                    _roleCode = roles[0].RoleCode;
+                    lue_Role.EditValue = _roleCode;
+                }
+
+                UpdateFormTitle();
+                LoadData(_roleCode);
+            }
+            finally
+            {
+                _isLoading = false;
+            }
+
+            treeList1.ShowFindPanel();
+        }
+
+        private void LoadRoles()
+        {
+            List<DcRole> roles = efMethods.SelectEntities<DcRole>();
+
+            lue_Role.Properties.DataSource = roles;
+            lue_Role.Properties.ValueMember = nameof(DcRole.RoleCode);
+            lue_Role.Properties.DisplayMember = nameof(DcRole.RoleDesc);
+
+            lue_Role.Properties.Columns.Clear();
+            lue_Role.Properties.Columns.Add(new LookUpColumnInfo(nameof(DcRole.RoleCode), Resources.Entity_Role_Code, 80));
+            lue_Role.Properties.Columns.Add(new LookUpColumnInfo(nameof(DcRole.RoleDesc), Resources.Entity_Role_Desc, 160));
+        }
+
+        private void UpdateFormTitle()
+        {
+            if (!string.IsNullOrEmpty(_roleCode))
+            {
+                string roleText = !string.IsNullOrWhiteSpace(lue_Role.Text) ? lue_Role.Text : _roleCode;
+                Text = $"{Resources.Form_ClaimCategoryList_Caption} - {roleText} ({_roleCode})";
+            }
+            else
+            {
+                Text = Resources.Form_ClaimCategoryList_Caption;
+            }
+        }
+
+        private void lue_Role_EditValueChanged(object sender, EventArgs e)
+        {
+            if (_isLoading)
+                return;
+
+            string? newRoleCode = lue_Role.EditValue?.ToString();
+
+            if (_roleCode == newRoleCode)
+                return;
+
+            if (_isModified)
+            {
+                DialogResult dr = XtraMessageBox.Show(
+                    Resources.Form_ClaimCategoryList_UnsavedChanges,
+                    Text,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question
+                );
+
+                if (dr == DialogResult.Yes)
+                {
+                    if (!SaveData())
+                    {
+                        lue_Role.EditValue = _roleCode;
+                        return;
+                    }
+                }
+                else if (dr == DialogResult.Cancel)
+                {
+                    lue_Role.EditValue = _roleCode;
+                    return;
+                }
+            }
+
+            _roleCode = newRoleCode;
+            UpdateFormTitle();
+            LoadData(_roleCode);
+        }
+
+        private void LoadData(string? roleCode)
+        {
+            treeList1.BeginUpdate();
+            try
+            {
+                _isUpdatingCheckState = true;
+                List<DcClaimCategoryViewModel> dcClaimCategories = efMethods.SelectDcClaimCategories(roleCode ?? string.Empty);
+                treeList1.DataSource = dcClaimCategories;
+                treeList1.ForceInitialize();
+
+                InitializeTreeParentStates(treeList1.Nodes);
+                treeList1.ExpandAll();
+                treeList1.BestFitColumns();
+                UpdateSummary();
+                _isModified = false;
+            }
+            finally
+            {
+                _isUpdatingCheckState = false;
+                treeList1.EndUpdate();
+            }
         }
 
         private void TreeList_GetStateImage(object sender, GetStateImageEventArgs e)
         {
-            if ((bool)e.Node.GetValue("IsCategory"))
-                e.NodeImageIndex = 0;
-            else
-                e.NodeImageIndex = 6;
-        }
+            if (e.Node == null)
+                return;
 
-        private void FormTreeView_Load(object sender, EventArgs e)
-        {
-            List<DcClaimCategoryViewModel> DcClaimCategories = efMethods.SelectDcClaimCategories(RoleCode);
-            treeList1.DataSource = DcClaimCategories;
-        }
-
-        private void treeList1_InitNewRow(object sender, TreeListInitNewRowEventArgs e)
-        {
-            string NewDocNum = efMethods.GetNextDocNum(false, "", "CategoryId", "DcClaimCategories", 4);
-            e.SetValue(treeListCol_CategoryId, NewDocNum);
-        }
-
-        private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
-        {
-            object categoryId = e.Node?.GetValue(treeListCol_CategoryId);
-
-            if (categoryId is not null)
-                DcClaimCategory = efMethods.SelectEntityById<DcClaimCategory>(Convert.ToInt32(categoryId));
-        }
-
-        private void treeList1_DoubleClick(object sender, EventArgs e)
-        {
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void TreeList1_CellValueChanged(object sender, CellValueChangedEventArgs e)
-        {
-            if (e.Column.FieldName == "IsSelected")
+            bool isCategory = Convert.ToBoolean(e.Node.GetValue(treeListCol_IsCategory));
+            if (isCategory)
             {
-                bool isChecked = Convert.ToBoolean(e.Value);
-                TreeListNode node = e.Node;
+                e.NodeImageIndex = e.Node.Expanded ? 0 : 1;
+            }
+            else
+            {
+                e.NodeImageIndex = 9; // Key icon
+            }
+        }
 
-                SetChildNodesChecked(node, isChecked);
+        private void repoCheckEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            treeList1.PostEditor();
+        }
 
-                SetParentNodesChecked(node);
+        private void treeList1_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+            if (_isUpdatingCheckState)
+                return;
+
+            if (e.Column == treeListCol_IsSelected)
+            {
+                try
+                {
+                    _isUpdatingCheckState = true;
+                    bool isChecked = Convert.ToBoolean(e.Value);
+
+                    SetChildNodesChecked(e.Node, isChecked);
+                    SetParentNodesChecked(e.Node);
+                    _isModified = true;
+                    UpdateSummary();
+                }
+                finally
+                {
+                    _isUpdatingCheckState = false;
+                }
             }
         }
 
@@ -107,69 +198,250 @@ namespace Foxoft
         {
             foreach (TreeListNode child in parentNode.Nodes)
             {
-                child.SetValue("IsSelected", isChecked);
+                child.SetValue(treeListCol_IsSelected, isChecked);
                 SetChildNodesChecked(child, isChecked);
             }
         }
 
         private void SetParentNodesChecked(TreeListNode childNode)
         {
-            TreeListNode parent = childNode.ParentNode;
+            TreeListNode? parent = childNode.ParentNode;
             while (parent != null)
             {
-                bool allChecked = parent.Nodes.Cast<TreeListNode>().All(n => Convert.ToBoolean(n.GetValue("IsSelected")));
-                parent.SetValue("IsSelected", allChecked);
+                var childStates = parent.Nodes.Cast<TreeListNode>()
+                    .Select(n => n.GetValue(treeListCol_IsSelected) as bool?)
+                    .ToList();
+
+                if (childStates.Count > 0 && childStates.All(s => s == true))
+                    parent.SetValue(treeListCol_IsSelected, true);
+                else if (childStates.Count > 0 && childStates.All(s => s == false))
+                    parent.SetValue(treeListCol_IsSelected, false);
+                else
+                    parent.SetValue(treeListCol_IsSelected, null);
+
                 parent = parent.ParentNode;
             }
         }
 
-        private void Btn_Claims_Click(object sender, EventArgs e)
+        private void InitializeTreeParentStates(TreeListNodes nodes)
         {
-            FormCommonList<DcClaim> formCommonList = new FormCommonList<DcClaim>("", nameof(DcClaim.ClaimCode));
-            formCommonList.ShowDialog();
-        }
-
-        private void Btn_Save_Click(object sender, EventArgs e)
-        {
-            SaveNodesToDb(treeList1.Nodes);
-        }
-
-        private void SaveNodesToDb(IEnumerable<TreeListNode> nodes)
-        {
-            foreach (TreeListNode child in nodes)
+            foreach (TreeListNode node in nodes)
             {
-                bool isCategory = (bool)child.GetValue("IsCategory");
-
-                if (!isCategory)
+                if (node.HasChildren)
                 {
-                    DcClaim dcClaim = efMethods.SelectDcClaimByIdentity(Convert.ToInt32(child.GetValue("CategoryId")) - 1000);
-                    bool chckd = (bool)child.GetValue("IsSelected");
+                    InitializeTreeParentStates(node.Nodes);
 
-                    if (chckd)
-                    {
-                        if (!efMethods.TrRoleClaimExist(RoleCode, dcClaim.ClaimCode))
-                        {
-                            efMethods.InsertEntity(new TrRoleClaim()
-                            {
-                                RoleCode = RoleCode,
-                                ClaimCode = dcClaim.ClaimCode
-                            });
-                        }
-                    }
+                    var childStates = node.Nodes.Cast<TreeListNode>()
+                        .Select(n => n.GetValue(treeListCol_IsSelected) as bool?)
+                        .ToList();
+
+                    if (childStates.Count > 0 && childStates.All(s => s == true))
+                        node.SetValue(treeListCol_IsSelected, true);
+                    else if (childStates.Count > 0 && childStates.All(s => s == false))
+                        node.SetValue(treeListCol_IsSelected, false);
                     else
-                    {
-                        TrRoleClaim trRoleClaim = efMethods.SelectRoleClaim(RoleCode, dcClaim.ClaimCode);
-
-                        if (trRoleClaim != null)
-                            efMethods.DeleteEntity(trRoleClaim);
-                    }
+                        node.SetValue(treeListCol_IsSelected, null);
                 }
+            }
+        }
 
-                if (child.Nodes.Count > 0)
+        private void UpdateSummary()
+        {
+            var leafNodes = treeList1.GetNodeList()
+                .Where(n => !Convert.ToBoolean(n.GetValue(treeListCol_IsCategory)))
+                .ToList();
+
+            int totalClaims = leafNodes.Count;
+            int selectedClaims = leafNodes.Count(n => n.GetValue(treeListCol_IsSelected) as bool? == true);
+
+            lbl_Summary.Text = string.Format(Resources.Form_ClaimCategoryList_Summary, totalClaims, selectedClaims);
+        }
+
+        private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
+        {
+            object? categoryId = e.Node?.GetValue(treeListCol_CategoryId);
+            bool isCategory = Convert.ToBoolean(e.Node?.GetValue(treeListCol_IsCategory) ?? false);
+
+            if (categoryId is not null && isCategory)
+                DcClaimCategory = efMethods.SelectEntityById<DcClaimCategory>(Convert.ToInt32(categoryId));
+        }
+
+        private void btn_SelectAll_Click(object sender, EventArgs e)
+        {
+            treeList1.BeginUpdate();
+            try
+            {
+                _isUpdatingCheckState = true;
+                foreach (TreeListNode node in treeList1.GetNodeList())
                 {
-                    SaveNodesToDb(child.Nodes);
+                    node.SetValue(treeListCol_IsSelected, true);
                 }
+                _isModified = true;
+                UpdateSummary();
+            }
+            finally
+            {
+                _isUpdatingCheckState = false;
+                treeList1.EndUpdate();
+            }
+        }
+
+        private void btn_UnselectAll_Click(object sender, EventArgs e)
+        {
+            treeList1.BeginUpdate();
+            try
+            {
+                _isUpdatingCheckState = true;
+                foreach (TreeListNode node in treeList1.GetNodeList())
+                {
+                    node.SetValue(treeListCol_IsSelected, false);
+                }
+                _isModified = true;
+                UpdateSummary();
+            }
+            finally
+            {
+                _isUpdatingCheckState = false;
+                treeList1.EndUpdate();
+            }
+        }
+
+        private void btn_ExpandAll_Click(object sender, EventArgs e)
+        {
+            treeList1.ExpandAll();
+        }
+
+        private void btn_CollapseAll_Click(object sender, EventArgs e)
+        {
+            treeList1.CollapseAll();
+        }
+
+        private void btn_Refresh_Click(object sender, EventArgs e)
+        {
+            if (_isModified)
+            {
+                DialogResult dr = XtraMessageBox.Show(
+                    Resources.Form_ClaimCategoryList_UnsavedChanges,
+                    Text,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question
+                );
+
+                if (dr == DialogResult.Yes)
+                {
+                    if (!SaveData())
+                        return;
+                }
+                else if (dr == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+
+            LoadData(_roleCode);
+        }
+
+        private void btn_Claims_Click(object sender, EventArgs e)
+        {
+            using FormCommonList<DcClaim> formCommonList = new("", nameof(DcClaim.ClaimCode));
+            if (formCommonList.ShowDialog(this) == DialogResult.OK)
+            {
+                LoadData(_roleCode);
+            }
+        }
+
+        private void btn_Save_Click(object sender, EventArgs e)
+        {
+            if (SaveData())
+            {
+                XtraMessageBox.Show(
+                    Resources.Common_SavedSuccessfully,
+                    Text,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+            }
+        }
+
+        private bool SaveData()
+        {
+            if (string.IsNullOrWhiteSpace(_roleCode))
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_ClaimCategoryList_RoleRequired,
+                    Text,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                lue_Role.Focus();
+                return false;
+            }
+
+            try
+            {
+                List<string> selectedClaimCodes = treeList1.GetNodeList()
+                    .Where(n => !Convert.ToBoolean(n.GetValue(treeListCol_IsCategory)) && (n.GetValue(treeListCol_IsSelected) as bool? == true))
+                    .Select(n => n.GetValue(treeListCol_ClaimCode)?.ToString())
+                    .Where(c => !string.IsNullOrWhiteSpace(c))
+                    .ToList()!;
+
+                efMethods.SaveRoleClaims(_roleCode, selectedClaimCodes);
+                _isModified = false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    ex.Message,
+                    Text,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return false;
+            }
+        }
+
+        private void btn_Cancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void FormClaimCategoryList_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_isModified)
+            {
+                DialogResult dr = XtraMessageBox.Show(
+                    Resources.Form_ClaimCategoryList_UnsavedChanges,
+                    Text,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question
+                );
+
+                if (dr == DialogResult.Yes)
+                {
+                    if (!SaveData())
+                        e.Cancel = true;
+                }
+                else if (dr == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void FormClaimCategoryList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                btn_Save.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F5)
+            {
+                btn_Refresh.PerformClick();
+                e.Handled = true;
             }
         }
     }
 }
+

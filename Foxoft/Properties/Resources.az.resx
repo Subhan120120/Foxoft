@@ -2080,6 +2080,30 @@
   <data name="Form_ClaimCategoryList_Button_Claims" xml:space="preserve">
     <value>Yetkilər</value>
   </data>
+  <data name="Common_ExpandAll" xml:space="preserve">
+    <value>Hamısını Aç</value>
+  </data>
+  <data name="Common_CollapseAll" xml:space="preserve">
+    <value>Hamısını Bağla</value>
+  </data>
+  <data name="Common_Role" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="Form_ClaimCategoryList_Summary" xml:space="preserve">
+    <value>Cəmi yetki: {0} | Seçilmiş: {1}</value>
+  </data>
+  <data name="Form_ClaimCategoryList_RoleRequired" xml:space="preserve">
+    <value>Zəhmət olmasa, rol seçin.</value>
+  </data>
+  <data name="Form_ClaimCategoryList_UnsavedChanges" xml:space="preserve">
+    <value>Yadda saxlanılmamış dəyişikliklər var. Yadda saxlamaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_ClaimCategoryList_ColCategory" xml:space="preserve">
+    <value>Kateqoriya / Yetki Kodu</value>
+  </data>
+  <data name="Form_ClaimCategoryList_ColDescription" xml:space="preserve">
+    <value>Yetki Açıqlaması</value>
+  </data>
   <data name="Form_Common_Exists" xml:space="preserve">
     <value>Bu kodla data artıq mövcuddur.</value>
   </data>
@@ -2229,7 +2253,10 @@
     <value>Excel Faylı|*.xlsx</value>
   </data>
   <data name="Form_CurrAccProfile_Caption" xml:space="preserve">
-    <value>Cari Hesab Profili</value>
+    <value>Cari Hesab Yetkiləri</value>
+  </data>
+  <data name="Form_CurrAccPermission_Caption" xml:space="preserve">
+    <value>Cari Hesab Yetkiləri</value>
   </data>
   <data name="Form_CurrAccProfile_RibbonPage_Main" xml:space="preserve">
     <value>Cari Hesab Yetkisi</value>
@@ -2245,6 +2272,63 @@
   </data>
   <data name="Form_CurrAccProfile_Label_ClaimReport" xml:space="preserve">
     <value>Hesabat Yetkisi</value>
+  </data>
+  <data name="Form_CurrAccProfile_Tab_RoleClaims" xml:space="preserve">
+    <value>Rol Yetkiləri</value>
+  </data>
+  <data name="Form_CurrAccProfile_Tab_EffectiveClaims" xml:space="preserve">
+    <value>Cari Hesabın Qüvvədə Olan Yetkiləri</value>
+  </data>
+  <data name="Form_CurrAccProfile_Tab_ReportClaims" xml:space="preserve">
+    <value>Hesabat Yetkiləri</value>
+  </data>
+  <data name="Form_CurrAccProfile_RolesGroup" xml:space="preserve">
+    <value>Rollar</value>
+  </data>
+  <data name="Form_CurrAccProfile_SaveRoles" xml:space="preserve">
+    <value>Rolları Saxla</value>
+  </data>
+  <data name="Form_CurrAccProfile_SavePassword" xml:space="preserve">
+    <value>Şifrəni Saxla</value>
+  </data>
+  <data name="Form_CurrAccProfile_PasswordChangedSuccessfully" xml:space="preserve">
+    <value>Şifrə uğurla dəyişdirildi.</value>
+  </data>
+  <data name="Form_CurrAccProfile_RolesSavedSuccessfully" xml:space="preserve">
+    <value>Rollar uğurla saxlanıldı.</value>
+  </data>
+  <data name="Form_CurrAccProfile_SelectCurrAccFirst" xml:space="preserve">
+    <value>Zəhmət olmasa əvvəlcə cari hesab seçin.</value>
+  </data>
+  <data name="Form_CurrAccProfile_EffectiveSummary" xml:space="preserve">
+    <value>Cəmi yetkilər: {0}, Verilən: {1}</value>
+  </data>
+  <data name="Form_CurrAccProfile_SelectedRolePrefix" xml:space="preserve">
+    <value>Seçilmiş Rol: {0}</value>
+  </data>
+  <data name="Form_CurrAccProfile_Assigned" xml:space="preserve">
+    <value>Təyin edilib</value>
+  </data>
+  <data name="Form_CurrAccProfile_SaveRoleClaims" xml:space="preserve">
+    <value>Rol Yetkilərini Saxla</value>
+  </data>
+  <data name="Form_CurrAccProfile_RoleClaimsSavedSuccessfully" xml:space="preserve">
+    <value>Rol yetkiləri uğurla saxlanıldı.</value>
+  </data>
+  <data name="Form_CurrAccProfile_NoRoleSelected" xml:space="preserve">
+    <value>Heç bir rol seçilməyib.</value>
+  </data>
+  <data name="Form_CurrAccProfile_PasswordRequired" xml:space="preserve">
+    <value>Zəhmət olmasa yeni şifrəni daxil edin.</value>
+  </data>
+  <data name="Form_CurrAccProfile_NewRole" xml:space="preserve">
+    <value>Yeni Rol</value>
+  </data>
+  <data name="Form_CurrAccProfile_EditRole" xml:space="preserve">
+    <value>Rolu Dəyiş</value>
+  </data>
+  <data name="Form_CurrAccProfile_DeleteRole" xml:space="preserve">
+    <value>Rolu Sil</value>
   </data>
   <data name="Common_NewPassword" xml:space="preserve">
     <value>Yeni Şifrə</value>

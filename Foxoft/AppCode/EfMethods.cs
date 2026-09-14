@@ -682,18 +682,21 @@ namespace Foxoft
                       CategoryParentId = cat.CategoryParentId,
                       CategoryDesc = cat.CategoryDesc,
                       ClaimDesc = null,
-
-                      IsSelected = !cat.DcClaims.Any()
+                      ClaimCode = null,
+                      CategoryLevel = cat.CategoryLevel,
+                      IsSelected = string.IsNullOrEmpty(roleCode)
                           ? false
-                          : cat.DcClaims.All(cl => cl.TrRoleClaims.Any(rc => rc.RoleCode == roleCode))
-                              ? true
-                              : cat.DcClaims.All(cl => cl.TrRoleClaims.All(rc => rc.RoleCode != roleCode))
-                                  ? false
-                                  : null,
+                          : !cat.DcClaims.Any()
+                              ? false
+                              : cat.DcClaims.All(cl => cl.TrRoleClaims.Any(rc => rc.RoleCode == roleCode))
+                                  ? true
+                                  : cat.DcClaims.All(cl => cl.TrRoleClaims.All(rc => rc.RoleCode != roleCode))
+                                      ? false
+                                      : null,
 
                       IsCategory = true
-                  });
-
+                  })
+                  .ToList();
 
             var claims =
                 db.DcClaims
@@ -704,17 +707,61 @@ namespace Foxoft
                       CategoryParentId = cl.CategoryId,
                       CategoryDesc = cl.ClaimCode,
                       ClaimDesc = cl.ClaimDesc,
-                      IsSelected = cl.TrRoleClaims.Any(rc => rc.RoleCode == roleCode),
+                      ClaimCode = cl.ClaimCode,
+                      CategoryLevel = 0,
+                      IsSelected = !string.IsNullOrEmpty(roleCode) && cl.TrRoleClaims.Any(rc => rc.RoleCode == roleCode),
                       IsCategory = false
-                  });
+                  })
+                  .ToList();
 
             var data = categories
-                .Concat(claims)           // Union-all
+                .Concat(claims)
                 .ToList();
 
             return data;
+        }
 
+        public void SaveRoleClaims(string roleCode, IEnumerable<string> selectedClaimCodes)
+        {
+            if (string.IsNullOrWhiteSpace(roleCode))
+                throw new ArgumentNullException(nameof(roleCode));
 
+            using subContext db = new();
+            using var transaction = db.Database.BeginTransaction();
+            try
+            {
+                var existingRoleClaims = db.TrRoleClaims
+                    .Where(rc => rc.RoleCode == roleCode)
+                    .ToList();
+
+                var targetCodes = new HashSet<string>(selectedClaimCodes?.Where(c => !string.IsNullOrWhiteSpace(c)) ?? Enumerable.Empty<string>());
+                var existingCodes = new HashSet<string>(existingRoleClaims.Select(rc => rc.ClaimCode));
+
+                var toRemove = existingRoleClaims.Where(rc => !targetCodes.Contains(rc.ClaimCode)).ToList();
+                if (toRemove.Count > 0)
+                {
+                    db.TrRoleClaims.RemoveRange(toRemove);
+                }
+
+                var toAddCodes = targetCodes.Where(code => !existingCodes.Contains(code)).ToList();
+                if (toAddCodes.Count > 0)
+                {
+                    var newRoleClaims = toAddCodes.Select(code => new TrRoleClaim
+                    {
+                        RoleCode = roleCode,
+                        ClaimCode = code
+                    });
+                    db.TrRoleClaims.AddRange(newRoleClaims);
+                }
+
+                db.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
 
         public List<TrCurrAccRole> SelectCurrAccRole(string currAccCode)
@@ -726,6 +773,121 @@ namespace Foxoft
                                                                   .Where(x => x.CurrAccCode == currAccCode)
                                                                   .ToList();
             return currAccRoles;
+        }
+
+        public List<CurrAccRoleVM> SelectCurrAccRoleVMs(string currAccCode)
+        {
+            using subContext db = new();
+
+            var allRoles = db.DcRoles.AsNoTracking().OrderBy(r => r.RoleDesc).ToList();
+            var assignedRoles = string.IsNullOrWhiteSpace(currAccCode)
+                ? new HashSet<string>()
+                : db.TrCurrAccRoles.AsNoTracking()
+                    .Where(x => x.CurrAccCode == currAccCode)
+                    .Select(x => x.RoleCode)
+                    .ToHashSet();
+
+            return allRoles.Select(r => new CurrAccRoleVM
+            {
+                RoleCode = r.RoleCode,
+                RoleDesc = r.RoleDesc,
+                IsAssigned = assignedRoles.Contains(r.RoleCode)
+            }).ToList();
+        }
+
+        public void SaveCurrAccRoles(string currAccCode, IEnumerable<string> assignedRoleCodes)
+        {
+            if (string.IsNullOrWhiteSpace(currAccCode))
+                throw new ArgumentNullException(nameof(currAccCode));
+
+            using subContext db = new();
+            using var transaction = db.Database.BeginTransaction();
+            try
+            {
+                var existingRoles = db.TrCurrAccRoles
+                    .Where(x => x.CurrAccCode == currAccCode)
+                    .ToList();
+
+                var targetCodes = new HashSet<string>(assignedRoleCodes?.Where(c => !string.IsNullOrWhiteSpace(c)) ?? Enumerable.Empty<string>());
+                var existingCodes = new HashSet<string>(existingRoles.Select(x => x.RoleCode));
+
+                var toRemove = existingRoles.Where(x => !targetCodes.Contains(x.RoleCode)).ToList();
+                if (toRemove.Count > 0)
+                {
+                    db.TrCurrAccRoles.RemoveRange(toRemove);
+                }
+
+                var toAddCodes = targetCodes.Where(code => !existingCodes.Contains(code)).ToList();
+                if (toAddCodes.Count > 0)
+                {
+                    var newRoles = toAddCodes.Select(code => new TrCurrAccRole
+                    {
+                        CurrAccCode = currAccCode,
+                        RoleCode = code
+                    });
+                    db.TrCurrAccRoles.AddRange(newRoles);
+                }
+
+                db.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
+
+        public List<DcClaimCategoryViewModel> SelectDcClaimCategoriesByCurrAcc(string currAccCode)
+        {
+            using var db = new subContext();
+
+            var userRoles = string.IsNullOrWhiteSpace(currAccCode)
+                ? new List<string>()
+                : db.TrCurrAccRoles.AsNoTracking()
+                    .Where(x => x.CurrAccCode == currAccCode)
+                    .Select(x => x.RoleCode)
+                    .ToList();
+
+            var categories = db.DcClaimCategories
+                .AsNoTracking()
+                .Select(cat => new DcClaimCategoryViewModel
+                {
+                    CategoryId = cat.CategoryId,
+                    CategoryParentId = cat.CategoryParentId,
+                    CategoryDesc = cat.CategoryDesc,
+                    ClaimDesc = null,
+                    ClaimCode = null,
+                    CategoryLevel = cat.CategoryLevel,
+                    IsSelected = userRoles.Count == 0
+                        ? false
+                        : !cat.DcClaims.Any()
+                            ? false
+                            : cat.DcClaims.All(cl => cl.TrRoleClaims.Any(rc => userRoles.Contains(rc.RoleCode)))
+                                ? true
+                                : cat.DcClaims.All(cl => cl.TrRoleClaims.All(rc => !userRoles.Contains(rc.RoleCode)))
+                                    ? false
+                                    : null,
+                    IsCategory = true
+                })
+                .ToList();
+
+            var claims = db.DcClaims
+                .AsNoTracking()
+                .Select(cl => new DcClaimCategoryViewModel
+                {
+                    CategoryId = cl.Id + 1000,
+                    CategoryParentId = cl.CategoryId,
+                    CategoryDesc = cl.ClaimCode,
+                    ClaimDesc = cl.ClaimDesc,
+                    ClaimCode = cl.ClaimCode,
+                    CategoryLevel = 0,
+                    IsSelected = userRoles.Count > 0 && cl.TrRoleClaims.Any(rc => userRoles.Contains(rc.RoleCode)),
+                    IsCategory = false
+                })
+                .ToList();
+
+            return categories.Concat(claims).ToList();
         }
 
         public List<DcClaimReportViewModel> SelectClaimReport(string claimCode)
