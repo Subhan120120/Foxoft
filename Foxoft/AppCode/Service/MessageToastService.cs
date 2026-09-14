@@ -25,8 +25,10 @@ namespace Foxoft.AppCode.Service
 
         private static SvgImage? _whatsAppSvg;
         private static SvgImage? _smsSvg;
+        private static SvgImage? _printSvg;
         private static Image? _whatsAppIcon;
         private static Image? _smsIcon;
+        private static Image? _printIcon;
         private static readonly object _iconLock = new();
 
         public static bool IsInCache(Guid messageLogId, bool isSuccessful) =>
@@ -62,6 +64,22 @@ namespace Foxoft.AppCode.Service
                 }
             }
             return _smsIcon != null ? (Image)_smsIcon.Clone() : null;
+        }
+
+        public static Image? GetPrintIcon()
+        {
+            if (_printIcon == null)
+            {
+                lock (_iconLock)
+                {
+                    if (_printIcon == null)
+                    {
+                        _printSvg ??= LoadSvg("Print.svg");
+                        _printIcon = RenderSvgToImage(_printSvg, 36, 36);
+                    }
+                }
+            }
+            return _printIcon != null ? (Image)_printIcon.Clone() : null;
         }
 
         public static Image? GetChannelOrProviderIcon(string? channel, string? provider = null)
@@ -215,6 +233,34 @@ namespace Foxoft.AppCode.Service
 
             Image? icon = GetChannelOrProviderIcon(channel, provider);
             ShowToastInternal(caption, text, icon);
+        }
+
+        public static void ShowPrintSending(Control? owner, string printerName, AlertControl alertControl)
+        {
+            Form? form = (owner as Form) ?? owner?.FindForm() ?? Application.OpenForms.OfType<Form>().FirstOrDefault(f => f.IsHandleCreated);
+            if (form == null) return;
+
+            alertControl.Show(
+                form,
+                Resources.Common_PrintSending,
+                string.Format(Resources.Common_PrinterLabel, printerName),
+                string.Empty,
+                GetPrintIcon(),
+                null);
+        }
+
+        public static void ShowPrintSent(Control? owner, string printerName, AlertControl alertControl)
+        {
+            Form? form = (owner as Form) ?? owner?.FindForm() ?? Application.OpenForms.OfType<Form>().FirstOrDefault(f => f.IsHandleCreated);
+            if (form == null) return;
+
+            alertControl.Show(
+                form,
+                Resources.Common_PrintSent,
+                string.Format(Resources.Common_PrinterLabel, printerName),
+                string.Empty,
+                GetPrintIcon(),
+                null);
         }
 
         public static async Task CheckRecentMessageLogsAsync(Form? owner = null, string? currAccCode = null, CancellationToken ct = default)

@@ -3842,16 +3842,16 @@ namespace Foxoft
 
         private async Task PrintFast(string printerName)
         {
-            alertControl1.Show(this, "Print Göndərilir...", "Printer: " + printerName, "", (Image)null, null);
+            MessageToastService.ShowPrintSending(this, printerName, alertControl1);
 
             if (trInvoiceHeader is not null)
                 await Task.Run(() => GetPrint(trInvoiceHeader.InvoiceHeaderId, printerName));
-            else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
+            else MessageBox.Show(Resources.Form_HandOver_NoInvoiceToPrint);
 
             if (this.IsHandleCreated)
                 this.BeginInvoke(new Action(ShowPrintCount));
 
-            alertControl1.Show(this, "Print Göndərildi.", printerName, "", (Image)null, null);
+            MessageToastService.ShowPrintSent(this, printerName, alertControl1);
         }
 
         private void GetPrint(Guid invoiceHeaderId, string printerName)

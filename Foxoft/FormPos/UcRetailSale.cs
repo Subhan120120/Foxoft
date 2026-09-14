@@ -1770,26 +1770,14 @@ namespace Foxoft
 
             try
             {
-                alertControl1.Show(
-                    this.ParentForm,
-                    Resources.Common_PrintSending,
-                    string.Format(Resources.Common_PrinterLabel, printerName),
-                    string.Empty,
-                    (Image)null,
-                    null);
+                MessageToastService.ShowPrintSending(this.ParentForm, printerName, alertControl1);
 
                 await Task.Run(() => GetPrint(invoiceHeaderId, printerName));
 
                 if (this.IsHandleCreated)
                     this.BeginInvoke(new Action(() => ShowPrintCount(invoiceHeaderId)));
 
-                alertControl1.Show(
-                    this.ParentForm,
-                    Resources.Common_PrintSent,
-                    string.Format(Resources.Common_PrinterLabel, printerName),
-                    string.Empty,
-                    (Image)null,
-                    null);
+                MessageToastService.ShowPrintSent(this.ParentForm, printerName, alertControl1);
             }
             catch (Exception ex)
             {

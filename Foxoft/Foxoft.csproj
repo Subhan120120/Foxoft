@@ -336,6 +336,7 @@
 		<EmbeddedResource Include="Resources\startup550x363.png.png" />
 		<EmbeddedResource Include="Resources\SMS.svg" />
 		<EmbeddedResource Include="Resources\WhatsApp.svg" />
+		<EmbeddedResource Include="Resources\Print.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -343,6 +344,9 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Resources\WhatsApp.svg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Resources\Print.svg">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

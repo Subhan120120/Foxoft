@@ -1,0 +1,8 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<svg viewBox="-2.935 -2 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="Quick_Print" transform="translate(-1.8683, 0)" style="enable-background:new 0 0 32 32">
+    <g transform="matrix(0.933333694934845, 0, 0, 0.933333694934845, 0, 0)">
+      <path d="M10, 2L22, 2L22, 10L24, 10L24, 0L8, 0L8, 10L10, 10L10, 2zM28, 8L26, 8L26, 11C26, 11.6 25.6, 12 25, 12L7, 12C6.4, 12 6, 11.6 6, 11L6, 8L4, 8C2.9, 8 2, 8.9 2, 10L2, 22C2, 23.1 2.9, 24 4, 24L8, 24L8, 30L24, 30L24, 24L28, 24C29.1, 24 30, 23.1 30, 22L30, 10C30, 8.9 29.1, 8 28, 8zM22, 22L22, 24L22, 28L10, 28L10, 24L10, 22L10, 18L22, 18L22, 22zM20, 24L12, 24L12, 26L20, 26L20, 24zM20, 20L12, 20L12, 22L20, 22L20, 20z" fill="#727272" class="Black" />
+    </g>
+  </g>
+</svg>

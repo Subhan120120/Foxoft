@@ -605,26 +605,14 @@ namespace Foxoft
                 FormDisplaySpeed = AlertFormDisplaySpeed.Fast
             };
 
-            alertControl1.Show(
-                this,
-                Resources.Common_PrintSending,
-                string.Format(Resources.Common_PrinterLabel, printerName),
-                "",
-                (Image)null,
-                null);
+            MessageToastService.ShowPrintSending(this, printerName, alertControl1);
 
             if (deliveryInvoHeader is not null)
                 await Task.Run(() => GetPrint(deliveryInvoHeader.InvoiceHeaderId, printerName));
             else
                 MessageBox.Show(Resources.Form_HandOver_NoInvoiceToPrint);
 
-            alertControl1.Show(
-                this,
-                Resources.Common_PrintSent,
-                string.Format(Resources.Common_PrinterLabel, printerName),
-                "",
-                (Image)null,
-                null);
+            MessageToastService.ShowPrintSent(this, printerName, alertControl1);
         }
 
 

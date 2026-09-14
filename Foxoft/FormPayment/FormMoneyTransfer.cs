@@ -582,26 +582,14 @@ namespace Foxoft
             gV_PaymentLine.PostEditor();
             gV_PaymentLine.UpdateCurrentRow();
 
-            alertControl1.Show(
-                this,
-                Resources.Common_PrintSending,
-                string.Format(Resources.Common_PrinterLabel, printerName),
-                string.Empty,
-                (Image)null,
-                null);
+            MessageToastService.ShowPrintSending(this, printerName, alertControl1);
 
             if (trPaymentHeader is not null && efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
                 await Task.Run(() => GetPrint(trPaymentHeader.PaymentHeaderId, printerName));
             else
                 XtraMessageBox.Show(Resources.Form_MoneyTransfer_NoPaymentToPrint);
 
-            alertControl1.Show(
-                this,
-                Resources.Common_PrintSent,
-                string.Format(Resources.Common_PrinterLabel, printerName),
-                string.Empty,
-                (Image)null,
-                null);
+            MessageToastService.ShowPrintSent(this, printerName, alertControl1);
         }
 
         private void GetPrint(Guid paymentHeaderId, string printerName)
