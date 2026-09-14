@@ -2204,6 +2204,27 @@
   <data name="Form_CurrAcc_Message_MergeError" xml:space="preserve">
     <value>Müştərilərin birləşdirilməsində xəta: {0}</value>
   </data>
+  <data name="Form_CurrAcc_Bar_SetPassword" xml:space="preserve">
+    <value>Şifrə Təyini</value>
+  </data>
+  <data name="Form_CurrAcc_Message_SaveFirst" xml:space="preserve">
+    <value>Şifrə təyin etməzdən əvvəl cari hesabı yadda saxlayın.</value>
+  </data>
+  <data name="Form_CurrAccPassword_Title" xml:space="preserve">
+    <value>İstifadəçi Şifrəsi Təyini</value>
+  </data>
+  <data name="Form_CurrAccPassword_Account" xml:space="preserve">
+    <value>Cari Hesab</value>
+  </data>
+  <data name="Form_CurrAccPassword_Empty" xml:space="preserve">
+    <value>Şifrə boş ola bilməz!</value>
+  </data>
+  <data name="Form_CurrAccPassword_Success" xml:space="preserve">
+    <value>Şifrə uğurla təyin edildi.</value>
+  </data>
+  <data name="Common_ShowPassword" xml:space="preserve">
+    <value>Şifrəni göstər</value>
+  </data>
   <data name="Form_CurrAcc_Message_CannotMergeSameCurrAcc" xml:space="preserve">
     <value>Müştəri özü ilə birləşdirilə bilməz.</value>
   </data>

@@ -29,6 +29,12 @@ namespace Foxoft
         public FormCurrAccPermission()
         {
             InitializeComponent();
+            BBI_SetPassword.Enabled = CanChangePassword() && !string.IsNullOrWhiteSpace(_currentCurrAccCode);
+        }
+
+        private bool CanChangePassword()
+        {
+            return efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ChangeCurrAccPassword");
         }
 
         public FormCurrAccPermission(string currAccCode)
@@ -102,6 +108,7 @@ namespace Foxoft
                     gridControl_Roles.DataSource = null;
                     treeListEffectiveClaims.DataSource = null;
                     lbl_EffectiveSummary.Text = string.Empty;
+                    BBI_SetPassword.Enabled = false;
                     return;
                 }
 
@@ -117,6 +124,8 @@ namespace Foxoft
                 {
                     txt_CurrAccDesc.Text = string.Empty;
                 }
+
+                BBI_SetPassword.Enabled = CanChangePassword() && dcCurrAcc != null;
 
                 LoadRoles(currAccCode);
                 LoadEffectiveClaims(currAccCode);
@@ -697,6 +706,24 @@ namespace Foxoft
             }
 
             LoadCurrAccData(_currentCurrAccCode);
+        }
+
+        private void BBI_SetPassword_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (!CanChangePassword())
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(_currentCurrAccCode))
+            {
+                XtraMessageBox.Show(Resources.Form_CurrAcc_Message_SaveFirst, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using FormCurrAccPassword frm = new(_currentCurrAccCode, txt_CurrAccDesc.Text);
+            frm.ShowDialog(this);
         }
 
         private void BBI_NewRole_ItemClick(object sender, ItemClickEventArgs e)

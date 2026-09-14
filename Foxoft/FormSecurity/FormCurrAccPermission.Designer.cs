@@ -56,6 +56,7 @@ namespace Foxoft
             BBI_EditRole = new BarButtonItem();
             BBI_DeleteRole = new BarButtonItem();
             BBI_RoleClaimsWindow = new BarButtonItem();
+            BBI_SetPassword = new BarButtonItem();
             ribbonPage1 = new RibbonPage();
             ribbonPageGroup1 = new RibbonPageGroup();
             ribbonPageGroup2 = new RibbonPageGroup();
@@ -147,10 +148,11 @@ namespace Foxoft
                 BBI_NewRole,
                 BBI_EditRole,
                 BBI_DeleteRole,
-                BBI_RoleClaimsWindow
+                BBI_RoleClaimsWindow,
+                BBI_SetPassword
             });
             ribbon.Location = new Point(0, 0);
-            ribbon.MaxItemId = 12;
+            ribbon.MaxItemId = 13;
             ribbon.Name = "ribbon";
             ribbon.Pages.AddRange(new RibbonPage[] { ribbonPage1 });
             ribbon.Size = new Size(1350, 158);
@@ -209,6 +211,14 @@ namespace Foxoft
             BBI_RoleClaimsWindow.Name = "BBI_RoleClaimsWindow";
             BBI_RoleClaimsWindow.ItemClick += BBI_RoleClaimsWindow_ItemClick;
 
+            // BBI_SetPassword
+            BBI_SetPassword.Caption = Resources.Form_CurrAcc_Bar_SetPassword;
+            BBI_SetPassword.Enabled = false;
+            BBI_SetPassword.Id = 9;
+            BBI_SetPassword.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_SetPassword.ImageOptions.SvgImage");
+            BBI_SetPassword.Name = "BBI_SetPassword";
+            BBI_SetPassword.ItemClick += BBI_SetPassword_ItemClick;
+
             // ribbonPage1
             ribbonPage1.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2 });
             ribbonPage1.Name = "ribbonPage1";
@@ -217,6 +227,7 @@ namespace Foxoft
             // ribbonPageGroup1
             ribbonPageGroup1.ItemLinks.Add(BBI_Save);
             ribbonPageGroup1.ItemLinks.Add(BBI_Refresh);
+            ribbonPageGroup1.ItemLinks.Add(BBI_SetPassword);
             ribbonPageGroup1.ItemLinks.Add(BBI_SelectAllRoles);
             ribbonPageGroup1.ItemLinks.Add(BBI_UnselectAllRoles);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
@@ -915,6 +926,7 @@ namespace Foxoft
         private BarButtonItem BBI_EditRole;
         private BarButtonItem BBI_DeleteRole;
         private BarButtonItem BBI_RoleClaimsWindow;
+        private BarButtonItem BBI_SetPassword;
 
         // Splitter
         private SplitterControl splitterControl1;

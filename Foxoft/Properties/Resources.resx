@@ -2204,6 +2204,27 @@
   <data name="Form_CurrAcc_Message_MergeError" xml:space="preserve">
     <value>Error merging current accounts: {0}</value>
   </data>
+  <data name="Form_CurrAcc_Bar_SetPassword" xml:space="preserve">
+    <value>Set Password</value>
+  </data>
+  <data name="Form_CurrAcc_Message_SaveFirst" xml:space="preserve">
+    <value>Please save the current account first before setting a password.</value>
+  </data>
+  <data name="Form_CurrAccPassword_Title" xml:space="preserve">
+    <value>Set User Password</value>
+  </data>
+  <data name="Form_CurrAccPassword_Account" xml:space="preserve">
+    <value>Current Account</value>
+  </data>
+  <data name="Form_CurrAccPassword_Empty" xml:space="preserve">
+    <value>Password cannot be empty!</value>
+  </data>
+  <data name="Form_CurrAccPassword_Success" xml:space="preserve">
+    <value>Password successfully set.</value>
+  </data>
+  <data name="Common_ShowPassword" xml:space="preserve">
+    <value>Show password</value>
+  </data>
   <data name="Form_CurrAcc_Message_CannotMergeSameCurrAcc" xml:space="preserve">
     <value>A current account cannot be merged with itself.</value>
   </data>

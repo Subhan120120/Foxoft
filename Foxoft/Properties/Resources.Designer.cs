@@ -9363,6 +9363,69 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set Password.
+        /// </summary>
+        public static string Form_CurrAcc_Bar_SetPassword {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Bar_SetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please save the current account first before setting a password..
+        /// </summary>
+        public static string Form_CurrAcc_Message_SaveFirst {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Message_SaveFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set User Password.
+        /// </summary>
+        public static string Form_CurrAccPassword_Title {
+            get {
+                return ResourceManager.GetString("Form_CurrAccPassword_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account.
+        /// </summary>
+        public static string Form_CurrAccPassword_Account {
+            get {
+                return ResourceManager.GetString("Form_CurrAccPassword_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password cannot be empty!.
+        /// </summary>
+        public static string Form_CurrAccPassword_Empty {
+            get {
+                return ResourceManager.GetString("Form_CurrAccPassword_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password successfully set..
+        /// </summary>
+        public static string Form_CurrAccPassword_Success {
+            get {
+                return ResourceManager.GetString("Form_CurrAccPassword_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show password.
+        /// </summary>
+        public static string Common_ShowPassword {
+            get {
+                return ResourceManager.GetString("Common_ShowPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change account code.
         /// </summary>
         public static string Form_CurrAcc_Button_ChangeCurrAccCode {

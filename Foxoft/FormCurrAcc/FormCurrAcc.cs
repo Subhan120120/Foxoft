@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraDataLayout;
+using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.DXErrorProvider;
