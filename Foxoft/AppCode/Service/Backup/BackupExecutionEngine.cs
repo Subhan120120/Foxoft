@@ -211,22 +211,44 @@ namespace Foxoft.AppCode.Service.Backup
                 ConnectTimeout = 30
             };
 
-            string diffClause = backupType == BackupType.Differential ? "WITH DIFFERENTIAL, " : "WITH ";
+            string diffClause = backupType == BackupType.Differential ? "DIFFERENTIAL, " : "";
             string sql = $@"
 BACKUP DATABASE [{dbName.Replace("]", "]]")}]
 TO DISK = @bakPath
-{diffClause}FORMAT, INIT, SKIP, NOREWIND, NOUNLOAD, STATS = 10;";
+WITH COMPRESSION, {diffClause}FORMAT, INIT, SKIP, NOREWIND, NOUNLOAD, STATS = 10;";
+
+            string sqlWithoutCompression = $@"
+BACKUP DATABASE [{dbName.Replace("]", "]]")}]
+TO DISK = @bakPath
+WITH {diffClause}FORMAT, INIT, SKIP, NOREWIND, NOUNLOAD, STATS = 10;";
 
             await using SqlConnection conn = new(cb.ConnectionString);
             await conn.OpenAsync(ct);
 
-            await using SqlCommand cmd = new(sql, conn)
+            try
             {
-                CommandTimeout = 0 // Unlimited timeout for long backups
-            };
-            cmd.Parameters.AddWithValue("@bakPath", bakFilePath);
+                await using SqlCommand cmd = new(sql, conn)
+                {
+                    CommandTimeout = 0 // Unlimited timeout for long backups
+                };
+                cmd.Parameters.AddWithValue("@bakPath", bakFilePath);
+                await cmd.ExecuteNonQueryAsync(ct);
+            }
+            catch (SqlException ex) when (ex.Number == 3060 || ex.Message.Contains("COMPRESSION", StringComparison.OrdinalIgnoreCase))
+            {
+                // Fallback if SQL Server edition does not support native backup compression
+                if (File.Exists(bakFilePath))
+                {
+                    try { File.Delete(bakFilePath); } catch { }
+                }
 
-            await cmd.ExecuteNonQueryAsync(ct);
+                await using SqlCommand cmdFallback = new(sqlWithoutCompression, conn)
+                {
+                    CommandTimeout = 0
+                };
+                cmdFallback.Parameters.AddWithValue("@bakPath", bakFilePath);
+                await cmdFallback.ExecuteNonQueryAsync(ct);
+            }
         }
 
         private static async Task SaveBackupLogAsync(string connectionString, TrBackupLog log, CancellationToken ct)
