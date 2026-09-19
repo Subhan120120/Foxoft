@@ -4385,8 +4385,10 @@ namespace Foxoft
 
         private void BBI_Salesman_ItemClick(object sender, ItemClickEventArgs e)
         {
-            using FormCurrAccList form = new(new byte[] { 3 }, false, new byte[] { 1 });
+            if (!EnsureInvoiceCanBeChanged())
+                return;
 
+            using FormCurrAccList form = new(new byte[] { 3 }, false, new byte[] { 1 });
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -4397,7 +4399,12 @@ namespace Foxoft
                     for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                         gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, salesPersonCode);
 
-                    gV_InvoiceLine.UpdateCurrentRow(); //databazaya yazmaq üçün
+                    gV_InvoiceLine.CloseEditor();
+                    gV_InvoiceLine.UpdateCurrentRow();
+                    trInvoiceLinesBindingSource.EndEdit();
+
+                    if (gV_InvoiceLine.DataRowCount > 0)
+                        SaveInvoice();
                 }
             }
         }
