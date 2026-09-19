@@ -440,6 +440,12 @@ namespace Foxoft
             {
                 trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
                 trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
+
+                if (trInvoiceHeader is not null)
+                {
+                    lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.StoreCode);
+                    lUE_WarehouseCode.EditValue = trInvoiceHeader.WarehouseCode;
+                }
             }
             finally
             {
@@ -548,7 +554,8 @@ namespace Foxoft
 
         private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
-            dataLayoutControl1.Validate();  // ensure editor loses focus and commits value
+            if (!_isLoading)
+                dataLayoutControl1.Validate();  // ensure editor loses focus and commits value
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
@@ -719,6 +726,13 @@ namespace Foxoft
 
                 trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
                 trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+                lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.StoreCode);
+                lUE_WarehouseCode.EditValue = trInvoiceHeader.WarehouseCode;
+
+                if (!string.IsNullOrWhiteSpace(trInvoiceHeader.CurrAccCode))
+                    lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
+                lUE_ToWarehouseCode.EditValue = trInvoiceHeader.ToWarehouseCode;
 
                 dcProcess = efMethods.SelectEntityById<DcProcess>(trInvoiceHeader.ProcessCode);
 
@@ -3800,6 +3814,9 @@ namespace Foxoft
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
             lUE_WarehouseCode.Properties.DataSource = dcWarehouses;
 
+            if (_isLoading)
+                return;
+
             string currentWarehouseCode = trInvoiceHeader.WarehouseCode;
 
             if (!string.IsNullOrWhiteSpace(currentWarehouseCode)
@@ -3825,12 +3842,18 @@ namespace Foxoft
 
         private void lUE_WarehouseCode_EditValueChanged(object sender, EventArgs e)
         {
+            if (_isLoading)
+                return;
+
             if (trInvoiceHeader is not null)
                 trInvoiceHeader.WarehouseCode = lUE_WarehouseCode.EditValue?.ToString();
         }
 
         private void lUE_ToWarehouseCode_EditValueChanged(object sender, EventArgs e)
         {
+            if (_isLoading)
+                return;
+
             if (trInvoiceHeader is not null)
                 trInvoiceHeader.ToWarehouseCode = lUE_ToWarehouseCode.EditValue?.ToString();
         }
