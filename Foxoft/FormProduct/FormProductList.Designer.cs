@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using Foxoft.Properties;
 using System.Data;
 

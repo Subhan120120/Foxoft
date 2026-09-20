@@ -301,13 +301,6 @@ namespace Foxoft
 
         private void LoadProducts(byte[] productTypeArr)
         {
-            // Dispose previous DataTable to prevent memory leak
-            if (dcProductsBindingSource.DataSource is DataTable oldDt)
-            {
-                dcProductsBindingSource.DataSource = null;
-                oldDt.Dispose();
-            }
-
             object dataSource = null;
 
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_ProductList");
@@ -341,7 +334,14 @@ namespace Foxoft
                 }
             }
 
+            DataTable oldDt = dcProductsBindingSource.DataSource as DataTable;
+
             dcProductsBindingSource.DataSource = dataSource;
+
+            // Dispose previous DataTable after replacing DataSource to prevent memory leak
+            // without temporarily setting DataSource to null (which breaks active filters)
+            if (oldDt != null && !ReferenceEquals(oldDt, dataSource))
+                oldDt.Dispose();
 
             if (gV_ProductList.FocusedRowHandle >= 0)
             {
