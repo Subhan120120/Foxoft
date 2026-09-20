@@ -5501,6 +5501,27 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   <data name="Form_NotificationRule_InvalidChannel" xml:space="preserve">
     <value>Ən azı bir kanal seçin.</value>
   </data>
+  <data name="Form_NotificationRule_Title" xml:space="preserve">
+    <value>Bildiriş Qaydaları və Şablonları</value>
+  </data>
+  <data name="Form_NotificationRule_FilterCurrentOnly" xml:space="preserve">
+    <value>Yalnız seçilmiş bildirişin şablonları</value>
+  </data>
+  <data name="Form_NotificationRule_TemplateEditor" xml:space="preserve">
+    <value>Şablon Redaktoru</value>
+  </data>
+  <data name="Form_NotificationRule_Placeholders" xml:space="preserve">
+    <value>Mövcud dəyişənlər (əlavə etmək üçün klikləyin):</value>
+  </data>
+  <data name="Form_NotificationRule_CharCount" xml:space="preserve">
+    <value>{0} simvol</value>
+  </data>
+  <data name="Form_NotificationRule_CharCountSms" xml:space="preserve">
+    <value>{0} simvol | {1} SMS</value>
+  </data>
+  <data name="Form_NotificationRule_Parameters" xml:space="preserve">
+    <value>Qayda Parametrləri</value>
+  </data>
   <data name="ERP_ACE_NotificationCenter" xml:space="preserve">
     <value>Bildiriş Mərkəzi</value>
   </data>

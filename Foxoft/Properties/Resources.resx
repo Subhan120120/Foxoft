@@ -5510,6 +5510,27 @@ Send a close request to the document owner?</value>
   <data name="Form_NotificationRule_InvalidChannel" xml:space="preserve">
     <value>Select at least one channel.</value>
   </data>
+  <data name="Form_NotificationRule_Title" xml:space="preserve">
+    <value>Notification Rules and Templates</value>
+  </data>
+  <data name="Form_NotificationRule_FilterCurrentOnly" xml:space="preserve">
+    <value>Only templates of selected notification</value>
+  </data>
+  <data name="Form_NotificationRule_TemplateEditor" xml:space="preserve">
+    <value>Template Editor</value>
+  </data>
+  <data name="Form_NotificationRule_Placeholders" xml:space="preserve">
+    <value>Available placeholders (click to insert):</value>
+  </data>
+  <data name="Form_NotificationRule_CharCount" xml:space="preserve">
+    <value>{0} chars</value>
+  </data>
+  <data name="Form_NotificationRule_CharCountSms" xml:space="preserve">
+    <value>{0} chars | {1} SMS</value>
+  </data>
+  <data name="Form_NotificationRule_Parameters" xml:space="preserve">
+    <value>Rule Parameters</value>
+  </data>
   <data name="ERP_ACE_NotificationCenter" xml:space="preserve">
     <value>Notification Center</value>
   </data>

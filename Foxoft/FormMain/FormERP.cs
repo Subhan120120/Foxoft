@@ -224,7 +224,18 @@ namespace Foxoft
                 case "WhatsAppMessageLog": ShowExistForm<FormMessageLog>(); break;
                 case "NotificationCenter": ShowExistForm<FormNotificationCenter>(); break;
                 case "NotificationRules": ShowExistForm<FormNotificationRule>(); break;
-                case "NotificationTemplates": ShowExistForm<FormNotificationTemplate>(); break;
+                case "NotificationTemplates":
+                    if (Application.OpenForms[nameof(FormNotificationRule)] is FormNotificationRule existingRuleForm)
+                    {
+                        existingRuleForm.BringToFront();
+                        existingRuleForm.Activate();
+                        existingRuleForm.SelectTemplatesTab();
+                    }
+                    else
+                    {
+                        ShowExistForm<FormNotificationTemplate>();
+                    }
+                    break;
                 case "MessagingSettings": ShowExistForm<FormAppSetting>(); break;
                 case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
                 case "BackupSettings": ShowExistForm<FormBackupManager>(); break;

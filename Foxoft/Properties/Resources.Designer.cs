@@ -13055,6 +13055,48 @@ namespace Foxoft.Properties {
             }
         }
         
+        public static string Form_NotificationRule_Title {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Title", resourceCulture);
+            }
+        }
+        
+        public static string Form_NotificationRule_FilterCurrentOnly {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_FilterCurrentOnly", resourceCulture);
+            }
+        }
+        
+        public static string Form_NotificationRule_TemplateEditor {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_TemplateEditor", resourceCulture);
+            }
+        }
+        
+        public static string Form_NotificationRule_Placeholders {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Placeholders", resourceCulture);
+            }
+        }
+        
+        public static string Form_NotificationRule_CharCount {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_CharCount", resourceCulture);
+            }
+        }
+        
+        public static string Form_NotificationRule_CharCountSms {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_CharCountSms", resourceCulture);
+            }
+        }
+        
+        public static string Form_NotificationRule_Parameters {
+            get {
+                return ResourceManager.GetString("Form_NotificationRule_Parameters", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Rules.
         /// </summary>
