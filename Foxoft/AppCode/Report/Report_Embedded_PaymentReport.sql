@@ -15,7 +15,7 @@ select ph.*
 	, cari.PhoneNum
 	, CashRegisterDesc = kassa.CurrAccDesc
 	, DcPaymentTypes.PaymentTypeDesc
-	, CurrAccBalance = dbo.CurrAccBalance(ph.CurrAccCode, CAST(ph.DocumentDate as Datetime) + CAST(ph.DocumentTime as Datetime))
+	, CurrAccBalance = dbo.CurrAccBalance(ph.CurrAccCode, CAST(ph.OperationDate as Datetime) + CAST(ph.OperationTime as Datetime))
 	
 	, StorePhoneNum = store.PhoneNum
 	, StoreAddress = store.Address
