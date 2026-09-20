@@ -6147,4 +6147,199 @@ Please wait or choose another invoice.</value>
   <data name="Entity_TrBackupLog_ErrorMessage" xml:space="preserve">
     <value>Error Message</value>
   </data>
+  <data name="NotificationCategory_Stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="NotificationCategory_Sale" xml:space="preserve">
+    <value>Sale</value>
+  </data>
+  <data name="NotificationCategory_Purchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="NotificationCategory_Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="NotificationCategory_Installment" xml:space="preserve">
+    <value>Installment</value>
+  </data>
+  <data name="NotificationCategory_Customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="NotificationCategory_System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="NotificationSeverity_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="NotificationSeverity_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="NotificationSeverity_High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="NotificationSeverity_Critical" xml:space="preserve">
+    <value>Critical</value>
+  </data>
+  <data name="NotificationType_ProductStockWarning" xml:space="preserve">
+    <value>Product Stock Warning Level</value>
+  </data>
+  <data name="NotificationType_ProductOutOfStock" xml:space="preserve">
+    <value>Product Out of Stock</value>
+  </data>
+  <data name="NotificationType_NegativeStock" xml:space="preserve">
+    <value>Negative Stock</value>
+  </data>
+  <data name="NotificationType_OverStock" xml:space="preserve">
+    <value>Over Stock</value>
+  </data>
+  <data name="NotificationType_ExpiredProduct" xml:space="preserve">
+    <value>Expired Product</value>
+  </data>
+  <data name="NotificationType_ProductExpireSoon" xml:space="preserve">
+    <value>Product Expiring Soon</value>
+  </data>
+  <data name="NotificationType_SerialImeiMissing" xml:space="preserve">
+    <value>Serial/IMEI Missing</value>
+  </data>
+  <data name="NotificationType_StockTransferPending" xml:space="preserve">
+    <value>Stock Transfer Pending</value>
+  </data>
+  <data name="NotificationType_StockTransferRejected" xml:space="preserve">
+    <value>Stock Transfer Rejected</value>
+  </data>
+  <data name="NotificationType_InventoryDifference" xml:space="preserve">
+    <value>Inventory Difference</value>
+  </data>
+  <data name="NotificationType_SaleBelowMinimumPrice" xml:space="preserve">
+    <value>Sale Below Minimum Price</value>
+  </data>
+  <data name="NotificationType_DiscountApprovalRequired" xml:space="preserve">
+    <value>Discount Approval Required</value>
+  </data>
+  <data name="NotificationType_InvoiceNotPosted" xml:space="preserve">
+    <value>Invoice Not Posted</value>
+  </data>
+  <data name="NotificationType_CustomerCreditLimitExceeded" xml:space="preserve">
+    <value>Customer Credit Limit Exceeded</value>
+  </data>
+  <data name="NotificationType_LargeSaleCreated" xml:space="preserve">
+    <value>Large Sale Created</value>
+  </data>
+  <data name="NotificationType_ProductPurchase" xml:space="preserve">
+    <value>Product Purchase</value>
+  </data>
+  <data name="NotificationType_ReturnCreated" xml:space="preserve">
+    <value>Return Created</value>
+  </data>
+  <data name="NotificationType_PurchaseOrderPending" xml:space="preserve">
+    <value>Purchase Order Pending</value>
+  </data>
+  <data name="NotificationType_SupplierDebtDue" xml:space="preserve">
+    <value>Supplier Debt Due</value>
+  </data>
+  <data name="NotificationType_PurchasePriceChanged" xml:space="preserve">
+    <value>Purchase Price Changed</value>
+  </data>
+  <data name="NotificationType_SupplierInvoiceMissing" xml:space="preserve">
+    <value>Supplier Invoice Missing</value>
+  </data>
+  <data name="NotificationType_CashBalanceWarning" xml:space="preserve">
+    <value>Cash Balance Warning</value>
+  </data>
+  <data name="NotificationType_PaymentNotConfirmed" xml:space="preserve">
+    <value>Payment Not Confirmed</value>
+  </data>
+  <data name="NotificationType_BankPaymentImported" xml:space="preserve">
+    <value>Bank Payment Imported</value>
+  </data>
+  <data name="NotificationType_CashboxClosingMissing" xml:space="preserve">
+    <value>Cashbox Closing Missing</value>
+  </data>
+  <data name="NotificationType_PaymentDifference" xml:space="preserve">
+    <value>Payment Difference</value>
+  </data>
+  <data name="NotificationType_InstallmentDueSoon" xml:space="preserve">
+    <value>Installment Due Soon</value>
+  </data>
+  <data name="NotificationType_InstallmentDueToday" xml:space="preserve">
+    <value>Installment Due Today</value>
+  </data>
+  <data name="NotificationType_InstallmentOverdue" xml:space="preserve">
+    <value>Installment Overdue</value>
+  </data>
+  <data name="NotificationType_InstallmentPaid" xml:space="preserve">
+    <value>Installment Paid</value>
+  </data>
+  <data name="NotificationType_CreditClosed" xml:space="preserve">
+    <value>Credit Closed</value>
+  </data>
+  <data name="NotificationType_CustomerDebtIncreased" xml:space="preserve">
+    <value>Customer Debt Increased</value>
+  </data>
+  <data name="NotificationType_CustomerBirthday" xml:space="preserve">
+    <value>Customer Birthday</value>
+  </data>
+  <data name="NotificationType_CustomerInactive" xml:space="preserve">
+    <value>Customer Inactive</value>
+  </data>
+  <data name="NotificationType_VipCustomerSale" xml:space="preserve">
+    <value>VIP Customer Sale</value>
+  </data>
+  <data name="NotificationType_NewCustomerCreated" xml:space="preserve">
+    <value>New Customer Created</value>
+  </data>
+  <data name="NotificationType_BackupFailed" xml:space="preserve">
+    <value>Backup Failed</value>
+  </data>
+  <data name="NotificationType_IntegrationFailed" xml:space="preserve">
+    <value>Integration Failed</value>
+  </data>
+  <data name="NotificationType_SyncFailed" xml:space="preserve">
+    <value>Sync Failed</value>
+  </data>
+  <data name="NotificationType_LicenseExpireSoon" xml:space="preserve">
+    <value>License Expiring Soon</value>
+  </data>
+  <data name="NotificationType_UserLoginFailedManyTimes" xml:space="preserve">
+    <value>Too Many Failed Login Attempts</value>
+  </data>
+  <data name="NotificationChannel_InApp" xml:space="preserve">
+    <value>In-App</value>
+  </data>
+  <data name="NotificationChannel_Popup" xml:space="preserve">
+    <value>Popup</value>
+  </data>
+  <data name="NotificationChannel_Sms" xml:space="preserve">
+    <value>SMS</value>
+  </data>
+  <data name="NotificationChannel_WhatsApp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
+  <data name="NotificationChannel_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="NotificationRecipientStatus_Unread" xml:space="preserve">
+    <value>Unread</value>
+  </data>
+  <data name="NotificationRecipientStatus_Read" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="NotificationRecipientStatus_Dismissed" xml:space="preserve">
+    <value>Dismissed</value>
+  </data>
+  <data name="NotificationRecipientStatus_Snoozed" xml:space="preserve">
+    <value>Snoozed</value>
+  </data>
+  <data name="NotificationStatus_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="NotificationStatus_Resolved" xml:space="preserve">
+    <value>Resolved</value>
+  </data>
+  <data name="NotificationStatus_Cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="NotificationStatus_Expired" xml:space="preserve">
+    <value>Expired</value>
+  </data>
 </root>

@@ -468,8 +468,9 @@ namespace Foxoft.AppCode.Service
                 .ThenBy(x => x.NotificationTemplateId)
                 .FirstOrDefaultAsync(ct);
 
-            string title = request.Title ?? template?.TitleTemplate ?? notificationTypeCode;
-            string body = request.Body ?? template?.BodyTemplate ?? notificationTypeCode;
+            string fallbackText = NotificationLocalizer.GetTypeDescription(notificationTypeCode);
+            string title = request.Title ?? template?.TitleTemplate ?? fallbackText;
+            string body = request.Body ?? template?.BodyTemplate ?? fallbackText;
 
             return (ApplyPlaceholders(title, placeholders), ApplyPlaceholders(body, placeholders));
         }

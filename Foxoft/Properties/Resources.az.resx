@@ -5472,13 +5472,13 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
     <value>Proqram daxili</value>
   </data>
   <data name="Form_NotificationRule_Channel_Popup" xml:space="preserve">
-    <value>Popup</value>
+    <value>Qalxan pəncərə</value>
   </data>
   <data name="Form_NotificationRule_Channel_SMS" xml:space="preserve">
     <value>SMS</value>
   </data>
   <data name="Form_NotificationRule_Channel_Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-poçt</value>
   </data>
   <data name="Form_NotificationRule_Channel_WhatsApp" xml:space="preserve">
     <value>WhatsApp</value>
@@ -6146,5 +6146,200 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Entity_TrBackupLog_ErrorMessage" xml:space="preserve">
     <value>Xəta Mesajı</value>
+  </data>
+    <data name="NotificationCategory_Stock" xml:space="preserve">
+    <value>Anbar</value>
+  </data>
+  <data name="NotificationCategory_Sale" xml:space="preserve">
+    <value>Satış</value>
+  </data>
+  <data name="NotificationCategory_Purchase" xml:space="preserve">
+    <value>Alış</value>
+  </data>
+  <data name="NotificationCategory_Payment" xml:space="preserve">
+    <value>Ödəniş</value>
+  </data>
+  <data name="NotificationCategory_Installment" xml:space="preserve">
+    <value>Taksit / Kredit</value>
+  </data>
+  <data name="NotificationCategory_Customer" xml:space="preserve">
+    <value>Müştəri</value>
+  </data>
+  <data name="NotificationCategory_System" xml:space="preserve">
+    <value>Sistem</value>
+  </data>
+  <data name="NotificationSeverity_Info" xml:space="preserve">
+    <value>Məlumat</value>
+  </data>
+  <data name="NotificationSeverity_Warning" xml:space="preserve">
+    <value>Xəbərdarlıq</value>
+  </data>
+  <data name="NotificationSeverity_High" xml:space="preserve">
+    <value>Yüksək</value>
+  </data>
+  <data name="NotificationSeverity_Critical" xml:space="preserve">
+    <value>Kritik</value>
+  </data>
+  <data name="NotificationType_ProductStockWarning" xml:space="preserve">
+    <value>Məhsul Qalığı Xəbərdarlığı</value>
+  </data>
+  <data name="NotificationType_ProductOutOfStock" xml:space="preserve">
+    <value>Məhsul Bitib</value>
+  </data>
+  <data name="NotificationType_NegativeStock" xml:space="preserve">
+    <value>Mənfi Qalıq</value>
+  </data>
+  <data name="NotificationType_OverStock" xml:space="preserve">
+    <value>Artıq Qalıq</value>
+  </data>
+  <data name="NotificationType_ExpiredProduct" xml:space="preserve">
+    <value>Müddəti Bitmiş Məhsul</value>
+  </data>
+  <data name="NotificationType_ProductExpireSoon" xml:space="preserve">
+    <value>Müddəti Bitmək Üzrə</value>
+  </data>
+  <data name="NotificationType_SerialImeiMissing" xml:space="preserve">
+    <value>Seriya/IMEI Çatışmır</value>
+  </data>
+  <data name="NotificationType_StockTransferPending" xml:space="preserve">
+    <value>Anbar Transferi Gözləmədə</value>
+  </data>
+  <data name="NotificationType_StockTransferRejected" xml:space="preserve">
+    <value>Anbar Transferi İmtina Edildi</value>
+  </data>
+  <data name="NotificationType_InventoryDifference" xml:space="preserve">
+    <value>Sayım Fərqi</value>
+  </data>
+  <data name="NotificationType_SaleBelowMinimumPrice" xml:space="preserve">
+    <value>Minimum Qiymətdən Aşağı Satış</value>
+  </data>
+  <data name="NotificationType_DiscountApprovalRequired" xml:space="preserve">
+    <value>Endirim Təsdiqi Tələb Olunur</value>
+  </data>
+  <data name="NotificationType_InvoiceNotPosted" xml:space="preserve">
+    <value>Qaimə Təsdiqlənməyib</value>
+  </data>
+  <data name="NotificationType_CustomerCreditLimitExceeded" xml:space="preserve">
+    <value>Müştəri Kredit Limiti Aşıldı</value>
+  </data>
+  <data name="NotificationType_LargeSaleCreated" xml:space="preserve">
+    <value>Böyük Satış</value>
+  </data>
+  <data name="NotificationType_ProductPurchase" xml:space="preserve">
+    <value>Məhsul Satışı</value>
+  </data>
+  <data name="NotificationType_ReturnCreated" xml:space="preserve">
+    <value>Qaytarma Qaiməsi</value>
+  </data>
+  <data name="NotificationType_PurchaseOrderPending" xml:space="preserve">
+    <value>Alış Sifarişi Gözləmədə</value>
+  </data>
+  <data name="NotificationType_SupplierDebtDue" xml:space="preserve">
+    <value>Təchizatçı Borcunun Vaxtı Çatıb</value>
+  </data>
+  <data name="NotificationType_PurchasePriceChanged" xml:space="preserve">
+    <value>Alış Qiyməti Dəyişdi</value>
+  </data>
+  <data name="NotificationType_SupplierInvoiceMissing" xml:space="preserve">
+    <value>Təchizatçı Qaiməsi Çatışmır</value>
+  </data>
+  <data name="NotificationType_CashBalanceWarning" xml:space="preserve">
+    <value>Kassa Qalığı Xəbərdarlığı</value>
+  </data>
+  <data name="NotificationType_PaymentNotConfirmed" xml:space="preserve">
+    <value>Ödəniş Təsdiqlənməyib</value>
+  </data>
+  <data name="NotificationType_BankPaymentImported" xml:space="preserve">
+    <value>Bank Ödənişi İdxal Edildi</value>
+  </data>
+  <data name="NotificationType_CashboxClosingMissing" xml:space="preserve">
+    <value>Kassa Qapanışı Çatışmır</value>
+  </data>
+  <data name="NotificationType_PaymentDifference" xml:space="preserve">
+    <value>Ödəniş Fərqi</value>
+  </data>
+  <data name="NotificationType_InstallmentDueSoon" xml:space="preserve">
+    <value>Taksit Xatırlatması</value>
+  </data>
+  <data name="NotificationType_InstallmentDueToday" xml:space="preserve">
+    <value>Taksit Ödəniş Günü</value>
+  </data>
+  <data name="NotificationType_InstallmentOverdue" xml:space="preserve">
+    <value>Gecikmiş Taksit</value>
+  </data>
+  <data name="NotificationType_InstallmentPaid" xml:space="preserve">
+    <value>Taksit Ödəndi</value>
+  </data>
+  <data name="NotificationType_CreditClosed" xml:space="preserve">
+    <value>Kredit Bağlandı</value>
+  </data>
+  <data name="NotificationType_CustomerDebtIncreased" xml:space="preserve">
+    <value>Müştəri Borcu Artıb</value>
+  </data>
+  <data name="NotificationType_CustomerBirthday" xml:space="preserve">
+    <value>Müştəri Ad Günü</value>
+  </data>
+  <data name="NotificationType_CustomerInactive" xml:space="preserve">
+    <value>Qeyri-Aktiv Müştəri</value>
+  </data>
+  <data name="NotificationType_VipCustomerSale" xml:space="preserve">
+    <value>VIP Müştəri Satışı</value>
+  </data>
+  <data name="NotificationType_NewCustomerCreated" xml:space="preserve">
+    <value>Yeni Müştəri Yaradıldı</value>
+  </data>
+  <data name="NotificationType_BackupFailed" xml:space="preserve">
+    <value>Nüsxələmə Uğursuz</value>
+  </data>
+  <data name="NotificationType_IntegrationFailed" xml:space="preserve">
+    <value>İnteqrasiya Uğursuz</value>
+  </data>
+  <data name="NotificationType_SyncFailed" xml:space="preserve">
+    <value>Sinxronizasiya Xətası</value>
+  </data>
+  <data name="NotificationType_LicenseExpireSoon" xml:space="preserve">
+    <value>Lisenziya Bitir</value>
+  </data>
+  <data name="NotificationType_UserLoginFailedManyTimes" xml:space="preserve">
+    <value>Çoxsaylı Uğursuz Giriş Cəhdi</value>
+  </data>
+  <data name="NotificationChannel_InApp" xml:space="preserve">
+    <value>Proqram daxili</value>
+  </data>
+  <data name="NotificationChannel_Popup" xml:space="preserve">
+    <value>Qalxan pəncərə</value>
+  </data>
+  <data name="NotificationChannel_Sms" xml:space="preserve">
+    <value>SMS</value>
+  </data>
+  <data name="NotificationChannel_WhatsApp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
+  <data name="NotificationChannel_Email" xml:space="preserve">
+    <value>E-poçt</value>
+  </data>
+  <data name="NotificationRecipientStatus_Unread" xml:space="preserve">
+    <value>Oxunmamış</value>
+  </data>
+  <data name="NotificationRecipientStatus_Read" xml:space="preserve">
+    <value>Oxunmuş</value>
+  </data>
+  <data name="NotificationRecipientStatus_Dismissed" xml:space="preserve">
+    <value>Bağlanmış</value>
+  </data>
+  <data name="NotificationRecipientStatus_Snoozed" xml:space="preserve">
+    <value>Təxirə salınmış</value>
+  </data>
+  <data name="NotificationStatus_Active" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="NotificationStatus_Resolved" xml:space="preserve">
+    <value>Həll edilib</value>
+  </data>
+  <data name="NotificationStatus_Cancelled" xml:space="preserve">
+    <value>Ləğv edilib</value>
+  </data>
+  <data name="NotificationStatus_Expired" xml:space="preserve">
+    <value>Müddəti bitib</value>
   </data>
 </root>

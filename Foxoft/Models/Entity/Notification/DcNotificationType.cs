@@ -1,6 +1,8 @@
+using Foxoft.AppCode;
 using Foxoft.Properties;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
@@ -42,6 +44,14 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Common_Order), ResourceType = typeof(Resources))]
         public int DisplayOrder { get; set; }
+
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_NotificationType_Desc), ResourceType = typeof(Resources))]
+        public string LocalizedDescription => NotificationLocalizer.GetTypeDescription(NotificationTypeCode, NotificationTypeDesc);
+
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_NotificationType_CategoryCode), ResourceType = typeof(Resources))]
+        public string LocalizedCategory => NotificationLocalizer.GetCategoryName(CategoryCode);
 
         public virtual ICollection<DcNotificationRule> DcNotificationRules { get; set; }
         public virtual ICollection<DcNotificationTemplate> DcNotificationTemplates { get; set; }

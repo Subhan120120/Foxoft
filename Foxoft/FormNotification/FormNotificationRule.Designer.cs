@@ -427,6 +427,7 @@ namespace Foxoft
             gV_NotificationRules.FocusedRowChanged += gV_NotificationRules_FocusedRowChanged;
             gV_NotificationRules.RowCellStyle += gV_NotificationRules_RowCellStyle;
             gV_NotificationRules.PopupMenuShowing += gV_NotificationRules_PopupMenuShowing;
+            gV_NotificationRules.CustomColumnDisplayText += gV_NotificationRules_CustomColumnDisplayText;
             // 
             // colNotificationRuleId
             // 
@@ -861,10 +862,10 @@ namespace Foxoft
             repositoryItemLookUpEditNotificationType.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
             repositoryItemLookUpEditNotificationType.Columns.AddRange(new LookUpColumnInfo[] {
                 new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code),
-                new LookUpColumnInfo(nameof(DcNotificationType.CategoryCode), Resources.Entity_NotificationType_CategoryCode),
-                new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeDesc), Resources.Entity_NotificationType_Desc)
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedCategory), Resources.Entity_NotificationType_CategoryCode),
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedDescription), Resources.Entity_NotificationType_Desc)
             });
-            repositoryItemLookUpEditNotificationType.DisplayMember = nameof(DcNotificationType.NotificationTypeDesc);
+            repositoryItemLookUpEditNotificationType.DisplayMember = nameof(DcNotificationType.LocalizedDescription);
             repositoryItemLookUpEditNotificationType.Name = "repositoryItemLookUpEditNotificationType";
             repositoryItemLookUpEditNotificationType.NullText = "";
             repositoryItemLookUpEditNotificationType.SearchMode = SearchMode.AutoSearch;
@@ -1165,9 +1166,16 @@ namespace Foxoft
             // 
             repositoryItemLookUpEditRecipientNotificationType.AutoHeight = false;
             repositoryItemLookUpEditRecipientNotificationType.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            repositoryItemLookUpEditRecipientNotificationType.Columns.AddRange(new LookUpColumnInfo[] {
+                new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code),
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedCategory), Resources.Entity_NotificationType_CategoryCode),
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedDescription), Resources.Entity_NotificationType_Desc)
+            });
+            repositoryItemLookUpEditRecipientNotificationType.DisplayMember = nameof(DcNotificationType.LocalizedDescription);
             repositoryItemLookUpEditRecipientNotificationType.Name = "repositoryItemLookUpEditRecipientNotificationType";
             repositoryItemLookUpEditRecipientNotificationType.NullText = "";
             repositoryItemLookUpEditRecipientNotificationType.SearchMode = SearchMode.AutoSearch;
+            repositoryItemLookUpEditRecipientNotificationType.ValueMember = nameof(DcNotificationType.NotificationTypeCode);
             // 
             // panelRecipientTop
             // 

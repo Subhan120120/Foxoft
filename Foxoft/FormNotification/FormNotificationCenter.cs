@@ -3,6 +3,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.AppCode;
 using Foxoft.AppCode.Service;
@@ -384,6 +385,33 @@ namespace Foxoft
 
             gV_Notifications.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
             layoutLoaded = true;
+        }
+
+        private void gV_Notifications_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
+        {
+            if (e.Column == colNotificationTypeDesc)
+            {
+                if (gV_Notifications.GetRow(e.ListSourceRowIndex) is NotificationInboxItem item)
+                    e.DisplayText = NotificationLocalizer.GetTypeDescription(item.NotificationTypeCode, item.NotificationTypeDesc);
+                else
+                    e.DisplayText = NotificationLocalizer.GetTypeDescription(e.Value?.ToString(), e.Value?.ToString());
+            }
+            else if (e.Column == colCategoryCode)
+            {
+                e.DisplayText = NotificationLocalizer.GetCategoryName(e.Value?.ToString());
+            }
+            else if (e.Column == colSeverity)
+            {
+                e.DisplayText = NotificationLocalizer.GetSeverityName(e.Value?.ToString());
+            }
+            else if (e.Column == colRecipientStatus)
+            {
+                e.DisplayText = NotificationLocalizer.GetRecipientStatusName(e.Value?.ToString());
+            }
+            else if (e.Column == colNotificationStatus)
+            {
+                e.DisplayText = NotificationLocalizer.GetNotificationStatusName(e.Value?.ToString());
+            }
         }
 
         private void FormNotificationCenter_FormClosed(object sender, FormClosedEventArgs e)

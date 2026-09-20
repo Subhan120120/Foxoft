@@ -17846,6 +17846,551 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Entity_TrBackupLog_ErrorMessage", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to Stock.
+        /// </summary>
+        public static string NotificationCategory_Stock {
+            get {
+                return ResourceManager.GetString("NotificationCategory_Stock", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Sale.
+        /// </summary>
+        public static string NotificationCategory_Sale {
+            get {
+                return ResourceManager.GetString("NotificationCategory_Sale", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase.
+        /// </summary>
+        public static string NotificationCategory_Purchase {
+            get {
+                return ResourceManager.GetString("NotificationCategory_Purchase", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string NotificationCategory_Payment {
+            get {
+                return ResourceManager.GetString("NotificationCategory_Payment", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Installment.
+        /// </summary>
+        public static string NotificationCategory_Installment {
+            get {
+                return ResourceManager.GetString("NotificationCategory_Installment", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Customer.
+        /// </summary>
+        public static string NotificationCategory_Customer {
+            get {
+                return ResourceManager.GetString("NotificationCategory_Customer", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string NotificationCategory_System {
+            get {
+                return ResourceManager.GetString("NotificationCategory_System", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string NotificationSeverity_Info {
+            get {
+                return ResourceManager.GetString("NotificationSeverity_Info", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string NotificationSeverity_Warning {
+            get {
+                return ResourceManager.GetString("NotificationSeverity_Warning", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to High.
+        /// </summary>
+        public static string NotificationSeverity_High {
+            get {
+                return ResourceManager.GetString("NotificationSeverity_High", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Critical.
+        /// </summary>
+        public static string NotificationSeverity_Critical {
+            get {
+                return ResourceManager.GetString("NotificationSeverity_Critical", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Product Stock Warning Level.
+        /// </summary>
+        public static string NotificationType_ProductStockWarning {
+            get {
+                return ResourceManager.GetString("NotificationType_ProductStockWarning", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Product Out of Stock.
+        /// </summary>
+        public static string NotificationType_ProductOutOfStock {
+            get {
+                return ResourceManager.GetString("NotificationType_ProductOutOfStock", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Negative Stock.
+        /// </summary>
+        public static string NotificationType_NegativeStock {
+            get {
+                return ResourceManager.GetString("NotificationType_NegativeStock", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Over Stock.
+        /// </summary>
+        public static string NotificationType_OverStock {
+            get {
+                return ResourceManager.GetString("NotificationType_OverStock", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Expired Product.
+        /// </summary>
+        public static string NotificationType_ExpiredProduct {
+            get {
+                return ResourceManager.GetString("NotificationType_ExpiredProduct", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Product Expiring Soon.
+        /// </summary>
+        public static string NotificationType_ProductExpireSoon {
+            get {
+                return ResourceManager.GetString("NotificationType_ProductExpireSoon", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Serial/IMEI Missing.
+        /// </summary>
+        public static string NotificationType_SerialImeiMissing {
+            get {
+                return ResourceManager.GetString("NotificationType_SerialImeiMissing", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Stock Transfer Pending.
+        /// </summary>
+        public static string NotificationType_StockTransferPending {
+            get {
+                return ResourceManager.GetString("NotificationType_StockTransferPending", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Stock Transfer Rejected.
+        /// </summary>
+        public static string NotificationType_StockTransferRejected {
+            get {
+                return ResourceManager.GetString("NotificationType_StockTransferRejected", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Difference.
+        /// </summary>
+        public static string NotificationType_InventoryDifference {
+            get {
+                return ResourceManager.GetString("NotificationType_InventoryDifference", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Sale Below Minimum Price.
+        /// </summary>
+        public static string NotificationType_SaleBelowMinimumPrice {
+            get {
+                return ResourceManager.GetString("NotificationType_SaleBelowMinimumPrice", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Discount Approval Required.
+        /// </summary>
+        public static string NotificationType_DiscountApprovalRequired {
+            get {
+                return ResourceManager.GetString("NotificationType_DiscountApprovalRequired", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Not Posted.
+        /// </summary>
+        public static string NotificationType_InvoiceNotPosted {
+            get {
+                return ResourceManager.GetString("NotificationType_InvoiceNotPosted", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Credit Limit Exceeded.
+        /// </summary>
+        public static string NotificationType_CustomerCreditLimitExceeded {
+            get {
+                return ResourceManager.GetString("NotificationType_CustomerCreditLimitExceeded", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Large Sale Created.
+        /// </summary>
+        public static string NotificationType_LargeSaleCreated {
+            get {
+                return ResourceManager.GetString("NotificationType_LargeSaleCreated", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Product Purchase.
+        /// </summary>
+        public static string NotificationType_ProductPurchase {
+            get {
+                return ResourceManager.GetString("NotificationType_ProductPurchase", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Return Created.
+        /// </summary>
+        public static string NotificationType_ReturnCreated {
+            get {
+                return ResourceManager.GetString("NotificationType_ReturnCreated", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase Order Pending.
+        /// </summary>
+        public static string NotificationType_PurchaseOrderPending {
+            get {
+                return ResourceManager.GetString("NotificationType_PurchaseOrderPending", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Supplier Debt Due.
+        /// </summary>
+        public static string NotificationType_SupplierDebtDue {
+            get {
+                return ResourceManager.GetString("NotificationType_SupplierDebtDue", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase Price Changed.
+        /// </summary>
+        public static string NotificationType_PurchasePriceChanged {
+            get {
+                return ResourceManager.GetString("NotificationType_PurchasePriceChanged", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Supplier Invoice Missing.
+        /// </summary>
+        public static string NotificationType_SupplierInvoiceMissing {
+            get {
+                return ResourceManager.GetString("NotificationType_SupplierInvoiceMissing", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Balance Warning.
+        /// </summary>
+        public static string NotificationType_CashBalanceWarning {
+            get {
+                return ResourceManager.GetString("NotificationType_CashBalanceWarning", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Not Confirmed.
+        /// </summary>
+        public static string NotificationType_PaymentNotConfirmed {
+            get {
+                return ResourceManager.GetString("NotificationType_PaymentNotConfirmed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Bank Payment Imported.
+        /// </summary>
+        public static string NotificationType_BankPaymentImported {
+            get {
+                return ResourceManager.GetString("NotificationType_BankPaymentImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cashbox Closing Missing.
+        /// </summary>
+        public static string NotificationType_CashboxClosingMissing {
+            get {
+                return ResourceManager.GetString("NotificationType_CashboxClosingMissing", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Difference.
+        /// </summary>
+        public static string NotificationType_PaymentDifference {
+            get {
+                return ResourceManager.GetString("NotificationType_PaymentDifference", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Due Soon.
+        /// </summary>
+        public static string NotificationType_InstallmentDueSoon {
+            get {
+                return ResourceManager.GetString("NotificationType_InstallmentDueSoon", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Due Today.
+        /// </summary>
+        public static string NotificationType_InstallmentDueToday {
+            get {
+                return ResourceManager.GetString("NotificationType_InstallmentDueToday", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Overdue.
+        /// </summary>
+        public static string NotificationType_InstallmentOverdue {
+            get {
+                return ResourceManager.GetString("NotificationType_InstallmentOverdue", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Paid.
+        /// </summary>
+        public static string NotificationType_InstallmentPaid {
+            get {
+                return ResourceManager.GetString("NotificationType_InstallmentPaid", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Credit Closed.
+        /// </summary>
+        public static string NotificationType_CreditClosed {
+            get {
+                return ResourceManager.GetString("NotificationType_CreditClosed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Debt Increased.
+        /// </summary>
+        public static string NotificationType_CustomerDebtIncreased {
+            get {
+                return ResourceManager.GetString("NotificationType_CustomerDebtIncreased", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Birthday.
+        /// </summary>
+        public static string NotificationType_CustomerBirthday {
+            get {
+                return ResourceManager.GetString("NotificationType_CustomerBirthday", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Inactive.
+        /// </summary>
+        public static string NotificationType_CustomerInactive {
+            get {
+                return ResourceManager.GetString("NotificationType_CustomerInactive", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to VIP Customer Sale.
+        /// </summary>
+        public static string NotificationType_VipCustomerSale {
+            get {
+                return ResourceManager.GetString("NotificationType_VipCustomerSale", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to New Customer Created.
+        /// </summary>
+        public static string NotificationType_NewCustomerCreated {
+            get {
+                return ResourceManager.GetString("NotificationType_NewCustomerCreated", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Backup Failed.
+        /// </summary>
+        public static string NotificationType_BackupFailed {
+            get {
+                return ResourceManager.GetString("NotificationType_BackupFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Integration Failed.
+        /// </summary>
+        public static string NotificationType_IntegrationFailed {
+            get {
+                return ResourceManager.GetString("NotificationType_IntegrationFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Sync Failed.
+        /// </summary>
+        public static string NotificationType_SyncFailed {
+            get {
+                return ResourceManager.GetString("NotificationType_SyncFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to License Expiring Soon.
+        /// </summary>
+        public static string NotificationType_LicenseExpireSoon {
+            get {
+                return ResourceManager.GetString("NotificationType_LicenseExpireSoon", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Too Many Failed Login Attempts.
+        /// </summary>
+        public static string NotificationType_UserLoginFailedManyTimes {
+            get {
+                return ResourceManager.GetString("NotificationType_UserLoginFailedManyTimes", resourceCulture);
+            }
+        }
+
+        public static string NotificationChannel_InApp {
+            get {
+                return ResourceManager.GetString("NotificationChannel_InApp", resourceCulture);
+            }
+        }
+
+        public static string NotificationChannel_Popup {
+            get {
+                return ResourceManager.GetString("NotificationChannel_Popup", resourceCulture);
+            }
+        }
+
+        public static string NotificationChannel_Sms {
+            get {
+                return ResourceManager.GetString("NotificationChannel_Sms", resourceCulture);
+            }
+        }
+
+        public static string NotificationChannel_WhatsApp {
+            get {
+                return ResourceManager.GetString("NotificationChannel_WhatsApp", resourceCulture);
+            }
+        }
+
+        public static string NotificationChannel_Email {
+            get {
+                return ResourceManager.GetString("NotificationChannel_Email", resourceCulture);
+            }
+        }
+
+        public static string NotificationRecipientStatus_Unread {
+            get {
+                return ResourceManager.GetString("NotificationRecipientStatus_Unread", resourceCulture);
+            }
+        }
+
+        public static string NotificationRecipientStatus_Read {
+            get {
+                return ResourceManager.GetString("NotificationRecipientStatus_Read", resourceCulture);
+            }
+        }
+
+        public static string NotificationRecipientStatus_Dismissed {
+            get {
+                return ResourceManager.GetString("NotificationRecipientStatus_Dismissed", resourceCulture);
+            }
+        }
+
+        public static string NotificationRecipientStatus_Snoozed {
+            get {
+                return ResourceManager.GetString("NotificationRecipientStatus_Snoozed", resourceCulture);
+            }
+        }
+
+        public static string NotificationStatus_Active {
+            get {
+                return ResourceManager.GetString("NotificationStatus_Active", resourceCulture);
+            }
+        }
+
+        public static string NotificationStatus_Resolved {
+            get {
+                return ResourceManager.GetString("NotificationStatus_Resolved", resourceCulture);
+            }
+        }
+
+        public static string NotificationStatus_Cancelled {
+            get {
+                return ResourceManager.GetString("NotificationStatus_Cancelled", resourceCulture);
+            }
+        }
+
+        public static string NotificationStatus_Expired {
+            get {
+                return ResourceManager.GetString("NotificationStatus_Expired", resourceCulture);
+            }
+        }
+
     }
 }
-

@@ -6,6 +6,7 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Models.Entity.RoleClaim;
 using Foxoft.Properties;
@@ -101,6 +102,20 @@ namespace Foxoft
             lblPlaceholdersTitle.Text = Resources.Form_NotificationRule_Placeholders;
             repositoryItemLookUpEditRecipientStore.NullText = Resources.Form_NotificationRecipientRule_AllStores;
             lueParamStore.Properties.NullText = Resources.Form_NotificationRule_AllStores;
+
+            chkParamInApp.Text = Resources.Form_NotificationRule_Channel_InApp;
+            chkParamPopup.Text = Resources.Form_NotificationRule_Channel_Popup;
+            chkParamSms.Text = Resources.Form_NotificationRule_Channel_SMS;
+            chkParamWhatsApp.Text = Resources.Form_NotificationRule_Channel_WhatsApp;
+            chkParamEmail.Text = Resources.Form_NotificationRule_Channel_Email;
+
+            cboParamSeverity.Properties.Items.Clear();
+            cboParamSeverity.Properties.Items.AddRange(new ImageComboBoxItem[] {
+                new ImageComboBoxItem(NotificationLocalizer.GetSeverityName(NotificationSeverities.Info), NotificationSeverities.Info),
+                new ImageComboBoxItem(NotificationLocalizer.GetSeverityName(NotificationSeverities.Warning), NotificationSeverities.Warning),
+                new ImageComboBoxItem(NotificationLocalizer.GetSeverityName(NotificationSeverities.High), NotificationSeverities.High),
+                new ImageComboBoxItem(NotificationLocalizer.GetSeverityName(NotificationSeverities.Critical), NotificationSeverities.Critical)
+            });
         }
 
         private async void FormNotificationRule_Load(object sender, EventArgs e)
@@ -129,17 +144,34 @@ namespace Foxoft
             List<DcCurrAcc> stores = efMethods.SelectStoresIncludeDisabled();
 
             lueParamNotificationType.Properties.DataSource = notificationTypes;
-            lueParamNotificationType.Properties.DisplayMember = nameof(DcNotificationType.NotificationTypeDesc);
+            lueParamNotificationType.Properties.DisplayMember = nameof(DcNotificationType.LocalizedDescription);
             lueParamNotificationType.Properties.ValueMember = nameof(DcNotificationType.NotificationTypeCode);
             lueParamNotificationType.Properties.Columns.Clear();
             lueParamNotificationType.Properties.Columns.AddRange(new LookUpColumnInfo[] {
                 new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code),
-                new LookUpColumnInfo(nameof(DcNotificationType.CategoryCode), Resources.Entity_NotificationType_CategoryCode),
-                new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeDesc), Resources.Entity_NotificationType_Desc)
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedCategory), Resources.Entity_NotificationType_CategoryCode),
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedDescription), Resources.Entity_NotificationType_Desc)
             });
 
             repositoryItemLookUpEditNotificationType.DataSource = notificationTypes;
+            repositoryItemLookUpEditNotificationType.DisplayMember = nameof(DcNotificationType.LocalizedDescription);
+            repositoryItemLookUpEditNotificationType.ValueMember = nameof(DcNotificationType.NotificationTypeCode);
+            repositoryItemLookUpEditNotificationType.Columns.Clear();
+            repositoryItemLookUpEditNotificationType.Columns.AddRange(new LookUpColumnInfo[] {
+                new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code),
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedCategory), Resources.Entity_NotificationType_CategoryCode),
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedDescription), Resources.Entity_NotificationType_Desc)
+            });
+
             repositoryItemLookUpEditRecipientNotificationType.DataSource = notificationTypes;
+            repositoryItemLookUpEditRecipientNotificationType.DisplayMember = nameof(DcNotificationType.LocalizedDescription);
+            repositoryItemLookUpEditRecipientNotificationType.ValueMember = nameof(DcNotificationType.NotificationTypeCode);
+            repositoryItemLookUpEditRecipientNotificationType.Columns.Clear();
+            repositoryItemLookUpEditRecipientNotificationType.Columns.AddRange(new LookUpColumnInfo[] {
+                new LookUpColumnInfo(nameof(DcNotificationType.NotificationTypeCode), Resources.Entity_NotificationType_Code),
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedCategory), Resources.Entity_NotificationType_CategoryCode),
+                new LookUpColumnInfo(nameof(DcNotificationType.LocalizedDescription), Resources.Entity_NotificationType_Desc)
+            });
             repositoryItemLookUpEditRole.DataSource = roles;
             repositoryItemLookUpEditRecipientStore.DataSource = stores;
 
@@ -213,12 +245,13 @@ namespace Foxoft
         {
             if (rule != null)
             {
-                string typeDesc = rule.DcNotificationType?.NotificationTypeDesc ?? rule.NotificationTypeCode;
-                string category = rule.DcNotificationType?.CategoryCode ?? string.Empty;
+                string typeDesc = NotificationLocalizer.GetTypeDescription(rule.NotificationTypeCode, rule.DcNotificationType?.NotificationTypeDesc);
+                string category = NotificationLocalizer.GetCategoryName(rule.DcNotificationType?.CategoryCode);
                 string store = string.IsNullOrWhiteSpace(rule.StoreCode) ? Resources.Form_NotificationRule_AllStores : (rule.DcStore?.CurrAccDesc ?? rule.StoreCode);
+                string channels = NotificationLocalizer.GetLocalizedChannelsString(rule.ChannelCodes);
 
                 lblSelectedRuleTitle.Text = $"{rule.RuleName} ({typeDesc})";
-                lblSelectedRuleSubtitle.Text = $"Kateqoriya: {category} | Filial: {store} | Kanallar: {rule.ChannelCodes}";
+                lblSelectedRuleSubtitle.Text = $"Kateqoriya: {category} | Filial: {store} | Kanallar: {channels}";
             }
             else
             {
@@ -428,9 +461,11 @@ namespace Foxoft
                 return;
 
             DcNotificationType? selectedType = FocusedRule()?.DcNotificationType ?? notificationTypes.FirstOrDefault();
+            string defaultRuleName = selectedType?.LocalizedDescription ?? string.Empty;
+
             DcNotificationRule rule = new()
             {
-                RuleName = selectedType?.NotificationTypeDesc ?? string.Empty,
+                RuleName = defaultRuleName,
                 NotificationTypeCode = selectedType?.NotificationTypeCode ?? string.Empty,
                 StoreCode = null,
                 IsEnabled = true,
@@ -510,7 +545,7 @@ namespace Foxoft
                 else if (!existingLangs.Contains("en")) defaultLang = "en";
             }
 
-            string defaultTitle = rule?.RuleName ?? rule?.DcNotificationType?.NotificationTypeDesc ?? notificationTypeCode;
+            string defaultTitle = rule?.RuleName ?? NotificationLocalizer.GetTypeDescription(notificationTypeCode, rule?.DcNotificationType?.NotificationTypeDesc);
 
             DcNotificationTemplate template = new()
             {
@@ -902,6 +937,18 @@ namespace Foxoft
                 e.Appearance.ForeColor = Color.Gray;
         }
 
+        private void gV_NotificationRules_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
+        {
+            if (e.Column == colNotificationCategoryCode)
+            {
+                e.DisplayText = NotificationLocalizer.GetCategoryName(e.Value?.ToString());
+            }
+            else if (e.Column == colNotificationTypeCode)
+            {
+                e.DisplayText = NotificationLocalizer.GetTypeDescription(e.Value?.ToString());
+            }
+        }
+
         private async void gC_NotificationRules_ProcessGridKey(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
@@ -954,8 +1001,8 @@ namespace Foxoft
 
                 if (string.IsNullOrWhiteSpace(txtParamRuleName.Text) && rule.DcNotificationType != null)
                 {
-                    txtParamRuleName.Text = rule.DcNotificationType.NotificationTypeDesc;
-                    rule.RuleName = rule.DcNotificationType.NotificationTypeDesc;
+                    txtParamRuleName.Text = rule.DcNotificationType.LocalizedDescription;
+                    rule.RuleName = rule.DcNotificationType.LocalizedDescription;
                 }
 
                 gV_NotificationRules.RefreshRow(gV_NotificationRules.FocusedRowHandle);

@@ -1,3 +1,5 @@
+using Foxoft.AppCode;
+
 namespace Foxoft.Models.ViewModel
 {
     public sealed class NotificationInboxItem
@@ -18,5 +20,11 @@ namespace Foxoft.Models.ViewModel
         public string? EntityKey { get; set; }
         public DateTime? SnoozedUntil { get; set; }
         public DateTime LastRaisedDate { get; set; }
+
+        public string LocalizedTypeDesc => NotificationLocalizer.GetTypeDescription(NotificationTypeCode, NotificationTypeDesc);
+        public string LocalizedCategory => NotificationLocalizer.GetCategoryName(CategoryCode);
+        public string LocalizedSeverity => NotificationLocalizer.GetSeverityName(Severity);
+        public string LocalizedRecipientStatus => NotificationLocalizer.GetRecipientStatusName(RecipientStatus);
+        public string LocalizedNotificationStatus => NotificationLocalizer.GetNotificationStatusName(NotificationStatus);
     }
 }

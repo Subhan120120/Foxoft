@@ -1,3 +1,4 @@
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Models.ViewModel;
 using Foxoft.Properties;
@@ -34,7 +35,7 @@ namespace Foxoft
 
             lblTitle.Text = item.Title;
             lblBody.Text = NormalizeBody(item.Body);
-            lblStatus.Text = item.RecipientStatus;
+            lblStatus.Text = NotificationLocalizer.GetRecipientStatusName(item.RecipientStatus);
             lblMeta.Text = BuildMetaText(item);
             lblEntity.Text = BuildEntityText(item);
 
@@ -120,7 +121,8 @@ namespace Foxoft
                 ? string.Empty
                 : $" | {Resources.Entity_InvoiceHeader_StoreCode}: {item.StoreCode}";
 
-            return $"{item.NotificationTypeDesc} | {Resources.Entity_Notification_LastRaisedDate}: {item.LastRaisedDate:g}{store}";
+            string typeDesc = NotificationLocalizer.GetTypeDescription(item.NotificationTypeCode, item.NotificationTypeDesc);
+            return $"{typeDesc} | {Resources.Entity_Notification_LastRaisedDate}: {item.LastRaisedDate:g}{store}";
         }
 
         private static string BuildEntityText(NotificationInboxItem item)

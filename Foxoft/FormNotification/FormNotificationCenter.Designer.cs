@@ -367,6 +367,7 @@ namespace Foxoft
             gV_Notifications.RowCellStyle += gV_Notifications_RowCellStyle;
             gV_Notifications.PopupMenuShowing += gV_Notifications_PopupMenuShowing;
             gV_Notifications.DoubleClick += gV_Notifications_DoubleClick;
+            gV_Notifications.CustomColumnDisplayText += gV_Notifications_CustomColumnDisplayText;
             // 
             // colCreatedDate
             // 
