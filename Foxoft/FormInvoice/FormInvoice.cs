@@ -388,6 +388,9 @@ namespace Foxoft
         {
             colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
             col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
+            colPurchasePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.PurchasePrice);
+            colWholesalePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.WholesalePrice);
+            colRetailPrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.RetailPrice);
             LCI_CashRegCode.Text = ReflectionExt.GetDisplayName<TrPaymentLine>(x => x.CashRegisterCode);
         }
 
@@ -1114,6 +1117,30 @@ namespace Foxoft
         {
             if (e.Value is null)
                 return;
+
+            if (e.Column == colPurchasePrice || e.Column == colWholesalePrice || e.Column == colRetailPrice)
+            {
+                var line = gV_InvoiceLine.GetRow(e.RowHandle) as TrInvoiceLine;
+                if (line is not null && !string.IsNullOrEmpty(line.ProductCode))
+                {
+                    var trackedProduct = line.DcProduct
+                        ?? dbContext.DcProducts.Local.FirstOrDefault(x => x.ProductCode == line.ProductCode)
+                        ?? dbContext.DcProducts.Find(line.ProductCode);
+
+                    if (trackedProduct is not null)
+                    {
+                        line.DcProduct = trackedProduct;
+                        decimal val = Convert.ToDecimal(e.Value ?? 0);
+                        if (e.Column == colPurchasePrice && trackedProduct.PurchasePrice != val)
+                            trackedProduct.PurchasePrice = val;
+                        else if (e.Column == colWholesalePrice && trackedProduct.WholesalePrice != val)
+                            trackedProduct.WholesalePrice = val;
+                        else if (e.Column == colRetailPrice && trackedProduct.RetailPrice != val)
+                            trackedProduct.RetailPrice = val;
+                    }
+                }
+                return;
+            }
 
             string value = e.Value.ToString()?.Trim();
             if (string.IsNullOrWhiteSpace(value))
@@ -3361,6 +3388,16 @@ namespace Foxoft
                     col_Price.OptionsColumn.ReadOnly = true;
             }
 
+            if (colPurchasePrice != null)
+            {
+                bool currAccHasClaimsRP = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailPurchaseInvoice");
+                if (!currAccHasClaimsRP)
+                {
+                    colPurchasePrice.OptionsColumn.ShowInCustomizationForm = false;
+                    colPurchasePrice.Visible = false;
+                }
+            }
+
             colBalance.OptionsColumn.ReadOnly = true;
             colProductCost.OptionsColumn.ReadOnly = true;
             col_NetAmount.OptionsColumn.ReadOnly = true;
@@ -3759,6 +3796,19 @@ namespace Foxoft
 
         private void FillRow(int rowHandle, DcProduct product)
         {
+            var line = gV_InvoiceLine.GetRow(rowHandle) as TrInvoiceLine;
+            if (line is not null)
+            {
+                var trackedProduct = dbContext.DcProducts.Local.FirstOrDefault(x => x.ProductCode == product.ProductCode)
+                                     ?? dbContext.DcProducts.Find(product.ProductCode);
+                if (trackedProduct is not null)
+                    line.DcProduct = trackedProduct;
+            }
+
+            gV_InvoiceLine.SetRowCellValue(rowHandle, colPurchasePrice, product.PurchasePrice);
+            gV_InvoiceLine.SetRowCellValue(rowHandle, colWholesalePrice, product.WholesalePrice);
+            gV_InvoiceLine.SetRowCellValue(rowHandle, colRetailPrice, product.RetailPrice);
+
             gV_InvoiceLine.SetRowCellValue(rowHandle, colProductCost, product.ProductCost);
             gV_InvoiceLine.SetRowCellValue(rowHandle, colUnitOfMeasureId, product.DefaultUnitOfMeasureId);
 
@@ -4244,7 +4294,16 @@ namespace Foxoft
         private void gV_InvoiceLine_ShowingEditor(object sender, CancelEventArgs e)
         {
             if (!EnsureInvoiceCanBeChanged())
+            {
                 e.Cancel = true;
+                return;
+            }
+
+            if ((gV_InvoiceLine.FocusedColumn == colPurchasePrice || gV_InvoiceLine.FocusedColumn == colWholesalePrice || gV_InvoiceLine.FocusedColumn == colRetailPrice)
+                && string.IsNullOrEmpty(gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString()))
+            {
+                e.Cancel = true;
+            }
         }
 
         private void gV_InvoiceLine_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)

@@ -149,7 +149,7 @@ namespace Foxoft.Models
         {
             var modifiedEntries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Modified)
-                .Where(e => e.Entity is TrInvoiceHeader || e.Entity is TrInvoiceLine);
+                .Where(e => e.Entity is TrInvoiceHeader || e.Entity is TrInvoiceLine || e.Entity is DcProduct);
 
             foreach (var entry in modifiedEntries)
             {
@@ -162,6 +162,11 @@ namespace Foxoft.Models
                 {
                     line.LastUpdatedUserName = currAccCode;
                     line.LastUpdatedDate = DateTime.Now;
+                }
+                else if (entry.Entity is DcProduct product)
+                {
+                    product.LastUpdatedUserName = currAccCode;
+                    product.LastUpdatedDate = DateTime.Now;
                 }
             }
             try
@@ -180,7 +185,7 @@ namespace Foxoft.Models
         {
             var modifiedEntries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Modified)
-                .Where(e => e.Entity is TrInvoiceHeader || e.Entity is TrInvoiceLine);
+                .Where(e => e.Entity is TrInvoiceHeader || e.Entity is TrInvoiceLine || e.Entity is DcProduct);
 
             foreach (var entry in modifiedEntries)
             {
@@ -200,6 +205,11 @@ namespace Foxoft.Models
                 {
                     line.LastUpdatedUserName = currAccCode;
                     line.LastUpdatedDate = DateTime.Now;
+                }
+                else if (entry.Entity is DcProduct product)
+                {
+                    product.LastUpdatedUserName = currAccCode;
+                    product.LastUpdatedDate = DateTime.Now;
                 }
             }
             try

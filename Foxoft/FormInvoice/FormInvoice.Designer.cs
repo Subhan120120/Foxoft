@@ -165,6 +165,9 @@ namespace Foxoft
             colPriceLoc = new GridColumn();
             repoCalcEdit_PriceLoc = new RepositoryItemCalcEdit();
             col_Price = new GridColumn();
+            colPurchasePrice = new GridColumn();
+            colWholesalePrice = new GridColumn();
+            colRetailPrice = new GridColumn();
             repoCalcEdit_Price = new RepositoryItemCalcEdit();
             colCurrencyCode = new GridColumn();
             repoLUE_CurrencyCode = new RepositoryItemLookUpEdit();
@@ -1382,7 +1385,7 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode, colUnitOfMeasureId, col_TotalBenefit, colWorkerCode, colDiscountCampaign, colDiscountCampaignLoc });
+            gV_InvoiceLine.Columns.AddRange(new GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colPurchasePrice, colWholesalePrice, colRetailPrice, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode, colUnitOfMeasureId, col_TotalBenefit, colWorkerCode, colDiscountCampaign, colDiscountCampaignLoc });
             gV_InvoiceLine.CustomizationFormBounds = new Rectangle(760, 184, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -1497,6 +1500,39 @@ namespace Foxoft
             col_Price.VisibleIndex = 4;
             col_Price.Width = 57;
             // 
+            // colPurchasePrice
+            // 
+            colPurchasePrice.ColumnEdit = repoCalcEdit_Price;
+            colPurchasePrice.DisplayFormat.FormatString = "{0:n2}";
+            colPurchasePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colPurchasePrice.FieldName = "PurchasePrice";
+            colPurchasePrice.Name = "colPurchasePrice";
+            colPurchasePrice.Visible = true;
+            colPurchasePrice.VisibleIndex = 5;
+            colPurchasePrice.Width = 75;
+            // 
+            // colWholesalePrice
+            // 
+            colWholesalePrice.ColumnEdit = repoCalcEdit_Price;
+            colWholesalePrice.DisplayFormat.FormatString = "{0:n2}";
+            colWholesalePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colWholesalePrice.FieldName = "WholesalePrice";
+            colWholesalePrice.Name = "colWholesalePrice";
+            colWholesalePrice.Visible = true;
+            colWholesalePrice.VisibleIndex = 6;
+            colWholesalePrice.Width = 75;
+            // 
+            // colRetailPrice
+            // 
+            colRetailPrice.ColumnEdit = repoCalcEdit_Price;
+            colRetailPrice.DisplayFormat.FormatString = "{0:n2}";
+            colRetailPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colRetailPrice.FieldName = "RetailPrice";
+            colRetailPrice.Name = "colRetailPrice";
+            colRetailPrice.Visible = true;
+            colRetailPrice.VisibleIndex = 7;
+            colRetailPrice.Width = 75;
+            // 
             // repoCalcEdit_Price
             // 
             repoCalcEdit_Price.AutoHeight = false;
@@ -1513,7 +1549,7 @@ namespace Foxoft
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
-            colCurrencyCode.VisibleIndex = 5;
+            colCurrencyCode.VisibleIndex = 8;
             colCurrencyCode.Width = 59;
             // 
             // repoLUE_CurrencyCode
@@ -1554,7 +1590,7 @@ namespace Foxoft
             col_PosDiscount.FieldName = "PosDiscount";
             col_PosDiscount.Name = "col_PosDiscount";
             col_PosDiscount.Visible = true;
-            col_PosDiscount.VisibleIndex = 6;
+            col_PosDiscount.VisibleIndex = 9;
             col_PosDiscount.Width = 89;
             // 
             // col_NetAmount
@@ -1565,7 +1601,7 @@ namespace Foxoft
             col_NetAmount.Name = "col_NetAmount";
             col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:n2}") });
             col_NetAmount.Visible = true;
-            col_NetAmount.VisibleIndex = 7;
+            col_NetAmount.VisibleIndex = 10;
             col_NetAmount.Width = 69;
             // 
             // col_LineDesc
@@ -1573,7 +1609,7 @@ namespace Foxoft
             col_LineDesc.FieldName = "LineDescription";
             col_LineDesc.Name = "col_LineDesc";
             col_LineDesc.Visible = true;
-            col_LineDesc.VisibleIndex = 8;
+            col_LineDesc.VisibleIndex = 13;
             col_LineDesc.Width = 97;
             // 
             // col_SalesPersonCode
@@ -1715,14 +1751,14 @@ namespace Foxoft
             colDiscountCampaign.OptionsColumn.ReadOnly = true;
             colDiscountCampaign.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DiscountCampaign", "{0:n2}") });
             colDiscountCampaign.Visible = true;
-            colDiscountCampaign.VisibleIndex = 9;
+            colDiscountCampaign.VisibleIndex = 11;
             // 
             // colDiscountCampaignLoc
             // 
             colDiscountCampaignLoc.FieldName = "DiscountCampaignLoc";
             colDiscountCampaignLoc.Name = "colDiscountCampaignLoc";
             colDiscountCampaignLoc.Visible = true;
-            colDiscountCampaignLoc.VisibleIndex = 10;
+            colDiscountCampaignLoc.VisibleIndex = 12;
             // 
             // repoBtnEdit_UnitOfMeasure
             // 
@@ -2384,6 +2420,9 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_ProductCode;
         private DevExpress.XtraGrid.Columns.GridColumn col_Price;
+        private DevExpress.XtraGrid.Columns.GridColumn colPurchasePrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colWholesalePrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colRetailPrice;
         private DevExpress.XtraGrid.Columns.GridColumn col_Amount;
         private DevExpress.XtraGrid.Columns.GridColumn col_PosDiscount;
         private DevExpress.XtraGrid.Columns.GridColumn col_NetAmount;

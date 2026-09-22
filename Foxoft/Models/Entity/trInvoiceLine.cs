@@ -213,9 +213,75 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_ProductBarcode_Barcode), ResourceType = typeof(Resources))]
         public string? Barcode { get; set; }
 
+        [NotMapped]
+        private decimal? _purchasePrice;
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_Product_PurchasePrice), ResourceType = typeof(Resources))]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
+        public decimal? PurchasePrice
+        {
+            get => DcProduct?.PurchasePrice ?? _purchasePrice;
+            set
+            {
+                _purchasePrice = value;
+                if (DcProduct != null && value.HasValue)
+                    DcProduct.PurchasePrice = value.Value;
+            }
+        }
+
+        [NotMapped]
+        private decimal? _wholesalePrice;
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_Product_WholesalePrice), ResourceType = typeof(Resources))]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
+        public decimal? WholesalePrice
+        {
+            get => DcProduct?.WholesalePrice ?? _wholesalePrice;
+            set
+            {
+                _wholesalePrice = value;
+                if (DcProduct != null && value.HasValue)
+                    DcProduct.WholesalePrice = value.Value;
+            }
+        }
+
+        [NotMapped]
+        private decimal? _retailPrice;
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_Product_RetailPrice), ResourceType = typeof(Resources))]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
+        public decimal? RetailPrice
+        {
+            get => DcProduct?.RetailPrice ?? _retailPrice;
+            set
+            {
+                _retailPrice = value;
+                if (DcProduct != null && value.HasValue)
+                    DcProduct.RetailPrice = value.Value;
+            }
+        }
+
         [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
-        public virtual DcProduct DcProduct { get; set; }
+
+        private DcProduct _dcProduct;
+        public virtual DcProduct DcProduct
+        {
+            get => _dcProduct;
+            set
+            {
+                _dcProduct = value;
+                if (_dcProduct != null)
+                {
+                    if (_purchasePrice.HasValue)
+                        _dcProduct.PurchasePrice = _purchasePrice.Value;
+                    if (_wholesalePrice.HasValue)
+                        _dcProduct.WholesalePrice = _wholesalePrice.Value;
+                    if (_retailPrice.HasValue)
+                        _dcProduct.RetailPrice = _retailPrice.Value;
+                }
+            }
+        }
         public virtual DcSerialNumber DcSerialNumber { get; set; }
         public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
