@@ -2446,7 +2446,10 @@
     <value>Print is being sent...</value>
   </data>
   <data name="Common_PrintSent" xml:space="preserve">
-    <value>Print has been sent.</value>
+    <value>Print sent successfully.</value>
+  </data>
+  <data name="Common_PrintFailed" xml:space="preserve">
+    <value>Print failed.</value>
   </data>
   <data name="Common_PrinterLabel" xml:space="preserve">
     <value>Printer: {0}</value>

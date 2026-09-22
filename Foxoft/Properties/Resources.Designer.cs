@@ -939,11 +939,20 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Print has been sent..
+        ///   Looks up a localized string similar to Print sent successfully..
         /// </summary>
         public static string Common_PrintSent {
             get {
                 return ResourceManager.GetString("Common_PrintSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print failed..
+        /// </summary>
+        public static string Common_PrintFailed {
+            get {
+                return ResourceManager.GetString("Common_PrintFailed", resourceCulture);
             }
         }
         

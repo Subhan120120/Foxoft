@@ -599,35 +599,43 @@ namespace Foxoft
 
         private async Task PrintFast(string printerName)
         {
-            AlertControl alertControl1 = new AlertControl()
+            if (deliveryInvoHeader is null)
+            {
+                XtraMessageBox.Show(Resources.Form_HandOver_NoInvoiceToPrint);
+                return;
+            }
+
+            AlertControl alertControl1 = new()
             {
                 AutoFormDelay = 3000,
                 FormDisplaySpeed = AlertFormDisplaySpeed.Fast
             };
 
-            MessageToastService.ShowPrintSending(this, printerName, alertControl1);
-
-            if (deliveryInvoHeader is not null)
+            try
+            {
+                printerName = MessageToastService.ResolvePrinterName(printerName);
                 await Task.Run(() => GetPrint(deliveryInvoHeader.InvoiceHeaderId, printerName));
-            else
-                MessageBox.Show(Resources.Form_HandOver_NoInvoiceToPrint);
-
-            MessageToastService.ShowPrintSent(this, printerName, alertControl1);
+                MessageToastService.ShowPrintSuccess(this, printerName, alertControl1);
+            }
+            catch (Exception ex)
+            {
+                MessageToastService.ShowPrintFailed(this, printerName, ex.Message, alertControl1);
+            }
         }
-
 
         private void GetPrint(Guid invoiceHeaderId, string printerName)
         {
-            XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
-            report.PrinterName = printerName;
+            XtraReport? report = GetInvoiceReport(reportFileNameInvoiceWare);
+            if (report is null)
+                throw new FileNotFoundException(Resources.Report_NotFound);
 
-            if (report is not null)
+            using (report)
             {
+                report.PrinterName = printerName;
                 ReportPrintTool printTool = new(report);
                 printTool.Print();
                 efMethods.UpdateInvoicePrintCount(invoiceHeaderId);
             }
-            report.Dispose();
         }
 
         private XtraReport GetInvoiceReport(string fileName)

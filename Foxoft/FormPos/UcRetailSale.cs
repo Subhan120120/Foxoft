@@ -1770,22 +1770,18 @@ namespace Foxoft
 
             try
             {
-                MessageToastService.ShowPrintSending(this.ParentForm, printerName, alertControl1);
+                printerName = MessageToastService.ResolvePrinterName(printerName);
 
                 await Task.Run(() => GetPrint(invoiceHeaderId, printerName));
 
                 if (this.IsHandleCreated)
                     this.BeginInvoke(new Action(() => ShowPrintCount(invoiceHeaderId)));
 
-                MessageToastService.ShowPrintSent(this.ParentForm, printerName, alertControl1);
+                MessageToastService.ShowPrintSuccess(this.ParentForm, printerName, alertControl1);
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(
-                    $"{Resources.Common_ErrorOccurred}{Environment.NewLine}{ex.Message}",
-                    Resources.Common_Error,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageToastService.ShowPrintFailed(this.ParentForm, printerName, ex.Message, alertControl1);
             }
             finally
             {
@@ -1813,7 +1809,7 @@ namespace Foxoft
             XtraReport? report = GetInvoiceReport(invoiceHeaderId, "Report_Embedded_InvoiceReport.repx");
 
             if (report is null)
-                return;
+                throw new FileNotFoundException(Resources.Report_NotFound);
 
             using (report)
             {

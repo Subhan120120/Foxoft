@@ -2446,7 +2446,10 @@
     <value>Çap göndərilir...</value>
   </data>
   <data name="Common_PrintSent" xml:space="preserve">
-    <value>Çap göndərildi.</value>
+    <value>Çap uğurla göndərildi.</value>
+  </data>
+  <data name="Common_PrintFailed" xml:space="preserve">
+    <value>Çap uğursuz oldu.</value>
   </data>
   <data name="Common_PrinterLabel" xml:space="preserve">
     <value>Printer: {0}</value>

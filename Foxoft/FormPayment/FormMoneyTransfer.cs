@@ -582,22 +582,29 @@ namespace Foxoft
             gV_PaymentLine.PostEditor();
             gV_PaymentLine.UpdateCurrentRow();
 
-            MessageToastService.ShowPrintSending(this, printerName, alertControl1);
-
-            if (trPaymentHeader is not null && efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
-                await Task.Run(() => GetPrint(trPaymentHeader.PaymentHeaderId, printerName));
-            else
+            if (trPaymentHeader is null || !efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
+            {
                 XtraMessageBox.Show(Resources.Form_MoneyTransfer_NoPaymentToPrint);
+                return;
+            }
 
-            MessageToastService.ShowPrintSent(this, printerName, alertControl1);
+            try
+            {
+                printerName = MessageToastService.ResolvePrinterName(printerName);
+                await Task.Run(() => GetPrint(trPaymentHeader.PaymentHeaderId, printerName));
+                MessageToastService.ShowPrintSuccess(this, printerName, alertControl1);
+            }
+            catch (Exception ex)
+            {
+                MessageToastService.ShowPrintFailed(this, printerName, ex.Message, alertControl1);
+            }
         }
 
         private void GetPrint(Guid paymentHeaderId, string printerName)
         {
             XtraReport? xtraReport = GetPaymentReport(paymentHeaderId);
-
             if (xtraReport is null)
-                return;
+                throw new FileNotFoundException(Resources.Report_NotFound);
 
             using (xtraReport)
             {

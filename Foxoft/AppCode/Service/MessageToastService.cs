@@ -8,6 +8,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -235,32 +236,101 @@ namespace Foxoft.AppCode.Service
             ShowToastInternal(caption, text, icon);
         }
 
-        public static void ShowPrintSending(Control? owner, string printerName, AlertControl alertControl)
+        public static string ResolvePrinterName(string? printerName)
         {
-            Form? form = (owner as Form) ?? owner?.FindForm() ?? Application.OpenForms.OfType<Form>().FirstOrDefault(f => f.IsHandleCreated);
-            if (form == null) return;
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(printerName)
+                    && PrinterSettings.InstalledPrinters
+                        .Cast<string>()
+                        .Any(installedPrinter => string.Equals(installedPrinter, printerName, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return printerName;
+                }
 
-            alertControl.Show(
-                form,
-                Resources.Common_PrintSending,
-                string.Format(Resources.Common_PrinterLabel, printerName),
-                string.Empty,
-                GetPrintIcon(),
-                null);
+                string defaultPrinter = new PrinterSettings().PrinterName;
+                if (!string.IsNullOrWhiteSpace(defaultPrinter))
+                    return defaultPrinter;
+            }
+            catch
+            {
+            }
+
+            return printerName ?? string.Empty;
         }
 
-        public static void ShowPrintSent(Control? owner, string printerName, AlertControl alertControl)
+        public static void ShowPrintSuccess(Control? owner, string printerName, AlertControl? alertControl = null)
         {
-            Form? form = (owner as Form) ?? owner?.FindForm() ?? Application.OpenForms.OfType<Form>().FirstOrDefault(f => f.IsHandleCreated);
-            if (form == null) return;
+            ShowPrintNotification(owner, printerName, isSuccess: true, errorMessage: null, alertControl);
+        }
 
-            alertControl.Show(
-                form,
-                Resources.Common_PrintSent,
-                string.Format(Resources.Common_PrinterLabel, printerName),
-                string.Empty,
-                GetPrintIcon(),
-                null);
+        public static void ShowPrintFailed(Control? owner, string printerName, string? errorMessage = null, AlertControl? alertControl = null)
+        {
+            ShowPrintNotification(owner, printerName, isSuccess: false, errorMessage, alertControl);
+        }
+
+        public static void ShowPrintResult(Control? owner, string printerName, bool isSuccess, string? errorMessage = null, AlertControl? alertControl = null)
+        {
+            ShowPrintNotification(owner, printerName, isSuccess, errorMessage, alertControl);
+        }
+
+        [Obsolete("Print notification now appears only once upon completion showing success or failure.")]
+        public static void ShowPrintSending(Control? owner, string printerName, AlertControl? alertControl = null)
+        {
+            // Intentionally no-op: notifications should only appear once showing success or failure.
+        }
+
+        public static void ShowPrintSent(Control? owner, string printerName, AlertControl? alertControl = null)
+        {
+            ShowPrintSuccess(owner, printerName, alertControl);
+        }
+
+        private static void ShowPrintNotification(Control? owner, string printerName, bool isSuccess, string? errorMessage = null, AlertControl? alertControl = null)
+        {
+            try
+            {
+                Form? form = (owner as Form) ?? owner?.FindForm() ?? Application.OpenForms.OfType<Form>().FirstOrDefault(f => f.IsHandleCreated);
+                if (form == null) return;
+
+                void ShowAction()
+                {
+                    try
+                    {
+                        AlertControl ac = alertControl ?? GetAlertControl();
+                        ac.AllowHtmlText = true;
+
+                        string caption = isSuccess
+                            ? $"<b><color=green>✓</color> {Resources.Common_PrintSent}</b>"
+                            : $"<b><color=red>⚠ {Resources.Common_PrintFailed}</color></b>";
+
+                        string resolvedPrinter = ResolvePrinterName(printerName);
+                        string displayPrinter = !string.IsNullOrWhiteSpace(resolvedPrinter) ? resolvedPrinter : "-";
+                        string text = string.Format(Resources.Common_PrinterLabel, displayPrinter);
+
+                        if (!isSuccess && !string.IsNullOrWhiteSpace(errorMessage))
+                        {
+                            text += $"\n{string.Format(Resources.Common_Toast_Error, errorMessage)}";
+                        }
+
+                        ac.Show(form, caption, text, string.Empty, GetPrintIcon(), null);
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                if (form.InvokeRequired)
+                {
+                    form.BeginInvoke((Action)ShowAction);
+                }
+                else
+                {
+                    ShowAction();
+                }
+            }
+            catch
+            {
+            }
         }
 
         public static async Task CheckRecentMessageLogsAsync(Form? owner = null, string? currAccCode = null, CancellationToken ct = default)
