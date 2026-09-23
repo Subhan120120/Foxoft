@@ -63,7 +63,6 @@ namespace Foxoft
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             productsFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "Products");
             reportClass = new ReportClass(settingStore.DesignFileFolder);
-
             string activeFilterStr = $"[{nameof(SettingStore.StoreCode)}] = '" + settingStore.StoreCode + "'";
             reportClass.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_ProductList);
 

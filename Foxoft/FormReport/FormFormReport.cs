@@ -1,8 +1,13 @@
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -36,15 +41,12 @@ namespace Foxoft
 
             InitializeComponent();
 
-            AcceptButton = btn_Ok;
-            CancelButton = btn_Cancel;
             FormClosed += (_, _) => dbContext?.Dispose();
         }
 
         private void FormFormReport_Load(object sender, EventArgs e)
         {
             LoadFormReport();
-            dataLayoutControl1.IsValid(out List<string> errorList);
         }
 
         private void LoadFormReport()
@@ -54,17 +56,36 @@ namespace Foxoft
             LoadLookups();
 
             if (initialReportId is null)
-                ClearControlsAddNew();
+            {
+                trFormReport = new TrFormReport
+                {
+                    FormCode = initialFormCode ?? string.Empty,
+                    UseReportAs = UseReportAs.OpenPreview
+                };
+
+                trFormReportsBindingSource.DataSource = trFormReport;
+
+                if (!string.IsNullOrWhiteSpace(initialFormCode))
+                {
+                    FormCodeLookUpEdit.Properties.ReadOnly = true;
+                    ReportIdLookUpEdit.Select();
+                }
+                else
+                {
+                    FormCodeLookUpEdit.Select();
+                }
+            }
             else
             {
-                dbContext.TrFormReports
-                    .Where(x => x.FormCode == initialFormCode && x.ReportId == initialReportId.Value)
-                    .Load();
+                trFormReport = dbContext.TrFormReports
+                    .FirstOrDefault(x => x.FormCode == initialFormCode && x.ReportId == initialReportId.Value)
+                    ?? new TrFormReport { FormCode = initialFormCode ?? string.Empty, ReportId = initialReportId.Value };
 
-                trFormReportsBindingSource.DataSource = dbContext.TrFormReports.Local.ToBindingList();
-                trFormReport = trFormReportsBindingSource.Current as TrFormReport ?? new TrFormReport();
+                trFormReportsBindingSource.DataSource = trFormReport;
 
-                SetKeyEditorsReadOnly();
+                FormCodeLookUpEdit.Properties.ReadOnly = true;
+                ReportIdLookUpEdit.Properties.ReadOnly = true;
+                ShortcutButtonEdit.Select();
             }
         }
 
@@ -92,48 +113,64 @@ namespace Foxoft
 
             UseReportAsLookUpEdit.Properties.DataSource = new[]
             {
-                new { UseReportAs = UseReportAs.CopyToClipboard, UseReportAsDesc = Resources.Entity_FormReport_UseReportAs_CopyToClipboard },
-                new { UseReportAs = UseReportAs.OpenPreview, UseReportAsDesc = Resources.Entity_FormReport_UseReportAs_OpenPreview },
-                new { UseReportAs = UseReportAs.CopyToClipboardAndOpenPreview, UseReportAsDesc = Resources.Entity_FormReport_UseReportAs_CopyToClipboardAndOpenPreview }
+                new { Value = UseReportAs.OpenPreview, Name = Resources.Entity_FormReport_UseReportAs_OpenPreview },
+                new { Value = UseReportAs.CopyToClipboard, Name = Resources.Entity_FormReport_UseReportAs_CopyToClipboard },
+                new { Value = UseReportAs.CopyToClipboardAndOpenPreview, Name = Resources.Entity_FormReport_UseReportAs_CopyToClipboardAndOpenPreview }
             };
         }
 
-        private void ClearControlsAddNew()
+        private void ShortcutButtonEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            trFormReport = new TrFormReport
-            {
-                FormCode = initialFormCode ?? string.Empty,
-                UseReportAs = UseReportAs.OpenPreview
-            };
-
-            trFormReportsBindingSource.DataSource = trFormReport;
-
-            if (!string.IsNullOrWhiteSpace(initialFormCode))
-                SetFormCodeReadOnly();
-
-            ReportIdLookUpEdit.Select();
+            ShortcutButtonEdit.EditValue = null;
+            trFormReport.Shortcut = null;
+            dxErrorProvider1.SetError(ShortcutButtonEdit, string.Empty);
         }
 
-        private void SetKeyEditorsReadOnly()
+        private void ShortcutButtonEdit_KeyDown(object sender, KeyEventArgs e)
         {
-            SetFormCodeReadOnly();
-            ReportIdLookUpEdit.Properties.ReadOnly = true;
-            ReportIdLookUpEdit.Properties.Appearance.BackColor = Color.LightGray;
-        }
+            e.Handled = true;
+            e.SuppressKeyPress = true;
 
-        private void SetFormCodeReadOnly()
-        {
-            FormCodeLookUpEdit.Properties.ReadOnly = true;
-            FormCodeLookUpEdit.Properties.Appearance.BackColor = Color.LightGray;
-        }
-
-        private void btn_Ok_Click(object sender, EventArgs e)
-        {
-            trFormReportsBindingSource.EndEdit();
-            trFormReport = trFormReportsBindingSource.Current as TrFormReport ?? new TrFormReport();
-
-            if (!ValidateFormReport())
+            // Ignore standalone modifier keys
+            if (e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.ShiftKey || e.KeyCode == Keys.Menu)
                 return;
+
+            if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                ShortcutButtonEdit.EditValue = null;
+                trFormReport.Shortcut = null;
+                dxErrorProvider1.SetError(ShortcutButtonEdit, string.Empty);
+                return;
+            }
+
+            string shortcutStr = ShortcutHelper.KeysToString(e.KeyData);
+            if (!string.IsNullOrEmpty(shortcutStr))
+            {
+                ShortcutButtonEdit.EditValue = shortcutStr;
+                trFormReport.Shortcut = shortcutStr;
+                dxErrorProvider1.SetError(ShortcutButtonEdit, string.Empty);
+            }
+        }
+
+        private bool ValidateData()
+        {
+            dxErrorProvider1.ClearErrors();
+            bool isValid = true;
+
+            if (string.IsNullOrWhiteSpace(trFormReport.FormCode))
+            {
+                dxErrorProvider1.SetError(FormCodeLookUpEdit, string.Format(Resources.Validation_Required, Resources.Entity_FormReport_FormCode));
+                isValid = false;
+            }
+
+            if (trFormReport.ReportId <= 0)
+            {
+                dxErrorProvider1.SetError(ReportIdLookUpEdit, string.Format(Resources.Validation_Required, Resources.Entity_FormReport_ReportId));
+                isValid = false;
+            }
+
+            if (!isValid)
+                return false;
 
             if (initialReportId is null)
             {
@@ -144,38 +181,56 @@ namespace Foxoft
                 if (exists)
                 {
                     XtraMessageBox.Show(this, Resources.Form_Common_Exists, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    return false;
                 }
-
-                dbContext.TrFormReports.Add(trFormReport);
             }
 
-            dbContext.SaveChanges();
-            DialogResult = DialogResult.OK;
-        }
-
-        private bool ValidateFormReport()
-        {
-            if (!dataLayoutControl1.IsValid(out List<string> errorList))
+            if (!string.IsNullOrWhiteSpace(trFormReport.Shortcut))
             {
-                string combined = errorList.Aggregate((x, y) => x + "" + y);
-                XtraMessageBox.Show(this, combined, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
+                bool shortcutExists = dbContext.TrFormReports
+                    .AsNoTracking()
+                    .Any(x => x.FormCode == trFormReport.FormCode
+                           && x.ReportId != trFormReport.ReportId
+                           && x.Shortcut == trFormReport.Shortcut);
 
-            if (string.IsNullOrWhiteSpace(trFormReport.FormCode) || trFormReport.ReportId <= 0)
-            {
-                XtraMessageBox.Show(this, Resources.Form_PriceListDetail_Message_InvalidData, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                if (shortcutExists)
+                {
+                    dxErrorProvider1.SetError(ShortcutButtonEdit, Resources.FormShortcut_DuplicateWarning);
+                    XtraMessageBox.Show(this, Resources.FormShortcut_DuplicateWarning, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
             }
 
             return true;
+        }
+
+        private void btn_Ok_Click(object sender, EventArgs e)
+        {
+            trFormReportsBindingSource.EndEdit();
+            trFormReport = trFormReportsBindingSource.Current as TrFormReport ?? trFormReport;
+
+            if (!ValidateData())
+                return;
+
+            try
+            {
+                if (initialReportId is null)
+                {
+                    dbContext.TrFormReports.Add(trFormReport);
+                }
+
+                dbContext.SaveChanges();
+                DialogResult = DialogResult.OK;
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(this, ex.Message, Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
         }
-
     }
 }
