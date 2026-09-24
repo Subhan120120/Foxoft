@@ -153,6 +153,7 @@ namespace Foxoft
             gV_InvoiceLine.CellValueChanged += GV_InvoiceLine_CellValueChanged;
             gV_InvoiceLine.CellValueChanging += gV_InvoiceLine_CellValueChanging;
             gV_InvoiceLine.KeyDown += gV_InvoiceLine_KeyDown;
+            gV_InvoiceLine.ShowingEditor += gV_InvoiceLine_ShowingEditor;
             gV_InvoiceLine.ValidatingEditor += GV_InvoiceLine_ValidatingEditor;
             gV_InvoiceLine.InvalidValueException += GV_InvoiceLine_InvalidValueException;
             // 

@@ -30,6 +30,24 @@ namespace Foxoft
         private void UcExpense_Load(object sender, EventArgs e)
         {
             ClearControlsAddNew();
+            ApplyPermissions();
+        }
+
+        private void ApplyPermissions()
+        {
+            bool hasExpenseClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
+            if (!hasExpenseClaim)
+            {
+                dataLayoutControl1.Enabled = false;
+            }
+            else
+            {
+                dataLayoutControl1.Enabled = true;
+
+                string processCode = trInvoiceHeader?.ProcessCode ?? "EX";
+                bool canChangePrice = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ChangePrice" + processCode);
+                gridColumn2.OptionsColumn.ReadOnly = !canChangePrice;
+            }
         }
 
         private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -100,6 +118,8 @@ namespace Foxoft
             dataLayoutControl1.IsValid(out List<string> errorList);
 
             Tag = btnEdit_DocNum.EditValue;
+
+            ApplyPermissions();
         }
 
         private void LoadInvoice()
@@ -132,11 +152,19 @@ namespace Foxoft
 
             Tag = btnEdit_DocNum.EditValue;
 
+            ApplyPermissions();
+
             SplashScreenManager.CloseForm(false);
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission);
+                return;
+            }
+
             using (FormInvoiceHeaderList form = new("EX"))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
@@ -153,7 +181,15 @@ namespace Foxoft
             {
                 if (e.KeyCode == Keys.Delete && gV_InvoiceLine.ActiveEditor == null)
                 {
-                    if (MessageBox.Show(
+                    string claim = "DeleteLine" + (trInvoiceHeader?.ProcessCode ?? "EX");
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                    if (!currAccHasClaims)
+                    {
+                        XtraMessageBox.Show(Resources.Common_NoPermission);
+                        return;
+                    }
+
+                    if (XtraMessageBox.Show(
                             Resources.Form_Expense_RowDeleteQuestion,
                             Resources.Common_Attention,
                             MessageBoxButtons.YesNo) != DialogResult.Yes)
@@ -208,7 +244,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                XtraMessageBox.Show(ex.ToString());
             }
         }
 
@@ -240,6 +276,12 @@ namespace Foxoft
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission);
+                return;
+            }
+
             if (!efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
                 dbContext.TrInvoiceHeaders.Add(trInvoiceHeader);
 
@@ -247,6 +289,17 @@ namespace Foxoft
             efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
             ClearControlsAddNew();
+        }
+
+        private void gV_InvoiceLine_ShowingEditor(object sender, CancelEventArgs e)
+        {
+            if (gV_InvoiceLine.FocusedColumn == gridColumn2)
+            {
+                string processCode = trInvoiceHeader?.ProcessCode ?? "EX";
+                bool canChangePrice = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ChangePrice" + processCode);
+                if (!canChangePrice)
+                    e.Cancel = true;
+            }
         }
 
         private void gV_InvoiceLine_ShownEditor(object sender, EventArgs e)

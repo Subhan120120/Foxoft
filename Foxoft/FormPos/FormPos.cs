@@ -1,5 +1,7 @@
-﻿using DevExpress.XtraBars;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.ToolbarForm;
+using DevExpress.XtraEditors;
+using Foxoft.Properties;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,6 +10,8 @@ namespace Foxoft
 {
     public partial class FormPOS : ToolbarForm
     {
+        private readonly EfMethods efMethods = new();
+
         public FormPOS()
         {
             InitializeComponent();
@@ -29,7 +33,13 @@ namespace Foxoft
 
         private void FormPOS_Load(object sender, EventArgs e)
         {
+            ApplyPermissions();
+        }
 
+        private void ApplyPermissions()
+        {
+            bool hasExpenseClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
+            bCI_expenses.Visibility = hasExpenseClaim ? BarItemVisibility.Always : BarItemVisibility.Never;
         }
 
         private void bCI_CheckedChanged(object sender, ItemClickEventArgs e)
@@ -79,6 +89,12 @@ namespace Foxoft
 
         private void bCI_expenses_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission);
+                return;
+            }
+
             navigationFrame1.SelectedPage = navPage_Expenses;
             BarCheckItem clickedBtn = e.Item as BarCheckItem;
             foreach (BarItem control in toolbarFormManager1.Items)
