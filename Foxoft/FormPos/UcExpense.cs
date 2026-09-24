@@ -1,3 +1,4 @@
+using DevExpress.Utils.Menu;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Mask;
@@ -21,6 +22,7 @@ namespace Foxoft
         EfMethods efMethods = new();
         TrInvoiceHeader trInvoiceHeader;
         Guid invoiceHeaderId;
+        private bool _isLoading = false;
 
         public UcExpense()
         {
@@ -47,6 +49,9 @@ namespace Foxoft
                 string processCode = trInvoiceHeader?.ProcessCode ?? "EX";
                 bool canChangePrice = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ChangePrice" + processCode);
                 gridColumn2.OptionsColumn.ReadOnly = !canChangePrice;
+
+                bool canDeleteInvoice = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeleteInvoice" + processCode);
+                btn_Delete.Enabled = canDeleteInvoice;
             }
         }
 
@@ -90,6 +95,8 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
+            _isLoading = true;
+
             dbContext = new subContext();
 
             invoiceHeaderId = Guid.NewGuid();
@@ -111,8 +118,18 @@ namespace Foxoft
                      .LoadAsync()
                      .ContinueWith(loadTask =>
                      {
-                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
-                         gV_InvoiceLine.Focus();
+                         try
+                         {
+                             if (!loadTask.IsFaulted)
+                             {
+                                 trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+                                 gV_InvoiceLine.Focus();
+                             }
+                         }
+                         finally
+                         {
+                             _isLoading = false;
+                         }
                      }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
@@ -122,14 +139,18 @@ namespace Foxoft
             ApplyPermissions();
         }
 
-        private void LoadInvoice()
+        private void LoadInvoice(Guid headerId)
         {
+            _isLoading = true;
             SplashScreenManager.ShowForm(ParentForm, typeof(WaitForm), true, true, false);
 
+            invoiceHeaderId = headerId;
             dbContext = new subContext();
 
             dbContext.TrInvoiceHeaders
-                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                     .Include(x => x.DcProcess)
+                     .Include(x => x.DcCurrAcc)
+                     .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                      .Load();
 
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
@@ -139,13 +160,24 @@ namespace Foxoft
             dbContext.TrInvoiceLines
                      .Include(o => o.DcProduct)
                      .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
-                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                     .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                      .OrderBy(x => x.CreatedDate)
                      .LoadAsync()
                      .ContinueWith(loadTask =>
                      {
-                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
-                         gV_InvoiceLine.Focus();
+                         try
+                         {
+                             if (!loadTask.IsFaulted)
+                             {
+                                 trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+                                 gV_InvoiceLine.Focus();
+                             }
+                         }
+                         finally
+                         {
+                             _isLoading = false;
+                             SplashScreenManager.CloseForm(false);
+                         }
                      }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
@@ -153,8 +185,6 @@ namespace Foxoft
             Tag = btnEdit_DocNum.EditValue;
 
             ApplyPermissions();
-
-            SplashScreenManager.CloseForm(false);
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -167,10 +197,9 @@ namespace Foxoft
 
             using (FormInvoiceHeaderList form = new("EX"))
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK && form.trInvoiceHeader is not null)
                 {
-                    trInvoiceHeader.InvoiceHeaderId = form.trInvoiceHeader.InvoiceHeaderId;
-                    LoadInvoice();
+                    LoadInvoice(form.trInvoiceHeader.InvoiceHeaderId);
                 }
             }
         }
@@ -181,21 +210,8 @@ namespace Foxoft
             {
                 if (e.KeyCode == Keys.Delete && gV_InvoiceLine.ActiveEditor == null)
                 {
-                    string claim = "DeleteLine" + (trInvoiceHeader?.ProcessCode ?? "EX");
-                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
-                    if (!currAccHasClaims)
-                    {
-                        XtraMessageBox.Show(Resources.Common_NoPermission);
-                        return;
-                    }
-
-                    if (XtraMessageBox.Show(
-                            Resources.Form_Expense_RowDeleteQuestion,
-                            Resources.Common_Attention,
-                            MessageBoxButtons.YesNo) != DialogResult.Yes)
-                        return;
-
-                    gV_InvoiceLine.DeleteSelectedRows();
+                    DeleteSelectedLine();
+                    e.Handled = true;
                 }
 
                 if (e.KeyCode == Keys.C && e.Control)
@@ -219,6 +235,39 @@ namespace Foxoft
 
                     e.Handled = true;  // Stop the character from being entered into the control.
                 }
+            }
+        }
+
+        private void DeleteSelectedLine()
+        {
+            if (gV_InvoiceLine.SelectedRowsCount > 0 && gV_InvoiceLine.FocusedRowHandle >= 0)
+            {
+                string claim = "DeleteLine" + (trInvoiceHeader?.ProcessCode ?? "EX");
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                if (!currAccHasClaims)
+                {
+                    XtraMessageBox.Show(Resources.Common_NoPermission);
+                    return;
+                }
+
+                if (XtraMessageBox.Show(
+                        Resources.Form_Expense_RowDeleteQuestion,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+
+                gV_InvoiceLine.DeleteSelectedRows();
+                AutoSaveIfEnabled();
+            }
+        }
+
+        private void gV_InvoiceLine_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        {
+            if (e.HitInfo.InRow && e.HitInfo.RowHandle >= 0)
+            {
+                e.Menu ??= new DevExpress.XtraGrid.Menu.GridViewMenu(gV_InvoiceLine);
+                DXMenuItem itemDelete = new(Resources.Common_Delete, (s, args) => DeleteSelectedLine());
+                e.Menu.Items.Add(itemDelete);
             }
         }
 
@@ -274,6 +323,46 @@ namespace Foxoft
             SelectProduct(sender);
         }
 
+        private bool SaveInvoice()
+        {
+            if (trInvoiceHeader is null)
+                return false;
+
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission);
+                return false;
+            }
+
+            gV_InvoiceLine.CloseEditor();
+            gV_InvoiceLine.UpdateCurrentRow();
+            dataLayoutControl1.Validate();
+
+            if (!dataLayoutControl1.IsValid(out _))
+                return false;
+
+            if (dbContext == null)
+                return false;
+
+            try
+            {
+                if (dbContext.Entry(trInvoiceHeader).State == EntityState.Detached)
+                    dbContext.TrInvoiceHeaders.Add(trInvoiceHeader);
+
+                dbContext.SaveChanges(Authorization.CurrAccCode);
+                efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+
+                Tag = btnEdit_DocNum.EditValue;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         private void btn_Save_Click(object sender, EventArgs e)
         {
             if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
@@ -282,11 +371,61 @@ namespace Foxoft
                 return;
             }
 
-            if (!efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
-                dbContext.TrInvoiceHeaders.Add(trInvoiceHeader);
+            if (SaveInvoice())
+            {
+                ClearControlsAddNew();
+            }
+        }
 
-            dbContext.SaveChanges();
-            efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+        private void btn_Delete_Click(object sender, EventArgs e)
+        {
+            DeleteExpense();
+        }
+
+        private void DeleteExpense()
+        {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission);
+                return;
+            }
+
+            string processCode = trInvoiceHeader?.ProcessCode ?? "EX";
+            string claim = "DeleteInvoice" + processCode;
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission);
+                return;
+            }
+
+            bool invoiceExistsInDb = trInvoiceHeader is not null && efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId);
+            bool hasLines = gV_InvoiceLine.DataRowCount > 0;
+            bool hasDesc = !string.IsNullOrWhiteSpace(memoEdit_InvoiceDesc.Text);
+
+            if (!invoiceExistsInDb && !hasLines && !hasDesc)
+            {
+                XtraMessageBox.Show(Resources.Form_Invoice_NoInvoiceToDelete, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DialogResult dialogResult = XtraMessageBox.Show(
+                Resources.Form_Invoice_DeleteInvoiceQuestion,
+                Resources.Common_Attention,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (dialogResult != DialogResult.Yes)
+                return;
+
+            if (invoiceExistsInDb)
+            {
+                if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
+                {
+                    efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
+                }
+
+                efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
+            }
 
             ClearControlsAddNew();
         }
@@ -358,6 +497,44 @@ namespace Foxoft
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
             e.WindowCaption = Resources.Common_Attention;
+        }
+
+        private void AutoSaveIfEnabled()
+        {
+            if (_isLoading || dbContext == null || trInvoiceHeader == null)
+                return;
+
+            if (!Settings.Default.AppSetting.AutoSave)
+                return;
+
+            bool invoiceExistsInDb = efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId);
+            if (invoiceExistsInDb || gV_InvoiceLine.DataRowCount > 0)
+            {
+                SaveInvoice();
+            }
+        }
+
+        private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
+        {
+            AutoSaveIfEnabled();
+        }
+
+        private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
+        {
+            if (!_isLoading)
+                dataLayoutControl1.Validate();
+
+            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+            if (trInvoiceHeader is null)
+                return;
+
+            AutoSaveIfEnabled();
+        }
+
+        private void UcExpense_Leave(object sender, EventArgs e)
+        {
+            AutoSaveIfEnabled();
         }
     }
 }

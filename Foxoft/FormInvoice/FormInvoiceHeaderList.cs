@@ -40,15 +40,18 @@ namespace Foxoft
             : this(processCode)
         {
             RelatedInvoiceId = relatedInvoiceId;
-
-            LoadInvoiveHeaders();
+
         }
 
         public FormInvoiceHeaderList(string processCode, bool? isComplated)
             : this(processCode)
         {
             this.isComplated = isComplated;
+
+        }
 
+        private void FormInvoiceHeaderList_Load(object sender, EventArgs e)
+        {
             LoadInvoiveHeaders();
         }
 
@@ -62,7 +65,7 @@ namespace Foxoft
                         .AsNoTracking()
                         .Where(x => RelatedInvoiceId == null || x.RelatedInvoiceId == RelatedInvoiceId)
                         .Where(x => isComplated == null || x.IsCompleted == isComplated)
-                        .Where(x => x.ProcessCode == processCode && x.IsMainTF)
+                        .Where(x => (string.IsNullOrEmpty(processCode) || x.ProcessCode == processCode) && x.IsMainTF)
                         .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
                         .Select(x => new TrInvoiceHeader
                         {
@@ -105,7 +108,11 @@ namespace Foxoft
 
             trInvoiceHeadersBindingSource.DataSource = headerList;
             LoadLayout();
-            gV_InvoiceHeaderList.ActiveFilterString = $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{Authorization.StoreCode}'";
+            if (!string.IsNullOrEmpty(Authorization.StoreCode))
+                gV_InvoiceHeaderList.ActiveFilterString = $"[{nameof(TrInvoiceHeader.StoreCode)}] = '{Authorization.StoreCode}'";
+
+            if (gV_InvoiceHeaderList.FocusedRowHandle >= 0)
+                trInvoiceHeader = gV_InvoiceHeaderList.GetFocusedRow() as TrInvoiceHeader;
         }
 
         private void gV_TrInvoiceHeaderList_DoubleClick(object sender, EventArgs e)

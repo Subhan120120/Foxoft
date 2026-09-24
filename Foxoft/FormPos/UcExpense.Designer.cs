@@ -53,6 +53,7 @@ namespace Foxoft
             gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
             btn_Save = new DevExpress.XtraEditors.SimpleButton();
+            btn_Delete = new DevExpress.XtraEditors.SimpleButton();
             btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
             trInvoiceHeadersBindingSource = new BindingSource(components);
             dateEdit_DocDate = new DevExpress.XtraEditors.DateEdit();
@@ -63,6 +64,7 @@ namespace Foxoft
             ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItemDelete = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
@@ -83,6 +85,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDescription).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItemDelete).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentTime).BeginInit();
@@ -93,6 +96,7 @@ namespace Foxoft
             dataLayoutControl1.AutoRetrieveFields = true;
             dataLayoutControl1.Controls.Add(gC_InvoiceLine);
             dataLayoutControl1.Controls.Add(btn_Save);
+            dataLayoutControl1.Controls.Add(btn_Delete);
             dataLayoutControl1.Controls.Add(btnEdit_DocNum);
             dataLayoutControl1.Controls.Add(dateEdit_DocDate);
             dataLayoutControl1.Controls.Add(dateEdit_DocTime);
@@ -156,6 +160,8 @@ namespace Foxoft
             gV_InvoiceLine.ShowingEditor += gV_InvoiceLine_ShowingEditor;
             gV_InvoiceLine.ValidatingEditor += GV_InvoiceLine_ValidatingEditor;
             gV_InvoiceLine.InvalidValueException += GV_InvoiceLine_InvalidValueException;
+            gV_InvoiceLine.PopupMenuShowing += gV_InvoiceLine_PopupMenuShowing;
+            gV_InvoiceLine.RowUpdated += gV_InvoiceLine_RowUpdated;
             // 
             // colInvoiceLineId
             // 
@@ -280,11 +286,21 @@ namespace Foxoft
             // 
             btn_Save.Location = new Point(12, 460);
             btn_Save.Name = "btn_Save";
-            btn_Save.Size = new Size(926, 89);
+            btn_Save.Size = new Size(461, 89);
             btn_Save.StyleController = dataLayoutControl1;
             btn_Save.TabIndex = 10;
             btn_Save.Text = Resources.Common_Save;
             btn_Save.Click += btn_Save_Click;
+            // 
+            // btn_Delete
+            // 
+            btn_Delete.Location = new Point(477, 460);
+            btn_Delete.Name = "btn_Delete";
+            btn_Delete.Size = new Size(461, 89);
+            btn_Delete.StyleController = dataLayoutControl1;
+            btn_Delete.TabIndex = 11;
+            btn_Delete.Text = Resources.Common_Delete;
+            btn_Delete.Click += btn_Delete_Click;
             // 
             // btnEdit_DocNum
             // 
@@ -309,6 +325,7 @@ namespace Foxoft
             // 
             trInvoiceHeadersBindingSource.DataSource = typeof(TrInvoiceHeader);
             trInvoiceHeadersBindingSource.AddingNew += trInvoiceHeadersBindingSource_AddingNew;
+            trInvoiceHeadersBindingSource.CurrentItemChanged += trInvoiceHeadersBindingSource_CurrentItemChanged;
             // 
             // dateEdit_DocDate
             // 
@@ -385,6 +402,7 @@ namespace Foxoft
                 ItemForDocumentNumber,
                 ItemForDescription,
                 layoutControlItem2,
+                layoutControlItemDelete,
                 layoutControlItem1,
                 ItemForDocumentDate,
                 ItemForDocumentTime
@@ -417,10 +435,21 @@ namespace Foxoft
             layoutControlItem2.Location = new Point(0, 448);
             layoutControlItem2.MinSize = new Size(78, 26);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new Size(930, 93);
+            layoutControlItem2.Size = new Size(465, 93);
             layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
+            // 
+            // layoutControlItemDelete
+            // 
+            layoutControlItemDelete.Control = btn_Delete;
+            layoutControlItemDelete.Location = new Point(465, 448);
+            layoutControlItemDelete.MinSize = new Size(78, 26);
+            layoutControlItemDelete.Name = "layoutControlItemDelete";
+            layoutControlItemDelete.Size = new Size(465, 93);
+            layoutControlItemDelete.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItemDelete.TextSize = new Size(0, 0);
+            layoutControlItemDelete.TextVisible = false;
             // 
             // layoutControlItem1
             // 
@@ -457,6 +486,7 @@ namespace Foxoft
             Name = "UcExpense";
             Size = new Size(950, 561);
             Load += UcExpense_Load;
+            Leave += UcExpense_Leave;
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).EndInit();
@@ -474,6 +504,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDescription).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItemDelete).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentTime).EndInit();
@@ -489,7 +520,9 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentNumber;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDescription;
         private DevExpress.XtraEditors.SimpleButton btn_Save;
+        private DevExpress.XtraEditors.SimpleButton btn_Delete;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemDelete;
         private BindingSource trInvoiceLinesBindingSource;
         private MyGridControl gC_InvoiceLine;
         private MyGridView gV_InvoiceLine;

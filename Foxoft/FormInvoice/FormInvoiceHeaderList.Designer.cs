@@ -239,6 +239,7 @@ namespace Foxoft
             StartPosition = FormStartPosition.CenterParent;
             Text = Resources.Form_InvoiceHeaderList_Caption;
             Activated += FormInvoiceHeaderList_Activated;
+            Load += FormInvoiceHeaderList_Load;
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceHeaderList).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceHeaderList).EndInit();
