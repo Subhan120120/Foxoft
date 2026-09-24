@@ -144,6 +144,10 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsLocked), ResourceType = typeof(Resources))]
         public bool IsLocked { get; set; }
 
+        [DefaultValueSql("0")]
+        [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsDailyExpense), ResourceType = typeof(Resources))]
+        public bool IsDailyExpense { get; set; }
+
         [Display(Name = nameof(Resources.Entity_InvoiceHeader_IsMainTF), ResourceType = typeof(Resources))]
         public bool IsMainTF { get; set; }
 

@@ -718,6 +718,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "CashTransfer", ClaimDesc = "Pul Transferi", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "InventoryTransfer", ClaimDesc = "Mal Transferi", ClaimTypeId = 1, CategoryId = 14 },
                 new DcClaim { ClaimCode = "Expense", ClaimDesc = "Xərc", ClaimTypeId = 1, CategoryId = 9 },
+                new DcClaim { ClaimCode = "DailyExpense", ClaimDesc = "Gündəlik Xərc", ClaimTypeId = 1, CategoryId = 9 },
                 new DcClaim { ClaimCode = "RetailPurchaseInvoice", ClaimDesc = "Pərakəndə Alış Fakturası", ClaimTypeId = 1, CategoryId = 3 },
                 new DcClaim { ClaimCode = "WholePurchaseInvoice", ClaimDesc = "Topdan Alış Fakturası", ClaimTypeId = 1, CategoryId = 4 },
                 new DcClaim { ClaimCode = "RetailSaleInvoice", ClaimDesc = "Pərakəndə Satış Fakturası", ClaimTypeId = 1, CategoryId = 5 },
@@ -969,7 +970,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 215, RoleCode = "Admin", ClaimCode = "UnlockGracePeriodInvoice" },
                 new TrRoleClaim { RoleClaimId = 216, RoleCode = "Admin", ClaimCode = "UnlockGracePeriodPayment" },
                 new TrRoleClaim { RoleClaimId = 217, RoleCode = "Admin", ClaimCode = "BackupSettings" },
-                new TrRoleClaim { RoleClaimId = 218, RoleCode = "Admin", ClaimCode = "ChangeCurrAccPassword" }
+                new TrRoleClaim { RoleClaimId = 218, RoleCode = "Admin", ClaimCode = "ChangeCurrAccPassword" },
+                new TrRoleClaim { RoleClaimId = 219, RoleCode = "Admin", ClaimCode = "DailyExpense" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

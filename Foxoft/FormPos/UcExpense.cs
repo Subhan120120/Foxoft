@@ -31,13 +31,60 @@ namespace Foxoft
 
         private void UcExpense_Load(object sender, EventArgs e)
         {
-            ClearControlsAddNew();
+            EnsureTodayDailyExpense();
             ApplyPermissions();
+        }
+
+        public void EnsureTodayDailyExpense()
+        {
+            DateTime today = DateTime.Today;
+            string storeCode = Authorization.StoreCode;
+
+            if (trInvoiceHeader != null
+                && trInvoiceHeader.ProcessCode == "EX"
+                && trInvoiceHeader.IsDailyExpense
+                && trInvoiceHeader.StoreCode == storeCode
+                && trInvoiceHeader.DocumentDate.Date == today)
+            {
+                return;
+            }
+
+            LoadTodayDailyExpenseOrCreate();
+        }
+
+        private void LoadTodayDailyExpenseOrCreate()
+        {
+            DateTime today = DateTime.Today;
+            string storeCode = Authorization.StoreCode;
+
+            Guid? existingId = null;
+            using (subContext db = new())
+            {
+                existingId = db.TrInvoiceHeaders
+                    .AsNoTracking()
+                    .Where(x => x.ProcessCode == "EX"
+                             && x.StoreCode == storeCode
+                             && x.DocumentDate == today
+                             && x.IsDailyExpense)
+                    .OrderByDescending(x => x.CreatedDate)
+                    .Select(x => (Guid?)x.InvoiceHeaderId)
+                    .FirstOrDefault();
+            }
+
+            if (existingId.HasValue)
+            {
+                LoadInvoice(existingId.Value);
+            }
+            else
+            {
+                ClearControlsAddNew();
+            }
         }
 
         private void ApplyPermissions()
         {
-            bool hasExpenseClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
+            bool hasExpenseClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense")
+                                || efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DailyExpense");
             if (!hasExpenseClaim)
             {
                 dataLayoutControl1.Enabled = false;
@@ -68,6 +115,8 @@ namespace Foxoft
             invoiceHeader.StoreCode = Authorization.StoreCode;
             invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
             invoiceHeader.IsMainTF = true;
+            invoiceHeader.IsDailyExpense = true;
+            invoiceHeader.Description = $"{Resources.ERP_ACE_DailyExpense} - {DateTime.Today:dd.MM.yyyy}";
             invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
             e.NewObject = invoiceHeader;
@@ -189,13 +238,14 @@ namespace Foxoft
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense")
+                && !efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DailyExpense"))
             {
                 XtraMessageBox.Show(Resources.Common_NoPermission);
                 return;
             }
 
-            using (FormInvoiceHeaderList form = new("EX"))
+            using (FormInvoiceHeaderList form = new("EX", null, true))
             {
                 if (form.ShowDialog(this) == DialogResult.OK && form.trInvoiceHeader is not null)
                 {
@@ -328,7 +378,8 @@ namespace Foxoft
             if (trInvoiceHeader is null)
                 return false;
 
-            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense")
+                && !efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DailyExpense"))
             {
                 XtraMessageBox.Show(Resources.Common_NoPermission);
                 return false;
@@ -365,7 +416,8 @@ namespace Foxoft
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense")
+                && !efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DailyExpense"))
             {
                 XtraMessageBox.Show(Resources.Common_NoPermission);
                 return;
@@ -373,7 +425,7 @@ namespace Foxoft
 
             if (SaveInvoice())
             {
-                ClearControlsAddNew();
+                LoadTodayDailyExpenseOrCreate();
             }
         }
 
@@ -384,7 +436,8 @@ namespace Foxoft
 
         private void DeleteExpense()
         {
-            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense")
+                && !efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DailyExpense"))
             {
                 XtraMessageBox.Show(Resources.Common_NoPermission);
                 return;
@@ -427,7 +480,7 @@ namespace Foxoft
                 efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
             }
 
-            ClearControlsAddNew();
+            LoadTodayDailyExpenseOrCreate();
         }
 
         private void gV_InvoiceLine_ShowingEditor(object sender, CancelEventArgs e)

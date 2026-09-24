@@ -6345,4 +6345,10 @@ Please wait or choose another invoice.</value>
   <data name="NotificationStatus_Expired" xml:space="preserve">
     <value>Expired</value>
   </data>
+  <data name="ERP_ACE_DailyExpense" xml:space="preserve">
+    <value>Daily Expense</value>
+  </data>
+  <data name="Entity_InvoiceHeader_IsDailyExpense" xml:space="preserve">
+    <value>Daily Expense</value>
+  </data>
 </root>

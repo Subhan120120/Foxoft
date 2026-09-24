@@ -11,6 +11,7 @@ namespace Foxoft
     public partial class FormPOS : ToolbarForm
     {
         private readonly EfMethods efMethods = new();
+        private UcExpense ucExpense;
 
         public FormPOS()
         {
@@ -24,7 +25,7 @@ namespace Foxoft
             ucReturn.Dock = DockStyle.Fill;
             navPage_Return.Controls.Add(ucReturn);
 
-            UcExpense ucExpense = new();
+            ucExpense = new();
             ucExpense.Dock = DockStyle.Fill;
             navPage_Expenses.Controls.Add(ucExpense);
 
@@ -38,7 +39,8 @@ namespace Foxoft
 
         private void ApplyPermissions()
         {
-            bool hasExpenseClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
+            bool hasExpenseClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense")
+                                || efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DailyExpense");
             bCI_expenses.Visibility = hasExpenseClaim ? BarItemVisibility.Always : BarItemVisibility.Never;
         }
 
@@ -89,11 +91,14 @@ namespace Foxoft
 
         private void bCI_expenses_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense"))
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense")
+                && !efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DailyExpense"))
             {
                 XtraMessageBox.Show(Resources.Common_NoPermission);
                 return;
             }
+
+            ucExpense?.EnsureTodayDailyExpense();
 
             navigationFrame1.SelectedPage = navPage_Expenses;
             BarCheckItem clickedBtn = e.Item as BarCheckItem;

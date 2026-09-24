@@ -20,6 +20,7 @@ namespace Foxoft
         public TrInvoiceHeader trInvoiceHeader { get; set; }
         public Guid? RelatedInvoiceId { get; set; }
         public bool? isComplated;
+        public bool? isDailyExpense;
         subContext dbContext;
         public string processCode { get; set; }
 
@@ -47,6 +48,12 @@ namespace Foxoft
             : this(processCode)
         {
             this.isComplated = isComplated;
+        }
+
+        public FormInvoiceHeaderList(string processCode, bool? isComplated, bool? isDailyExpense)
+            : this(processCode, isComplated)
+        {
+            this.isDailyExpense = isDailyExpense;
 
         }
 
@@ -65,6 +72,7 @@ namespace Foxoft
                         .AsNoTracking()
                         .Where(x => RelatedInvoiceId == null || x.RelatedInvoiceId == RelatedInvoiceId)
                         .Where(x => isComplated == null || x.IsCompleted == isComplated)
+                        .Where(x => isDailyExpense == null || x.IsDailyExpense == isDailyExpense)
                         .Where(x => (string.IsNullOrEmpty(processCode) || x.ProcessCode == processCode) && x.IsMainTF)
                         .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
                         .Select(x => new TrInvoiceHeader
@@ -100,6 +108,7 @@ namespace Foxoft
                             StoreCode = x.StoreCode,
                             WarehouseCode = x.WarehouseCode,
                             ToWarehouseCode = x.ToWarehouseCode,
+                            IsDailyExpense = x.IsDailyExpense,
                             IsMainTF = x.IsMainTF,
                             TransferApprovalStatus = x.TransferApprovalStatus,
                             CashRegisterCode = x.CashRegisterCode

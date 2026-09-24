@@ -6345,4 +6345,10 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="NotificationStatus_Expired" xml:space="preserve">
     <value>Müddəti bitib</value>
   </data>
+  <data name="ERP_ACE_DailyExpense" xml:space="preserve">
+    <value>Gündəlik Xərc</value>
+  </data>
+  <data name="Entity_InvoiceHeader_IsDailyExpense" xml:space="preserve">
+    <value>Gündəlik Xərc</value>
+  </data>
 </root>

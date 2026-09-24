@@ -105,6 +105,7 @@ namespace Foxoft
             ACE_CashTransfer = new AccordionControlElement();
             accordionControlSeparator7 = new AccordionControlSeparator();
             aCE_Expense = new AccordionControlElement();
+            aCE_DailyExpense = new AccordionControlElement();
             aCE_ExpenseOfInvoice = new AccordionControlElement();
             aCE_PaymentDetail = new AccordionControlElement();
             accordionControlSeparator1 = new AccordionControlSeparator();
@@ -544,7 +545,7 @@ namespace Foxoft
             // 
             // aCE_Invoices
             // 
-            aCE_Invoices.Elements.AddRange(new AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentSaleInvoice, accordionControlSeparator6, ACE_RetailPurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentSaleReturn, accordionControlSeparator10, ACE_RetailPurchaseReturnCustom, ACE_RetailSaleReturnCustom, ACE_WholesaleReturnCustom, ACE_InstallmentSaleReturnCustom, ACE_InventoryTransferReturnCustom, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_ExpenseOfInvoice, aCE_PaymentDetail, accordionControlSeparator1, ACE_InstallmentSales });
+            aCE_Invoices.Elements.AddRange(new AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentSaleInvoice, accordionControlSeparator6, ACE_RetailPurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentSaleReturn, accordionControlSeparator10, ACE_RetailPurchaseReturnCustom, ACE_RetailSaleReturnCustom, ACE_WholesaleReturnCustom, ACE_InstallmentSaleReturnCustom, ACE_InventoryTransferReturnCustom, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_DailyExpense, aCE_ExpenseOfInvoice, aCE_PaymentDetail, accordionControlSeparator1, ACE_InstallmentSales });
             aCE_Invoices.Expanded = true;
             aCE_Invoices.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Invoices.ImageOptions.SvgImage");
             aCE_Invoices.Name = "aCE_Invoices";
@@ -702,6 +703,13 @@ namespace Foxoft
             aCE_Expense.Name = "aCE_Expense";
             aCE_Expense.Style = ElementStyle.Item;
             aCE_Expense.Text = Resources.ERP_ACE_Expenses;
+            // 
+            // aCE_DailyExpense
+            // 
+            aCE_DailyExpense.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Expense.ImageOptions.SvgImage");
+            aCE_DailyExpense.Name = "aCE_DailyExpense";
+            aCE_DailyExpense.Style = ElementStyle.Item;
+            aCE_DailyExpense.Text = Resources.ERP_ACE_DailyExpense;
             // 
             // aCE_ExpenseOfInvoice
             // 
@@ -1145,6 +1153,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_POS;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_RetailSaleInvoice;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Expense;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_DailyExpense;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_ExpenseOfInvoice;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator1;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator2;

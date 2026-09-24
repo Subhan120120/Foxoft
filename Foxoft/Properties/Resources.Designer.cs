@@ -3603,6 +3603,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Daily Expense.
+        /// </summary>
+        public static string Entity_InvoiceHeader_IsDailyExpense {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_IsDailyExpense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main Transfer.
         /// </summary>
         public static string Entity_InvoiceHeader_IsMainTF {
@@ -8135,6 +8144,15 @@ namespace Foxoft.Properties {
         public static string ERP_ACE_ExpenseOfInvoice {
             get {
                 return ResourceManager.GetString("ERP_ACE_ExpenseOfInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daily Expense.
+        /// </summary>
+        public static string ERP_ACE_DailyExpense {
+            get {
+                return ResourceManager.GetString("ERP_ACE_DailyExpense", resourceCulture);
             }
         }
         

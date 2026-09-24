@@ -165,6 +165,7 @@ namespace Foxoft
                 case "WholesaleInvoice": ShowNewForm<FormInvoice>("WS", false, new byte[] { 1, 3 }, null, true); break;
                 case "InstallmentSaleInvoice": ShowNewForm<FormInvoice>("IS", false, new byte[] { 1, 3 }, null, true); break;
                 case "Expense": ShowNewForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null, true); break;
+                case "DailyExpense": OpenDailyExpenseInvoice(); break;
                 case "ExpenseOfInvoice": ShowNewForm<FormInvoice>("EI", false, new byte[] { 2, 3 }, null, true); break;
 
                 case "Count": ShowNewForm<FormInvoice>("CN", false, new byte[] { 1 }, null, true); break;
@@ -313,6 +314,7 @@ namespace Foxoft
 
             this.ACE_CashTransfer.Name = "CashTransfer";
             this.aCE_Expense.Name = "Expense";
+            this.aCE_DailyExpense.Name = "DailyExpense";
             this.aCE_ExpenseOfInvoice.Name = "ExpenseOfInvoice";
             this.aCE_PaymentDetail.Name = "PaymentDetail";
             this.ACE_Group_InventoryCount.Name = "Acounting";
@@ -921,6 +923,49 @@ namespace Foxoft
         private void BBI_ChangeUser_ItemClick(object sender, ItemClickEventArgs e)
         {
             ShowExistForm<FormInvoiceCampaignLogList>();
+        }
+
+        private void OpenDailyExpenseInvoice()
+        {
+            DateTime today = DateTime.Today;
+            string storeCode = Authorization.StoreCode;
+
+            FormInvoice? openDailyForm = MdiChildren.OfType<FormInvoice>()
+                .FirstOrDefault(f => f.trInvoiceHeader != null
+                                  && f.trInvoiceHeader.ProcessCode == "EX"
+                                  && f.trInvoiceHeader.StoreCode == storeCode
+                                  && (f.trInvoiceHeader.IsDailyExpense || f.isDailyExpense)
+                                  && f.trInvoiceHeader.DocumentDate.Date == today);
+
+            if (openDailyForm != null)
+            {
+                openDailyForm.BringToFront();
+                openDailyForm.Activate();
+                return;
+            }
+
+            Guid? existingInvoiceId = null;
+            using (subContext db = new())
+            {
+                existingInvoiceId = db.TrInvoiceHeaders
+                    .AsNoTracking()
+                    .Where(x => x.ProcessCode == "EX"
+                             && x.StoreCode == storeCode
+                             && x.DocumentDate == today
+                             && x.IsDailyExpense)
+                    .OrderByDescending(x => x.CreatedDate)
+                    .Select(x => (Guid?)x.InvoiceHeaderId)
+                    .FirstOrDefault();
+            }
+
+            if (existingInvoiceId.HasValue)
+            {
+                ShowExistForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null, existingInvoiceId.Value);
+            }
+            else
+            {
+                ShowNewForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null, true, true);
+            }
         }
 
         private void ShowNewForm<T>(params object[] args) where T : Form

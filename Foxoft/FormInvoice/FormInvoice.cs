@@ -79,6 +79,7 @@ namespace Foxoft
         private int _pid => Process.GetCurrentProcess().Id;
 
         public bool isNew = false;
+        public bool isDailyExpense = false;
 
         private bool _isLoading = false;
         private bool _pendingPaymentCurrAccUpdate = false;
@@ -166,6 +167,12 @@ namespace Foxoft
             : this(processCode, isReturn, productTypeArr, relatedInvoiceId)
         {
             this.isNew = isNew;
+        }
+
+        public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, bool isNew, bool isDailyExpense)
+            : this(processCode, isReturn, productTypeArr, relatedInvoiceId, isNew)
+        {
+            this.isDailyExpense = isDailyExpense;
         }
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, Guid invoiceHeaderId)
@@ -539,6 +546,13 @@ namespace Foxoft
             invoiceHeader.IsCompleted = true;
             invoiceHeader.TerminalId = Settings.Default.TerminalId;
             invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+
+            if (isDailyExpense && dcProcess.ProcessCode == "EX")
+            {
+                invoiceHeader.IsDailyExpense = true;
+                invoiceHeader.Description = $"{Resources.ERP_ACE_DailyExpense} - {DateTime.Today:dd.MM.yyyy}";
+                isDailyExpense = false;
+            }
 
             if (new string[] { "RS", "WS" }.Contains(dcProcess.ProcessCode))
             {
@@ -2408,7 +2422,10 @@ namespace Foxoft
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
                 if (SaveInvoice())
+                {
+                    isDailyExpense = false;
                     ClearControlsAddNew();
+                }
             }
             else
             {
@@ -2432,6 +2449,7 @@ namespace Foxoft
             if (!PromptSaveChanges())
                 return;
 
+            isDailyExpense = false;
             ClearControlsAddNew();
         }
 
@@ -2602,6 +2620,7 @@ namespace Foxoft
 
             efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
 
+            isDailyExpense = false;
             ClearControlsAddNew();
         }
 
