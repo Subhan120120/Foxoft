@@ -727,41 +727,45 @@ namespace Foxoft
                 throw new ArgumentNullException(nameof(roleCode));
 
             using subContext db = new();
-            using var transaction = db.Database.BeginTransaction();
-            try
-            {
-                var existingRoleClaims = db.TrRoleClaims
-                    .Where(rc => rc.RoleCode == roleCode)
-                    .ToList();
-
-                var targetCodes = new HashSet<string>(selectedClaimCodes?.Where(c => !string.IsNullOrWhiteSpace(c)) ?? Enumerable.Empty<string>());
-                var existingCodes = new HashSet<string>(existingRoleClaims.Select(rc => rc.ClaimCode));
-
-                var toRemove = existingRoleClaims.Where(rc => !targetCodes.Contains(rc.ClaimCode)).ToList();
-                if (toRemove.Count > 0)
+            //var strategy = db.Database.CreateExecutionStrategy();
+            //strategy.Execute(() =>
+            //{
+            //    using var transaction = db.Database.BeginTransaction();
+                try
                 {
-                    db.TrRoleClaims.RemoveRange(toRemove);
-                }
+                    var existingRoleClaims = db.TrRoleClaims
+                        .Where(rc => rc.RoleCode == roleCode)
+                        .ToList();
 
-                var toAddCodes = targetCodes.Where(code => !existingCodes.Contains(code)).ToList();
-                if (toAddCodes.Count > 0)
-                {
-                    var newRoleClaims = toAddCodes.Select(code => new TrRoleClaim
+                    var targetCodes = new HashSet<string>(selectedClaimCodes?.Where(c => !string.IsNullOrWhiteSpace(c)) ?? Enumerable.Empty<string>());
+                    var existingCodes = new HashSet<string>(existingRoleClaims.Select(rc => rc.ClaimCode));
+
+                    var toRemove = existingRoleClaims.Where(rc => !targetCodes.Contains(rc.ClaimCode)).ToList();
+                    if (toRemove.Count > 0)
                     {
-                        RoleCode = roleCode,
-                        ClaimCode = code
-                    });
-                    db.TrRoleClaims.AddRange(newRoleClaims);
-                }
+                        db.TrRoleClaims.RemoveRange(toRemove);
+                    }
 
-                db.SaveChanges();
-                transaction.Commit();
-            }
-            catch
-            {
-                transaction.Rollback();
-                throw;
-            }
+                    var toAddCodes = targetCodes.Where(code => !existingCodes.Contains(code)).ToList();
+                    if (toAddCodes.Count > 0)
+                    {
+                        var newRoleClaims = toAddCodes.Select(code => new TrRoleClaim
+                        {
+                            RoleCode = roleCode,
+                            ClaimCode = code
+                        });
+                        db.TrRoleClaims.AddRange(newRoleClaims);
+                    }
+
+                    db.SaveChanges();
+                    //transaction.Commit();
+                }
+                catch
+                {
+                     //transaction.Rollback();
+                    throw;
+                }
+            //});
         }
 
         public List<TrCurrAccRole> SelectCurrAccRole(string currAccCode)
@@ -801,41 +805,45 @@ namespace Foxoft
                 throw new ArgumentNullException(nameof(currAccCode));
 
             using subContext db = new();
-            using var transaction = db.Database.BeginTransaction();
-            try
+            var strategy = db.Database.CreateExecutionStrategy();
+            strategy.Execute(() =>
             {
-                var existingRoles = db.TrCurrAccRoles
-                    .Where(x => x.CurrAccCode == currAccCode)
-                    .ToList();
-
-                var targetCodes = new HashSet<string>(assignedRoleCodes?.Where(c => !string.IsNullOrWhiteSpace(c)) ?? Enumerable.Empty<string>());
-                var existingCodes = new HashSet<string>(existingRoles.Select(x => x.RoleCode));
-
-                var toRemove = existingRoles.Where(x => !targetCodes.Contains(x.RoleCode)).ToList();
-                if (toRemove.Count > 0)
+                using var transaction = db.Database.BeginTransaction();
+                try
                 {
-                    db.TrCurrAccRoles.RemoveRange(toRemove);
-                }
+                    var existingRoles = db.TrCurrAccRoles
+                        .Where(x => x.CurrAccCode == currAccCode)
+                        .ToList();
 
-                var toAddCodes = targetCodes.Where(code => !existingCodes.Contains(code)).ToList();
-                if (toAddCodes.Count > 0)
-                {
-                    var newRoles = toAddCodes.Select(code => new TrCurrAccRole
+                    var targetCodes = new HashSet<string>(assignedRoleCodes?.Where(c => !string.IsNullOrWhiteSpace(c)) ?? Enumerable.Empty<string>());
+                    var existingCodes = new HashSet<string>(existingRoles.Select(x => x.RoleCode));
+
+                    var toRemove = existingRoles.Where(x => !targetCodes.Contains(x.RoleCode)).ToList();
+                    if (toRemove.Count > 0)
                     {
-                        CurrAccCode = currAccCode,
-                        RoleCode = code
-                    });
-                    db.TrCurrAccRoles.AddRange(newRoles);
-                }
+                        db.TrCurrAccRoles.RemoveRange(toRemove);
+                    }
 
-                db.SaveChanges();
-                transaction.Commit();
-            }
-            catch
-            {
-                transaction.Rollback();
-                throw;
-            }
+                    var toAddCodes = targetCodes.Where(code => !existingCodes.Contains(code)).ToList();
+                    if (toAddCodes.Count > 0)
+                    {
+                        var newRoles = toAddCodes.Select(code => new TrCurrAccRole
+                        {
+                            CurrAccCode = currAccCode,
+                            RoleCode = code
+                        });
+                        db.TrCurrAccRoles.AddRange(newRoles);
+                    }
+
+                    db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            });
         }
 
         public List<DcClaimCategoryViewModel> SelectDcClaimCategoriesByCurrAcc(string currAccCode)

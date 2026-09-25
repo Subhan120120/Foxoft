@@ -609,51 +609,86 @@ namespace Foxoft
             LoadClaimReport();
         }
 
+        private void repoCheckEditReport_EditValueChanged(object sender, EventArgs e)
+        {
+            treeListReportClaims.PostEditor();
+        }
+
         private void treeListReportClaims_CellValueChanged(object sender, DevExpress.XtraTreeList.CellValueChangedEventArgs e)
         {
+            if (_isUpdatingCheckState)
+                return;
+
             if (e.Column.FieldName == "IsSelected")
             {
-                bool isChecked = Convert.ToBoolean(e.Value);
-                TreeListNode node = e.Node;
+                try
+                {
+                    _isUpdatingCheckState = true;
+                    bool isChecked = Convert.ToBoolean(e.Value);
+                    TreeListNode node = e.Node;
 
-                SetChildNodesChecked(node, colReport_IsSelected, isChecked);
-                SetParentNodesChecked(node, colReport_IsSelected);
+                    SetChildNodesChecked(node, colReport_IsSelected, isChecked);
+                    SetParentNodesChecked(node, colReport_IsSelected);
+                }
+                finally
+                {
+                    _isUpdatingCheckState = false;
+                }
             }
         }
 
         private void btn_ClaimReportSave_Click(object sender, EventArgs e)
         {
-            SaveNodesToDb(treeListReportClaims.Nodes);
-            XtraMessageBox.Show(Resources.Common_SavedSuccessfully, Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (SaveNodesToDb(treeListReportClaims.GetNodeList()))
+            {
+                XtraMessageBox.Show(Resources.Common_SavedSuccessfully, Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
-        private void SaveNodesToDb(IEnumerable<TreeListNode> nodes)
+        private bool SaveNodesToDb(IEnumerable<TreeListNode> nodes)
         {
             string claimCode = btnEdit_ClaimReport.Text;
+            if (string.IsNullOrWhiteSpace(claimCode))
+                return false;
 
-            foreach (TreeListNode child in nodes)
+            try
             {
-                DcReport report = efMethods.SelectEntityById<DcReport>(Convert.ToInt32(child.GetValue("ReportId")));
-                bool chckd = (bool)child.GetValue("IsSelected");
+                treeListReportClaims.CloseEditor();
 
-                if (chckd)
+                foreach (TreeListNode child in nodes)
                 {
-                    if (!efMethods.TrClaimReportExist(report.ReportId, claimCode))
+                    int reportId = Convert.ToInt32(child.GetValue("ReportId"));
+                    DcReport? report = efMethods.SelectEntityById<DcReport>(reportId);
+                    if (report == null)
+                        continue;
+
+                    bool chckd = child.GetValue("IsSelected") as bool? == true;
+
+                    if (chckd)
                     {
-                        efMethods.InsertEntity(new TrClaimReport()
+                        if (!efMethods.TrClaimReportExist(report.ReportId, claimCode))
                         {
-                            ClaimCode = claimCode,
-                            ReportId = report.ReportId
-                        });
+                            efMethods.InsertEntity(new TrClaimReport()
+                            {
+                                ClaimCode = claimCode,
+                                ReportId = report.ReportId
+                            });
+                        }
+                    }
+                    else
+                    {
+                        TrClaimReport? claimReport = efMethods.SelectClaimReport(report.ReportId, claimCode);
+
+                        if (claimReport != null)
+                            efMethods.DeleteEntity(claimReport);
                     }
                 }
-                else
-                {
-                    TrClaimReport claimReport = efMethods.SelectClaimReport(report.ReportId, claimCode);
-
-                    if (claimReport != null)
-                        efMethods.DeleteEntity(claimReport);
-                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
 
@@ -663,17 +698,28 @@ namespace Foxoft
 
         private void BBI_Save_ItemClick(object sender, ItemClickEventArgs e)
         {
+            gV_Roles.CloseEditor();
+            gV_Roles.UpdateCurrentRow();
+            treeListRoleClaims.CloseEditor();
+            treeListReportClaims.CloseEditor();
+
             bool anySaved = false;
 
-            if (_isRolesModified)
+            if (_isRolesModified || (!string.IsNullOrWhiteSpace(_currentCurrAccCode) && !_isRoleClaimsModified))
             {
                 if (SaveCurrAccRoles(silent: true))
                     anySaved = true;
-            }
+            } 
 
-            if (_isRoleClaimsModified)
+            if (_isRoleClaimsModified || (!string.IsNullOrWhiteSpace(_currentRoleCode) && !_isRolesModified))
             {
                 if (SaveRoleClaims(silent: true))
+                    anySaved = true;
+            }
+
+            if (xtraTabControl1.SelectedTabPage == tab_ReportClaims && !string.IsNullOrWhiteSpace(btnEdit_ClaimReport.Text))
+            {
+                if (SaveNodesToDb(treeListReportClaims.GetNodeList()))
                     anySaved = true;
             }
 
