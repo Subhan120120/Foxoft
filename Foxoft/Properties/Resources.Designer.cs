@@ -10652,6 +10652,168 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        public static string Common_View {
+            get {
+                return ResourceManager.GetString("Common_View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string Common_Open {
+            get {
+                return ResourceManager.GetString("Common_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Folder.
+        /// </summary>
+        public static string Common_OpenFolder {
+            get {
+                return ResourceManager.GetString("Common_OpenFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string Common_Preview {
+            get {
+                return ResourceManager.GetString("Common_Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotate Left.
+        /// </summary>
+        public static string Form_Image_RotateLeft {
+            get {
+                return ResourceManager.GetString("Form_Image_RotateLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotate Right.
+        /// </summary>
+        public static string Form_Image_RotateRight {
+            get {
+                return ResourceManager.GetString("Form_Image_RotateRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thumbnail Size.
+        /// </summary>
+        public static string Form_Image_ThumbnailSize {
+            get {
+                return ResourceManager.GetString("Form_Image_ThumbnailSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Small.
+        /// </summary>
+        public static string Form_Image_ThumbnailSmall {
+            get {
+                return ResourceManager.GetString("Form_Image_ThumbnailSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium.
+        /// </summary>
+        public static string Form_Image_ThumbnailMedium {
+            get {
+                return ResourceManager.GetString("Form_Image_ThumbnailMedium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Large.
+        /// </summary>
+        public static string Form_Image_ThumbnailLarge {
+            get {
+                return ResourceManager.GetString("Form_Image_ThumbnailLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total: {0} image(s).
+        /// </summary>
+        public static string Form_Image_TotalImages {
+            get {
+                return ResourceManager.GetString("Form_Image_TotalImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No image selected.
+        /// </summary>
+        public static string Form_Image_NoImageSelected {
+            get {
+                return ResourceManager.GetString("Form_Image_NoImageSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No image or image file found in clipboard..
+        /// </summary>
+        public static string Form_Image_NoImageInClipboard {
+            get {
+                return ResourceManager.GetString("Form_Image_NoImageInClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} image(s) added..
+        /// </summary>
+        public static string Form_Image_ImagesPasted {
+            get {
+                return ResourceManager.GetString("Form_Image_ImagesPasted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Pictures.
+        /// </summary>
+        public static string Form_Image_InvoiceTitle {
+            get {
+                return ResourceManager.GetString("Form_Image_InvoiceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doc No: {0}.
+        /// </summary>
+        public static string Form_Image_DocNum {
+            get {
+                return ResourceManager.GetString("Form_Image_DocNum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image rotated successfully..
+        /// </summary>
+        public static string Form_Image_RotateSuccess {
+            get {
+                return ResourceManager.GetString("Form_Image_RotateSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to rotate image: {0}.
+        /// </summary>
+        public static string Form_Image_RotateError {
+            get {
+                return ResourceManager.GetString("Form_Image_RotateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input.
         /// </summary>
         public static string Form_Input_Caption {

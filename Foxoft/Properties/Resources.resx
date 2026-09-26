@@ -2562,6 +2562,60 @@
   <data name="Form_Image_OpenDialogTitle" xml:space="preserve">
     <value>Select images for Foxoft.</value>
   </data>
+  <data name="Common_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Common_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Common_OpenFolder" xml:space="preserve">
+    <value>Open Folder</value>
+  </data>
+  <data name="Common_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Form_Image_RotateLeft" xml:space="preserve">
+    <value>Rotate Left</value>
+  </data>
+  <data name="Form_Image_RotateRight" xml:space="preserve">
+    <value>Rotate Right</value>
+  </data>
+  <data name="Form_Image_ThumbnailSize" xml:space="preserve">
+    <value>Thumbnail Size</value>
+  </data>
+  <data name="Form_Image_ThumbnailSmall" xml:space="preserve">
+    <value>Small</value>
+  </data>
+  <data name="Form_Image_ThumbnailMedium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="Form_Image_ThumbnailLarge" xml:space="preserve">
+    <value>Large</value>
+  </data>
+  <data name="Form_Image_TotalImages" xml:space="preserve">
+    <value>Total: {0} image(s)</value>
+  </data>
+  <data name="Form_Image_NoImageSelected" xml:space="preserve">
+    <value>No image selected</value>
+  </data>
+  <data name="Form_Image_NoImageInClipboard" xml:space="preserve">
+    <value>No image or image file found in clipboard.</value>
+  </data>
+  <data name="Form_Image_ImagesPasted" xml:space="preserve">
+    <value>{0} image(s) added.</value>
+  </data>
+  <data name="Form_Image_InvoiceTitle" xml:space="preserve">
+    <value>Invoice Pictures</value>
+  </data>
+  <data name="Form_Image_DocNum" xml:space="preserve">
+    <value>Doc No: {0}</value>
+  </data>
+  <data name="Form_Image_RotateSuccess" xml:space="preserve">
+    <value>Image rotated successfully.</value>
+  </data>
+  <data name="Form_Image_RotateError" xml:space="preserve">
+    <value>Failed to rotate image: {0}</value>
+  </data>
   <data name="Common_File_ImageFilter" xml:space="preserve">
     <value>Images (*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF</value>
   </data>

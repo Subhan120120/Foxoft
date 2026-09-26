@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils.Extensions;
+using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -446,25 +446,32 @@ namespace Foxoft
                 if (string.IsNullOrWhiteSpace(productFolder))
                     return;
 
-                Image loadedImage = Image.FromFile(openFileDialog.FileName);
-
-                if (!Directory.Exists(productFolder))
-                    Directory.CreateDirectory(productFolder);
-
-                string fileName = "";
-                for (int i = 1; i <= 50; i++)
+                try
                 {
-                    fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
-                    string filePath = Path.Combine(productFolder, fileName);
-                    if (!File.Exists(filePath))
-                        break;
+                    using Image loadedImage = Image.FromFile(openFileDialog.FileName);
+
+                    if (!Directory.Exists(productFolder))
+                        Directory.CreateDirectory(productFolder);
+
+                    string fileName = "";
+                    for (int i = 1; i <= 50; i++)
+                    {
+                        fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
+                        string filePath = Path.Combine(productFolder, fileName);
+                        if (!File.Exists(filePath))
+                            break;
+                    }
+
+                    string savePath = Path.Combine(productFolder, fileName);
+
+                    loadedImage.Save(savePath, ImageFormat.Jpeg);
+
+                    LoadGalleryImages();
                 }
-
-                string savePath = Path.Combine(productFolder, fileName);
-
-                loadedImage.Save(savePath, ImageFormat.Jpeg);
-
-                LoadGalleryImages();
+                catch (Exception ex)
+                {
+                    XtraMessageBox.Show(ex.Message, Resources.Common_ErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -497,30 +504,37 @@ namespace Foxoft
         {
             if (Clipboard.ContainsImage())
             {
-                Image clipboardImage = Clipboard.GetImage();
+                using Image? clipboardImage = Clipboard.GetImage();
 
                 if (clipboardImage != null)
                 {
                     if (string.IsNullOrWhiteSpace(productFolder))
                         return;
 
-                    if (!Directory.Exists(productFolder))
-                        Directory.CreateDirectory(productFolder);
-
-                    string fileName = "";
-                    for (int i = 1; i <= 50; i++)
+                    try
                     {
-                        fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
-                        string filePath = Path.Combine(productFolder, fileName);
-                        if (!File.Exists(filePath))
-                            break;
+                        if (!Directory.Exists(productFolder))
+                            Directory.CreateDirectory(productFolder);
+
+                        string fileName = "";
+                        for (int i = 1; i <= 50; i++)
+                        {
+                            fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
+                            string filePath = Path.Combine(productFolder, fileName);
+                            if (!File.Exists(filePath))
+                                break;
+                        }
+
+                        string savePath = Path.Combine(productFolder, fileName);
+
+                        clipboardImage.Save(savePath, ImageFormat.Jpeg);
+
+                        LoadGalleryImages();
                     }
-
-                    string savePath = Path.Combine(productFolder, fileName);
-
-                    clipboardImage.Save(savePath, ImageFormat.Jpeg);
-
-                    LoadGalleryImages();
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show(ex.Message, Resources.Common_ErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             else
