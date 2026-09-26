@@ -4009,6 +4009,60 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_Return_Caption_Confirmation" xml:space="preserve">
     <value>Təsdiqlə</value>
   </data>
+  <data name="Form_Return_Button_Confirm" xml:space="preserve">
+    <value>Qaytarmanı Təsdiqlə</value>
+  </data>
+  <data name="Form_Return_Button_Cancel" xml:space="preserve">
+    <value>İmtina</value>
+  </data>
+  <data name="Form_Return_Button_ReturnAll" xml:space="preserve">
+    <value>Hamısını Qaytar</value>
+  </data>
+  <data name="Form_Return_Button_Clear" xml:space="preserve">
+    <value>Təmizlə</value>
+  </data>
+  <data name="Form_Return_Col_ReturnQty" xml:space="preserve">
+    <value>Qaytarılan Say</value>
+  </data>
+  <data name="Form_Return_Col_Remove" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="Form_Return_Col_Add" xml:space="preserve">
+    <value>Əlavə et</value>
+  </data>
+  <data name="Form_Return_Message_CartEmpty" xml:space="preserve">
+    <value>Qaytarılacaq məhsul seçilməyib.</value>
+  </data>
+  <data name="Form_Return_Message_Success" xml:space="preserve">
+    <value>Qaytarma sənədi uğurla yaradıldı: {0}</value>
+  </data>
+  <data name="Form_Return_Label_SearchBarcode" xml:space="preserve">
+    <value>Barkod / Məhsul</value>
+  </data>
+  <data name="Form_Return_Group_ReturnCart" xml:space="preserve">
+    <value>Qaytarılacaq Mallar</value>
+  </data>
+  <data name="Form_Return_Label_DocDate" xml:space="preserve">
+    <value>Sənəd Tarixi</value>
+  </data>
+  <data name="Form_Return_Label_TotalAmount" xml:space="preserve">
+    <value>Faktura Məbləği</value>
+  </data>
+  <data name="Form_Return_Tooltip_ReturnLine" xml:space="preserve">
+    <value>Qaytarılanlara əlavə et</value>
+  </data>
+  <data name="Form_Return_Tooltip_RemoveLine" xml:space="preserve">
+    <value>Qaytarılanlardan çıxart</value>
+  </data>
+  <data name="Form_Return_Message_QtyExceedsRemaining" xml:space="preserve">
+    <value>Qaytarılan say ({0}) qalan saydan ({1}) çox ola bilməz.</value>
+  </data>
+  <data name="Form_Return_Message_InvalidQty" xml:space="preserve">
+    <value>Miqdar 0-dan böyük olmalıdır.</value>
+  </data>
+  <data name="Form_Return_TotalReturnAmount" xml:space="preserve">
+    <value>Cəmi Qaytarılan Məbləğ</value>
+  </data>
   <data name="Form_WaitForm_Title" xml:space="preserve">
     <value>Yüklənir</value>
   </data>

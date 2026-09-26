@@ -4018,6 +4018,60 @@ To delete, cancel the receipt!</value>
   <data name="Form_Return_Caption_Confirmation" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="Form_Return_Button_Confirm" xml:space="preserve">
+    <value>Confirm Return</value>
+  </data>
+  <data name="Form_Return_Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Form_Return_Button_ReturnAll" xml:space="preserve">
+    <value>Return All</value>
+  </data>
+  <data name="Form_Return_Button_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Form_Return_Col_ReturnQty" xml:space="preserve">
+    <value>Return Qty</value>
+  </data>
+  <data name="Form_Return_Col_Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Form_Return_Col_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Form_Return_Message_CartEmpty" xml:space="preserve">
+    <value>No items selected to return.</value>
+  </data>
+  <data name="Form_Return_Message_Success" xml:space="preserve">
+    <value>Return invoice created successfully: {0}</value>
+  </data>
+  <data name="Form_Return_Label_SearchBarcode" xml:space="preserve">
+    <value>Barcode / Product</value>
+  </data>
+  <data name="Form_Return_Group_ReturnCart" xml:space="preserve">
+    <value>Items to Return</value>
+  </data>
+  <data name="Form_Return_Label_DocDate" xml:space="preserve">
+    <value>Document Date</value>
+  </data>
+  <data name="Form_Return_Label_TotalAmount" xml:space="preserve">
+    <value>Invoice Total</value>
+  </data>
+  <data name="Form_Return_Tooltip_ReturnLine" xml:space="preserve">
+    <value>Add to return</value>
+  </data>
+  <data name="Form_Return_Tooltip_RemoveLine" xml:space="preserve">
+    <value>Remove from return</value>
+  </data>
+  <data name="Form_Return_Message_QtyExceedsRemaining" xml:space="preserve">
+    <value>Return quantity ({0}) cannot exceed remaining returnable quantity ({1}).</value>
+  </data>
+  <data name="Form_Return_Message_InvalidQty" xml:space="preserve">
+    <value>Quantity must be greater than 0.</value>
+  </data>
+  <data name="Form_Return_TotalReturnAmount" xml:space="preserve">
+    <value>Total Return Amount</value>
+  </data>
   <data name="Form_WaitForm_Title" xml:space="preserve">
     <value>Loading</value>
   </data>

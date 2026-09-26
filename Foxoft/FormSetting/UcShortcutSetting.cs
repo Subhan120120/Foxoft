@@ -30,6 +30,7 @@ namespace Foxoft
 
         private void LoadData()
         {
+            ShortcutHelper.EnsureDefaultShortcuts(dbContext);
             var data = dbContext.DcShortcuts.OrderBy(x => x.FormName).ThenBy(x => x.Id).ToList();
             shortcutBindingList = new BindingList<DcShortcut>(data);
             gridControl1.DataSource = shortcutBindingList;
@@ -111,7 +112,7 @@ namespace Foxoft
             if (e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.ShiftKey || e.KeyCode == Keys.Menu)
                 return;
 
-            if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
                 editor.EditValue = "";
                 return;

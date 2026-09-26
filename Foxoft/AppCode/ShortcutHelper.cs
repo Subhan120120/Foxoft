@@ -21,6 +21,8 @@ namespace Foxoft.AppCode
             try
             {
                 using var ctx = new subContext();
+                EnsureDefaultShortcuts(ctx);
+
                 var shortcuts = ctx.DcShortcuts
                     .Where(s => s.FormName == formName && s.ShortcutKeys != null && s.ShortcutKeys != "")
                     .ToList();
@@ -40,7 +42,53 @@ namespace Foxoft.AppCode
         }
 
         /// <summary>
-        /// Keys enum-u oxunaqlı string-ə çevirir.  Məs: "Ctrl+F3"
+        /// Bazada mövcud olmayan standart shortcut qeydlərini avtomatik əlavə edir.
+        /// </summary>
+        public static void EnsureDefaultShortcuts(subContext? ctx = null)
+        {
+            bool dispose = false;
+            if (ctx == null)
+            {
+                ctx = new subContext();
+                dispose = true;
+            }
+
+            try
+            {
+                var defaults = new List<DcShortcut>
+                {
+                    new DcShortcut { FormName = "UcReturn", ButtonName = "btn_Ok",        ShortcutKeys = "F10", ButtonDescription = "Qaytarışı Təsdiq Et" },
+                    new DcShortcut { FormName = "UcReturn", ButtonName = "btn_Cancel",    ShortcutKeys = "Esc", ButtonDescription = "Ləğv Et" },
+                    new DcShortcut { FormName = "UcReturn", ButtonName = "btn_ReturnAll", ShortcutKeys = "",   ButtonDescription = "Hamısını Qaytar" },
+                    new DcShortcut { FormName = "UcReturn", ButtonName = "btn_Clear",     ShortcutKeys = "",   ButtonDescription = "Səbəti Təmizlə" },
+                };
+
+                bool changed = false;
+                foreach (var item in defaults)
+                {
+                    if (!ctx.DcShortcuts.Any(s => s.FormName == item.FormName && s.ButtonName == item.ButtonName))
+                    {
+                        ctx.DcShortcuts.Add(item);
+                        changed = true;
+                    }
+                }
+
+                if (changed)
+                    ctx.SaveChanges();
+            }
+            catch (Exception)
+            {
+                // DB əlçatan olmadıqda və ya xəta baş verərsə səssiz ötür
+            }
+            finally
+            {
+                if (dispose)
+                    ctx.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Keys enum-u oxunaqlı string-ə çevirir.  Məs: "Ctrl+F3", "Esc"
         /// </summary>
         public static string KeysToString(Keys keys)
         {
@@ -53,13 +101,18 @@ namespace Foxoft.AppCode
 
             Keys keyCode = keys & Keys.KeyCode;
             if (keyCode != Keys.ControlKey && keyCode != Keys.ShiftKey && keyCode != Keys.Menu && keyCode != Keys.None)
-                parts.Add(keyCode.ToString());
+            {
+                if (keyCode == Keys.Escape)
+                    parts.Add("Esc");
+                else
+                    parts.Add(keyCode.ToString());
+            }
 
             return string.Join("+", parts);
         }
 
         /// <summary>
-        /// String-i Keys enum-a parse edir. Məs: "Ctrl+F3" → Keys.Control | Keys.F3
+        /// String-i Keys enum-a parse edir. Məs: "Ctrl+F3" → Keys.Control | Keys.F3, "Esc" → Keys.Escape
         /// </summary>
         public static Keys ParseKeys(string keysStr)
         {
@@ -78,6 +131,8 @@ namespace Foxoft.AppCode
                     result |= Keys.Shift;
                 else if (trimmed.Equals("Alt", StringComparison.OrdinalIgnoreCase))
                     result |= Keys.Alt;
+                else if (trimmed.Equals("Esc", StringComparison.OrdinalIgnoreCase))
+                    result |= Keys.Escape;
                 else if (Enum.TryParse(trimmed, true, out Keys k))
                     result |= k;
             }

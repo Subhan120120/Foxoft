@@ -614,7 +614,13 @@ namespace Foxoft.Models
                 new DcShortcut { Id = 42, FormName = "FormInvoice", ButtonName = "bBI_CampaignDelete",     ShortcutKeys = "",        ButtonDescription = "Kampaniyanı Sil" },
                 new DcShortcut { Id = 43, FormName = "FormInvoice", ButtonName = "BBI_picture",            ShortcutKeys = "",        ButtonDescription = "Şəkillər" },
                 new DcShortcut { Id = 44, FormName = "FormInvoice", ButtonName = "BBI_InvoiceExpenses",    ShortcutKeys = "",        ButtonDescription = "Xərclər" },
-                new DcShortcut { Id = 45, FormName = "FormInvoice", ButtonName = "BBI_CountingStock",      ShortcutKeys = "",        ButtonDescription = "Stok Sayım" }
+                new DcShortcut { Id = 45, FormName = "FormInvoice", ButtonName = "BBI_CountingStock",      ShortcutKeys = "",        ButtonDescription = "Stok Sayım" },
+
+                // UcReturn buttons
+                new DcShortcut { Id = 46, FormName = "UcReturn", ButtonName = "btn_Ok",        ShortcutKeys = "F10",    ButtonDescription = "Qaytarışı Təsdiq Et" },
+                new DcShortcut { Id = 47, FormName = "UcReturn", ButtonName = "btn_Cancel",    ShortcutKeys = "Esc",    ButtonDescription = "Ləğv Et" },
+                new DcShortcut { Id = 48, FormName = "UcReturn", ButtonName = "btn_ReturnAll", ShortcutKeys = "",       ButtonDescription = "Hamısını Qaytar" },
+                new DcShortcut { Id = 49, FormName = "UcReturn", ButtonName = "btn_Clear",     ShortcutKeys = "",       ButtonDescription = "Səbəti Təmizlə" }
             );
 
             modelBuilder.Entity<DcHierarchy>().HasData(

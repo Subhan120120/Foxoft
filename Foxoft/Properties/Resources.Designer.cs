@@ -15968,6 +15968,168 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm Return.
+        /// </summary>
+        public static string Form_Return_Button_Confirm {
+            get {
+                return ResourceManager.GetString("Form_Return_Button_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Form_Return_Button_Cancel {
+            get {
+                return ResourceManager.GetString("Form_Return_Button_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return All.
+        /// </summary>
+        public static string Form_Return_Button_ReturnAll {
+            get {
+                return ResourceManager.GetString("Form_Return_Button_ReturnAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Form_Return_Button_Clear {
+            get {
+                return ResourceManager.GetString("Form_Return_Button_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return Qty.
+        /// </summary>
+        public static string Form_Return_Col_ReturnQty {
+            get {
+                return ResourceManager.GetString("Form_Return_Col_ReturnQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Form_Return_Col_Remove {
+            get {
+                return ResourceManager.GetString("Form_Return_Col_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Form_Return_Col_Add {
+            get {
+                return ResourceManager.GetString("Form_Return_Col_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No items selected to return..
+        /// </summary>
+        public static string Form_Return_Message_CartEmpty {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_CartEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return invoice created successfully: {0}.
+        /// </summary>
+        public static string Form_Return_Message_Success {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode / Product.
+        /// </summary>
+        public static string Form_Return_Label_SearchBarcode {
+            get {
+                return ResourceManager.GetString("Form_Return_Label_SearchBarcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Items to Return.
+        /// </summary>
+        public static string Form_Return_Group_ReturnCart {
+            get {
+                return ResourceManager.GetString("Form_Return_Group_ReturnCart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Date.
+        /// </summary>
+        public static string Form_Return_Label_DocDate {
+            get {
+                return ResourceManager.GetString("Form_Return_Label_DocDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Total.
+        /// </summary>
+        public static string Form_Return_Label_TotalAmount {
+            get {
+                return ResourceManager.GetString("Form_Return_Label_TotalAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to return.
+        /// </summary>
+        public static string Form_Return_Tooltip_ReturnLine {
+            get {
+                return ResourceManager.GetString("Form_Return_Tooltip_ReturnLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove from return.
+        /// </summary>
+        public static string Form_Return_Tooltip_RemoveLine {
+            get {
+                return ResourceManager.GetString("Form_Return_Tooltip_RemoveLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return quantity ({0}) cannot exceed remaining returnable quantity ({1})..
+        /// </summary>
+        public static string Form_Return_Message_QtyExceedsRemaining {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_QtyExceedsRemaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity must be greater than 0..
+        /// </summary>
+        public static string Form_Return_Message_InvalidQty {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_InvalidQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Return Amount.
+        /// </summary>
+        public static string Form_Return_TotalReturnAmount {
+            get {
+                return ResourceManager.GetString("Form_Return_TotalReturnAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open Invoice.
         /// </summary>
         public static string Form_Return_Caption_OpenInvoice {

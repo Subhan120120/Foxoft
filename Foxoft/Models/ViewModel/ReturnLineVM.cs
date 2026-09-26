@@ -120,6 +120,12 @@ namespace Foxoft.Models.ViewModel
         [Display(Name = nameof(Resources.Entity_InvoiceLine_WorkerCode), ResourceType = typeof(Resources))]
         public string? WorkerCode { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductCost), ResourceType = typeof(Resources))]
+        public decimal? ProductCost { get; set; }
+
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_SalesPersonCode), ResourceType = typeof(Resources))]
+        public string? SalesPersonCode { get; set; }
+
 
         [NotMapped]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductDesc), ResourceType = typeof(Resources))]

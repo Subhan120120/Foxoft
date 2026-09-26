@@ -1499,8 +1499,11 @@ namespace Foxoft
         public List<TrPaymentLine> SelectPaymentLinesByInvoice(Guid invoiceHeaderId)
         {
             using subContext db = new();
-            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+            return db.TrPaymentLines.AsNoTracking()
+                           .Include(x => x.TrPaymentHeader)
                            .Include(x => x.DcPaymentType)
+                           .Include(x => x.DcPaymentMethod)
+                           .Include(x => x.DcCashRegister)
                            .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
                            .ToList();
         }
