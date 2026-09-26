@@ -414,4 +414,47 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="..\Foxoft.NotificationWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.NotificationWorker.exe" Condition="Exists('..\Foxoft.NotificationWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.NotificationWorker.exe')">
+			<Link>Foxoft.NotificationWorker.exe</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+		<None Include="..\Foxoft.NotificationWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.NotificationWorker.dll" Condition="Exists('..\Foxoft.NotificationWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.NotificationWorker.dll')">
+			<Link>Foxoft.NotificationWorker.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+		<None Include="..\Foxoft.NotificationWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.NotificationWorker.runtimeconfig.json" Condition="Exists('..\Foxoft.NotificationWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.NotificationWorker.runtimeconfig.json')">
+			<Link>Foxoft.NotificationWorker.runtimeconfig.json</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+		<None Include="..\Foxoft.NotificationWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.NotificationWorker.deps.json" Condition="Exists('..\Foxoft.NotificationWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.NotificationWorker.deps.json')">
+			<Link>Foxoft.NotificationWorker.deps.json</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+		<None Include="..\Foxoft.BackupWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.BackupWorker.exe" Condition="Exists('..\Foxoft.BackupWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.BackupWorker.exe')">
+			<Link>Foxoft.BackupWorker.exe</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+		<None Include="..\Foxoft.BackupWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.BackupWorker.dll" Condition="Exists('..\Foxoft.BackupWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.BackupWorker.dll')">
+			<Link>Foxoft.BackupWorker.dll</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+		<None Include="..\Foxoft.BackupWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.BackupWorker.runtimeconfig.json" Condition="Exists('..\Foxoft.BackupWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.BackupWorker.runtimeconfig.json')">
+			<Link>Foxoft.BackupWorker.runtimeconfig.json</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+		<None Include="..\Foxoft.BackupWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.BackupWorker.deps.json" Condition="Exists('..\Foxoft.BackupWorker\bin\$(Configuration)\$(TargetFramework)\Foxoft.BackupWorker.deps.json')">
+			<Link>Foxoft.BackupWorker.deps.json</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+
 </Project>

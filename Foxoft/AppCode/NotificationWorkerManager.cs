@@ -176,13 +176,13 @@ namespace Foxoft.AppCode
                 // If service is not registered, start background process
             }
 
-            string? exePath = FindWorkerExecutable();
-            if (string.IsNullOrEmpty(exePath) || !File.Exists(exePath))
-                return false;
-
             // If process is already running, return true
             if (Process.GetProcessesByName(ProcessName).Length > 0)
                 return true;
+
+            string? exePath = FindWorkerExecutable();
+            if (string.IsNullOrEmpty(exePath) || !File.Exists(exePath))
+                return false;
 
             string conn = Properties.Settings.Default.SubConnString;
             if (string.IsNullOrWhiteSpace(conn))

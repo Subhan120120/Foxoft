@@ -25,4 +25,11 @@
 		</None>
 	</ItemGroup>
 
+	<Target Name="CopyToFoxoftBin" AfterTargets="Build">
+		<ItemGroup>
+			<WorkerOutputFiles Include="$(TargetDir)Foxoft.NotificationWorker.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(WorkerOutputFiles)" DestinationFolder="..\Foxoft\bin\$(Configuration)\$(TargetFramework)\" SkipUnchangedFiles="true" />
+	</Target>
+
 </Project>
