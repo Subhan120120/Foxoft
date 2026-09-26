@@ -1,4 +1,4 @@
-﻿#region usings
+#region usings
 using DevExpress.Data;
 using DevExpress.Utils;
 using DevExpress.Utils.Design;
@@ -89,7 +89,6 @@ namespace Foxoft
             gV_Report.CalcRowHeight += gV_Report_CalcRowHeight;
             gV_Report.ShowingEditor += gV_Report_ShowingEditor;
             gV_Report.CustomUnboundColumnData += gV_Report_CustomUnboundColumnData;
-            gV_Report.DoubleClick += gV_Report_DoubleClick;
         }
 
         public FormReportGrid(string query, string filter, DcReport dcReport)
@@ -101,7 +100,6 @@ namespace Foxoft
             ReportQuery = reportClass.ApplyFilter(dcReport, query, filter, out sqlParameters);
 
             LoadData();
-            HyperLinkColumns();
             LoadLayout();
         }
 
@@ -192,6 +190,8 @@ namespace Foxoft
                 HLE_DocumentNum.SingleClick = true;
                 HLE_DocumentNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
                 col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
+                col_DocumentNumber.OptionsColumn.AllowEdit = true;
+                col_DocumentNumber.OptionsColumn.ReadOnly = true;
             }
 
             GridColumn col_InvoiceNum = gV_Report.Columns["InvoiceNumber"];
@@ -201,6 +201,8 @@ namespace Foxoft
                 HLE_InvoiceNum.SingleClick = true;
                 HLE_InvoiceNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
                 col_InvoiceNum.ColumnEdit = HLE_InvoiceNum;
+                col_InvoiceNum.OptionsColumn.AllowEdit = true;
+                col_InvoiceNum.OptionsColumn.ReadOnly = true;
             }
 
             GridColumn col_ProductCode = gV_Report.Columns["ProductCode"];
@@ -210,9 +212,14 @@ namespace Foxoft
                 HLE_ProductCode.SingleClick = true;
                 HLE_ProductCode.OpenLink += repoHLE_ProductCode_OpenLink;
                 col_ProductCode.ColumnEdit = HLE_ProductCode;
+                col_ProductCode.OptionsColumn.AllowEdit = true;
+                col_ProductCode.OptionsColumn.ReadOnly = true;
 
-                CreateColImage();
-                gV_Report.Columns.Add(colImage);
+                if (gV_Report.Columns["Image"] == null)
+                {
+                    CreateColImage();
+                    gV_Report.Columns.Add(colImage);
+                }
             }
 
             GridColumn col_CurrAccCode = gV_Report.Columns["CurrAccCode"];
@@ -222,6 +229,8 @@ namespace Foxoft
                 HLE_CurrAccCode.SingleClick = true;
                 HLE_CurrAccCode.OpenLink += repoHLE_CurrAccCode_OpenLink;
                 col_CurrAccCode.ColumnEdit = HLE_CurrAccCode;
+                col_CurrAccCode.OptionsColumn.AllowEdit = true;
+                col_CurrAccCode.OptionsColumn.ReadOnly = true;
             }
         }
 
@@ -237,7 +246,8 @@ namespace Foxoft
             colImage.ColumnEdit = riPictureEdit;
             riPictureEdit.SizeMode = PictureSizeMode.Zoom;
             riPictureEdit.NullText = " ";
-            gC_Report.RepositoryItems.Add(riPictureEdit);
+            if (!gC_Report.RepositoryItems.Contains(riPictureEdit))
+                gC_Report.RepositoryItems.Add(riPictureEdit);
         }
 
         private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -268,6 +278,7 @@ namespace Foxoft
                 gV_Report.RestoreLayoutFromStream(stream);
             }
             TrimNumbersFormat();
+            HyperLinkColumns();
         }
 
         private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)
@@ -279,6 +290,7 @@ namespace Foxoft
         private void bBI_DesignClear_ItemClick(object sender, ItemClickEventArgs e)
         {
             gV_Report.PopulateColumns();
+            HyperLinkColumns();
         }
 
         GridColumn prevColumn = null; // Disable the Immediate Edit Cell
@@ -286,6 +298,9 @@ namespace Foxoft
         private void gV_Report_ShowingEditor(object sender, CancelEventArgs e)
         {
             GridView view = sender as GridView;
+
+            if (view.FocusedColumn?.ColumnEdit is RepositoryItemHyperLinkEdit)
+                return;
 
             // Disable the Immediate Edit Cell
             if (prevColumn != view.FocusedColumn || prevRow != view.FocusedRowHandle)
@@ -296,7 +311,8 @@ namespace Foxoft
 
         private void repoHLE_ProductCode_OpenLink(object sender, OpenLinkEventArgs e)
         {
-            object objProductCode = gV_Report.GetFocusedRowCellValue("ProductCode");
+            e.Handled = true;
+            object objProductCode = e.EditValue ?? gV_Report.GetFocusedRowCellValue("ProductCode");
             string productCode = objProductCode?.ToString();
             if (!String.IsNullOrEmpty(productCode))
                 OpenFormProduct(productCode);
@@ -304,7 +320,8 @@ namespace Foxoft
 
         private void repoHLE_CurrAccCode_OpenLink(object sender, OpenLinkEventArgs e)
         {
-            object objCurrAccCode = gV_Report.GetFocusedRowCellValue("CurrAccCode");
+            e.Handled = true;
+            object objCurrAccCode = e.EditValue ?? gV_Report.GetFocusedRowCellValue("CurrAccCode");
             string currAccCode = objCurrAccCode?.ToString();
             if (!String.IsNullOrEmpty(currAccCode))
                 OpenFormCurrAcc(currAccCode);
@@ -312,8 +329,15 @@ namespace Foxoft
 
         private void repoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
         {
-            object objDocNum = gV_Report.GetFocusedValue();
-            string strDocNum = objDocNum?.ToString();
+            e.Handled = true;
+            string strDocNum = e.EditValue?.ToString();
+            if (string.IsNullOrEmpty(strDocNum))
+            {
+                object objDocNum = gV_Report.GetFocusedRowCellValue("DocumentNumber")
+                                ?? gV_Report.GetFocusedRowCellValue("InvoiceNumber")
+                                ?? gV_Report.GetFocusedValue();
+                strDocNum = objDocNum?.ToString();
+            }
 
             if (!String.IsNullOrEmpty(strDocNum))
             {
@@ -344,28 +368,6 @@ namespace Foxoft
             return isOpen;
         }
 
-        private void gV_Report_DoubleClick(object sender, EventArgs e)
-        {
-            DXMouseEventArgs ea = e as DXMouseEventArgs;
-            GridView view = sender as GridView;
-            if (view == null || ea == null) return;
-
-            GridHitInfo info = view.CalcHitInfo(ea.Location);
-            if (info.InRow || info.InRowCell)
-            {
-                object objDocNum = view.GetRowCellValue(info.RowHandle, "DocumentNumber")
-                                ?? view.GetRowCellValue(info.RowHandle, "InvoiceNumber");
-                string strDocNum = objDocNum?.ToString();
-
-                if (!string.IsNullOrEmpty(strDocNum))
-                {
-                    bool isOpen = InvoiceIsOpen(strDocNum);
-                    if (!isOpen)
-                        OpenFormInvoice(strDocNum);
-                }
-            }
-        }
-
         private void OpenFormInvoice(string strDocNum)
         {
             TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
@@ -383,6 +385,19 @@ namespace Foxoft
 
             if (trPayrollHeader == null)
                 trPayrollHeader = efMethods.SelectPayrollHeaderByDocNum(strDocNum, currAccCode);
+
+            if (trInvoiceHeader is null && trPaymentHeader is null && trPayrollHeader is null)
+            {
+                object fallbackDoc = gV_Report.GetRowCellValue(gV_Report.FocusedRowHandle, "DocumentNumber");
+                if (fallbackDoc != null && fallbackDoc.ToString() != strDocNum)
+                {
+                    strDocNum = fallbackDoc.ToString();
+                    trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
+                    trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
+                    if (trPayrollHeader == null)
+                        trPayrollHeader = efMethods.SelectPayrollHeaderByDocNum(strDocNum, currAccCode);
+                }
+            }
 
             if (trInvoiceHeader is not null)
             {
