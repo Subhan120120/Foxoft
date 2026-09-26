@@ -179,6 +179,8 @@ namespace Foxoft
             : this(processCode, isReturn, productTypeArr, relatedInvoiceId)
         {
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+            if (trInvoiceHeader?.IsDailyExpense == true)
+                this.isDailyExpense = true;
         }
 
         private void FormInvoice_Load(object sender, EventArgs e)
@@ -277,9 +279,31 @@ namespace Foxoft
         private async void FormInvoice_Shown(object sender, EventArgs e)
         {
             if (isNew)
+            {
                 ClearControlsAddNew();
+            }
             else
-                await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+            {
+                if (trInvoiceHeader is not null)
+                {
+                    if (!_lockService.IsLockOwnedByMe("Invoice", trInvoiceHeader.InvoiceHeaderId,
+                        Authorization.CurrAccCode, _appInstanceId, _formInstanceId))
+                    {
+                        if (!TryAcquireInvoiceLockForEdit(trInvoiceHeader.InvoiceHeaderId))
+                        {
+                            _isClosingByLockEvent = true;
+                            Close();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        StartLockHeartbeat();
+                    }
+
+                    await LoadInvoiceAsync(trInvoiceHeader.InvoiceHeaderId);
+                }
+            }
 
             dataLayoutControl1.IsValid(out List<string> errorList);
             gC_InvoiceLine.Focus();
@@ -4682,7 +4706,9 @@ namespace Foxoft
 
             foreach (Form child in MdiParent.MdiChildren)
             {
-                if (child is FormInvoice frm &&
+                if (child != this &&
+                    child is FormInvoice frm &&
+                    frm.trInvoiceHeader != null &&
                     frm.trInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
                 {
                     if (frm.WindowState == FormWindowState.Minimized)
@@ -4693,7 +4719,7 @@ namespace Foxoft
                     return true;
                 }
             }
-
+             
             return false;
         }
 
@@ -4721,6 +4747,59 @@ namespace Foxoft
                 {
                     if (TryActivateOpenInvoiceWindow(invoiceHeaderId))
                         return false;
+
+                    // If no open window found in this app instance, the previous form was closed without releasing lock
+                    var selfTakeoverRes = _lockService.ForceTakeoverLock(
+                        documentType: "Invoice",
+                        documentId: invoiceHeaderId,
+                        newUserId: Authorization.CurrAccCode,
+                        machineName: Environment.MachineName,
+                        appInstanceId: _appInstanceId,
+                        formInstanceId: _formInstanceId,
+                        clientProcessId: _pid,
+                        reason: "Recover lock from closed window in same app instance");
+
+                    if (selfTakeoverRes.Acquired)
+                    {
+                        StartLockHeartbeat();
+                        return true;
+                    }
+                }
+
+                // If same machine, same user, and the locking process no longer exists (crashed/killed)
+                if (res.LockedBy == Authorization.CurrAccCode &&
+                    string.Equals(res.MachineName, Environment.MachineName, StringComparison.OrdinalIgnoreCase) &&
+                    res.ClientProcessId.HasValue && res.ClientProcessId.Value > 0)
+                {
+                    bool processAlive = false;
+                    try
+                    {
+                        using var p = Process.GetProcessById(res.ClientProcessId.Value);
+                        processAlive = !p.HasExited;
+                    }
+                    catch
+                    {
+                        processAlive = false;
+                    }
+
+                    if (!processAlive)
+                    {
+                        var deadProcTakeover = _lockService.ForceTakeoverLock(
+                            documentType: "Invoice",
+                            documentId: invoiceHeaderId,
+                            newUserId: Authorization.CurrAccCode,
+                            machineName: Environment.MachineName,
+                            appInstanceId: _appInstanceId,
+                            formInstanceId: _formInstanceId,
+                            clientProcessId: _pid,
+                            reason: "Recover lock from terminated process");
+
+                        if (deadProcTakeover.Acquired)
+                        {
+                            StartLockHeartbeat();
+                            return true;
+                        }
+                    }
                 }
 
                 bool canTakeover = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DocumentLockTakeover");

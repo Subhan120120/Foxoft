@@ -15,7 +15,8 @@ namespace Foxoft.AppCode.Service
         Guid? AppInstanceId,
         Guid? FormInstanceId,
         string? MachineName,
-        string Message
+        string Message,
+        int? ClientProcessId = null
     );
 
     public enum LockCloseReason
@@ -171,7 +172,8 @@ namespace Foxoft.AppCode.Service
                         AppInstanceId: existing.AppInstanceId,
                         FormInstanceId: existing.FormInstanceId,
                         MachineName: existing.MachineName,
-                        Message: "LOCKED"
+                        Message: "LOCKED",
+                        ClientProcessId: existing.ClientProcessId
                     );
                 }
 
@@ -185,7 +187,8 @@ namespace Foxoft.AppCode.Service
                     AppInstanceId: existing.AppInstanceId,
                     FormInstanceId: existing.FormInstanceId,
                     MachineName: existing.MachineName,
-                    Message: "LOCKED"
+                    Message: "LOCKED",
+                    ClientProcessId: existing.ClientProcessId
                 );
             }
         }

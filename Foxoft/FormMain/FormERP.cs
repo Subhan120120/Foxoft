@@ -195,7 +195,7 @@ namespace Foxoft
                 case "PriceList": ShowNewForm<FormPriceList>(); break;
                 case "CampaignList": ShowExistForm<FormCampaignList>(); break;
                 case "ProductDiscountList": ShowExistForm<FormCommonList<DcDiscount>>("", nameof(DcDiscount.DiscountId)); break;
-                case "RetailSaleOrder": ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null); break;
+                case "RetailSaleOrder": ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null, true); break;
                 case "Session": ShowExistForm<FormDocumentLock>(); break;
                 case "ProductFeatureType": ShowExistForm<FormHierarchyFeatureType>(); break;
                 case "CurrAccFeatureType": ShowExistForm<FormCommonList<DcCurrAccFeatureType>>("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId)); break;
@@ -925,8 +925,13 @@ namespace Foxoft
 
             if (openDailyForm != null)
             {
+                if (openDailyForm.WindowState == FormWindowState.Minimized)
+                    openDailyForm.WindowState = FormWindowState.Maximized;
+
                 openDailyForm.BringToFront();
                 openDailyForm.Activate();
+                if (parentRibbonControl.MergedPages.Count > 0)
+                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
                 return;
             }
 
