@@ -1,4 +1,4 @@
-﻿
+
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -101,6 +101,8 @@ namespace Foxoft
             ucMessagingSetting1 = new UcMessagingSetting();
             tabPagePosButtons = new DevExpress.XtraTab.XtraTabPage();
             ucPosButtonSetting1 = new UcPosButtonSetting();
+            tabPageBackup = new DevExpress.XtraTab.XtraTabPage();
+            ucBackupSetting1 = new UcBackupSetting();
             ((System.ComponentModel.ISupportInitialize)tabControl1).BeginInit();
             tabControl1.SuspendLayout();
             tabPageSettings.SuspendLayout();
@@ -167,6 +169,7 @@ namespace Foxoft
             tabPageShortcuts.SuspendLayout();
             tabPageMessaging.SuspendLayout();
             tabPagePosButtons.SuspendLayout();
+            tabPageBackup.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -177,7 +180,7 @@ namespace Foxoft
             tabControl1.SelectedTabPage = tabPageSettings;
             tabControl1.Size = new Size(800, 720);
             tabControl1.TabIndex = 1;
-            tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts, tabPageMessaging, tabPagePosButtons });
+            tabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageSettings, tabPageShortcuts, tabPageMessaging, tabPagePosButtons, tabPageBackup });
             // 
             // tabPageSettings
             // 
@@ -864,6 +867,21 @@ namespace Foxoft
             ucPosButtonSetting1.Size = new Size(798, 695);
             ucPosButtonSetting1.TabIndex = 0;
             // 
+            // tabPageBackup
+            // 
+            tabPageBackup.Controls.Add(ucBackupSetting1);
+            tabPageBackup.Name = "tabPageBackup";
+            tabPageBackup.Size = new Size(798, 695);
+            tabPageBackup.Text = Resources.Form_ERP_BackupSettings;
+            // 
+            // ucBackupSetting1
+            // 
+            ucBackupSetting1.Dock = DockStyle.Fill;
+            ucBackupSetting1.Location = new Point(0, 0);
+            ucBackupSetting1.Name = "ucBackupSetting1";
+            ucBackupSetting1.Size = new Size(798, 695);
+            ucBackupSetting1.TabIndex = 0;
+            // 
             // FormAppSetting
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -939,6 +957,7 @@ namespace Foxoft
             tabPageShortcuts.ResumeLayout(false);
             tabPageMessaging.ResumeLayout(false);
             tabPagePosButtons.ResumeLayout(false);
+            tabPageBackup.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1016,5 +1035,8 @@ namespace Foxoft
         // POS Button Settings tab
         private DevExpress.XtraTab.XtraTabPage tabPagePosButtons;
         private Foxoft.UcPosButtonSetting ucPosButtonSetting1;
+        // Backup Settings tab
+        private DevExpress.XtraTab.XtraTabPage tabPageBackup;
+        private Foxoft.UcBackupSetting ucBackupSetting1;
     }
 }

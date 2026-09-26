@@ -227,7 +227,7 @@ namespace Foxoft
                 case "NotificationRules": ShowExistForm<FormNotificationRule>(); break;
                 case "MessagingSettings": ShowExistForm<FormAppSetting>(); break;
                 case "TransferApproval": ShowExistForm<FormTransferApproval>(); break;
-                case "BackupSettings": ShowExistForm<FormBackupManager>(); break;
+                case "BackupSettings": ShowExistForm<FormAppSetting>(); break;
                 case "ReportNew": 
                     FormReportEditor formQueryEditor = new(0);
                     if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
@@ -341,7 +341,6 @@ namespace Foxoft
             this.ACE_NotificationCenter.Name = "NotificationCenter";
             this.ACE_NotificationRules.Name = "NotificationRules";
             this.ACE_TransferApproval.Name = "TransferApproval";
-            this.ACE_BackupSettings.Name = "BackupSettings";
         }
 
         private void StartNotificationPopupTimer()

@@ -161,7 +161,6 @@ namespace Foxoft
             ACE_NotificationCenter = new AccordionControlElement();
             ACE_NotificationRules = new AccordionControlElement();
             ACE_TransferApproval = new AccordionControlElement();
-            ACE_BackupSettings = new AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
@@ -977,7 +976,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_MessageLog, ACE_NotificationCenter, ACE_NotificationRules, ACE_TransferApproval, ACE_BackupSettings });
+            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_MessageLog, ACE_NotificationCenter, ACE_NotificationRules, ACE_TransferApproval });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -1077,12 +1076,6 @@ namespace Foxoft
             ACE_TransferApproval.Name = "ACE_TransferApproval";
             ACE_TransferApproval.Style = ElementStyle.Item;
             ACE_TransferApproval.Text = Resources.ERP_ACE_TransferApproval;
-            // 
-            // ACE_BackupSettings
-            // 
-            ACE_BackupSettings.Name = "ACE_BackupSettings";
-            ACE_BackupSettings.Style = ElementStyle.Item;
-            ACE_BackupSettings.Text = Resources.Form_ERP_BackupSettings;
             // 
             // FormERP
             // 
@@ -1244,7 +1237,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PayrollPeriods;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Attendances;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_TransferApproval;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_BackupSettings;
     }
 }
 
