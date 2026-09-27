@@ -3994,6 +3994,13 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_Return_Message_OpenInvoiceQuestion" xml:space="preserve">
     <value>Qaiməni açmaq istəyirsiniz?</value>
   </data>
+  <data name="Form_Return_Message_ConfirmOptions" xml:space="preserve">
+    <value>Qaytarış təsdiqlənsin?
+
+Bəli - Qaiməni aç
+Xeyr - Qaiməni açmadan yekunlaşdır
+İmtina - Geri qaytarmanı yekunlaşdırma</value>
+  </data>
   <data name="Form_Return_Caption_OpenInvoice" xml:space="preserve">
     <value>Qaiməni Aç</value>
   </data>

@@ -4003,6 +4003,13 @@ To delete, cancel the receipt!</value>
   <data name="Form_Return_Message_OpenInvoiceQuestion" xml:space="preserve">
     <value>Do you want to open the invoice?</value>
   </data>
+  <data name="Form_Return_Message_ConfirmOptions" xml:space="preserve">
+    <value>Confirm return?
+
+Yes - Open invoice
+No - Finalize without opening invoice
+Cancel - Cancel return</value>
+  </data>
   <data name="Form_Return_Caption_OpenInvoice" xml:space="preserve">
     <value>Open Invoice</value>
   </data>

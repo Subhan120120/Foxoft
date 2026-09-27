@@ -16238,6 +16238,18 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm return?
+        ///   Yes - Open invoice
+        ///   No - Finalize without opening invoice
+        ///   Cancel - Cancel return
+        /// </summary>
+        public static string Form_Return_Message_ConfirmOptions {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_ConfirmOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment amount equals 0..
         /// </summary>
         public static string Form_Return_Message_PaymentIsZero {

@@ -641,6 +641,15 @@ namespace Foxoft
                 }
             }
 
+            DialogResult answer = XtraMessageBox.Show(
+                Resources.Form_Return_Message_ConfirmOptions,
+                Resources.Form_Return_Caption_Confirmation,
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            if (answer != DialogResult.Yes && answer != DialogResult.No)
+                return;
+
             using subContext db = new();
             var strategy = db.Database.CreateExecutionStrategy();
 
@@ -765,23 +774,9 @@ namespace Foxoft
 
             if (isSuccess)
             {
-                XtraMessageBox.Show(
-                    string.Format(Resources.Form_Return_Message_Success, newDocNum),
-                    Resources.Form_Return_Caption_Confirmation,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-
-                FormERP? formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                if (formERP != null)
+                if (answer == DialogResult.Yes)
                 {
-                    if (XtraMessageBox.Show(
-                            Resources.Form_Return_Message_OpenInvoiceQuestion,
-                            Resources.Form_Return_Caption_OpenInvoice,
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        OpenFormInvoice(newDocNum);
-                    }
+                    OpenFormInvoice(newDocNum);
                 }
 
                 ClearControlsInternal();
