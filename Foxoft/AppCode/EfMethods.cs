@@ -1496,16 +1496,22 @@ namespace Foxoft
                            .ToList();
         }
 
-        public List<TrPaymentLine> SelectPaymentLinesByInvoice(Guid invoiceHeaderId)
+        public List<TrPaymentLine> SelectPaymentLinesByInvoice(Guid invoiceHeaderId, string? currAccCode = null)
         {
             using subContext db = new();
-            return db.TrPaymentLines.AsNoTracking()
+            var query = db.TrPaymentLines.AsNoTracking()
                            .Include(x => x.TrPaymentHeader)
                            .Include(x => x.DcPaymentType)
                            .Include(x => x.DcPaymentMethod)
                            .Include(x => x.DcCashRegister)
-                           .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
-                           .ToList();
+                           .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId);
+
+            if (!string.IsNullOrEmpty(currAccCode))
+                query = query.Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode);
+            else
+                query = query.Where(x => x.TrPaymentHeader.PaymentKindId != 1);
+
+            return query.ToList();
         }
 
         public DcCompany SelectCompany(string companyCode)

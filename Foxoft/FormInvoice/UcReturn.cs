@@ -288,7 +288,7 @@ namespace Foxoft
             decimal totalAmount = OriginalLines.Sum(x => x.NetAmount);
             txt_TotalAmount.EditValue = $"{totalAmount:N2} AZN";
 
-            gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeaderId);
+            gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeaderId, trInvoiceHeader?.CurrAccCode);
 
             if (focusedLineId.HasValue)
             {
