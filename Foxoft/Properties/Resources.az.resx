@@ -1998,6 +1998,48 @@
   <data name="Common_ExportToExcel" xml:space="preserve">
     <value>Excelə göndər</value>
   </data>
+  <data name="Common_ImportFromExcel" xml:space="preserve">
+    <value>Exceldən qəbul et</value>
+  </data>
+  <data name="Common_Filter_ExportSuccess" xml:space="preserve">
+    <value>Filter uğurla Excel-ə ixrac edildi.</value>
+  </data>
+  <data name="Common_Filter_ImportSuccess" xml:space="preserve">
+    <value>Filter uğurla Excel-dən idxal edildi.</value>
+  </data>
+  <data name="Common_Filter_ImportError" xml:space="preserve">
+    <value>Filter Excel-dən idxal edilərkən xəta baş verdi: {0}</value>
+  </data>
+  <data name="Common_Filter_NoDataToExport" xml:space="preserve">
+    <value>Filter boşdur. İxrac ediləcək məlumat yoxdur.</value>
+  </data>
+  <data name="Common_Filter_ExcelDialogTitle" xml:space="preserve">
+    <value>Yalnız ilk sütünda olan məlumatlar daxil edilir.</value>
+  </data>
+  <data name="Common_Filter_ExcelDialogFilter" xml:space="preserve">
+    <value>Excel Faylları (*.xls;*.xlsx)|*.xls;*.xlsx|Bütün fayllar (*.*)|*.*</value>
+  </data>
+  <data name="Common_Filter_ExportEntireFilter" xml:space="preserve">
+    <value>Filteri Excel-ə ixrac et</value>
+  </data>
+  <data name="Common_Filter_ImportEntireFilter" xml:space="preserve">
+    <value>Filteri Excel-dən idxal et</value>
+  </data>
+  <data name="Common_Filter_Node_ImportExcel" xml:space="preserve">
+    <value>Dəyərləri Excel-dən idxal et</value>
+  </data>
+  <data name="Common_Filter_Node_ExportExcel" xml:space="preserve">
+    <value>Dəyərləri Excel-ə ixrac et</value>
+  </data>
+  <data name="Common_Filter_Node_Tooltip" xml:space="preserve">
+    <value>Cari şərtin dəyərlərini Excel ilə idarə et (idxal / ixrac)</value>
+  </data>
+  <data name="Common_Filter_Node_ExportSuccess" xml:space="preserve">
+    <value>Cari şərtin dəyərləri uğurla Excel-ə ixrac edildi.</value>
+  </data>
+  <data name="Common_Filter_Node_ImportSuccess" xml:space="preserve">
+    <value>Cari şərtin dəyərləri uğurla Excel-dən idxal edildi.</value>
+  </data>
   <data name="Common_Report" xml:space="preserve">
     <value>Hesabat</value>
   </data>

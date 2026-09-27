@@ -525,6 +525,132 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import from Excel.
+        /// </summary>
+        public static string Common_ImportFromExcel {
+            get {
+                return ResourceManager.GetString("Common_ImportFromExcel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Filter exported to Excel successfully..
+        /// </summary>
+        public static string Common_Filter_ExportSuccess {
+            get {
+                return ResourceManager.GetString("Common_Filter_ExportSuccess", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Filter imported from Excel successfully..
+        /// </summary>
+        public static string Common_Filter_ImportSuccess {
+            get {
+                return ResourceManager.GetString("Common_Filter_ImportSuccess", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while importing filter from Excel: {0}.
+        /// </summary>
+        public static string Common_Filter_ImportError {
+            get {
+                return ResourceManager.GetString("Common_Filter_ImportError", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Filter is empty. Nothing to export..
+        /// </summary>
+        public static string Common_Filter_NoDataToExport {
+            get {
+                return ResourceManager.GetString("Common_Filter_NoDataToExport", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Only data in the first column will be imported..
+        /// </summary>
+        public static string Common_Filter_ExcelDialogTitle {
+            get {
+                return ResourceManager.GetString("Common_Filter_ExcelDialogTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*.
+        /// </summary>
+        public static string Common_Filter_ExcelDialogFilter {
+            get {
+                return ResourceManager.GetString("Common_Filter_ExcelDialogFilter", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Export Filter to Excel.
+        /// </summary>
+        public static string Common_Filter_ExportEntireFilter {
+            get {
+                return ResourceManager.GetString("Common_Filter_ExportEntireFilter", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Import Filter from Excel.
+        /// </summary>
+        public static string Common_Filter_ImportEntireFilter {
+            get {
+                return ResourceManager.GetString("Common_Filter_ImportEntireFilter", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Import Values from Excel.
+        /// </summary>
+        public static string Common_Filter_Node_ImportExcel {
+            get {
+                return ResourceManager.GetString("Common_Filter_Node_ImportExcel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Export Values to Excel.
+        /// </summary>
+        public static string Common_Filter_Node_ExportExcel {
+            get {
+                return ResourceManager.GetString("Common_Filter_Node_ExportExcel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Import/export values of this condition with Excel.
+        /// </summary>
+        public static string Common_Filter_Node_Tooltip {
+            get {
+                return ResourceManager.GetString("Common_Filter_Node_Tooltip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Condition values exported to Excel successfully..
+        /// </summary>
+        public static string Common_Filter_Node_ExportSuccess {
+            get {
+                return ResourceManager.GetString("Common_Filter_Node_ExportSuccess", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Condition values imported from Excel successfully..
+        /// </summary>
+        public static string Common_Filter_Node_ImportSuccess {
+            get {
+                return ResourceManager.GetString("Common_Filter_Node_ImportSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feature.
         /// </summary>
         public static string Common_Feature {

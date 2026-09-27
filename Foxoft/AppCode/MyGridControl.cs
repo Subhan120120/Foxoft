@@ -21,6 +21,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Foxoft.AppCode;
+using DevExpress.XtraLayout;
+using DevExpress.XtraLayout.Utils;
 
 namespace Foxoft
 {
@@ -156,59 +159,128 @@ namespace Foxoft
 
     public class MyFilterBuilder : FilterBuilder
     {
+        private SimpleButton? sbExportEntireFilterExcel;
+        private SimpleButton? sbImportEntireFilterExcel;
+
         public MyFilterBuilder(FilterColumnCollection columns, IDXMenuManager manager, UserLookAndFeel lookAndFeel, ColumnView view, FilterColumn fColumn)
             : base(columns, manager, lookAndFeel, view, fColumn)
         {
             sbOK.Enabled = sbApply.Enabled = false;
             ((FilterControl)fcMain).FilterChanged += new FilterChangedEventHandler(OnFilterControlFilterChanged);
+            InitializeExcelButtons();
+        }
+
+        private void InitializeExcelButtons()
+        {
+            var layoutControl = Controls.Find("layoutControl1", true).FirstOrDefault() as LayoutControl;
+            if (layoutControl != null)
+            {
+                layoutControl.BeginUpdate();
+                try
+                {
+                    sbExportEntireFilterExcel = new SimpleButton
+                    {
+                        Name = "sbExportEntireFilterExcel",
+                        Text = Properties.Resources.Common_Filter_ExportEntireFilter,
+                        ToolTip = Properties.Resources.Common_Filter_ExportEntireFilter
+                    };
+                    sbExportEntireFilterExcel.Click += SbExportEntireFilterExcel_Click;
+
+                    sbImportEntireFilterExcel = new SimpleButton
+                    {
+                        Name = "sbImportEntireFilterExcel",
+                        Text = Properties.Resources.Common_Filter_ImportEntireFilter,
+                        ToolTip = Properties.Resources.Common_Filter_ImportEntireFilter
+                    };
+                    sbImportEntireFilterExcel.Click += SbImportEntireFilterExcel_Click;
+
+                    try
+                    {
+                        ComponentResourceManager resProduct = new(typeof(FormProductList));
+                        var svgExport = resProduct.GetObject("bBI_ExportExcel.ImageOptions.SvgImage") as SvgImage;
+                        if (svgExport != null)
+                        {
+                            sbExportEntireFilterExcel.ImageOptions.SvgImage = svgExport;
+                            sbExportEntireFilterExcel.ImageOptions.SvgImageSize = new Size(16, 16);
+                        }
+                    }
+                    catch { }
+
+                    try
+                    {
+                        ComponentResourceManager resInvoice = new(typeof(FormInvoice));
+                        var svgImport = resInvoice.GetObject("BBI_ImportExcel.ImageOptions.SvgImage") as SvgImage;
+                        if (svgImport != null)
+                        {
+                            sbImportEntireFilterExcel.ImageOptions.SvgImage = svgImport;
+                            sbImportEntireFilterExcel.ImageOptions.SvgImageSize = new Size(16, 16);
+                        }
+                    }
+                    catch { }
+
+                    var lciExport = layoutControl.Root.AddItem();
+                    lciExport.Control = sbExportEntireFilterExcel;
+                    lciExport.TextVisible = false;
+
+                    var lciImport = layoutControl.Root.AddItem();
+                    lciImport.Control = sbImportEntireFilterExcel;
+                    lciImport.TextVisible = false;
+
+                    var emptySpace = layoutControl.Root.Items.OfType<EmptySpaceItem>().FirstOrDefault();
+                    if (emptySpace != null)
+                    {
+                        lciExport.Move(emptySpace, InsertType.Left);
+                        lciImport.Move(lciExport, InsertType.Right);
+                    }
+                }
+                finally
+                {
+                    layoutControl.EndUpdate();
+                }
+            }
+        }
+
+        private void SbExportEntireFilterExcel_Click(object? sender, EventArgs e)
+        {
+            FilterExcelHelper.ExportEntireFilterToExcel((FilterControl)fcMain, this);
+        }
+
+        private void SbImportEntireFilterExcel_Click(object? sender, EventArgs e)
+        {
+            if (FilterExcelHelper.ImportEntireFilterFromExcel((FilterControl)fcMain, this))
+            {
+                sbOK.Enabled = sbApply.Enabled = true;
+            }
         }
 
         protected override GridFilterControl CreateGridFilterControl()
         {
-            var filterControl = new ExcelBtnFilterControl(Client);
-            filterControl.ExcelBtnClick += new ExcelBtnFilterControl.ExcelBtnEventHandler(ExcelBtnFilterControl_ExcelBtnClick);
+            var filterControl = new ClauseNodeExcelButtonFilterControl(Client);
+            filterControl.ClauseNodeExcelButtonClick += FilterControl_ClauseNodeExcelButtonClick;
 
             return filterControl;
         }
 
-        private void ExcelBtnFilterControl_ExcelBtnClick(object sender, ExcelBtnEventArgs e)
+        private void FilterControl_ClauseNodeExcelButtonClick(object sender, ClauseNodeExcelButtonEventArgs e)
         {
-            XtraOpenFileDialog dialog = new();
-            dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*";
-            dialog.Title = "Yalnız ilk sütünda olan məlumatlar daxil edilir.";
+            ClauseNode clauseNode = (ClauseNode)e.LabelInfo.Owner;
+            FilterControl filterControl = (FilterControl)fcMain;
 
-            DialogResult dr = dialog.ShowDialog();
-
-            if (dr == DialogResult.OK)
+            var menu = new DXPopupMenu();
+            menu.Items.Add(new DXMenuItem(Properties.Resources.Common_Filter_Node_ImportExcel, (s, ev) =>
             {
-                ExcelDataSource excelDataSource = new();
-                excelDataSource.FileName = dialog.FileName;
-
-                ExcelWorksheetSettings excelWorksheetSettings = new(0, "A1:A10000");
-                //excelWorksheetSettings.WorksheetName = "10QK";
-
-                ExcelSourceOptions excelOptions = new();
-                excelOptions.ImportSettings = excelWorksheetSettings;
-                excelOptions.SkipHiddenRows = false;
-                excelOptions.SkipHiddenColumns = false;
-                excelOptions.UseFirstRowAsHeader = true;
-                excelDataSource.SourceOptions = excelOptions;
-
-                excelDataSource.Fill();
-
-                DataTable dt = new();
-                dt = ToDataTableFromExcelDataSource(excelDataSource);
-
-                ClauseNode clauseNode = (ClauseNode)e.LabelInfo.Owner;
-
-                if (clauseNode.Operation == ClauseType.AnyOf || clauseNode.Operation == ClauseType.NoneOf)
+                if (FilterExcelHelper.ImportClauseNodeValuesFromExcel(clauseNode, filterControl, this))
                 {
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        clauseNode.AdditionalOperands.Add(row[0].ToString());
-                    }
+                    sbOK.Enabled = sbApply.Enabled = true;
                 }
-            }
+            }));
+            menu.Items.Add(new DXMenuItem(Properties.Resources.Common_Filter_Node_ExportExcel, (s, ev) =>
+            {
+                FilterExcelHelper.ExportClauseNodeValuesToExcel(clauseNode, filterControl, this);
+            }));
+
+            Point clientPoint = new(e.LabelInfo.NodeBounds.Right, e.LabelInfo.NodeBounds.Top);
+            MenuManagerHelper.ShowMenu(menu, LookAndFeel, ((IDXMenuManagerProvider)this).MenuManager, filterControl, clientPoint);
         }
 
         public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)
@@ -238,56 +310,124 @@ namespace Foxoft
         private void OnFilterControlFilterChanged(object sender, FilterChangedEventArgs e)
         {
             sbOK.Enabled = sbApply.Enabled = true;
-            ((FilterControl)fcMain).FilterChanged -= new FilterChangedEventHandler(OnFilterControlFilterChanged);
         }
     }
 
-    public class ExcelBtnFilterControl : GridFilterControl
+    public class ClauseNodeExcelButtonFilterControl : GridFilterControl
     {
-        public ExcelBtnFilterControl(ISupportFilterCriteriaDisplayStyle client)
-            : base(client.DisplayStyle)
-        { }
+        private ToolTip? _toolTip;
+        private bool _isToolTipVisible;
 
-        private Image _Icon;
-        public Image MyIcon
+        public ClauseNodeExcelButtonFilterControl(ISupportFilterCriteriaDisplayStyle client)
+            : base(client.DisplayStyle)
         {
-            get { return _Icon; }
+            InitIcon();
+            _toolTip = new ToolTip();
+        }
+
+        private void InitIcon()
+        {
+            if (_Icon != null) return;
+            try
+            {
+                ComponentResourceManager resources = new(typeof(FormProductList));
+                SvgImage? svgImage = resources.GetObject("bBI_ExportExcel.ImageOptions.SvgImage") as SvgImage;
+                if (svgImage != null)
+                {
+                    SvgBitmap bm = new(svgImage);
+                    _Icon = bm.Render(null, 0.5);
+                }
+            }
+            catch { }
+        }
+
+        private Image? _Icon;
+        public Image? MyIcon
+        {
+            get
+            {
+                if (_Icon == null) InitIcon();
+                return _Icon;
+            }
             set { _Icon = value; }
         }
 
+        public delegate void ClauseNodeExcelButtonEventHandler(object sender, ClauseNodeExcelButtonEventArgs e);
+        public event ClauseNodeExcelButtonEventHandler? ClauseNodeExcelButtonClick;
+
+        [Obsolete("Use ClauseNodeExcelButtonClick instead.")]
         public delegate void ExcelBtnEventHandler(object sender, ExcelBtnEventArgs e);
-        public event ExcelBtnEventHandler ExcelBtnClick;
+        [Obsolete("Use ClauseNodeExcelButtonClick instead.")]
+        public event ExcelBtnEventHandler? ExcelBtnClick;
 
         protected override BaseControlPainter CreatePainter()
         {
-            return new ExcelBtnFilterControlPainter(this);
+            return new ClauseNodeExcelButtonPainter(this);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            Point mouseLocation = new(e.X, e.Y);
+            if (TryGetExcelButtonLabelInfo(mouseLocation, out FilterControlLabelInfo labelInfo))
+            {
+                Cursor = Cursors.Hand;
+                if (!_isToolTipVisible)
+                {
+                    _toolTip?.Show(Properties.Resources.Common_Filter_Node_Tooltip, this, e.X + 16, e.Y + 16);
+                    _isToolTipVisible = true;
+                }
+            }
+            else
+            {
+                Cursor = Cursors.Default;
+                if (_isToolTipVisible)
+                {
+                    _toolTip?.Hide(this);
+                    _isToolTipVisible = false;
+                }
+            }
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            Cursor = Cursors.Default;
+            if (_isToolTipVisible)
+            {
+                _toolTip?.Hide(this);
+                _isToolTipVisible = false;
+            }
         }
 
         protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
-            ComponentResourceManager resources = new(typeof(FormProductList));
-            SvgImage ımage = ((SvgImage)(resources.GetObject("bBI_ExportExcel.ImageOptions.SvgImage")));
-            SvgBitmap bm = new SvgBitmap(ımage);
-            MyIcon = bm.Render(null, 0.5);
+            if (_Icon == null)
+                InitIcon();
 
             base.OnMouseDown(e);
             Point mouseLocation = new(e.X, e.Y);
             if (e.Button == MouseButtons.Left && TryGetExcelButtonLabelInfo(mouseLocation, out FilterControlLabelInfo labelInfo))
+            {
+                ClauseNodeExcelButtonClick?.Invoke(this, new ClauseNodeExcelButtonEventArgs(labelInfo));
+#pragma warning disable CS0618
                 ExcelBtnClick?.Invoke(this, new ExcelBtnEventArgs(labelInfo));
+#pragma warning restore CS0618
+            }
         }
 
         private bool TryGetExcelButtonLabelInfo(Point mouseLocation, out FilterControlLabelInfo labelInfo)
         {
-            labelInfo = null;
+            labelInfo = null!;
 
-            if (_Icon == null)
+            if (MyIcon == null)
                 return false;
 
-            labelInfo = Model.GetLabelInfoByCoordinates(mouseLocation.X - _Icon.Width - 1, mouseLocation.Y);
+            labelInfo = Model.GetLabelInfoByCoordinates(mouseLocation.X - MyIcon.Width - 1, mouseLocation.Y);
             if (labelInfo == null)
                 return false;
 
-            ClauseNode clauseNode = labelInfo.Owner as ClauseNode;
+            ClauseNode? clauseNode = labelInfo.Owner as ClauseNode;
             if (labelInfo.Owner.Elements[0].ElementType == ElementType.Group
                 || (clauseNode?.Operation != ClauseType.AnyOf && clauseNode?.Operation != ClauseType.NoneOf))
                 return false;
@@ -297,18 +437,45 @@ namespace Foxoft
 
         internal Rectangle GetExcelButtonBounds(FilterControlLabelInfo labelInfo)
         {
+            int iconHeight = MyIcon?.Height ?? 16;
+            int iconWidth = MyIcon?.Width ?? 16;
+
             return new Rectangle(
                 labelInfo.NodeBounds.X + labelInfo.NodeBounds.Width,
-                labelInfo.NodeBounds.Y + (labelInfo.NodeBounds.Height - MyIcon.Height) / 2 + 2,
-                MyIcon.Width,
-                MyIcon.Height);
+                labelInfo.NodeBounds.Y + (labelInfo.NodeBounds.Height - iconHeight) / 2 + 2,
+                iconWidth,
+                iconHeight);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _toolTip?.Dispose();
+                _toolTip = null;
+            }
+            base.Dispose(disposing);
+        }
     }
 
+    public class ClauseNodeExcelButtonEventArgs : EventArgs
+    {
+        private FilterControlLabelInfo _LabelInfo;
+
+        public FilterControlLabelInfo LabelInfo
+        {
+            get { return _LabelInfo; }
+            set { _LabelInfo = value; }
+        }
+        public ClauseNodeExcelButtonEventArgs(FilterControlLabelInfo li)
+        {
+            _LabelInfo = li;
+        }
+    }
+
+    [Obsolete("Use ClauseNodeExcelButtonEventArgs instead.")]
     public class ExcelBtnEventArgs : EventArgs
     {
-        // Fields...
         private FilterControlLabelInfo _LabelInfo;
 
         public FilterControlLabelInfo LabelInfo
@@ -318,21 +485,27 @@ namespace Foxoft
         }
         public ExcelBtnEventArgs(FilterControlLabelInfo li)
         {
-            LabelInfo = li;
+            _LabelInfo = li;
         }
     }
 
-    public class ExcelBtnFilterControlPainter : FilterControlPainter
+    [Obsolete("Use ClauseNodeExcelButtonFilterControl instead.")]
+    public class ExcelBtnFilterControl : ClauseNodeExcelButtonFilterControl
     {
-        public ExcelBtnFilterControlPainter(FilterControl filter) : base(filter) { }
+        public ExcelBtnFilterControl(ISupportFilterCriteriaDisplayStyle client) : base(client) { }
+    }
+
+    public class ClauseNodeExcelButtonPainter : FilterControlPainter
+    {
+        public ClauseNodeExcelButtonPainter(FilterControl filter) : base(filter) { }
 
         protected override void DrawNodeLabel(Node node, ControlGraphicsInfoArgs info)
         {
-            FilterControlLabelInfo labelInfo = (node.Model as WinFilterTreeNodeModel)[node];
-            ExcelBtnFilterControl fControl = Owner as ExcelBtnFilterControl;
-            if (fControl.MyIcon != null)
+            FilterControlLabelInfo? labelInfo = (node.Model as WinFilterTreeNodeModel)?[node];
+            ClauseNodeExcelButtonFilterControl? fControl = Owner as ClauseNodeExcelButtonFilterControl;
+            if (fControl?.MyIcon != null && labelInfo != null)
             {
-                ClauseNode clauseNode = node as ClauseNode;
+                ClauseNode? clauseNode = node as ClauseNode;
 
                 if (node.Elements[0].ElementType != ElementType.Group
                    && (clauseNode?.Operation == ClauseType.AnyOf || clauseNode?.Operation == ClauseType.NoneOf))
@@ -342,5 +515,11 @@ namespace Foxoft
             }
             base.DrawNodeLabel(node, info);
         }
+    }
+
+    [Obsolete("Use ClauseNodeExcelButtonPainter instead.")]
+    public class ExcelBtnFilterControlPainter : ClauseNodeExcelButtonPainter
+    {
+        public ExcelBtnFilterControlPainter(FilterControl filter) : base(filter) { }
     }
 }

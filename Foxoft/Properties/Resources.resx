@@ -1998,6 +1998,48 @@
   <data name="Common_ExportToExcel" xml:space="preserve">
     <value>Export to Excel</value>
   </data>
+  <data name="Common_ImportFromExcel" xml:space="preserve">
+    <value>Import from Excel</value>
+  </data>
+  <data name="Common_Filter_ExportSuccess" xml:space="preserve">
+    <value>Filter exported to Excel successfully.</value>
+  </data>
+  <data name="Common_Filter_ImportSuccess" xml:space="preserve">
+    <value>Filter imported from Excel successfully.</value>
+  </data>
+  <data name="Common_Filter_ImportError" xml:space="preserve">
+    <value>An error occurred while importing filter from Excel: {0}</value>
+  </data>
+  <data name="Common_Filter_NoDataToExport" xml:space="preserve">
+    <value>Filter is empty. Nothing to export.</value>
+  </data>
+  <data name="Common_Filter_ExcelDialogTitle" xml:space="preserve">
+    <value>Only data in the first column will be imported.</value>
+  </data>
+  <data name="Common_Filter_ExcelDialogFilter" xml:space="preserve">
+    <value>Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*</value>
+  </data>
+  <data name="Common_Filter_ExportEntireFilter" xml:space="preserve">
+    <value>Export Filter to Excel</value>
+  </data>
+  <data name="Common_Filter_ImportEntireFilter" xml:space="preserve">
+    <value>Import Filter from Excel</value>
+  </data>
+  <data name="Common_Filter_Node_ImportExcel" xml:space="preserve">
+    <value>Import Values from Excel</value>
+  </data>
+  <data name="Common_Filter_Node_ExportExcel" xml:space="preserve">
+    <value>Export Values to Excel</value>
+  </data>
+  <data name="Common_Filter_Node_Tooltip" xml:space="preserve">
+    <value>Import/export values of this condition with Excel</value>
+  </data>
+  <data name="Common_Filter_Node_ExportSuccess" xml:space="preserve">
+    <value>Condition values exported to Excel successfully.</value>
+  </data>
+  <data name="Common_Filter_Node_ImportSuccess" xml:space="preserve">
+    <value>Condition values imported from Excel successfully.</value>
+  </data>
   <data name="Common_Report" xml:space="preserve">
     <value>Report</value>
   </data>
