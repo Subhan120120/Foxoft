@@ -1,4 +1,4 @@
-﻿using Foxoft.Models;
+using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
@@ -119,7 +119,7 @@ namespace Foxoft.AppCode.Services
                 InvoiceHeaderId = invoice.InvoiceHeaderId,
                 OperationDate = invoice.DocumentDate,
                 OperationTime = invoice.DocumentTime,
-                PaymentKindId = 2
+                PaymentKindId = PaymentKind.Invoice
             };
 
             return ph;

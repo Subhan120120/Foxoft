@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Foxoft.Properties;
 
 namespace Foxoft.Models
@@ -14,7 +15,8 @@ namespace Foxoft.Models
 
         [Key]
         [Display(Name = nameof(Resources.Entity_PaymentKind_Id), ResourceType = typeof(Resources))]
-        public byte PaymentKindId { get; set; }
+        [Column(TypeName = "tinyint")]
+        public PaymentKind PaymentKindId { get; set; }
 
         [Display(Name = nameof(Resources.Entity_PaymentKind_Desc), ResourceType = typeof(Resources))]
         [Required(ErrorMessageResourceType = typeof(Resources),

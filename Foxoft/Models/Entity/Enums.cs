@@ -44,6 +44,14 @@ namespace Foxoft.Models
         Commission = 4   // Komissiya
     }
 
+    public enum PaymentKind : int
+    {
+        Unknown = 0,
+        Payment = 1,
+        Invoice = 2,
+        Installment = 3
+    }
+
     public enum WhatsAppProvider : byte
     {
         Chrome = 0,       

@@ -74,7 +74,7 @@ namespace Foxoft
             : this(paymentType, pay, invoiceHeader, allowedPaymentMethodIds)
         {
             if (isInstallmentPayment)
-                trPaymentHeader.PaymentKindId = 3;
+                trPaymentHeader.PaymentKindId = PaymentKind.Installment;
         }
 
         private void InitLookups()
@@ -203,11 +203,11 @@ namespace Foxoft
             if (HasInvoice())
             {
                 trPaymentHeader.InvoiceHeaderId = header.InvoiceHeaderId;
-                trPaymentHeader.PaymentKindId = 2;
+                trPaymentHeader.PaymentKindId = PaymentKind.Invoice;
             }
             else
             {
-                trPaymentHeader.PaymentKindId = 1;
+                trPaymentHeader.PaymentKindId = PaymentKind.Payment;
             }
 
             trPaymentHeader.OperationDate = DateTime.Now;
@@ -684,7 +684,7 @@ namespace Foxoft
                 PaymentHeaderId = Guid.NewGuid(),
                 DocumentNumber = efMethods.GetNextDocNum(true, "PA", nameof(TrPaymentHeader.DocumentNumber), "TrPaymentHeaders", 6),
                 CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString(),
-                PaymentKindId = 1,
+                PaymentKindId = PaymentKind.Payment,
                 CreatedUserName = Authorization.CurrAccCode,
                 OfficeCode = Authorization.OfficeCode,
                 StoreCode = Authorization.StoreCode,

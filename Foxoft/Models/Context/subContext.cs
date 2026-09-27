@@ -1050,10 +1050,10 @@ namespace Foxoft.Models
                );
 
             modelBuilder.Entity<DcPaymentKind>().HasData(
-                new DcPaymentKind { PaymentKindId = 0, PaymentKindDesc = "Unknown" },
-                new DcPaymentKind { PaymentKindId = 1, PaymentKindDesc = "Payment" },
-                new DcPaymentKind { PaymentKindId = 2, PaymentKindDesc = "Invoice" },
-                new DcPaymentKind { PaymentKindId = 3, PaymentKindDesc = "Installment" }
+                new DcPaymentKind { PaymentKindId = PaymentKind.Unknown, PaymentKindDesc = "Unknown" },
+                new DcPaymentKind { PaymentKindId = PaymentKind.Payment, PaymentKindDesc = "Payment" },
+                new DcPaymentKind { PaymentKindId = PaymentKind.Invoice, PaymentKindDesc = "Invoice" },
+                new DcPaymentKind { PaymentKindId = PaymentKind.Installment, PaymentKindDesc = "Installment" }
                 );
 
             modelBuilder.Entity<DcPaymentType>().HasData(
@@ -1560,6 +1560,16 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcCurrAccContactDetail>()
                 .Property(x => x.ContactTypeId)
+                .HasConversion<byte>()
+                .HasColumnType("tinyint");
+
+            modelBuilder.Entity<DcPaymentKind>()
+                .Property(x => x.PaymentKindId)
+                .HasConversion<byte>()
+                .HasColumnType("tinyint");
+
+            modelBuilder.Entity<TrPaymentHeader>()
+                .Property(x => x.PaymentKindId)
                 .HasConversion<byte>()
                 .HasColumnType("tinyint");
         }

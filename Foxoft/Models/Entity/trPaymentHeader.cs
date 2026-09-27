@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -73,7 +73,8 @@ namespace Foxoft.Models
 
         [ForeignKey(nameof(DcPaymentKind))]
         [Display(Name = nameof(Resources.Entity_PaymentHeader_PaymentKindId), ResourceType = typeof(Resources))]
-        public byte? PaymentKindId { get; set; }
+        [Column(TypeName = "tinyint")]
+        public PaymentKind? PaymentKindId { get; set; }
 
         [DefaultValueSql("0")]
         [Display(Name = nameof(Resources.Entity_PaymentHeader_CompanyCode), ResourceType = typeof(Resources))]

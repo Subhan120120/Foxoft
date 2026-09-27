@@ -1446,7 +1446,7 @@ namespace Foxoft
 
             foreach (TrPaymentHeader entity in trPaymentHeaders)
             {
-                if (entity.PaymentKindId == 2)
+                if (entity.PaymentKindId == PaymentKind.Invoice)
                 {
                     entity.CurrAccCode = currAccCode;
                     db.Entry(entity).Property(x => x.CurrAccCode).IsModified = true;
@@ -1509,7 +1509,7 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(currAccCode))
                 query = query.Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode);
             else
-                query = query.Where(x => x.TrPaymentHeader.PaymentKindId != 1);
+                query = query.Where(x => x.TrPaymentHeader.PaymentKindId != PaymentKind.Payment);
 
             return query.ToList();
         }
