@@ -421,5 +421,15 @@ namespace Foxoft
 
             Settings.Default.TrReportCustomizations = asd;
         }
+
+        private void bBI_FilterExportExcel_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FilterExcelHelper.ExportEntireFilterToExcel(filterControl_Outer, this);
+        }
+
+        private void bBI_FilterImportExcel_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FilterExcelHelper.ImportEntireFilterFromExcel(filterControl_Outer, this);
+        }
     }
 }

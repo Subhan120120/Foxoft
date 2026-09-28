@@ -30,6 +30,19 @@ namespace Foxoft.AppCode
             public List<string> ValuesList { get; set; } = new();
         }
 
+        public class SkippedFilterNode
+        {
+            public int Id { get; set; }
+            public int ParentId { get; set; }
+            public string Field { get; set; } = "";
+            public string Caption { get; set; } = "";
+            public string Operator { get; set; } = "";
+            public string Value { get; set; } = "";
+            public string Reason { get; set; } = "";
+
+            public override string ToString() => FormatSkippedNode(this);
+        }
+
         #region Entire Filter Export / Import (Bütün Filter)
 
         public static void ExportEntireFilterToExcel(FilterControl filterControl, IWin32Window? owner = null)
@@ -273,7 +286,44 @@ namespace Foxoft.AppCode
 
             try
             {
-                CriteriaOperator? resultCriteria = LoadFilterFromExcelFile(ofd.FileName, filterControl.FilterColumns);
+                CriteriaOperator? resultCriteria = LoadFilterFromExcelFile(ofd.FileName, filterControl.FilterColumns, out var skippedNodes);
+
+                if (skippedNodes.Count > 0)
+                {
+                    string skippedDetails = string.Join(Environment.NewLine, skippedNodes.Take(15).Select(s => "• " + FormatSkippedNode(s)));
+                    if (skippedNodes.Count > 15)
+                    {
+                        skippedDetails += Environment.NewLine + string.Format(Properties.Resources.Common_Filter_SkippedMoreCount, skippedNodes.Count - 15);
+                    }
+
+                    if (!ReferenceEquals(resultCriteria, null))
+                    {
+                        filterControl.FilterCriteria = resultCriteria;
+                        filterControl.Refresh();
+
+                        string message = string.Format(Properties.Resources.Common_Filter_ImportSuccessWithSkipped, skippedDetails);
+                        XtraMessageBox.Show(
+                            owner,
+                            message,
+                            Properties.Resources.Common_Attention,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return true;
+                    }
+                    else
+                    {
+                        string message = string.Format(Properties.Resources.Common_Filter_AllNodesSkipped, skippedDetails);
+                        XtraMessageBox.Show(
+                            owner,
+                            message,
+                            Properties.Resources.Common_Attention,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                        return false;
+                    }
+                }
 
                 if (!ReferenceEquals(resultCriteria, null))
                 {
@@ -317,7 +367,15 @@ namespace Foxoft.AppCode
             => ImportEntireFilterFromExcel(filterControl, owner);
 
         public static CriteriaOperator? LoadFilterFromExcelFile(string filePath, FilterColumnCollection? columns)
+            => LoadFilterFromExcelFile(filePath, columns, out _);
+
+        public static CriteriaOperator? LoadFilterFromExcelFile(
+            string filePath,
+            FilterColumnCollection? columns,
+            out List<SkippedFilterNode> skippedNodes)
         {
+            skippedNodes = new List<SkippedFilterNode>();
+
             using var workbook = new Workbook();
             workbook.LoadDocument(filePath);
 
@@ -327,18 +385,21 @@ namespace Foxoft.AppCode
             Dictionary<int, List<string>> valuesByNodeId = new();
             Dictionary<string, List<string>> valuesByField = new(StringComparer.OrdinalIgnoreCase);
 
-            var valuesSheet = workbook.Worksheets["Values"];
+            var valuesSheet = FindWorksheet(workbook, "Values");
             if (valuesSheet != null)
             {
                 ReadValuesSheet(valuesSheet, valuesByNodeId, valuesByField);
             }
 
-            var filterSheet = workbook.Worksheets["Filter"] ?? workbook.Worksheets[0];
-            CriteriaOperator? resultCriteria = ParseSheetToCriteria(filterSheet, valuesByNodeId, valuesByField, columns);
+            var filterSheet = FindWorksheet(workbook, "Filter") ?? (workbook.Worksheets.Count > 0 ? workbook.Worksheets[0] : null);
+            if (filterSheet == null)
+                return null;
 
-            if (ReferenceEquals(resultCriteria, null))
+            CriteriaOperator? resultCriteria = ParseSheetToCriteria(filterSheet, valuesByNodeId, valuesByField, columns, skippedNodes);
+
+            if (ReferenceEquals(resultCriteria, null) && skippedNodes.Count == 0)
             {
-                var criteriaSheet = workbook.Worksheets["Criteria"];
+                var criteriaSheet = FindWorksheet(workbook, "Criteria");
                 if (criteriaSheet != null && criteriaSheet.Rows.LastUsedIndex >= 1)
                 {
                     string cText = criteriaSheet.Cells[1, 0].DisplayText;
@@ -355,8 +416,10 @@ namespace Foxoft.AppCode
         public static bool RunSelfTest(out string message)
         {
             string tempFile = Path.Combine(Path.GetTempPath(), $"FilterTest_{Guid.NewGuid():N}.xlsx");
+            string tempFile2 = Path.Combine(Path.GetTempPath(), $"FilterTest2_{Guid.NewGuid():N}.xlsx");
             try
             {
+                // Test 1: InOperator, Between, Binary, Group (has Values sheet)
                 var dt = new System.Data.DataTable();
                 dt.Columns.Add("Barcode", typeof(string));
                 dt.Columns.Add("Price", typeof(decimal));
@@ -381,7 +444,7 @@ namespace Foxoft.AppCode
                 var loadedCriteria = LoadFilterFromExcelFile(tempFile, fc.FilterColumns);
                 if (ReferenceEquals(loadedCriteria, null))
                 {
-                    message = "Loaded criteria is null!";
+                    message = "Test 1 loaded criteria is null!";
                     return false;
                 }
 
@@ -393,11 +456,127 @@ namespace Foxoft.AppCode
 
                 if (!string.Equals(exportedFilterStr, originalFilterStr, StringComparison.OrdinalIgnoreCase))
                 {
-                    message = $"Filter mismatch! Expected: {originalFilterStr}, Got: {exportedFilterStr}";
+                    message = $"Test 1 filter mismatch! Expected: {originalFilterStr}, Got: {exportedFilterStr}";
                     return false;
                 }
 
-                message = $"Self-test PASSED! Filter matched: {exportedFilterStr}";
+                // Test 2: Report 1036 pattern (Dates, StartsWith, Contains, Equals in nested OR, NO InOperator / NO Values sheet)
+                var dt2 = new System.Data.DataTable();
+                dt2.Columns.Add("OperationDate", typeof(DateTime));
+                dt2.Columns.Add("ProductCode", typeof(string));
+                dt2.Columns.Add("CurrAccCode", typeof(string));
+                dt2.Columns.Add("CurrAccDesc", typeof(string));
+                dt2.Columns.Add("CustomsDocumentNumber", typeof(string));
+
+                var fc2 = new FilterControl { SourceControl = dt2 };
+                string rep1036FilterStr = "[OperationDate] >= #2026-01-01# And [OperationDate] <= #2027-01-01# And ([ProductCode] = '07' Or StartsWith([CurrAccCode], 'C-0145') Or Contains([CurrAccDesc], 'Instagram') Or StartsWith([CustomsDocumentNumber], 'İnstagram') Or Contains([CurrAccDesc], 'İnstagram') Or StartsWith([CustomsDocumentNumber], 'Instagram') Or Contains([CurrAccCode], 'C-0836') Or Contains([CurrAccCode], 'C-3073'))";
+                var rep1036Criteria = CriteriaOperator.Parse(rep1036FilterStr);
+                fc2.FilterCriteria = rep1036Criteria;
+
+                SaveFilterToExcelFile(fc2, tempFile2);
+
+                var loadedCriteria2 = LoadFilterFromExcelFile(tempFile2, fc2.FilterColumns);
+                if (ReferenceEquals(loadedCriteria2, null))
+                {
+                    message = "Test 2 (Report 1036) loaded criteria is null!";
+                    return false;
+                }
+
+                fc2.FilterCriteria = loadedCriteria2;
+                string loadedStr2 = fc2.FilterString;
+
+                fc2.FilterCriteria = rep1036Criteria;
+                string origStr2 = fc2.FilterString;
+
+                if (!string.Equals(loadedStr2, origStr2, StringComparison.OrdinalIgnoreCase))
+                {
+                    message = $"Test 2 (Report 1036) filter mismatch! Expected: {origStr2}, Got: {loadedStr2}";
+                    return false;
+                }
+
+                // Test 3: Non-existent column in datasource is skipped and reported
+                string tempFile3 = Path.Combine(Path.GetTempPath(), $"FilterTest3_{Guid.NewGuid():N}.xlsx");
+                try
+                {
+                    var dtSource = new System.Data.DataTable();
+                    dtSource.Columns.Add("ValidCol", typeof(string));
+                    dtSource.Columns.Add("ValidPrice", typeof(decimal));
+
+                    var dtFull = new System.Data.DataTable();
+                    dtFull.Columns.Add("ValidCol", typeof(string));
+                    dtFull.Columns.Add("ValidPrice", typeof(decimal));
+                    dtFull.Columns.Add("MissingCol", typeof(string));
+
+                    var fcFull = new FilterControl { SourceControl = dtFull };
+                    fcFull.FilterCriteria = new GroupOperator(GroupOperatorType.And,
+                        new BinaryOperator("ValidCol", "ABC", BinaryOperatorType.Equal),
+                        new BinaryOperator("MissingCol", "XYZ", BinaryOperatorType.Equal)
+                    );
+
+                    SaveFilterToExcelFile(fcFull, tempFile3);
+
+                    var fcTarget = new FilterControl { SourceControl = dtSource };
+                    var loadedCriteria3 = LoadFilterFromExcelFile(tempFile3, fcTarget.FilterColumns, out var skipped3);
+
+                    if (skipped3.Count != 1 || !string.Equals(skipped3[0].Field, "MissingCol", StringComparison.OrdinalIgnoreCase))
+                    {
+                        message = $"Test 3 failed! Expected 1 skipped node for 'MissingCol', got {skipped3.Count}";
+                        return false;
+                    }
+
+                    fcTarget.FilterCriteria = loadedCriteria3;
+                    string targetFilterStr = fcTarget.FilterString;
+                    if (targetFilterStr.Contains("MissingCol", StringComparison.OrdinalIgnoreCase) || !targetFilterStr.Contains("ValidCol", StringComparison.OrdinalIgnoreCase))
+                    {
+                        message = $"Test 3 failed! Target filter string still has MissingCol or missing ValidCol: {targetFilterStr}";
+                        return false;
+                    }
+                }
+                finally
+                {
+                    try { if (File.Exists(tempFile3)) File.Delete(tempFile3); } catch { }
+                }
+
+                // Test 4: All columns non-existent => null criteria, all reported in skipped
+                string tempFile4 = Path.Combine(Path.GetTempPath(), $"FilterTest4_{Guid.NewGuid():N}.xlsx");
+                try
+                {
+                    var dtSource = new System.Data.DataTable();
+                    dtSource.Columns.Add("OnlyCol", typeof(string));
+
+                    var dtFull = new System.Data.DataTable();
+                    dtFull.Columns.Add("WrongCol1", typeof(string));
+                    dtFull.Columns.Add("WrongCol2", typeof(string));
+
+                    var fcFull = new FilterControl { SourceControl = dtFull };
+                    fcFull.FilterCriteria = new GroupOperator(GroupOperatorType.And,
+                        new BinaryOperator("WrongCol1", "1", BinaryOperatorType.Equal),
+                        new BinaryOperator("WrongCol2", "2", BinaryOperatorType.Equal)
+                    );
+
+                    SaveFilterToExcelFile(fcFull, tempFile4);
+
+                    var fcTarget = new FilterControl { SourceControl = dtSource };
+                    var loadedCriteria4 = LoadFilterFromExcelFile(tempFile4, fcTarget.FilterColumns, out var skipped4);
+
+                    if (loadedCriteria4 != null)
+                    {
+                        message = "Test 4 failed! Expected null criteria when all columns are missing.";
+                        return false;
+                    }
+
+                    if (skipped4.Count != 2)
+                    {
+                        message = $"Test 4 failed! Expected 2 skipped nodes, got {skipped4.Count}";
+                        return false;
+                    }
+                }
+                finally
+                {
+                    try { if (File.Exists(tempFile4)) File.Delete(tempFile4); } catch { }
+                }
+
+                message = $"Self-tests PASSED! All filter export/import and column validation tests matched.";
                 return true;
             }
             catch (Exception ex)
@@ -408,6 +587,7 @@ namespace Foxoft.AppCode
             finally
             {
                 try { if (File.Exists(tempFile)) File.Delete(tempFile); } catch { }
+                try { if (File.Exists(tempFile2)) File.Delete(tempFile2); } catch { }
             }
         }
 
@@ -471,7 +651,8 @@ namespace Foxoft.AppCode
             Worksheet sheet,
             Dictionary<int, List<string>> valuesByNodeId,
             Dictionary<string, List<string>> valuesByField,
-            FilterColumnCollection? columns)
+            FilterColumnCollection? columns,
+            List<SkippedFilterNode> skippedNodes)
         {
             int lastRow = sheet.Rows.LastUsedIndex;
             int lastCol = sheet.Columns.LastUsedIndex;
@@ -506,6 +687,17 @@ namespace Foxoft.AppCode
             {
                 string firstHeader = sheet.Cells[0, 0].DisplayText.Trim();
                 var matchedCol = FindFilterColumn(columns, firstHeader);
+                if (columns != null && columns.Count > 0 && matchedCol == null)
+                {
+                    skippedNodes.Add(new SkippedFilterNode
+                    {
+                        Field = firstHeader,
+                        Operator = "In",
+                        Value = $"{lastRow} items"
+                    });
+                    return null;
+                }
+
                 string targetField = matchedCol?.FieldName ?? firstHeader;
 
                 int startR = matchedCol != null ? 1 : 0;
@@ -533,11 +725,47 @@ namespace Foxoft.AppCode
             for (int r = 1; r <= lastRow; r++)
             {
                 string fld = fieldCol != -1 ? sheet.Cells[r, fieldCol].DisplayText.Trim() : "";
+                string caption = captionCol != -1 ? sheet.Cells[r, captionCol].DisplayText.Trim() : "";
                 string op = opCol != -1 ? sheet.Cells[r, opCol].DisplayText.Trim() : "";
                 string logic = logicCol != -1 ? sheet.Cells[r, logicCol].DisplayText.Trim() : "";
                 string nType = nodeTypeCol != -1 ? sheet.Cells[r, nodeTypeCol].DisplayText.Trim() : "";
-                string v1 = valCol != -1 ? sheet.Cells[r, valCol].DisplayText.Trim() : "";
-                string v2 = val2Col != -1 ? sheet.Cells[r, val2Col].DisplayText.Trim() : "";
+                object? v1Obj = null;
+                string v1 = "";
+                if (valCol != -1)
+                {
+                    var cell = sheet.Cells[r, valCol];
+                    v1 = cell.DisplayText.Trim();
+                    if (!cell.Value.IsEmpty)
+                    {
+                        if (cell.Value.IsDateTime)
+                            v1Obj = cell.Value.DateTimeValue;
+                        else if (cell.Value.IsBoolean)
+                            v1Obj = cell.Value.BooleanValue;
+                        else if (cell.Value.IsNumeric)
+                            v1Obj = cell.Value.NumericValue;
+                        else
+                            v1Obj = v1;
+                    }
+                }
+
+                object? v2Obj = null;
+                string v2 = "";
+                if (val2Col != -1)
+                {
+                    var cell = sheet.Cells[r, val2Col];
+                    v2 = cell.DisplayText.Trim();
+                    if (!cell.Value.IsEmpty)
+                    {
+                        if (cell.Value.IsDateTime)
+                            v2Obj = cell.Value.DateTimeValue;
+                        else if (cell.Value.IsBoolean)
+                            v2Obj = cell.Value.BooleanValue;
+                        else if (cell.Value.IsNumeric)
+                            v2Obj = cell.Value.NumericValue;
+                        else
+                            v2Obj = v2;
+                    }
+                }
 
                 int id = autoId++;
                 if (idCol != -1 && int.TryParse(sheet.Cells[r, idCol].DisplayText.Trim(), out int parsedId))
@@ -562,9 +790,10 @@ namespace Foxoft.AppCode
                     NodeType = nType,
                     Logic = string.IsNullOrWhiteSpace(logic) ? "And" : logic,
                     Field = fld,
+                    Caption = caption,
                     Operator = op,
-                    Value = v1,
-                    Value2 = v2
+                    Value = v1Obj ?? v1,
+                    Value2 = v2Obj ?? v2
                 };
 
                 // Check detailed values
@@ -591,6 +820,67 @@ namespace Foxoft.AppCode
 
                 rows.Add(rowItem);
             }
+
+            if (rows.Count == 0) return null;
+
+            // Filter out condition nodes whose property does not exist in datasource schema
+            if (columns != null && columns.Count > 0)
+            {
+                var validRows = new List<FilterRowItem>();
+                foreach (var r in rows)
+                {
+                    if (r.NodeType.Equals("Group", StringComparison.OrdinalIgnoreCase))
+                    {
+                        validRows.Add(r);
+                        continue;
+                    }
+
+                    var col = FindFilterColumn(columns, r.Field);
+                    if (col == null && !string.IsNullOrWhiteSpace(r.Caption))
+                        col = FindFilterColumn(columns, r.Caption);
+
+                    if (col == null)
+                    {
+                        string valStr;
+                        if (r.ValuesList.Count > 0)
+                        {
+                            valStr = string.Join(", ", r.ValuesList.Take(5));
+                            if (r.ValuesList.Count > 5)
+                                valStr += $" ... (+{r.ValuesList.Count - 5})";
+                        }
+                        else
+                        {
+                            valStr = r.Value?.ToString() ?? "";
+                            if (!string.IsNullOrWhiteSpace(r.Value2?.ToString()))
+                                valStr += $" - {r.Value2}";
+                            if (valStr.Length > 50)
+                                valStr = valStr.Substring(0, 47) + "...";
+                        }
+
+                        skippedNodes.Add(new SkippedFilterNode
+                        {
+                            Id = r.Id,
+                            ParentId = r.ParentId,
+                            Field = r.Field,
+                            Caption = r.Caption,
+                            Operator = r.Operator,
+                            Value = valStr
+                        });
+                    }
+                    else
+                    {
+                        r.Field = col.FieldName;
+                        if (string.IsNullOrWhiteSpace(r.Caption) && !string.IsNullOrWhiteSpace(col.ColumnCaption))
+                            r.Caption = col.ColumnCaption;
+                        validRows.Add(r);
+                    }
+                }
+                rows = validRows;
+            }
+
+            bool hasConditions = rows.Any(x => !x.NodeType.Equals("Group", StringComparison.OrdinalIgnoreCase));
+            if (!hasConditions)
+                return null;
 
             if (rows.Count == 0) return null;
 
@@ -710,60 +1000,62 @@ namespace Foxoft.AppCode
 
             var col = FindFilterColumn(columns, row.Field);
             string fieldName = col?.FieldName ?? row.Field;
-            Type targetType = col?.ColumnType ?? typeof(string);
+            Type targetType = col?.ColumnType ?? row.Value?.GetType() ?? typeof(string);
 
             ClauseType op = ParseClauseType(row.Operator);
-            string rawV1 = row.Value?.ToString() ?? "";
-            string rawV2 = row.Value2?.ToString() ?? "";
+            object? val1 = row.Value;
+            object? val2 = row.Value2;
+            string strV1 = val1?.ToString() ?? "";
+            string strV2 = val2?.ToString() ?? "";
 
             var prop = new OperandProperty(fieldName);
 
             switch (op)
             {
                 case ClauseType.Equals:
-                    return new BinaryOperator(prop, new OperandValue(ConvertValue(rawV1, targetType)), BinaryOperatorType.Equal);
+                    return new BinaryOperator(prop, new OperandValue(ConvertValue(val1, targetType)), BinaryOperatorType.Equal);
 
                 case ClauseType.DoesNotEqual:
-                    return new BinaryOperator(prop, new OperandValue(ConvertValue(rawV1, targetType)), BinaryOperatorType.NotEqual);
+                    return new BinaryOperator(prop, new OperandValue(ConvertValue(val1, targetType)), BinaryOperatorType.NotEqual);
 
                 case ClauseType.Greater:
-                    return new BinaryOperator(prop, new OperandValue(ConvertValue(rawV1, targetType)), BinaryOperatorType.Greater);
+                    return new BinaryOperator(prop, new OperandValue(ConvertValue(val1, targetType)), BinaryOperatorType.Greater);
 
                 case ClauseType.GreaterOrEqual:
-                    return new BinaryOperator(prop, new OperandValue(ConvertValue(rawV1, targetType)), BinaryOperatorType.GreaterOrEqual);
+                    return new BinaryOperator(prop, new OperandValue(ConvertValue(val1, targetType)), BinaryOperatorType.GreaterOrEqual);
 
                 case ClauseType.Less:
-                    return new BinaryOperator(prop, new OperandValue(ConvertValue(rawV1, targetType)), BinaryOperatorType.Less);
+                    return new BinaryOperator(prop, new OperandValue(ConvertValue(val1, targetType)), BinaryOperatorType.Less);
 
                 case ClauseType.LessOrEqual:
-                    return new BinaryOperator(prop, new OperandValue(ConvertValue(rawV1, targetType)), BinaryOperatorType.LessOrEqual);
+                    return new BinaryOperator(prop, new OperandValue(ConvertValue(val1, targetType)), BinaryOperatorType.LessOrEqual);
 
                 case ClauseType.Between:
-                    return new BetweenOperator(prop, new OperandValue(ConvertValue(rawV1, targetType)), new OperandValue(ConvertValue(rawV2, targetType)));
+                    return new BetweenOperator(prop, new OperandValue(ConvertValue(val1, targetType)), new OperandValue(ConvertValue(val2, targetType)));
 
                 case ClauseType.NotBetween:
                     return new UnaryOperator(UnaryOperatorType.Not,
-                        new BetweenOperator(prop, new OperandValue(ConvertValue(rawV1, targetType)), new OperandValue(ConvertValue(rawV2, targetType))));
+                        new BetweenOperator(prop, new OperandValue(ConvertValue(val1, targetType)), new OperandValue(ConvertValue(val2, targetType))));
 
                 case ClauseType.Contains:
-                    return new FunctionOperator(FunctionOperatorType.Contains, prop, new OperandValue(rawV1));
+                    return new FunctionOperator(FunctionOperatorType.Contains, prop, new OperandValue(strV1));
 
                 case ClauseType.DoesNotContain:
                     return new UnaryOperator(UnaryOperatorType.Not,
-                        new FunctionOperator(FunctionOperatorType.Contains, prop, new OperandValue(rawV1)));
+                        new FunctionOperator(FunctionOperatorType.Contains, prop, new OperandValue(strV1)));
 
                 case ClauseType.BeginsWith:
-                    return new FunctionOperator(FunctionOperatorType.StartsWith, prop, new OperandValue(rawV1));
+                    return new FunctionOperator(FunctionOperatorType.StartsWith, prop, new OperandValue(strV1));
 
                 case ClauseType.EndsWith:
-                    return new FunctionOperator(FunctionOperatorType.EndsWith, prop, new OperandValue(rawV1));
+                    return new FunctionOperator(FunctionOperatorType.EndsWith, prop, new OperandValue(strV1));
 
                 case ClauseType.Like:
-                    return new BinaryOperator(prop, new OperandValue(rawV1), BinaryOperatorType.Like);
+                    return new BinaryOperator(prop, new OperandValue(strV1), BinaryOperatorType.Like);
 
                 case ClauseType.NotLike:
                     return new UnaryOperator(UnaryOperatorType.Not,
-                        new BinaryOperator(prop, new OperandValue(rawV1), BinaryOperatorType.Like));
+                        new BinaryOperator(prop, new OperandValue(strV1), BinaryOperatorType.Like));
 
                 case ClauseType.IsNull:
                     return new UnaryOperator(UnaryOperatorType.IsNull, prop);
@@ -782,7 +1074,7 @@ namespace Foxoft.AppCode
                     {
                         var list = row.ValuesList.Count > 0
                             ? row.ValuesList
-                            : (string.IsNullOrWhiteSpace(rawV1) ? new List<string>() : new List<string> { rawV1 });
+                            : (string.IsNullOrWhiteSpace(strV1) ? new List<string>() : new List<string> { strV1 });
                         var operands = list.Select(v => (CriteriaOperator)new OperandValue(ConvertValue(v, targetType)));
                         return new InOperator(prop, operands);
                     }
@@ -791,13 +1083,13 @@ namespace Foxoft.AppCode
                     {
                         var list = row.ValuesList.Count > 0
                             ? row.ValuesList
-                            : (string.IsNullOrWhiteSpace(rawV1) ? new List<string>() : new List<string> { rawV1 });
+                            : (string.IsNullOrWhiteSpace(strV1) ? new List<string>() : new List<string> { strV1 });
                         var operands = list.Select(v => (CriteriaOperator)new OperandValue(ConvertValue(v, targetType)));
                         return new UnaryOperator(UnaryOperatorType.Not, new InOperator(prop, operands));
                     }
 
                 default:
-                    return new BinaryOperator(prop, new OperandValue(ConvertValue(rawV1, targetType)), BinaryOperatorType.Equal);
+                    return new BinaryOperator(prop, new OperandValue(ConvertValue(val1, targetType)), BinaryOperatorType.Equal);
             }
         }
 
@@ -979,25 +1271,89 @@ namespace Foxoft.AppCode
 
         #region Helpers
 
+        public static Worksheet? FindWorksheet(Workbook workbook, string sheetName)
+        {
+            if (workbook == null || string.IsNullOrWhiteSpace(sheetName))
+                return null;
+
+            for (int i = 0; i < workbook.Worksheets.Count; i++)
+            {
+                if (string.Equals(workbook.Worksheets[i].Name, sheetName, StringComparison.OrdinalIgnoreCase))
+                    return workbook.Worksheets[i];
+            }
+            return null;
+        }
+
+        public static string FormatSkippedNode(SkippedFilterNode item)
+        {
+            if (item == null) return "";
+
+            string fieldDisplay = !string.IsNullOrWhiteSpace(item.Caption) && !string.Equals(item.Caption, item.Field, StringComparison.OrdinalIgnoreCase)
+                ? $"[{item.Field}] ({item.Caption})"
+                : $"[{item.Field}]";
+
+            string opDisplay = GetOperatorDisplay(item.Operator);
+            if (string.IsNullOrWhiteSpace(item.Value))
+                return $"{fieldDisplay} {opDisplay}";
+
+            return $"{fieldDisplay} {opDisplay} {item.Value}";
+        }
+
+        public static string GetOperatorDisplay(string opStr)
+        {
+            if (string.IsNullOrWhiteSpace(opStr)) return "=";
+            ClauseType ct = ParseClauseType(opStr);
+            return ct switch
+            {
+                ClauseType.Equals => "=",
+                ClauseType.DoesNotEqual => "!=",
+                ClauseType.Greater => ">",
+                ClauseType.GreaterOrEqual => ">=",
+                ClauseType.Less => "<",
+                ClauseType.LessOrEqual => "<=",
+                ClauseType.Between => "Between",
+                ClauseType.NotBetween => "Not Between",
+                ClauseType.Contains => "Contains",
+                ClauseType.DoesNotContain => "Does Not Contain",
+                ClauseType.BeginsWith => "StartsWith",
+                ClauseType.EndsWith => "EndsWith",
+                ClauseType.Like => "Like",
+                ClauseType.NotLike => "Not Like",
+                ClauseType.AnyOf => "In",
+                ClauseType.NoneOf => "Not In",
+                ClauseType.IsNull => "Is Null",
+                ClauseType.IsNotNull => "Is Not Null",
+                ClauseType.IsNullOrEmpty => "Is Null Or Empty",
+                ClauseType.IsNotNullOrEmpty => "Is Not Null Or Empty",
+                _ => opStr
+            };
+        }
+
         public static FilterColumn? FindFilterColumn(FilterColumnCollection? columns, string fieldOrCaption)
         {
             if (columns == null || string.IsNullOrWhiteSpace(fieldOrCaption))
                 return null;
 
             string target = fieldOrCaption.Trim();
+            string cleanTarget = target.Trim('[', ']').Trim();
 
-            var col = columns[target];
+            var col = columns[cleanTarget];
+            if (col != null) return col;
+
+            col = columns[target];
             if (col != null) return col;
 
             foreach (FilterColumn c in columns)
             {
-                if (string.Equals(c.FieldName, target, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(c.FieldName, cleanTarget, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(c.FieldName, target, StringComparison.OrdinalIgnoreCase))
                     return c;
             }
 
             foreach (FilterColumn c in columns)
             {
-                if (string.Equals(c.ColumnCaption, target, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(c.ColumnCaption, cleanTarget, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(c.ColumnCaption, target, StringComparison.OrdinalIgnoreCase))
                     return c;
             }
 
@@ -1051,42 +1407,60 @@ namespace Foxoft.AppCode
             };
         }
 
-        public static object? ConvertValue(string raw, Type targetType)
+        public static object? ConvertValue(object? rawObj, Type targetType)
         {
+            if (rawObj == null) return null;
+            if (targetType == null) return rawObj;
+
+            Type underlying = Nullable.GetUnderlyingType(targetType) ?? targetType;
+
+            if (underlying.IsInstanceOfType(rawObj))
+                return rawObj;
+
+            string raw = rawObj.ToString()?.Trim() ?? "";
             if (string.IsNullOrWhiteSpace(raw)) return null;
 
             try
             {
-                Type underlying = Nullable.GetUnderlyingType(targetType) ?? targetType;
-
                 if (underlying == typeof(string)) return raw;
-                if (underlying == typeof(int)) return int.Parse(raw, NumberStyles.Any, CultureInfo.InvariantCulture);
-                if (underlying == typeof(long)) return long.Parse(raw, NumberStyles.Any, CultureInfo.InvariantCulture);
-                if (underlying == typeof(short)) return short.Parse(raw, NumberStyles.Any, CultureInfo.InvariantCulture);
-                if (underlying == typeof(byte)) return byte.Parse(raw, NumberStyles.Any, CultureInfo.InvariantCulture);
+                if (underlying == typeof(int)) return Convert.ToInt32(rawObj, CultureInfo.InvariantCulture);
+                if (underlying == typeof(long)) return Convert.ToInt64(rawObj, CultureInfo.InvariantCulture);
+                if (underlying == typeof(short)) return Convert.ToInt16(rawObj, CultureInfo.InvariantCulture);
+                if (underlying == typeof(byte)) return Convert.ToByte(rawObj, CultureInfo.InvariantCulture);
                 if (underlying == typeof(decimal))
                 {
+                    if (rawObj is double or float or decimal or int or long)
+                        return Convert.ToDecimal(rawObj, CultureInfo.InvariantCulture);
                     string normalized = raw.Replace(',', '.');
                     return decimal.Parse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture);
                 }
                 if (underlying == typeof(double))
                 {
+                    if (rawObj is double or float or decimal or int or long)
+                        return Convert.ToDouble(rawObj, CultureInfo.InvariantCulture);
                     string normalized = raw.Replace(',', '.');
                     return double.Parse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture);
                 }
                 if (underlying == typeof(float))
                 {
+                    if (rawObj is double or float or decimal or int or long)
+                        return Convert.ToSingle(rawObj, CultureInfo.InvariantCulture);
                     string normalized = raw.Replace(',', '.');
                     return float.Parse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture);
                 }
                 if (underlying == typeof(DateTime))
                 {
-                    if (DateTime.TryParse(raw, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
+                    if (rawObj is DateTime dtObj) return dtObj;
+                    string dateStr = raw.Trim('#').Trim();
+                    if (DateTime.TryParse(dateStr, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
                         return dt;
-                    return DateTime.Parse(raw);
+                    if (DateTime.TryParse(dateStr, CultureInfo.CurrentCulture, DateTimeStyles.None, out var dtCurr))
+                        return dtCurr;
+                    return DateTime.Parse(dateStr);
                 }
                 if (underlying == typeof(bool))
                 {
+                    if (rawObj is bool b) return b;
                     if (raw == "1" || raw.Equals("true", StringComparison.OrdinalIgnoreCase) || raw.Equals("bəli", StringComparison.OrdinalIgnoreCase) || raw.Equals("beli", StringComparison.OrdinalIgnoreCase))
                         return true;
                     if (raw == "0" || raw.Equals("false", StringComparison.OrdinalIgnoreCase) || raw.Equals("xeyr", StringComparison.OrdinalIgnoreCase))
@@ -1098,11 +1472,11 @@ namespace Foxoft.AppCode
                 if (underlying.IsEnum)
                     return Enum.Parse(underlying, raw, true);
 
-                return Convert.ChangeType(raw, underlying, CultureInfo.InvariantCulture);
+                return Convert.ChangeType(rawObj, underlying, CultureInfo.InvariantCulture);
             }
             catch
             {
-                return raw;
+                return rawObj;
             }
         }
 

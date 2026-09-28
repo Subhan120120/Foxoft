@@ -1,4 +1,4 @@
-﻿using DevExpress.Data.Filtering.Helpers;
+using DevExpress.Data.Filtering.Helpers;
 using DevExpress.Utils.Drawing;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Drawing;

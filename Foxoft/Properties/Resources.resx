@@ -2040,6 +2040,19 @@
   <data name="Common_Filter_Node_ImportSuccess" xml:space="preserve">
     <value>Condition values imported from Excel successfully.</value>
   </data>
+  <data name="Common_Filter_ImportSuccessWithSkipped" xml:space="preserve">
+    <value>Filter imported from Excel. However, the following condition(s) were not imported because their columns were not found in the datasource:
+
+{0}</value>
+  </data>
+  <data name="Common_Filter_AllNodesSkipped" xml:space="preserve">
+    <value>No conditions could be imported because the columns were not found in the datasource:
+
+{0}</value>
+  </data>
+  <data name="Common_Filter_SkippedMoreCount" xml:space="preserve">
+    <value>... and {0} more condition(s)</value>
+  </data>
   <data name="Common_Report" xml:space="preserve">
     <value>Report</value>
   </data>
@@ -3746,6 +3759,9 @@ Do you want to return to the invoice?</value>
   </data>
   <data name="Form_ReportFilter_Button_CustomDelete" xml:space="preserve">
     <value>Delete design</value>
+  </data>
+  <data name="Form_ReportFilter_RibbonGroup_Excel" xml:space="preserve">
+    <value>Excel</value>
   </data>
   <data name="Form_ReportGrid_Caption" xml:space="preserve">
     <value>Report grid</value>

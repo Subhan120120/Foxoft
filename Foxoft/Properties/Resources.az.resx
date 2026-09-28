@@ -2040,6 +2040,19 @@
   <data name="Common_Filter_Node_ImportSuccess" xml:space="preserve">
     <value>Cari şərtin dəyərləri uğurla Excel-dən idxal edildi.</value>
   </data>
+  <data name="Common_Filter_ImportSuccessWithSkipped" xml:space="preserve">
+    <value>Filter Excel-dən idxal edildi. Lakin aşağıdakı şərt(lər) sütunları məlumat mənbəyində tapılmadığı üçün idxal olunmadı:
+
+{0}</value>
+  </data>
+  <data name="Common_Filter_AllNodesSkipped" xml:space="preserve">
+    <value>Sütunlar məlumat mənbəyində tapılmadığı üçün heç bir şərt idxal olunmadı:
+
+{0}</value>
+  </data>
+  <data name="Common_Filter_SkippedMoreCount" xml:space="preserve">
+    <value>... və daha {0} şərt</value>
+  </data>
   <data name="Common_Report" xml:space="preserve">
     <value>Hesabat</value>
   </data>
@@ -3737,6 +3750,9 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_ReportFilter_Button_CustomDelete" xml:space="preserve">
     <value>Dizaynı sil</value>
+  </data>
+  <data name="Form_ReportFilter_RibbonGroup_Excel" xml:space="preserve">
+    <value>Excel</value>
   </data>
   <data name="Form_ReportGrid_Caption" xml:space="preserve">
     <value>Hesabat cədvəli</value>

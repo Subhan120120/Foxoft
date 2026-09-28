@@ -651,6 +651,37 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter imported from Excel. However, the following condition(s) were not imported because their columns were not found in the datasource:
+        ///
+        ///{0}.
+        /// </summary>
+        public static string Common_Filter_ImportSuccessWithSkipped {
+            get {
+                return ResourceManager.GetString("Common_Filter_ImportSuccessWithSkipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No conditions could be imported because the columns were not found in the datasource:
+        ///
+        ///{0}.
+        /// </summary>
+        public static string Common_Filter_AllNodesSkipped {
+            get {
+                return ResourceManager.GetString("Common_Filter_AllNodesSkipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ... and {0} more condition(s).
+        /// </summary>
+        public static string Common_Filter_SkippedMoreCount {
+            get {
+                return ResourceManager.GetString("Common_Filter_SkippedMoreCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feature.
         /// </summary>
         public static string Common_Feature {
@@ -15468,6 +15499,15 @@ namespace Foxoft.Properties {
         public static string Form_ReportFilter_RibbonGroup_ReportOperations {
             get {
                 return ResourceManager.GetString("Form_ReportFilter_RibbonGroup_ReportOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel.
+        /// </summary>
+        public static string Form_ReportFilter_RibbonGroup_Excel {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_RibbonGroup_Excel", resourceCulture);
             }
         }
         

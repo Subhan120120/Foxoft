@@ -45,6 +45,9 @@ namespace Foxoft
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Hesaba = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup_Excel = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            bBI_FilterExportExcel = new DevExpress.XtraBars.BarButtonItem();
+            bBI_FilterImportExcel = new DevExpress.XtraBars.BarButtonItem();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             filterControl_Inner = new NotEditableFilterControl();
             btn_ShowReport = new DevExpress.XtraEditors.SimpleButton();
@@ -120,10 +123,12 @@ namespace Foxoft
                 bBI_ReportDelete,
                 BBI_ReportCustomAdd,
                 BBI_ReportCustomSave,
-                BBI_ReportCustomDelete
+                BBI_ReportCustomDelete,
+                bBI_FilterExportExcel,
+                bBI_FilterImportExcel
             });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 11;
+            ribbonControl1.MaxItemId = 13;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(992, 158);
@@ -175,9 +180,27 @@ namespace Foxoft
             BBI_ReportCustomDelete.Name = "BBI_ReportCustomDelete";
             BBI_ReportCustomDelete.ItemClick += BBI_ReportCustomDelete_ItemClick;
             // 
+            // bBI_FilterExportExcel
+            // 
+            bBI_FilterExportExcel.Caption = Resources.Common_Filter_ExportEntireFilter;
+            bBI_FilterExportExcel.Id = 11;
+            bBI_FilterExportExcel.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_FilterExportExcel.ImageOptions.SvgImage");
+            bBI_FilterExportExcel.Name = "bBI_FilterExportExcel";
+            bBI_FilterExportExcel.ItemClick += bBI_FilterExportExcel_ItemClick;
+            // 
+            // bBI_FilterImportExcel
+            // 
+            bBI_FilterImportExcel.Caption = Resources.Common_Filter_ImportEntireFilter;
+            bBI_FilterImportExcel.Id = 12;
+            bBI_FilterImportExcel.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_FilterImportExcel.ImageOptions.SvgImage");
+            bBI_FilterImportExcel.Name = "bBI_FilterImportExcel";
+            bBI_FilterImportExcel.ItemClick += bBI_FilterImportExcel_ItemClick;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Hesaba, ribbonPageGroup1 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Hesaba, ribbonPageGroup1, ribbonPageGroup_Excel });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.Form_ReportFilter_RibbonPage_Report;
             // 
@@ -196,6 +219,13 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(BBI_ReportCustomDelete);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = Resources.Form_ReportFilter_RibbonGroup_Customization;
+            // 
+            // ribbonPageGroup_Excel
+            // 
+            ribbonPageGroup_Excel.ItemLinks.Add(bBI_FilterExportExcel);
+            ribbonPageGroup_Excel.ItemLinks.Add(bBI_FilterImportExcel);
+            ribbonPageGroup_Excel.Name = "ribbonPageGroup_Excel";
+            ribbonPageGroup_Excel.Text = Resources.Form_ReportFilter_RibbonGroup_Excel;
             // 
             // ribbonStatusBar1
             // 
@@ -391,5 +421,8 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraEditors.ButtonEdit BtnEdit_DesignFileFullPath;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup_Excel;
+        private DevExpress.XtraBars.BarButtonItem bBI_FilterExportExcel;
+        private DevExpress.XtraBars.BarButtonItem bBI_FilterImportExcel;
     }
 }
