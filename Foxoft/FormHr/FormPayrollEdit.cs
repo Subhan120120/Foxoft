@@ -270,8 +270,6 @@ namespace Foxoft
                 if (!Save()) return;
             }
 
-            //PayrollReportService.EnsurePayrollReportRepx();
-
             DcReport dcReport = efMethods.SelectReportByName(PayrollReportService.PayrollReportName);
 
             if (dcReport == null)
