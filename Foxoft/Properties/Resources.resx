@@ -6524,4 +6524,28 @@ Please wait or choose another invoice.</value>
   <data name="Entity_InvoiceHeader_IsDailyExpense" xml:space="preserve">
     <value>Daily Expense</value>
   </data>
+  <data name="Form_ClaimList_Caption" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="Form_ClaimList_NoClaimSelected" xml:space="preserve">
+    <value>No permission selected.</value>
+  </data>
+  <data name="Form_ClaimList_HasRelatedRoleClaims" xml:space="preserve">
+    <value>This permission is assigned to {0} role(s). Are you sure you want to delete it?</value>
+  </data>
+  <data name="Form_ClaimEdit_Caption_New" xml:space="preserve">
+    <value>New Permission</value>
+  </data>
+  <data name="Form_ClaimEdit_Caption_Edit" xml:space="preserve">
+    <value>Edit Permission</value>
+  </data>
+  <data name="Form_ClaimEdit_CodeExists" xml:space="preserve">
+    <value>This permission code already exists.</value>
+  </data>
+  <data name="Form_ClaimEdit_CodeRequired" xml:space="preserve">
+    <value>Permission code is required.</value>
+  </data>
+  <data name="Common_Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
 </root>

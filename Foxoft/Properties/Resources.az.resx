@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6523,5 +6523,29 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Entity_InvoiceHeader_IsDailyExpense" xml:space="preserve">
     <value>Gündəlik Xərc</value>
+  </data>
+  <data name="Form_ClaimList_Caption" xml:space="preserve">
+    <value>Yetkilər</value>
+  </data>
+  <data name="Form_ClaimList_NoClaimSelected" xml:space="preserve">
+    <value>Yetki seçilməyib.</value>
+  </data>
+  <data name="Form_ClaimList_HasRelatedRoleClaims" xml:space="preserve">
+    <value>Bu yetki {0} rola təyin edilmişdir. Silmək istədiyinizə əminsiniz?</value>
+  </data>
+  <data name="Form_ClaimEdit_Caption_New" xml:space="preserve">
+    <value>Yeni Yetki</value>
+  </data>
+  <data name="Form_ClaimEdit_Caption_Edit" xml:space="preserve">
+    <value>Yetkiyə Düzəliş</value>
+  </data>
+  <data name="Form_ClaimEdit_CodeExists" xml:space="preserve">
+    <value>Bu yetki kodu artıq mövcuddur.</value>
+  </data>
+  <data name="Form_ClaimEdit_CodeRequired" xml:space="preserve">
+    <value>Yetki kodu mütləqdir.</value>
+  </data>
+  <data name="Common_Count" xml:space="preserve">
+    <value>Say</value>
   </data>
 </root>

@@ -378,7 +378,7 @@ namespace Foxoft
             {
                 treeListRoleClaims.CloseEditor();
 
-                List<string> selectedClaimCodes = treeListRoleClaims.GetNodeList()
+                List<string> selectedClaimCodes = treeListRoleClaims.GetAllNodes()
                     .Where(n => !Convert.ToBoolean(n.GetValue(colRC_IsCategory)) && (n.GetValue(colRC_IsSelected) as bool? == true))
                     .Select(n => n.GetValue(colRC_ClaimCode)?.ToString())
                     .Where(c => !string.IsNullOrWhiteSpace(c))
@@ -420,6 +420,7 @@ namespace Foxoft
                 {
                     node.SetValue(colRC_IsSelected, true);
                 }
+                InitializeTreeParentStates(treeListRoleClaims.Nodes, colRC_IsSelected);
                 _isRoleClaimsModified = true;
             }
             finally
@@ -439,6 +440,7 @@ namespace Foxoft
                 {
                     node.SetValue(colRC_IsSelected, false);
                 }
+                InitializeTreeParentStates(treeListRoleClaims.Nodes, colRC_IsSelected);
                 _isRoleClaimsModified = true;
             }
             finally
@@ -446,16 +448,6 @@ namespace Foxoft
                 _isUpdatingCheckState = false;
                 treeListRoleClaims.EndUpdate();
             }
-        }
-
-        private void btn_ExpandAllClaims_Click(object sender, EventArgs e)
-        {
-            treeListRoleClaims.ExpandAll();
-        }
-
-        private void btn_CollapseAllClaims_Click(object sender, EventArgs e)
-        {
-            treeListRoleClaims.CollapseAll();
         }
 
         private void btn_OpenClaimsWindow_Click(object sender, EventArgs e)
@@ -470,14 +462,13 @@ namespace Foxoft
 
         private void OpenFullClaimsWindow()
         {
-            using FormClaimCategoryList form = new(_currentRoleCode);
-            if (form.ShowDialog(this) == DialogResult.OK)
+            using FormClaimList form = new();
+            form.ShowDialog(this);
+
+            LoadRoleClaims(_currentRoleCode);
+            if (!string.IsNullOrWhiteSpace(_currentCurrAccCode))
             {
-                LoadRoleClaims(_currentRoleCode);
-                if (!string.IsNullOrWhiteSpace(_currentCurrAccCode))
-                {
-                    LoadEffectiveClaims(_currentCurrAccCode);
-                }
+                LoadEffectiveClaims(_currentCurrAccCode);
             }
         }
 
@@ -498,7 +489,7 @@ namespace Foxoft
                 treeListEffectiveClaims.ExpandAll();
                 treeListEffectiveClaims.BestFitColumns();
 
-                var leafNodes = treeListEffectiveClaims.GetNodeList()
+                var leafNodes = treeListEffectiveClaims.GetAllNodes()
                     .Where(n => !Convert.ToBoolean(n.GetValue(colEff_IsCategory)))
                     .ToList();
 
@@ -515,16 +506,6 @@ namespace Foxoft
         private void btn_RefreshEffective_Click(object sender, EventArgs e)
         {
             LoadEffectiveClaims(_currentCurrAccCode);
-        }
-
-        private void btn_ExpandAllEffective_Click(object sender, EventArgs e)
-        {
-            treeListEffectiveClaims.ExpandAll();
-        }
-
-        private void btn_CollapseAllEffective_Click(object sender, EventArgs e)
-        {
-            treeListEffectiveClaims.CollapseAll();
         }
 
         #endregion
@@ -639,7 +620,7 @@ namespace Foxoft
 
         private void btn_ClaimReportSave_Click(object sender, EventArgs e)
         {
-            if (SaveNodesToDb(treeListReportClaims.GetNodeList()))
+            if (SaveNodesToDb(treeListReportClaims.GetAllNodes()))
             {
                 XtraMessageBox.Show(Resources.Common_SavedSuccessfully, Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -719,7 +700,7 @@ namespace Foxoft
 
             if (xtraTabControl1.SelectedTabPage == tab_ReportClaims && !string.IsNullOrWhiteSpace(btnEdit_ClaimReport.Text))
             {
-                if (SaveNodesToDb(treeListReportClaims.GetNodeList()))
+                if (SaveNodesToDb(treeListReportClaims.GetAllNodes()))
                     anySaved = true;
             }
 

@@ -124,32 +124,12 @@ namespace Foxoft
             // gV_Report
             // 
             gV_Report.GridControl = gC_Report;
-            gV_Report.Name = "gridView1";
+            gV_Report.Name = "gV_Report";
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-                ribbonControl1.ExpandCollapseItem,
-                bBI_LayoutSave,
-                bBI_LayoutLoad,
-                bBI_GridOptions,
-                bBI_DesignClear,
-                bBI_ExportXlsx,
-                bBI_Refresh,
-                barButtonItem2,
-                BBI_ExportExcel,
-                BBI_PrintPreview,
-                barButtonItem1,
-                barSubItem1,
-                BBI_AddColumnString,
-                BBI_AddColumnInt32,
-                BBI_AddColumnBoolean,
-                BBI_AddColumnDateTime,
-                BBI_AddColumnTimeSpan,
-                BBI_AddColumnDecimal,
-                BBI_AddColumnObject
-            });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, barButtonItem2, BBI_ExportExcel, BBI_PrintPreview, barButtonItem1, barSubItem1, BBI_AddColumnString, BBI_AddColumnInt32, BBI_AddColumnBoolean, BBI_AddColumnDateTime, BBI_AddColumnTimeSpan, BBI_AddColumnDecimal, BBI_AddColumnObject });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 25;
             ribbonControl1.Name = "ribbonControl1";
@@ -240,15 +220,7 @@ namespace Foxoft
             barSubItem1.Caption = Resources.Form_ReportGrid_Menu_AddColumn;
             barSubItem1.Id = 16;
             barSubItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barSubItem1.ImageOptions.SvgImage");
-            barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-                new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnString),
-                new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnInt32),
-                new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnBoolean),
-                new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnDateTime),
-                new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnTimeSpan),
-                new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnDecimal),
-                new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnObject)
-            });
+            barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnString), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnInt32), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnBoolean), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnDateTime), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnTimeSpan), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnDecimal), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnObject) });
             barSubItem1.Name = "barSubItem1";
             // 
             // BBI_AddColumnString
@@ -302,11 +274,7 @@ namespace Foxoft
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-                ribbonPageGroup3,
-                ribbonPageGroup1,
-                ribbonPageGroup2
-            });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup3, ribbonPageGroup1, ribbonPageGroup2 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = Resources.ERP_BSI_Reports;
             // 
@@ -371,7 +339,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = Resources.Form_ReportGrid_Caption;
+            Text = "Report grid";
             FormClosing += FormReportGrid_FormClosing;
             KeyDown += FormReportGrid_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_Report).EndInit();

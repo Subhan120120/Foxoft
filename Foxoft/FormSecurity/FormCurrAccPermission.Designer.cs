@@ -93,8 +93,6 @@ namespace Foxoft
             btn_SaveRoleClaims = new SimpleButton();
             btn_SelectAllClaims = new SimpleButton();
             btn_UnselectAllClaims = new SimpleButton();
-            btn_ExpandAllClaims = new SimpleButton();
-            btn_CollapseAllClaims = new SimpleButton();
             btn_OpenClaimsWindow = new SimpleButton();
             tab_EffectiveClaims = new XtraTabPage();
             treeListEffectiveClaims = new TreeList();
@@ -109,8 +107,6 @@ namespace Foxoft
             panelControlEffectiveTop = new PanelControl();
             lbl_EffectiveSummary = new LabelControl();
             btn_RefreshEffective = new SimpleButton();
-            btn_ExpandAllEffective = new SimpleButton();
-            btn_CollapseAllEffective = new SimpleButton();
             tab_ReportClaims = new XtraTabPage();
             treeListReportClaims = new TreeList();
             colReport_IsSelected = new TreeListColumn();
@@ -293,11 +289,11 @@ namespace Foxoft
             // 
             // btnEdit_CurrAccCode
             // 
-            btnEdit_CurrAccCode.Location = new Point(137, 12);
+            btnEdit_CurrAccCode.Location = new Point(133, 12);
             btnEdit_CurrAccCode.MenuManager = ribbon;
             btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
             btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_CurrAccCode.Size = new Size(331, 20);
+            btnEdit_CurrAccCode.Size = new Size(335, 20);
             btnEdit_CurrAccCode.StyleController = layoutControl1;
             btnEdit_CurrAccCode.TabIndex = 0;
             btnEdit_CurrAccCode.ButtonPressed += btnEdit_CurrAccCode_ButtonPressed;
@@ -305,11 +301,11 @@ namespace Foxoft
             // 
             // txt_CurrAccDesc
             // 
-            txt_CurrAccDesc.Location = new Point(137, 36);
+            txt_CurrAccDesc.Location = new Point(133, 36);
             txt_CurrAccDesc.MenuManager = ribbon;
             txt_CurrAccDesc.Name = "txt_CurrAccDesc";
             txt_CurrAccDesc.Properties.ReadOnly = true;
-            txt_CurrAccDesc.Size = new Size(331, 20);
+            txt_CurrAccDesc.Size = new Size(335, 20);
             txt_CurrAccDesc.StyleController = layoutControl1;
             txt_CurrAccDesc.TabIndex = 1;
             // 
@@ -400,8 +396,8 @@ namespace Foxoft
             layoutControlItemCurrAccCode.Location = new Point(0, 0);
             layoutControlItemCurrAccCode.Name = "layoutControlItemCurrAccCode";
             layoutControlItemCurrAccCode.Size = new Size(460, 24);
-            layoutControlItemCurrAccCode.Text = "Current Account:";
-            layoutControlItemCurrAccCode.TextSize = new Size(113, 13);
+            layoutControlItemCurrAccCode.Text = Resources.Entity_CurrAcc_CurrAccCode;
+            layoutControlItemCurrAccCode.TextSize = new Size(109, 13);
             // 
             // layoutControlItemCurrAccDesc
             // 
@@ -409,8 +405,8 @@ namespace Foxoft
             layoutControlItemCurrAccDesc.Location = new Point(0, 24);
             layoutControlItemCurrAccDesc.Name = "layoutControlItemCurrAccDesc";
             layoutControlItemCurrAccDesc.Size = new Size(460, 24);
-            layoutControlItemCurrAccDesc.Text = "Current Account Name:";
-            layoutControlItemCurrAccDesc.TextSize = new Size(113, 13);
+            layoutControlItemCurrAccDesc.Text = Resources.Entity_CurrAcc_CurrAccDesc;
+            layoutControlItemCurrAccDesc.TextSize = new Size(109, 13);
             // 
             // groupRoles
             // 
@@ -460,14 +456,14 @@ namespace Foxoft
             treeListRoleClaims.Columns.AddRange(new TreeListColumn[] { colRC_IsSelected, colRC_CategoryDesc, colRC_ClaimDesc, colRC_ClaimCode, colRC_CategoryId, colRC_CategoryParentId, colRC_IsCategory });
             treeListRoleClaims.Dock = DockStyle.Fill;
             treeListRoleClaims.KeyFieldName = "CategoryId";
-            treeListRoleClaims.Location = new Point(0, 38);
+            treeListRoleClaims.Location = new Point(0, 47);
             treeListRoleClaims.Name = "treeListRoleClaims";
             treeListRoleClaims.OptionsFilter.ExpandNodesOnFiltering = true;
             treeListRoleClaims.OptionsFind.AlwaysVisible = true;
             treeListRoleClaims.OptionsFind.Behavior = FindPanelBehavior.Filter;
             treeListRoleClaims.ParentFieldName = "CategoryParentId";
             treeListRoleClaims.RepositoryItems.AddRange(new RepositoryItem[] { repoCheckEditRoleClaim });
-            treeListRoleClaims.Size = new Size(858, 499);
+            treeListRoleClaims.Size = new Size(858, 490);
             treeListRoleClaims.TabIndex = 1;
             treeListRoleClaims.CellValueChanged += treeListRoleClaims_CellValueChanged;
             // 
@@ -539,83 +535,69 @@ namespace Foxoft
             panelControlRoleTop.Controls.Add(btn_SaveRoleClaims);
             panelControlRoleTop.Controls.Add(btn_SelectAllClaims);
             panelControlRoleTop.Controls.Add(btn_UnselectAllClaims);
-            panelControlRoleTop.Controls.Add(btn_ExpandAllClaims);
-            panelControlRoleTop.Controls.Add(btn_CollapseAllClaims);
             panelControlRoleTop.Controls.Add(btn_OpenClaimsWindow);
             panelControlRoleTop.Dock = DockStyle.Top;
             panelControlRoleTop.Location = new Point(0, 0);
             panelControlRoleTop.Name = "panelControlRoleTop";
-            panelControlRoleTop.Size = new Size(858, 38);
+            panelControlRoleTop.Size = new Size(858, 40);
             panelControlRoleTop.TabIndex = 0;
             // 
             // lbl_SelectedRole
             // 
             lbl_SelectedRole.Appearance.Font = new Font("Tahoma", 8.25F, FontStyle.Bold);
             lbl_SelectedRole.Appearance.Options.UseFont = true;
-            lbl_SelectedRole.Location = new Point(10, 12);
+            lbl_SelectedRole.Location = new Point(10, 13);
             lbl_SelectedRole.Name = "lbl_SelectedRole";
             lbl_SelectedRole.Size = new Size(93, 13);
             lbl_SelectedRole.TabIndex = 0;
-            lbl_SelectedRole.Text = "No role selected.";
+            lbl_SelectedRole.Text = Resources.Form_CurrAccProfile_NoRoleSelected;
             // 
             // btn_SaveRoleClaims
             // 
             btn_SaveRoleClaims.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_SaveRoleClaims.Location = new Point(270, 7);
+            btn_SaveRoleClaims.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_SaveRoleClaims.ImageOptions.SvgImage");
+            btn_SaveRoleClaims.ImageOptions.SvgImageSize = new Size(16, 16);
+            btn_SaveRoleClaims.Location = new Point(470, 8);
             btn_SaveRoleClaims.Name = "btn_SaveRoleClaims";
-            btn_SaveRoleClaims.Size = new Size(115, 24);
+            btn_SaveRoleClaims.Size = new Size(130, 24);
             btn_SaveRoleClaims.TabIndex = 1;
-            btn_SaveRoleClaims.Text = "Save Role Permissions";
+            btn_SaveRoleClaims.Text = Resources.Form_CurrAccProfile_SaveRoleClaims;
             btn_SaveRoleClaims.Click += btn_SaveRoleClaims_Click;
             // 
             // btn_SelectAllClaims
             // 
             btn_SelectAllClaims.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_SelectAllClaims.Location = new Point(390, 7);
+            btn_SelectAllClaims.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_SelectAllClaims.ImageOptions.SvgImage");
+            btn_SelectAllClaims.ImageOptions.SvgImageSize = new Size(16, 16);
+            btn_SelectAllClaims.Location = new Point(606, 8);
             btn_SelectAllClaims.Name = "btn_SelectAllClaims";
-            btn_SelectAllClaims.Size = new Size(85, 24);
+            btn_SelectAllClaims.Size = new Size(80, 24);
             btn_SelectAllClaims.TabIndex = 2;
-            btn_SelectAllClaims.Text = "Select All";
+            btn_SelectAllClaims.Text = Resources.Common_SelectAll;
             btn_SelectAllClaims.Click += btn_SelectAllClaims_Click;
             // 
             // btn_UnselectAllClaims
             // 
             btn_UnselectAllClaims.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_UnselectAllClaims.Location = new Point(480, 7);
+            btn_UnselectAllClaims.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_UnselectAllClaims.ImageOptions.SvgImage");
+            btn_UnselectAllClaims.ImageOptions.SvgImageSize = new Size(16, 16);
+            btn_UnselectAllClaims.Location = new Point(692, 8);
             btn_UnselectAllClaims.Name = "btn_UnselectAllClaims";
-            btn_UnselectAllClaims.Size = new Size(95, 24);
+            btn_UnselectAllClaims.Size = new Size(88, 24);
             btn_UnselectAllClaims.TabIndex = 3;
-            btn_UnselectAllClaims.Text = "Unselect All";
+            btn_UnselectAllClaims.Text = Resources.Common_UnselectAll;
             btn_UnselectAllClaims.Click += btn_UnselectAllClaims_Click;
-            // 
-            // btn_ExpandAllClaims
-            // 
-            btn_ExpandAllClaims.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_ExpandAllClaims.Location = new Point(580, 7);
-            btn_ExpandAllClaims.Name = "btn_ExpandAllClaims";
-            btn_ExpandAllClaims.Size = new Size(85, 24);
-            btn_ExpandAllClaims.TabIndex = 4;
-            btn_ExpandAllClaims.Text = "Expand All";
-            btn_ExpandAllClaims.Click += btn_ExpandAllClaims_Click;
-            // 
-            // btn_CollapseAllClaims
-            // 
-            btn_CollapseAllClaims.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_CollapseAllClaims.Location = new Point(670, 7);
-            btn_CollapseAllClaims.Name = "btn_CollapseAllClaims";
-            btn_CollapseAllClaims.Size = new Size(85, 24);
-            btn_CollapseAllClaims.TabIndex = 5;
-            btn_CollapseAllClaims.Text = "Collapse All";
-            btn_CollapseAllClaims.Click += btn_CollapseAllClaims_Click;
             // 
             // btn_OpenClaimsWindow
             // 
             btn_OpenClaimsWindow.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_OpenClaimsWindow.Location = new Point(760, 7);
+            btn_OpenClaimsWindow.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_OpenClaimsWindow.ImageOptions.SvgImage");
+            btn_OpenClaimsWindow.ImageOptions.SvgImageSize = new Size(16, 16);
+            btn_OpenClaimsWindow.Location = new Point(786, 8);
             btn_OpenClaimsWindow.Name = "btn_OpenClaimsWindow";
-            btn_OpenClaimsWindow.Size = new Size(90, 24);
-            btn_OpenClaimsWindow.TabIndex = 6;
-            btn_OpenClaimsWindow.Text = "Permissions";
+            btn_OpenClaimsWindow.Size = new Size(68, 24);
+            btn_OpenClaimsWindow.TabIndex = 4;
+            btn_OpenClaimsWindow.Text = Resources.Form_CurrAccProfile_Button_Permissions;
             btn_OpenClaimsWindow.Click += btn_OpenClaimsWindow_Click;
             // 
             // tab_EffectiveClaims
@@ -704,8 +686,6 @@ namespace Foxoft
             panelControlEffectiveTop.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
             panelControlEffectiveTop.Controls.Add(lbl_EffectiveSummary);
             panelControlEffectiveTop.Controls.Add(btn_RefreshEffective);
-            panelControlEffectiveTop.Controls.Add(btn_ExpandAllEffective);
-            panelControlEffectiveTop.Controls.Add(btn_CollapseAllEffective);
             panelControlEffectiveTop.Dock = DockStyle.Top;
             panelControlEffectiveTop.Location = new Point(0, 0);
             panelControlEffectiveTop.Name = "panelControlEffectiveTop";
@@ -724,32 +704,12 @@ namespace Foxoft
             // btn_RefreshEffective
             // 
             btn_RefreshEffective.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_RefreshEffective.Location = new Point(580, 7);
+            btn_RefreshEffective.Location = new Point(765, 7);
             btn_RefreshEffective.Name = "btn_RefreshEffective";
             btn_RefreshEffective.Size = new Size(85, 24);
             btn_RefreshEffective.TabIndex = 1;
             btn_RefreshEffective.Text = "Refresh";
             btn_RefreshEffective.Click += btn_RefreshEffective_Click;
-            // 
-            // btn_ExpandAllEffective
-            // 
-            btn_ExpandAllEffective.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_ExpandAllEffective.Location = new Point(670, 7);
-            btn_ExpandAllEffective.Name = "btn_ExpandAllEffective";
-            btn_ExpandAllEffective.Size = new Size(85, 24);
-            btn_ExpandAllEffective.TabIndex = 2;
-            btn_ExpandAllEffective.Text = "Expand All";
-            btn_ExpandAllEffective.Click += btn_ExpandAllEffective_Click;
-            // 
-            // btn_CollapseAllEffective
-            // 
-            btn_CollapseAllEffective.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_CollapseAllEffective.Location = new Point(760, 7);
-            btn_CollapseAllEffective.Name = "btn_CollapseAllEffective";
-            btn_CollapseAllEffective.Size = new Size(85, 24);
-            btn_CollapseAllEffective.TabIndex = 3;
-            btn_CollapseAllEffective.Text = "Collapse All";
-            btn_CollapseAllEffective.Click += btn_CollapseAllEffective_Click;
             // 
             // tab_ReportClaims
             // 
@@ -789,7 +749,7 @@ namespace Foxoft
             // 
             // colReport_ReportId
             // 
-            colReport_ReportId.Caption = "Id";
+            colReport_ReportId.Caption = Resources.Entity_Report_Id;
             colReport_ReportId.FieldName = "ReportId";
             colReport_ReportId.Name = "colReport_ReportId";
             colReport_ReportId.OptionsColumn.AllowEdit = false;
@@ -799,7 +759,7 @@ namespace Foxoft
             // 
             // colReport_ReportName
             // 
-            colReport_ReportName.Caption = Resources.Common_Report;
+            colReport_ReportName.Caption = Resources.Entity_Report_Name;
             colReport_ReportName.FieldName = "ReportName";
             colReport_ReportName.Name = "colReport_ReportName";
             colReport_ReportName.OptionsColumn.AllowEdit = false;
@@ -833,13 +793,13 @@ namespace Foxoft
             // 
             lbl_ClaimReport.Location = new Point(10, 12);
             lbl_ClaimReport.Name = "lbl_ClaimReport";
-            lbl_ClaimReport.Size = new Size(90, 13);
+            lbl_ClaimReport.Size = new Size(86, 13);
             lbl_ClaimReport.TabIndex = 0;
-            lbl_ClaimReport.Text = "Report Permission:";
+            lbl_ClaimReport.Text = "Report Permission";
             // 
             // btnEdit_ClaimReport
             // 
-            btnEdit_ClaimReport.Location = new Point(95, 9);
+            btnEdit_ClaimReport.Location = new Point(110, 9);
             btnEdit_ClaimReport.MenuManager = ribbon;
             btnEdit_ClaimReport.Name = "btnEdit_ClaimReport";
             btnEdit_ClaimReport.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
@@ -850,7 +810,7 @@ namespace Foxoft
             // 
             // btn_ClaimReportSave
             // 
-            btn_ClaimReportSave.Location = new Point(360, 7);
+            btn_ClaimReportSave.Location = new Point(370, 7);
             btn_ClaimReportSave.Name = "btn_ClaimReportSave";
             btn_ClaimReportSave.Size = new Size(110, 24);
             btn_ClaimReportSave.TabIndex = 2;
@@ -961,8 +921,6 @@ namespace Foxoft
         private SimpleButton btn_SaveRoleClaims;
         private SimpleButton btn_SelectAllClaims;
         private SimpleButton btn_UnselectAllClaims;
-        private SimpleButton btn_ExpandAllClaims;
-        private SimpleButton btn_CollapseAllClaims;
         private SimpleButton btn_OpenClaimsWindow;
         private TreeList treeListRoleClaims;
         private TreeListColumn colRC_IsSelected;
@@ -978,8 +936,6 @@ namespace Foxoft
         private PanelControl panelControlEffectiveTop;
         private LabelControl lbl_EffectiveSummary;
         private SimpleButton btn_RefreshEffective;
-        private SimpleButton btn_ExpandAllEffective;
-        private SimpleButton btn_CollapseAllEffective;
         private TreeList treeListEffectiveClaims;
         private TreeListColumn colEff_IsSelected;
         private RepositoryItemCheckEdit repoCheckEditEffective;

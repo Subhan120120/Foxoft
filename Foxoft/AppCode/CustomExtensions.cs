@@ -5,6 +5,8 @@ using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
+using DevExpress.XtraTreeList;
+using DevExpress.XtraTreeList.Nodes;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using System.Diagnostics;
@@ -277,6 +279,27 @@ namespace Foxoft
             // Serialize and deserialize -> creates a new instance
             var serialized = JsonSerializer.Serialize(source, options);
             return JsonSerializer.Deserialize<T>(serialized, options)!;
+        }
+
+        public static List<TreeListNode> GetAllNodes(this TreeList treeList)
+        {
+            List<TreeListNode> list = new();
+            if (treeList == null) return list;
+            AddNodes(treeList.Nodes, list);
+            return list;
+        }
+
+        private static void AddNodes(TreeListNodes? nodes, List<TreeListNode> result)
+        {
+            if (nodes == null) return;
+            foreach (TreeListNode node in nodes)
+            {
+                result.Add(node);
+                if (node.HasChildren)
+                {
+                    AddNodes(node.Nodes, result);
+                }
+            }
         }
     }
 }

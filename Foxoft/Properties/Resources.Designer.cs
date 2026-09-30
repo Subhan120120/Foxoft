@@ -18921,5 +18921,53 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_ClaimList_Caption {
+            get {
+                return ResourceManager.GetString("Form_ClaimList_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_ClaimList_NoClaimSelected {
+            get {
+                return ResourceManager.GetString("Form_ClaimList_NoClaimSelected", resourceCulture);
+            }
+        }
+
+        public static string Form_ClaimList_HasRelatedRoleClaims {
+            get {
+                return ResourceManager.GetString("Form_ClaimList_HasRelatedRoleClaims", resourceCulture);
+            }
+        }
+
+        public static string Form_ClaimEdit_Caption_New {
+            get {
+                return ResourceManager.GetString("Form_ClaimEdit_Caption_New", resourceCulture);
+            }
+        }
+
+        public static string Form_ClaimEdit_Caption_Edit {
+            get {
+                return ResourceManager.GetString("Form_ClaimEdit_Caption_Edit", resourceCulture);
+            }
+        }
+
+        public static string Form_ClaimEdit_CodeExists {
+            get {
+                return ResourceManager.GetString("Form_ClaimEdit_CodeExists", resourceCulture);
+            }
+        }
+
+        public static string Form_ClaimEdit_CodeRequired {
+            get {
+                return ResourceManager.GetString("Form_ClaimEdit_CodeRequired", resourceCulture);
+            }
+        }
+
+        public static string Common_Count {
+            get {
+                return ResourceManager.GetString("Common_Count", resourceCulture);
+            }
+        }
+
     }
 }
