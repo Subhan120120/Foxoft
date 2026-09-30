@@ -41,6 +41,7 @@ namespace Foxoft
             btn_Clear = new SimpleButton();
             gC_InvoiceLine = new MyGridControl();
             gV_InvoiceLine = new MyGridView();
+            col_InvoiceLineId = new GridColumn();
             col_ProductCode = new GridColumn();
             col_Barcode = new GridColumn();
             col_ProductDesc = new GridColumn();
@@ -257,15 +258,21 @@ namespace Foxoft
             gV_InvoiceLine.Appearance.HeaderPanel.Options.UseFont = true;
             gV_InvoiceLine.Appearance.Row.Font = new Font("Segoe UI", 9.5F);
             gV_InvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_InvoiceLine.Columns.AddRange(new GridColumn[] { col_ProductCode, col_Barcode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_PosDiscount, col_NetAmount, col_ActionAdd });
+            gV_InvoiceLine.Columns.AddRange(new GridColumn[] { col_InvoiceLineId, col_ProductCode, col_Barcode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_PosDiscount, col_NetAmount, col_ActionAdd });
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
+            gV_InvoiceLine.OptionsSelection.EnableAppearanceHideSelection = false;
             gV_InvoiceLine.OptionsView.ShowFooter = true;
             gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
             gV_InvoiceLine.OptionsView.ShowIndicator = false;
             gV_InvoiceLine.RowStyle += gV_InvoiceLine_RowStyle;
             gV_InvoiceLine.KeyDown += gV_InvoiceLine_KeyDown;
             gV_InvoiceLine.DoubleClick += gV_InvoiceLine_DoubleClick;
+            // 
+            // col_InvoiceLineId
+            // 
+            col_InvoiceLineId.FieldName = "InvoiceLineId";
+            col_InvoiceLineId.Name = "col_InvoiceLineId";
             // 
             // col_ProductCode
             // 
@@ -923,6 +930,7 @@ namespace Foxoft
         private LayoutControlGroup lCG_InvoiceLine;
         private MyGridControl gC_InvoiceLine;
         private MyGridView gV_InvoiceLine;
+        private GridColumn col_InvoiceLineId;
         private GridColumn col_ProductCode;
         private GridColumn col_Barcode;
         private GridColumn col_ProductDesc;

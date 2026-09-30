@@ -173,6 +173,8 @@ namespace Foxoft
             if (File.Exists(layoutFilePath))
             {
                 OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+                option.Columns.AddNewColumns = true;
+                option.Columns.RemoveOldColumns = false;
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath, option);
             }
         }
@@ -292,15 +294,42 @@ namespace Foxoft
 
             if (focusedLineId.HasValue)
             {
-                int rowHandle = gV_InvoiceLine.LocateByValue(0, col_ProductCode, focusedLineId.Value);
+                gV_InvoiceLine.RefreshData();
+
+                int rowHandle = gV_InvoiceLine.LocateByValue(0, col_InvoiceLineId, focusedLineId.Value);
+                if (rowHandle == GridControl.InvalidRowHandle)
+                {
+                    int dataSourceIndex = -1;
+                    for (int i = 0; i < OriginalLines.Count; i++)
+                    {
+                        if (OriginalLines[i].InvoiceLineId == focusedLineId.Value)
+                        {
+                            dataSourceIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (dataSourceIndex >= 0)
+                        rowHandle = gV_InvoiceLine.GetRowHandle(dataSourceIndex);
+                }
+
                 if (rowHandle != GridControl.InvalidRowHandle)
                 {
+                    gV_InvoiceLine.ClearSelection();
+                    gV_InvoiceLine.SelectRow(rowHandle);
                     gV_InvoiceLine.FocusedRowHandle = rowHandle;
+                    gV_InvoiceLine.FocusedColumn = col_ProductCode;
                     gV_InvoiceLine.MakeRowVisible(rowHandle);
                 }
-            }
 
-            txt_BarcodeSearch.Focus();
+                gC_InvoiceLine.Focus();
+                if (IsHandleCreated)
+                    BeginInvoke(new Action(() => gC_InvoiceLine.Focus()));
+            }
+            else
+            {
+                txt_BarcodeSearch.Focus();
+            }
         }
 
         #endregion
