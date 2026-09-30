@@ -18969,5 +18969,107 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_PayrollEdit_Button_SendWhatsapp {
+            get {
+                return ResourceManager.GetString("Form_PayrollEdit_Button_SendWhatsapp", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollEdit_Button_ReportPreview {
+            get {
+                return ResourceManager.GetString("Form_PayrollEdit_Button_ReportPreview", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollEdit_WhatsAppCaption {
+            get {
+                return ResourceManager.GetString("Form_PayrollEdit_WhatsAppCaption", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollEdit_SaveBeforeReport {
+            get {
+                return ResourceManager.GetString("Form_PayrollEdit_SaveBeforeReport", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollEdit_SaveBeforeWhatsapp {
+            get {
+                return ResourceManager.GetString("Form_PayrollEdit_SaveBeforeWhatsapp", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_Button_SendWhatsapp {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_Button_SendWhatsapp", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_SendWhatsappConfirm {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_SendWhatsappConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_SendWhatsappCompleted {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_SendWhatsappCompleted", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_SendWhatsappOnFinish {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_SendWhatsappOnFinish", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_WhatsAppWebBulkWarning {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_WhatsAppWebBulkWarning", resourceCulture);
+            }
+        }
+
+        public static string Report_PayrollSlip_Title {
+            get {
+                return ResourceManager.GetString("Report_PayrollSlip_Title", resourceCulture);
+            }
+        }
+
+        public static string Common_EmployeeSignature {
+            get {
+                return ResourceManager.GetString("Common_EmployeeSignature", resourceCulture);
+            }
+        }
+
+        public static string Common_ManagerSignature {
+            get {
+                return ResourceManager.GetString("Common_ManagerSignature", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrPayrollLine_Overtime {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollLine_Overtime", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrPayrollLine_Tax {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollLine_Tax", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrPayrollLine_Insurance {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollLine_Insurance", resourceCulture);
+            }
+        }
+
+        public static string Entity_TrPayrollLine_Other {
+            get {
+                return ResourceManager.GetString("Entity_TrPayrollLine_Other", resourceCulture);
+            }
+        }
+
     }
 }

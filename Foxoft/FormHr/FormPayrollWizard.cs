@@ -1,11 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraWizard;
+using Foxoft.AppCode;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
@@ -219,13 +224,12 @@ namespace Foxoft
             }
         }
 
-        private void WizardControl1_FinishClick(object sender, CancelEventArgs e)
+        private async void WizardControl1_FinishClick(object sender, CancelEventArgs e)
         {
             gridViewEmployees.CloseEditor();
             gridViewEmployees.UpdateCurrentRow();
 
             if (lkpPeriod.EditValue == null) return;
-            Guid periodId = (Guid)lkpPeriod.EditValue;
 
             var selectedEmployees = employeeList.Where(x => x.Selected).ToList();
             if (!selectedEmployees.Any())
@@ -238,6 +242,50 @@ namespace Foxoft
                 e.Cancel = true;
                 return;
             }
+
+            if (!SaveSelectedPayrolls(selectedEmployees))
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            if (chkSendWhatsappOnFinish.Checked)
+            {
+                e.Cancel = true;
+                wizardControl1.Enabled = false;
+                try
+                {
+                    await SendBulkWhatsAppAsync(selectedEmployees);
+                }
+                finally
+                {
+                    wizardControl1.Enabled = true;
+                }
+
+                XtraMessageBox.Show(this,
+                    string.Format(Properties.Resources.Form_PayrollWizard_SuccessMessage, selectedEmployees.Count),
+                    Properties.Resources.Common_Info,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                DialogResult = DialogResult.OK;
+                Close();
+                return;
+            }
+
+            XtraMessageBox.Show(this,
+                string.Format(Properties.Resources.Form_PayrollWizard_SuccessMessage, selectedEmployees.Count),
+                Properties.Resources.Common_Info,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+
+            DialogResult = DialogResult.OK;
+        }
+
+        private bool SaveSelectedPayrolls(List<PayrollWizardEmployeeVM> selectedEmployees)
+        {
+            if (lkpPeriod.EditValue == null) return false;
+            Guid periodId = (Guid)lkpPeriod.EditValue;
 
             try
             {
@@ -319,6 +367,9 @@ namespace Foxoft
                             }
 
                             saveDb.TrPayrollHeaders.Add(dbHeader);
+
+                            item.AlreadyExists = true;
+                            item.ExistingPayrollHeaderId = newHeaderId;
                         }
                         else
                         {
@@ -422,13 +473,8 @@ namespace Foxoft
                     transaction.Commit();
                 });
 
-                XtraMessageBox.Show(this,
-                    string.Format(Properties.Resources.Form_PayrollWizard_SuccessMessage, selectedEmployees.Count),
-                    Properties.Resources.Common_Info,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-
-                DialogResult = DialogResult.OK;
+                gridViewEmployees.RefreshData();
+                return true;
             }
             catch (Exception ex)
             {
@@ -437,8 +483,176 @@ namespace Foxoft
                     Properties.Resources.Common_Attention,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                e.Cancel = true;
+                return false;
             }
+        }
+
+        private async void BtnSendWhatsapp_Click(object sender, EventArgs e)
+        {
+            gridViewEmployees.CloseEditor();
+            gridViewEmployees.UpdateCurrentRow();
+
+            var selectedEmployees = employeeList.Where(x => x.Selected).ToList();
+            if (!selectedEmployees.Any())
+            {
+                XtraMessageBox.Show(this,
+                    Properties.Resources.Form_PayrollWizard_NoEmployeesSelected,
+                    Properties.Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            string confirmMsg = string.Format(Properties.Resources.Form_PayrollWizard_SendWhatsappConfirm, selectedEmployees.Count);
+            if (XtraMessageBox.Show(this, confirmMsg, Properties.Resources.Common_Confirm, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            if (!SaveSelectedPayrolls(selectedEmployees))
+            {
+                return;
+            }
+
+            await SendBulkWhatsAppAsync(selectedEmployees);
+        }
+
+        private async void BtnSendWhatsappCompletion_Click(object sender, EventArgs e)
+        {
+            gridViewEmployees.CloseEditor();
+            gridViewEmployees.UpdateCurrentRow();
+
+            var selectedEmployees = employeeList.Where(x => x.Selected).ToList();
+            if (!selectedEmployees.Any())
+            {
+                XtraMessageBox.Show(this,
+                    Properties.Resources.Form_PayrollWizard_NoEmployeesSelected,
+                    Properties.Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            string confirmMsg = string.Format(Properties.Resources.Form_PayrollWizard_SendWhatsappConfirm, selectedEmployees.Count);
+            if (XtraMessageBox.Show(this, confirmMsg, Properties.Resources.Common_Confirm, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            if (!SaveSelectedPayrolls(selectedEmployees))
+            {
+                return;
+            }
+
+            await SendBulkWhatsAppAsync(selectedEmployees);
+        }
+
+        private async Task SendBulkWhatsAppAsync(List<PayrollWizardEmployeeVM> targetEmployees)
+        {
+            if (targetEmployees == null || !targetEmployees.Any())
+                return;
+
+            bool isApiMode = Properties.Settings.Default.AppSetting?.WhatsAppProvider == WhatsAppProvider.API;
+
+            if (!isApiMode)
+            {
+                if (XtraMessageBox.Show(this,
+                    Properties.Resources.Form_PayrollWizard_WhatsAppWebBulkWarning,
+                    Properties.Resources.Common_Attention,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning) != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (!WhatsAppCreditService.HasEnoughBalance())
+                {
+                    XtraMessageBox.Show(this,
+                        Properties.Resources.Common_InsufficientBalance,
+                        Properties.Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            EfMethods efMethods = new();
+            string periodName = lkpPeriod.Text;
+            int successCount = 0;
+            int failCount = 0;
+
+            var prevCursor = Cursor.Current;
+            Cursor.Current = Cursors.WaitCursor;
+
+            try
+            {
+                foreach (var emp in targetEmployees)
+                {
+                    if (!emp.ExistingPayrollHeaderId.HasValue)
+                    {
+                        failCount++;
+                        continue;
+                    }
+
+                    List<string> phoneNums = efMethods.SelectCurrAccWhatsappRecipients(emp.CurrAccCode);
+                    if (phoneNums == null || phoneNums.Count == 0)
+                    {
+                        failCount++;
+                        continue;
+                    }
+
+                    using MemoryStream? memoryStream = PayrollReportService.GetPayrollReportImg(emp.ExistingPayrollHeaderId.Value);
+                    if (memoryStream == null)
+                    {
+                        failCount++;
+                        continue;
+                    }
+
+                    string caption = string.Format(Properties.Resources.Form_PayrollEdit_WhatsAppCaption, emp.EmployeeName, periodName);
+
+                    if (isApiMode)
+                    {
+                        bool anySent = false;
+                        foreach (string phoneNum in phoneNums)
+                        {
+                            bool sent = await PayrollReportService.SendWhatsAppViaEvolutionApiAsync(
+                                emp.ExistingPayrollHeaderId.Value,
+                                emp.CurrAccCode,
+                                phoneNum,
+                                memoryStream,
+                                caption,
+                                this,
+                                alertControl1);
+
+                            if (sent) anySent = true;
+                            await Task.Delay(300);
+                        }
+
+                        if (anySent)
+                            successCount++;
+                        else
+                            failCount++;
+                    }
+                    else
+                    {
+                        foreach (string phoneNum in phoneNums)
+                        {
+                            PayrollReportService.SendWhatsAppWeb(phoneNum, caption, memoryStream);
+                            await Task.Delay(1000);
+                        }
+                        successCount++;
+                    }
+                }
+            }
+            finally
+            {
+                Cursor.Current = prevCursor;
+            }
+
+            string completedMsg = string.Format(Properties.Resources.Form_PayrollWizard_SendWhatsappCompleted, successCount, failCount);
+            XtraMessageBox.Show(this, completedMsg, Properties.Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void WizardControl1_CancelClick(object sender, CancelEventArgs e)

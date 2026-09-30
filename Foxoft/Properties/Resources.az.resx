@@ -6548,4 +6548,55 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Common_Count" xml:space="preserve">
     <value>Say</value>
   </data>
+  <data name="Form_PayrollEdit_Button_SendWhatsapp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
+  <data name="Form_PayrollEdit_Button_ReportPreview" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="Form_PayrollEdit_WhatsAppCaption" xml:space="preserve">
+    <value>Əmək haqqı: {0} ({1})</value>
+  </data>
+  <data name="Form_PayrollEdit_SaveBeforeReport" xml:space="preserve">
+    <value>Hesabata baxmaq üçün əvvəlcə qeyd yadda saxlanmalıdır.</value>
+  </data>
+  <data name="Form_PayrollEdit_SaveBeforeWhatsapp" xml:space="preserve">
+    <value>WhatsApp ilə göndərmək üçün əvvəlcə qeyd yadda saxlanmalıdır.</value>
+  </data>
+  <data name="Form_PayrollWizard_Button_SendWhatsapp" xml:space="preserve">
+    <value>WhatsApp ilə Göndər</value>
+  </data>
+  <data name="Form_PayrollWizard_SendWhatsappConfirm" xml:space="preserve">
+    <value>Seçilmiş {0} əməkdaş üçün WhatsApp mesajı göndəriləcək. Davam edilsin?</value>
+  </data>
+  <data name="Form_PayrollWizard_SendWhatsappCompleted" xml:space="preserve">
+    <value>WhatsApp bildirişləri tamamlandı.&#xA;Uğurlu: {0}&#xA;Uğursuz / Nömrə yoxdur: {1}</value>
+  </data>
+  <data name="Form_PayrollWizard_SendWhatsappOnFinish" xml:space="preserve">
+    <value>Yadda saxladıqdan sonra WhatsApp ilə göndər</value>
+  </data>
+  <data name="Form_PayrollWizard_WhatsAppWebBulkWarning" xml:space="preserve">
+    <value>WhatsApp Web rejimində toplu göndəriş çoxsaylı brauzer pəncərəsi aça bilər. WhatsApp API rejimindən istifadə tövsiyə olunur. Davam edilsin?</value>
+  </data>
+  <data name="Report_PayrollSlip_Title" xml:space="preserve">
+    <value>ƏMƏK HAQQI VƏRƏQƏSİ</value>
+  </data>
+  <data name="Common_EmployeeSignature" xml:space="preserve">
+    <value>İşçinin imzası</value>
+  </data>
+  <data name="Common_ManagerSignature" xml:space="preserve">
+    <value>Rəhbərin imzası</value>
+  </data>
+  <data name="Entity_TrPayrollLine_Overtime" xml:space="preserve">
+    <value>Əlavə İş</value>
+  </data>
+  <data name="Entity_TrPayrollLine_Tax" xml:space="preserve">
+    <value>Vergi</value>
+  </data>
+  <data name="Entity_TrPayrollLine_Insurance" xml:space="preserve">
+    <value>Sığorta</value>
+  </data>
+  <data name="Entity_TrPayrollLine_Other" xml:space="preserve">
+    <value>Digər</value>
+  </data>
 </root>

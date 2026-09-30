@@ -1,23 +1,31 @@
+using DevExpress.XtraBars;
+using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraLayout;
 using Foxoft.AppCode;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
+using Foxoft.Models.Entity.Report;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormPayrollEdit : XtraForm
+    public partial class FormPayrollEdit : RibbonForm
     {
-        private readonly Guid? id;
+        private Guid? id;
         private TrPayrollHeader entity;
         private BindingList<TrPayrollLine> lines = new();
+        private EfMethods efMethods = new();
 
         public FormPayrollEdit(Guid? payrollHeaderId)
         {
@@ -30,8 +38,6 @@ namespace Foxoft
 
             btnAddLine.Click += (_, __) => AddLine();
             btnRemoveLine.Click += (_, __) => RemoveLine();
-            btnSave.Click += (_, __) => Save();
-            btnCancel.Click += (_, __) => DialogResult = DialogResult.Cancel;
 
             viewLines.CustomDrawRowIndicator += (s, e) =>
             {
@@ -127,8 +133,6 @@ namespace Foxoft
             Load += (_, __) => LoadEntity();
         }
 
-
-
         private void btnEditEmployee_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
             FormCurrAccList formCommonList = new(new byte[] { 3 }, false, btnEditEmployee.EditValue?.ToString());
@@ -211,6 +215,8 @@ namespace Foxoft
             spGrossSalary.Value = entity.GrossSalary;
             spNetSalary.Value = entity.NetSalary;
             lines.ListChanged += (s, e) => RecalculateTotals();
+
+            UpdateWhatsAppIcon(entity.Id);
         }
 
         private void AddLine()
@@ -243,7 +249,129 @@ namespace Foxoft
             lines.Remove(row);
         }
 
-        private void Save()
+        private void bBI_SaveAndClose_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (Save())
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+        }
+
+        private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowReportPreview();
+        }
+
+        private void ShowReportPreview()
+        {
+            if (entity == null) return;
+
+            if (id == null || entity.Id == Guid.Empty)
+            {
+                if (!Save()) return;
+            }
+
+            //PayrollReportService.EnsurePayrollReportRepx();
+
+            DcReport dcReport = efMethods.SelectReportByName(PayrollReportService.PayrollReportName);
+
+            if (dcReport == null)
+            {
+                XtraMessageBox.Show(Properties.Resources.Report_NotFound);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(dcReport.ReportQuery))
+                dcReport.ReportQuery = new CustomMethods().GetDataFromFile("Foxoft.AppCode.Report." + PayrollReportService.PayrollReportName + ".sql");
+
+            foreach (var item in dcReport.DcReportVariables)
+            {
+                if (string.Equals(item.VariableProperty, "PayrollHeaderId", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(item.VariableProperty, nameof(TrPayrollHeader.Id), StringComparison.OrdinalIgnoreCase))
+                {
+                    item.VariableValue = entity.Id.ToString();
+                }
+            }
+
+            FormReportPreview form = new(dcReport.ReportQuery, "", dcReport);
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
+        private async void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (entity == null) return;
+
+            if (id == null || entity.Id == Guid.Empty)
+            {
+                if (!Save()) return;
+            }
+
+            if (string.IsNullOrEmpty(entity.CurrAccCode))
+            {
+                XtraMessageBox.Show(this, Properties.Resources.Form_Payment_CurrAccNotSelected, Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            List<string> phoneNums = efMethods.SelectCurrAccWhatsappRecipients(entity.CurrAccCode);
+            if (phoneNums.Count == 0)
+            {
+                XtraMessageBox.Show(this, Properties.Resources.Form_PaymentDetail_PhoneNotFound, Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            MemoryStream? memoryStream = PayrollReportService.GetPayrollReportImg(entity.Id);
+            if (memoryStream == null)
+            {
+                XtraMessageBox.Show(this, Properties.Resources.Report_NotFound, Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string empName = txtEmployeeName.Text;
+            string periodName = lkpPeriod.Text;
+            string caption = string.Format(Properties.Resources.Form_PayrollEdit_WhatsAppCaption, empName, periodName);
+
+            if (Properties.Settings.Default.AppSetting?.WhatsAppProvider == WhatsAppProvider.API)
+            {
+                foreach (string phoneNum in phoneNums)
+                {
+                    await PayrollReportService.SendWhatsAppViaEvolutionApiAsync(
+                        entity.Id,
+                        entity.CurrAccCode,
+                        phoneNum,
+                        memoryStream,
+                        caption,
+                        this,
+                        alertControl1);
+                }
+            }
+            else
+            {
+                foreach (string phoneNum in phoneNums)
+                {
+                    PayrollReportService.SendWhatsAppWeb(phoneNum, caption, memoryStream);
+                }
+            }
+
+            UpdateWhatsAppIcon(entity.Id);
+        }
+
+        private void UpdateWhatsAppIcon(Guid payrollHeaderId)
+        {
+            try
+            {
+                bool isSent = PayrollReportService.IsWhatsAppSent(payrollHeaderId);
+                string svgKey = isSent ? "whatsapp_sent" : "whatsapp_unsend";
+                bBI_SendWhatsapp.ImageOptions.SvgImage = svgImageCollection1[svgKey];
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print($"WhatsApp icon update error: {ex.Message}");
+            }
+        }
+
+        private bool Save()
         {
             viewLines.CloseEditor();
             viewLines.UpdateCurrentRow();
@@ -254,13 +382,13 @@ namespace Foxoft
             {
                 XtraMessageBox.Show(this, string.Format(Properties.Resources.Validation_Required, Properties.Resources.Entity_TrPayrollHeader_CurrAccCode),
                     Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return false;
             }
             if (lkpPeriod.EditValue == null)
             {
                 XtraMessageBox.Show(this, string.Format(Properties.Resources.Validation_Required, Properties.Resources.Entity_TrPayrollHeader_PeriodId),
                     Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return false;
             }
 
             entity.CurrAccCode = btnEditEmployee.EditValue?.ToString();
@@ -270,7 +398,7 @@ namespace Foxoft
             {
                 XtraMessageBox.Show(this, msgHeader, Properties.Resources.Common_Attention,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return false;
             }
 
             foreach (var ln in lines)
@@ -282,7 +410,7 @@ namespace Foxoft
                 {
                     XtraMessageBox.Show(this, msgLine, Properties.Resources.Common_Attention,
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    return false;
                 }
             }
 
@@ -327,6 +455,12 @@ namespace Foxoft
                         }
 
                         saveDb.TrPayrollHeaders.Add(newHeader);
+                        saveDb.SaveChanges();
+                        tran.Commit();
+
+                        id = newHeader.Id;
+                        entity.Id = newHeader.Id;
+                        Text = Properties.Resources.Form_PayrollEdit_Caption_Edit;
                     }
                     else
                     {
@@ -380,13 +514,14 @@ namespace Foxoft
                                 existing.AmountLoc = amtLoc;
                             }
                         }
-                    }
 
-                    saveDb.SaveChanges();
-                    tran.Commit();
+                        saveDb.SaveChanges();
+                        tran.Commit();
+                    }
                 });
 
-                DialogResult = DialogResult.OK;
+                UpdateWhatsAppIcon(entity.Id);
+                return true;
             }
             catch (Exception ex)
             {
@@ -395,6 +530,7 @@ namespace Foxoft
                     Properties.Resources.Common_Attention,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+                return false;
             }
         }
 

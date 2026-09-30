@@ -28,6 +28,7 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             wizardControl1 = new DevExpress.XtraWizard.WizardControl();
             welcomeWizardPage1 = new DevExpress.XtraWizard.WelcomeWizardPage();
             lblWelcomeInfo = new DevExpress.XtraEditors.LabelControl();
@@ -59,9 +60,13 @@ namespace Foxoft
             panelControlTop = new DevExpress.XtraEditors.PanelControl();
             btnSelectAll = new DevExpress.XtraEditors.SimpleButton();
             btnUnselectAll = new DevExpress.XtraEditors.SimpleButton();
+            btnSendWhatsapp = new DevExpress.XtraEditors.SimpleButton();
             completionWizardPage1 = new DevExpress.XtraWizard.CompletionWizardPage();
             lblCompletionInfo = new DevExpress.XtraEditors.LabelControl();
             lblSummary = new DevExpress.XtraEditors.LabelControl();
+            chkSendWhatsappOnFinish = new DevExpress.XtraEditors.CheckEdit();
+            btnSendWhatsappCompletion = new DevExpress.XtraEditors.SimpleButton();
+            alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             ((System.ComponentModel.ISupportInitialize)wizardControl1).BeginInit();
             wizardControl1.SuspendLayout();
             welcomeWizardPage1.SuspendLayout();
@@ -78,6 +83,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelControlTop).BeginInit();
             panelControlTop.SuspendLayout();
             completionWizardPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)chkSendWhatsappOnFinish.Properties).BeginInit();
             SuspendLayout();
             // 
             // wizardControl1
@@ -387,6 +393,7 @@ namespace Foxoft
             // 
             panelControlTop.Controls.Add(btnSelectAll);
             panelControlTop.Controls.Add(btnUnselectAll);
+            panelControlTop.Controls.Add(btnSendWhatsapp);
             panelControlTop.Dock = DockStyle.Top;
             panelControlTop.Location = new Point(0, 0);
             panelControlTop.Name = "panelControlTop";
@@ -399,7 +406,7 @@ namespace Foxoft
             btnSelectAll.Name = "btnSelectAll";
             btnSelectAll.Size = new Size(95, 25);
             btnSelectAll.TabIndex = 0;
-            btnSelectAll.Text = "Select All";
+            btnSelectAll.Text = Properties.Resources.Common_SelectAll;
             btnSelectAll.Click += BtnSelectAll_Click;
             // 
             // btnUnselectAll
@@ -408,13 +415,24 @@ namespace Foxoft
             btnUnselectAll.Name = "btnUnselectAll";
             btnUnselectAll.Size = new Size(95, 25);
             btnUnselectAll.TabIndex = 1;
-            btnUnselectAll.Text = "Unselect All";
+            btnUnselectAll.Text = Properties.Resources.Common_UnselectAll;
             btnUnselectAll.Click += BtnUnselectAll_Click;
+            // 
+            // btnSendWhatsapp
+            // 
+            btnSendWhatsapp.Location = new Point(207, 5);
+            btnSendWhatsapp.Name = "btnSendWhatsapp";
+            btnSendWhatsapp.Size = new Size(160, 25);
+            btnSendWhatsapp.TabIndex = 2;
+            btnSendWhatsapp.Text = Properties.Resources.Form_PayrollWizard_Button_SendWhatsapp;
+            btnSendWhatsapp.Click += BtnSendWhatsapp_Click;
             // 
             // completionWizardPage1
             // 
             completionWizardPage1.Controls.Add(lblCompletionInfo);
             completionWizardPage1.Controls.Add(lblSummary);
+            completionWizardPage1.Controls.Add(chkSendWhatsappOnFinish);
+            completionWizardPage1.Controls.Add(btnSendWhatsappCompletion);
             completionWizardPage1.FinishText = Properties.Resources.Form_PayrollWizard_CompletionText;
             completionWizardPage1.Name = "completionWizardPage1";
             completionWizardPage1.ProceedText = "";
@@ -437,10 +455,27 @@ namespace Foxoft
             lblSummary.Appearance.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             lblSummary.Appearance.Options.UseFont = true;
             lblSummary.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
-            lblSummary.Location = new Point(30, 95);
+            lblSummary.Location = new Point(30, 80);
             lblSummary.Name = "lblSummary";
             lblSummary.Size = new Size(500, 0);
             lblSummary.TabIndex = 1;
+            // 
+            // chkSendWhatsappOnFinish
+            // 
+            chkSendWhatsappOnFinish.Location = new Point(30, 190);
+            chkSendWhatsappOnFinish.Name = "chkSendWhatsappOnFinish";
+            chkSendWhatsappOnFinish.Properties.Caption = Properties.Resources.Form_PayrollWizard_SendWhatsappOnFinish;
+            chkSendWhatsappOnFinish.Size = new Size(450, 20);
+            chkSendWhatsappOnFinish.TabIndex = 2;
+            // 
+            // btnSendWhatsappCompletion
+            // 
+            btnSendWhatsappCompletion.Location = new Point(30, 225);
+            btnSendWhatsappCompletion.Name = "btnSendWhatsappCompletion";
+            btnSendWhatsappCompletion.Size = new Size(180, 30);
+            btnSendWhatsappCompletion.TabIndex = 3;
+            btnSendWhatsappCompletion.Text = Properties.Resources.Form_PayrollWizard_Button_SendWhatsapp;
+            btnSendWhatsappCompletion.Click += BtnSendWhatsappCompletion_Click;
             // 
             // FormPayrollWizard
             // 
@@ -471,6 +506,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelControlTop).EndInit();
             panelControlTop.ResumeLayout(false);
             completionWizardPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)chkSendWhatsappOnFinish.Properties).EndInit();
             ResumeLayout(false);
         }
 
@@ -486,6 +522,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.PanelControl panelControlTop;
         private DevExpress.XtraEditors.SimpleButton btnSelectAll;
         private DevExpress.XtraEditors.SimpleButton btnUnselectAll;
+        private DevExpress.XtraEditors.SimpleButton btnSendWhatsapp;
         private MyGridControl gridControlEmployees;
         private MyGridView gridViewEmployees;
         private DevExpress.XtraGrid.Columns.GridColumn colSelected;
@@ -510,5 +547,8 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colStatus;
         private DevExpress.XtraEditors.LabelControl lblCompletionInfo;
         private DevExpress.XtraEditors.LabelControl lblSummary;
+        private DevExpress.XtraEditors.CheckEdit chkSendWhatsappOnFinish;
+        private DevExpress.XtraEditors.SimpleButton btnSendWhatsappCompletion;
+        private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
     }
 }

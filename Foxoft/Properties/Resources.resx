@@ -6548,4 +6548,55 @@ Please wait or choose another invoice.</value>
   <data name="Common_Count" xml:space="preserve">
     <value>Count</value>
   </data>
+  <data name="Form_PayrollEdit_Button_SendWhatsapp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
+  <data name="Form_PayrollEdit_Button_ReportPreview" xml:space="preserve">
+    <value>Report Preview</value>
+  </data>
+  <data name="Form_PayrollEdit_WhatsAppCaption" xml:space="preserve">
+    <value>Salary Slip: {0} ({1})</value>
+  </data>
+  <data name="Form_PayrollEdit_SaveBeforeReport" xml:space="preserve">
+    <value>Please save the record before viewing the report.</value>
+  </data>
+  <data name="Form_PayrollEdit_SaveBeforeWhatsapp" xml:space="preserve">
+    <value>Please save the record before sending via WhatsApp.</value>
+  </data>
+  <data name="Form_PayrollWizard_Button_SendWhatsapp" xml:space="preserve">
+    <value>Send via WhatsApp</value>
+  </data>
+  <data name="Form_PayrollWizard_SendWhatsappConfirm" xml:space="preserve">
+    <value>WhatsApp messages will be sent for {0} selected employees. Do you want to continue?</value>
+  </data>
+  <data name="Form_PayrollWizard_SendWhatsappCompleted" xml:space="preserve">
+    <value>WhatsApp notifications completed.&#xA;Successful: {0}&#xA;Failed / No phone: {1}</value>
+  </data>
+  <data name="Form_PayrollWizard_SendWhatsappOnFinish" xml:space="preserve">
+    <value>Send via WhatsApp after finish</value>
+  </data>
+  <data name="Form_PayrollWizard_WhatsAppWebBulkWarning" xml:space="preserve">
+    <value>Bulk sending via WhatsApp Web will open multiple browser tabs. Using WhatsApp API is recommended. Do you want to continue?</value>
+  </data>
+  <data name="Report_PayrollSlip_Title" xml:space="preserve">
+    <value>PAYROLL SLIP</value>
+  </data>
+  <data name="Common_EmployeeSignature" xml:space="preserve">
+    <value>Employee signature</value>
+  </data>
+  <data name="Common_ManagerSignature" xml:space="preserve">
+    <value>Manager signature</value>
+  </data>
+  <data name="Entity_TrPayrollLine_Overtime" xml:space="preserve">
+    <value>Overtime</value>
+  </data>
+  <data name="Entity_TrPayrollLine_Tax" xml:space="preserve">
+    <value>Tax</value>
+  </data>
+  <data name="Entity_TrPayrollLine_Insurance" xml:space="preserve">
+    <value>Insurance</value>
+  </data>
+  <data name="Entity_TrPayrollLine_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
 </root>

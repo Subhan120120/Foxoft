@@ -1008,6 +1008,7 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 7, ReportTypeId = 0, ReportName = "Report_Embedded_StoreList", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_StoreList.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 8, ReportTypeId = 0, ReportName = "Report_Embedded_BarcodeOperation", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_BarcodeOperation.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 9, ReportTypeId = 0, ReportName = "Report_Embedded_PaymentReport", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_PaymentReport.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 10, ReportTypeId = 0, ReportName = "Report_Embedded_PayrollReport", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_PayrollReport.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 11, ReportTypeId = 1, ReportCategoryId = 5, ReportName = "Xərclər", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Expenses.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 12, ReportTypeId = 1, ReportCategoryId = 5, ReportName = "Pulun Hərəkəti", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MoneyMovements.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 13, ReportTypeId = 1, ReportCategoryId = 1, ReportName = "Cari Hesab ilə Əməliyatlar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MovementsWithAccounts.sql"), ReportLayout = "" },
@@ -1032,7 +1033,8 @@ namespace Foxoft.Models
                 new DcReportVariable { VariableId = 1, ReportId = 4, VariableTypeId = 1, VariableProperty = "InvoiceHeaderId", Representative = "@InvoiceHeaderId", VariableValue = "", VariableOperator = "", VariableValueType = "System.Guid" },
                 new DcReportVariable { VariableId = 2, ReportId = 13, VariableTypeId = 2, VariableProperty = "CurrAccCode", Representative = "{CurrAccCode}", VariableValue = "c-0000001", VariableOperator = "=", VariableValueType = "System.String" },
                 new DcReportVariable { VariableId = 3, ReportId = 17, VariableTypeId = 2, VariableProperty = "DocumentDate", Representative = "{StartDate}", VariableValue = "08.01.2030", VariableOperator = "<=", VariableValueType = "System.DateTime" },
-                new DcReportVariable { VariableId = 4, ReportId = 9, VariableTypeId = 1, VariableProperty = "PaymentHeaderId", Representative = "@PaymentHeaderId", VariableValue = "", VariableOperator = "", VariableValueType = "System.Guid" }
+                new DcReportVariable { VariableId = 4, ReportId = 9, VariableTypeId = 1, VariableProperty = "PaymentHeaderId", Representative = "@PaymentHeaderId", VariableValue = "", VariableOperator = "", VariableValueType = "System.Guid" },
+                new DcReportVariable { VariableId = 5, ReportId = 10, VariableTypeId = 1, VariableProperty = "PayrollHeaderId", Representative = "@PayrollHeaderId", VariableValue = "", VariableOperator = "", VariableValueType = "System.Guid" }
                );
 
             modelBuilder.Entity<DcReportCategory>().HasData(
