@@ -15,6 +15,7 @@ select prh.Id
 		from TrPayrollLines l
 		where l.PayrollHeaderId = prh.Id
 	)
+	, CurrAccBalance = dbo.CurrAccBalance(prh.CurrAccCode, isnull(cast(eomonth(datefromparts(prp.PeriodYear, prp.PeriodMonth, 1)) as datetime) + cast('23:59:59' as datetime), getdate()))
 	, PayrollLineId = prl.Id
 	, prl.PayrollItemType
 	, PayrollItemTypeName = case prl.PayrollItemType
