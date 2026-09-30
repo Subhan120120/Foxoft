@@ -1,20 +1,29 @@
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Filtering.Helpers;
 using DevExpress.DataAccess.Excel;
+using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Filtering;
+using DevExpress.XtraReports.UI;
+using DevExpress.XtraReports.UserDesigner;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.VisualBasic;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -56,13 +65,25 @@ namespace Foxoft
             filterControl_Inner.SourceControl = GetColumnsFromDatabase(dcReport.DcReportVariables); //For Column Types
             filterControl_Inner.FilterCriteria = GetFiltersFromDatabase(dcReport.DcReportVariables);
 
-            LUE_ReportCustomization.Properties.DataSource =
-                efMethods.SelectReportCustomizationByCurrAcc(dcReport.ReportId, Authorization.CurrAccCode);
-            LUE_ReportCustomization.EditValue =
-                Settings.Default.TrReportCustomizations
-                         .FirstOrDefault(x => x.ReportId == dcReport.ReportId &&
-                                              x.CurrAccCode == Authorization.CurrAccCode)
-                         ?.ReportCustomizationId;
+            var customizations = efMethods.SelectReportCustomizationByCurrAcc(dcReport.ReportId, Authorization.CurrAccCode);
+            LUE_ReportCustomization.Properties.DataSource = customizations;
+
+            int? savedCustomizationId = Settings.Default.TrReportCustomizations?
+                .FirstOrDefault(x => x.ReportId == dcReport.ReportId && x.CurrAccCode == Authorization.CurrAccCode)?
+                .ReportCustomizationId;
+
+            if (savedCustomizationId.HasValue && customizations.Any(x => x.ReportCustomizationId == savedCustomizationId.Value))
+            {
+                LUE_ReportCustomization.EditValue = savedCustomizationId.Value;
+            }
+            else if (customizations.Count > 0)
+            {
+                LUE_ReportCustomization.EditValue = customizations[0].ReportCustomizationId;
+            }
+            else
+            {
+                BtnEdit_DesignFileFullPath.EditValue = dcReport.ReportName + ".repx";
+            }
         }
 
         private DataTable opToDt(GroupOperator groupOperand)
@@ -164,11 +185,11 @@ namespace Foxoft
         {
             if (!string.IsNullOrEmpty(qry))
             {
-                FormReportPreview frm = new(qry, filter, dcReport);
+                string designFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString();
+                FormReportPreview frm = new(qry, filter, dcReport, designFileName);
                 frm.MdiParent = this.ParentForm;
                 frm.Show();
                 frm.WindowState = FormWindowState.Maximized;
-                //this.ParentForm.parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             }
         }
 
@@ -176,7 +197,7 @@ namespace Foxoft
         {
             BarButtonItem item = new();
             item.ItemClick += item_ItemClick;
-            item.Caption = "Get Help"; // istəyə görə sonradan resx-ə də çıxarıla bilər
+            item.Caption = "Get Help";
             return item;
         }
 
@@ -242,8 +263,6 @@ namespace Foxoft
             if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
                 dcReport.ReportQuery = formQueryEditor.dcReport.ReportQuery;
         }
-
-
 
         private void bBI_ReportDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -337,11 +356,77 @@ namespace Foxoft
             return table;
         }
 
+        private void BtnEdit_DesignFileFullPath_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            using OpenFileDialog dialog = new();
+            dialog.Title = Resources.Form_ReportFilter_DesignSelectFile;
+            dialog.Filter = Resources.Form_ReportFilter_DesignFileFilter;
+
+            string folder = GetDesignFolder();
+            if (!string.IsNullOrEmpty(folder) && Directory.Exists(folder))
+                dialog.InitialDirectory = folder;
+
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                string selectedPath = dialog.FileName;
+                if (!string.IsNullOrEmpty(folder) && selectedPath.StartsWith(folder, StringComparison.OrdinalIgnoreCase))
+                {
+                    string relative = selectedPath.Substring(folder.Length).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                    BtnEdit_DesignFileFullPath.EditValue = relative;
+                }
+                else
+                {
+                    BtnEdit_DesignFileFullPath.EditValue = selectedPath;
+                }
+
+                TrReportCustomization selectedEntity =
+                    LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
+
+                if (selectedEntity != null)
+                {
+                    selectedEntity.ReportDesignFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString();
+                    efMethods.UpdateEntity(selectedEntity);
+                }
+            }
+        }
+
         private void BBI_ReportCustomAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
             string name = Interaction.InputBox(
                 Resources.Form_ReportFilter_Input_DesignName,
                 Resources.Common_Attention);
+
+            if (string.IsNullOrWhiteSpace(name))
+                return;
+
+            name = name.Trim();
+
+            string sanitized = string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
+            string newFileName = $"{dcReport.ReportName}_{sanitized}.repx";
+
+            string folder = GetDesignFolder();
+            string targetFilePath = Path.Combine(folder, newFileName);
+            string baseFilePath = Path.Combine(folder, dcReport.ReportName + ".repx");
+
+            try
+            {
+                if (!File.Exists(targetFilePath))
+                {
+                    if (File.Exists(baseFilePath))
+                    {
+                        File.Copy(baseFilePath, targetFilePath, true);
+                    }
+                    else
+                    {
+                        using XtraReport initialReport = new();
+                        initialReport.SaveLayoutToXml(targetFilePath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
             string filterCriteria = filterControl_Outer?.FilterCriteria?.ToString();
 
@@ -349,18 +434,130 @@ namespace Foxoft
             {
                 CurrAccCode = Authorization.CurrAccCode,
                 ReportCustomizationDesc = name,
-                ReportDesignFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString(),
+                ReportDesignFileName = newFileName,
                 ReportFilter = filterCriteria,
                 ReportId = dcReport.ReportId
             });
 
-            List<TrReportCustomization> dataSource =
-                (List<TrReportCustomization>)LUE_ReportCustomization.Properties.DataSource;
-
-            dataSource.Add(entity);
-
+            var dataSource = efMethods.SelectReportCustomizationByCurrAcc(dcReport.ReportId, Authorization.CurrAccCode);
             LUE_ReportCustomization.Properties.DataSource = dataSource;
-            LUE_ReportCustomization.Refresh();
+            LUE_ReportCustomization.EditValue = entity.ReportCustomizationId;
+
+            if (XtraMessageBox.Show(
+                    Resources.Form_ReportFilter_Prompt_OpenDesignerNow,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                OpenReportDesigner(newFileName);
+            }
+        }
+
+        private void BBI_ReportCustomEdit_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            string designFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString();
+            if (string.IsNullOrWhiteSpace(designFileName))
+                designFileName = dcReport.ReportName + ".repx";
+
+            OpenReportDesigner(designFileName);
+        }
+
+        private void OpenReportDesigner(string designFileName)
+        {
+            try
+            {
+                string folder = GetDesignFolder();
+                string fullPath = Path.IsPathRooted(designFileName)
+                    ? designFileName
+                    : Path.Combine(folder, designFileName);
+
+                string filter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
+                SqlParameter[] sqlParameters;
+                string query = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
+                List<QueryParameter> qryParams = reportClass.ConvertSqlParametersToQueryParameters(sqlParameters);
+
+                CustomSqlQuery mainQuery = new("Main", query);
+                mainQuery.Parameters.AddRange(qryParams);
+
+                List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
+
+                foreach (TrReportSubQuery reportSubQuery in dcReport.TrReportSubQueries)
+                {
+                    SqlParameter[] sqlParameters1;
+                    string subQueryText = reportClass.ApplyFilter(dcReport, reportSubQuery.SubQueryText, null, out sqlParameters1);
+                    subQueryText = reportClass.AddRelation(query, reportSubQuery, subQueryText);
+
+                    List<QueryParameter> subQryParams = reportClass.ConvertSqlParametersToQueryParameters(sqlParameters1);
+                    CustomSqlQuery subQuery = new(reportSubQuery.SubQueryName, subQueryText);
+                    subQuery.Parameters.AddRange(subQryParams);
+
+                    sqlQueries.Add(subQuery);
+                }
+
+                if (!File.Exists(fullPath))
+                {
+                    string baseFilePath = Path.Combine(folder, dcReport.ReportName + ".repx");
+                    if (File.Exists(baseFilePath))
+                    {
+                        File.Copy(baseFilePath, fullPath, true);
+                    }
+                    else
+                    {
+                        using XtraReport initialReport = new();
+                        initialReport.SaveLayoutToXml(fullPath);
+                    }
+                }
+
+                ReportClass reportCls = new(folder);
+                XtraReport xReport = reportCls.GetReport(dcReport.ReportName, designFileName, sqlQueries);
+
+                if (xReport is null)
+                {
+                    XtraMessageBox.Show(Resources.Common_Error, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                using (XRDesignRibbonForm formDesignRibbon = new())
+                {
+                    formDesignRibbon.DesignMdiController.DesignPanelLoaded += (s, args) =>
+                    {
+                        XRDesignPanel panel = (XRDesignPanel)s;
+                        panel.AddCommandHandler(new RepxSaveCommandHandler(panel, fullPath));
+                    };
+
+                    formDesignRibbon.OpenReport(xReport);
+                    formDesignRibbon.ShowDialog(this);
+                }
+
+                BtnEdit_DesignFileFullPath.EditValue = designFileName;
+
+                TrReportCustomization selectedEntity =
+                    LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
+
+                if (selectedEntity != null)
+                {
+                    selectedEntity.ReportDesignFileName = designFileName;
+                    efMethods.UpdateEntity(selectedEntity);
+                }
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string GetDesignFolder()
+        {
+            string folder = settingStore?.DesignFileFolder;
+            if (string.IsNullOrWhiteSpace(folder))
+                folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Design Files");
+
+            if (!Directory.Exists(folder))
+            {
+                try { Directory.CreateDirectory(folder); } catch { }
+            }
+
+            return folder;
         }
 
         private void BBI_ReportCustomDelete_ItemClick(object sender, ItemClickEventArgs e)
@@ -370,20 +567,37 @@ namespace Foxoft
 
             if (selectedEntity != null)
             {
-                var dataSource =
-                    LUE_ReportCustomization.Properties.DataSource as List<TrReportCustomization>;
-
-                if (dataSource != null)
-                {
-                    dataSource.Remove(selectedEntity);
-                    LUE_ReportCustomization.Refresh();
-                }
+                if (XtraMessageBox.Show(
+                        Resources.Common_DeleteConfirm,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Question) != DialogResult.OK)
+                    return;
 
                 efMethods.DeleteEntity(selectedEntity);
+
+                var savedList = Settings.Default.TrReportCustomizations?.ToList() ?? new List<TrReportCustomization>();
+                savedList.RemoveAll(x => x.ReportCustomizationId == selectedEntity.ReportCustomizationId || (x.ReportId == dcReport.ReportId && x.CurrAccCode == Authorization.CurrAccCode));
+                Settings.Default.TrReportCustomizations = savedList;
+                Settings.Default.Save();
+
+                var list = efMethods.SelectReportCustomizationByCurrAcc(dcReport.ReportId, Authorization.CurrAccCode);
+                LUE_ReportCustomization.Properties.DataSource = list;
+
+                if (list.Count > 0)
+                {
+                    LUE_ReportCustomization.EditValue = list[0].ReportCustomizationId;
+                }
+                else
+                {
+                    LUE_ReportCustomization.EditValue = null;
+                    BtnEdit_DesignFileFullPath.EditValue = dcReport.ReportName + ".repx";
+                    filterControl_Outer.FilterString = dcReport.ReportFilter;
+                }
             }
             else
             {
-                MessageBox.Show(
+                XtraMessageBox.Show(
                     Resources.Form_ReportFilter_Message_NoCustomizationSelected,
                     Resources.Form_ReportFilter_Message_NoCustomizationSelectedTitle,
                     MessageBoxButtons.OK,
@@ -397,29 +611,54 @@ namespace Foxoft
                 LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
 
             if (selectedEntity == null)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_ReportFilter_Message_NoCustomizationSelected,
+                    Resources.Form_ReportFilter_Message_NoCustomizationSelectedTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
+            }
 
             selectedEntity.ReportFilter = filterControl_Outer?.FilterCriteria?.ToString();
             selectedEntity.ReportDesignFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString();
 
             efMethods.UpdateEntity(selectedEntity);
+
+            XtraMessageBox.Show(
+                Resources.Common_SavedSuccessfully,
+                Resources.Common_Attention,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         private void LUE_ReportCustomization_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit lookUpEdit = (LookUpEdit)sender;
+            if (lookUpEdit?.EditValue == null || lookUpEdit.EditValue == DBNull.Value)
+                return;
 
-            int ina = Convert.ToInt32(lookUpEdit?.EditValue);
-            TrReportCustomization entity = efMethods.SelectEntityById<TrReportCustomization>(ina);
-            BtnEdit_DesignFileFullPath.EditValue = entity.ReportDesignFileName;
-            filterControl_Outer.FilterString = entity.ReportFilter;
+            int id = Convert.ToInt32(lookUpEdit.EditValue);
+            if (id <= 0)
+                return;
 
-            var asd = Settings.Default.TrReportCustomizations.ToList();
+            TrReportCustomization entity = efMethods.SelectEntityById<TrReportCustomization>(id);
+            if (entity == null)
+                return;
 
-            asd.RemoveAll(x => x.ReportId == dcReport.ReportId);
-            asd.Add(entity);
+            BtnEdit_DesignFileFullPath.EditValue = string.IsNullOrWhiteSpace(entity.ReportDesignFileName)
+                ? dcReport.ReportName + ".repx"
+                : entity.ReportDesignFileName;
 
-            Settings.Default.TrReportCustomizations = asd;
+            if (!string.IsNullOrEmpty(entity.ReportFilter))
+                filterControl_Outer.FilterString = entity.ReportFilter;
+
+            var savedList = Settings.Default.TrReportCustomizations?.ToList() ?? new List<TrReportCustomization>();
+            savedList.RemoveAll(x => x.ReportId == dcReport.ReportId && x.CurrAccCode == Authorization.CurrAccCode);
+            savedList.Add(entity);
+
+            Settings.Default.TrReportCustomizations = savedList;
+            Settings.Default.Save();
         }
 
         private void bBI_FilterExportExcel_ItemClick(object sender, ItemClickEventArgs e)

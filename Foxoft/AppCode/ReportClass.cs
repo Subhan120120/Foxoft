@@ -24,6 +24,7 @@ namespace Foxoft
 
         string designFolder;
         private string subConnString = Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(Properties.Settings.Default.SubConnString);
+        public string SubConnString => subConnString;
 
         public ReportClass()
         {
@@ -57,9 +58,10 @@ namespace Foxoft
         public XtraReport CreateReport(object datasource, string repxFileName)
         {
             string designPath = string.Empty;
-            if (!string.IsNullOrEmpty(designFolder))
-                if (CustomExtensions.DirectoryExist(designFolder))
-                    designPath = designFolder + @"\" + repxFileName;
+            if (Path.IsPathRooted(repxFileName))
+                designPath = repxFileName;
+            else if (!string.IsNullOrEmpty(designFolder) && CustomExtensions.DirectoryExist(designFolder))
+                designPath = Path.Combine(designFolder, repxFileName);
 
             if (!File.Exists(designPath))
                 designPath = SelectDesign();

@@ -23,6 +23,8 @@ namespace Foxoft
         private EfMethods efMethods = new();
         private ReportClass reportClass = new();
         readonly SettingStore settingStore;
+        private string currentDesignFileName;
+        private string fullDesignFilePath;
 
         public FormReportPreview()
         {
@@ -31,9 +33,13 @@ namespace Foxoft
             InitializeComponent();
         }
 
-        public FormReportPreview(string query, string filter, DcReport dcReport)
+        public FormReportPreview(string query, string filter, DcReport dcReport, string designFileName = null)
             : this()
         {
+            this.currentDesignFileName = string.IsNullOrWhiteSpace(designFileName)
+                ? dcReport.ReportName + ".repx"
+                : designFileName;
+
             SqlParameter[] sqlParameters;
 
             query = this.reportClass.ApplyFilter(dcReport, query, filter, out sqlParameters);
@@ -59,9 +65,22 @@ namespace Foxoft
                 sqlQueries.Add(subQuery);
             }
 
-            ReportClass reportClass = new(settingStore.DesignFileFolder);
+            ReportClass reportClass = new(settingStore?.DesignFileFolder ?? string.Empty);
 
-            xReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
+            string folder = settingStore?.DesignFileFolder;
+            if (string.IsNullOrEmpty(folder))
+                folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Design Files");
+
+            if (!Directory.Exists(folder))
+            {
+                try { Directory.CreateDirectory(folder); } catch { }
+            }
+
+            fullDesignFilePath = Path.IsPathRooted(this.currentDesignFileName)
+                ? this.currentDesignFileName
+                : Path.Combine(folder, this.currentDesignFileName);
+
+            xReport = reportClass.GetReport(dcReport.ReportName, this.currentDesignFileName, sqlQueries);
 
             if (xReport is not null)
             {
@@ -78,8 +97,8 @@ namespace Foxoft
             if (report is null)
                 return;
 
-            AddOrSetParameter(report, "ImageRootPath", settingStore.ImageFolder);
-            AddOrSetParameter(report, "StoreName", settingStore.DcStore.CurrAccDesc);
+            AddOrSetParameter(report, "ImageRootPath", settingStore?.ImageFolder);
+            AddOrSetParameter(report, "StoreName", settingStore?.DcStore?.CurrAccDesc);
         }
 
         private void AddOrSetParameter(XtraReport report, string parameterName, object value)
@@ -103,15 +122,25 @@ namespace Foxoft
 
         private void BBI_EditDesign_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (xReport is null)
+                return;
+
             using (XRDesignRibbonForm FormDesignRibbon = new())
             {
-                RibbonPageGroup pageGroup = FormDesignRibbon.RibbonControl.Pages[0].GetGroupByName("Report");
-                BarButtonItem bbi_Design = CreateItem();
-                pageGroup.ItemLinks.Add(bbi_Design);
+                if (!string.IsNullOrEmpty(fullDesignFilePath))
+                {
+                    FormDesignRibbon.DesignMdiController.DesignPanelLoaded += (s, args) =>
+                    {
+                        XRDesignPanel panel = (XRDesignPanel)s;
+                        panel.AddCommandHandler(new RepxSaveCommandHandler(panel, fullDesignFilePath));
+                    };
+                }
 
                 FormDesignRibbon.OpenReport(xReport);
-                FormDesignRibbon.ShowDialog();
+                FormDesignRibbon.ShowDialog(this);
             }
+
+            xReport?.CreateDocument();
         }
 
         private BarButtonItem CreateItem()

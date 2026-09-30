@@ -3751,6 +3751,24 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_ReportFilter_Button_CustomDelete" xml:space="preserve">
     <value>Dizaynı sil</value>
   </data>
+  <data name="Form_ReportFilter_Button_CustomEdit" xml:space="preserve">
+    <value>Dizaynı redaktə et</value>
+  </data>
+  <data name="Form_ReportFilter_Column_DesignName" xml:space="preserve">
+    <value>Dizayn adı</value>
+  </data>
+  <data name="Form_ReportFilter_Column_DesignFileName" xml:space="preserve">
+    <value>Dizayn faylı</value>
+  </data>
+  <data name="Form_ReportFilter_Prompt_OpenDesignerNow" xml:space="preserve">
+    <value>Dizayn yaradıldı. İndi dizayn redaktorunda açmaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_ReportFilter_DesignSelectFile" xml:space="preserve">
+    <value>Dizayn faylını seçin</value>
+  </data>
+  <data name="Form_ReportFilter_DesignFileFilter" xml:space="preserve">
+    <value>Hesabat dizayn faylları (*.repx)|*.repx|Bütün fayllar (*.*)|*.*</value>
+  </data>
   <data name="Form_ReportFilter_RibbonGroup_Excel" xml:space="preserve">
     <value>Excel</value>
   </data>

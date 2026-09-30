@@ -40,6 +40,7 @@ namespace Foxoft
 
             bBI_ReportDelete = new DevExpress.XtraBars.BarButtonItem();
             BBI_ReportCustomAdd = new DevExpress.XtraBars.BarButtonItem();
+            BBI_ReportCustomEdit = new DevExpress.XtraBars.BarButtonItem();
             BBI_ReportCustomSave = new DevExpress.XtraBars.BarButtonItem();
             BBI_ReportCustomDelete = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -102,8 +103,8 @@ namespace Foxoft
                 new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)
             });
             LUE_ReportCustomization.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCustomizationId", ""),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCustomizationDesc", "")
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCustomizationDesc", Resources.Form_ReportFilter_Column_DesignName),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportDesignFileName", Resources.Form_ReportFilter_Column_DesignFileName)
             });
             LUE_ReportCustomization.Properties.DisplayMember = "ReportCustomizationDesc";
             LUE_ReportCustomization.Properties.NullText = "";
@@ -122,13 +123,14 @@ namespace Foxoft
 
                 bBI_ReportDelete,
                 BBI_ReportCustomAdd,
+                BBI_ReportCustomEdit,
                 BBI_ReportCustomSave,
                 BBI_ReportCustomDelete,
                 bBI_FilterExportExcel,
                 bBI_FilterImportExcel
             });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 13;
+            ribbonControl1.MaxItemId = 15;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(992, 158);
@@ -161,6 +163,15 @@ namespace Foxoft
                 (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomAdd.ImageOptions.SvgImage");
             BBI_ReportCustomAdd.Name = "BBI_ReportCustomAdd";
             BBI_ReportCustomAdd.ItemClick += BBI_ReportCustomAdd_ItemClick;
+            // 
+            // BBI_ReportCustomEdit
+            // 
+            BBI_ReportCustomEdit.Caption = Resources.Form_ReportFilter_Button_CustomEdit;
+            BBI_ReportCustomEdit.Id = 14;
+            BBI_ReportCustomEdit.ImageOptions.SvgImage =
+                (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ReportEdit.ImageOptions.SvgImage");
+            BBI_ReportCustomEdit.Name = "BBI_ReportCustomEdit";
+            BBI_ReportCustomEdit.ItemClick += BBI_ReportCustomEdit_ItemClick;
             // 
             // BBI_ReportCustomSave
             // 
@@ -215,6 +226,7 @@ namespace Foxoft
             // ribbonPageGroup1
             // 
             ribbonPageGroup1.ItemLinks.Add(BBI_ReportCustomAdd);
+            ribbonPageGroup1.ItemLinks.Add(BBI_ReportCustomEdit);
             ribbonPageGroup1.ItemLinks.Add(BBI_ReportCustomSave);
             ribbonPageGroup1.ItemLinks.Add(BBI_ReportCustomDelete);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
@@ -277,11 +289,12 @@ namespace Foxoft
             BtnEdit_DesignFileFullPath.MenuManager = ribbonControl1;
             BtnEdit_DesignFileFullPath.Name = "BtnEdit_DesignFileFullPath";
             BtnEdit_DesignFileFullPath.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo)
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis)
             });
             BtnEdit_DesignFileFullPath.Size = new Size(899, 20);
             BtnEdit_DesignFileFullPath.StyleController = layoutControl1;
             BtnEdit_DesignFileFullPath.TabIndex = 5;
+            BtnEdit_DesignFileFullPath.ButtonClick += BtnEdit_DesignFileFullPath_ButtonClick;
             // 
             // Root
             // 
@@ -341,8 +354,9 @@ namespace Foxoft
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(972, 24);
             layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem2.TextSize = new Size(0, 0);
-            layoutControlItem2.TextVisible = false;
+            layoutControlItem2.Text = Resources.Common_Design;
+            layoutControlItem2.TextSize = new Size(57, 13);
+            layoutControlItem2.TextVisible = true;
             // 
             // layoutControlItem5
             // 
@@ -415,6 +429,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.SplitterItem splitterItem1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportCustomAdd;
+        private DevExpress.XtraBars.BarButtonItem BBI_ReportCustomEdit;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportCustomSave;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportCustomDelete;
         private DevExpress.XtraEditors.LookUpEdit LUE_ReportCustomization;

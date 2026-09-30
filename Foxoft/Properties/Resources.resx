@@ -3760,6 +3760,24 @@ Do you want to return to the invoice?</value>
   <data name="Form_ReportFilter_Button_CustomDelete" xml:space="preserve">
     <value>Delete design</value>
   </data>
+  <data name="Form_ReportFilter_Button_CustomEdit" xml:space="preserve">
+    <value>Edit design</value>
+  </data>
+  <data name="Form_ReportFilter_Column_DesignName" xml:space="preserve">
+    <value>Design name</value>
+  </data>
+  <data name="Form_ReportFilter_Column_DesignFileName" xml:space="preserve">
+    <value>Design file</value>
+  </data>
+  <data name="Form_ReportFilter_Prompt_OpenDesignerNow" xml:space="preserve">
+    <value>Design created. Do you want to open it in the report designer now?</value>
+  </data>
+  <data name="Form_ReportFilter_DesignSelectFile" xml:space="preserve">
+    <value>Select design file</value>
+  </data>
+  <data name="Form_ReportFilter_DesignFileFilter" xml:space="preserve">
+    <value>Report design files (*.repx)|*.repx|All files (*.*)|*.*</value>
+  </data>
   <data name="Form_ReportFilter_RibbonGroup_Excel" xml:space="preserve">
     <value>Excel</value>
   </data>

@@ -15403,6 +15403,60 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit design.
+        /// </summary>
+        public static string Form_ReportFilter_Button_CustomEdit {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Button_CustomEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design name.
+        /// </summary>
+        public static string Form_ReportFilter_Column_DesignName {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Column_DesignName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design file.
+        /// </summary>
+        public static string Form_ReportFilter_Column_DesignFileName {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Column_DesignFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design created. Do you want to open it in the report designer now?.
+        /// </summary>
+        public static string Form_ReportFilter_Prompt_OpenDesignerNow {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_Prompt_OpenDesignerNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select design file.
+        /// </summary>
+        public static string Form_ReportFilter_DesignSelectFile {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_DesignSelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report design files (*.repx)|*.repx|All files (*.*)|*.*.
+        /// </summary>
+        public static string Form_ReportFilter_DesignFileFilter {
+            get {
+                return ResourceManager.GetString("Form_ReportFilter_DesignFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save design.
         /// </summary>
         public static string Form_ReportFilter_Button_CustomSave {
