@@ -1,4 +1,4 @@
-﻿select DcCurrAccs.CurrAccCode
+select DcCurrAccs.CurrAccCode
 , CurrAccDesc
 , Balance = ISNULL(SUM(CAST(Amount as money)), 0)
 , PhoneNum

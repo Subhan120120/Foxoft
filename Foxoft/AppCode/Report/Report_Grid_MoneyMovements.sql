@@ -1,4 +1,4 @@
-﻿select  PaymentLineId
+select  PaymentLineId
 , ph.PaymentHeaderId
 , ph.InvoiceHeaderId
 , InvoiceNumber = ih.DocumentNumber

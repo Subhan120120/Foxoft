@@ -15,7 +15,6 @@ namespace Foxoft
 {
     public partial class FormPayrollEdit : XtraForm
     {
-        private readonly subContext db = new();
         private readonly Guid? id;
         private TrPayrollHeader entity;
         private BindingList<TrPayrollLine> lines = new();
@@ -43,15 +42,86 @@ namespace Foxoft
             repoType.Items.AddRange(Enum.GetNames(typeof(PayrollItemType)));
 
             var repoAmount = new RepositoryItemCalcEdit();
+            repoAmount.DisplayFormat.FormatString = "n2";
+            repoAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+
+            var repoCurrency = new RepositoryItemLookUpEdit();
+            using (var dbCur = new subContext())
+            {
+                repoCurrency.DataSource = dbCur.DcCurrencies.AsNoTracking().OrderBy(x => x.CurrencyCode).ToList();
+            }
+            repoCurrency.DisplayMember = "CurrencyCode";
+            repoCurrency.ValueMember = "CurrencyCode";
+            repoCurrency.NullText = "";
+            repoCurrency.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+            repoCurrency.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
+            repoCurrency.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", Properties.Resources.Entity_Currency_Code));
+            repoCurrency.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", Properties.Resources.Entity_Currency_Desc));
+            repoCurrency.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", Properties.Resources.Entity_Currency_ExchangeRate, 20, DevExpress.Utils.FormatType.Numeric, "n4", true, DevExpress.Utils.HorzAlignment.Default, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default));
+
+            var repoExRate = new RepositoryItemCalcEdit();
+            repoExRate.DisplayFormat.FormatString = "n4";
+            repoExRate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            repoExRate.Mask.EditMask = "n4";
+
+            var repoAmountLoc = new RepositoryItemCalcEdit();
+            repoAmountLoc.DisplayFormat.FormatString = "n2";
+            repoAmountLoc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
 
             gridLines.RepositoryItems.Add(repoType);
             gridLines.RepositoryItems.Add(repoAmount);
+            gridLines.RepositoryItems.Add(repoCurrency);
+            gridLines.RepositoryItems.Add(repoExRate);
+            gridLines.RepositoryItems.Add(repoAmountLoc);
 
             viewLines.Columns.AddVisible(nameof(TrPayrollLine.PayrollItemType), Properties.Resources.Entity_TrPayrollLine_PayrollItemType).ColumnEdit = repoType;
             viewLines.Columns.AddVisible(nameof(TrPayrollLine.Description), Properties.Resources.Entity_TrPayrollLine_Description);
             viewLines.Columns.AddVisible(nameof(TrPayrollLine.Amount), Properties.Resources.Entity_TrPayrollLine_Amount).ColumnEdit = repoAmount;
+            viewLines.Columns.AddVisible(nameof(TrPayrollLine.CurrencyCode), Properties.Resources.Entity_Currency_Code).ColumnEdit = repoCurrency;
+            viewLines.Columns.AddVisible(nameof(TrPayrollLine.ExchangeRate), Properties.Resources.Entity_Currency_ExchangeRate).ColumnEdit = repoExRate;
+            var colAmtLoc = viewLines.Columns.AddVisible(nameof(TrPayrollLine.AmountLoc), Properties.Resources.Entity_InvoiceLine_AmountLoc);
+            colAmtLoc.ColumnEdit = repoAmountLoc;
+            colAmtLoc.OptionsColumn.AllowEdit = false;
 
-            viewLines.CellValueChanged += (s, e) => RecalculateTotals();
+            repoCurrency.EditValueChanged += (s, e) =>
+            {
+                if (s is LookUpEdit editor && editor.EditValue != null)
+                {
+                    string code = editor.EditValue.ToString()?.Trim() ?? string.Empty;
+                    using var cDb = new subContext();
+                    var cur = cDb.DcCurrencies.AsNoTracking().FirstOrDefault(x => x.CurrencyCode == code);
+                    float rate = cur?.ExchangeRate ?? 1f;
+
+                    viewLines.PostEditor();
+                    viewLines.SetFocusedRowCellValue(nameof(TrPayrollLine.CurrencyCode), cur?.CurrencyCode ?? code);
+                    viewLines.SetFocusedRowCellValue(nameof(TrPayrollLine.ExchangeRate), rate);
+
+                    var row = viewLines.GetFocusedRow() as TrPayrollLine;
+                    if (row != null)
+                    {
+                        row.ExchangeRate = rate;
+                        row.AmountLoc = Math.Round(row.Amount / (rate == 0 ? 1m : (decimal)rate), 2);
+                        viewLines.SetFocusedRowCellValue(nameof(TrPayrollLine.AmountLoc), row.AmountLoc);
+                    }
+                    viewLines.RefreshRow(viewLines.FocusedRowHandle);
+                    RecalculateTotals();
+                }
+            };
+
+            viewLines.CellValueChanged += (s, e) =>
+            {
+                var row = viewLines.GetRow(e.RowHandle) as TrPayrollLine;
+                if (row != null)
+                {
+                    decimal rate = row.ExchangeRate == 0 ? 1m : (decimal)row.ExchangeRate;
+                    row.AmountLoc = Math.Round(row.Amount / rate, 2);
+                    if (e.Column.FieldName != nameof(TrPayrollLine.AmountLoc))
+                    {
+                        viewLines.SetRowCellValue(e.RowHandle, nameof(TrPayrollLine.AmountLoc), row.AmountLoc);
+                    }
+                }
+                RecalculateTotals();
+            };
             viewLines.RowDeleted += (s, e) => RecalculateTotals();
 
             Load += (_, __) => LoadEntity();
@@ -75,6 +145,7 @@ namespace Foxoft
 
         private void LoadEntity()
         {
+            using var db = new subContext();
             var periods = db.DcPayrollPeriods.AsNoTracking()
                 .OrderByDescending(x => x.PeriodYear)
                 .ThenByDescending(x => x.PeriodMonth)
@@ -101,7 +172,7 @@ namespace Foxoft
             }
             else
             {
-                entity = db.TrPayrollHeaders
+                entity = db.TrPayrollHeaders.AsNoTracking()
                     .Include(x => x.Lines)
                     .First(x => x.Id == id.Value);
 
@@ -215,63 +286,116 @@ namespace Foxoft
                 }
             }
 
-            if (id == null)
+            try
             {
-                entity.Lines = lines.ToList();
-                db.TrPayrollHeaders.Add(entity);
-            }
-            else
-            {
-                var dbEntity = db.TrPayrollHeaders
-                    .Include(x => x.Lines)
-                    .First(x => x.Id == entity.Id);
+                using var saveDb = new subContext();
+                var strategy = saveDb.Database.CreateExecutionStrategy();
 
-                dbEntity.CurrAccCode = entity.CurrAccCode;
-                dbEntity.PayrollPeriodId = entity.PayrollPeriodId;
-                dbEntity.GrossSalary = entity.GrossSalary;
-                dbEntity.NetSalary = entity.NetSalary;
-
-                var incomingIds = lines.Select(x => x.Id).ToHashSet();
-                var toRemove = dbEntity.Lines.Where(x => !incomingIds.Contains(x.Id)).ToList();
-                foreach (var rem in toRemove)
-                    db.TrPayrollLines.Remove(rem);
-
-                foreach (var ln in lines)
+                strategy.Execute(() =>
                 {
-                    decimal rate = ln.ExchangeRate == 0 ? 1m : (decimal)ln.ExchangeRate;
-                    decimal amtLoc = ln.AmountLoc == 0 ? Math.Round(ln.Amount / rate, 2) : ln.AmountLoc;
-                    string currCode = string.IsNullOrWhiteSpace(ln.CurrencyCode) ? (Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN") : ln.CurrencyCode;
-                    float exRate = ln.ExchangeRate == 0 ? 1f : ln.ExchangeRate;
+                    using var tran = saveDb.Database.BeginTransaction();
 
-                    var existing = dbEntity.Lines.FirstOrDefault(x => x.Id == ln.Id);
-                    if (existing == null)
+                    if (id == null)
                     {
-                        dbEntity.Lines.Add(new TrPayrollLine
+                        var newHeader = new TrPayrollHeader
                         {
-                            Id = ln.Id,
-                            PayrollHeaderId = dbEntity.Id,
-                            PayrollItemType = ln.PayrollItemType,
-                            Description = ln.Description,
-                            Amount = ln.Amount,
-                            CurrencyCode = currCode,
-                            ExchangeRate = exRate,
-                            AmountLoc = amtLoc
-                        });
+                            Id = entity.Id == Guid.Empty ? Guid.NewGuid() : entity.Id,
+                            CurrAccCode = entity.CurrAccCode,
+                            PayrollPeriodId = entity.PayrollPeriodId,
+                            GrossSalary = entity.GrossSalary,
+                            NetSalary = entity.NetSalary
+                        };
+
+                        foreach (var ln in lines)
+                        {
+                            decimal rate = ln.ExchangeRate == 0 ? 1m : (decimal)ln.ExchangeRate;
+                            decimal amtLoc = Math.Round(ln.Amount / rate, 2);
+                            string currCode = string.IsNullOrWhiteSpace(ln.CurrencyCode) ? (Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN") : ln.CurrencyCode;
+                            float exRate = ln.ExchangeRate == 0 ? 1f : ln.ExchangeRate;
+
+                            newHeader.Lines.Add(new TrPayrollLine
+                            {
+                                Id = ln.Id == Guid.Empty ? Guid.NewGuid() : ln.Id,
+                                PayrollHeaderId = newHeader.Id,
+                                PayrollItemType = ln.PayrollItemType,
+                                Description = ln.Description,
+                                Amount = ln.Amount,
+                                CurrencyCode = currCode,
+                                ExchangeRate = exRate,
+                                AmountLoc = amtLoc
+                            });
+                        }
+
+                        saveDb.TrPayrollHeaders.Add(newHeader);
                     }
                     else
                     {
-                        existing.PayrollItemType = ln.PayrollItemType;
-                        existing.Description = ln.Description;
-                        existing.Amount = ln.Amount;
-                        existing.CurrencyCode = currCode;
-                        existing.ExchangeRate = exRate;
-                        existing.AmountLoc = amtLoc;
-                    }
-                }
-            }
+                        var dbEntity = saveDb.TrPayrollHeaders
+                            .Include(x => x.Lines)
+                            .FirstOrDefault(x => x.Id == entity.Id);
 
-            db.SaveChanges();
-            DialogResult = DialogResult.OK;
+                        if (dbEntity == null)
+                        {
+                            throw new Exception("Payroll record not found in database.");
+                        }
+
+                        dbEntity.CurrAccCode = entity.CurrAccCode;
+                        dbEntity.PayrollPeriodId = entity.PayrollPeriodId;
+                        dbEntity.GrossSalary = entity.GrossSalary;
+                        dbEntity.NetSalary = entity.NetSalary;
+
+                        var incomingIds = lines.Select(x => x.Id).ToHashSet();
+                        var toRemove = dbEntity.Lines.Where(x => !incomingIds.Contains(x.Id)).ToList();
+                        saveDb.TrPayrollLines.RemoveRange(toRemove);
+
+                        foreach (var ln in lines)
+                        {
+                            decimal rate = ln.ExchangeRate == 0 ? 1m : (decimal)ln.ExchangeRate;
+                            decimal amtLoc = Math.Round(ln.Amount / rate, 2);
+                            string currCode = string.IsNullOrWhiteSpace(ln.CurrencyCode) ? (Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN") : ln.CurrencyCode;
+                            float exRate = ln.ExchangeRate == 0 ? 1f : ln.ExchangeRate;
+
+                            var existing = dbEntity.Lines.FirstOrDefault(x => x.Id == ln.Id);
+                            if (existing == null)
+                            {
+                                saveDb.TrPayrollLines.Add(new TrPayrollLine
+                                {
+                                    Id = ln.Id == Guid.Empty ? Guid.NewGuid() : ln.Id,
+                                    PayrollHeaderId = dbEntity.Id,
+                                    PayrollItemType = ln.PayrollItemType,
+                                    Description = ln.Description,
+                                    Amount = ln.Amount,
+                                    CurrencyCode = currCode,
+                                    ExchangeRate = exRate,
+                                    AmountLoc = amtLoc
+                                });
+                            }
+                            else
+                            {
+                                existing.PayrollItemType = ln.PayrollItemType;
+                                existing.Description = ln.Description;
+                                existing.Amount = ln.Amount;
+                                existing.CurrencyCode = currCode;
+                                existing.ExchangeRate = exRate;
+                                existing.AmountLoc = amtLoc;
+                            }
+                        }
+                    }
+
+                    saveDb.SaveChanges();
+                    tran.Commit();
+                });
+
+                DialogResult = DialogResult.OK;
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(this,
+                    ex.InnerException?.Message ?? ex.Message,
+                    Properties.Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void RecalculateTotals()
@@ -284,19 +408,19 @@ namespace Foxoft
             foreach (var line in lines)
             {
                 decimal rate = line.ExchangeRate == 0 ? 1m : (decimal)line.ExchangeRate;
-                decimal amtLoc = line.AmountLoc != 0 ? line.AmountLoc : Math.Round(line.Amount / rate, 2);
+                line.AmountLoc = Math.Round(line.Amount / rate, 2);
 
                 if (line.PayrollItemType == PayrollItemType.Salary ||
                     line.PayrollItemType == PayrollItemType.Bonus ||
                     line.PayrollItemType == PayrollItemType.Overtime)
                 {
-                    gross += amtLoc;
+                    gross += line.AmountLoc;
                 }
                 else if (line.PayrollItemType == PayrollItemType.Tax ||
                          line.PayrollItemType == PayrollItemType.Insurance ||
                          line.PayrollItemType == PayrollItemType.Deduction)
                 {
-                    deductions += amtLoc;
+                    deductions += line.AmountLoc;
                 }
             }
 
@@ -311,6 +435,7 @@ namespace Foxoft
         {
             if (id == null && lines.Count == 0 && !string.IsNullOrEmpty(currAccCode))
             {
+                using var db = new subContext();
                 var today = DateTime.Today;
                 var activeContract = db.TrEmployeeContracts.AsNoTracking()
                     .Where(x => x.CurrAccCode == currAccCode && x.StartDate <= today && (x.EndDate == null || x.EndDate >= today))
@@ -319,16 +444,25 @@ namespace Foxoft
 
                 if (activeContract != null)
                 {
+                    string currCode = activeContract.CurrencyCode ?? Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+                    float rate = 1f;
+                    var cur = db.DcCurrencies.AsNoTracking().FirstOrDefault(c => c.CurrencyCode == currCode);
+                    if (cur != null && cur.ExchangeRate > 0)
+                        rate = cur.ExchangeRate;
+
+                    decimal amt = activeContract.BaseSalary;
+                    decimal amtLoc = Math.Round(amt / (decimal)rate, 2);
+
                     var salaryLine = new TrPayrollLine
                     {
                         Id = Guid.NewGuid(),
                         PayrollHeaderId = entity.Id,
                         PayrollItemType = PayrollItemType.Salary,
                         Description = Properties.Resources.Form_PayrollEdit_BaseSalaryFromContract,
-                        Amount = activeContract.BaseSalary,
-                        CurrencyCode = activeContract.CurrencyCode ?? Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN",
-                        ExchangeRate = 1f,
-                        AmountLoc = activeContract.BaseSalary
+                        Amount = amt,
+                        CurrencyCode = currCode,
+                        ExchangeRate = rate,
+                        AmountLoc = amtLoc
                     };
                     lines.Add(salaryLine);
                     RecalculateTotals();

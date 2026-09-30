@@ -1,4 +1,4 @@
-﻿--declare @EndDate date = dateadd(DAY, 1, getdate())
+--declare @EndDate date = dateadd(DAY, 1, getdate())
 --declare @EndTime time =  '00:00:00.000'
 
 select DcCurrAccs.CurrAccCode
