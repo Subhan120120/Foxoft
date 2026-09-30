@@ -60,7 +60,6 @@ namespace Foxoft
             string qry = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters, 1);
 
             filterControl_Outer.SourceControl = adoMethods.SqlGetDt(qry, sqlParameters);
-            filterControl_Outer.FilterString = dcReport.ReportFilter;
 
             filterControl_Inner.SourceControl = GetColumnsFromDatabase(dcReport.DcReportVariables); //For Column Types
             filterControl_Inner.FilterCriteria = GetFiltersFromDatabase(dcReport.DcReportVariables);
@@ -83,6 +82,7 @@ namespace Foxoft
             else
             {
                 BtnEdit_DesignFileFullPath.EditValue = dcReport.ReportName + ".repx";
+                ApplyOuterFilter(dcReport.ReportFilter);
             }
         }
 
@@ -137,6 +137,8 @@ namespace Foxoft
 
         private void btn_ShowReport_Click(object sender, EventArgs e)
         {
+            filterControl_Outer.ApplyFilter();
+
             string filter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
 
             switch (dcReport.ReportTypeId)
@@ -428,7 +430,8 @@ namespace Foxoft
                 XtraMessageBox.Show(ex.Message, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            string filterCriteria = filterControl_Outer?.FilterCriteria?.ToString();
+            filterControl_Outer.ApplyFilter();
+            string filterCriteria = filterControl_Outer.FilterCriteria?.ToString() ?? filterControl_Outer.FilterString;
 
             var entity = efMethods.InsertEntity<TrReportCustomization>(new TrReportCustomization()
             {
@@ -592,7 +595,7 @@ namespace Foxoft
                 {
                     LUE_ReportCustomization.EditValue = null;
                     BtnEdit_DesignFileFullPath.EditValue = dcReport.ReportName + ".repx";
-                    filterControl_Outer.FilterString = dcReport.ReportFilter;
+                    ApplyOuterFilter(dcReport.ReportFilter);
                 }
             }
             else
@@ -607,6 +610,8 @@ namespace Foxoft
 
         private void BBI_ReportCustomSave_ItemClick(object sender, ItemClickEventArgs e)
         {
+            filterControl_Outer.ApplyFilter();
+
             TrReportCustomization selectedEntity =
                 LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
 
@@ -620,10 +625,17 @@ namespace Foxoft
                 return;
             }
 
-            selectedEntity.ReportFilter = filterControl_Outer?.FilterCriteria?.ToString();
+            string filterCriteria = filterControl_Outer.FilterCriteria?.ToString() ?? filterControl_Outer.FilterString;
+            selectedEntity.ReportFilter = filterCriteria;
             selectedEntity.ReportDesignFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString();
 
             efMethods.UpdateEntity(selectedEntity);
+
+            var savedList = Settings.Default.TrReportCustomizations?.ToList() ?? new List<TrReportCustomization>();
+            savedList.RemoveAll(x => x.ReportId == dcReport.ReportId && x.CurrAccCode == Authorization.CurrAccCode);
+            savedList.Add(selectedEntity);
+            Settings.Default.TrReportCustomizations = savedList;
+            Settings.Default.Save();
 
             XtraMessageBox.Show(
                 Resources.Common_SavedSuccessfully,
@@ -642,7 +654,8 @@ namespace Foxoft
             if (id <= 0)
                 return;
 
-            TrReportCustomization entity = efMethods.SelectEntityById<TrReportCustomization>(id);
+            TrReportCustomization entity = lookUpEdit.GetSelectedDataRow() as TrReportCustomization
+                                           ?? efMethods.SelectEntityById<TrReportCustomization>(id);
             if (entity == null)
                 return;
 
@@ -650,8 +663,7 @@ namespace Foxoft
                 ? dcReport.ReportName + ".repx"
                 : entity.ReportDesignFileName;
 
-            if (!string.IsNullOrEmpty(entity.ReportFilter))
-                filterControl_Outer.FilterString = entity.ReportFilter;
+            ApplyOuterFilter(entity.ReportFilter);
 
             var savedList = Settings.Default.TrReportCustomizations?.ToList() ?? new List<TrReportCustomization>();
             savedList.RemoveAll(x => x.ReportId == dcReport.ReportId && x.CurrAccCode == Authorization.CurrAccCode);
@@ -659,6 +671,27 @@ namespace Foxoft
 
             Settings.Default.TrReportCustomizations = savedList;
             Settings.Default.Save();
+        }
+
+        private void ApplyOuterFilter(string filterString)
+        {
+            if (string.IsNullOrWhiteSpace(filterString))
+            {
+                filterControl_Outer.FilterCriteria = null;
+                filterControl_Outer.FilterString = string.Empty;
+            }
+            else
+            {
+                try
+                {
+                    CriteriaOperator op = CriteriaOperator.Parse(filterString);
+                    filterControl_Outer.FilterCriteria = op;
+                }
+                catch
+                {
+                    filterControl_Outer.FilterString = filterString;
+                }
+            }
         }
 
         private void bBI_FilterExportExcel_ItemClick(object sender, ItemClickEventArgs e)
