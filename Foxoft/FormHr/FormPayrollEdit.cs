@@ -168,9 +168,7 @@ namespace Foxoft
             {
                 entity = new TrPayrollHeader
                 {
-                    Id = Guid.NewGuid(),
-                    GrossSalary = 0,
-                    NetSalary = 0
+                    Id = Guid.NewGuid()
                 };
                 lines = new BindingList<TrPayrollLine>();
             }
@@ -429,9 +427,7 @@ namespace Foxoft
                         {
                             Id = entity.Id == Guid.Empty ? Guid.NewGuid() : entity.Id,
                             CurrAccCode = entity.CurrAccCode,
-                            PayrollPeriodId = entity.PayrollPeriodId,
-                            GrossSalary = entity.GrossSalary,
-                            NetSalary = entity.NetSalary
+                            PayrollPeriodId = entity.PayrollPeriodId
                         };
 
                         foreach (var ln in lines)
@@ -475,8 +471,6 @@ namespace Foxoft
 
                         dbEntity.CurrAccCode = entity.CurrAccCode;
                         dbEntity.PayrollPeriodId = entity.PayrollPeriodId;
-                        dbEntity.GrossSalary = entity.GrossSalary;
-                        dbEntity.NetSalary = entity.NetSalary;
 
                         var incomingIds = lines.Select(x => x.Id).ToHashSet();
                         var toRemove = dbEntity.Lines.Where(x => !incomingIds.Contains(x.Id)).ToList();
@@ -560,6 +554,7 @@ namespace Foxoft
                 }
             }
 
+            entity.Lines = lines.ToList();
             entity.GrossSalary = gross;
             entity.NetSalary = gross - deductions;
 

@@ -16,7 +16,12 @@ UNION ALL
 SELECT ProductCode = prh.CurrAccCode
 , ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)
 , LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')
-, Amount = prh.GrossSalary
+, Amount = isnull((
+    select sum(l.AmountLoc)
+    from TrPayrollLines l
+    where l.PayrollHeaderId = prh.Id
+      and l.PayrollItemType in (1, 2, 3)
+), 0)
 FROM TrPayrollHeaders prh
 LEFT JOIN DcPayrollPeriods prp ON prh.PayrollPeriodId = prp.Id
 LEFT JOIN DcCurrAccs ON prh.CurrAccCode = DcCurrAccs.CurrAccCode

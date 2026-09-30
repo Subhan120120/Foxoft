@@ -86,9 +86,9 @@ from (
 	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)
 	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)
 	, PayrollHeaderId = prh.Id
-	, NetAmountLoc = prh.NetSalary
+	, NetAmountLoc = calc.NetSalary
 	, PaymentLoc = 0
-	, Summary = prh.NetSalary
+	, Summary = calc.NetSalary
 	, ProcessDesc = N'Əməkhaqqı'
 	, DocumentNumber = CONCAT('PR-', prp.PeriodYear, '-', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2))
 	, StoreCode = DcCurrAccs.StoreCode
@@ -99,6 +99,14 @@ from (
 	, ProcessCode = 'PR'
 	, IsReturn = CAST(0 as bit)
 	from TrPayrollHeaders prh
+	cross apply (
+		select NetSalary = isnull(sum(case 
+			when l.PayrollItemType in (1, 2, 3) then l.AmountLoc 
+			when l.PayrollItemType in (4, 5, 6) then -l.AmountLoc 
+			else 0 end), 0)
+		from TrPayrollLines l
+		where l.PayrollHeaderId = prh.Id
+	) calc
 	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id
 	left join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode
 

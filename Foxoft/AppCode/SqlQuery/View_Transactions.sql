@@ -22,8 +22,13 @@ select  TrInvoiceHeaders.InvoiceHeaderId
 	, CurrAccBalance = ((select isnull(Sum(NetAmount), 0) from TrInvoiceLines il 
 						join TrInvoiceHeaders as ih on ih.InvoiceHeaderId = il.InvoiceHeaderId 
 						where ih.CurrAccCode = TrInvoiceHeaders.CurrAccCode) 
-						+ (select isnull(Sum(NetSalary), 0) from TrPayrollHeaders prh
-						where prh.CurrAccCode = TrInvoiceHeaders.CurrAccCode)
+						+ (select isnull(Sum(case 
+								when prl.PayrollItemType in (1, 2, 3) then prl.AmountLoc 
+								when prl.PayrollItemType in (4, 5, 6) then -prl.AmountLoc 
+								else 0 end), 0) 
+							from TrPayrollLines prl
+							inner join TrPayrollHeaders prh on prl.PayrollHeaderId = prh.Id
+							where prh.CurrAccCode = TrInvoiceHeaders.CurrAccCode)
 						- (select isnull(Sum(PaymentLoc), 0) from TrPaymentLines pl 
 						join TrPaymentHeaders as ph on ph.PaymentHeaderId = pl.PaymentHeaderId 
 						where ph.CurrAccCode = TrInvoiceHeaders.CurrAccCode))

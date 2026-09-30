@@ -1,8 +1,20 @@
 select prh.Id
 	, prh.CurrAccCode
 	, prh.PayrollPeriodId
-	, prh.GrossSalary
-	, prh.NetSalary
+	, GrossSalary = (
+		select isnull(sum(l.AmountLoc), 0)
+		from TrPayrollLines l
+		where l.PayrollHeaderId = prh.Id
+		  and l.PayrollItemType in (1, 2, 3)
+	)
+	, NetSalary = (
+		select isnull(sum(case 
+			when l.PayrollItemType in (1, 2, 3) then l.AmountLoc 
+			when l.PayrollItemType in (4, 5, 6) then -l.AmountLoc 
+			else 0 end), 0)
+		from TrPayrollLines l
+		where l.PayrollHeaderId = prh.Id
+	)
 	, PayrollLineId = prl.Id
 	, prl.PayrollItemType
 	, PayrollItemTypeName = case prl.PayrollItemType

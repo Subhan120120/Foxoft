@@ -53,8 +53,12 @@ namespace Foxoft.Migrations
                             DECLARE @payrollSum DECIMAL(18, 2)
                             SET @payrollSum = ISNULL(
                                 (
-                                    SELECT SUM(prh.NetSalary)
-                                    FROM TrPayrollHeaders prh
+                                    SELECT SUM(CASE 
+                                        WHEN prl.PayrollItemType IN (1, 2, 3) THEN prl.AmountLoc 
+                                        WHEN prl.PayrollItemType IN (4, 5, 6) THEN -prl.AmountLoc 
+                                        ELSE 0 END)
+                                    FROM TrPayrollLines prl
+                                    INNER JOIN TrPayrollHeaders prh ON prl.PayrollHeaderId = prh.Id
                                     LEFT JOIN DcPayrollPeriods prp ON prh.PayrollPeriodId = prp.Id
                                     WHERE prh.CurrAccCode = @CurrAccCode
                                       AND (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <= @DateTime

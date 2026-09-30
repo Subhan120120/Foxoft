@@ -317,9 +317,7 @@ namespace Foxoft
                             {
                                 Id = newHeaderId,
                                 CurrAccCode = item.CurrAccCode,
-                                PayrollPeriodId = periodId,
-                                GrossSalary = item.GrossSalaryLoc,
-                                NetSalary = item.NetSalaryLoc
+                                PayrollPeriodId = periodId
                             };
 
                             dbHeader.Lines.Add(new TrPayrollLine
@@ -373,9 +371,6 @@ namespace Foxoft
                         }
                         else
                         {
-                            dbHeader.GrossSalary = item.GrossSalaryLoc;
-                            dbHeader.NetSalary = item.NetSalaryLoc;
-
                             // Sync Salary Line
                             var salaryLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Salary);
                             if (salaryLine == null)

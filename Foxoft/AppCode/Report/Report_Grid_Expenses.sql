@@ -20,10 +20,20 @@ where ProcessCode = 'EX'
 
 UNION ALL
 
-select Price = prh.GrossSalary
+select Price = isnull((
+    select sum(l.AmountLoc)
+    from TrPayrollLines l
+    where l.PayrollHeaderId = prh.Id
+      and l.PayrollItemType in (1, 2, 3)
+), 0)
 , ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)
 , CurrencyCode = 'AZN'
-, NetAmountLoc = prh.GrossSalary
+, NetAmountLoc = isnull((
+    select sum(l.AmountLoc)
+    from TrPayrollLines l
+    where l.PayrollHeaderId = prh.Id
+      and l.PayrollItemType in (1, 2, 3)
+), 0)
 , DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))
 , LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')
 , StoreCode = DcCurrAccs.StoreCode

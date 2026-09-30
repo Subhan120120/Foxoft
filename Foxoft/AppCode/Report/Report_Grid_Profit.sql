@@ -81,16 +81,16 @@ select InvoiceLineId = cast(cast(0 as binary) as uniqueidentifier)
 , InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)
 , ProductCode = ''
 , ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)
-, Price = prh.GrossSalary
-, PriceLoc = prh.GrossSalary
-, Amount = prh.GrossSalary
-, NetAmountLoc = prh.GrossSalary
+, Price = calc.GrossSalary
+, PriceLoc = calc.GrossSalary
+, Amount = calc.GrossSalary
+, NetAmountLoc = calc.GrossSalary
 , PosDiscount = cast(0 as decimal(18, 2))
 , QtyIn = cast(0 as decimal(18, 4))
 , QtyOut = cast(0 as decimal(18, 4))
 , Satis = cast(0 as decimal(18, 2))
 , Maya = cast(0 as decimal(18, 2))
-, Xərc = prh.GrossSalary
+, Xərc = calc.GrossSalary
 , Artirma = cast(0 as decimal(18, 2))
 , Silinme = cast(0 as decimal(18, 2))
 , IsReturn = cast(0 as bit)
@@ -132,6 +132,12 @@ select InvoiceLineId = cast(cast(0 as binary) as uniqueidentifier)
 , CreatedUserName = ''
 , PriceDiscountedLoc = cast(0 as decimal(18, 2))
 from TrPayrollHeaders prh
+cross apply (
+    select GrossSalary = isnull(sum(l.AmountLoc), 0)
+    from TrPayrollLines l
+    where l.PayrollHeaderId = prh.Id
+      and l.PayrollItemType in (1, 2, 3)
+) calc
 left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id
 left join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode
 left join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode

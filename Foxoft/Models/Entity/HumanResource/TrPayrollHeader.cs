@@ -1,8 +1,9 @@
-﻿// File: Models/TrPayrollHeader.cs
+// File: Models/TrPayrollHeader.cs
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Foxoft.Models
 {
@@ -23,11 +24,46 @@ namespace Foxoft.Models
         [ForeignKey(nameof(PayrollPeriodId))]
         public DcPayrollPeriod PayrollPeriod { get; set; } = null!;
 
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal GrossSalary { get; set; }
+        private decimal _grossSalary;
+        private decimal _netSalary;
 
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal NetSalary { get; set; }
+        [NotMapped]
+        public decimal GrossSalary
+        {
+            get
+            {
+                if (Lines != null && Lines.Count > 0)
+                {
+                    return Lines
+                        .Where(l => l.PayrollItemType == PayrollItemType.Salary ||
+                                    l.PayrollItemType == PayrollItemType.Bonus ||
+                                    l.PayrollItemType == PayrollItemType.Overtime)
+                        .Sum(l => l.AmountLoc != 0 ? l.AmountLoc : (l.ExchangeRate == 0 ? l.Amount : Math.Round(l.Amount / (decimal)l.ExchangeRate, 2)));
+                }
+                return _grossSalary;
+            }
+            set => _grossSalary = value;
+        }
+
+        [NotMapped]
+        public decimal NetSalary
+        {
+            get
+            {
+                if (Lines != null && Lines.Count > 0)
+                {
+                    decimal gross = GrossSalary;
+                    decimal deductions = Lines
+                        .Where(l => l.PayrollItemType == PayrollItemType.Tax ||
+                                    l.PayrollItemType == PayrollItemType.Insurance ||
+                                    l.PayrollItemType == PayrollItemType.Deduction)
+                        .Sum(l => l.AmountLoc != 0 ? l.AmountLoc : (l.ExchangeRate == 0 ? l.Amount : Math.Round(l.Amount / (decimal)l.ExchangeRate, 2)));
+                    return gross - deductions;
+                }
+                return _netSalary;
+            }
+            set => _netSalary = value;
+        }
 
         public ICollection<TrPayrollLine> Lines { get; set; } = new HashSet<TrPayrollLine>();
     }

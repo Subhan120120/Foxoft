@@ -32,10 +32,14 @@ select * from (select DcCurrAccs.CurrAccCode
 			   group by CurrAccCode
 			   ) as parchses on parchses.CurrAccCode = DcCurrAccs.CurrAccCode
 
-	left join (select CurrAccCode 
-			   ,NetAmountLoc = sum(NetSalary)
-			   from TrPayrollHeaders
-			   group by CurrAccCode
+	left join (select prh.CurrAccCode 
+			   ,NetAmountLoc = sum(case 
+					when prl.PayrollItemType in (1, 2, 3) then prl.AmountLoc 
+					when prl.PayrollItemType in (4, 5, 6) then -prl.AmountLoc 
+					else 0 end)
+			   from TrPayrollLines prl
+			   inner join TrPayrollHeaders prh on prl.PayrollHeaderId = prh.Id
+			   group by prh.CurrAccCode
 			   ) as payroll on payroll.CurrAccCode = DcCurrAccs.CurrAccCode
 
 	left join (select CurrAccCode

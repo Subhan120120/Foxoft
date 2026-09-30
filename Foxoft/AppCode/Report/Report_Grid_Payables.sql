@@ -32,8 +32,12 @@ left join
 	UNION ALL
 
 	select CurrAccCode = prh.CurrAccCode
-	, Amount = prh.NetSalary
-	from TrPayrollHeaders prh
+	, Amount = (case 
+		when prl.PayrollItemType in (1, 2, 3) then prl.AmountLoc 
+		when prl.PayrollItemType in (4, 5, 6) then -prl.AmountLoc 
+		else 0 end)
+	from TrPayrollLines prl
+	inner join TrPayrollHeaders prh on prl.PayrollHeaderId = prh.Id
 	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id
 --	where 1=1
 --	and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=

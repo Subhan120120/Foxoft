@@ -970,46 +970,14 @@ namespace Foxoft
 
             return headers.Select(x =>
             {
-                decimal grossLoc = 0;
-                decimal deductionsLoc = 0;
-
-                if (x.Lines != null && x.Lines.Count > 0)
-                {
-                    foreach (var l in x.Lines)
-                    {
-                        decimal rate = l.ExchangeRate == 0 ? 1m : (decimal)l.ExchangeRate;
-                        decimal loc = l.AmountLoc != 0 ? l.AmountLoc : Math.Round(l.Amount / rate, 2);
-
-                        if (l.PayrollItemType == PayrollItemType.Salary ||
-                            l.PayrollItemType == PayrollItemType.Bonus ||
-                            l.PayrollItemType == PayrollItemType.Overtime)
-                        {
-                            grossLoc += loc;
-                        }
-                        else if (l.PayrollItemType == PayrollItemType.Tax ||
-                                 l.PayrollItemType == PayrollItemType.Insurance ||
-                                 l.PayrollItemType == PayrollItemType.Deduction)
-                        {
-                            deductionsLoc += loc;
-                        }
-                    }
-                }
-                else
-                {
-                    grossLoc = x.GrossSalary;
-                    deductionsLoc = x.GrossSalary - x.NetSalary;
-                }
-
-                decimal netLoc = grossLoc - deductionsLoc;
-
                 return new
                 {
                     x.Id,
                     x.CurrAccCode,
                     Period = x.PayrollPeriod != null ? $"{x.PayrollPeriod.PeriodYear:0000}-{x.PayrollPeriod.PeriodMonth:00}" : string.Empty,
                     Employee = (!string.IsNullOrEmpty(x.DcCurrAcc?.CurrAccDesc) ? x.DcCurrAcc.CurrAccDesc : $"{x.DcCurrAcc?.FirstName} {x.DcCurrAcc?.LastName}").Trim(),
-                    GrossSalary = grossLoc,
-                    NetSalary = netLoc
+                    GrossSalary = x.GrossSalary,
+                    NetSalary = x.NetSalary
                 };
             }).ToList();
         }
@@ -1843,11 +1811,17 @@ namespace Foxoft
             decimal paymentSum = paymentLinesQuery
                                        .Sum(x => (decimal?)x.PaymentLoc) ?? 0m;
 
-            decimal payrollSum = db.TrPayrollHeaders
-                                       .Where(x => x.CurrAccCode == currAccCode)
-                                       .Where(x => x.PayrollPeriod.PeriodYear < dateOnly.Year
-                                                || (x.PayrollPeriod.PeriodYear == dateOnly.Year && x.PayrollPeriod.PeriodMonth <= dateOnly.Month))
-                                       .Sum(x => (decimal?)x.NetSalary) ?? 0m;
+            decimal payrollSum = db.TrPayrollLines
+                                       .Where(x => x.PayrollHeader.CurrAccCode == currAccCode)
+                                       .Where(x => x.PayrollHeader.PayrollPeriod.PeriodYear < dateOnly.Year
+                                                || (x.PayrollHeader.PayrollPeriod.PeriodYear == dateOnly.Year && x.PayrollHeader.PayrollPeriod.PeriodMonth <= dateOnly.Month))
+                                       .Sum(x => (decimal?)(
+                                           (x.PayrollItemType == PayrollItemType.Salary || x.PayrollItemType == PayrollItemType.Bonus || x.PayrollItemType == PayrollItemType.Overtime)
+                                               ? x.AmountLoc
+                                               : ((x.PayrollItemType == PayrollItemType.Tax || x.PayrollItemType == PayrollItemType.Insurance || x.PayrollItemType == PayrollItemType.Deduction)
+                                                   ? -x.AmountLoc
+                                                   : 0m)
+                                       )) ?? 0m;
 
             return paymentSum + invoiceSum + payrollSum;
         }
