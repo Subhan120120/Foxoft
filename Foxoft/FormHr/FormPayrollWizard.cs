@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -207,146 +207,152 @@ namespace Foxoft
 
             try
             {
-                using var saveDb = new subContext();
-                using var transaction = saveDb.Database.BeginTransaction();
+                using var initDb = new subContext();
+                var strategy = initDb.Database.CreateExecutionStrategy();
 
-                foreach (var item in selectedEmployees)
+                strategy.Execute(() =>
                 {
-                    TrPayrollHeader? dbHeader = null;
-                    if (item.AlreadyExists && item.ExistingPayrollHeaderId.HasValue)
+                    using var saveDb = new subContext();
+                    using var transaction = saveDb.Database.BeginTransaction();
+
+                    foreach (var item in selectedEmployees)
                     {
-                        dbHeader = saveDb.TrPayrollHeaders
-                            .Include(x => x.Lines)
-                            .FirstOrDefault(x => x.Id == item.ExistingPayrollHeaderId.Value);
-                    }
-
-                    if (dbHeader == null)
-                    {
-                        var newHeaderId = Guid.NewGuid();
-                        dbHeader = new TrPayrollHeader
+                        TrPayrollHeader? dbHeader = null;
+                        if (item.AlreadyExists && item.ExistingPayrollHeaderId.HasValue)
                         {
-                            Id = newHeaderId,
-                            CurrAccCode = item.CurrAccCode,
-                            PayrollPeriodId = periodId,
-                            GrossSalary = item.GrossSalary,
-                            NetSalary = item.NetSalary
-                        };
+                            dbHeader = saveDb.TrPayrollHeaders
+                                .Include(x => x.Lines)
+                                .FirstOrDefault(x => x.Id == item.ExistingPayrollHeaderId.Value);
+                        }
 
-                        dbHeader.Lines.Add(new TrPayrollLine
+                        if (dbHeader == null)
                         {
-                            Id = Guid.NewGuid(),
-                            PayrollHeaderId = newHeaderId,
-                            PayrollItemType = PayrollItemType.Salary,
-                            Description = Properties.Resources.Form_PayrollEdit_BaseSalaryFromContract,
-                            Amount = item.BaseSalary
-                        });
+                            var newHeaderId = Guid.NewGuid();
+                            dbHeader = new TrPayrollHeader
+                            {
+                                Id = newHeaderId,
+                                CurrAccCode = item.CurrAccCode,
+                                PayrollPeriodId = periodId,
+                                GrossSalary = item.GrossSalary,
+                                NetSalary = item.NetSalary
+                            };
 
-                        if (item.Bonus > 0)
-                        {
                             dbHeader.Lines.Add(new TrPayrollLine
                             {
                                 Id = Guid.NewGuid(),
                                 PayrollHeaderId = newHeaderId,
-                                PayrollItemType = PayrollItemType.Bonus,
-                                Description = Properties.Resources.Entity_TrPayrollHeader_Bonus,
-                                Amount = item.Bonus
-                            });
-                        }
-
-                        if (item.Deduction > 0)
-                        {
-                            dbHeader.Lines.Add(new TrPayrollLine
-                            {
-                                Id = Guid.NewGuid(),
-                                PayrollHeaderId = newHeaderId,
-                                PayrollItemType = PayrollItemType.Deduction,
-                                Description = Properties.Resources.Entity_TrPayrollHeader_Deduction,
-                                Amount = item.Deduction
-                            });
-                        }
-
-                        saveDb.TrPayrollHeaders.Add(dbHeader);
-                    }
-                    else
-                    {
-                        dbHeader.GrossSalary = item.GrossSalary;
-                        dbHeader.NetSalary = item.NetSalary;
-
-                        // Sync Salary Line
-                        var salaryLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Salary);
-                        if (salaryLine == null)
-                        {
-                            dbHeader.Lines.Add(new TrPayrollLine
-                            {
-                                Id = Guid.NewGuid(),
-                                PayrollHeaderId = dbHeader.Id,
                                 PayrollItemType = PayrollItemType.Salary,
                                 Description = Properties.Resources.Form_PayrollEdit_BaseSalaryFromContract,
                                 Amount = item.BaseSalary
                             });
-                        }
-                        else
-                        {
-                            salaryLine.Amount = item.BaseSalary;
-                            salaryLine.Description = Properties.Resources.Form_PayrollEdit_BaseSalaryFromContract;
-                        }
 
-                        // Sync Bonus Line
-                        var bonusLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Bonus);
-                        if (item.Bonus > 0)
-                        {
-                            if (bonusLine == null)
+                            if (item.Bonus > 0)
                             {
                                 dbHeader.Lines.Add(new TrPayrollLine
                                 {
                                     Id = Guid.NewGuid(),
-                                    PayrollHeaderId = dbHeader.Id,
+                                    PayrollHeaderId = newHeaderId,
                                     PayrollItemType = PayrollItemType.Bonus,
                                     Description = Properties.Resources.Entity_TrPayrollHeader_Bonus,
                                     Amount = item.Bonus
                                 });
                             }
-                            else
-                            {
-                                bonusLine.Amount = item.Bonus;
-                                bonusLine.Description = Properties.Resources.Entity_TrPayrollHeader_Bonus;
-                            }
-                        }
-                        else if (bonusLine != null)
-                        {
-                            saveDb.TrPayrollLines.Remove(bonusLine);
-                        }
 
-                        // Sync Deduction Line
-                        var deductionLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Deduction);
-                        if (item.Deduction > 0)
-                        {
-                            if (deductionLine == null)
+                            if (item.Deduction > 0)
                             {
                                 dbHeader.Lines.Add(new TrPayrollLine
                                 {
                                     Id = Guid.NewGuid(),
-                                    PayrollHeaderId = dbHeader.Id,
+                                    PayrollHeaderId = newHeaderId,
                                     PayrollItemType = PayrollItemType.Deduction,
                                     Description = Properties.Resources.Entity_TrPayrollHeader_Deduction,
                                     Amount = item.Deduction
                                 });
                             }
+
+                            saveDb.TrPayrollHeaders.Add(dbHeader);
+                        }
+                        else
+                        {
+                            dbHeader.GrossSalary = item.GrossSalary;
+                            dbHeader.NetSalary = item.NetSalary;
+
+                            // Sync Salary Line
+                            var salaryLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Salary);
+                            if (salaryLine == null)
+                            {
+                                dbHeader.Lines.Add(new TrPayrollLine
+                                {
+                                    Id = Guid.NewGuid(),
+                                    PayrollHeaderId = dbHeader.Id,
+                                    PayrollItemType = PayrollItemType.Salary,
+                                    Description = Properties.Resources.Form_PayrollEdit_BaseSalaryFromContract,
+                                    Amount = item.BaseSalary
+                                });
+                            }
                             else
                             {
-                                deductionLine.Amount = item.Deduction;
-                                deductionLine.Description = Properties.Resources.Entity_TrPayrollHeader_Deduction;
+                                salaryLine.Amount = item.BaseSalary;
+                                salaryLine.Description = Properties.Resources.Form_PayrollEdit_BaseSalaryFromContract;
+                            }
+
+                            // Sync Bonus Line
+                            var bonusLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Bonus);
+                            if (item.Bonus > 0)
+                            {
+                                if (bonusLine == null)
+                                {
+                                    dbHeader.Lines.Add(new TrPayrollLine
+                                    {
+                                        Id = Guid.NewGuid(),
+                                        PayrollHeaderId = dbHeader.Id,
+                                        PayrollItemType = PayrollItemType.Bonus,
+                                        Description = Properties.Resources.Entity_TrPayrollHeader_Bonus,
+                                        Amount = item.Bonus
+                                    });
+                                }
+                                else
+                                {
+                                    bonusLine.Amount = item.Bonus;
+                                    bonusLine.Description = Properties.Resources.Entity_TrPayrollHeader_Bonus;
+                                }
+                            }
+                            else if (bonusLine != null)
+                            {
+                                saveDb.TrPayrollLines.Remove(bonusLine);
+                            }
+
+                            // Sync Deduction Line
+                            var deductionLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Deduction);
+                            if (item.Deduction > 0)
+                            {
+                                if (deductionLine == null)
+                                {
+                                    dbHeader.Lines.Add(new TrPayrollLine
+                                    {
+                                        Id = Guid.NewGuid(),
+                                        PayrollHeaderId = dbHeader.Id,
+                                        PayrollItemType = PayrollItemType.Deduction,
+                                        Description = Properties.Resources.Entity_TrPayrollHeader_Deduction,
+                                        Amount = item.Deduction
+                                    });
+                                }
+                                else
+                                {
+                                    deductionLine.Amount = item.Deduction;
+                                    deductionLine.Description = Properties.Resources.Entity_TrPayrollHeader_Deduction;
+                                }
+                            }
+                            else if (deductionLine != null)
+                            {
+                                saveDb.TrPayrollLines.Remove(deductionLine);
                             }
                         }
-                        else if (deductionLine != null)
-                        {
-                            saveDb.TrPayrollLines.Remove(deductionLine);
-                        }
                     }
-                }
 
-                saveDb.SaveChanges();
-                transaction.Commit();
+                    saveDb.SaveChanges();
+                    transaction.Commit();
+                });
 
                 XtraMessageBox.Show(this,
                     string.Format(Properties.Resources.Form_PayrollWizard_SuccessMessage, selectedEmployees.Count),
