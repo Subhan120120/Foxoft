@@ -960,21 +960,58 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            return db.TrPayrollHeaders.AsNoTracking()
+            var headers = db.TrPayrollHeaders.AsNoTracking()
                 .Include(x => x.DcCurrAcc)
                 .Include(x => x.PayrollPeriod)
+                .Include(x => x.Lines)
                 .OrderByDescending(x => x.PayrollPeriod.PeriodYear)
                 .ThenByDescending(x => x.PayrollPeriod.PeriodMonth)
-                .Select(x => new
+                .ToList();
+
+            return headers.Select(x =>
+            {
+                decimal grossLoc = 0;
+                decimal deductionsLoc = 0;
+
+                if (x.Lines != null && x.Lines.Count > 0)
+                {
+                    foreach (var l in x.Lines)
+                    {
+                        decimal rate = l.ExchangeRate == 0 ? 1m : (decimal)l.ExchangeRate;
+                        decimal loc = l.AmountLoc != 0 ? l.AmountLoc : Math.Round(l.Amount / rate, 2);
+
+                        if (l.PayrollItemType == PayrollItemType.Salary ||
+                            l.PayrollItemType == PayrollItemType.Bonus ||
+                            l.PayrollItemType == PayrollItemType.Overtime)
+                        {
+                            grossLoc += loc;
+                        }
+                        else if (l.PayrollItemType == PayrollItemType.Tax ||
+                                 l.PayrollItemType == PayrollItemType.Insurance ||
+                                 l.PayrollItemType == PayrollItemType.Deduction)
+                        {
+                            deductionsLoc += loc;
+                        }
+                    }
+                }
+                else
+                {
+                    grossLoc = x.GrossSalary;
+                    deductionsLoc = x.GrossSalary - x.NetSalary;
+                }
+
+                decimal netLoc = grossLoc - deductionsLoc;
+
+                return new
                 {
                     x.Id,
                     x.CurrAccCode,
-                    Period = x.PayrollPeriod.PeriodYear.ToString() + "-" + x.PayrollPeriod.PeriodMonth.ToString("00"),
-                    Employee = (!string.IsNullOrEmpty(x.DcCurrAcc.CurrAccDesc) ? x.DcCurrAcc.CurrAccDesc : (x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName)).Trim(),
-                    x.GrossSalary,
-                    x.NetSalary
-                })
-                .ToList();
+                    Period = x.PayrollPeriod != null ? $"{x.PayrollPeriod.PeriodYear:0000}-{x.PayrollPeriod.PeriodMonth:00}" : string.Empty,
+                    Employee = (!string.IsNullOrEmpty(x.DcCurrAcc?.CurrAccDesc) ? x.DcCurrAcc.CurrAccDesc : $"{x.DcCurrAcc?.FirstName} {x.DcCurrAcc?.LastName}").Trim(),
+                    GrossSalary = grossLoc,
+                    NetSalary = netLoc
+                };
+            }).ToList();
         }
 
         public TrPayrollHeader SelectEntityByIdWithLine(Guid? id)

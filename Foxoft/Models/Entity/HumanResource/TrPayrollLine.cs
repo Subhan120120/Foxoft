@@ -26,5 +26,17 @@ namespace Foxoft.Models
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        [ForeignKey(nameof(DcCurrency))]
+        public string CurrencyCode { get; set; } = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+
+        public float ExchangeRate { get; set; } = 1;
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal AmountLoc { get; set; }
+
+        public virtual DcCurrency? DcCurrency { get; set; }
     }
 }

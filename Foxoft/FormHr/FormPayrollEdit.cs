@@ -114,7 +114,10 @@ namespace Foxoft
                             PayrollHeaderId = entity.Id,
                             PayrollItemType = x.PayrollItemType,
                             Description = x.Description,
-                            Amount = x.Amount
+                            Amount = x.Amount,
+                            CurrencyCode = x.CurrencyCode,
+                            ExchangeRate = x.ExchangeRate,
+                            AmountLoc = x.AmountLoc
                         }).ToList()
                 );
                 
@@ -146,7 +149,10 @@ namespace Foxoft
                 Id = Guid.NewGuid(),
                 PayrollHeaderId = entity.Id,
                 PayrollItemType = PayrollItemType.Salary,
-                Amount = 0
+                Amount = 0,
+                CurrencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN",
+                ExchangeRate = 1f,
+                AmountLoc = 0
             };
             lines.Add(line);
 
@@ -232,6 +238,11 @@ namespace Foxoft
 
                 foreach (var ln in lines)
                 {
+                    decimal rate = ln.ExchangeRate == 0 ? 1m : (decimal)ln.ExchangeRate;
+                    decimal amtLoc = ln.AmountLoc == 0 ? Math.Round(ln.Amount / rate, 2) : ln.AmountLoc;
+                    string currCode = string.IsNullOrWhiteSpace(ln.CurrencyCode) ? (Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN") : ln.CurrencyCode;
+                    float exRate = ln.ExchangeRate == 0 ? 1f : ln.ExchangeRate;
+
                     var existing = dbEntity.Lines.FirstOrDefault(x => x.Id == ln.Id);
                     if (existing == null)
                     {
@@ -241,7 +252,10 @@ namespace Foxoft
                             PayrollHeaderId = dbEntity.Id,
                             PayrollItemType = ln.PayrollItemType,
                             Description = ln.Description,
-                            Amount = ln.Amount
+                            Amount = ln.Amount,
+                            CurrencyCode = currCode,
+                            ExchangeRate = exRate,
+                            AmountLoc = amtLoc
                         });
                     }
                     else
@@ -249,6 +263,9 @@ namespace Foxoft
                         existing.PayrollItemType = ln.PayrollItemType;
                         existing.Description = ln.Description;
                         existing.Amount = ln.Amount;
+                        existing.CurrencyCode = currCode;
+                        existing.ExchangeRate = exRate;
+                        existing.AmountLoc = amtLoc;
                     }
                 }
             }
@@ -266,17 +283,20 @@ namespace Foxoft
 
             foreach (var line in lines)
             {
+                decimal rate = line.ExchangeRate == 0 ? 1m : (decimal)line.ExchangeRate;
+                decimal amtLoc = line.AmountLoc != 0 ? line.AmountLoc : Math.Round(line.Amount / rate, 2);
+
                 if (line.PayrollItemType == PayrollItemType.Salary ||
                     line.PayrollItemType == PayrollItemType.Bonus ||
                     line.PayrollItemType == PayrollItemType.Overtime)
                 {
-                    gross += line.Amount;
+                    gross += amtLoc;
                 }
                 else if (line.PayrollItemType == PayrollItemType.Tax ||
                          line.PayrollItemType == PayrollItemType.Insurance ||
                          line.PayrollItemType == PayrollItemType.Deduction)
                 {
-                    deductions += line.Amount;
+                    deductions += amtLoc;
                 }
             }
 
@@ -305,7 +325,10 @@ namespace Foxoft
                         PayrollHeaderId = entity.Id,
                         PayrollItemType = PayrollItemType.Salary,
                         Description = Properties.Resources.Form_PayrollEdit_BaseSalaryFromContract,
-                        Amount = activeContract.BaseSalary
+                        Amount = activeContract.BaseSalary,
+                        CurrencyCode = activeContract.CurrencyCode ?? Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN",
+                        ExchangeRate = 1f,
+                        AmountLoc = activeContract.BaseSalary
                     };
                     lines.Add(salaryLine);
                     RecalculateTotals();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -14,6 +14,8 @@ namespace Foxoft.Models.ViewModel
         private decimal _baseSalary;
         private decimal _bonus;
         private decimal _deduction;
+        private string _currencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+        private float _exchangeRate = 1f;
         private bool _alreadyExists;
         private Guid? _existingPayrollHeaderId;
 
@@ -58,6 +60,9 @@ namespace Foxoft.Models.ViewModel
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(GrossSalary));
                     OnPropertyChanged(nameof(NetSalary));
+                    OnPropertyChanged(nameof(GrossSalaryLoc));
+                    OnPropertyChanged(nameof(NetSalaryLoc));
+                    OnPropertyChanged(nameof(AmountLoc));
                 }
             }
         }
@@ -73,6 +78,9 @@ namespace Foxoft.Models.ViewModel
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(GrossSalary));
                     OnPropertyChanged(nameof(NetSalary));
+                    OnPropertyChanged(nameof(GrossSalaryLoc));
+                    OnPropertyChanged(nameof(NetSalaryLoc));
+                    OnPropertyChanged(nameof(AmountLoc));
                 }
             }
         }
@@ -87,6 +95,8 @@ namespace Foxoft.Models.ViewModel
                     _deduction = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(NetSalary));
+                    OnPropertyChanged(nameof(NetSalaryLoc));
+                    OnPropertyChanged(nameof(AmountLoc));
                 }
             }
         }
@@ -94,6 +104,58 @@ namespace Foxoft.Models.ViewModel
         public decimal GrossSalary => BaseSalary + Bonus;
 
         public decimal NetSalary => GrossSalary - Deduction;
+
+        public string CurrencyCode
+        {
+            get => _currencyCode;
+            set
+            {
+                if (_currencyCode != value)
+                {
+                    _currencyCode = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(GrossSalaryLoc));
+                    OnPropertyChanged(nameof(NetSalaryLoc));
+                    OnPropertyChanged(nameof(AmountLoc));
+                }
+            }
+        }
+
+        public float ExchangeRate
+        {
+            get => _exchangeRate;
+            set
+            {
+                if (_exchangeRate != value)
+                {
+                    _exchangeRate = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(GrossSalaryLoc));
+                    OnPropertyChanged(nameof(NetSalaryLoc));
+                    OnPropertyChanged(nameof(AmountLoc));
+                }
+            }
+        }
+
+        public decimal GrossSalaryLoc
+        {
+            get
+            {
+                decimal rate = ExchangeRate == 0 ? 1m : (decimal)ExchangeRate;
+                return Math.Round(GrossSalary / rate, 2);
+            }
+        }
+
+        public decimal NetSalaryLoc
+        {
+            get
+            {
+                decimal rate = ExchangeRate == 0 ? 1m : (decimal)ExchangeRate;
+                return Math.Round(NetSalary / rate, 2);
+            }
+        }
+
+        public decimal AmountLoc => NetSalaryLoc;
 
         public bool AlreadyExists
         {

@@ -1,4 +1,4 @@
-﻿namespace Foxoft
+namespace Foxoft
 {
     partial class FormPayrollWizard
     {
@@ -50,6 +50,11 @@
             repoCalcDeduction = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             colGrossSalary = new DevExpress.XtraGrid.Columns.GridColumn();
             colNetSalary = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoLookUpCurrency = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoCalcExchangeRate = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            colNetSalaryLoc = new DevExpress.XtraGrid.Columns.GridColumn();
             colStatus = new DevExpress.XtraGrid.Columns.GridColumn();
             panelControlTop = new DevExpress.XtraEditors.PanelControl();
             btnSelectAll = new DevExpress.XtraEditors.SimpleButton();
@@ -68,6 +73,8 @@
             ((System.ComponentModel.ISupportInitialize)repoCalcBaseSalary).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcBonus).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcDeduction).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoLookUpCurrency).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcExchangeRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelControlTop).BeginInit();
             panelControlTop.SuspendLayout();
             completionWizardPage1.SuspendLayout();
@@ -147,14 +154,14 @@
             gridControlEmployees.Location = new Point(0, 36);
             gridControlEmployees.MainView = gridViewEmployees;
             gridControlEmployees.Name = "gridControlEmployees";
-            gridControlEmployees.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoCheckSelected, repoCalcBaseSalary, repoCalcBonus, repoCalcDeduction });
+            gridControlEmployees.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoCheckSelected, repoCalcBaseSalary, repoCalcBonus, repoCalcDeduction, repoLookUpCurrency, repoCalcExchangeRate });
             gridControlEmployees.Size = new Size(918, 381);
             gridControlEmployees.TabIndex = 1;
             gridControlEmployees.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewEmployees });
             // 
             // gridViewEmployees
             // 
-            gridViewEmployees.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colSelected, colCurrAccCode, colEmployeeName, colPositionName, colDepartmentName, colBaseSalary, colBonus, colDeduction, colGrossSalary, colNetSalary, colStatus });
+            gridViewEmployees.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colSelected, colCurrAccCode, colEmployeeName, colPositionName, colDepartmentName, colBaseSalary, colBonus, colDeduction, colGrossSalary, colNetSalary, colCurrencyCode, colExchangeRate, colNetSalaryLoc, colStatus });
             gridViewEmployees.GridControl = gridControlEmployees;
             gridViewEmployees.Name = "gridViewEmployees";
             gridViewEmployees.OptionsView.ColumnAutoWidth = false;
@@ -302,6 +309,70 @@
             colNetSalary.VisibleIndex = 9;
             colNetSalary.Width = 100;
             // 
+            // colCurrencyCode
+            // 
+            colCurrencyCode.Caption = Properties.Resources.Entity_Currency_Code;
+            colCurrencyCode.ColumnEdit = repoLookUpCurrency;
+            colCurrencyCode.FieldName = "CurrencyCode";
+            colCurrencyCode.Name = "colCurrencyCode";
+            colCurrencyCode.Visible = true;
+            colCurrencyCode.VisibleIndex = 10;
+            colCurrencyCode.Width = 80;
+            // 
+            // repoLookUpCurrency
+            // 
+            repoLookUpCurrency.AutoHeight = false;
+            repoLookUpCurrency.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoLookUpCurrency.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", Properties.Resources.Entity_Currency_Code),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", Properties.Resources.Entity_Currency_Desc),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", Properties.Resources.Entity_Currency_ExchangeRate, 20, DevExpress.Utils.FormatType.Numeric, "n4", true, DevExpress.Utils.HorzAlignment.Default, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)
+            });
+            repoLookUpCurrency.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+            repoLookUpCurrency.DisplayMember = "CurrencyCode";
+            repoLookUpCurrency.NullText = "";
+            repoLookUpCurrency.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
+            repoLookUpCurrency.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
+            repoLookUpCurrency.ValueMember = "CurrencyCode";
+            repoLookUpCurrency.Name = "repoLookUpCurrency";
+            repoLookUpCurrency.EditValueChanged += RepoLookUpCurrency_EditValueChanged;
+            // 
+            // colExchangeRate
+            // 
+            colExchangeRate.Caption = Properties.Resources.Entity_Currency_ExchangeRate;
+            colExchangeRate.ColumnEdit = repoCalcExchangeRate;
+            colExchangeRate.DisplayFormat.FormatString = "n4";
+            colExchangeRate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colExchangeRate.FieldName = "ExchangeRate";
+            colExchangeRate.Name = "colExchangeRate";
+            colExchangeRate.Visible = true;
+            colExchangeRate.VisibleIndex = 11;
+            colExchangeRate.Width = 85;
+            // 
+            // repoCalcExchangeRate
+            // 
+            repoCalcExchangeRate.AutoHeight = false;
+            repoCalcExchangeRate.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoCalcExchangeRate.DisplayFormat.FormatString = "n4";
+            repoCalcExchangeRate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            repoCalcExchangeRate.EditFormat.FormatString = "n4";
+            repoCalcExchangeRate.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            repoCalcExchangeRate.Mask.EditMask = "n4";
+            repoCalcExchangeRate.Name = "repoCalcExchangeRate";
+            // 
+            // colNetSalaryLoc
+            // 
+            colNetSalaryLoc.Caption = Properties.Resources.Entity_InvoiceLine_AmountLoc;
+            colNetSalaryLoc.DisplayFormat.FormatString = "n2";
+            colNetSalaryLoc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colNetSalaryLoc.FieldName = "NetSalaryLoc";
+            colNetSalaryLoc.Name = "colNetSalaryLoc";
+            colNetSalaryLoc.OptionsColumn.AllowEdit = false;
+            colNetSalaryLoc.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetSalaryLoc", "{0:n2}") });
+            colNetSalaryLoc.Visible = true;
+            colNetSalaryLoc.VisibleIndex = 12;
+            colNetSalaryLoc.Width = 100;
+            // 
             // colStatus
             // 
             colStatus.Caption = Properties.Resources.Common_Status;
@@ -309,7 +380,7 @@
             colStatus.Name = "colStatus";
             colStatus.OptionsColumn.AllowEdit = false;
             colStatus.Visible = true;
-            colStatus.VisibleIndex = 10;
+            colStatus.VisibleIndex = 13;
             colStatus.Width = 90;
             // 
             // panelControlTop
@@ -395,6 +466,8 @@
             ((System.ComponentModel.ISupportInitialize)repoCalcBaseSalary).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcBonus).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcDeduction).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoLookUpCurrency).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcExchangeRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelControlTop).EndInit();
             panelControlTop.ResumeLayout(false);
             completionWizardPage1.ResumeLayout(false);
@@ -429,6 +502,11 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcDeduction;
         private DevExpress.XtraGrid.Columns.GridColumn colGrossSalary;
         private DevExpress.XtraGrid.Columns.GridColumn colNetSalary;
+        private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLookUpCurrency;
+        private DevExpress.XtraGrid.Columns.GridColumn colExchangeRate;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcExchangeRate;
+        private DevExpress.XtraGrid.Columns.GridColumn colNetSalaryLoc;
         private DevExpress.XtraGrid.Columns.GridColumn colStatus;
         private DevExpress.XtraEditors.LabelControl lblCompletionInfo;
         private DevExpress.XtraEditors.LabelControl lblSummary;

@@ -40,8 +40,27 @@ namespace Foxoft
             if (view.Columns["CurrAccCode"] != null) view.Columns["CurrAccCode"].Caption = Properties.Resources.Entity_TrPayrollHeader_CurrAccCode;
             if (view.Columns["Employee"] != null) view.Columns["Employee"].Caption = Properties.Resources.Common_EmployeeName;
             if (view.Columns["Period"] != null) view.Columns["Period"].Caption = Properties.Resources.Entity_TrPayrollHeader_PeriodId;
-            if (view.Columns["GrossSalary"] != null) view.Columns["GrossSalary"].Caption = Properties.Resources.Entity_TrPayrollHeader_GrossSalary;
-            if (view.Columns["NetSalary"] != null) view.Columns["NetSalary"].Caption = Properties.Resources.Entity_TrPayrollHeader_NetSalary;
+
+            string localCurr = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+
+            if (view.Columns["GrossSalary"] != null)
+            {
+                view.Columns["GrossSalary"].Caption = $"{Properties.Resources.Entity_TrPayrollHeader_GrossSalary} ({localCurr})";
+                view.Columns["GrossSalary"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+                view.Columns["GrossSalary"].DisplayFormat.FormatString = "{0:n2}";
+                view.Columns["GrossSalary"].Summary.Clear();
+                view.Columns["GrossSalary"].Summary.Add(DevExpress.Data.SummaryItemType.Sum, "GrossSalary", "{0:n2}");
+            }
+            if (view.Columns["NetSalary"] != null)
+            {
+                view.Columns["NetSalary"].Caption = $"{Properties.Resources.Entity_TrPayrollHeader_NetSalary} ({localCurr})";
+                view.Columns["NetSalary"].DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+                view.Columns["NetSalary"].DisplayFormat.FormatString = "{0:n2}";
+                view.Columns["NetSalary"].Summary.Clear();
+                view.Columns["NetSalary"].Summary.Add(DevExpress.Data.SummaryItemType.Sum, "NetSalary", "{0:n2}");
+            }
+
+            view.OptionsView.ShowFooter = true;
 
             HyperLinkColumns();
 
