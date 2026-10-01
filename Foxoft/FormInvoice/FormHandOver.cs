@@ -462,6 +462,301 @@ namespace Foxoft
 
         private void gV_InvoiceHeader_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
+            if (!efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId))
+            {
+                if (gvMaster.GetRow(e.FocusedRowHandle) is DeliveryVM vm && vm.TrInvoiceHeader != null)
+                {
+                    trInvoiceHeadersBindingSource.DataSource = vm.TrInvoiceHeader;
+                }
+            }
+        }
+
+        private bool EnsureDeliveryHeader(Guid invoiceHeaderId)
+        {
+            if (!efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId))
+            {
+                var lockRes = _lockService.TryAcquireLock(
+                    documentType: "HandOver",
+                    documentId: invoiceHeaderId,
+                    userId: Authorization.CurrAccCode,
+                    machineName: Environment.MachineName,
+                    appInstanceId: _handoverFormInstanceId,
+                    formInstanceId: _handoverFormInstanceId,
+                    clientProcessId: Process.GetCurrentProcess().Id,
+                    timeout: TimeSpan.FromMinutes(30),
+                    reason: "HandOver creation");
+
+                if (!lockRes.Acquired)
+                {
+                    XtraMessageBox.Show(
+                        string.Format(Resources.Form_HandOver_InvoiceLockedByOther, lockRes.LockedByName),
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                _lockedSourceInvoiceId = invoiceHeaderId;
+
+                string newDocNum = efMethods.GetNextDocNum(true, processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
+
+                deliveryInvoHeader = new();
+                deliveryInvoHeader.InvoiceHeaderId = deliveryInvoiceHeaderId;
+                deliveryInvoHeader.RelatedInvoiceId = invoiceHeaderId;
+                deliveryInvoHeader.DocumentNumber = newDocNum;
+                deliveryInvoHeader.ProcessCode = processCode;
+                if (_index.ContainsKey(invoiceHeaderId))
+                    deliveryInvoHeader.CurrAccCode = _index[invoiceHeaderId].TrInvoiceHeader.CurrAccCode;
+                deliveryInvoHeader.OfficeCode = Authorization.OfficeCode;
+                deliveryInvoHeader.StoreCode = Authorization.StoreCode;
+                deliveryInvoHeader.CreatedUserName = Authorization.CurrAccCode;
+                if (_index.ContainsKey(invoiceHeaderId))
+                    deliveryInvoHeader.WarehouseCode = _index[invoiceHeaderId].TrInvoiceHeader.WarehouseCode;
+                deliveryInvoHeader.IsMainTF = true;
+
+                efMethods.InsertEntity(deliveryInvoHeader);
+
+                btn_Ok.Enabled = true;
+                btn_Cancel.Enabled = true;
+
+                trInvoiceHeadersBindingSource.DataSource = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+            }
+            else
+            {
+                if (_lockedSourceInvoiceId.HasValue && _lockedSourceInvoiceId.Value != invoiceHeaderId)
+                {
+                    XtraMessageBox.Show(
+                        Resources.Form_HandOver_AnotherInvoiceInProgress,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void InsertOrUpdateDeliveryLine(Guid invoiceLineID, TrInvoiceLine invoiceLine, decimal qtyToAdd)
+        {
+            if (!efMethods.InvoicelineExistByRelatedLineId(deliveryInvoiceHeaderId, invoiceLineID))
+            {
+                TrInvoiceLine deliveryInvoiceLine = new()
+                {
+                    InvoiceLineId = Guid.NewGuid(),
+                    InvoiceHeaderId = deliveryInvoiceHeaderId,
+                    RelatedLineId = invoiceLineID,
+                    ProductCode = invoiceLine.ProductCode,
+                    Price = invoiceLine.Price,
+                    PriceLoc = invoiceLine.PriceLoc,
+                    PosDiscount = invoiceLine.PosDiscount,
+                    CreatedUserName = Authorization.CurrAccCode
+                };
+
+                if ((bool)CustomExtensions.DirectionIsIn(processCode))
+                    deliveryInvoiceLine.QtyIn = qtyToAdd;
+                else
+                    deliveryInvoiceLine.QtyOut = qtyToAdd;
+
+                deliveryInvoiceLine.Amount = qtyToAdd * deliveryInvoiceLine.Price;
+                deliveryInvoiceLine.AmountLoc = qtyToAdd * deliveryInvoiceLine.PriceLoc;
+                deliveryInvoiceLine.NetAmount = qtyToAdd * deliveryInvoiceLine.Price * (100 - deliveryInvoiceLine.PosDiscount) / 100m;
+                deliveryInvoiceLine.NetAmountLoc = qtyToAdd * deliveryInvoiceLine.PriceLoc * (100 - deliveryInvoiceLine.PosDiscount) / 100m;
+
+                efMethods.InsertEntity(deliveryInvoiceLine);
+            }
+            else
+            {
+                TrInvoiceLine trInvoiceLine = efMethods.SelectTrInvoiceLineByRelatedLineId(deliveryInvoiceHeaderId, invoiceLineID);
+
+                decimal currentQty = (bool)CustomExtensions.DirectionIsIn(processCode) ? trInvoiceLine.QtyIn : trInvoiceLine.QtyOut;
+                decimal newQty = currentQty + qtyToAdd;
+
+                trInvoiceLine.Amount = newQty * trInvoiceLine.Price;
+                trInvoiceLine.AmountLoc = newQty * trInvoiceLine.PriceLoc;
+                trInvoiceLine.NetAmount = newQty * trInvoiceLine.Price * (100 - trInvoiceLine.PosDiscount) / 100m;
+                trInvoiceLine.NetAmountLoc = newQty * trInvoiceLine.PriceLoc * (100 - trInvoiceLine.PosDiscount) / 100m;
+
+                if ((bool)CustomExtensions.DirectionIsIn(processCode))
+                    trInvoiceLine.QtyIn = newQty;
+                else
+                    trInvoiceLine.QtyOut = newQty;
+
+                efMethods.UpdateEntity(trInvoiceLine);
+            }
+        }
+
+        private void AddLineToDelivery(DeliveryVM.Line line, GridView view, decimal? customQty = null)
+        {
+            if (line == null || line.TrInvoiceLine == null) return;
+
+            decimal remaining = line.RemainingQty;
+            if (remaining <= 0)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_HandOver_NoRemainingQty,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            decimal qtyToAdd;
+            if (customQty.HasValue)
+            {
+                qtyToAdd = customQty.Value;
+            }
+            else if (remaining == 1)
+            {
+                qtyToAdd = 1;
+            }
+            else
+            {
+                using FormInput formQty = new(remaining, remaining);
+                if (formQty.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                qtyToAdd = formQty.input;
+            }
+
+            if (qtyToAdd <= 0)
+                return;
+
+            if (qtyToAdd > remaining)
+                qtyToAdd = remaining;
+
+            Guid invoiceLineID = line.TrInvoiceLine.InvoiceLineId;
+            Guid invoiceHeaderId = line.TrInvoiceHeader?.InvoiceHeaderId
+                                   ?? (Guid)gvMaster.GetFocusedRowCellValue(col_InvoiceHeaderId);
+
+            if (!EnsureDeliveryHeader(invoiceHeaderId))
+                return;
+
+            InsertOrUpdateDeliveryLine(invoiceLineID, line.TrInvoiceLine, qtyToAdd);
+
+            line.DeliveredQty += qtyToAdd;
+            line.RemainingQty -= qtyToAdd;
+
+            List<TrInvoiceLine> deliveryLines = efMethods.SelectInvoiceLines(deliveryInvoiceHeaderId);
+            gC_DeliveryInvoiceLine.DataSource = deliveryLines;
+
+            view?.RefreshRow(view.FocusedRowHandle);
+            gvMaster.RefreshRow(gvMaster.FocusedRowHandle);
+        }
+
+        private void DeliverAll()
+        {
+            DeliveryVM targetVm = null;
+
+            if (_lockedSourceInvoiceId.HasValue && _index.TryGetValue(_lockedSourceInvoiceId.Value, out var lockedVm))
+            {
+                targetVm = lockedVm;
+            }
+            else
+            {
+                if (gC_Invoice.FocusedView is GridView focusedDetailView && focusedDetailView != gvMaster)
+                {
+                    var line = focusedDetailView.GetFocusedRow() as DeliveryVM.Line;
+                    if (line?.TrInvoiceHeader != null)
+                        _index.TryGetValue(line.TrInvoiceHeader.InvoiceHeaderId, out targetVm);
+                }
+
+                if (targetVm == null && gvMaster.FocusedRowHandle >= 0)
+                {
+                    targetVm = gvMaster.GetRow(gvMaster.FocusedRowHandle) as DeliveryVM;
+                }
+            }
+
+            if (targetVm == null || targetVm.TrInvoiceHeader == null)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_HandOver_SelectInvoiceWarning,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            Guid invoiceHeaderId = targetVm.TrInvoiceHeader.InvoiceHeaderId;
+
+            if (_lockedSourceInvoiceId.HasValue && _lockedSourceInvoiceId.Value != invoiceHeaderId)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_HandOver_AnotherInvoiceInProgress,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            var remainingLines = targetVm.Lines.Where(x => x.RemainingQty > 0).ToList();
+            if (remainingLines.Count == 0)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_HandOver_AllDelivered,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            if (!EnsureDeliveryHeader(invoiceHeaderId))
+                return;
+
+            foreach (var line in remainingLines)
+            {
+                decimal qtyToAdd = line.RemainingQty;
+                InsertOrUpdateDeliveryLine(line.TrInvoiceLine.InvoiceLineId, line.TrInvoiceLine, qtyToAdd);
+
+                line.DeliveredQty += qtyToAdd;
+                line.RemainingQty = 0;
+            }
+
+            List<TrInvoiceLine> deliveryLines = efMethods.SelectInvoiceLines(deliveryInvoiceHeaderId);
+            gC_DeliveryInvoiceLine.DataSource = deliveryLines;
+
+            gC_Invoice.RefreshDataSource();
+            gvMaster.RefreshRow(gvMaster.FocusedRowHandle);
+        }
+
+        private void RemoveFocusedDeliveryLine()
+        {
+            if (gV_DeliveryInvoiceLine.GetFocusedRow() is TrInvoiceLine deliveryLine)
+            {
+                if (XtraMessageBox.Show(
+                        Resources.Common_DeleteConfirm,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question) != DialogResult.Yes)
+                    return;
+
+                efMethods.DeleteEntityById<TrInvoiceLine>(deliveryLine.InvoiceLineId);
+
+                if (deliveryLine.RelatedLineId.HasValue && deliveryInvoHeader != null && deliveryInvoHeader.RelatedInvoiceId.HasValue)
+                {
+                    if (_index.TryGetValue(deliveryInvoHeader.RelatedInvoiceId.Value, out var headerVm))
+                    {
+                        var sourceLine = headerVm.Lines.FirstOrDefault(l => l.TrInvoiceLine.InvoiceLineId == deliveryLine.RelatedLineId.Value);
+                        if (sourceLine != null)
+                        {
+                            decimal qty = (bool)CustomExtensions.DirectionIsIn(processCode) ? deliveryLine.QtyIn : deliveryLine.QtyOut;
+                            sourceLine.DeliveredQty = Math.Max(0, sourceLine.DeliveredQty - qty);
+                            sourceLine.RemainingQty += qty;
+                        }
+                    }
+                }
+
+                List<TrInvoiceLine> deliveryLines = efMethods.SelectInvoiceLines(deliveryInvoiceHeaderId);
+                gC_DeliveryInvoiceLine.DataSource = deliveryLines;
+
+                if (deliveryLines.Count == 0)
+                {
+                    btn_Ok.Enabled = false;
+                }
+
+                gC_Invoice.RefreshDataSource();
+                gvMaster.RefreshRow(gvMaster.FocusedRowHandle);
+            }
         }
 
         private void repoBtn_AddWaybill_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -469,126 +764,71 @@ namespace Foxoft
             var editor = sender as ButtonEdit;
             if (editor == null) return;
 
-            var grid = editor.Parent as GridControl;       // detail GridControl
-            var view = grid?.FocusedView as GridView;      // aktiv detail GridView
+            var grid = editor.Parent as GridControl;
+            var view = grid?.FocusedView as GridView;
             if (view == null) return;
 
-            var val = view.GetFocusedRowCellValue(col_InvoiceLineId);
-            if (val == null || val == DBNull.Value) return;
-
-            Guid invoiceLineID = (Guid)val;
-
-            // Daha etibarlı: seçilmiş detail sətrindən başlıq ID-si
             var focusedDetailRow = view.GetFocusedRow() as DeliveryVM.Line;
-            Guid invoiceHeaderId = focusedDetailRow?.TrInvoiceHeader.InvoiceHeaderId
-                                   ?? (Guid)gvMaster.GetFocusedRowCellValue(col_InvoiceHeaderId);
+            if (focusedDetailRow == null) return;
 
-            decimal maxDelivery = (decimal)(view.GetFocusedRowCellValue(col_RemainingQty));
-            if (!(maxDelivery > 0))
+            AddLineToDelivery(focusedDetailRow, view);
+        }
+
+        private void gvDetail_DoubleClick(object sender, EventArgs e)
+        {
+            if (sender is GridView view && view.GetFocusedRow() is DeliveryVM.Line line)
             {
-                XtraMessageBox.Show(Resources.Form_HandOver_NoRemainingQty);
-                return;
+                AddLineToDelivery(line, view);
             }
+        }
 
-            using (FormInput formQty = new(maxDelivery, maxDelivery))
+        private void gvDetail_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
             {
-                if (formQty.ShowDialog(this) == DialogResult.OK)
+                if (sender is GridView view && view.GetFocusedRow() is DeliveryVM.Line line)
                 {
-                    if (!efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId))
-                    {
-                        // Mənbə qaimə üçün lock əldə etməyə çalış
-                        var lockRes = _lockService.TryAcquireLock(
-                            documentType: "HandOver",
-                            documentId: invoiceHeaderId,
-                            userId: Authorization.CurrAccCode,
-                            machineName: Environment.MachineName,
-                            appInstanceId: _handoverFormInstanceId,
-                            formInstanceId: _handoverFormInstanceId,
-                            clientProcessId: Process.GetCurrentProcess().Id,
-                            timeout: TimeSpan.FromMinutes(30),
-                            reason: "HandOver creation");
-
-                        if (!lockRes.Acquired)
-                        {
-                            XtraMessageBox.Show(
-                                string.Format(Resources.Form_HandOver_InvoiceLockedByOther, lockRes.LockedByName),
-                                Resources.Common_Attention,
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-                            return;
-                        }
-
-                        _lockedSourceInvoiceId = invoiceHeaderId;
-
-                        string NewDocNum = efMethods.GetNextDocNum(true, processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
-
-                        deliveryInvoHeader = new();
-                        deliveryInvoHeader.InvoiceHeaderId = deliveryInvoiceHeaderId;
-                        deliveryInvoHeader.RelatedInvoiceId = invoiceHeaderId;
-                        deliveryInvoHeader.DocumentNumber = NewDocNum;
-                        deliveryInvoHeader.ProcessCode = processCode;
-                        if (_index.ContainsKey(invoiceHeaderId))
-                            deliveryInvoHeader.CurrAccCode = _index[invoiceHeaderId].TrInvoiceHeader.CurrAccCode;
-                        deliveryInvoHeader.OfficeCode = Authorization.OfficeCode;
-                        deliveryInvoHeader.StoreCode = Authorization.StoreCode;
-                        deliveryInvoHeader.CreatedUserName = Authorization.CurrAccCode;
-                        deliveryInvoHeader.WarehouseCode = _index[invoiceHeaderId].TrInvoiceHeader.WarehouseCode;
-                        deliveryInvoHeader.IsMainTF = true;
-
-                        efMethods.InsertEntity(deliveryInvoHeader);
-
-                        btn_Ok.Enabled = true;
-                        btn_Cancel.Enabled = true;
-
-                        trInvoiceHeadersBindingSource.DataSource = efMethods.SelectInvoiceHeader(invoiceHeaderId);
-                    }
-
-                    if (!efMethods.InvoicelineExistByRelatedLineId(deliveryInvoiceHeaderId, invoiceLineID))
-                    {
-                        TrInvoiceLine invoiceLine = efMethods.SelectInvoiceLine(invoiceLineID);
-                        TrInvoiceLine deliveryInvoiceLine = new();
-
-                        deliveryInvoiceLine.InvoiceLineId = Guid.NewGuid();
-                        deliveryInvoiceLine.InvoiceHeaderId = deliveryInvoiceHeaderId;
-                        deliveryInvoiceLine.RelatedLineId = invoiceLineID;
-                        deliveryInvoiceLine.ProductCode = invoiceLine.ProductCode;
-                        deliveryInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
-
-                        if ((bool)CustomExtensions.DirectionIsIn(processCode))
-                            deliveryInvoiceLine.QtyIn = formQty.input;
-                        else
-                            deliveryInvoiceLine.QtyOut = formQty.input;
-
-                        efMethods.InsertEntity(deliveryInvoiceLine);
-                    }
-                    else
-                    {
-                        TrInvoiceLine trInvoiceLine = efMethods.SelectTrInvoiceLineByRelatedLineId(deliveryInvoiceHeaderId, invoiceLineID);
-
-                        trInvoiceLine.Amount = (formQty.input + trInvoiceLine.QtyOut) * trInvoiceLine.Price;
-                        trInvoiceLine.AmountLoc = (formQty.input + trInvoiceLine.QtyOut) * trInvoiceLine.PriceLoc;
-                        trInvoiceLine.NetAmount = (formQty.input + trInvoiceLine.QtyOut) * trInvoiceLine.Price * (100 - trInvoiceLine.PosDiscount);
-                        trInvoiceLine.NetAmountLoc = (formQty.input + trInvoiceLine.QtyOut) * trInvoiceLine.PriceLoc * (100 - trInvoiceLine.PosDiscount);
-                        trInvoiceLine.QtyOut = formQty.input + trInvoiceLine.QtyOut;
-
-                        efMethods.UpdateEntity(trInvoiceLine);
-                    }
-
-                    // UI yenilə
-                    List<TrInvoiceLine> deliveryLines = efMethods.SelectInvoiceLines(deliveryInvoiceHeaderId);
-                    gC_DeliveryInvoiceLine.DataSource = deliveryLines;
-
-                    // Seçilmiş detail sətrin lokaldakı hesablanmış dəyərlərini yenilə
-                    if (focusedDetailRow != null)
-                    {
-                        focusedDetailRow.DeliveredQty += formQty.input;
-                        focusedDetailRow.RemainingQty -= formQty.input;
-                        view.RefreshRow(view.FocusedRowHandle);
-                    }
-
-                    LoadDataStreamedAsync(invoiceHeaderId);
+                    AddLineToDelivery(line, view);
+                    e.Handled = true;
                 }
             }
+        }
+
+        private void gvDetail_RowStyle(object sender, RowStyleEventArgs e)
+        {
+            if (e.RowHandle < 0) return;
+
+            if (sender is GridView view && view.GetRow(e.RowHandle) is DeliveryVM.Line line)
+            {
+                if (line.RemainingQty <= 0)
+                {
+                    e.Appearance.ForeColor = Color.DarkGray;
+                }
+            }
+        }
+
+        private void repoBtn_RemoveDeliveryLine_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            RemoveFocusedDeliveryLine();
+        }
+
+        private void gV_DeliveryInvoiceLine_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                RemoveFocusedDeliveryLine();
+                e.Handled = true;
+            }
+        }
+
+        private void btn_DeliverAll_Click(object sender, EventArgs e)
+        {
+            DeliverAll();
+        }
+
+        private void BBI_DeliverAll_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DeliverAll();
         }
 
 
@@ -734,11 +974,12 @@ namespace Foxoft
             if (string.IsNullOrWhiteSpace(documentNumber))
                 return;
 
-            DXMenuItem menuItem = new(Resources.Form_HandOver_OpenInvoice, (s, args) => OpenFormInvoice(documentNumber), svgImageCollection1[1], DXMenuItemPriority.High);
-            //menuItem.ImageOptions.SvgImage = ;
+            DXMenuItem menuItem = new(Resources.Form_HandOver_OpenInvoice, (s, args) => OpenFormInvoice(documentNumber), svgImageCollection1["actions_edit"], DXMenuItemPriority.High);
+            DXMenuItem menuItemDeliverAll = new(Resources.Form_HandOver_Button_DeliverAll, (s, args) => DeliverAll(), svgImageCollection1["deliver_all"], DXMenuItemPriority.Normal);
 
             e.Menu.Items.Clear();
             e.Menu.Items.Add(menuItem);
+            e.Menu.Items.Add(menuItemDeliverAll);
         }
 
         private string GetInvoiceDocumentNumber(GridView view, int rowHandle)

@@ -120,6 +120,11 @@ namespace Foxoft
             col_RCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RSalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_RRemove = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoBtn_RemoveDeliveryLine = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            btn_DeliverAll = new DevExpress.XtraEditors.SimpleButton();
+            lCI_DeliverAll = new DevExpress.XtraLayout.LayoutControlItem();
+            BBI_DeliverAll = new DevExpress.XtraBars.BarButtonItem();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -161,6 +166,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccDesc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_DeliveryInvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_DeliveryInvoiceLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtn_RemoveDeliveryLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_DeliverAll).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cancel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cash).BeginInit();
@@ -175,15 +182,22 @@ namespace Foxoft
             // 
             // gvDetail
             // 
+            gvDetail.Appearance.HeaderPanel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            gvDetail.Appearance.HeaderPanel.Options.UseFont = true;
+            gvDetail.Appearance.Row.Font = new Font("Segoe UI", 9.5F);
+            gvDetail.Appearance.Row.Options.UseFont = true;
             gvDetail.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_HierarchyCode, col_ProductCode, col_ProductDesc, col_Qty, col_DeliveredQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_SerialNumberCode, col_UnitOfMeasureId, col_AddWaybill });
             gvDetail.GridControl = gC_Invoice;
             gvDetail.Name = "gvDetail";
             gvDetail.OptionsFind.AllowFindInExpandedDetails = DevExpress.Utils.DefaultBoolean.True;
-            gvDetail.OptionsFind.AlwaysVisible = true;
+            gvDetail.OptionsFind.AlwaysVisible = false;
             gvDetail.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             gvDetail.OptionsView.ColumnAutoWidth = false;
             gvDetail.OptionsView.ShowGroupPanel = false;
             gvDetail.PopupMenuShowing += GvInvoice_PopupMenuShowing;
+            gvDetail.DoubleClick += gvDetail_DoubleClick;
+            gvDetail.KeyDown += gvDetail_KeyDown;
+            gvDetail.RowStyle += gvDetail_RowStyle;
             // 
             // col_InvoiceLineId
             // 
@@ -244,13 +258,19 @@ namespace Foxoft
             // 
             // col_RemainingQty
             // 
+            col_RemainingQty.AppearanceCell.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            col_RemainingQty.AppearanceCell.ForeColor = Color.DarkGreen;
+            col_RemainingQty.AppearanceCell.Options.UseFont = true;
+            col_RemainingQty.AppearanceCell.Options.UseForeColor = true;
+            col_RemainingQty.AppearanceCell.Options.UseTextOptions = true;
+            col_RemainingQty.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             col_RemainingQty.Caption = Resources.Form_HandOver_Column_RemainingQty;
             col_RemainingQty.FieldName = "RemainingQty";
             col_RemainingQty.Name = "col_RemainingQty";
             col_RemainingQty.OptionsColumn.AllowEdit = false;
             col_RemainingQty.Visible = true;
             col_RemainingQty.VisibleIndex = 5;
-            col_RemainingQty.Width = 38;
+            col_RemainingQty.Width = 60;
             // 
             // col_Price
             // 
@@ -348,15 +368,23 @@ namespace Foxoft
             col_AddWaybill.ColumnEdit = repoBtn_AddWaybill;
             col_AddWaybill.FieldName = "AddWaybill";
             col_AddWaybill.Name = "col_AddWaybill";
+            col_AddWaybill.AppearanceCell.Options.UseTextOptions = true;
+            col_AddWaybill.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            col_AddWaybill.AppearanceHeader.Options.UseTextOptions = true;
+            col_AddWaybill.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            col_AddWaybill.MaxWidth = 45;
+            col_AddWaybill.MinWidth = 45;
+            col_AddWaybill.Width = 45;
+            col_AddWaybill.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
             col_AddWaybill.Visible = true;
             col_AddWaybill.VisibleIndex = 15;
             // 
             // repoBtn_AddWaybill
             // 
             repoBtn_AddWaybill.AutoHeight = false;
-            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
-            editorButtonImageOptions1.SvgImageSize = new Size(16, 16);
-            repoBtn_AddWaybill.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+
+
+            repoBtn_AddWaybill.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus) });
             repoBtn_AddWaybill.Name = "repoBtn_AddWaybill";
             repoBtn_AddWaybill.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
             repoBtn_AddWaybill.ButtonPressed += repoBtn_AddWaybill_ButtonPressed;
@@ -378,9 +406,11 @@ namespace Foxoft
             // 
             // gvMaster
             // 
-            gvMaster.Appearance.FooterPanel.Font = new Font("Tahoma", 12F);
+            gvMaster.Appearance.FooterPanel.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             gvMaster.Appearance.FooterPanel.Options.UseFont = true;
-            gvMaster.Appearance.Row.Font = new Font("Tahoma", 12F);
+            gvMaster.Appearance.Row.Font = new Font("Segoe UI", 9.5F);
+            gvMaster.Appearance.HeaderPanel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            gvMaster.Appearance.HeaderPanel.Options.UseFont = true;
             gvMaster.Appearance.Row.Options.UseFont = true;
             gvMaster.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_DeliveryDate, col_WarehouseCode, col_Description, col_ProcessCode, col_DocumentTime, col_OfficeCode, col_StoreCode, col_CustomsDocumentNumber, col_CreatedUserName });
             gvMaster.GridControl = gC_Invoice;
@@ -518,6 +548,7 @@ namespace Foxoft
             // 
             // lC_Root
             // 
+            lC_Root.Controls.Add(btn_DeliverAll);
             lC_Root.Controls.Add(dataLayoutControl1);
             lC_Root.Controls.Add(gC_DeliveryInvoiceLine);
             lC_Root.Controls.Add(gC_Invoice);
@@ -636,7 +667,7 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_ReportPrintFast, BBI_Refresh, BBI_GridOptions, BBI_GridLayoutSave });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_ReportPrintFast, BBI_DeliverAll, BBI_Refresh, BBI_GridOptions, BBI_GridLayoutSave });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 5;
             ribbonControl1.Name = "ribbonControl1";
@@ -658,6 +689,15 @@ namespace Foxoft
             popupMenuPrinters.Name = "popupMenuPrinters";
             popupMenuPrinters.Ribbon = ribbonControl1;
             popupMenuPrinters.BeforePopup += popupMenuPrinters_BeforePopup;
+            // 
+            // 
+            // BBI_DeliverAll
+            // 
+            BBI_DeliverAll.Caption = Resources.Form_HandOver_Button_DeliverAll;
+            BBI_DeliverAll.Id = 6;
+            BBI_DeliverAll.ImageOptions.SvgImage = svgImageCollection1["deliver_all"];
+            BBI_DeliverAll.Name = "BBI_DeliverAll";
+            BBI_DeliverAll.ItemClick += BBI_DeliverAll_ItemClick;
             // 
             // BBI_Refresh
             // 
@@ -690,6 +730,7 @@ namespace Foxoft
             // 
             // ribbonPageGroup2
             // 
+            ribbonPageGroup2.ItemLinks.Add(BBI_DeliverAll);
             ribbonPageGroup2.ItemLinks.Add(BBI_Refresh);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = Resources.Common_Operations;
@@ -790,20 +831,23 @@ namespace Foxoft
             gC_DeliveryInvoiceLine.Location = new Point(24, 333);
             gC_DeliveryInvoiceLine.MainView = gV_DeliveryInvoiceLine;
             gC_DeliveryInvoiceLine.Name = "gC_DeliveryInvoiceLine";
+            gC_DeliveryInvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtn_RemoveDeliveryLine });
             gC_DeliveryInvoiceLine.Size = new Size(1001, 204);
             gC_DeliveryInvoiceLine.TabIndex = 2;
             gC_DeliveryInvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_DeliveryInvoiceLine });
             // 
             // gV_DeliveryInvoiceLine
             // 
-            gV_DeliveryInvoiceLine.Appearance.FooterPanel.Font = new Font("Tahoma", 12F);
+            gV_DeliveryInvoiceLine.Appearance.FooterPanel.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             gV_DeliveryInvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
-            gV_DeliveryInvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
+            gV_DeliveryInvoiceLine.Appearance.Row.Font = new Font("Segoe UI", 9.5F);
+            gV_DeliveryInvoiceLine.Appearance.HeaderPanel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            gV_DeliveryInvoiceLine.Appearance.HeaderPanel.Options.UseFont = true;
             gV_DeliveryInvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_DeliveryInvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_RInvoiceHeaderId, col_RRelatedLineId, col_RProductCode, col_RQty, col_RPrice, col_RAmount, col_RPosDiscount, col_RNetAmount, col_RVatRate, col_RCurrencyCode, col_RSalesPersonCode, col_RProductDesc });
+            gV_DeliveryInvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_RInvoiceHeaderId, col_RRelatedLineId, col_RProductCode, col_RProductDesc, col_RQty, col_RPrice, col_RAmount, col_RPosDiscount, col_RNetAmount, col_RVatRate, col_RCurrencyCode, col_RSalesPersonCode, col_RRemove });
             gV_DeliveryInvoiceLine.GridControl = gC_DeliveryInvoiceLine;
             gV_DeliveryInvoiceLine.Name = "gV_DeliveryInvoiceLine";
-            gV_DeliveryInvoiceLine.OptionsBehavior.Editable = false;
+            gV_DeliveryInvoiceLine.OptionsBehavior.Editable = true;
             gV_DeliveryInvoiceLine.OptionsView.AutoCalcPreviewLineCount = true;
             gV_DeliveryInvoiceLine.OptionsView.ShowFooter = true;
             gV_DeliveryInvoiceLine.OptionsView.ShowGroupPanel = false;
@@ -811,6 +855,7 @@ namespace Foxoft
             gV_DeliveryInvoiceLine.OptionsView.ShowPreview = true;
             gV_DeliveryInvoiceLine.PreviewIndent = 10;
             gV_DeliveryInvoiceLine.CalcPreviewText += gV_DeliveryInvoiceLine_CalcPreviewText;
+            gV_DeliveryInvoiceLine.KeyDown += gV_DeliveryInvoiceLine_KeyDown;
             // 
             // col_RInvoiceHeaderId
             // 
@@ -890,9 +935,56 @@ namespace Foxoft
             col_RProductDesc.Visible = true;
             col_RProductDesc.VisibleIndex = 1;
             // 
+            // col_RRemove
+            // 
+            col_RRemove.AppearanceCell.Options.UseTextOptions = true;
+            col_RRemove.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            col_RRemove.AppearanceHeader.Options.UseTextOptions = true;
+            col_RRemove.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            col_RRemove.Caption = Resources.Common_Delete;
+            col_RRemove.ColumnEdit = repoBtn_RemoveDeliveryLine;
+            col_RRemove.MaxWidth = 45;
+            col_RRemove.MinWidth = 45;
+            col_RRemove.Name = "col_RRemove";
+            col_RRemove.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
+            col_RRemove.Visible = true;
+            col_RRemove.VisibleIndex = 3;
+            col_RRemove.Width = 45;
+            // 
+            // repoBtn_RemoveDeliveryLine
+            // 
+            repoBtn_RemoveDeliveryLine.AutoHeight = false;
+            repoBtn_RemoveDeliveryLine.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete) });
+            repoBtn_RemoveDeliveryLine.Name = "repoBtn_RemoveDeliveryLine";
+            repoBtn_RemoveDeliveryLine.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+            repoBtn_RemoveDeliveryLine.ButtonClick += repoBtn_RemoveDeliveryLine_ButtonClick;
+            // 
+            // 
+            // btn_DeliverAll
+            // 
+            btn_DeliverAll.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btn_DeliverAll.Appearance.Options.UseFont = true;
+            btn_DeliverAll.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            btn_DeliverAll.ImageOptions.SvgImage = svgImageCollection1["deliver_all"];
+            btn_DeliverAll.ImageOptions.SvgImageSize = new Size(22, 22);
+            btn_DeliverAll.Location = new Point(12, 553);
+            btn_DeliverAll.Name = "btn_DeliverAll";
+            btn_DeliverAll.Size = new Size(180, 56);
+            btn_DeliverAll.StyleController = lC_Root;
+            btn_DeliverAll.TabIndex = 2;
+            btn_DeliverAll.Text = Resources.Form_HandOver_Button_DeliverAll;
+            btn_DeliverAll.Click += btn_DeliverAll_Click;
+            // 
             // btn_Ok
             // 
-            btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_Ok.Appearance.BackColor = Color.FromArgb(46, 139, 87);
+            btn_Ok.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btn_Ok.Appearance.ForeColor = Color.White;
+            btn_Ok.Appearance.Options.UseBackColor = true;
+            btn_Ok.Appearance.Options.UseFont = true;
+            btn_Ok.Appearance.Options.UseForeColor = true;
+            btn_Ok.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            btn_Ok.ImageOptions.SvgImageSize = new Size(22, 22);
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
             btn_Ok.Location = new Point(734, 553);
             btn_Ok.Name = "btn_Ok";
@@ -904,7 +996,10 @@ namespace Foxoft
             // 
             // btn_Cancel
             // 
-            btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_Cancel.Appearance.Font = new Font("Segoe UI", 10F);
+            btn_Cancel.Appearance.Options.UseFont = true;
+            btn_Cancel.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            btn_Cancel.ImageOptions.SvgImageSize = new Size(22, 22);
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
             btn_Cancel.Location = new Point(870, 553);
             btn_Cancel.Name = "btn_Cancel";
@@ -918,7 +1013,7 @@ namespace Foxoft
             // 
             lCG_Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             lCG_Root.GroupBordersVisible = false;
-            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_Cancel, lCI_Cash, emptySpace_1, lCG_ReturnInvoiceLine, splitterItem1, lCI_InvoiceLine });
+            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_DeliverAll, emptySpace_1, lCI_Cash, lCI_Cancel, lCG_ReturnInvoiceLine, splitterItem1, lCI_InvoiceLine });
             lCG_Root.Name = "Root";
             lCG_Root.Size = new Size(1049, 621);
             lCG_Root.TextVisible = false;
@@ -943,11 +1038,22 @@ namespace Foxoft
             lCI_Cash.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Cash.TextVisible = false;
             // 
+            // 
+            // lCI_DeliverAll
+            // 
+            lCI_DeliverAll.Control = btn_DeliverAll;
+            lCI_DeliverAll.Location = new Point(0, 541);
+            lCI_DeliverAll.MinSize = new Size(170, 56);
+            lCI_DeliverAll.Name = "lCI_DeliverAll";
+            lCI_DeliverAll.Size = new Size(190, 60);
+            lCI_DeliverAll.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            lCI_DeliverAll.TextVisible = false;
+            // 
             // emptySpace_1
             // 
-            emptySpace_1.Location = new Point(0, 541);
+            emptySpace_1.Location = new Point(190, 541);
             emptySpace_1.Name = "emptySpace_1";
-            emptySpace_1.Size = new Size(722, 60);
+            emptySpace_1.Size = new Size(532, 60);
             // 
             // lCG_ReturnInvoiceLine
             // 
@@ -993,6 +1099,7 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("quickprint", "image://svgimages/diagramicons/quickprint.svg");
             svgImageCollection1.Add("actions_edit", "image://svgimages/icon builder/actions_edit.svg");
+            svgImageCollection1.Add("deliver_all", "image://svgimages/icon builder/actions_checkcircled.svg");
             // 
             // FormHandOver
             // 
@@ -1036,7 +1143,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccDesc).EndInit();
             ((System.ComponentModel.ISupportInitialize)gC_DeliveryInvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_DeliveryInvoiceLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtn_RemoveDeliveryLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_DeliverAll).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cancel).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cash).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpace_1).EndInit();
@@ -1073,6 +1182,11 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtn_AddWaybill;
         private DevExpress.XtraEditors.SimpleButton btn_Ok;
         private DevExpress.XtraEditors.SimpleButton btn_Cancel;
+        private DevExpress.XtraEditors.SimpleButton btn_DeliverAll;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_DeliverAll;
+        private DevExpress.XtraBars.BarButtonItem BBI_DeliverAll;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RRemove;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtn_RemoveDeliveryLine;
         private DevExpress.XtraLayout.LayoutControlItem lCI_Cancel;
         private DevExpress.XtraLayout.LayoutControlItem lCI_Cash;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpace_1;

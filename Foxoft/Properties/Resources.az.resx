@@ -2482,6 +2482,24 @@
   <data name="Form_HandOver_Button_AddWaybill" xml:space="preserve">
     <value>Əlavə Et</value>
   </data>
+  <data name="Form_HandOver_Button_DeliverAll" xml:space="preserve">
+    <value>Hamısını Təhvil Ver</value>
+  </data>
+  <data name="Form_HandOver_SelectInvoiceWarning" xml:space="preserve">
+    <value>Zəhmət olmasa təhvil veriləcək qaiməni seçin.</value>
+  </data>
+  <data name="Form_HandOver_AnotherInvoiceInProgress" xml:space="preserve">
+    <value>Hazırda başqa qaimə üzrə təhvil aparılır. Zəhmət olmasa cari əməliyyatı tamamlayın və ya imtina edin.</value>
+  </data>
+  <data name="Form_HandOver_Tooltip_AddLine" xml:space="preserve">
+    <value>Təhvilə əlavə et</value>
+  </data>
+  <data name="Form_HandOver_Tooltip_RemoveLine" xml:space="preserve">
+    <value>Təhvildən çıxar</value>
+  </data>
+  <data name="Form_HandOver_AllDelivered" xml:space="preserve">
+    <value>Bu qaimə üzrə bütün mallar artıq təhvil verilib.</value>
+  </data>
   <data name="Common_PrintFast" xml:space="preserve">
     <value>Sürətli Çap Et</value>
   </data>

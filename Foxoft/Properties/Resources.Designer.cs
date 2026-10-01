@@ -10375,6 +10375,60 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deliver All.
+        /// </summary>
+        public static string Form_HandOver_Button_DeliverAll {
+            get {
+                return ResourceManager.GetString("Form_HandOver_Button_DeliverAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select an invoice to deliver..
+        /// </summary>
+        public static string Form_HandOver_SelectInvoiceWarning {
+            get {
+                return ResourceManager.GetString("Form_HandOver_SelectInvoiceWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Another invoice handover is already in progress. Please finish or cancel it first..
+        /// </summary>
+        public static string Form_HandOver_AnotherInvoiceInProgress {
+            get {
+                return ResourceManager.GetString("Form_HandOver_AnotherInvoiceInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to delivery.
+        /// </summary>
+        public static string Form_HandOver_Tooltip_AddLine {
+            get {
+                return ResourceManager.GetString("Form_HandOver_Tooltip_AddLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove from delivery.
+        /// </summary>
+        public static string Form_HandOver_Tooltip_RemoveLine {
+            get {
+                return ResourceManager.GetString("Form_HandOver_Tooltip_RemoveLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All items for this invoice have already been delivered..
+        /// </summary>
+        public static string Form_HandOver_AllDelivered {
+            get {
+                return ResourceManager.GetString("Form_HandOver_AllDelivered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel hand over?.
         /// </summary>
         public static string Form_HandOver_CancelQuestion {
