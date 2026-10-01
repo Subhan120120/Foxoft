@@ -3327,6 +3327,9 @@ namespace Foxoft
                 {
                     colQty.Visible = false;
                     colQty.OptionsColumn.ReadOnly = true;
+                    ItemForCurrAccCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                    LCI_CurrAccDesc.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                    ItemForToWarehouseCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
                     ItemForWarehouseCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
                     LCI_CashRegCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
 
@@ -3341,7 +3344,13 @@ namespace Foxoft
                 {
                     LCG_InfoPayment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 
-                    if (dcProcess.ProcessCode == "IT")
+                    if (dcProcess.ProcessCode == "CI")
+                    {
+                        ItemForCurrAccCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                        LCI_CurrAccDesc.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                        ItemForToWarehouseCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                    }
+                    else if (dcProcess.ProcessCode == "IT")
                     {
                         btnEdit_CurrAccCode.Enabled = true;
                         col_Price.Visible = false;
@@ -3368,6 +3377,20 @@ namespace Foxoft
 
             if (File.Exists(layoutHeaderPath))
                 dataLayoutControl1.RestoreLayoutFromXml(layoutHeaderPath);
+
+            if (new string[] { "EX", "EI", "CI" }.Contains(dcProcess.ProcessCode))
+            {
+                ItemForCurrAccCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                LCI_CurrAccDesc.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                ItemForToWarehouseCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+            }
+
+            if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+            {
+                ItemForWarehouseCode.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+                if (dcProcess.ProcessCode == "EX")
+                    ItemForDeliveryDate.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+            }
 
             string layoutLineFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml");
 
