@@ -314,21 +314,11 @@ namespace Foxoft
 
         private void CurrAccTypeCodeLookUpEdit_EditValueChanged(object sender, EventArgs e)
         {
-            // treat null/empty as "not 3"
-            var isType3 = false;
+            bool isPersonnel = CurrAccTypeCodeLookUpEdit.EditValue is CurrAccType.Personnel;
 
-            var val = CurrAccTypeCodeLookUpEdit.EditValue;
-            if (val != null && val != DBNull.Value)
-            {
-                // DevExpress LookUpEdit value is often string/int; handle both safely
-                if (val is int i) isType3 = (i == 3);
-                else if (int.TryParse(val.ToString(), out var parsed)) isType3 = (parsed == 3);
-            }
+            PersonalTypeCodeLookUpEdit.Enabled = isPersonnel;
 
-            PersonalTypeCodeLookUpEdit.Enabled = isType3;
-
-            // optional: clear value when disabled
-            if (!isType3)
+            if (!isPersonnel)
                 PersonalTypeCodeLookUpEdit.EditValue = null;
         }
 
