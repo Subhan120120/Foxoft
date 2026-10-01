@@ -3859,6 +3859,234 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_ReportGridOptions_GroupFooter_VisibleIfExpanded" xml:space="preserve">
     <value>Yalnız genişlənəndə görünən</value>
   </data>
+  <data name="Form_ReportGridOptions_TabView" xml:space="preserve">
+    <value>Görünüş</value>
+  </data>
+  <data name="Form_ReportGridOptions_TabBehavior" xml:space="preserve">
+    <value>Davranış</value>
+  </data>
+  <data name="Form_ReportGridOptions_TabCustomization" xml:space="preserve">
+    <value>Fərdiləşdirmə</value>
+  </data>
+  <data name="Form_ReportGridOptions_TabFind" xml:space="preserve">
+    <value>Axtarış paneli</value>
+  </data>
+  <data name="Form_ReportGridOptions_TabSelectionMenu" xml:space="preserve">
+    <value>Seçim və Menyu</value>
+  </data>
+  <data name="Form_ReportGridOptions_TabAdvanced" xml:space="preserve">
+    <value>Bütün parametrlər (Ətraflı)</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowGroupPanel" xml:space="preserve">
+    <value>Qruplaşdırma panelini göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowAutoFilterRow" xml:space="preserve">
+    <value>Avtomatik filtr sətrini göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowFilterPanelMode" xml:space="preserve">
+    <value>Filtr paneli rejimi</value>
+  </data>
+  <data name="Form_ReportGridOptions_FilterPanel_Default" xml:space="preserve">
+    <value>Varsayılan</value>
+  </data>
+  <data name="Form_ReportGridOptions_FilterPanel_Never" xml:space="preserve">
+    <value>Heç vaxt</value>
+  </data>
+  <data name="Form_ReportGridOptions_FilterPanel_ShowAlways" xml:space="preserve">
+    <value>Həmişə</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowIndicator" xml:space="preserve">
+    <value>Sətir nömrəsi göstəricisini göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowHorizontalLines" xml:space="preserve">
+    <value>Üfüqi tor xətlərini göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowVerticalLines" xml:space="preserve">
+    <value>Şaquli tor xətlərini göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowGroupedColumns" xml:space="preserve">
+    <value>Qruplaşdırılmış sütunları cədvəldə göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_ColumnAutoWidth" xml:space="preserve">
+    <value>Sütun enini avtomatik sığdır</value>
+  </data>
+  <data name="Form_ReportGridOptions_RowAutoHeight" xml:space="preserve">
+    <value>Sətir hündürlüyünü avtomatik müəyyən et</value>
+  </data>
+  <data name="Form_ReportGridOptions_EnableAppearanceEvenRow" xml:space="preserve">
+    <value>Cüt sətirləri rənglə fərqləndir</value>
+  </data>
+  <data name="Form_ReportGridOptions_EnableAppearanceOddRow" xml:space="preserve">
+    <value>Tək sətirləri rənglə fərqləndir</value>
+  </data>
+  <data name="Form_ReportGridOptions_NewItemRowPosition" xml:space="preserve">
+    <value>Yeni sətir daxiletmə mövqeyi</value>
+  </data>
+  <data name="Form_ReportGridOptions_NewItemRow_None" xml:space="preserve">
+    <value>Yoxdur</value>
+  </data>
+  <data name="Form_ReportGridOptions_NewItemRow_Top" xml:space="preserve">
+    <value>Yuxarıda</value>
+  </data>
+  <data name="Form_ReportGridOptions_NewItemRow_Bottom" xml:space="preserve">
+    <value>Aşağıda</value>
+  </data>
+  <data name="Form_ReportGridOptions_RowHeight" xml:space="preserve">
+    <value>Sətir hündürlüyü (0 = avtomatik)</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowAddRows" xml:space="preserve">
+    <value>Sətir əlavə etməyə icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowDeleteRows" xml:space="preserve">
+    <value>Sətir silməyə icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_EditorShowMode" xml:space="preserve">
+    <value>Redaktorun açılma rejimi</value>
+  </data>
+  <data name="Form_ReportGridOptions_EditorShow_Default" xml:space="preserve">
+    <value>Varsayılan</value>
+  </data>
+  <data name="Form_ReportGridOptions_EditorShow_MouseDown" xml:space="preserve">
+    <value>Siçanın düyməsini basanda</value>
+  </data>
+  <data name="Form_ReportGridOptions_EditorShow_MouseDownFocused" xml:space="preserve">
+    <value>Fokus olduqda basanda</value>
+  </data>
+  <data name="Form_ReportGridOptions_EditorShow_Click" xml:space="preserve">
+    <value>Kliklədikdə</value>
+  </data>
+  <data name="Form_ReportGridOptions_AutoExpandAllGroups" xml:space="preserve">
+    <value>Bütün qrupları avtomatik aç</value>
+  </data>
+  <data name="Form_ReportGridOptions_KeepFocusedRowOnUpdate" xml:space="preserve">
+    <value>Yenilənmədə aktiv sətiri saxla</value>
+  </data>
+  <data name="Form_ReportGridOptions_ImmediateUpdateRowPosition" xml:space="preserve">
+    <value>Dəyişiklikdə dərhal çeşidlə</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowPixelScrolling" xml:space="preserve">
+    <value>Piksel sürüşdürməsinə icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_CopyToClipboardWithHeaders" xml:space="preserve">
+    <value>Kopyalayarkən sütun başlıqlarını daxil et</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowColumnMoving" xml:space="preserve">
+    <value>Sütunların yerini dəyişməyə icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowColumnResizing" xml:space="preserve">
+    <value>Sütun ölçülərini dəyişməyə icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowGroup" xml:space="preserve">
+    <value>Qruplaşdırmaya icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowSort" xml:space="preserve">
+    <value>Çeşidləməyə (Sort) icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowFilter" xml:space="preserve">
+    <value>Filtrasiyaya icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_AllowQuickHideColumns" xml:space="preserve">
+    <value>Sütunları cəld gizlətməyə icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_FindAlwaysVisible" xml:space="preserve">
+    <value>Axtarış panelini həmişə göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_FindShowClearButton" xml:space="preserve">
+    <value>Təmizlə düyməsini göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_FindShowCloseButton" xml:space="preserve">
+    <value>Bağla düyməsini göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_FindShowFindButton" xml:space="preserve">
+    <value>Axtar düyməsini göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_FindHighlightResults" xml:space="preserve">
+    <value>Tapılan nəticələri işıqlandır</value>
+  </data>
+  <data name="Form_ReportGridOptions_FindSearchInPreview" xml:space="preserve">
+    <value>Önbaxış bölmələrində axtar</value>
+  </data>
+  <data name="Form_ReportGridOptions_FindFilterColumns" xml:space="preserve">
+    <value>Axtarış sütunları (* = hamısı)</value>
+  </data>
+  <data name="Form_ReportGridOptions_FindNullPrompt" xml:space="preserve">
+    <value>Axtarış sətirinin daxili mətni</value>
+  </data>
+  <data name="Form_ReportGridOptions_MultiSelect" xml:space="preserve">
+    <value>Çoxlu sətir seçiminə icazə ver</value>
+  </data>
+  <data name="Form_ReportGridOptions_MultiSelectMode" xml:space="preserve">
+    <value>Çoxlu seçim rejimi</value>
+  </data>
+  <data name="Form_ReportGridOptions_MultiSelect_Row" xml:space="preserve">
+    <value>Sətir seçimi</value>
+  </data>
+  <data name="Form_ReportGridOptions_MultiSelect_CheckBox" xml:space="preserve">
+    <value>Qutu ilə seçim (Checkbox)</value>
+  </data>
+  <data name="Form_ReportGridOptions_MultiSelect_Cell" xml:space="preserve">
+    <value>Xana seçimi</value>
+  </data>
+  <data name="Form_ReportGridOptions_ResetSelectionClickOutside" xml:space="preserve">
+    <value>Qutudan kənara kliklədikdə seçimi sıfırla</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowCheckBoxInPrintExport" xml:space="preserve">
+    <value>Çap və ixracda seçim qutusunu göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowCheckBoxInGroup" xml:space="preserve">
+    <value>Qrup sətirlərində checkbox göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowCheckBoxInHeader" xml:space="preserve">
+    <value>Sütun başlığında checkbox göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_EnableAppearanceFocusedRow" xml:space="preserve">
+    <value>Seçilmiş sətiri vurğula</value>
+  </data>
+  <data name="Form_ReportGridOptions_EnableAppearanceFocusedCell" xml:space="preserve">
+    <value>Seçilmiş xananı vurğula</value>
+  </data>
+  <data name="Form_ReportGridOptions_EnableColumnMenu" xml:space="preserve">
+    <value>Sütun sağ klik menyusunu aktiv et</value>
+  </data>
+  <data name="Form_ReportGridOptions_EnableFooterMenu" xml:space="preserve">
+    <value>Alt cəm menyusunu aktiv et</value>
+  </data>
+  <data name="Form_ReportGridOptions_EnableGroupPanelMenu" xml:space="preserve">
+    <value>Qrup paneli menyusunu aktiv et</value>
+  </data>
+  <data name="Form_ReportGridOptions_ShowConditionalFormattingItem" xml:space="preserve">
+    <value>Şərti formatlaşdırma menyu bəndini göstər</value>
+  </data>
+  <data name="Form_ReportGridOptions_AdvancedCategory" xml:space="preserve">
+    <value>Parametr kateqoriyası:</value>
+  </data>
+  <data name="Form_ReportGridOptions_Category_OptionsView" xml:space="preserve">
+    <value>Görünüş parametrləri (OptionsView)</value>
+  </data>
+  <data name="Form_ReportGridOptions_Category_OptionsBehavior" xml:space="preserve">
+    <value>Davranış parametrləri (OptionsBehavior)</value>
+  </data>
+  <data name="Form_ReportGridOptions_Category_OptionsCustomization" xml:space="preserve">
+    <value>Fərdiləşdirmə parametrləri (OptionsCustomization)</value>
+  </data>
+  <data name="Form_ReportGridOptions_Category_OptionsFind" xml:space="preserve">
+    <value>Axtarış paneli parametrləri (OptionsFind)</value>
+  </data>
+  <data name="Form_ReportGridOptions_Category_OptionsSelection" xml:space="preserve">
+    <value>Seçim parametrləri (OptionsSelection)</value>
+  </data>
+  <data name="Form_ReportGridOptions_Category_OptionsMenu" xml:space="preserve">
+    <value>Menyu parametrləri (OptionsMenu)</value>
+  </data>
+  <data name="Form_ReportGridOptions_Category_OptionsFilter" xml:space="preserve">
+    <value>Filtr parametrləri (OptionsFilter)</value>
+  </data>
+  <data name="Form_ReportGridOptions_Category_OptionsPrint" xml:space="preserve">
+    <value>Çap parametrləri (OptionsPrint)</value>
+  </data>
+  <data name="Form_ReportGridOptions_Category_GridView" xml:space="preserve">
+    <value>Bütün GridView parametrləri (GridView)</value>
+  </data>
   <data name="Form_ReportPreview_EditDesign" xml:space="preserve">
     <value>Dizaynı Dəyişdir</value>
   </data>

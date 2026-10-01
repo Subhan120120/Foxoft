@@ -15826,6 +15826,462 @@ namespace Foxoft.Properties {
             }
         }
         
+        public static string Form_ReportGridOptions_TabView {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_TabView", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_TabBehavior {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_TabBehavior", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_TabCustomization {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_TabCustomization", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_TabFind {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_TabFind", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_TabSelectionMenu {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_TabSelectionMenu", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_TabAdvanced {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_TabAdvanced", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowGroupPanel {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowGroupPanel", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowAutoFilterRow {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowAutoFilterRow", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowFilterPanelMode {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowFilterPanelMode", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FilterPanel_Default {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FilterPanel_Default", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FilterPanel_Never {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FilterPanel_Never", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FilterPanel_ShowAlways {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FilterPanel_ShowAlways", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowIndicator {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowIndicator", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowHorizontalLines {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowHorizontalLines", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowVerticalLines {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowVerticalLines", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowGroupedColumns {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowGroupedColumns", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ColumnAutoWidth {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ColumnAutoWidth", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_RowAutoHeight {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_RowAutoHeight", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EnableAppearanceEvenRow {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EnableAppearanceEvenRow", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EnableAppearanceOddRow {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EnableAppearanceOddRow", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_NewItemRowPosition {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_NewItemRowPosition", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_NewItemRow_None {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_NewItemRow_None", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_NewItemRow_Top {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_NewItemRow_Top", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_NewItemRow_Bottom {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_NewItemRow_Bottom", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_RowHeight {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_RowHeight", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AllowAddRows {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowAddRows", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AllowDeleteRows {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowDeleteRows", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EditorShowMode {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EditorShowMode", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EditorShow_Default {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EditorShow_Default", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EditorShow_MouseDown {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EditorShow_MouseDown", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EditorShow_MouseDownFocused {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EditorShow_MouseDownFocused", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EditorShow_Click {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EditorShow_Click", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AutoExpandAllGroups {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AutoExpandAllGroups", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_KeepFocusedRowOnUpdate {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_KeepFocusedRowOnUpdate", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ImmediateUpdateRowPosition {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ImmediateUpdateRowPosition", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AllowPixelScrolling {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowPixelScrolling", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_CopyToClipboardWithHeaders {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_CopyToClipboardWithHeaders", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AllowColumnMoving {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowColumnMoving", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AllowColumnResizing {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowColumnResizing", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AllowGroup {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowGroup", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AllowSort {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowSort", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AllowFilter {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowFilter", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AllowQuickHideColumns {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AllowQuickHideColumns", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FindAlwaysVisible {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FindAlwaysVisible", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FindShowClearButton {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FindShowClearButton", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FindShowCloseButton {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FindShowCloseButton", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FindShowFindButton {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FindShowFindButton", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FindHighlightResults {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FindHighlightResults", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FindSearchInPreview {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FindSearchInPreview", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FindFilterColumns {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FindFilterColumns", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_FindNullPrompt {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_FindNullPrompt", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_MultiSelect {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_MultiSelect", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_MultiSelectMode {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_MultiSelectMode", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_MultiSelect_Row {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_MultiSelect_Row", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_MultiSelect_CheckBox {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_MultiSelect_CheckBox", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_MultiSelect_Cell {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_MultiSelect_Cell", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ResetSelectionClickOutside {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ResetSelectionClickOutside", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowCheckBoxInPrintExport {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowCheckBoxInPrintExport", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowCheckBoxInGroup {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowCheckBoxInGroup", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowCheckBoxInHeader {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowCheckBoxInHeader", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EnableAppearanceFocusedRow {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EnableAppearanceFocusedRow", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EnableAppearanceFocusedCell {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EnableAppearanceFocusedCell", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EnableColumnMenu {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EnableColumnMenu", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EnableFooterMenu {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EnableFooterMenu", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_EnableGroupPanelMenu {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_EnableGroupPanelMenu", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_ShowConditionalFormattingItem {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_ShowConditionalFormattingItem", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_AdvancedCategory {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_AdvancedCategory", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_Category_OptionsView {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Category_OptionsView", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_Category_OptionsBehavior {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Category_OptionsBehavior", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_Category_OptionsCustomization {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Category_OptionsCustomization", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_Category_OptionsFind {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Category_OptionsFind", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_Category_OptionsSelection {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Category_OptionsSelection", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_Category_OptionsMenu {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Category_OptionsMenu", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_Category_OptionsFilter {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Category_OptionsFilter", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_Category_OptionsPrint {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Category_OptionsPrint", resourceCulture);
+            }
+        }
+        
+        public static string Form_ReportGridOptions_Category_GridView {
+            get {
+                return ResourceManager.GetString("Form_ReportGridOptions_Category_GridView", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy to Clipboard.
         /// </summary>
