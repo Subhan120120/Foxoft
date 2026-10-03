@@ -2653,6 +2653,159 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Related Current Account.
+        /// </summary>
+        public static string Entity_CurrAccRelation {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRelation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_CurrAccRelation_Id {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRelation_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Account Code.
+        /// </summary>
+        public static string Entity_CurrAccRelation_RelatedCurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRelation_RelatedCurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Account.
+        /// </summary>
+        public static string Entity_CurrAccRelation_RelatedCurrAccDesc {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRelation_RelatedCurrAccDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relation Type.
+        /// </summary>
+        /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        public static string Entity_CurrAccRelation_Note {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRelation_Note", resourceCulture);
+            }
+        }
+
+        public static string Entity_CurrAccRelation_RelationType {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRelation_RelationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relation Type.
+        /// </summary>
+        public static string Entity_CurrAccRelationType {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRelationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_CurrAccRelationType_Id {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRelationType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relation Type Name.
+        /// </summary>
+        public static string Entity_CurrAccRelationType_Name {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRelationType_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Accounts.
+        /// </summary>
+        public static string Form_CurrAcc_Bar_RelatedCurrAcc {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Bar_RelatedCurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Current Accounts.
+        /// </summary>
+        public static string Form_CurrAccRelationList_Caption {
+            get {
+                return ResourceManager.GetString("Form_CurrAccRelationList_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No related account selected to delete..
+        /// </summary>
+        public static string Form_CurrAccRelationList_NoItemToDelete {
+            get {
+                return ResourceManager.GetString("Form_CurrAccRelationList_NoItemToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Related Account.
+        /// </summary>
+        public static string Form_CurrAccRelation_Caption_New {
+            get {
+                return ResourceManager.GetString("Form_CurrAccRelation_Caption_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Related Account.
+        /// </summary>
+        public static string Form_CurrAccRelation_Caption_Edit {
+            get {
+                return ResourceManager.GetString("Form_CurrAccRelation_Caption_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current account cannot be related to itself..
+        /// </summary>
+        /// <summary>
+        ///   Looks up a localized string similar to Current account not found..
+        /// </summary>
+        public static string Validation_CurrAcc_NotFound {
+            get {
+                return ResourceManager.GetString("Validation_CurrAcc_NotFound", resourceCulture);
+            }
+        }
+
+        public static string Validation_CurrAcc_CannotRelateToSelf {
+            get {
+                return ResourceManager.GetString("Validation_CurrAcc_CannotRelateToSelf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This relation already exists..
+        /// </summary>
+        public static string Validation_CurrAcc_RelationAlreadyExists {
+            get {
+                return ResourceManager.GetString("Validation_CurrAcc_RelationAlreadyExists", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Current Account Feature.
         /// </summary>
         public static string Entity_CurrAccFeature {
@@ -2688,6 +2841,9 @@ namespace Foxoft.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Related Current Account.
+        /// </summary>
         /// <summary>
         ///   Looks up a localized string similar to Current Account Feature.
         /// </summary>

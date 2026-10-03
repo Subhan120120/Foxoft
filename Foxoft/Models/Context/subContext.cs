@@ -28,6 +28,8 @@ namespace Foxoft.Models
         public DbSet<TrClaimReport> TrClaimReports { get; set; }
         public DbSet<DcClaimCategory> DcClaimCategories { get; set; }
         public DbSet<DcCurrAccContactDetail> DcCurrAccContactDetails { get; set; }
+        public DbSet<DcCurrAccRelationType> DcCurrAccRelationTypes { get; set; }
+        public DbSet<TrCurrAccRelation> TrCurrAccRelations { get; set; }
         public DbSet<DcContactType> DcContactType { get; set; }
         public DbSet<DcCurrAcc> DcCurrAccs { get; set; }
         public DbSet<DcCurrAccType> DcCurrAccTypes { get; set; }
@@ -687,6 +689,18 @@ namespace Foxoft.Models
                 new DcContactType { Id = ContactType.Email, ContactTypeDesc = "Email" },
                 new DcContactType { Id = ContactType.SocialMedia, ContactTypeDesc = "Sosial Media" },
                 new DcContactType { Id = ContactType.WhatsAppGroup, ContactTypeDesc = "WhatsApp Qrupu" }
+                );
+
+            modelBuilder.Entity<DcCurrAccRelationType>().HasData(
+                new DcCurrAccRelationType { RelationTypeId = 1, RelationTypeName = "Qardaşı" },
+                new DcCurrAccRelationType { RelationTypeId = 2, RelationTypeName = "Valideyni" },
+                new DcCurrAccRelationType { RelationTypeId = 3, RelationTypeName = "Övladı" },
+                new DcCurrAccRelationType { RelationTypeId = 4, RelationTypeName = "Həyat yoldaşı" },
+                new DcCurrAccRelationType { RelationTypeId = 5, RelationTypeName = "Filialı" },
+                new DcCurrAccRelationType { RelationTypeId = 6, RelationTypeName = "Ana şirkəti" },
+                new DcCurrAccRelationType { RelationTypeId = 7, RelationTypeName = "Zamin" },
+                new DcCurrAccRelationType { RelationTypeId = 8, RelationTypeName = "Nümayəndə" },
+                new DcCurrAccRelationType { RelationTypeId = 9, RelationTypeName = "Digər" }
                 );
 
             modelBuilder.Entity<DcPersonalType>().HasData(
@@ -1591,6 +1605,24 @@ namespace Foxoft.Models
                 .Property(x => x.PaymentKindId)
                 .HasConversion<byte>()
                 .HasColumnType("tinyint");
+
+            modelBuilder.Entity<TrCurrAccRelation>(entity =>
+            {
+                entity.HasOne(d => d.DcCurrAcc)
+                    .WithMany(p => p.TrCurrAccRelations)
+                    .HasForeignKey(d => d.CurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.RelatedDcCurrAcc)
+                    .WithMany(p => p.RelatedTrCurrAccRelations)
+                    .HasForeignKey(d => d.RelatedCurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.DcCurrAccRelationType)
+                    .WithMany(p => p.TrCurrAccRelations)
+                    .HasForeignKey(d => d.RelationTypeId)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
         }
     }
 }

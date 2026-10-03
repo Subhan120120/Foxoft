@@ -1,4 +1,4 @@
-using Foxoft.Properties;
+﻿using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -59,6 +59,7 @@ namespace Foxoft
             bar1 = new DevExpress.XtraBars.Bar();
             BBI_CurrAccFeatures = new DevExpress.XtraBars.BarButtonItem();
             BBI_ContactDetail = new DevExpress.XtraBars.BarButtonItem();
+            BBI_RelatedCurrAcc = new DevExpress.XtraBars.BarButtonItem();
             BBI_HumanResources = new DevExpress.XtraBars.BarButtonItem();
             BBI_MergeCurrAcc = new DevExpress.XtraBars.BarButtonItem();
             bar3 = new DevExpress.XtraBars.Bar();
@@ -448,8 +449,8 @@ namespace Foxoft
             barManager1.DockControls.Add(barDockControlLeft);
             barManager1.DockControls.Add(barDockControlRight);
             barManager1.Form = this;
-            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_CurrAccFeatures, BBI_ContactDetail, BBI_HumanResources, BBI_MergeCurrAcc });
-            barManager1.MaxItemId = 4;
+            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_CurrAccFeatures, BBI_ContactDetail, BBI_RelatedCurrAcc, BBI_HumanResources, BBI_MergeCurrAcc });
+            barManager1.MaxItemId = 5;
             barManager1.StatusBar = bar3;
             // 
             // bar1
@@ -459,7 +460,7 @@ namespace Foxoft
             bar1.DockRow = 1;
             bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
             bar1.FloatLocation = new Point(80, 531);
-            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_CurrAccFeatures), new DevExpress.XtraBars.LinkPersistInfo(BBI_ContactDetail), new DevExpress.XtraBars.LinkPersistInfo(BBI_HumanResources), new DevExpress.XtraBars.LinkPersistInfo(BBI_MergeCurrAcc) });
+            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_CurrAccFeatures), new DevExpress.XtraBars.LinkPersistInfo(BBI_ContactDetail), new DevExpress.XtraBars.LinkPersistInfo(BBI_RelatedCurrAcc), new DevExpress.XtraBars.LinkPersistInfo(BBI_HumanResources), new DevExpress.XtraBars.LinkPersistInfo(BBI_MergeCurrAcc) });
             bar1.Offset = 11;
             bar1.Text = "Tools";
             // 
@@ -480,6 +481,15 @@ namespace Foxoft
             BBI_ContactDetail.Name = "BBI_ContactDetail";
             BBI_ContactDetail.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             BBI_ContactDetail.ItemClick += BBI_ContactDetail_ItemClick;
+            // 
+            // BBI_RelatedCurrAcc
+            // 
+            BBI_RelatedCurrAcc.Caption = Resources.Form_CurrAcc_Bar_RelatedCurrAcc;
+            BBI_RelatedCurrAcc.Id = 4;
+            BBI_RelatedCurrAcc.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_RelatedCurrAcc.ImageOptions.SvgImage");
+            BBI_RelatedCurrAcc.Name = "BBI_RelatedCurrAcc";
+            BBI_RelatedCurrAcc.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            BBI_RelatedCurrAcc.ItemClick += BBI_RelatedCurrAcc_ItemClick;
             // 
             // BBI_HumanResources
             // 
@@ -919,6 +929,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
         private DevExpress.XtraBars.BarButtonItem BBI_CurrAccFeatures;
         private DevExpress.XtraBars.BarButtonItem BBI_ContactDetail;
+        private DevExpress.XtraBars.BarButtonItem BBI_RelatedCurrAcc;
         private DevExpress.XtraBars.BarButtonItem BBI_MergeCurrAcc;
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
         private DevExpress.XtraEditors.LookUpEdit PersonalTypeCodeLookUpEdit;

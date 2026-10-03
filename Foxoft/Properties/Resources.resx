@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -659,6 +659,57 @@
   </data>
   <data name="Form_CurrAccContactDetailList_NoItemToDelete" xml:space="preserve">
     <value>No contact detail selected to delete.</value>
+  </data>
+  <data name="Entity_CurrAccRelation" xml:space="preserve">
+    <value>Related Current Account</value>
+  </data>
+  <data name="Entity_CurrAccRelation_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Entity_CurrAccRelation_RelatedCurrAccCode" xml:space="preserve">
+    <value>Related Account Code</value>
+  </data>
+  <data name="Entity_CurrAccRelation_RelatedCurrAccDesc" xml:space="preserve">
+    <value>Related Account</value>
+  </data>
+  <data name="Entity_CurrAccRelation_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Entity_CurrAccRelation_RelationType" xml:space="preserve">
+    <value>Relation Type</value>
+  </data>
+  <data name="Entity_CurrAccRelationType" xml:space="preserve">
+    <value>Relation Type</value>
+  </data>
+  <data name="Entity_CurrAccRelationType_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Entity_CurrAccRelationType_Name" xml:space="preserve">
+    <value>Relation Type Name</value>
+  </data>
+  <data name="Form_CurrAcc_Bar_RelatedCurrAcc" xml:space="preserve">
+    <value>Related Accounts</value>
+  </data>
+  <data name="Form_CurrAccRelationList_Caption" xml:space="preserve">
+    <value>Related Current Accounts</value>
+  </data>
+  <data name="Form_CurrAccRelationList_NoItemToDelete" xml:space="preserve">
+    <value>No related account selected to delete.</value>
+  </data>
+  <data name="Form_CurrAccRelation_Caption_New" xml:space="preserve">
+    <value>New Related Account</value>
+  </data>
+  <data name="Form_CurrAccRelation_Caption_Edit" xml:space="preserve">
+    <value>Edit Related Account</value>
+  </data>
+  <data name="Validation_CurrAcc_NotFound" xml:space="preserve">
+    <value>Current account not found.</value>
+  </data>
+  <data name="Validation_CurrAcc_CannotRelateToSelf" xml:space="preserve">
+    <value>Current account cannot be related to itself.</value>
+  </data>
+  <data name="Validation_CurrAcc_RelationAlreadyExists" xml:space="preserve">
+    <value>This relation already exists.</value>
   </data>
   <data name="Entity_CurrAccFeature" xml:space="preserve">
     <value>Current Account Feature</value>

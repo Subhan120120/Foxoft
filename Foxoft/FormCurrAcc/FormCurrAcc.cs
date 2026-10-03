@@ -1,4 +1,4 @@
-using DevExpress.XtraDataLayout;
+﻿using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.DXErrorProvider;
@@ -289,6 +289,11 @@ namespace Foxoft
         private void BBI_ContactDetail_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             FormCurrAccContactDetailList frm = new(dcCurrAcc.CurrAccCode);
+            frm.ShowDialog();
+        }
+        private void BBI_RelatedCurrAcc_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            FormCurrAccRelationList frm = new(dcCurrAcc.CurrAccCode);
             frm.ShowDialog();
         }
 

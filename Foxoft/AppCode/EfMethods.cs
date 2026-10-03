@@ -1,4 +1,4 @@
-using DevExpress.CodeParser;
+﻿using DevExpress.CodeParser;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
@@ -3069,6 +3069,34 @@ namespace Foxoft
             context.TrMessageLogs
                 .Where(x => x.Sender == sourceCurrAccCode)
                 .ExecuteUpdate(s => s.SetProperty(p => p.Sender, targetCurrAccCode));
+
+            // 14.1 TrCurrAccRelations
+            context.TrCurrAccRelations
+                .Where(x => (x.CurrAccCode == sourceCurrAccCode && x.RelatedCurrAccCode == targetCurrAccCode) ||
+                            (x.CurrAccCode == targetCurrAccCode && x.RelatedCurrAccCode == sourceCurrAccCode))
+                .ExecuteDelete();
+
+            var targetRelatedCodes = context.TrCurrAccRelations
+                .Where(x => x.CurrAccCode == targetCurrAccCode)
+                .Select(x => x.RelatedCurrAccCode)
+                .Concat(context.TrCurrAccRelations
+                    .Where(x => x.RelatedCurrAccCode == targetCurrAccCode)
+                    .Select(x => x.CurrAccCode))
+                .Distinct()
+                .ToList();
+
+            context.TrCurrAccRelations
+                .Where(x => (x.CurrAccCode == sourceCurrAccCode && targetRelatedCodes.Contains(x.RelatedCurrAccCode)) ||
+                            (x.RelatedCurrAccCode == sourceCurrAccCode && targetRelatedCodes.Contains(x.CurrAccCode)))
+                .ExecuteDelete();
+
+            context.TrCurrAccRelations
+                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+
+            context.TrCurrAccRelations
+                .Where(x => x.RelatedCurrAccCode == sourceCurrAccCode)
+                .ExecuteUpdate(s => s.SetProperty(p => p.RelatedCurrAccCode, targetCurrAccCode));
 
             // 15. Delete the source current account
             context.DcCurrAccs
