@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -460,7 +460,7 @@ namespace Foxoft
             bar1.DockRow = 1;
             bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
             bar1.FloatLocation = new Point(80, 531);
-            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_CurrAccFeatures), new DevExpress.XtraBars.LinkPersistInfo(BBI_ContactDetail), new DevExpress.XtraBars.LinkPersistInfo(BBI_RelatedCurrAcc), new DevExpress.XtraBars.LinkPersistInfo(BBI_HumanResources), new DevExpress.XtraBars.LinkPersistInfo(BBI_MergeCurrAcc) });
+            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_CurrAccFeatures), new DevExpress.XtraBars.LinkPersistInfo(BBI_ContactDetail), new DevExpress.XtraBars.LinkPersistInfo(BBI_RelatedCurrAcc), new DevExpress.XtraBars.LinkPersistInfo(BBI_MergeCurrAcc) });
             bar1.Offset = 11;
             bar1.Text = "Tools";
             // 
