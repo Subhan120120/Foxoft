@@ -14,6 +14,8 @@ namespace Foxoft.Models
             : base(options) { }
 
         public DbSet<DcCompany> DcCompanies { get; set; }
+        public DbSet<DcUser> DcUsers { get; set; }
+        public DbSet<TrUserCompany> TrUserCompanies { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,23 +34,41 @@ namespace Foxoft.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //for DefaultValue Attribute for Entity propertires.
-            //foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
-            //    foreach (IMutableProperty property in entityType.GetProperties())
-            //    {
-            //        MemberInfo memberInfo = property.PropertyInfo ?? (MemberInfo)property.FieldInfo;
-            //        if (memberInfo == null) continue;
-            //        DefaultValueAttribute defaultValue = Attribute.GetCustomAttribute(memberInfo, typeof(DefaultValueAttribute)) as DefaultValueAttribute;
-            //        if (defaultValue == null) continue;
-            //        property.SetDefaultValueSql(defaultValue.Value.ToString());
-            //    }
-
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<DcCompany>(entity =>
+            {
+                entity.HasKey(e => e.CompanyCode);
+            });
+
+            modelBuilder.Entity<DcUser>(entity =>
+            {
+                entity.HasKey(e => e.UserName);
+                entity.Property(e => e.UserName).HasMaxLength(30);
+                entity.Property(e => e.Password).HasMaxLength(100);
+                entity.Property(e => e.UserDesc).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<TrUserCompany>(entity =>
+            {
+                entity.HasKey(e => e.UserCompanyId);
+                entity.HasIndex(e => e.CompanyCode);
+                entity.HasIndex(e => new { e.UserName, e.CompanyCode }).IsUnique();
+
+                entity.HasOne(d => d.DcCompany)
+                    .WithMany(p => p.TrUserCompanies)
+                    .HasForeignKey(d => d.CompanyCode)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.DcUser)
+                    .WithMany(p => p.TrUserCompanies)
+                    .HasForeignKey(d => d.UserName)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             InitializeHasData(modelBuilder);
 
             InitializeDeleteBehaviour(modelBuilder);
-
 
             OnModelCreatingPartial(modelBuilder);
         }
@@ -63,8 +83,41 @@ namespace Foxoft.Models
         private static void InitializeHasData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DcCompany>().HasData(
-               new DcCompany {CompanyCode = "Company01", CompanyDesc = "Şirkət01" }
-               );
+               new DcCompany { CompanyCode = "Company01", CompanyDesc = "Şirkət01" }
+            );
+
+            modelBuilder.Entity<DcUser>().HasData(
+                new DcUser
+                {
+                    UserName = "admin",
+                    Password = "123",
+                    UserDesc = "Administrator",
+                    IsDisabled = false,
+                    RowGuid = new System.Guid("11111111-1111-1111-1111-111111111111")
+                },
+                new DcUser
+                {
+                    UserName = "C-000001",
+                    Password = "123",
+                    UserDesc = "Administrator",
+                    IsDisabled = false,
+                    RowGuid = new System.Guid("22222222-2222-2222-2222-222222222222")
+                },
+                new DcUser
+                {
+                    UserName = "CA-1",
+                    Password = "123",
+                    UserDesc = "Administrator",
+                    IsDisabled = false,
+                    RowGuid = new System.Guid("33333333-3333-3333-3333-333333333333")
+                }
+            );
+
+            modelBuilder.Entity<TrUserCompany>().HasData(
+                new TrUserCompany { UserCompanyId = 1, CompanyCode = "Company01", UserName = "admin" },
+                new TrUserCompany { UserCompanyId = 2, CompanyCode = "Company01", UserName = "C-000001" },
+                new TrUserCompany { UserCompanyId = 3, CompanyCode = "Company01", UserName = "CA-1" }
+            );
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

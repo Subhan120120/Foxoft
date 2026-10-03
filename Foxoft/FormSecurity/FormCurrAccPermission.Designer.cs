@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraBars;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Repository;
@@ -378,7 +378,7 @@ namespace Foxoft
             btn_SaveRoles.Size = new Size(432, 22);
             btn_SaveRoles.StyleController = layoutControl1;
             btn_SaveRoles.TabIndex = 3;
-            btn_SaveRoles.Text = "Save Roles";
+            btn_SaveRoles.Text = Resources.Form_CurrAccProfile_SaveRoles;
             btn_SaveRoles.Click += btn_SaveRoles_Click;
             // 
             // Root
@@ -396,7 +396,7 @@ namespace Foxoft
             layoutControlItemCurrAccCode.Location = new Point(0, 0);
             layoutControlItemCurrAccCode.Name = "layoutControlItemCurrAccCode";
             layoutControlItemCurrAccCode.Size = new Size(460, 24);
-            layoutControlItemCurrAccCode.Text = Resources.Entity_CurrAcc_CurrAccCode;
+            layoutControlItemCurrAccCode.Text = Resources.Entity_User_UserName;
             layoutControlItemCurrAccCode.TextSize = new Size(109, 13);
             // 
             // layoutControlItemCurrAccDesc
@@ -405,7 +405,7 @@ namespace Foxoft
             layoutControlItemCurrAccDesc.Location = new Point(0, 24);
             layoutControlItemCurrAccDesc.Name = "layoutControlItemCurrAccDesc";
             layoutControlItemCurrAccDesc.Size = new Size(460, 24);
-            layoutControlItemCurrAccDesc.Text = Resources.Entity_CurrAcc_CurrAccDesc;
+            layoutControlItemCurrAccDesc.Text = Resources.Entity_User_UserDesc;
             layoutControlItemCurrAccDesc.TextSize = new Size(109, 13);
             // 
             // groupRoles
@@ -449,7 +449,7 @@ namespace Foxoft
             tab_RoleClaims.Controls.Add(panelControlRoleTop);
             tab_RoleClaims.Name = "tab_RoleClaims";
             tab_RoleClaims.Size = new Size(858, 537);
-            tab_RoleClaims.Text = "Role Permissions";
+            tab_RoleClaims.Text = Resources.Form_CurrAccProfile_Tab_RoleClaims;
             // 
             // treeListRoleClaims
             // 
@@ -606,7 +606,7 @@ namespace Foxoft
             tab_EffectiveClaims.Controls.Add(panelControlEffectiveTop);
             tab_EffectiveClaims.Name = "tab_EffectiveClaims";
             tab_EffectiveClaims.Size = new Size(858, 537);
-            tab_EffectiveClaims.Text = "Effective Permissions";
+            tab_EffectiveClaims.Text = Resources.Form_CurrAccProfile_Tab_EffectiveClaims;
             // 
             // treeListEffectiveClaims
             // 
@@ -708,7 +708,7 @@ namespace Foxoft
             btn_RefreshEffective.Name = "btn_RefreshEffective";
             btn_RefreshEffective.Size = new Size(85, 24);
             btn_RefreshEffective.TabIndex = 1;
-            btn_RefreshEffective.Text = "Refresh";
+            btn_RefreshEffective.Text = Resources.Common_Refresh;
             btn_RefreshEffective.Click += btn_RefreshEffective_Click;
             // 
             // tab_ReportClaims
@@ -717,7 +717,7 @@ namespace Foxoft
             tab_ReportClaims.Controls.Add(panelControlReportTop);
             tab_ReportClaims.Name = "tab_ReportClaims";
             tab_ReportClaims.Size = new Size(858, 537);
-            tab_ReportClaims.Text = "Report Permissions";
+            tab_ReportClaims.Text = Resources.Form_CurrAccProfile_Tab_ReportClaims;
             // 
             // treeListReportClaims
             // 
@@ -795,7 +795,7 @@ namespace Foxoft
             lbl_ClaimReport.Name = "lbl_ClaimReport";
             lbl_ClaimReport.Size = new Size(86, 13);
             lbl_ClaimReport.TabIndex = 0;
-            lbl_ClaimReport.Text = "Report Permission";
+            lbl_ClaimReport.Text = Resources.Form_CurrAccProfile_Label_ClaimReport;
             // 
             // btnEdit_ClaimReport
             // 
@@ -814,7 +814,7 @@ namespace Foxoft
             btn_ClaimReportSave.Name = "btn_ClaimReportSave";
             btn_ClaimReportSave.Size = new Size(110, 24);
             btn_ClaimReportSave.TabIndex = 2;
-            btn_ClaimReportSave.Text = "Save";
+            btn_ClaimReportSave.Text = Resources.Common_Save;
             btn_ClaimReportSave.Click += btn_ClaimReportSave_Click;
             // 
             // FormCurrAccPermission
@@ -830,7 +830,7 @@ namespace Foxoft
             Name = "FormCurrAccPermission";
             Ribbon = ribbon;
             StatusBar = ribbonStatusBar;
-            Text = "Current Account Permissions";
+            Text = Properties.Resources.Form_CurrAccPermission_Caption;
             FormClosing += FormCurrAccPermission_FormClosing;
             KeyDown += FormCurrAccPermission_KeyDown;
             ((ISupportInitialize)ribbon).EndInit();

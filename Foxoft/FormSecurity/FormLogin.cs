@@ -28,6 +28,8 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            txtEdit_UserName.Leave += (_, _) => UpdateCompanyListForUser();
+
             LUE_Company.Properties.DataSource = efMethods.SelectCompanies();
             LUE_Language.Properties.DataSource = efMethods.SelectEntities<DcUILanguage>();
             LUE_Company.EditValue = Settings.Default.CompanyCode;
@@ -35,6 +37,29 @@ namespace Foxoft
             AcceptButton = btn_ERP;
 
             LoadDataByDatabase();
+            UpdateCompanyListForUser();
+        }
+
+        private void UpdateCompanyListForUser()
+        {
+            string userName = txtEdit_UserName.Text?.Trim() ?? string.Empty;
+            List<DcCompany> companies;
+            if (!string.IsNullOrWhiteSpace(userName) && efMethods.MainUserExist(userName))
+            {
+                companies = efMethods.SelectCompaniesByUser(userName);
+            }
+            else
+            {
+                companies = efMethods.SelectCompanies();
+            }
+
+            LUE_Company.Properties.DataSource = companies;
+
+            string? currentVal = LUE_Company.EditValue?.ToString();
+            if (companies.Count > 0 && (string.IsNullOrEmpty(currentVal) || !companies.Any(c => c.CompanyCode == currentVal)))
+            {
+                LUE_Company.EditValue = companies[0].CompanyCode;
+            }
         }
 
         private void LoadDataByDatabase()
@@ -93,10 +118,10 @@ namespace Foxoft
                 _ = LicenseService.PublishExpiringSoonNotificationAsync(selectedCompany, licenseResult, txtEdit_UserName.Text.Trim());
             }
 
-            if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
+            if (Authorization.Login(txtEdit_UserName.Text.Trim(), txtEdit_Password.Text, selectedCompany, checkEdit_RemindMe.Checked))
             {
                 SessionSave(
-                    txtEdit_UserName.Text,
+                    txtEdit_UserName.Text.Trim(),
                     txtEdit_Password.Text,
                     checkEdit_RemindMe.Checked,
                     Convert.ToInt32(LUE_Terminal.EditValue),
@@ -145,10 +170,10 @@ namespace Foxoft
                 _ = LicenseService.PublishExpiringSoonNotificationAsync(selectedCompany, licenseResult, txtEdit_UserName.Text.Trim());
             }
 
-            if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
+            if (Authorization.Login(txtEdit_UserName.Text.Trim(), txtEdit_Password.Text, selectedCompany, checkEdit_RemindMe.Checked))
             {
                 SessionSave(
-                    txtEdit_UserName.Text,
+                    txtEdit_UserName.Text.Trim(),
                     txtEdit_Password.Text,
                     checkEdit_RemindMe.Checked,
                     Convert.ToInt32(LUE_Terminal.EditValue),

@@ -1615,10 +1615,10 @@
     <value>Identity</value>
   </data>
   <data name="Entity_CurrAccRole" xml:space="preserve">
-    <value>Current Account Role</value>
+    <value>User Role</value>
   </data>
   <data name="Entity_CurrAccRole_Id" xml:space="preserve">
-    <value>Current Account Role Id</value>
+    <value>User Role Id</value>
   </data>
   <data name="Entity_CurrAccRole_CurrAccCode" xml:space="preserve">
     <value>Current Account</value>
@@ -2329,16 +2329,16 @@
     <value>Excel File|*.xlsx</value>
   </data>
   <data name="Form_CurrAccProfile_Caption" xml:space="preserve">
-    <value>Current Account Permissions</value>
+    <value>User Permissions</value>
   </data>
   <data name="Form_CurrAccPermission_Caption" xml:space="preserve">
-    <value>Current Account Permissions</value>
+    <value>User Permissions</value>
   </data>
   <data name="Form_CurrAccProfile_RibbonPage_Main" xml:space="preserve">
-    <value>Account Authorization</value>
+    <value>User Authorization</value>
   </data>
   <data name="Form_CurrAccProfile_RibbonGroup_CurrAccRole" xml:space="preserve">
-    <value>Account Role</value>
+    <value>User Role</value>
   </data>
   <data name="Form_CurrAccProfile_RibbonGroup_RoleClaim" xml:space="preserve">
     <value>Role Permissions</value>
@@ -2374,7 +2374,7 @@
     <value>Roles saved successfully.</value>
   </data>
   <data name="Form_CurrAccProfile_SelectCurrAccFirst" xml:space="preserve">
-    <value>Please select a current account first.</value>
+    <value>Please select a user first.</value>
   </data>
   <data name="Form_CurrAccProfile_EffectiveSummary" xml:space="preserve">
     <value>Total claims: {0}, Granted: {1}</value>
@@ -6862,5 +6862,104 @@ Please wait or choose another invoice.</value>
   </data>
   <data name="Entity_TrPayrollLine_Other" xml:space="preserve">
     <value>Other</value>
+  </data>
+  <data name="Entity_User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="Entity_User_UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="Entity_User_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Entity_User_UserDesc" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Entity_User_IsDisabled" xml:space="preserve">
+    <value>Is Disabled</value>
+  </data>
+  <data name="Entity_User_RowGuid" xml:space="preserve">
+    <value>Guid Id</value>
+  </data>
+  <data name="Entity_User_Companies" xml:space="preserve">
+    <value>Permitted Companies</value>
+  </data>
+  <data name="Entity_UserCompany" xml:space="preserve">
+    <value>User Company</value>
+  </data>
+  <data name="Entity_UserCompany_UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="Entity_UserCompany_CompanyCode" xml:space="preserve">
+    <value>Company Code</value>
+  </data>
+  <data name="Form_UserList_Caption" xml:space="preserve">
+    <value>System Users</value>
+  </data>
+  <data name="Form_UserList_New" xml:space="preserve">
+    <value>New User</value>
+  </data>
+  <data name="Form_UserList_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Form_UserList_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Form_UserList_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Form_UserList_ExportExcel" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="Form_UserList_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Form_UserList_NoUserSelected" xml:space="preserve">
+    <value>Please select a user from the list.</value>
+  </data>
+  <data name="Form_UserList_CannotDeleteSelf" xml:space="preserve">
+    <value>You cannot delete the currently logged in user.</value>
+  </data>
+  <data name="Form_UserList_CannotDeleteAdmin" xml:space="preserve">
+    <value>The system admin user cannot be deleted.</value>
+  </data>
+  <data name="Form_UserEdit_Caption_New" xml:space="preserve">
+    <value>New User</value>
+  </data>
+  <data name="Form_UserEdit_Caption_Edit" xml:space="preserve">
+    <value>Edit User</value>
+  </data>
+  <data name="Form_UserEdit_UserNameRequired" xml:space="preserve">
+    <value>User name is required.</value>
+  </data>
+  <data name="Form_UserEdit_UserNameExists" xml:space="preserve">
+    <value>A user with this user name already exists.</value>
+  </data>
+  <data name="Form_UserEdit_PasswordRequired" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
+  <data name="Form_UserEdit_CompanyRequired" xml:space="preserve">
+    <value>Please select at least one company for the user.</value>
+  </data>
+  <data name="Form_UserEdit_CompaniesGroup" xml:space="preserve">
+    <value>Permitted Companies</value>
+  </data>
+  <data name="Form_UserEdit_SelectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="Form_UserEdit_UnselectAll" xml:space="preserve">
+    <value>Clear Selection</value>
+  </data>
+  <data name="Auth_UserIsDisabled" xml:space="preserve">
+    <value>User account is disabled.</value>
+  </data>
+  <data name="Auth_NoCompanyPermission" xml:space="preserve">
+    <value>You do not have permission to access the selected company.</value>
+  </data>
+  <data name="ERP_ACE_MainUsers" xml:space="preserve">
+    <value>System Users</value>
+  </data>
+  <data name="ERP_ACE_CurrAccClaims" xml:space="preserve">
+    <value>User Permissions</value>
   </data>
 </root>

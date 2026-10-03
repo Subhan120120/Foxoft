@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraBars;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using Foxoft.AppCode;
@@ -45,13 +45,17 @@ namespace Foxoft
 
                         List<WindowInfo> windowinfos = WindowsAPI.GetMDIChildWindowsOfProcess(process);
 
+                        string userDesc = efMethods.SelectMainUser(trSession.CurrAccCode)?.UserDesc
+                            ?? efMethods.SelectCurrAcc(trSession.CurrAccCode)?.CurrAccDesc
+                            ?? trSession.CurrAccCode;
+
                         foreach (WindowInfo windowinfo in windowinfos)
                         {
                             userInfos.Add(new UserInfo()
                             {
                                 PID = trSession.PID,
                                 CurrAccCode = trSession.CurrAccCode,
-                                CurrAccDesc = efMethods.SelectCurrAcc(trSession.CurrAccCode).CurrAccDesc,
+                                CurrAccDesc = userDesc,
                                 ChildPID = windowinfo.Handle,
                                 ChildTitle = windowinfo.Title + " - " + windowinfo.Tag,
                             });
@@ -63,7 +67,7 @@ namespace Foxoft
                             {
                                 PID = trSession.PID,
                                 CurrAccCode = trSession.CurrAccCode,
-                                CurrAccDesc = efMethods.SelectCurrAcc(trSession.CurrAccCode).CurrAccDesc,
+                                CurrAccDesc = userDesc,
                             });
                         }
                     }

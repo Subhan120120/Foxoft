@@ -49,10 +49,10 @@ namespace Foxoft
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using FormCurrAccList form = new(new byte[] { 3 }, false, buttonEdit.EditValue?.ToString());
-            if (form.ShowDialog(this) == DialogResult.OK && form.dcCurrAcc != null)
+            using FormUserList form = new(isSelectMode: true, initialFocusUserName: buttonEdit.EditValue?.ToString());
+            if (form.ShowDialog(this) == DialogResult.OK && !string.IsNullOrWhiteSpace(form.SelectedUserName))
             {
-                buttonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
+                buttonEdit.EditValue = form.SelectedUserName;
             }
         }
 
@@ -122,10 +122,18 @@ namespace Foxoft
                 }
                 else
                 {
-                    txt_CurrAccDesc.Text = string.Empty;
+                    DcUser? mainUser = efMethods.SelectMainUser(currAccCode);
+                    if (mainUser != null)
+                    {
+                        txt_CurrAccDesc.Text = mainUser.UserDesc;
+                    }
+                    else
+                    {
+                        txt_CurrAccDesc.Text = string.Empty;
+                    }
                 }
 
-                BBI_SetPassword.Enabled = CanChangePassword() && dcCurrAcc != null;
+                BBI_SetPassword.Enabled = CanChangePassword() && (dcCurrAcc != null || efMethods.MainUserExist(currAccCode));
 
                 LoadRoles(currAccCode);
                 LoadEffectiveClaims(currAccCode);

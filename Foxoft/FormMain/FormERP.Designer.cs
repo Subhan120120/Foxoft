@@ -147,6 +147,7 @@ namespace Foxoft
             ACE_CrmActivityList = new AccordionControlElement();
             aCE_Reports = new AccordionControlElement();
             aCE_Setting = new AccordionControlElement();
+            ACE_Users = new AccordionControlElement();
             aCE_CurrAccRole = new AccordionControlElement();
             ACE_StoreList = new AccordionControlElement();
             ACE_WarehouseList = new AccordionControlElement();
@@ -976,18 +977,25 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_MessageLog, ACE_NotificationCenter, ACE_NotificationRules, ACE_TransferApproval });
+            aCE_Setting.Elements.AddRange(new AccordionControlElement[] { ACE_Users, aCE_CurrAccRole, ACE_StoreList, ACE_WarehouseList, ACE_TerminalList, accordionControlSeparator2, ACE_AppSettings, ACE_CreditList, ACE_CurrencyList, ACE_PaymentMethodList, ACE_PaymentPlanList, ACE_MessageLog, ACE_NotificationCenter, ACE_NotificationRules, ACE_TransferApproval });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
             aCE_Setting.Text = Resources.ERP_ACE_Parameters;
+            // 
+            // ACE_Users
+            // 
+            ACE_Users.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccRole.ImageOptions.SvgImage");
+            ACE_Users.Name = "ACE_Users";
+            ACE_Users.Style = ElementStyle.Item;
+            ACE_Users.Text = Resources.ERP_ACE_MainUsers;
             // 
             // aCE_CurrAccRole
             // 
             aCE_CurrAccRole.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccRole.ImageOptions.SvgImage");
             aCE_CurrAccRole.Name = "aCE_CurrAccRole";
             aCE_CurrAccRole.Style = ElementStyle.Item;
-            aCE_CurrAccRole.Text = Resources.ERP_ACE_Users;
+            aCE_CurrAccRole.Text = Resources.ERP_ACE_CurrAccClaims;
             // 
             // ACE_StoreList
             // 
@@ -1133,6 +1141,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_HumanResource;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Reports;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Setting;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Users;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CurrAccRole;
         private DevExpress.XtraBars.BarButtonItem bBI_POS;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_RetailSaleInvoice;

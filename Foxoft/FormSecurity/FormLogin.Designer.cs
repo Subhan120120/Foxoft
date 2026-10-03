@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using Foxoft.Properties;
 

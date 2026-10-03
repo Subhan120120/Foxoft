@@ -1,4 +1,4 @@
-﻿using DevExpress.LookAndFeel;
+using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.Utils.Svg;
 using Foxoft.Models;
@@ -76,19 +76,44 @@ namespace Foxoft.AppCode
                 EfMethods efMethods = new();
                 stream.Seek(0, SeekOrigin.Begin);
                 string layoutTxt = Convert.ToBase64String(stream.ToArray());
-                efMethods.UpdateCurrAccTheme(currAccCode, layoutTxt);
+                if (efMethods.MainUserExist(currAccCode))
+                {
+                    efMethods.UpdateMainUserTheme(currAccCode, layoutTxt);
+                }
+                else
+                {
+                    efMethods.UpdateCurrAccTheme(currAccCode, layoutTxt);
+                }
             }
         }
 
         public static void Load(string currAccCode)
         {
+            if (string.IsNullOrWhiteSpace(currAccCode))
+                return;
+
             EfMethods efMethods = new();
-            DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
-            if (!string.IsNullOrEmpty(dcCurrAcc.Theme) && !string.IsNullOrEmpty(dcCurrAcc.CurrAccCode))
+            string? theme = null;
+
+            DcUser? mainUser = efMethods.SelectMainUser(currAccCode);
+            if (mainUser != null && !string.IsNullOrEmpty(mainUser.Theme))
             {
-                if (!string.IsNullOrEmpty(dcCurrAcc.Theme))
+                theme = mainUser.Theme;
+            }
+            else
+            {
+                DcCurrAcc? dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
+                if (dcCurrAcc != null && !string.IsNullOrEmpty(dcCurrAcc.Theme))
                 {
-                    byte[] byteArray = Convert.FromBase64String(dcCurrAcc.Theme);
+                    theme = dcCurrAcc.Theme;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(theme))
+            {
+                try
+                {
+                    byte[] byteArray = Convert.FromBase64String(theme);
                     MemoryStream stream = new(byteArray);
 #pragma warning disable SYSLIB0011
                     BinaryFormatter formatter = new();
@@ -103,11 +128,25 @@ namespace Foxoft.AppCode
                         UserLookAndFeel.Default.SkinName = settings.SkinName;
 
                         var skin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-                        SvgPalette fireBall = skin.CustomSvgPalettes[settings.skinPaletteName];
-                        if (fireBall is not null)
-                            skin.SvgPalettes[Skin.DefaultSkinPaletteName].SetCustomPalette(fireBall);
+                        if (!string.IsNullOrEmpty(settings.skinPaletteName))
+                        {
+                            try
+                            {
+                                SvgPalette fireBall = skin.CustomSvgPalettes[settings.skinPaletteName];
+                                if (fireBall is not null)
+                                    skin.SvgPalettes[Skin.DefaultSkinPaletteName]?.SetCustomPalette(fireBall);
+                            }
+                            catch
+                            {
+                                // Ignore missing custom palette
+                            }
+                        }
                         LookAndFeelHelper.ForceDefaultLookAndFeelChanged();
                     }
+                }
+                catch
+                {
+                    // Safe fallback if theme payload is invalid
                 }
             }
         }

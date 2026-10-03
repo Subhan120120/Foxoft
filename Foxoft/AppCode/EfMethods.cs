@@ -60,6 +60,158 @@ namespace Foxoft
             return db.DcCompanies.ToList();
         }
 
+        public List<DcCompany> SelectCompaniesByUser(string userName)
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+                return SelectCompanies();
+
+            if (string.Equals(userName.Trim(), "admin", StringComparison.OrdinalIgnoreCase))
+            {
+                using mainContext db = new();
+                return db.DcCompanies.Where(x => !x.IsDisabled).ToList();
+            }
+
+            using (mainContext db = new())
+            {
+                var allowedCompanyCodes = db.TrUserCompanies
+                    .Where(x => x.UserName == userName.Trim())
+                    .Select(x => x.CompanyCode)
+                    .ToList();
+
+                return db.DcCompanies
+                    .Where(x => !x.IsDisabled && allowedCompanyCodes.Contains(x.CompanyCode))
+                    .ToList();
+            }
+        }
+
+        public bool UserHasCompanyAccess(string userName, string companyCode)
+        {
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(companyCode))
+                return false;
+
+            if (string.Equals(userName.Trim(), "admin", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            using mainContext db = new();
+            return db.TrUserCompanies.Any(x => x.UserName == userName.Trim() && x.CompanyCode == companyCode);
+        }
+
+        public DcUser? LoginMainUser(string userName, string password)
+        {
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrEmpty(password))
+                return null;
+
+            using mainContext db = new();
+            return db.DcUsers
+                .Include(u => u.TrUserCompanies)
+                .FirstOrDefault(u => u.UserName == userName.Trim() && u.Password == password);
+        }
+
+        public List<DcUser> SelectMainUsers()
+        {
+            using mainContext db = new();
+            return db.DcUsers
+                .Include(u => u.TrUserCompanies)
+                .ThenInclude(uc => uc.DcCompany)
+                .AsNoTracking()
+                .OrderBy(u => u.UserName)
+                .ToList();
+        }
+
+        public DcUser? SelectMainUser(string userName)
+        {
+            using mainContext db = new();
+            return db.DcUsers
+                .Include(u => u.TrUserCompanies)
+                .ThenInclude(uc => uc.DcCompany)
+                .FirstOrDefault(u => u.UserName == userName);
+        }
+
+        public bool MainUserExist(string userName)
+        {
+            using mainContext db = new();
+            return db.DcUsers.Any(u => u.UserName == userName);
+        }
+
+        public void InsertMainUser(DcUser user, IEnumerable<string> companyCodes)
+        {
+            using mainContext db = new();
+            if (user.RowGuid == Guid.Empty)
+                user.RowGuid = Guid.NewGuid();
+
+            db.DcUsers.Add(user);
+
+            if (companyCodes != null)
+            {
+                foreach (string compCode in companyCodes)
+                {
+                    db.TrUserCompanies.Add(new TrUserCompany
+                    {
+                        UserName = user.UserName,
+                        CompanyCode = compCode
+                    });
+                }
+            }
+
+            db.SaveChanges();
+        }
+
+        public void UpdateMainUser(DcUser user, IEnumerable<string> companyCodes)
+        {
+            using mainContext db = new();
+            DcUser? existing = db.DcUsers
+                .Include(u => u.TrUserCompanies)
+                .FirstOrDefault(u => u.UserName == user.UserName);
+
+            if (existing == null)
+                return;
+
+            existing.UserDesc = user.UserDesc;
+            if (!string.IsNullOrEmpty(user.Password))
+                existing.Password = user.Password;
+            existing.IsDisabled = user.IsDisabled;
+
+            var currentCodes = existing.TrUserCompanies.Select(x => x.CompanyCode).ToList();
+            var targetCodes = companyCodes != null ? new HashSet<string>(companyCodes) : new HashSet<string>();
+
+            var toRemove = existing.TrUserCompanies.Where(x => !targetCodes.Contains(x.CompanyCode)).ToList();
+            foreach (var item in toRemove)
+            {
+                db.TrUserCompanies.Remove(item);
+            }
+
+            foreach (var compCode in targetCodes)
+            {
+                if (!currentCodes.Contains(compCode))
+                {
+                    db.TrUserCompanies.Add(new TrUserCompany
+                    {
+                        UserName = existing.UserName,
+                        CompanyCode = compCode
+                    });
+                }
+            }
+
+            db.SaveChanges();
+        }
+
+        public void DeleteMainUser(string userName)
+        {
+            using mainContext db = new();
+            DcUser? user = db.DcUsers
+                .Include(u => u.TrUserCompanies)
+                .FirstOrDefault(u => u.UserName == userName);
+
+            if (user != null)
+            {
+                if (user.TrUserCompanies.Count > 0)
+                    db.TrUserCompanies.RemoveRange(user.TrUserCompanies);
+
+                db.DcUsers.Remove(user);
+                db.SaveChanges();
+            }
+        }
+
         public T InsertEntity<T>(T entity) where T : class
         {
             using subContext db = new();
@@ -773,7 +925,6 @@ namespace Foxoft
             using subContext db = new();
 
             List<TrCurrAccRole> currAccRoles = db.TrCurrAccRoles.Include(x => x.DcRole)
-                                                                  .Include(x => x.DcCurrAcc)
                                                                   .Where(x => x.CurrAccCode == currAccCode)
                                                                   .ToList();
             return currAccRoles;
@@ -2264,13 +2415,15 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcRoles.Include(x => x.TrCurrAccRoles)
-                       .ThenInclude(x => x.DcCurrAcc)
                     .Where(o => o.TrCurrAccRoles.Any(x => x.CurrAccCode == CurrAccCode))
                     .ToList();
         }
 
         public bool CurrAccHasClaims(string currAccCode, string claim)
         {
+            if (string.Equals(currAccCode, "admin", StringComparison.OrdinalIgnoreCase))
+                return true;
+
             using subContext db = new();
 
             bool hasClaim;
@@ -2321,12 +2474,49 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int UpdateMainUserTheme(string userName, string themeLayout)
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+                return 0;
+
+            using mainContext db = new();
+            var user = db.DcUsers.FirstOrDefault(x => x.UserName == userName);
+            if (user != null)
+            {
+                user.Theme = themeLayout;
+                return db.SaveChanges();
+            }
+            return 0;
+        }
+
         public int UpdateCurrAccPassword(string CurrAccCode, string newPassword)
         {
-            using subContext db = new();
-            DcCurrAcc dcCurrAcc = new() { CurrAccCode = CurrAccCode, NewPassword = newPassword };
-            db.Entry(dcCurrAcc).Property(x => x.NewPassword).IsModified = true;
-            return db.SaveChanges();
+            int result = 0;
+            using (subContext db = new())
+            {
+                if (db.DcCurrAccs.Any(x => x.CurrAccCode == CurrAccCode))
+                {
+                    DcCurrAcc dcCurrAcc = new() { CurrAccCode = CurrAccCode, NewPassword = newPassword };
+                    db.Entry(dcCurrAcc).Property(x => x.NewPassword).IsModified = true;
+                    result = db.SaveChanges();
+                }
+            }
+
+            try
+            {
+                using mainContext mainDb = new();
+                DcUser? mainUser = mainDb.DcUsers.FirstOrDefault(x => x.UserName == CurrAccCode);
+                if (mainUser != null)
+                {
+                    mainUser.Password = newPassword;
+                    result += mainDb.SaveChanges();
+                }
+            }
+            catch
+            {
+            }
+
+            return result;
         }
 
         public DcReport SelectReport(int id)

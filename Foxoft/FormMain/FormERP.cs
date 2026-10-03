@@ -75,10 +75,10 @@ namespace Foxoft
             UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
             LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
 
-            BSI_CompanyDesc.Caption = "| " + efMethods.SelectCompany(Settings.Default.CompanyCode).CompanyDesc;
-            bSI_UserName.Caption = "| " + efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
-            BSI_StoreDesc.Caption = "| " + efMethods.SelectStore(Authorization.StoreCode).CurrAccDesc;
-            bSI_TerminalName.Caption = "| " + efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId).TerminalDesc;
+            BSI_CompanyDesc.Caption = "| " + (efMethods.SelectCompany(Settings.Default.CompanyCode)?.CompanyDesc ?? Settings.Default.CompanyCode);
+            bSI_UserName.Caption = "| " + (!string.IsNullOrWhiteSpace(Authorization.UserDesc) ? Authorization.UserDesc : (efMethods.SelectMainUser(Authorization.CurrAccCode)?.UserDesc ?? Authorization.CurrAccCode));
+            BSI_StoreDesc.Caption = "| " + (efMethods.SelectStore(Authorization.StoreCode)?.CurrAccDesc ?? Authorization.StoreCode);
+            bSI_TerminalName.Caption = "| " + (efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId)?.TerminalDesc ?? Settings.Default.TerminalId.ToString());
 
             InitializeReports();
             InitializeFavorites();
@@ -200,6 +200,7 @@ namespace Foxoft
                 case "ProductFeatureType": ShowExistForm<FormHierarchyFeatureType>(); break;
                 case "CurrAccFeatureType": ShowExistForm<FormCommonList<DcCurrAccFeatureType>>("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId)); break;
                 case "InvoiceLineFeatureType": ShowExistForm<FormCommonList<DcInvoiceLineFeatureType>>("", nameof(DcInvoiceLineFeatureType.InvoiceLineFeatureTypeId)); break;
+                case "Users": ShowExistForm<FormUserList>(); break;
                 case "CurrAccClaim": ShowExistForm<FormCurrAccPermission>(); break;
                 case "Parameters": ShowExistForm<FormAppSetting>(); break;
                 case "StoreList": ShowExistForm<FormStoreList>(); break;
@@ -315,6 +316,7 @@ namespace Foxoft
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
             this.ACE_CurrAccFeatureType.Name = "CurrAccFeatureType";
             this.ACE_InvoiceLineFeatureType.Name = "InvoiceLineFeatureType";
+            this.ACE_Users.Name = "Users";
             this.aCE_CurrAccRole.Name = "CurrAccClaim";
             this.bBI_Session.Name = "Session";
             this.ACE_InstallmentSales.Name = "InstallmentSales";

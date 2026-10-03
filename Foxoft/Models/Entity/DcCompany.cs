@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -30,5 +30,7 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Entity_Company_RowGuid), ResourceType = typeof(Resources))]
         public Guid RowGuid { get; set; }
+
+        public virtual ICollection<TrUserCompany> TrUserCompanies { get; set; } = new List<TrUserCompany>();
     }
 }

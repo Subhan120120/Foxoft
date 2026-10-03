@@ -208,7 +208,6 @@ namespace Foxoft.Models
         public virtual DcPersonalType DcPersonalType { get; set; }
         [ForeignKey(nameof(CashRegPaymentTypeCode))]
         public virtual DcPaymentType DcPaymentType { get; set; }
-        public virtual TrSession TrSession { get; set; }
         public virtual SettingStore SettingStore { get; set; }
         public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
@@ -216,7 +215,6 @@ namespace Foxoft.Models
         public virtual ICollection<TrPaymentHeader> DcStoreTrPaymentHeaders { get; set; }
         public virtual ICollection<TrPaymentHeader> ToCashRegTrPaymentHeaders { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; } // as Cash register
-        public virtual ICollection<TrCurrAccRole> TrCurrAccRoles { get; set; }
         public virtual ICollection<DcPaymentMethod> CashRegDcPaymentMethods { get; set; }
         public virtual ICollection<DcPaymentMethod> CurrAccDcPaymentMethods { get; set; }
         public virtual ICollection<TrReportCustomization> TrReportCustomizations { get; set; }

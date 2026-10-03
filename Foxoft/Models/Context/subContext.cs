@@ -504,6 +504,21 @@ namespace Foxoft.Models
                 entity.ToTable(tb => tb.UseSqlOutputClause(false));
             });
 
+            modelBuilder.Entity<TrSession>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.CurrAccCode).HasMaxLength(30).IsRequired();
+            });
+
+            modelBuilder.Entity<TrCurrAccRole>(entity =>
+            {
+                entity.HasKey(e => e.CurrAccRoleId);
+                entity.Property(e => e.CurrAccCode).HasMaxLength(30).IsRequired();
+                entity.HasOne(d => d.DcRole)
+                    .WithMany(p => p.TrCurrAccRoles)
+                    .HasForeignKey(d => d.RoleCode);
+            });
+
 
             modelBuilder.Entity<MigrationHistory>(entity =>
             {
@@ -805,7 +820,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "InvoiceLineFeatureType", ClaimDesc = "Faktura Sətiri Özəlliyi", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "CurrAccCreditLimit", ClaimDesc = "Cari Hesab Taksit Limiti", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəllik Tipləri", ClaimTypeId = 1, CategoryId = 18 },
-                new DcClaim { ClaimCode = "CurrAccClaim", ClaimDesc = "Cari hesab yetkisi", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "CurrAccClaim", ClaimDesc = "İstifadəçi yetkisi", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "Session", ClaimDesc = "Sessiya", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "ExpenseOfInvoice", ClaimDesc = "Faktura Xərci", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "InstallmentSales", ClaimDesc = "Taksit Satışlar", ClaimTypeId = 1, CategoryId = 8 },
@@ -859,7 +874,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "UnlockGracePeriodInvoice", ClaimDesc = "Müddəti Bitmiş Qaiməni Dəyiş", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "UnlockGracePeriodPayment", ClaimDesc = "Müddəti Bitmiş Ödənişi Dəyiş", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "BackupSettings", ClaimDesc = "Baza Nüsxələnməsi (Backup)", ClaimTypeId = 1, CategoryId = 15 },
-                new DcClaim { ClaimCode = "ChangeCurrAccPassword", ClaimDesc = "Cari Hesab Şifrəsi Təyini", ClaimTypeId = 1, CategoryId = 15 }
+                new DcClaim { ClaimCode = "ChangeCurrAccPassword", ClaimDesc = "Cari Hesab Şifrəsi Təyini", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "Users", ClaimDesc = "İstifadəçilər", ClaimTypeId = 1, CategoryId = 15 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -977,7 +993,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 216, RoleCode = "Admin", ClaimCode = "UnlockGracePeriodPayment" },
                 new TrRoleClaim { RoleClaimId = 217, RoleCode = "Admin", ClaimCode = "BackupSettings" },
                 new TrRoleClaim { RoleClaimId = 218, RoleCode = "Admin", ClaimCode = "ChangeCurrAccPassword" },
-                new TrRoleClaim { RoleClaimId = 219, RoleCode = "Admin", ClaimCode = "DailyExpense" }
+                new TrRoleClaim { RoleClaimId = 219, RoleCode = "Admin", ClaimCode = "DailyExpense" },
+                new TrRoleClaim { RoleClaimId = 220, RoleCode = "Admin", ClaimCode = "Users" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

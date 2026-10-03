@@ -512,10 +512,14 @@ namespace Foxoft.AppCode.Service
 
             foreach (DcNotificationRecipientRule rule in rules)
             {
-                IQueryable<DcCurrAcc> query = _db.TrCurrAccRoles
+                var userCodes = _db.TrCurrAccRoles
                     .AsNoTracking()
                     .Where(x => x.RoleCode == rule.RoleCode)
-                    .Select(x => x.DcCurrAcc)
+                    .Select(x => x.CurrAccCode);
+
+                IQueryable<DcCurrAcc> query = _db.DcCurrAccs
+                    .AsNoTracking()
+                    .Where(x => userCodes.Contains(x.CurrAccCode))
                     .Where(x => x.CurrAccTypeCode == CurrAccType.Personnel && !x.IsDisabled);
 
                 if (!string.IsNullOrWhiteSpace(rule.StoreCode))

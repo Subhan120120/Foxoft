@@ -7020,7 +7020,7 @@ namespace Foxoft.Migrations
                         {
                             ClaimCode = "CurrAccClaim",
                             CategoryId = 15,
-                            ClaimDesc = "Cari hesab yetkisi",
+                            ClaimDesc = "İstifadəçi yetkisi",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         },
@@ -7453,6 +7453,14 @@ namespace Foxoft.Migrations
                             ClaimCode = "ChangeCurrAccPassword",
                             CategoryId = 15,
                             ClaimDesc = "Cari Hesab Şifrəsi Təyini",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Users",
+                            CategoryId = 15,
+                            ClaimDesc = "İstifadəçilər",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         });
@@ -8840,6 +8848,14 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 219,
                             ClaimCode = "DailyExpense",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 220,
+                            ClaimCode = "Users",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
@@ -11974,19 +11990,11 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.Entity.RoleClaim.TrCurrAccRole", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
-                        .WithMany("TrCurrAccRoles")
-                        .HasForeignKey("CurrAccCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Foxoft.Models.Entity.RoleClaim.DcRole", "DcRole")
                         .WithMany("TrCurrAccRoles")
                         .HasForeignKey("RoleCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("DcCurrAcc");
 
                     b.Navigation("DcRole");
                 });
@@ -12926,16 +12934,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrSession", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
-                        .WithOne("TrSession")
-                        .HasForeignKey("Foxoft.Models.TrSession", "CurrAccCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcCurrAcc");
-                });
 
             modelBuilder.Entity("Foxoft.Models.trInvoiceLineExt", b =>
                 {
@@ -13006,8 +13004,6 @@ namespace Foxoft.Migrations
 
                     b.Navigation("TrCurrAccFeatures");
 
-                    b.Navigation("TrCurrAccRoles");
-
                     b.Navigation("TrEmployeeContracts");
 
                     b.Navigation("TrEmployeePositions");
@@ -13029,9 +13025,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrPayrollHeaders");
 
                     b.Navigation("TrReportCustomizations");
-
-                    b.Navigation("TrSession")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAccFeature", b =>

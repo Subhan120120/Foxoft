@@ -921,7 +921,11 @@ namespace Foxoft
 
                     if (!object.Equals(e.Value, oldvalue1))
                     {
-                        string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
+                        string userName = !string.IsNullOrWhiteSpace(Authorization.UserDesc)
+                            ? Authorization.UserDesc
+                            : (efMethods.SelectMainUser(Authorization.CurrAccCode)?.UserDesc
+                                ?? efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc
+                                ?? Authorization.CurrAccCode);
 
                         gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
                         gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);

@@ -1615,10 +1615,10 @@
     <value>Identity</value>
   </data>
   <data name="Entity_CurrAccRole" xml:space="preserve">
-    <value>Cari Hesab Yetkisi</value>
+    <value>İstifadəçi Yetkisi</value>
   </data>
   <data name="Entity_CurrAccRole_Id" xml:space="preserve">
-    <value>Cari Hesab Rol Id</value>
+    <value>İstifadəçi Rol Id</value>
   </data>
   <data name="Entity_CurrAccRole_CurrAccCode" xml:space="preserve">
     <value>Cari Hesab</value>
@@ -2329,16 +2329,16 @@
     <value>Excel Faylı|*.xlsx</value>
   </data>
   <data name="Form_CurrAccProfile_Caption" xml:space="preserve">
-    <value>Cari Hesab Yetkiləri</value>
+    <value>İstifadəçi Yetkiləri</value>
   </data>
   <data name="Form_CurrAccPermission_Caption" xml:space="preserve">
-    <value>Cari Hesab Yetkiləri</value>
+    <value>İstifadəçi Yetkiləri</value>
   </data>
   <data name="Form_CurrAccProfile_RibbonPage_Main" xml:space="preserve">
-    <value>Cari Hesab Yetkisi</value>
+    <value>İstifadəçi Yetkisi</value>
   </data>
   <data name="Form_CurrAccProfile_RibbonGroup_CurrAccRole" xml:space="preserve">
-    <value>Cari Hesab Rolu</value>
+    <value>İstifadəçi Rolu</value>
   </data>
   <data name="Form_CurrAccProfile_RibbonGroup_RoleClaim" xml:space="preserve">
     <value>Rol Yetkisi</value>
@@ -2353,7 +2353,7 @@
     <value>Rol Yetkiləri</value>
   </data>
   <data name="Form_CurrAccProfile_Tab_EffectiveClaims" xml:space="preserve">
-    <value>Cari Hesabın Qüvvədə Olan Yetkiləri</value>
+    <value>İstifadəçinin Qüvvədə Olan Yetkiləri</value>
   </data>
   <data name="Form_CurrAccProfile_Tab_ReportClaims" xml:space="preserve">
     <value>Hesabat Yetkiləri</value>
@@ -2374,7 +2374,7 @@
     <value>Rollar uğurla saxlanıldı.</value>
   </data>
   <data name="Form_CurrAccProfile_SelectCurrAccFirst" xml:space="preserve">
-    <value>Zəhmət olmasa əvvəlcə cari hesab seçin.</value>
+    <value>Zəhmət olmasa əvvəlcə istifadəçi seçin.</value>
   </data>
   <data name="Form_CurrAccProfile_EffectiveSummary" xml:space="preserve">
     <value>Cəmi yetkilər: {0}, Verilən: {1}</value>
@@ -6862,5 +6862,104 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Entity_TrPayrollLine_Other" xml:space="preserve">
     <value>Digər</value>
+  </data>
+    <data name="Entity_User" xml:space="preserve">
+    <value>İstifadəçi</value>
+  </data>
+  <data name="Entity_User_UserName" xml:space="preserve">
+    <value>İstifadəçi Adı</value>
+  </data>
+  <data name="Entity_User_Password" xml:space="preserve">
+    <value>Şifrə</value>
+  </data>
+  <data name="Entity_User_UserDesc" xml:space="preserve">
+    <value>Ad, Soyad / Təsvir</value>
+  </data>
+  <data name="Entity_User_IsDisabled" xml:space="preserve">
+    <value>Deaktivdir</value>
+  </data>
+  <data name="Entity_User_RowGuid" xml:space="preserve">
+    <value>Bələdçi İd</value>
+  </data>
+  <data name="Entity_User_Companies" xml:space="preserve">
+    <value>İcazəli Şirkətlər</value>
+  </data>
+  <data name="Entity_UserCompany" xml:space="preserve">
+    <value>İstifadəçi Şirkəti</value>
+  </data>
+  <data name="Entity_UserCompany_UserName" xml:space="preserve">
+    <value>İstifadəçi Adı</value>
+  </data>
+  <data name="Entity_UserCompany_CompanyCode" xml:space="preserve">
+    <value>Şirkət Kodu</value>
+  </data>
+  <data name="Form_UserList_Caption" xml:space="preserve">
+    <value>Sistem İstifadəçiləri</value>
+  </data>
+  <data name="Form_UserList_New" xml:space="preserve">
+    <value>Yeni İstifadəçi</value>
+  </data>
+  <data name="Form_UserList_Edit" xml:space="preserve">
+    <value>Düzəliş et</value>
+  </data>
+  <data name="Form_UserList_Delete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="Form_UserList_Refresh" xml:space="preserve">
+    <value>Yenilə</value>
+  </data>
+  <data name="Form_UserList_ExportExcel" xml:space="preserve">
+    <value>Excel-ə İxrac</value>
+  </data>
+  <data name="Form_UserList_Close" xml:space="preserve">
+    <value>Bağla</value>
+  </data>
+  <data name="Form_UserList_NoUserSelected" xml:space="preserve">
+    <value>Zəhmət olmasa siyahıdan istifadəçi seçin.</value>
+  </data>
+  <data name="Form_UserList_CannotDeleteSelf" xml:space="preserve">
+    <value>Hazırda sistemə daxil olmuş cari istifadəçini silə bilməzsiniz.</value>
+  </data>
+  <data name="Form_UserList_CannotDeleteAdmin" xml:space="preserve">
+    <value>Əsas admin istifadəçisi silinə bilməz.</value>
+  </data>
+  <data name="Form_UserEdit_Caption_New" xml:space="preserve">
+    <value>Yeni İstifadəçi</value>
+  </data>
+  <data name="Form_UserEdit_Caption_Edit" xml:space="preserve">
+    <value>İstifadəçi Düzəlişi</value>
+  </data>
+  <data name="Form_UserEdit_UserNameRequired" xml:space="preserve">
+    <value>İstifadəçi adı boş ola bilməz.</value>
+  </data>
+  <data name="Form_UserEdit_UserNameExists" xml:space="preserve">
+    <value>Bu istifadəçi adı artıq mövcuddur.</value>
+  </data>
+  <data name="Form_UserEdit_PasswordRequired" xml:space="preserve">
+    <value>Şifrə boş ola bilməz.</value>
+  </data>
+  <data name="Form_UserEdit_CompanyRequired" xml:space="preserve">
+    <value>Zəhmət olmasa istifadəçi üçün ən azı bir şirkət seçin.</value>
+  </data>
+  <data name="Form_UserEdit_CompaniesGroup" xml:space="preserve">
+    <value>İcazəli Şirkətlər</value>
+  </data>
+  <data name="Form_UserEdit_SelectAll" xml:space="preserve">
+    <value>Hamısını Seç</value>
+  </data>
+  <data name="Form_UserEdit_UnselectAll" xml:space="preserve">
+    <value>Seçimi Təmizlə</value>
+  </data>
+  <data name="Auth_UserIsDisabled" xml:space="preserve">
+    <value>İstifadəçi hesabı deaktiv edilib.</value>
+  </data>
+  <data name="Auth_NoCompanyPermission" xml:space="preserve">
+    <value>Bu şirkətə daxil olmaq üçün icazəniz yoxdur.</value>
+  </data>
+  <data name="ERP_ACE_MainUsers" xml:space="preserve">
+    <value>Sistem İstifadəçiləri</value>
+  </data>
+  <data name="ERP_ACE_CurrAccClaims" xml:space="preserve">
+    <value>İstifadəçi Yetkiləri</value>
   </data>
 </root>
