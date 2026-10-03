@@ -299,9 +299,6 @@ namespace Foxoft
         {
             GridView view = sender as GridView;
 
-            if (view.FocusedColumn?.ColumnEdit is RepositoryItemHyperLinkEdit)
-                return;
-
             // Disable the Immediate Edit Cell
             if (prevColumn != view.FocusedColumn || prevRow != view.FocusedRowHandle)
                 e.Cancel = true;
@@ -311,6 +308,8 @@ namespace Foxoft
 
         private void repoHLE_ProductCode_OpenLink(object sender, OpenLinkEventArgs e)
         {
+            prevColumn = null;
+            prevRow = -1;
             e.Handled = true;
             object objProductCode = e.EditValue ?? gV_Report.GetFocusedRowCellValue("ProductCode");
             string productCode = objProductCode?.ToString();
@@ -320,6 +319,8 @@ namespace Foxoft
 
         private void repoHLE_CurrAccCode_OpenLink(object sender, OpenLinkEventArgs e)
         {
+            prevColumn = null;
+            prevRow = -1;
             e.Handled = true;
             object objCurrAccCode = e.EditValue ?? gV_Report.GetFocusedRowCellValue("CurrAccCode");
             string currAccCode = objCurrAccCode?.ToString();
@@ -329,6 +330,8 @@ namespace Foxoft
 
         private void repoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
         {
+            prevColumn = null;
+            prevRow = -1;
             e.Handled = true;
             string strDocNum = e.EditValue?.ToString();
             if (string.IsNullOrEmpty(strDocNum))
