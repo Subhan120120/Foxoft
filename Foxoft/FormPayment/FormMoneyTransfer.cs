@@ -885,18 +885,31 @@ namespace Foxoft
 
         private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcCurrAcc createdCurrAcc = efMethods.SelectCurrAcc(trPaymentHeader.CreatedUserName);
-            DcCurrAcc updatedCurrAcc = efMethods.SelectCurrAcc(trPaymentHeader.LastUpdatedUserName);
+            if (trPaymentHeader == null || trPaymentHeader.PaymentHeaderId == Guid.Empty)
+                return;
 
-            string lastUpdatedDate = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedDate.ToString();
-            string lastUpdatedUserName = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedUserName.ToString();
+            string createdUser = efMethods.GetUserDisplayName(trPaymentHeader.CreatedUserName);
 
-            string createdUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + createdCurrAcc.CurrAccDesc + " " + createdCurrAcc.FirstName;
-            string createdDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trPaymentHeader.CreatedDate.ToString();
-            string updatedUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + lastUpdatedUserName;
-            string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
+            var lines = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId);
+            var latestLine = lines.OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault();
 
-            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DateTime lastUpdatedDate = trPaymentHeader.LastUpdatedDate;
+            string lastUpdatedUserNameCode = trPaymentHeader.LastUpdatedUserName;
+
+            if (latestLine != null && latestLine.LastUpdatedDate > lastUpdatedDate)
+            {
+                lastUpdatedDate = latestLine.LastUpdatedDate;
+                lastUpdatedUserNameCode = latestLine.LastUpdatedUserName;
+            }
+
+            string updatedUser = efMethods.GetUserDisplayName(lastUpdatedUserNameCode);
+
+            string createdUserName = ReflectionExt.GetDisplayName<TrPaymentHeader>(x => x.CreatedUserName) + ": " + createdUser;
+            string createdDate = ReflectionExt.GetDisplayName<TrPaymentHeader>(x => x.CreatedDate) + ": " + trPaymentHeader.CreatedDate.ToString();
+            string updatedUserName = ReflectionExt.GetDisplayName<TrPaymentHeader>(x => x.LastUpdatedUserName) + ": " + updatedUser;
+            string updatedDateText = ReflectionExt.GetDisplayName<TrPaymentHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate.ToString();
+
+            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDateText, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void popupMenuPrinters_BeforePopup(object sender, CancelEventArgs e)

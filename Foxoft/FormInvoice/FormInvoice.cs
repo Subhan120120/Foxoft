@@ -4056,14 +4056,20 @@ namespace Foxoft
 
         private void Btn_info_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcCurrAcc createdCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
-            DcCurrAcc updatedCurrAcc = efMethods.SelectCurrAcc(efMethods.SelectInvoiceLastUpdatedUserName(trInvoiceHeader.InvoiceHeaderId));
-            DateTime lastUpdatedDate = efMethods.SelectInvoiceLastModifiedDate();
+            if (trInvoiceHeader == null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                return;
 
-            string createdUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + createdCurrAcc.CurrAccDesc + " " + createdCurrAcc.FirstName;
+            string createdUser = efMethods.GetUserDisplayName(trInvoiceHeader.CreatedUserName);
+            string updatedUserNameCode = efMethods.SelectInvoiceLastUpdatedUserName(trInvoiceHeader.InvoiceHeaderId);
+            if (string.IsNullOrWhiteSpace(updatedUserNameCode))
+                updatedUserNameCode = trInvoiceHeader.LastUpdatedUserName;
+            string updatedUser = efMethods.GetUserDisplayName(updatedUserNameCode);
+            DateTime? lastUpdatedDate = efMethods.SelectInvoiceLastModifiedDate(trInvoiceHeader.InvoiceHeaderId) ?? trInvoiceHeader.LastUpdatedDate;
+
+            string createdUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + createdUser;
             string createdDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
-            string updatedUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + updatedCurrAcc?.CurrAccDesc + " " + updatedCurrAcc?.FirstName;
-            string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate.ToString();
+            string updatedUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + updatedUser;
+            string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate?.ToString();
 
             XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, Properties.Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

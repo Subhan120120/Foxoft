@@ -165,6 +165,7 @@ namespace Foxoft
             BBI_Info.Id = 10;
             BBI_Info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Info.ImageOptions.SvgImage");
             BBI_Info.Name = "BBI_Info";
+            BBI_Info.ItemClick += BBI_Info_ItemClick;
             // 
             // BBI_ImportExcel
             // 

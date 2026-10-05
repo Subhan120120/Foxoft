@@ -1,4 +1,4 @@
-﻿using DevExpress.CodeParser;
+using DevExpress.CodeParser;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
@@ -131,6 +131,39 @@ namespace Foxoft
         {
             using mainContext db = new();
             return db.DcUsers.Any(u => u.UserName == userName);
+        }
+
+        public string GetUserDisplayName(string? userCode)
+        {
+            if (string.IsNullOrWhiteSpace(userCode))
+                return string.Empty;
+
+            try
+            {
+                DcUser? mainUser = SelectMainUser(userCode);
+                if (mainUser != null && !string.IsNullOrWhiteSpace(mainUser.UserDesc))
+                    return $"{mainUser.UserDesc} ({userCode})";
+                else if (mainUser != null)
+                    return userCode;
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                DcCurrAcc? currAcc = SelectCurrAcc(userCode);
+                if (currAcc != null)
+                {
+                    string fullName = $"{currAcc.CurrAccDesc} {currAcc.FirstName}".Trim();
+                    return string.IsNullOrWhiteSpace(fullName) ? userCode : $"{fullName} ({userCode})";
+                }
+            }
+            catch
+            {
+            }
+
+            return userCode;
         }
 
         public void InsertMainUser(DcUser user, IEnumerable<string> companyCodes)
@@ -435,6 +468,24 @@ namespace Foxoft
                     .Select(h => h.LastUpdatedDate)
                     .Concat(db.TrInvoiceLines.Select(l => l.LastUpdatedDate))
                     .Max();
+        }
+
+        public DateTime? SelectInvoiceLastModifiedDate(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+            var headerDate = db.TrInvoiceHeaders
+                               .Where(h => h.InvoiceHeaderId == invoiceHeaderId)
+                               .Select(h => (DateTime?)h.LastUpdatedDate)
+                               .FirstOrDefault();
+
+            var lineDate = db.TrInvoiceLines
+                             .Where(l => l.InvoiceHeaderId == invoiceHeaderId)
+                             .Max(l => (DateTime?)l.LastUpdatedDate);
+
+            if (headerDate.HasValue && lineDate.HasValue)
+                return headerDate.Value > lineDate.Value ? headerDate : lineDate;
+
+            return headerDate ?? lineDate;
         }
 
         public string SelectInvoiceLastUpdatedUserName(Guid invoiceHeaderId)

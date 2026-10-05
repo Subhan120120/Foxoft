@@ -1,4 +1,4 @@
-﻿using DevExpress.Data;
+using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.Utils.Extensions;
@@ -511,6 +511,35 @@ namespace Foxoft
             {
                 Debug.Print(ex.Message);
             }
+        }
+
+        private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (trPriceListHeader == null || trPriceListHeader.PriceListHeaderId == Guid.Empty)
+                return;
+
+            string createdUser = efMethods.GetUserDisplayName(trPriceListHeader.CreatedUserName);
+
+            var lines = efMethods.SelectPriceListLines(trPriceListHeader.PriceListHeaderId);
+            var latestLine = lines.OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault();
+
+            DateTime lastUpdatedDate = trPriceListHeader.LastUpdatedDate;
+            string lastUpdatedUserNameCode = trPriceListHeader.LastUpdatedUserName;
+
+            if (latestLine != null && latestLine.LastUpdatedDate > lastUpdatedDate)
+            {
+                lastUpdatedDate = latestLine.LastUpdatedDate;
+                lastUpdatedUserNameCode = latestLine.LastUpdatedUserName;
+            }
+
+            string updatedUser = efMethods.GetUserDisplayName(lastUpdatedUserNameCode);
+
+            string createdUserName = ReflectionExt.GetDisplayName<TrPriceListHeader>(x => x.CreatedUserName) + ": " + createdUser;
+            string createdDate = ReflectionExt.GetDisplayName<TrPriceListHeader>(x => x.CreatedDate) + ": " + trPriceListHeader.CreatedDate.ToString();
+            string updatedUserName = ReflectionExt.GetDisplayName<TrPriceListHeader>(x => x.LastUpdatedUserName) + ": " + updatedUser;
+            string updatedDateText = ReflectionExt.GetDisplayName<TrPriceListHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate.ToString();
+
+            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDateText, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
