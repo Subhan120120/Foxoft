@@ -86,7 +86,7 @@ namespace Foxoft
 
             gV_PaymentLine.Focus();
 
-            UpdateWhatsAppIcon(paymentHeaderId);
+            UpdateWhatsAppIcon(paymentHeaderId, trPaymentHeader?.DocumentNumber);
         }
 
         private void trPaymentHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -275,7 +275,7 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            UpdateWhatsAppIcon(paymentHeaderId);
+            UpdateWhatsAppIcon(paymentHeaderId, trPaymentHeader?.DocumentNumber);
         }
 
         private static string GetCurrAccDisplayName(DcCurrAcc currAcc)
@@ -454,9 +454,10 @@ namespace Foxoft
                 if (memoryStream.CanSeek) memoryStream.Position = 0;
                 Clipboard.SetImage(Image.FromStream(memoryStream));
                 sendWhatsApp(phoneNum, GetWhatsAppCaption());
+                SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, phoneNum, memoryStream, GetWhatsAppCaption(), isSuccessful: true);
             }
 
-            UpdateWhatsAppIcon(trPaymentHeader.PaymentHeaderId);
+            UpdateWhatsAppIcon(trPaymentHeader.PaymentHeaderId, trPaymentHeader.DocumentNumber);
         }
 
         private string PaymentText(string newLine)
@@ -733,20 +734,20 @@ namespace Foxoft
             }
         }
 
-        private void UpdateWhatsAppIcon(Guid paymentHeaderId)
+        private void UpdateWhatsAppIcon(Guid paymentHeaderId, string? documentNumber = null)
         {
             try
             {
-                bool isSent = false;
-                if (paymentHeaderId != Guid.Empty)
-                {
-                    using var ctx = new subContext();
-                    isSent = ctx.TrMessageLogs
-                        .Any(x => x.DocumentHeaderId == paymentHeaderId && x.ChannelCode == NotificationChannels.WhatsApp && x.IsSuccessful);
-                }
+                string? docNum = documentNumber ?? trPaymentHeader?.DocumentNumber;
+                bool isSent = efMethods.IsWhatsAppSentForPayment(paymentHeaderId, docNum);
 
                 string svgKey = isSent ? "whatsapp_sent" : "whatsapp_unsend";
                 bBI_SendWhatsapp.ImageOptions.SvgImage = svgImageCollection1[svgKey];
+                if (bBI_SendWhatsapp.Links != null)
+                {
+                    foreach (BarItemLink link in bBI_SendWhatsapp.Links)
+                        link.Invalidate();
+                }
             }
             catch (Exception ex)
             {

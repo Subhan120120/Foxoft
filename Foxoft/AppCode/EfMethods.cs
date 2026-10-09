@@ -2451,6 +2451,58 @@ namespace Foxoft
             return recipients;
         }
 
+        public bool IsWhatsAppSentForInvoice(Guid invoiceHeaderId, string? documentNumber = null)
+        {
+            if (invoiceHeaderId == Guid.Empty && string.IsNullOrWhiteSpace(documentNumber))
+                return false;
+
+            try
+            {
+                using subContext ctx = new();
+                return ctx.TrMessageLogs.Any(x =>
+                    x.ChannelCode == NotificationChannels.WhatsApp &&
+                    x.IsSuccessful &&
+                    (
+                        (invoiceHeaderId != Guid.Empty && x.DocumentHeaderId == invoiceHeaderId) ||
+                        (!string.IsNullOrEmpty(documentNumber) && (
+                            (x.Message != null && x.Message.Contains(documentNumber)) ||
+                            ctx.TrInvoiceHeaders.Any(h => h.DocumentNumber == documentNumber && h.InvoiceHeaderId == x.DocumentHeaderId)
+                        ))
+                    ));
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"IsWhatsAppSentForInvoice error: {ex.Message}");
+                return false;
+            }
+        }
+
+        public bool IsWhatsAppSentForPayment(Guid paymentHeaderId, string? documentNumber = null)
+        {
+            if (paymentHeaderId == Guid.Empty && string.IsNullOrWhiteSpace(documentNumber))
+                return false;
+
+            try
+            {
+                using subContext ctx = new();
+                return ctx.TrMessageLogs.Any(x =>
+                    x.ChannelCode == NotificationChannels.WhatsApp &&
+                    x.IsSuccessful &&
+                    (
+                        (paymentHeaderId != Guid.Empty && x.DocumentHeaderId == paymentHeaderId) ||
+                        (!string.IsNullOrEmpty(documentNumber) && (
+                            (x.Message != null && x.Message.Contains(documentNumber)) ||
+                            ctx.TrPaymentHeaders.Any(p => p.DocumentNumber == documentNumber && p.PaymentHeaderId == x.DocumentHeaderId)
+                        ))
+                    ));
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"IsWhatsAppSentForPayment error: {ex.Message}");
+                return false;
+            }
+        }
+
         public void InsertProduct(DcProduct dcProduct)
         {
             using subContext db = new();

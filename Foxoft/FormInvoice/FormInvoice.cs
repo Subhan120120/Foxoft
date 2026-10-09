@@ -536,7 +536,7 @@ namespace Foxoft
 
             SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
 
-            UpdateWhatsAppIcon(trInvoiceHeader.InvoiceHeaderId);
+            UpdateWhatsAppIcon(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.DocumentNumber);
         }
 
         private void ClearInstallmentGarantorsAddNew()
@@ -827,7 +827,7 @@ namespace Foxoft
 
                 PopulateRelatedInvoicesMenu();
 
-                UpdateWhatsAppIcon(invoiceHeaderId);
+                UpdateWhatsAppIcon(invoiceHeaderId, trInvoiceHeader?.DocumentNumber);
             }
             finally
             {
@@ -2777,10 +2777,13 @@ namespace Foxoft
                 Clipboard.SetImage(Image.FromStream(memoryStream));
 
                 foreach (string phoneNum in phoneNums)
+                {
                     SendWhatsApp(phoneNum, $"Faktura No: {trInvoiceHeader.DocumentNumber}");
+                    SaveWhatsAppLog(trInvoiceHeader.InvoiceHeaderId, phoneNum, memoryStream, $"Faktura No: {trInvoiceHeader.DocumentNumber}", isSuccessful: true);
+                }
             }
 
-            UpdateWhatsAppIcon(trInvoiceHeader.InvoiceHeaderId);
+            UpdateWhatsAppIcon(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.DocumentNumber);
         }
 
         private async Task SendWhatsAppViaEvolutionApi(string number, MemoryStream memoryStream, string documentNumber = null)
@@ -2896,20 +2899,20 @@ namespace Foxoft
             }
         }
 
-        private void UpdateWhatsAppIcon(Guid invoiceHeaderId)
+        private void UpdateWhatsAppIcon(Guid invoiceHeaderId, string? documentNumber = null)
         {
             try
             {
-                bool isSent = false;
-                if (invoiceHeaderId != Guid.Empty)
-                {
-                    using var ctx = new subContext();
-                    isSent = ctx.TrMessageLogs
-                        .Any(x => x.DocumentHeaderId == invoiceHeaderId && x.ChannelCode == NotificationChannels.WhatsApp && x.IsSuccessful);
-                }
+                string? docNum = documentNumber ?? trInvoiceHeader?.DocumentNumber;
+                bool isSent = efMethods.IsWhatsAppSentForInvoice(invoiceHeaderId, docNum);
 
                 string svgKey = isSent ? "whatsapp_sent" : "whatsapp_unsend";
                 bBI_Whatsapp.ImageOptions.SvgImage = svgImageCollection1[svgKey];
+                if (bBI_Whatsapp.Links != null)
+                {
+                    foreach (BarItemLink link in bBI_Whatsapp.Links)
+                        link.Invalidate();
+                }
             }
             catch (Exception ex)
             {
