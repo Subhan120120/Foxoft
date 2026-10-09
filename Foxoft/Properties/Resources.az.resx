@@ -2283,6 +2283,9 @@
   <data name="Form_CurrAcc_Button_ChangeCurrAccCode" xml:space="preserve">
     <value>Cari hesab kodunu dəyiş</value>
   </data>
+  <data name="Form_CurrAcc_Button_GenerateBonusCard" xml:space="preserve">
+    <value>Bonus kart yarat</value>
+  </data>
   <data name="Form_CurrAcc_Input_NewCurrAccCode" xml:space="preserve">
     <value>Yeni cari hesab kodunu daxil edin.</value>
   </data>

@@ -169,6 +169,36 @@ namespace Foxoft
             return efMethods.CurrAccHasClaims(Authorization.CurrAccCode, ChangeCurrAccCodeClaim);
         }
 
+        private void BonusCardNumTextEdit_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            try
+            {
+                dbContext ??= new subContext();
+
+                string barcode;
+                do
+                {
+                    string genNumber = efMethods.GetNextDocNum(
+                        false,
+                        "20",
+                        nameof(DcCurrAcc.BonusCardNum),
+                        nameof(subContext.DcCurrAccs),
+                        10);
+
+                    string checkDigit = CustomExtensions.CalculateChecksumDigit("20", genNumber.Substring(2));
+                    barcode = genNumber + checkDigit;
+                } while (dbContext.DcCurrAccs.Any(x => x.BonusCardNum == barcode));
+
+                BonusCardNumTextEdit.EditValue = barcode;
+                BonusCardNumTextEdit.IsModified = true;
+                dcCurrAccsBindingSource.EndEdit();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_ErrorTitle);
+            }
+        }
+
         private void CurrAccCodeTextEdit_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             if (!CanChangeCurrAccCode())

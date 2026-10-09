@@ -2283,6 +2283,9 @@
   <data name="Form_CurrAcc_Button_ChangeCurrAccCode" xml:space="preserve">
     <value>Change account code</value>
   </data>
+  <data name="Form_CurrAcc_Button_GenerateBonusCard" xml:space="preserve">
+    <value>Generate bonus card</value>
+  </data>
   <data name="Form_CurrAcc_Input_NewCurrAccCode" xml:space="preserve">
     <value>Enter the new account code.</value>
   </data>

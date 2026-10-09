@@ -301,5 +301,30 @@ namespace Foxoft
                 }
             }
         }
+
+        public static string CalculateChecksumDigit(string countryCode, string productCode)
+        {
+            string sTemp = (countryCode ?? string.Empty) + (productCode ?? string.Empty);
+            int iSum = 0;
+
+            for (int i = sTemp.Length; i >= 1; i--)
+            {
+                int iDigit = sTemp[i - 1] - '0';
+                if (iDigit < 0 || iDigit > 9)
+                    iDigit = 0;
+
+                if (i % 2 == 0)
+                {
+                    iSum += iDigit * 3;
+                }
+                else
+                {
+                    iSum += iDigit * 1;
+                }
+            }
+
+            int iCheckSum = (10 - (iSum % 10)) % 10;
+            return iCheckSum.ToString();
+        }
     }
 }

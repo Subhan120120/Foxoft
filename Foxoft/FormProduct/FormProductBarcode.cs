@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
@@ -188,26 +188,7 @@ namespace Foxoft
 
         public string CalculateChecksumDigit(string countryCode, string productCode)
         {
-            string sTemp = countryCode + productCode;
-            int iSum = 0;
-            int iDigit = 0;
-
-            // Calculate the checksum digit here.
-            for (int i = sTemp.Length; i >= 1; i--)
-            {
-                iDigit = Convert.ToInt32(sTemp.Substring(i - 1, 1));
-                if (i % 2 == 0)
-                {  // odd
-                    iSum += iDigit * 3;
-                }
-                else
-                {  // even
-                    iSum += iDigit * 1;
-                }
-            }
-
-            int iCheckSum = (10 - (iSum % 10)) % 10;
-            return iCheckSum.ToString();
+            return CustomExtensions.CalculateChecksumDigit(countryCode, productCode);
         }
 
         private void GV_ProductBarcode_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)

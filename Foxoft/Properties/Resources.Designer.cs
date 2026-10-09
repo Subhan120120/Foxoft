@@ -9775,6 +9775,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generate bonus card.
+        /// </summary>
+        public static string Form_CurrAcc_Button_GenerateBonusCard {
+            get {
+                return ResourceManager.GetString("Form_CurrAcc_Button_GenerateBonusCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Merge.
         /// </summary>
         public static string Form_CurrAcc_Button_MergeCurrAcc {

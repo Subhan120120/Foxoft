@@ -1,4 +1,4 @@
-using Foxoft.Properties;
+﻿using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -45,7 +45,7 @@ namespace Foxoft
             CreditLimitTextEdit = new DevExpress.XtraEditors.TextEdit();
             IsVipCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             IsDisabledCheckEdit = new DevExpress.XtraEditors.CheckEdit();
-            BonusCardNumTextEdit = new DevExpress.XtraEditors.TextEdit();
+            BonusCardNumTextEdit = new DevExpress.XtraEditors.ButtonEdit();
             AddressTextEdit = new DevExpress.XtraEditors.TextEdit();
             PhoneNumTextEdit = new DevExpress.XtraEditors.TextEdit();
             BirthDateDateEdit = new DevExpress.XtraEditors.DateEdit();
@@ -316,9 +316,13 @@ namespace Foxoft
             BonusCardNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "BonusCardNum", true));
             BonusCardNumTextEdit.Location = new Point(145, 258);
             BonusCardNumTextEdit.Name = "BonusCardNumTextEdit";
+            BonusCardNumTextEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus) { ToolTip = Resources.Form_CurrAcc_Button_GenerateBonusCard }
+            });
             BonusCardNumTextEdit.Size = new Size(154, 20);
             BonusCardNumTextEdit.StyleController = dataLayoutControl1;
             BonusCardNumTextEdit.TabIndex = 15;
+            BonusCardNumTextEdit.ButtonPressed += BonusCardNumTextEdit_ButtonPressed;
             // 
             // AddressTextEdit
             // 
@@ -886,7 +890,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit CreditLimitTextEdit;
         private DevExpress.XtraEditors.CheckEdit IsVipCheckEdit;
         private DevExpress.XtraEditors.CheckEdit IsDisabledCheckEdit;
-        private DevExpress.XtraEditors.TextEdit BonusCardNumTextEdit;
+        private DevExpress.XtraEditors.ButtonEdit BonusCardNumTextEdit;
         private DevExpress.XtraEditors.TextEdit AddressTextEdit;
         private DevExpress.XtraEditors.TextEdit PhoneNumTextEdit;
         private DevExpress.XtraEditors.DateEdit BirthDateDateEdit;
