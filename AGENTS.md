@@ -11,6 +11,7 @@ subdirectory.
 - Keep all user-facing text in `.resx` resource files and reference it through strongly typed resource properties.
 - Do not hardcode SQL strings unless necessary.
 - For SQL Server queries, use aliases with `=` syntax.
+- Never run database update migrations (e.g., `dotnet ef database update`, `Update-Database`).
 
 ## Windows Forms And DevExpress
 
@@ -94,3 +95,7 @@ Required steps:
 
 - Do not hardcode SQL strings unless necessary.
 - For SQL Server queries, use aliases with `=` syntax.
+
+## Database Migrations
+
+- Never run database update migrations (e.g. `dotnet ef database update`, `Update-Database`, or any command that applies migrations directly to the database).
