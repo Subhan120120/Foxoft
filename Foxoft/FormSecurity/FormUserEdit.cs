@@ -24,9 +24,18 @@ namespace Foxoft
 
         public string SavedUserName { get; private set; } = string.Empty;
 
+        public FormUserEdit()
+            : this(null)
+        {
+        }
+
         public FormUserEdit(string? userName)
         {
             InitializeComponent();
+
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+                return;
+
             _userName = userName;
             _isNew = string.IsNullOrWhiteSpace(userName);
 
@@ -42,6 +51,7 @@ namespace Foxoft
             lueStore.Properties.Columns.Add(new LookUpColumnInfo(nameof(DcCurrAcc.CurrAccDesc), 140, Resources.Entity_CurrAcc_Desc));
             lueStore.Properties.DisplayMember = nameof(DcCurrAcc.CurrAccDesc);
             lueStore.Properties.ValueMember = nameof(DcCurrAcc.CurrAccCode);
+            lueStore.Properties.Buttons.Add(new EditorButton(ButtonPredefines.Clear));
             lueStore.EditValueChanged += LueStore_EditValueChanged;
             lueStore.ButtonClick += (s, e) =>
             {
@@ -90,6 +100,9 @@ namespace Foxoft
 
         private void LoadEntity()
         {
+            if (DesignMode || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+                return;
+
             List<DcCompany> allCompanies = efMethods.SelectCompanies();
 
             if (_isNew)

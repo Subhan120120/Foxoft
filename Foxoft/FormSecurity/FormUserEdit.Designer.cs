@@ -204,8 +204,7 @@ namespace Foxoft
             this.lueStore.Location = new System.Drawing.Point(120, 368);
             this.lueStore.Name = "lueStore";
             this.lueStore.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueStore.Properties.NullText = Foxoft.Properties.Resources.Form_UserEdit_SelectStore;
             this.lueStore.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             this.lueStore.Size = new System.Drawing.Size(376, 20);
@@ -398,6 +397,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gcCompanies)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvCompanies)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lueStore.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciUserName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciUserDesc)).EndInit();
@@ -405,6 +405,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lciIsDisabled)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgCompanies)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciCompanies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciStore)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciSelectAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciUnselectAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupButtons)).EndInit();
