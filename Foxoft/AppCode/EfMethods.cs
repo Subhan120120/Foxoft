@@ -2221,8 +2221,11 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefault == true && x.CurrAccTypeCode == CurrAccType.CashRegister)
-                                  .FirstOrDefault(x => x.StoreCode == storeCode);
+            DcCurrAcc? dcCurrAcc = db.DcCurrAccs
+                .Where(x => x.IsDisabled == false && x.CurrAccTypeCode == CurrAccType.CashRegister && x.StoreCode == storeCode)
+                .OrderByDescending(x => x.IsDefault)
+                .ThenBy(x => x.CreatedDate)
+                .FirstOrDefault();
 
             if (dcCurrAcc is not null)
                 return dcCurrAcc.CurrAccCode;
@@ -2234,8 +2237,11 @@ namespace Foxoft
             using subContext db = new();
             string cashRegCode = "";
 
-            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefault == true && x.CurrAccTypeCode == CurrAccType.CashRegister)
-                                  .FirstOrDefault(x => x.StoreCode == storeCode);
+            DcCurrAcc? dcCurrAcc = db.DcCurrAccs
+                .Where(x => x.IsDisabled == false && x.CurrAccTypeCode == CurrAccType.CashRegister && x.StoreCode == storeCode)
+                .OrderByDescending(x => x.IsDefault)
+                .ThenBy(x => x.CreatedDate)
+                .FirstOrDefault();
 
             if (dcCurrAcc is not null)
                 cashRegCode = dcCurrAcc.CurrAccCode;
@@ -2246,14 +2252,14 @@ namespace Foxoft
         public string? SelectDefaultCashRegister(string storeCode, PaymentType? paymentTypeCode)
         {
             using subContext db = new();
-            IQueryable<DcCurrAcc> query = CashRegQuery(db, paymentTypeCode)
-                .Where(x => x.IsDefault == true);
+            IQueryable<DcCurrAcc> query = CashRegQuery(db, paymentTypeCode);
 
             if (!string.IsNullOrWhiteSpace(storeCode))
                 query = query.Where(x => x.StoreCode == storeCode);
 
             return query
-                .OrderBy(x => x.CreatedDate)
+                .OrderByDescending(x => x.IsDefault)
+                .ThenBy(x => x.CreatedDate)
                 .Select(x => x.CurrAccCode)
                 .FirstOrDefault();
         }

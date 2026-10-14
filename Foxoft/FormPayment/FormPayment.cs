@@ -190,11 +190,14 @@ namespace Foxoft
         {
             PaymentHeaderId = Guid.NewGuid();
 
+            string storeCode = !string.IsNullOrWhiteSpace(header?.StoreCode) ? header.StoreCode : Authorization.StoreCode;
+            string officeCode = !string.IsNullOrWhiteSpace(header?.OfficeCode) ? header.OfficeCode : Authorization.OfficeCode;
+
             trPaymentHeader.PaymentHeaderId = PaymentHeaderId;
             trPaymentHeader.CurrAccCode = header?.CurrAccCode;
             trPaymentHeader.CreatedUserName = Authorization.CurrAccCode;
-            trPaymentHeader.OfficeCode = Authorization.OfficeCode;
-            trPaymentHeader.StoreCode = Authorization.StoreCode;
+            trPaymentHeader.OfficeCode = officeCode;
+            trPaymentHeader.StoreCode = storeCode;
             trPaymentHeader.ProcessCode = "PA";
             trPaymentHeader.DocumentDate = header?.DocumentDate ?? DateTime.Today;
             trPaymentHeader.DocumentTime = header?.DocumentTime ?? DateTime.Now.TimeOfDay;
@@ -223,11 +226,25 @@ namespace Foxoft
             trPaymentLineCommission.PaymentMethodId = 3;
             trPaymentLineCommission.CreatedUserName = Authorization.CurrAccCode;
 
-            var cashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId, PaymentType.Cash);
+            string? terminalCashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId, PaymentType.Cash);
+            var terminalCashRegEntity = !string.IsNullOrWhiteSpace(terminalCashReg)
+                ? efMethods.SelectCashReg(terminalCashReg, PaymentType.Cash)
+                : null;
+
+            string? cashReg = null;
+            if (terminalCashRegEntity != null && string.Equals(terminalCashRegEntity.StoreCode, storeCode, StringComparison.OrdinalIgnoreCase))
+            {
+                cashReg = terminalCashReg;
+            }
+            else
+            {
+                cashReg = efMethods.SelectDefaultCashRegister(storeCode, PaymentType.Cash) ?? terminalCashReg;
+            }
+
             if (!string.IsNullOrWhiteSpace(cashReg))
                 trPaymentLineCash.CashRegisterCode = cashReg;
 
-            var bankAccount = efMethods.SelectDefaultCashRegister(header?.StoreCode ?? Authorization.StoreCode, PaymentType.Cashless);
+            var bankAccount = efMethods.SelectDefaultCashRegister(storeCode, PaymentType.Cashless);
             if (!string.IsNullOrWhiteSpace(bankAccount))
                 trPaymentLineCashless.CashRegisterCode = bankAccount;
         }
@@ -346,8 +363,11 @@ namespace Foxoft
             }
             else
             {
-                var cashReg = !string.IsNullOrWhiteSpace(dcPaymentMethod.DefaultCashRegCode)
-                              && efMethods.SelectCashReg(dcPaymentMethod.DefaultCashRegCode, PaymentType.Cashless) is not null
+                var defaultCashReg = !string.IsNullOrWhiteSpace(dcPaymentMethod.DefaultCashRegCode)
+                    ? efMethods.SelectCashReg(dcPaymentMethod.DefaultCashRegCode, PaymentType.Cashless)
+                    : null;
+
+                var cashReg = defaultCashReg != null && (string.IsNullOrWhiteSpace(defaultCashReg.StoreCode) || string.Equals(defaultCashReg.StoreCode, trPaymentHeader.StoreCode, StringComparison.OrdinalIgnoreCase))
                     ? dcPaymentMethod.DefaultCashRegCode
                     : efMethods.SelectDefaultCashRegister(trPaymentHeader.StoreCode, PaymentType.Cashless);
 
@@ -443,7 +463,7 @@ namespace Foxoft
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormCashRegisterList form = new(buttonEdit.EditValue?.ToString(), paymentTypeCode))
+            using (FormCashRegisterList form = new(buttonEdit.EditValue?.ToString(), trPaymentHeader.StoreCode, paymentTypeCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                     buttonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
@@ -686,8 +706,8 @@ namespace Foxoft
                 CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString(),
                 PaymentKindId = PaymentKind.Payment,
                 CreatedUserName = Authorization.CurrAccCode,
-                OfficeCode = Authorization.OfficeCode,
-                StoreCode = Authorization.StoreCode,
+                OfficeCode = trPaymentHeader.OfficeCode,
+                StoreCode = trPaymentHeader.StoreCode,
                 ProcessCode = "PA",
                 DocumentDate = trInvoiceHeader.DocumentDate,
                 DocumentTime = trInvoiceHeader.DocumentTime,
