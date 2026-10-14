@@ -34,6 +34,7 @@ namespace Foxoft
             this.gridView1 = new MyGridView();
             this.colUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colUserDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colStoreDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCompanies = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colIsDisabled = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
@@ -158,6 +159,7 @@ namespace Foxoft
             this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colUserName,
             this.colUserDesc,
+            this.colStoreDesc,
             this.colCompanies,
             this.colIsDisabled});
             this.gridView1.GridControl = this.gridControl1;
@@ -185,13 +187,22 @@ namespace Foxoft
             this.colUserDesc.VisibleIndex = 1;
             this.colUserDesc.Width = 220;
             // 
+            // colStoreDesc
+            // 
+            this.colStoreDesc.Caption = Foxoft.Properties.Resources.Form_UserList_Store;
+            this.colStoreDesc.FieldName = "StoreDesc";
+            this.colStoreDesc.Name = "colStoreDesc";
+            this.colStoreDesc.Visible = true;
+            this.colStoreDesc.VisibleIndex = 2;
+            this.colStoreDesc.Width = 200;
+            // 
             // colCompanies
             // 
             this.colCompanies.Caption = Foxoft.Properties.Resources.Entity_User_Companies;
             this.colCompanies.FieldName = "Companies";
             this.colCompanies.Name = "colCompanies";
             this.colCompanies.Visible = true;
-            this.colCompanies.VisibleIndex = 2;
+            this.colCompanies.VisibleIndex = 3;
             this.colCompanies.Width = 320;
             // 
             // colIsDisabled
@@ -203,7 +214,7 @@ namespace Foxoft
             this.colIsDisabled.MinWidth = 80;
             this.colIsDisabled.Name = "colIsDisabled";
             this.colIsDisabled.Visible = true;
-            this.colIsDisabled.VisibleIndex = 3;
+            this.colIsDisabled.VisibleIndex = 4;
             this.colIsDisabled.Width = 90;
             // 
             // repositoryItemCheckEdit1
@@ -251,6 +262,7 @@ namespace Foxoft
         private MyGridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn colUserName;
         private DevExpress.XtraGrid.Columns.GridColumn colUserDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn colStoreDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colCompanies;
         private DevExpress.XtraGrid.Columns.GridColumn colIsDisabled;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;

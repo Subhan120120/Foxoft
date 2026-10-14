@@ -7016,4 +7016,22 @@ Please wait or choose another invoice.</value>
   <data name="ERP_ACE_CurrAccClaims" xml:space="preserve">
     <value>User Permissions</value>
   </data>
+  <data name="Form_UserEdit_Store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="Form_UserEdit_SelectStore" xml:space="preserve">
+    <value>(None)</value>
+  </data>
+  <data name="Form_UserList_Store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="Entity_UserStore" xml:space="preserve">
+    <value>User Store</value>
+  </data>
+  <data name="Entity_UserStore_UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="Entity_UserStore_StoreCode" xml:space="preserve">
+    <value>Store</value>
+  </data>
 </root>

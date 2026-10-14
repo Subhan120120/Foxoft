@@ -121,6 +121,7 @@ namespace Foxoft.Models
         public DbSet<TrCampaignCategory> TrCampaignCategories { get; set; }
         public DbSet<TrCampaignCustomer> TrCampaignCustomers { get; set; }
         public DbSet<TrCampaignStore> TrCampaignStores { get; set; }
+        public DbSet<TrUserStore> TrUserStores { get; set; }
         public DbSet<TrCampaignWarehouse> TrCampaignWarehouses { get; set; }
         public DbSet<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
         public DbSet<TrInvoiceCampaignHeader> TrInvoiceCampaignHeaders { get; set; }
@@ -521,6 +522,14 @@ namespace Foxoft.Models
                     .HasForeignKey(d => d.RoleCode);
             });
 
+            modelBuilder.Entity<TrUserStore>(entity =>
+            {
+                entity.HasOne(d => d.DcStore)
+                    .WithMany(p => p.TrUserStores)
+                    .HasForeignKey(d => d.StoreCode)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
 
             modelBuilder.Entity<MigrationHistory>(entity =>
             {
@@ -908,6 +917,12 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrCurrAccRole>().HasData(
                new TrCurrAccRole { CurrAccRoleId = 1, CurrAccCode = "C-000001", RoleCode = "Admin" });
+
+            modelBuilder.Entity<TrUserStore>().HasData(
+                new TrUserStore { UserStoreId = 1, UserName = "admin", StoreCode = "MGZ01" },
+                new TrUserStore { UserStoreId = 2, UserName = "C-000001", StoreCode = "MGZ01" },
+                new TrUserStore { UserStoreId = 3, UserName = "CA-1", StoreCode = "MGZ01" }
+            );
 
             modelBuilder.Entity<TrRoleClaim>().HasData(
                 new TrRoleClaim { RoleClaimId = 1, RoleCode = "Admin", ClaimCode = "ButunHesabatlar" },

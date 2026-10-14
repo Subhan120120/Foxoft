@@ -116,17 +116,24 @@ namespace Foxoft
         private void LoadData(string? focusUserName = null)
         {
             var users = efMethods.SelectMainUsers();
+            var userStores = efMethods.SelectUserStoresWithDesc();
 
-            var list = users.Select(u => new UserViewModel
+            var list = users.Select(u =>
             {
-                UserName = u.UserName,
-                UserDesc = u.UserDesc,
-                Companies = string.Join(", ", u.TrUserCompanies.Select(c =>
-                    !string.IsNullOrWhiteSpace(c.DcCompany?.CompanyDesc)
-                        ? c.DcCompany.CompanyDesc
-                        : c.CompanyCode)),
-                CompanyCount = u.TrUserCompanies.Count,
-                IsDisabled = u.IsDisabled
+                userStores.TryGetValue(u.UserName, out var storeInfo);
+                return new UserViewModel
+                {
+                    UserName = u.UserName,
+                    UserDesc = u.UserDesc,
+                    StoreCode = storeInfo.StoreCode,
+                    StoreDesc = storeInfo.StoreDesc,
+                    Companies = string.Join(", ", u.TrUserCompanies.Select(c =>
+                        !string.IsNullOrWhiteSpace(c.DcCompany?.CompanyDesc)
+                            ? c.DcCompany.CompanyDesc
+                            : c.CompanyCode)),
+                    CompanyCount = u.TrUserCompanies.Count,
+                    IsDisabled = u.IsDisabled
+                };
             }).ToList();
 
             gridControl1.DataSource = list;

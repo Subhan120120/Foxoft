@@ -8,6 +8,7 @@ using DevExpress.Spreadsheet;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using DevExpress.XtraSpreadsheet.Model;
+using Foxoft.AppCode;
 using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Models.Entity;
@@ -237,11 +238,270 @@ namespace Foxoft
 
             if (user != null)
             {
+                var companyCodes = user.TrUserCompanies.Select(x => x.CompanyCode).ToList();
+                foreach (string comp in companyCodes)
+                {
+                    DeleteUserStore(userName, comp);
+                }
+
                 if (user.TrUserCompanies.Count > 0)
                     db.TrUserCompanies.RemoveRange(user.TrUserCompanies);
 
                 db.DcUsers.Remove(user);
                 db.SaveChanges();
+            }
+        }
+
+        private static readonly object _userStoreTableLock = new();
+        private static readonly HashSet<string> _ensuredDatabases = new(StringComparer.OrdinalIgnoreCase);
+
+        private void EnsureTrUserStoresTable(subContext db)
+        {
+            try
+            {
+                string dbName = db.Database.GetDbConnection().Database;
+                if (!string.IsNullOrEmpty(dbName))
+                {
+                    lock (_userStoreTableLock)
+                    {
+                        if (_ensuredDatabases.Contains(dbName))
+                            return;
+                    }
+                }
+
+                db.Database.ExecuteSqlRaw(@"
+IF OBJECT_ID(N'dbo.TrUserStores', N'U') IS NULL
+BEGIN
+    CREATE TABLE [dbo].[TrUserStores](
+        [UserStoreId] [int] IDENTITY(1,1) NOT NULL,
+        [UserName] [nvarchar](30) NOT NULL,
+        [StoreCode] [nvarchar](30) NOT NULL,
+        [CreatedUserName] [nvarchar](20) NULL CONSTRAINT [DF_TrUserStores_CreatedUserName] DEFAULT (substring(suser_name(),patindex('%\%',suser_name())+(1),(20))),
+        [CreatedDate] [datetime] NOT NULL CONSTRAINT [DF_TrUserStores_CreatedDate] DEFAULT (getdate()),
+        [LastUpdatedUserName] [nvarchar](20) NULL CONSTRAINT [DF_TrUserStores_LastUpdatedUserName] DEFAULT (substring(suser_name(),patindex('%\%',suser_name())+(1),(20))),
+        [LastUpdatedDate] [datetime] NOT NULL CONSTRAINT [DF_TrUserStores_LastUpdatedDate] DEFAULT (getdate()),
+        CONSTRAINT [PK_TrUserStores] PRIMARY KEY CLUSTERED ([UserStoreId] ASC),
+        CONSTRAINT [FK_TrUserStores_DcCurrAccs_StoreCode] FOREIGN KEY([StoreCode]) REFERENCES [dbo].[DcCurrAccs] ([CurrAccCode]) ON DELETE CASCADE
+    );
+
+    CREATE UNIQUE NONCLUSTERED INDEX [IX_TrUserStores_UserName] ON [dbo].[TrUserStores] ([UserName] ASC);
+    CREATE NONCLUSTERED INDEX [IX_TrUserStores_StoreCode] ON [dbo].[TrUserStores] ([StoreCode] ASC);
+END
+");
+
+                if (!string.IsNullOrEmpty(dbName))
+                {
+                    lock (_userStoreTableLock)
+                    {
+                        _ensuredDatabases.Add(dbName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"EnsureTrUserStoresTable error: {ex.Message}");
+            }
+        }
+
+        public List<DcCurrAcc> SelectStoresByCompany(string companyCode)
+        {
+            if (string.IsNullOrWhiteSpace(companyCode))
+                return new List<DcCurrAcc>();
+
+            try
+            {
+                string subConnString = Properties.Settings.Default.SubConnString;
+                if (string.IsNullOrWhiteSpace(subConnString))
+                    return new List<DcCurrAcc>();
+
+                var builder = new SqlConnectionStringBuilder(subConnString);
+                builder.InitialCatalog = companyCode;
+
+                var optionsBuilder = new DbContextOptionsBuilder<subContext>();
+                optionsBuilder.UseSqlServer(SqlLanguageHelper.GetLocalizedConnectionString(builder.ConnectionString));
+
+                using var db = new subContext(optionsBuilder.Options);
+                if (!db.Database.CanConnect())
+                    return new List<DcCurrAcc>();
+
+                return db.DcCurrAccs
+                    .Where(x => !x.IsDisabled && x.CurrAccTypeCode == CurrAccType.Store)
+                    .OrderBy(x => x.CurrAccCode)
+                    .ToList();
+            }
+            catch
+            {
+                return new List<DcCurrAcc>();
+            }
+        }
+
+        public string? SelectUserStoreCode(string userName, string companyCode)
+        {
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(companyCode))
+                return null;
+
+            try
+            {
+                string subConnString = Properties.Settings.Default.SubConnString;
+                if (string.IsNullOrWhiteSpace(subConnString))
+                    return null;
+
+                var builder = new SqlConnectionStringBuilder(subConnString);
+                builder.InitialCatalog = companyCode;
+
+                var optionsBuilder = new DbContextOptionsBuilder<subContext>();
+                optionsBuilder.UseSqlServer(SqlLanguageHelper.GetLocalizedConnectionString(builder.ConnectionString));
+
+                using var db = new subContext(optionsBuilder.Options);
+                if (!db.Database.CanConnect())
+                    return null;
+
+                EnsureTrUserStoresTable(db);
+
+                return db.TrUserStores
+                    .Where(x => x.UserName == userName)
+                    .Select(x => x.StoreCode)
+                    .FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public string? SelectUserStoreCode(string userName)
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+                return null;
+
+            try
+            {
+                using subContext db = new();
+                EnsureTrUserStoresTable(db);
+                return db.TrUserStores
+                    .Where(x => x.UserName == userName)
+                    .Select(x => x.StoreCode)
+                    .FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public Dictionary<string, (string StoreCode, string StoreDesc)> SelectUserStoresWithDesc()
+        {
+            try
+            {
+                using subContext db = new();
+                EnsureTrUserStoresTable(db);
+                var list = db.TrUserStores
+                    .Include(x => x.DcStore)
+                    .Select(x => new
+                    {
+                        x.UserName,
+                        x.StoreCode,
+                        StoreDesc = x.DcStore != null ? (x.DcStore.CurrAccDesc ?? x.StoreCode) : x.StoreCode
+                    })
+                    .ToList();
+
+                return list.ToDictionary(x => x.UserName, x => (x.StoreCode, x.StoreDesc));
+            }
+            catch
+            {
+                return new Dictionary<string, (string StoreCode, string StoreDesc)>();
+            }
+        }
+
+        public void SaveUserStore(string userName, string companyCode, string? storeCode)
+        {
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(companyCode))
+                return;
+
+            try
+            {
+                string subConnString = Properties.Settings.Default.SubConnString;
+                if (string.IsNullOrWhiteSpace(subConnString))
+                    return;
+
+                var builder = new SqlConnectionStringBuilder(subConnString);
+                builder.InitialCatalog = companyCode;
+
+                var optionsBuilder = new DbContextOptionsBuilder<subContext>();
+                optionsBuilder.UseSqlServer(SqlLanguageHelper.GetLocalizedConnectionString(builder.ConnectionString));
+
+                using var db = new subContext(optionsBuilder.Options);
+                if (!db.Database.CanConnect())
+                    return;
+
+                EnsureTrUserStoresTable(db);
+
+                var existing = db.TrUserStores.FirstOrDefault(x => x.UserName == userName);
+
+                if (!string.IsNullOrWhiteSpace(storeCode))
+                {
+                    if (existing != null)
+                    {
+                        existing.StoreCode = storeCode;
+                    }
+                    else
+                    {
+                        db.TrUserStores.Add(new TrUserStore
+                        {
+                            UserName = userName,
+                            StoreCode = storeCode
+                        });
+                    }
+                }
+                else
+                {
+                    if (existing != null)
+                    {
+                        db.TrUserStores.Remove(existing);
+                    }
+                }
+
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"SaveUserStore error: {ex.Message}");
+            }
+        }
+
+        public void DeleteUserStore(string userName, string companyCode)
+        {
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(companyCode))
+                return;
+
+            try
+            {
+                string subConnString = Properties.Settings.Default.SubConnString;
+                if (string.IsNullOrWhiteSpace(subConnString))
+                    return;
+
+                var builder = new SqlConnectionStringBuilder(subConnString);
+                builder.InitialCatalog = companyCode;
+
+                var optionsBuilder = new DbContextOptionsBuilder<subContext>();
+                optionsBuilder.UseSqlServer(SqlLanguageHelper.GetLocalizedConnectionString(builder.ConnectionString));
+
+                using var db = new subContext(optionsBuilder.Options);
+                if (!db.Database.CanConnect())
+                    return;
+
+                EnsureTrUserStoresTable(db);
+
+                var existing = db.TrUserStores.FirstOrDefault(x => x.UserName == userName);
+                if (existing != null)
+                {
+                    db.TrUserStores.Remove(existing);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"DeleteUserStore error: {ex.Message}");
             }
         }
 

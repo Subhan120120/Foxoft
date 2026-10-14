@@ -7016,4 +7016,22 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="ERP_ACE_CurrAccClaims" xml:space="preserve">
     <value>İstifadəçi Yetkiləri</value>
   </data>
+  <data name="Form_UserEdit_Store" xml:space="preserve">
+    <value>Mağaza</value>
+  </data>
+  <data name="Form_UserEdit_SelectStore" xml:space="preserve">
+    <value>(Seçilməyib)</value>
+  </data>
+  <data name="Form_UserList_Store" xml:space="preserve">
+    <value>Mağaza</value>
+  </data>
+  <data name="Entity_UserStore" xml:space="preserve">
+    <value>İstifadəçi Mağazası</value>
+  </data>
+  <data name="Entity_UserStore_UserName" xml:space="preserve">
+    <value>İstifadəçi Adı</value>
+  </data>
+  <data name="Entity_UserStore_StoreCode" xml:space="preserve">
+    <value>Mağaza</value>
+  </data>
 </root>

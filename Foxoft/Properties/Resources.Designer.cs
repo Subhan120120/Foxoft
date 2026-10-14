@@ -19965,5 +19965,35 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("ERP_ACE_CurrAccClaims", resourceCulture);
             }
         }
+        public static string Form_UserEdit_Store {
+            get {
+                return ResourceManager.GetString("Form_UserEdit_Store", resourceCulture);
+            }
+        }
+        public static string Form_UserEdit_SelectStore {
+            get {
+                return ResourceManager.GetString("Form_UserEdit_SelectStore", resourceCulture);
+            }
+        }
+        public static string Form_UserList_Store {
+            get {
+                return ResourceManager.GetString("Form_UserList_Store", resourceCulture);
+            }
+        }
+        public static string Entity_UserStore {
+            get {
+                return ResourceManager.GetString("Entity_UserStore", resourceCulture);
+            }
+        }
+        public static string Entity_UserStore_UserName {
+            get {
+                return ResourceManager.GetString("Entity_UserStore_UserName", resourceCulture);
+            }
+        }
+        public static string Entity_UserStore_StoreCode {
+            get {
+                return ResourceManager.GetString("Entity_UserStore_StoreCode", resourceCulture);
+            }
+        }
     }
 }

@@ -78,8 +78,19 @@ namespace Foxoft
             }
 
             // 3. Sub-context session & user role configuration
-            DcCurrAcc userCurrAcc = efMethods.SelectEntityById<DcCurrAcc>(user);
-            if (userCurrAcc != null)
+            string? assignedStoreCode = efMethods.SelectUserStoreCode(user);
+            DcCurrAcc? userCurrAcc = efMethods.SelectEntityById<DcCurrAcc>(user);
+
+            if (!string.IsNullOrEmpty(assignedStoreCode))
+            {
+                DcCurrAcc store = efMethods.SelectStore(assignedStoreCode);
+                if (store == null && !string.Equals(user, "admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    XtraMessageBox.Show(Properties.Resources.Auth_StoreNotActive);
+                    return false;
+                }
+            }
+            else if (userCurrAcc != null)
             {
                 DcCurrAcc store = efMethods.SelectStore(userCurrAcc.StoreCode);
                 if (store == null && !string.Equals(user, "admin", StringComparison.OrdinalIgnoreCase))
@@ -134,7 +145,20 @@ namespace Foxoft
                 };
             }
 
-            if (userCurrAcc != null)
+            if (!string.IsNullOrEmpty(assignedStoreCode))
+            {
+                Authorization.StoreCode = assignedStoreCode;
+                DcCurrAcc store = efMethods.SelectStore(assignedStoreCode);
+                if (store != null)
+                {
+                    Authorization.OfficeCode = store.OfficeCode;
+                }
+                else
+                {
+                    Authorization.OfficeCode = efMethods.SelectOffices().FirstOrDefault()?.OfficeCode;
+                }
+            }
+            else if (userCurrAcc != null)
             {
                 Authorization.StoreCode = userCurrAcc.StoreCode;
                 Authorization.OfficeCode = userCurrAcc.OfficeCode;

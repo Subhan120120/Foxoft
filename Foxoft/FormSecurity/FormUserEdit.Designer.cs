@@ -28,6 +28,8 @@ namespace Foxoft
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.colCompanyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCompanyDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colStoreDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.lueStore = new DevExpress.XtraEditors.LookUpEdit();
             this.btnSelectAll = new DevExpress.XtraEditors.SimpleButton();
             this.btnUnselectAll = new DevExpress.XtraEditors.SimpleButton();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
@@ -39,6 +41,7 @@ namespace Foxoft
             this.lciIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
             this.lcgCompanies = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lciCompanies = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lciStore = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciSelectAll = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciUnselectAll = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlGroupButtons = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -53,6 +56,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gcCompanies)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvCompanies)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lueStore.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciUserName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciUserDesc)).BeginInit();
@@ -60,6 +64,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lciIsDisabled)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgCompanies)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciCompanies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciStore)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciSelectAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciUnselectAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupButtons)).BeginInit();
@@ -74,6 +79,7 @@ namespace Foxoft
             this.layout.Controls.Add(this.txtPassword);
             this.layout.Controls.Add(this.chkIsDisabled);
             this.layout.Controls.Add(this.gcCompanies);
+            this.layout.Controls.Add(this.lueStore);
             this.layout.Controls.Add(this.btnSelectAll);
             this.layout.Controls.Add(this.btnUnselectAll);
             this.layout.Controls.Add(this.btnSave);
@@ -139,7 +145,8 @@ namespace Foxoft
             this.gvCompanies.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIsSelected,
             this.colCompanyCode,
-            this.colCompanyDesc});
+            this.colCompanyDesc,
+            this.colStoreDesc});
             this.gvCompanies.GridControl = this.gcCompanies;
             this.gvCompanies.Name = "gvCompanies";
             this.gvCompanies.OptionsView.ShowGroupPanel = false;
@@ -170,7 +177,7 @@ namespace Foxoft
             this.colCompanyCode.OptionsColumn.AllowEdit = false;
             this.colCompanyCode.Visible = true;
             this.colCompanyCode.VisibleIndex = 1;
-            this.colCompanyCode.Width = 140;
+            this.colCompanyCode.Width = 120;
             // 
             // colCompanyDesc
             // 
@@ -180,7 +187,30 @@ namespace Foxoft
             this.colCompanyDesc.OptionsColumn.AllowEdit = false;
             this.colCompanyDesc.Visible = true;
             this.colCompanyDesc.VisibleIndex = 2;
-            this.colCompanyDesc.Width = 270;
+            this.colCompanyDesc.Width = 160;
+            // 
+            // colStoreDesc
+            // 
+            this.colStoreDesc.Caption = Foxoft.Properties.Resources.Form_UserEdit_Store;
+            this.colStoreDesc.FieldName = "StoreDesc";
+            this.colStoreDesc.Name = "colStoreDesc";
+            this.colStoreDesc.OptionsColumn.AllowEdit = false;
+            this.colStoreDesc.Visible = true;
+            this.colStoreDesc.VisibleIndex = 3;
+            this.colStoreDesc.Width = 150;
+            // 
+            // lueStore
+            // 
+            this.lueStore.Location = new System.Drawing.Point(120, 368);
+            this.lueStore.Name = "lueStore";
+            this.lueStore.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear)});
+            this.lueStore.Properties.NullText = Foxoft.Properties.Resources.Form_UserEdit_SelectStore;
+            this.lueStore.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            this.lueStore.Size = new System.Drawing.Size(376, 20);
+            this.lueStore.StyleController = this.layout;
+            this.lueStore.TabIndex = 5;
             // 
             // btnSelectAll
             // 
@@ -188,7 +218,7 @@ namespace Foxoft
             this.btnSelectAll.Name = "btnSelectAll";
             this.btnSelectAll.Size = new System.Drawing.Size(234, 22);
             this.btnSelectAll.StyleController = this.layout;
-            this.btnSelectAll.TabIndex = 5;
+            this.btnSelectAll.TabIndex = 6;
             this.btnSelectAll.Text = Foxoft.Properties.Resources.Form_UserEdit_SelectAll;
             // 
             // btnUnselectAll
@@ -197,7 +227,7 @@ namespace Foxoft
             this.btnUnselectAll.Name = "btnUnselectAll";
             this.btnUnselectAll.Size = new System.Drawing.Size(234, 22);
             this.btnUnselectAll.StyleController = this.layout;
-            this.btnUnselectAll.TabIndex = 6;
+            this.btnUnselectAll.TabIndex = 7;
             this.btnUnselectAll.Text = Foxoft.Properties.Resources.Form_UserEdit_UnselectAll;
             // 
             // btnSave
@@ -206,7 +236,7 @@ namespace Foxoft
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(246, 32);
             this.btnSave.StyleController = this.layout;
-            this.btnSave.TabIndex = 7;
+            this.btnSave.TabIndex = 8;
             this.btnSave.Text = Foxoft.Properties.Resources.Common_Save;
             // 
             // btnCancel
@@ -215,7 +245,7 @@ namespace Foxoft
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(246, 32);
             this.btnCancel.StyleController = this.layout;
-            this.btnCancel.TabIndex = 8;
+            this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = Foxoft.Properties.Resources.Common_Cancel;
             // 
             // Root
@@ -273,6 +303,7 @@ namespace Foxoft
             // 
             this.lcgCompanies.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lciCompanies,
+            this.lciStore,
             this.lciSelectAll,
             this.lciUnselectAll});
             this.lcgCompanies.Location = new System.Drawing.Point(0, 96);
@@ -285,9 +316,18 @@ namespace Foxoft
             this.lciCompanies.Control = this.gcCompanies;
             this.lciCompanies.Location = new System.Drawing.Point(0, 0);
             this.lciCompanies.Name = "lciCompanies";
-            this.lciCompanies.Size = new System.Drawing.Size(476, 254);
+            this.lciCompanies.Size = new System.Drawing.Size(476, 226);
             this.lciCompanies.TextSize = new System.Drawing.Size(0, 0);
             this.lciCompanies.TextVisible = false;
+            // 
+            // lciStore
+            // 
+            this.lciStore.Control = this.lueStore;
+            this.lciStore.Location = new System.Drawing.Point(0, 226);
+            this.lciStore.Name = "lciStore";
+            this.lciStore.Size = new System.Drawing.Size(476, 28);
+            this.lciStore.Text = Foxoft.Properties.Resources.Form_UserEdit_Store;
+            this.lciStore.TextSize = new System.Drawing.Size(100, 13);
             // 
             // lciSelectAll
             // 
@@ -388,6 +428,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
         private DevExpress.XtraGrid.Columns.GridColumn colCompanyCode;
         private DevExpress.XtraGrid.Columns.GridColumn colCompanyDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn colStoreDesc;
+        private DevExpress.XtraEditors.LookUpEdit lueStore;
         private DevExpress.XtraEditors.SimpleButton btnSelectAll;
         private DevExpress.XtraEditors.SimpleButton btnUnselectAll;
         private DevExpress.XtraEditors.SimpleButton btnSave;
@@ -398,6 +440,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem lciIsDisabled;
         private DevExpress.XtraLayout.LayoutControlGroup lcgCompanies;
         private DevExpress.XtraLayout.LayoutControlItem lciCompanies;
+        private DevExpress.XtraLayout.LayoutControlItem lciStore;
         private DevExpress.XtraLayout.LayoutControlItem lciSelectAll;
         private DevExpress.XtraLayout.LayoutControlItem lciUnselectAll;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroupButtons;

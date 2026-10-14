@@ -32,6 +32,7 @@ namespace Foxoft.Models
             TrEmployeeShifts = new HashSet<TrEmployeeShift>();
             TrCurrAccRelations = new HashSet<TrCurrAccRelation>();
             RelatedTrCurrAccRelations = new HashSet<TrCurrAccRelation>();
+            TrUserStores = new HashSet<TrUserStore>();
         }
 
         [Key]
@@ -228,5 +229,6 @@ namespace Foxoft.Models
         public virtual DcCurrAcc DcStore { get; set; }
         public virtual ICollection<TrCurrAccRelation> TrCurrAccRelations { get; set; }
         public virtual ICollection<TrCurrAccRelation> RelatedTrCurrAccRelations { get; set; }
+        public virtual ICollection<TrUserStore> TrUserStores { get; set; }
     }
 }
