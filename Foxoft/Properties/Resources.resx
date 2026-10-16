@@ -3156,6 +3156,9 @@ Do you want to return to the invoice?</value>
   <data name="Form_Login_TerminalRequired" xml:space="preserve">
     <value>Terminal cannot be empty!</value>
   </data>
+  <data name="Form_Login_TerminalStoreMismatch" xml:space="preserve">
+    <value>The selected terminal does not belong to the user's assigned store.</value>
+  </data>
   <data name="Form_Login_LicenseDateInvalid" xml:space="preserve">
     <value>License date is invalid: {0}</value>
   </data>

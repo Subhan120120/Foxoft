@@ -12349,6 +12349,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selected terminal does not belong to the user's assigned store..
+        /// </summary>
+        public static string Form_Login_TerminalStoreMismatch {
+            get {
+                return ResourceManager.GetString("Form_Login_TerminalStoreMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run.
         /// </summary>
         public static string Form_Login_Test {

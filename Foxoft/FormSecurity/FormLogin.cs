@@ -28,7 +28,12 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            txtEdit_UserName.Leave += (_, _) => UpdateCompanyListForUser();
+            txtEdit_UserName.Leave += (_, _) =>
+            {
+                UpdateCompanyListForUser();
+                UpdateTerminalListForUser();
+            };
+            LUE_Terminal.QueryPopUp += (_, _) => UpdateTerminalListForUser();
 
             LUE_Company.Properties.DataSource = efMethods.SelectCompanies();
             LUE_Language.Properties.DataSource = efMethods.SelectEntities<DcUILanguage>();
@@ -38,6 +43,7 @@ namespace Foxoft
 
             LoadDataByDatabase();
             UpdateCompanyListForUser();
+            UpdateTerminalListForUser();
         }
 
         private void UpdateCompanyListForUser()
@@ -62,21 +68,64 @@ namespace Foxoft
             }
         }
 
+        private void UpdateTerminalListForUser()
+        {
+            string userName = txtEdit_UserName.Text?.Trim() ?? string.Empty;
+            string? companyCode = LUE_Company.EditValue?.ToString();
+
+            List<DcTerminal> terminals = new();
+
+            if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(companyCode))
+            {
+                string? storeCode = efMethods.SelectUserStoreCode(userName, companyCode);
+                if (!string.IsNullOrWhiteSpace(storeCode))
+                {
+                    terminals = efMethods.SelectTerminalsByStore(storeCode, companyCode);
+                }
+            }
+
+            LUE_Terminal.Properties.DataSource = terminals;
+
+            int currentVal = Convert.ToInt32(LUE_Terminal.EditValue);
+            if (terminals.Count > 0)
+            {
+                if (currentVal != 0 && terminals.Any(t => t.TerminalId == currentVal))
+                {
+                    // Keep current selection
+                }
+                else if (Settings.Default.TerminalId != 0 && terminals.Any(t => t.TerminalId == Settings.Default.TerminalId))
+                {
+                    LUE_Terminal.EditValue = Settings.Default.TerminalId;
+                }
+                else
+                {
+                    LUE_Terminal.EditValue = terminals[0].TerminalId;
+                }
+            }
+            else
+            {
+                LUE_Terminal.EditValue = null;
+            }
+
+            TouchUIMode(Convert.ToInt32(LUE_Terminal.EditValue));
+        }
+
         private void LoadDataByDatabase()
         {
             AppSetting appSetting = efMethods.SelectEntityById<AppSetting>(1);
             Settings.Default.AppSetting = appSetting;
             Settings.Default.Save();
             AppFontSettings.Apply(appSetting?.AppFontSize);
-            LUE_Terminal.Properties.DataSource = efMethods.SelectEntities<DcTerminal>();
 
-            LUE_Terminal.EditValue = Settings.Default.TerminalId;
-            txtEdit_UserName.Text = Settings.Default.LoginName;
-            txtEdit_Password.Text = Settings.Default.LoginPassword;
-            LUE_Language.EditValue = Settings.Default.LanguageCode;
+            if (string.IsNullOrEmpty(txtEdit_UserName.Text))
+                txtEdit_UserName.Text = Settings.Default.LoginName;
+            if (string.IsNullOrEmpty(txtEdit_Password.Text))
+                txtEdit_Password.Text = Settings.Default.LoginPassword;
+            if (LUE_Language.EditValue is null)
+                LUE_Language.EditValue = Settings.Default.LanguageCode;
             checkEdit_RemindMe.Checked = Settings.Default.LoginChecked;
 
-            TouchUIMode(Settings.Default.TerminalId);
+            UpdateTerminalListForUser();
         }
 
         private void TouchUIMode(int terminalId)
@@ -99,10 +148,30 @@ namespace Foxoft
             if (Settings.Default.AppSetting?.LocalCurrencyCode is null)
                 XtraMessageBox.Show(Resources.Form_Login_LocalCurrencyNotSet);
 
+            UpdateCompanyListForUser();
+            UpdateTerminalListForUser();
+
             string? selectedCompany = LUE_Company.EditValue?.ToString();
             if (string.IsNullOrWhiteSpace(selectedCompany))
             {
                 XtraMessageBox.Show(Resources.Form_Login_CompanyRequired, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int terminalId = Convert.ToInt32(LUE_Terminal.EditValue);
+            if (terminalId == 0)
+            {
+                XtraMessageBox.Show(Resources.Form_Login_TerminalRequired, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string userName = txtEdit_UserName.Text.Trim();
+            string? userStoreCode = efMethods.SelectUserStoreCode(userName, selectedCompany);
+            DcTerminal? dcTerminal = efMethods.SelectEntityById<DcTerminal>(terminalId);
+
+            if (dcTerminal == null || string.IsNullOrEmpty(userStoreCode) || dcTerminal.StoreCode != userStoreCode)
+            {
+                XtraMessageBox.Show(Resources.Form_Login_TerminalStoreMismatch, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -124,7 +193,7 @@ namespace Foxoft
                     txtEdit_UserName.Text.Trim(),
                     txtEdit_Password.Text,
                     checkEdit_RemindMe.Checked,
-                    Convert.ToInt32(LUE_Terminal.EditValue),
+                    terminalId,
                     selectedCompany,
                     LUE_Language.EditValue?.ToString());
 
@@ -134,15 +203,10 @@ namespace Foxoft
                 CultureInfo.DefaultThreadCurrentCulture = culture;
                 CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-                if (Convert.ToInt32(LUE_Terminal.EditValue) != 0)
-                {
-                    FormPOS formPos = new();
-                    Hide();
-                    formPos.ShowDialog();
-                    Close();
-                }
-                else
-                    XtraMessageBox.Show(Resources.Form_Login_TerminalRequired);
+                FormPOS formPos = new();
+                Hide();
+                formPos.ShowDialog();
+                Close();
             }
         }
 
@@ -151,10 +215,30 @@ namespace Foxoft
             if (Settings.Default.AppSetting?.LocalCurrencyCode is null)
                 XtraMessageBox.Show(Resources.Form_Login_LocalCurrencyNotSet);
 
+            UpdateCompanyListForUser();
+            UpdateTerminalListForUser();
+
             string? selectedCompany = LUE_Company.EditValue?.ToString();
             if (string.IsNullOrWhiteSpace(selectedCompany))
             {
                 XtraMessageBox.Show(Resources.Form_Login_CompanyRequired, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int terminalId = Convert.ToInt32(LUE_Terminal.EditValue);
+            if (terminalId == 0)
+            {
+                XtraMessageBox.Show(Resources.Form_Login_TerminalRequired, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string userName = txtEdit_UserName.Text.Trim();
+            string? userStoreCode = efMethods.SelectUserStoreCode(userName, selectedCompany);
+            DcTerminal? dcTerminal = efMethods.SelectEntityById<DcTerminal>(terminalId);
+
+            if (dcTerminal == null || string.IsNullOrEmpty(userStoreCode) || dcTerminal.StoreCode != userStoreCode)
+            {
+                XtraMessageBox.Show(Resources.Form_Login_TerminalStoreMismatch, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -176,7 +260,7 @@ namespace Foxoft
                     txtEdit_UserName.Text.Trim(),
                     txtEdit_Password.Text,
                     checkEdit_RemindMe.Checked,
-                    Convert.ToInt32(LUE_Terminal.EditValue),
+                    terminalId,
                     selectedCompany,
                     LUE_Language.EditValue?.ToString());
 
@@ -186,15 +270,10 @@ namespace Foxoft
                 CultureInfo.DefaultThreadCurrentCulture = culture;
                 CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-                if (Convert.ToInt32(LUE_Terminal.EditValue) != 0)
-                {
-                    FormERP formERP = new();
-                    Hide();
-                    formERP.ShowDialog();
-                    Close();
-                }
-                else
-                    XtraMessageBox.Show(Resources.Form_Login_TerminalRequired);
+                FormERP formERP = new();
+                Hide();
+                formERP.ShowDialog();
+                Close();
             }
         }
 

@@ -3147,6 +3147,9 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_Login_TerminalRequired" xml:space="preserve">
     <value>Terminal boş buraxıla bilməz!</value>
   </data>
+  <data name="Form_Login_TerminalStoreMismatch" xml:space="preserve">
+    <value>Seçilmiş terminal istifadəçiyə təyin edilmiş mağazaya aid deyil.</value>
+  </data>
   <data name="Form_Login_LicenseDateInvalid" xml:space="preserve">
     <value>Lisenziya tarixi etibarsızdır: {0}</value>
   </data>

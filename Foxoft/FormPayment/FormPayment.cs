@@ -190,8 +190,8 @@ namespace Foxoft
         {
             PaymentHeaderId = Guid.NewGuid();
 
-            string storeCode = !string.IsNullOrWhiteSpace(header?.StoreCode) ? header.StoreCode : Authorization.StoreCode;
-            string officeCode = !string.IsNullOrWhiteSpace(header?.OfficeCode) ? header.OfficeCode : Authorization.OfficeCode;
+            string storeCode = Authorization.StoreCode;
+            string officeCode = Authorization.OfficeCode;
 
             trPaymentHeader.PaymentHeaderId = PaymentHeaderId;
             trPaymentHeader.CurrAccCode = header?.CurrAccCode;
@@ -226,20 +226,10 @@ namespace Foxoft
             trPaymentLineCommission.PaymentMethodId = 3;
             trPaymentLineCommission.CreatedUserName = Authorization.CurrAccCode;
 
-            string? terminalCashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId, PaymentType.Cash);
-            var terminalCashRegEntity = !string.IsNullOrWhiteSpace(terminalCashReg)
-                ? efMethods.SelectCashReg(terminalCashReg, PaymentType.Cash)
-                : null;
+            string? terminalCashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId, PaymentType.Cash)
+                                      ?? efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId);
 
-            string? cashReg = null;
-            if (terminalCashRegEntity != null && string.Equals(terminalCashRegEntity.StoreCode, storeCode, StringComparison.OrdinalIgnoreCase))
-            {
-                cashReg = terminalCashReg;
-            }
-            else
-            {
-                cashReg = efMethods.SelectDefaultCashRegister(storeCode, PaymentType.Cash) ?? terminalCashReg;
-            }
+            string? cashReg = terminalCashReg ?? efMethods.SelectDefaultCashRegister(storeCode, PaymentType.Cash);
 
             if (!string.IsNullOrWhiteSpace(cashReg))
                 trPaymentLineCash.CashRegisterCode = cashReg;

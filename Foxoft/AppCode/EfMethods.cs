@@ -358,10 +358,24 @@ END
 
                 EnsureTrUserStoresTable(db);
 
-                return db.TrUserStores
+                var storeCode = db.TrUserStores
                     .Where(x => x.UserName == userName)
                     .Select(x => x.StoreCode)
                     .FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(storeCode))
+                    return storeCode;
+
+                if (string.Equals(userName, "admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    return db.DcCurrAccs
+                        .Where(x => !x.IsDisabled && x.CurrAccTypeCode == CurrAccType.Store)
+                        .OrderBy(x => x.CurrAccCode)
+                        .Select(x => x.CurrAccCode)
+                        .FirstOrDefault();
+                }
+
+                return null;
             }
             catch
             {
@@ -378,15 +392,100 @@ END
             {
                 using subContext db = new();
                 EnsureTrUserStoresTable(db);
-                return db.TrUserStores
+                var storeCode = db.TrUserStores
                     .Where(x => x.UserName == userName)
                     .Select(x => x.StoreCode)
                     .FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(storeCode))
+                    return storeCode;
+
+                if (string.Equals(userName, "admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    return db.DcCurrAccs
+                        .Where(x => !x.IsDisabled && x.CurrAccTypeCode == CurrAccType.Store)
+                        .OrderBy(x => x.CurrAccCode)
+                        .Select(x => x.CurrAccCode)
+                        .FirstOrDefault();
+                }
+
+                return null;
             }
             catch
             {
                 return null;
             }
+        }
+
+        public List<DcTerminal> SelectTerminalsByStore(string storeCode)
+        {
+            if (string.IsNullOrWhiteSpace(storeCode))
+                return new List<DcTerminal>();
+
+            try
+            {
+                using subContext db = new();
+                return db.DcTerminals
+                    .Where(x => !x.IsDisabled && x.StoreCode == storeCode)
+                    .OrderBy(x => x.TerminalId)
+                    .ToList();
+            }
+            catch
+            {
+                return new List<DcTerminal>();
+            }
+        }
+
+        public List<DcTerminal> SelectTerminalsByStore(string storeCode, string companyCode)
+        {
+            if (string.IsNullOrWhiteSpace(storeCode))
+                return new List<DcTerminal>();
+
+            if (string.IsNullOrWhiteSpace(companyCode))
+                return SelectTerminalsByStore(storeCode);
+
+            try
+            {
+                string subConnString = Properties.Settings.Default.SubConnString;
+                if (string.IsNullOrWhiteSpace(subConnString))
+                    return new List<DcTerminal>();
+
+                var builder = new SqlConnectionStringBuilder(subConnString);
+                builder.InitialCatalog = companyCode;
+
+                var optionsBuilder = new DbContextOptionsBuilder<subContext>();
+                optionsBuilder.UseSqlServer(SqlLanguageHelper.GetLocalizedConnectionString(builder.ConnectionString));
+
+                using var db = new subContext(optionsBuilder.Options);
+                if (!db.Database.CanConnect())
+                    return new List<DcTerminal>();
+
+                return db.DcTerminals
+                    .Where(x => !x.IsDisabled && x.StoreCode == storeCode)
+                    .OrderBy(x => x.TerminalId)
+                    .ToList();
+            }
+            catch
+            {
+                return new List<DcTerminal>();
+            }
+        }
+
+        public List<DcTerminal> SelectTerminalsByUser(string userName, string? companyCode = null)
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+                return new List<DcTerminal>();
+
+            string? storeCode = !string.IsNullOrWhiteSpace(companyCode)
+                ? SelectUserStoreCode(userName, companyCode)
+                : SelectUserStoreCode(userName);
+
+            if (string.IsNullOrWhiteSpace(storeCode))
+                return new List<DcTerminal>();
+
+            return !string.IsNullOrWhiteSpace(companyCode)
+                ? SelectTerminalsByStore(storeCode, companyCode)
+                : SelectTerminalsByStore(storeCode);
         }
 
         public Dictionary<string, (string StoreCode, string StoreDesc)> SelectUserStoresWithDesc()
