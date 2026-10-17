@@ -444,6 +444,7 @@ namespace Foxoft
             LoadCurrAcc();
             LoadCampaignHeader();
             CalcPaidAmount();
+            txt_LoyaltyEarned.EditValue = 0m;
 
 
             if (IsCampaignEnabled)
