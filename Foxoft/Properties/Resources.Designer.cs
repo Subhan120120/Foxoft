@@ -20004,5 +20004,95 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Entity_UserStore_StoreCode", resourceCulture);
             }
         }
+        public static string Common_GrossProfit {
+            get {
+                return ResourceManager.GetString("Common_GrossProfit", resourceCulture);
+            }
+        }
+        public static string Common_NetProfit {
+            get {
+                return ResourceManager.GetString("Common_NetProfit", resourceCulture);
+            }
+        }
+        public static string Common_Sales {
+            get {
+                return ResourceManager.GetString("Common_Sales", resourceCulture);
+            }
+        }
+        public static string Common_Cost {
+            get {
+                return ResourceManager.GetString("Common_Cost", resourceCulture);
+            }
+        }
+        public static string Common_Expense {
+            get {
+                return ResourceManager.GetString("Common_Expense", resourceCulture);
+            }
+        }
+        public static string Common_Increase {
+            get {
+                return ResourceManager.GetString("Common_Increase", resourceCulture);
+            }
+        }
+        public static string Common_WriteOff {
+            get {
+                return ResourceManager.GetString("Common_WriteOff", resourceCulture);
+            }
+        }
+        public static string Common_Total {
+            get {
+                return ResourceManager.GetString("Common_Total", resourceCulture);
+            }
+        }
+        public static string Common_RemainingAmount {
+            get {
+                return ResourceManager.GetString("Common_RemainingAmount", resourceCulture);
+            }
+        }
+        public static string Common_MonthlyPayment {
+            get {
+                return ResourceManager.GetString("Common_MonthlyPayment", resourceCulture);
+            }
+        }
+        public static string Common_DueAmount {
+            get {
+                return ResourceManager.GetString("Common_DueAmount", resourceCulture);
+            }
+        }
+        public static string Common_OverDueDays {
+            get {
+                return ResourceManager.GetString("Common_OverDueDays", resourceCulture);
+            }
+        }
+        public static string Common_InstallmentAmount {
+            get {
+                return ResourceManager.GetString("Common_InstallmentAmount", resourceCulture);
+            }
+        }
+        public static string Common_InstallmentPaid {
+            get {
+                return ResourceManager.GetString("Common_InstallmentPaid", resourceCulture);
+            }
+        }
+        public static string Common_DownPayment {
+            get {
+                return ResourceManager.GetString("Common_DownPayment", resourceCulture);
+            }
+        }
+        public static string Common_PassedMonth {
+            get {
+                return ResourceManager.GetString("Common_PassedMonth", resourceCulture);
+            }
+        }
+        public static string Common_PaidMonth {
+            get {
+                return ResourceManager.GetString("Common_PaidMonth", resourceCulture);
+            }
+        }
+        public static string Common_InstallmentStatus {
+            get {
+                return ResourceManager.GetString("Common_InstallmentStatus", resourceCulture);
+            }
+        }
     }
 }

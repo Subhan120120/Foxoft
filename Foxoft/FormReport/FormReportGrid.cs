@@ -175,7 +175,7 @@ namespace Foxoft
 
         private void LoadData()
         {
-            DataTable dt = adoMethods.SqlGetDt(ReportQuery, sqlParameters);
+            DataTable dt = adoMethods.SqlGetDt(ReportQuery, sqlParameters, dcReport?.ReportName);
             gC_Report.DataSource = dt;
             gV_Report.MoveLast();
             gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);

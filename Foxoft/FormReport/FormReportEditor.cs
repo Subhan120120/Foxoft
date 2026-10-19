@@ -411,7 +411,7 @@ namespace Foxoft
                 out sqlParameters,
                 1);
 
-            DataTable dt = adoMethods.SqlGetDt(queryTxt, sqlParameters); // check query is correct 
+            DataTable dt = adoMethods.SqlGetDt(queryTxt, sqlParameters, dcReport?.ReportName); // check query is correct 
 
             ICollection<TrReportSubQuery> subQueries = dcReport.TrReportSubQueries;
 
@@ -436,7 +436,7 @@ namespace Foxoft
 
                 subQueryText = this.reportClass.AddRelation(queryTxt, subQuery, subQueryText);
 
-                DataTable dt2 = adoMethods.SqlGetDt(subQueryText, sqlParameters1); // check sub query
+                DataTable dt2 = adoMethods.SqlGetDt(subQueryText, sqlParameters1, dcReport?.ReportName); // check sub query
             }
         }
 

@@ -59,7 +59,7 @@ namespace Foxoft
             SqlParameter[] sqlParameters;
             string qry = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters, 1);
 
-            filterControl_Outer.SourceControl = adoMethods.SqlGetDt(qry, sqlParameters);
+            filterControl_Outer.SourceControl = adoMethods.SqlGetDt(qry, sqlParameters, dcReport?.ReportName);
 
             filterControl_Inner.SourceControl = GetColumnsFromDatabase(dcReport.DcReportVariables); //For Column Types
             filterControl_Inner.FilterCriteria = GetFiltersFromDatabase(dcReport.DcReportVariables);

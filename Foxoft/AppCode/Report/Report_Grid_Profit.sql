@@ -1,153 +1,138 @@
-
-
 SELECT 
- Menfeet = Satis - Maya
-, [Net Menfeet] = Satis - Maya - Xərc
-, *
-FROM  (
-select  TrInvoiceLines.InvoiceLineId
-, TrInvoiceHeaders.InvoiceHeaderId
-, TrInvoiceLines.ProductCode
-, ProductDesc
-, Price
-, PriceLoc
-, Amount
-, NetAmountLoc
-, TrInvoiceLines.PosDiscount
-, QtyIn
-, QtyOut
-, Satis = case when TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') then NetAmountLoc else 0 end
-, Maya = CASE WHEN TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') THEN (QtyOut - QtyIn) * COALESCE(ProductCost, 0) ELSE 0 END
-, Xərc = case when TrInvoiceHeaders.ProcessCode = 'EX' then NetAmountLoc else 0 end
-, Artirma = case when TrInvoiceHeaders.ProcessCode = 'CI' then NetAmountLoc else 0 end
-, Silinme = case when TrInvoiceHeaders.ProcessCode = 'CO' then NetAmountLoc else 0 end
-, IsReturn
-, ProductCost
---, SonQiymet = dbo.GetProductCost(TrInvoiceLines.ProductCode, CAST(TrInvoiceHeaders.DocumentDate AS DATETIME) + CAST(TrInvoiceHeaders.DocumentTime AS DATETIME))
-, LineDescription
-, SalesPersonCode
-, CurrencyCode
-, ExchangeRate
-, TrInvoiceHeaders.ProcessCode
-, ProcessDesc
-, InvoiceNumber = DocumentNumber
---, Faiz =Round( ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)  / NULLIF(ProductCost,0) * 100,2)
-, DocumentDate
-, DocumentTime
-, OperationDate
-, OperationTime
-, Description
-, TrInvoiceHeaders.CurrAccCode
-, DcCurrAccs.CurrAccDesc
-, DcCurrAccTypes.CurrAccTypeDesc
-, DcCurrAccs.CurrAccTypeCode
-, TrInvoiceHeaders.OfficeCode
-, TrInvoiceHeaders.StoreCode
-, WarehouseCode
-, CustomsDocumentNumber
-, PosTerminalId
-, IsSuspended
-, IsCompleted
-, IsSalesViaInternet
-, IsLocked
-, DcProducts.ProductTypeCode
-, ProductTypeDesc
-, UsePos
-, PromotionCode
-, TaxRate
-, RetailPrice
-, PurchasePrice
-, WholesalePrice
-, TrInvoiceLines.CreatedDate
-, TrInvoiceLines.CreatedUserName
-, TrInvoiceLineExts.PriceDiscountedLoc
+    GrossProfit = Sales - Cost                  -- Ümumi Mənfəət
+  , NetProfit   = Sales - Cost - Expense        -- Xalis Mənfəət
+  , *
+FROM (
+    SELECT  
+        TrInvoiceLines.InvoiceLineId
+      , TrInvoiceHeaders.InvoiceHeaderId
+      , TrInvoiceLines.ProductCode
+      , ProductDesc
+      , Price
+      , PriceLoc
+      , Amount
+      , NetAmountLoc
+      , TrInvoiceLines.PosDiscount
+      , QtyIn
+      , QtyOut
+      , Sales     = CASE WHEN TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') THEN NetAmountLoc ELSE 0 END
+      , Cost      = CASE WHEN TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') THEN (QtyOut - QtyIn) * COALESCE(ProductCost, 0) ELSE 0 END
+      , Expense   = CASE WHEN TrInvoiceHeaders.ProcessCode = 'EX' THEN NetAmountLoc ELSE 0 END
+      , Increase  = CASE WHEN TrInvoiceHeaders.ProcessCode = 'CI' THEN NetAmountLoc ELSE 0 END
+      , WriteOff  = CASE WHEN TrInvoiceHeaders.ProcessCode = 'CO' THEN NetAmountLoc ELSE 0 END
+      , IsReturn
+      , ProductCost
+      , LineDescription
+      , SalesPersonCode
+      , CurrencyCode
+      , ExchangeRate
+      , TrInvoiceHeaders.ProcessCode
+      , ProcessDesc
+      , InvoiceNumber = DocumentNumber
+      , DocumentDate
+      , DocumentTime
+      , OperationDate
+      , OperationTime
+      , Description
+      , TrInvoiceHeaders.CurrAccCode
+      , DcCurrAccs.CurrAccDesc
+      , DcCurrAccTypes.CurrAccTypeDesc
+      , DcCurrAccs.CurrAccTypeCode
+      , TrInvoiceHeaders.OfficeCode
+      , TrInvoiceHeaders.StoreCode
+      , WarehouseCode
+      , CustomsDocumentNumber
+      , IsSuspended
+      , IsCompleted
+      , IsSalesViaInternet
+      , IsLocked
+      , DcProducts.ProductTypeCode
+      , ProductTypeDesc
+      , UsePos
+      , PromotionCode
+      , TaxRate
+      , RetailPrice
+      , PurchasePrice
+      , WholesalePrice
+      , TrInvoiceLines.CreatedDate
+      , TrInvoiceLines.CreatedUserName
+      , TrInvoiceLineExts.PriceDiscountedLoc
+    FROM TrInvoiceLines 
+    LEFT JOIN TrInvoiceHeaders ON TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId
+    LEFT JOIN TrInvoiceLineExts ON TrInvoiceLineExts.InvoiceLineId = TrInvoiceLines.InvoiceLineId
+    LEFT JOIN DcProducts ON TrInvoiceLines.ProductCode = DcProducts.ProductCode
+    LEFT JOIN DcProductTypes ON DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode
+    LEFT JOIN DcCurrAccs ON TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode
+    LEFT JOIN DcCurrAccTypes ON DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode
+    LEFT JOIN DcProcesses ON TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode
+    LEFT JOIN DcCurrAccs AS SalesPerson ON TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode    
+    WHERE TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'WS', 'RS', 'IS', 'EX')
 
-from TrInvoiceLines 
-left join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId
-left join TrInvoiceLineExts on TrInvoiceLineExts.InvoiceLineId = TrInvoiceLines.InvoiceLineId
-left join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode
-left join DcProductTypes on DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode
-left join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode
-left join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode
-left join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode
-left join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode	
+    UNION ALL
 
-where TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'WS', 'RS', 'IS', 'EX')
---and DocumentNumber = 'RS-000012'
-
-UNION ALL
-
-select InvoiceLineId = cast(cast(0 as binary) as uniqueidentifier)
-, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)
-, ProductCode = ''
-, ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)
-, Price = calc.GrossSalary
-, PriceLoc = calc.GrossSalary
-, Amount = calc.GrossSalary
-, NetAmountLoc = calc.GrossSalary
-, PosDiscount = cast(0 as decimal(18, 2))
-, QtyIn = cast(0 as decimal(18, 4))
-, QtyOut = cast(0 as decimal(18, 4))
-, Satis = cast(0 as decimal(18, 2))
-, Maya = cast(0 as decimal(18, 2))
-, Xərc = calc.GrossSalary
-, Artirma = cast(0 as decimal(18, 2))
-, Silinme = cast(0 as decimal(18, 2))
-, IsReturn = cast(0 as bit)
-, ProductCost = cast(0 as decimal(18, 2))
-, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')
-, SalesPersonCode = ''
-, CurrencyCode = 'AZN'
-, ExchangeRate = cast(1 as decimal(18, 4))
-, ProcessCode = 'PR'
-, ProcessDesc = N'Əməkhaqqı'
-, InvoiceNumber = CONCAT('PR-', prp.PeriodYear, '-', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2))
-, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))
-, DocumentTime = CAST('23:59:59' AS TIME)
-, OperationDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))
-, OperationTime = CAST('23:59:59' AS TIME)
-, Description = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı')
-, CurrAccCode = prh.CurrAccCode
-, CurrAccDesc = DcCurrAccs.CurrAccDesc
-, CurrAccTypeDesc = DcCurrAccTypes.CurrAccTypeDesc
-, CurrAccTypeCode = DcCurrAccs.CurrAccTypeCode
-, OfficeCode = ''
-, StoreCode = DcCurrAccs.StoreCode
-, WarehouseCode = ''
-, CustomsDocumentNumber = ''
-, PosTerminalId = cast(null as int)
-, IsSuspended = cast(0 as bit)
-, IsCompleted = cast(1 as bit)
-, IsSalesViaInternet = cast(0 as bit)
-, IsLocked = prp.IsClosed
-, ProductTypeCode = cast(null as int)
-, ProductTypeDesc = ''
-, UsePos = cast(0 as bit)
-, PromotionCode = ''
-, TaxRate = cast(0 as decimal(18, 2))
-, RetailPrice = cast(0 as decimal(18, 2))
-, PurchasePrice = cast(0 as decimal(18, 2))
-, WholesalePrice = cast(0 as decimal(18, 2))
-, CreatedDate = cast(null as datetime)
-, CreatedUserName = ''
-, PriceDiscountedLoc = cast(0 as decimal(18, 2))
-from TrPayrollHeaders prh
-cross apply (
-    select GrossSalary = isnull(sum(l.AmountLoc), 0)
-    from TrPayrollLines l
-    where l.PayrollHeaderId = prh.Id
-      and l.PayrollItemType in (1, 2, 3)
-) calc
-left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id
-left join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode
-left join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode
-) Dvijok
-order by Dvijok.DocumentDate
-
-
-
-
-
-
-
-
+    SELECT 
+        InvoiceLineId      = CAST(CAST(0 AS BINARY) AS UNIQUEIDENTIFIER)
+      , InvoiceHeaderId    = CAST(CAST(0 AS BINARY) AS UNIQUEIDENTIFIER)
+      , ProductCode        = ''
+      , ProductDesc        = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)
+      , Price              = Calc.GrossSalary
+      , PriceLoc           = Calc.GrossSalary
+      , Amount             = Calc.GrossSalary
+      , NetAmountLoc       = Calc.GrossSalary
+      , PosDiscount        = CAST(0 AS DECIMAL(18, 2))
+      , QtyIn              = CAST(0 AS DECIMAL(18, 4))
+      , QtyOut             = CAST(0 AS DECIMAL(18, 4))
+      , Sales              = CAST(0 AS DECIMAL(18, 2))
+      , Cost               = CAST(0 AS DECIMAL(18, 2))
+      , Expense            = Calc.GrossSalary
+      , Increase           = CAST(0 AS DECIMAL(18, 2))
+      , WriteOff           = CAST(0 AS DECIMAL(18, 2))
+      , IsReturn           = CAST(0 AS BIT)
+      , ProductCost        = CAST(0 AS DECIMAL(18, 2))
+      , LineDescription    = CONCAT(Prp.PeriodYear, ' / ', RIGHT('0' + CAST(Prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')
+      , SalesPersonCode    = ''
+      , CurrencyCode       = 'AZN'
+      , ExchangeRate       = CAST(1 AS DECIMAL(18, 4))
+      , ProcessCode        = 'PR'
+      , ProcessDesc        = N'Əməkhaqqı'
+      , InvoiceNumber      = CONCAT('PR-', Prp.PeriodYear, '-', RIGHT('0' + CAST(Prp.PeriodMonth AS VARCHAR(2)), 2))
+      , DocumentDate       = EOMONTH(DATEFROMPARTS(Prp.PeriodYear, Prp.PeriodMonth, 1))
+      , DocumentTime       = CAST('23:59:59' AS TIME)
+      , OperationDate      = EOMONTH(DATEFROMPARTS(Prp.PeriodYear, Prp.PeriodMonth, 1))
+      , OperationTime      = CAST('23:59:59' AS TIME)
+      , Description        = CONCAT(Prp.PeriodYear, ' / ', RIGHT('0' + CAST(Prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı')
+      , CurrAccCode        = Prh.CurrAccCode
+      , CurrAccDesc        = DcCurrAccs.CurrAccDesc
+      , CurrAccTypeDesc    = DcCurrAccTypes.CurrAccTypeDesc
+      , CurrAccTypeCode    = DcCurrAccs.CurrAccTypeCode
+      , OfficeCode         = ''
+      , StoreCode          = DcCurrAccs.StoreCode
+      , WarehouseCode      = ''
+      , CustomsDocumentNumber = ''
+      , IsSuspended        = CAST(0 AS BIT)
+      , IsCompleted        = CAST(1 AS BIT)
+      , IsSalesViaInternet = CAST(0 AS BIT)
+      , IsLocked           = Prp.IsClosed
+      , ProductTypeCode    = CAST(NULL AS INT)
+      , ProductTypeDesc    = ''
+      , UsePos             = CAST(0 AS BIT)
+      , PromotionCode      = ''
+      , TaxRate            = CAST(0 AS DECIMAL(18, 2))
+      , RetailPrice        = CAST(0 AS DECIMAL(18, 2))
+      , PurchasePrice      = CAST(0 AS DECIMAL(18, 2))
+      , WholesalePrice     = CAST(0 AS DECIMAL(18, 2))
+      , CreatedDate        = CAST(NULL AS DATETIME)
+      , CreatedUserName    = ''
+      , PriceDiscountedLoc = CAST(0 AS DECIMAL(18, 2))
+    FROM TrPayrollHeaders Prh
+    CROSS APPLY (
+        SELECT GrossSalary = ISNULL(SUM(L.AmountLoc), 0)
+        FROM TrPayrollLines L
+        WHERE L.PayrollHeaderId = Prh.Id
+          AND L.PayrollItemType IN (1, 2, 3)
+    ) Calc
+    LEFT JOIN DcPayrollPeriods Prp ON Prh.PayrollPeriodId = Prp.Id
+    LEFT JOIN DcCurrAccs ON Prh.CurrAccCode = DcCurrAccs.CurrAccCode
+    LEFT JOIN DcCurrAccTypes ON DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode
+) MovementQuery
+ORDER BY MovementQuery.DocumentDate;

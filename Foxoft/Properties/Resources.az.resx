@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -7036,5 +7036,59 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Entity_UserStore_StoreCode" xml:space="preserve">
     <value>Mağaza</value>
+  </data>
+  <data name="Common_GrossProfit" xml:space="preserve">
+    <value>Ümumi Mənfəət</value>
+  </data>
+  <data name="Common_NetProfit" xml:space="preserve">
+    <value>Xalis Mənfəət</value>
+  </data>
+  <data name="Common_Sales" xml:space="preserve">
+    <value>Satış</value>
+  </data>
+  <data name="Common_Cost" xml:space="preserve">
+    <value>Maya Dəyəri</value>
+  </data>
+  <data name="Common_Expense" xml:space="preserve">
+    <value>Xərc</value>
+  </data>
+  <data name="Common_Increase" xml:space="preserve">
+    <value>Artım</value>
+  </data>
+  <data name="Common_WriteOff" xml:space="preserve">
+    <value>Silinmə</value>
+  </data>
+  <data name="Common_Total" xml:space="preserve">
+    <value>Cəmi</value>
+  </data>
+  <data name="Common_RemainingAmount" xml:space="preserve">
+    <value>Qalan Məbləğ</value>
+  </data>
+  <data name="Common_MonthlyPayment" xml:space="preserve">
+    <value>Aylıq Ödəniş</value>
+  </data>
+  <data name="Common_DueAmount" xml:space="preserve">
+    <value>Gecikən Məbləğ</value>
+  </data>
+  <data name="Common_OverDueDays" xml:space="preserve">
+    <value>Gecikmə Günləri</value>
+  </data>
+  <data name="Common_InstallmentAmount" xml:space="preserve">
+    <value>Hissəli Satış Məbləği</value>
+  </data>
+  <data name="Common_InstallmentPaid" xml:space="preserve">
+    <value>Ödənilmiş Hissə</value>
+  </data>
+  <data name="Common_DownPayment" xml:space="preserve">
+    <value>İlkin Ödəniş</value>
+  </data>
+  <data name="Common_PassedMonth" xml:space="preserve">
+    <value>Keçən Aylar</value>
+  </data>
+  <data name="Common_PaidMonth" xml:space="preserve">
+    <value>Ödənilmiş Aylar</value>
+  </data>
+  <data name="Common_InstallmentStatus" xml:space="preserve">
+    <value>Hissəli Satış Statusu</value>
   </data>
 </root>

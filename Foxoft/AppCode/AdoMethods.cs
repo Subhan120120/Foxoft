@@ -41,21 +41,20 @@ namespace Foxoft
 
         public DataTable SqlGetDt(string query)
         {
-            using SqlConnection con = new(subConnString);
-            con.Open();
-
-            using SqlCommand cmd = new(query, con);
-
-            SqlDataReader dr = cmd.ExecuteReader();
-            DataTable dt = new();
-            dt.Load(dr);
-
-            ReflectionExt.SetCaptionName(dt);
-
-            return dt;
+            return SqlGetDt(query, (SqlParameter[]?)null, (string?)null);
         }
 
-        public DataTable SqlGetDt(string query, SqlParameter[] sqlParameters)
+        public DataTable SqlGetDt(string query, string? reportContext)
+        {
+            return SqlGetDt(query, (SqlParameter[]?)null, reportContext);
+        }
+
+        public DataTable SqlGetDt(string query, SqlParameter[]? sqlParameters)
+        {
+            return SqlGetDt(query, sqlParameters, (string?)null);
+        }
+
+        public DataTable SqlGetDt(string query, SqlParameter[]? sqlParameters, string? reportContext, Type? customModelType = null)
         {
             using SqlConnection con = new(subConnString);
             using SqlDataAdapter da = new(query, con);
@@ -75,9 +74,14 @@ namespace Foxoft
             if (dt.Columns.Contains("RowNum"))
                 dt.Columns.Remove("RowNum");
 
-            ReflectionExt.SetCaptionName(dt);
+            ReflectionExt.SetCaptionName(dt, customModelType, reportContext);
 
             return dt;
+        }
+
+        public DataTable SqlGetDt<TModel>(string query, SqlParameter[]? sqlParameters = null, string? reportContext = null)
+        {
+            return SqlGetDt(query, sqlParameters, reportContext, typeof(TModel));
         }
 
         public string DatabaseAVGFragmentationPercent()

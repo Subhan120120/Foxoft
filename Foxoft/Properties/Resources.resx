@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -7036,5 +7036,59 @@ Please wait or choose another invoice.</value>
   </data>
   <data name="Entity_UserStore_StoreCode" xml:space="preserve">
     <value>Store</value>
+  </data>
+  <data name="Common_GrossProfit" xml:space="preserve">
+    <value>Gross Profit</value>
+  </data>
+  <data name="Common_NetProfit" xml:space="preserve">
+    <value>Net Profit</value>
+  </data>
+  <data name="Common_Sales" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="Common_Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="Common_Expense" xml:space="preserve">
+    <value>Expense</value>
+  </data>
+  <data name="Common_Increase" xml:space="preserve">
+    <value>Increase</value>
+  </data>
+  <data name="Common_WriteOff" xml:space="preserve">
+    <value>Write-Off</value>
+  </data>
+  <data name="Common_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Common_RemainingAmount" xml:space="preserve">
+    <value>Remaining Amount</value>
+  </data>
+  <data name="Common_MonthlyPayment" xml:space="preserve">
+    <value>Monthly Payment</value>
+  </data>
+  <data name="Common_DueAmount" xml:space="preserve">
+    <value>Due Amount</value>
+  </data>
+  <data name="Common_OverDueDays" xml:space="preserve">
+    <value>Overdue Days</value>
+  </data>
+  <data name="Common_InstallmentAmount" xml:space="preserve">
+    <value>Installment Amount</value>
+  </data>
+  <data name="Common_InstallmentPaid" xml:space="preserve">
+    <value>Paid Installment</value>
+  </data>
+  <data name="Common_DownPayment" xml:space="preserve">
+    <value>Down Payment</value>
+  </data>
+  <data name="Common_PassedMonth" xml:space="preserve">
+    <value>Passed Months</value>
+  </data>
+  <data name="Common_PaidMonth" xml:space="preserve">
+    <value>Paid Months</value>
+  </data>
+  <data name="Common_InstallmentStatus" xml:space="preserve">
+    <value>Installment Status</value>
   </data>
 </root>
