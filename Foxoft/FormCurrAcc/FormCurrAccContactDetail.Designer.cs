@@ -1,4 +1,4 @@
-using Foxoft.Properties;
+﻿using Foxoft.Properties;
 
 namespace Foxoft
 {
@@ -83,6 +83,7 @@ namespace Foxoft
             ContactDescTextEdit.Name = "ContactDescTextEdit";
             ContactDescTextEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             ContactDescTextEdit.Properties.ButtonClick += ContactDescTextEdit_ButtonClick;
+            ContactDescTextEdit.Validating += ContactDescTextEdit_Validating;
             ContactDescTextEdit.Size = new Size(240, 20);
             ContactDescTextEdit.StyleController = layoutControl1;
             ContactDescTextEdit.TabIndex = 1;

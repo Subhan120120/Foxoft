@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraEditors;
+﻿using System.ComponentModel;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.AppCode;
@@ -87,12 +88,13 @@ namespace Foxoft
 
             if (isPhone)
             {
-                // Phone mask
-                ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
-                ContactDescTextEdit.Properties.Mask.EditMask = "+000 00 000-00-00";
-                ContactDescTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+                // Phone mask & prompt (same as FormCurrAcc)
+                ContactDescTextEdit.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
+                ContactDescTextEdit.Properties.MaskSettings.Set("allowBlankInput", true);
+                ContactDescTextEdit.Properties.MaskSettings.Set("mask", "(\\+?[0-9]\\d{0,2}([ ]?\\d{2,4}){2,6})?");
+                ContactDescTextEdit.Properties.MaskSettings.Set("showPlaceholders", false);
                 ContactDescTextEdit.Properties.NullValuePrompt = Resources.Common_PhonePrompt;
-                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = true;
+                ContactDescTextEdit.Properties.ShowNullValuePrompt = ShowNullValuePromptOptions.EmptyValue | ShowNullValuePromptOptions.EditorFocused;
                 ContactDescTextEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
 
                 // Default value for new records
@@ -105,11 +107,11 @@ namespace Foxoft
             else if (isWhatsAppGroup)
             {
                 // Remove phone mask
-                ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
+                                ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
                 ContactDescTextEdit.Properties.Mask.EditMask = "";
                 ContactDescTextEdit.Properties.Mask.UseMaskAsDisplayFormat = false;
                 ContactDescTextEdit.Properties.NullValuePrompt = "120363xxxx@g.us";
-                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = true;
+                ContactDescTextEdit.Properties.ShowNullValuePrompt = ShowNullValuePromptOptions.EmptyValue | ShowNullValuePromptOptions.EditorFocused;
                 ContactDescTextEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 
                 // Clear phone default value
@@ -125,11 +127,11 @@ namespace Foxoft
             else
             {
                 // Remove phone mask
-                ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
+                                ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
                 ContactDescTextEdit.Properties.Mask.EditMask = "";
                 ContactDescTextEdit.Properties.Mask.UseMaskAsDisplayFormat = false;
-                ContactDescTextEdit.Properties.NullValuePrompt = Resources.Common_PhonePrompt;
-                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = true;
+                ContactDescTextEdit.Properties.NullValuePrompt = "";
+                ContactDescTextEdit.Properties.ShowNullValuePrompt = 0;
                 ContactDescTextEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
 
                 // Clear phone/group default value
@@ -144,6 +146,24 @@ namespace Foxoft
             }
         }
 
+        private void ContactDescTextEdit_Validating(object sender, CancelEventArgs e)
+        {
+            if (GetSelectedContactType() != ContactType.Phone)
+                return;
+
+            var te = (ButtonEdit)sender;
+            var before = te.Text;
+            var after = PhoneNumberFormat.FormatIntlPhone(before);
+
+            if (string.IsNullOrWhiteSpace(after))
+            {
+                te.EditValue = null;
+                return;
+            }
+
+            te.Text = after;
+        }
+
         private void btn_Ok_Click(object sender, EventArgs e)
         {
             dcContactDetail = bindingSource1.Current as DcCurrAccContactDetail;
@@ -151,9 +171,17 @@ namespace Foxoft
             if (dcContactDetail == null)
                 return;
 
+            if (GetSelectedContactType() == ContactType.Phone)
+            {
+                if (dcContactDetail.ContactDesc != null && (dcContactDetail.ContactDesc.Trim() == "+994" || dcContactDetail.ContactDesc.Trim() == "+"))
+                    dcContactDetail.ContactDesc = null;
+                else if (!string.IsNullOrWhiteSpace(dcContactDetail.ContactDesc))
+                {
+                    string formatted = PhoneNumberFormat.FormatIntlPhone(dcContactDetail.ContactDesc);
+                    dcContactDetail.ContactDesc = string.IsNullOrWhiteSpace(formatted) ? null : formatted;
+                }
+            }
 
-            if (dcContactDetail.ContactDesc != null && (dcContactDetail.ContactDesc.Trim() == "+994" || dcContactDetail.ContactDesc.Trim() == "+"))
-                dcContactDetail.ContactDesc = null;
             if (string.IsNullOrWhiteSpace(dcContactDetail.ContactDesc))
             {
                 XtraMessageBox.Show(
