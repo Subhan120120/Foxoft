@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6498,5 +6498,185 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Form_RetailSale_CampaignNotAllowedForReturn" xml:space="preserve">
     <value>Geri qaytarma qaiməsində kampaniya tətbiq edilə bilməz.</value>
+  </data>
+  <data name="Form_CurrAccList_Button_GoogleContactWizard" xml:space="preserve">
+    <value>Google Contacts</value>
+  </data>
+  <data name="Form_CurrAccList_Button_GoogleContactWizard_Tooltip" xml:space="preserve">
+    <value>Cari hesabları Google Contacts-a əlavə et</value>
+  </data>
+  <data name="Form_GoogleContactWizard_Title" xml:space="preserve">
+    <value>Google Contacts İxrac Sehrbazı</value>
+  </data>
+  <data name="Form_GoogleContactWizard_WelcomeTitle" xml:space="preserve">
+    <value>Kontaktları Google Contacts-a İxrac Et</value>
+  </data>
+  <data name="Form_GoogleContactWizard_WelcomeSubtitle" xml:space="preserve">
+    <value>Foxoft cari hesablarınızı asanlıqla Google hesabınıza əlavə edin</value>
+  </data>
+  <data name="Form_GoogleContactWizard_WelcomeText" xml:space="preserve">
+    <value>Bu sehrbaz cari hesabların (müştərilər, təchizatçılar, əməkdaşlar) və əlaqə məlumatlarının Google Contacts hesabına əlavə edilməsi üçün nəzərdə tutulub.
+
+Zəhmət olmasa aşağıda Google hesabı bağlantısını yoxlayın və ixrac ediləcək hesab növlərini seçin.</value>
+  </data>
+  <data name="Form_GoogleContactWizard_GroupConnection" xml:space="preserve">
+    <value>Google Hesabı Bağlantısı</value>
+  </data>
+  <data name="Form_GoogleContactWizard_CheckConnection" xml:space="preserve">
+    <value>Google Hesabını Yoxla / Daxil Ol</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ResetAccount" xml:space="preserve">
+    <value>Hesabı Dəyiş</value>
+  </data>
+  <data name="Form_GoogleContactWizard_StatusNotChecked" xml:space="preserve">
+    <value>Bağlantı statusu: Yoxlanılmayıb</value>
+  </data>
+  <data name="Form_GoogleContactWizard_CheckingConnection" xml:space="preserve">
+    <value>Google hesabına qoşulur...</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ConnectedAs" xml:space="preserve">
+    <value>Qoşuldu: {0}</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ConnectionFailed" xml:space="preserve">
+    <value>Bağlantı xətası: {0}</value>
+  </data>
+  <data name="Form_GoogleContactWizard_GroupFilter" xml:space="preserve">
+    <value>Cari Hesab Filtri</value>
+  </data>
+  <data name="Form_GoogleContactWizard_FilterCustomers" xml:space="preserve">
+    <value>Müştərilər</value>
+  </data>
+  <data name="Form_GoogleContactWizard_FilterSuppliers" xml:space="preserve">
+    <value>Təchizatçılar</value>
+  </data>
+  <data name="Form_GoogleContactWizard_FilterPersonnel" xml:space="preserve">
+    <value>Əməkdaşlar</value>
+  </data>
+  <data name="Form_GoogleContactWizard_FilterOthers" xml:space="preserve">
+    <value>Digər (Mağaza, Kassa və s.)</value>
+  </data>
+  <data name="Form_GoogleContactWizard_OnlyWithPhone" xml:space="preserve">
+    <value>Yalnız telefon nömrəsi olan hesablar</value>
+  </data>
+  <data name="Form_GoogleContactWizard_StepAccountsTitle" xml:space="preserve">
+    <value>Cari Hesabları Seçin</value>
+  </data>
+  <data name="Form_GoogleContactWizard_StepAccountsSubtitle" xml:space="preserve">
+    <value>Google Contacts-a əlavə etmək istədiyiniz hesabları işarələyin</value>
+  </data>
+  <data name="Form_GoogleContactWizard_SelectedAccountsCount" xml:space="preserve">
+    <value>Seçilmiş hesablar: {0} / {1}</value>
+  </data>
+  <data name="Form_GoogleContactWizard_NoAccountsSelected" xml:space="preserve">
+    <value>Zəhmət olmasa ixrac üçün ən azı bir cari hesab seçin.</value>
+  </data>
+  <data name="Form_GoogleContactWizard_StepOptionsTitle" xml:space="preserve">
+    <value>İxrac Parametrləri</value>
+  </data>
+  <data name="Form_GoogleContactWizard_StepOptionsSubtitle" xml:space="preserve">
+    <value>Kontaktların adlandırma və Google Contacts seçimlərini təyin edin</value>
+  </data>
+  <data name="Form_GoogleContactWizard_GroupNameFormat" xml:space="preserve">
+    <value>Kontaktın Ad Formatı</value>
+  </data>
+  <data name="Form_GoogleContactWizard_NameFormatDesc" xml:space="preserve">
+    <value>Təsviri (CurrAccDesc) tam ad kimi istifadə et (məs. Əli Məmmədov və ya Delta MMC)</value>
+  </data>
+  <data name="Form_GoogleContactWizard_NameFormatFirstLast" xml:space="preserve">
+    <value>Ayrı-ayrı Ad (FirstName) və Soyad (LastName) sahələrini istifadə et</value>
+  </data>
+  <data name="Form_GoogleContactWizard_GroupPrefix" xml:space="preserve">
+    <value>Ad Prefiksi</value>
+  </data>
+  <data name="Form_GoogleContactWizard_AddPrefix" xml:space="preserve">
+    <value>Adın əvvəlinə prefiks əlavə et</value>
+  </data>
+  <data name="Form_GoogleContactWizard_PrefixDefault" xml:space="preserve">
+    <value>[Foxoft] </value>
+  </data>
+  <data name="Form_GoogleContactWizard_GroupAdditional" xml:space="preserve">
+    <value>Əlavə Məlumatlar</value>
+  </data>
+  <data name="Form_GoogleContactWizard_IncludeNote" xml:space="preserve">
+    <value>Qeyd bölməsində cari hesab kodunu və növünü qeyd et</value>
+  </data>
+  <data name="Form_GoogleContactWizard_SetOrganization" xml:space="preserve">
+    <value>Təsviri şirkət/təşkilat adı (Organization) kimi qeyd et</value>
+  </data>
+  <data name="Form_GoogleContactWizard_SkipDuplicates" xml:space="preserve">
+    <value>Mövcud Google kontaktlarında eyni nömrə varsa təkrar əlavə etmə</value>
+  </data>
+  <data name="Form_GoogleContactWizard_CompletionTitle" xml:space="preserve">
+    <value>Kontaktların İxracı</value>
+  </data>
+  <data name="Form_GoogleContactWizard_CompletionSubtitle" xml:space="preserve">
+    <value>Məlumatları yoxlayın və Google Contacts-a ixracı başladın</value>
+  </data>
+  <data name="Form_GoogleContactWizard_CompletionText" xml:space="preserve">
+    <value>Seçilmiş kontaktları Google hesabınıza əlavə etmək üçün 'İxracı Başla' düyməsini sıxın.</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ButtonStartExport" xml:space="preserve">
+    <value>İxracı Başla</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ExportInProgress" xml:space="preserve">
+    <value>Kontaktlar əlavə edilir ({0} / {1})...</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ExportCompleted" xml:space="preserve">
+    <value>İxrac tamamlandı! Cəmi: {0}, Əlavə edildi: {1}, Keçildi: {2}, Xəta: {3}</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ExportSummary" xml:space="preserve">
+    <value>İxrac olunacaq hesabların sayı: {0}
+Google hesabı: {1}</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ConfirmExport" xml:space="preserve">
+    <value>{0} ədəd kontaktın Google Contacts-a əlavə olunmasını təsdiqləyirsiniz?</value>
+  </data>
+  <data name="Form_GoogleContactWizard_Status_Pending" xml:space="preserve">
+    <value>Gözləyir</value>
+  </data>
+  <data name="Form_GoogleContactWizard_Status_Processing" xml:space="preserve">
+    <value>Əlavə edilir...</value>
+  </data>
+  <data name="Form_GoogleContactWizard_Status_Success" xml:space="preserve">
+    <value>Əlavə edildi</value>
+  </data>
+  <data name="Form_GoogleContactWizard_Status_Skipped" xml:space="preserve">
+    <value>Keçildi (Mövcuddur)</value>
+  </data>
+  <data name="Form_GoogleContactWizard_Status_Failed" xml:space="preserve">
+    <value>Xəta</value>
+  </data>
+  <data name="Form_GoogleContactWizard_Status_NoPhone" xml:space="preserve">
+    <value>Telefon nömrəsi yoxdur</value>
+  </data>
+  <data name="Form_GoogleContactWizard_AuthRequired" xml:space="preserve">
+    <value>Google hesabı ilə autentifikasiya tələb olunur. Zəhmət olmasa Google hesabınıza daxil olun.</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ColGoogleStatus" xml:space="preserve">
+    <value>Google Status</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ColGoogleName" xml:space="preserve">
+    <value>Google Kontakt Adı</value>
+  </data>
+  <data name="Form_GoogleContactWizard_ButtonSelectNew" xml:space="preserve">
+    <value>Yalnız Yeniləri Seç</value>
+  </data>
+  <data name="Form_GoogleContactWizard_Status_ExistsInGoogle" xml:space="preserve">
+    <value>Google-da mövcuddur</value>
+  </data>
+  <data name="Form_GoogleContactWizard_Status_NewInGoogle" xml:space="preserve">
+    <value>Yeni</value>
+  </data>
+  <data name="Form_GoogleContactWizard_CheckingGoogleContacts" xml:space="preserve">
+    <value>Google kontaktları yoxlanılır...</value>
+  </data>
+  <data name="Form_GoogleContactWizard_SummaryWithGoogleCounts" xml:space="preserve">
+    <value>Seçilib: {0} / {1} (Yenilər: {2}, Google-da mövcuddur: {3})</value>
+  </data>
+  <data name="Entity_AppSetting_AutoCreateGoogleContact" xml:space="preserve">
+    <value>Avtomatik Google Kontakt Yarat</value>
+  </data>
+  <data name="Form_CurrAcc_AutoCreateGoogleContact" xml:space="preserve">
+    <value>Avtomatik Google Kontakt Yarat</value>
   </data>
 </root>

@@ -1,4 +1,4 @@
-using DevExpress.Data.Mask;
+﻿using DevExpress.Data.Mask;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -492,6 +492,33 @@ namespace Foxoft
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
             LoadLayout();
+        }
+
+        private void bBI_GoogleContactWizard_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            List<string> selectedCodes = new();
+
+            int[] selectedRowHandles = gV_CurrAccList.GetSelectedRows();
+            if (selectedRowHandles != null && selectedRowHandles.Length > 0)
+            {
+                foreach (int handle in selectedRowHandles)
+                {
+                    if (handle >= 0)
+                    {
+                        object? codeObj = gV_CurrAccList.GetRowCellValue(handle, "CurrAccCode");
+                        if (codeObj != null && !string.IsNullOrEmpty(codeObj.ToString()))
+                            selectedCodes.Add(codeObj.ToString()!);
+                    }
+                }
+            }
+
+            if (selectedCodes.Count == 0 && dcCurrAcc != null && !string.IsNullOrEmpty(dcCurrAcc.CurrAccCode))
+            {
+                selectedCodes.Add(dcCurrAcc.CurrAccCode);
+            }
+
+            using FormGoogleContactWizard wizard = new(selectedCodes, currAccTypeArr);
+            wizard.ShowDialog(this);
         }
     }
 }

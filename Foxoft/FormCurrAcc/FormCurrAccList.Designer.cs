@@ -89,6 +89,8 @@ namespace Foxoft
             popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            bBI_GoogleContactWizard = new DevExpress.XtraBars.BarButtonItem();
+            ribbonPageGroupTools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccList).BeginInit();
@@ -266,9 +268,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, barButtonItem3, barButtonItem4, BBI_test, BBI_query, BSI_Reports, barButtonItem1 });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, barButtonItem3, barButtonItem4, BBI_test, BBI_query, BSI_Reports, barButtonItem1, bBI_GoogleContactWizard });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 32;
+            ribbonControl1.MaxItemId = 33;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage3 });
             ribbonControl1.Size = new Size(858, 158);
@@ -376,9 +378,15 @@ namespace Foxoft
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = Resources.Common_Report;                   // "Hesabat" → resx
             // 
+            // ribbonPageGroupTools
+            // 
+            ribbonPageGroupTools.ItemLinks.Add(bBI_GoogleContactWizard);
+            ribbonPageGroupTools.Name = "ribbonPageGroupTools";
+            ribbonPageGroupTools.Text = Resources.Common_Tools;
+            // 
             // ribbonPage3
             // 
-            ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2 });
+            ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroupTools, ribbonPageGroup2 });
             ribbonPage3.Name = "ribbonPage3";
             ribbonPage3.Text = Resources.Common_Settings;                      // "Ayarlar" → resx
             // 
@@ -414,6 +422,15 @@ namespace Foxoft
             barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
             barButtonItem1.Name = "barButtonItem1";
             barButtonItem1.ItemClick += barButtonItem1_ItemClick;
+            // 
+            // bBI_GoogleContactWizard
+            // 
+            bBI_GoogleContactWizard.Caption = Resources.Form_CurrAccList_Button_GoogleContactWizard;
+            bBI_GoogleContactWizard.Hint = Resources.Form_CurrAccList_Button_GoogleContactWizard_Tooltip;
+            bBI_GoogleContactWizard.Id = 32;
+            bBI_GoogleContactWizard.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_GoogleContactWizard.ImageOptions.SvgImage");
+            bBI_GoogleContactWizard.Name = "bBI_GoogleContactWizard";
+            bBI_GoogleContactWizard.ItemClick += bBI_GoogleContactWizard_ItemClick;
             // 
             // FormCurrAccList
             // 
@@ -492,5 +509,7 @@ namespace Foxoft
         private DevExpress.XtraBars.PopupMenu popupMenuReports;
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem bBI_GoogleContactWizard;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupTools;
     }
 }

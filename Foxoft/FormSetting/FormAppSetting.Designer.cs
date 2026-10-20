@@ -1,4 +1,4 @@
-
+﻿
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -59,6 +59,8 @@ namespace Foxoft
             UseCampaignCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             UseLoyaltyCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             UseInvoiceExpensesCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            AutoCreateGoogleContactCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            ItemForAutoCreateGoogleContact = new DevExpress.XtraLayout.LayoutControlItem();
             NotifyBalanceWarningLevelCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             LockReturnDocumentCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             TransferAutoApproveCheckEdit = new DevExpress.XtraEditors.CheckEdit();
@@ -130,6 +132,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)UseCampaignCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UseLoyaltyCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UseInvoiceExpensesCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)AutoCreateGoogleContactCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForAutoCreateGoogleContact).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NotifyBalanceWarningLevelCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LockReturnDocumentCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TransferAutoApproveCheckEdit.Properties).BeginInit();
@@ -218,6 +222,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(NotifyBalanceWarningLevelCheckEdit);
             dataLayoutControl1.Controls.Add(LockReturnDocumentCheckEdit);
             dataLayoutControl1.Controls.Add(TransferAutoApproveCheckEdit);
+            dataLayoutControl1.Controls.Add(AutoCreateGoogleContactCheckEdit);
             dataLayoutControl1.DataSource = appSettingBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.Location = new Point(0, 0);
@@ -514,6 +519,17 @@ namespace Foxoft
             UseInvoiceExpensesCheckEdit.StyleController = dataLayoutControl1;
             UseInvoiceExpensesCheckEdit.TabIndex = 37;
             // 
+            // AutoCreateGoogleContactCheckEdit
+            // 
+            AutoCreateGoogleContactCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "AutoCreateGoogleContact", true));
+            AutoCreateGoogleContactCheckEdit.Location = new Point(24, 240);
+            AutoCreateGoogleContactCheckEdit.Name = "AutoCreateGoogleContactCheckEdit";
+            AutoCreateGoogleContactCheckEdit.Properties.Caption = Resources.Entity_AppSetting_AutoCreateGoogleContact;
+            AutoCreateGoogleContactCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            AutoCreateGoogleContactCheckEdit.Size = new Size(361, 20);
+            AutoCreateGoogleContactCheckEdit.StyleController = dataLayoutControl1;
+            AutoCreateGoogleContactCheckEdit.TabIndex = 38;
+            // 
             // NotifyBalanceWarningLevelCheckEdit
             // 
             NotifyBalanceWarningLevelCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "NotifyBalanceWarningLevel", true));
@@ -567,10 +583,10 @@ namespace Foxoft
             // 
             // layoutControlGroupGeneral
             // 
-            layoutControlGroupGeneral.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, ItemForAppFontSize, ItemForUseInvoiceExpenses });
+            layoutControlGroupGeneral.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, ItemForAppFontSize, ItemForUseInvoiceExpenses, ItemForAutoCreateGoogleContact });
             layoutControlGroupGeneral.Location = new Point(0, 0);
             layoutControlGroupGeneral.Name = "layoutControlGroupGeneral";
-            layoutControlGroupGeneral.Size = new Size(389, 261);
+            layoutControlGroupGeneral.Size = new Size(389, 285);
             layoutControlGroupGeneral.Text = Resources.Form_AppSetting_Group_General;
             // 
             // ItemForGetPrint
@@ -658,6 +674,14 @@ namespace Foxoft
             ItemForUseInvoiceExpenses.Name = "ItemForUseInvoiceExpenses";
             ItemForUseInvoiceExpenses.Size = new Size(365, 24);
             ItemForUseInvoiceExpenses.TextVisible = false;
+            // 
+            // ItemForAutoCreateGoogleContact
+            // 
+            ItemForAutoCreateGoogleContact.Control = AutoCreateGoogleContactCheckEdit;
+            ItemForAutoCreateGoogleContact.Location = new Point(0, 240);
+            ItemForAutoCreateGoogleContact.Name = "ItemForAutoCreateGoogleContact";
+            ItemForAutoCreateGoogleContact.Size = new Size(365, 24);
+            ItemForAutoCreateGoogleContact.TextVisible = false;
             // 
             // layoutControlGroupPos
             // 
@@ -918,6 +942,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)UseCampaignCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)UseLoyaltyCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)UseInvoiceExpensesCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)AutoCreateGoogleContactCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForAutoCreateGoogleContact).EndInit();
             ((System.ComponentModel.ISupportInitialize)NotifyBalanceWarningLevelCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)LockReturnDocumentCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)TransferAutoApproveCheckEdit.Properties).EndInit();
@@ -1017,6 +1043,8 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForUseCampaign;
         private DevExpress.XtraEditors.CheckEdit UseLoyaltyCheckEdit;
         private DevExpress.XtraEditors.CheckEdit UseInvoiceExpensesCheckEdit;
+        private DevExpress.XtraEditors.CheckEdit AutoCreateGoogleContactCheckEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForAutoCreateGoogleContact;
         private DevExpress.XtraLayout.LayoutControlItem ItemForUseLoyalty;
         private DevExpress.XtraLayout.LayoutControlItem ItemForUseInvoiceExpenses;
         private DevExpress.XtraEditors.CheckEdit NotifyBalanceWarningLevelCheckEdit;

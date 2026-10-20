@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		
@@ -359,6 +359,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="FormCurrAcc\FormGoogleContactWizard.cs">
+			<SubType>Form</SubType>
+		</Compile>
 		<Compile Update="FormCurrAcc\FormCurrAccFeature.cs">
 			<SubType>Form</SubType>
 		</Compile>

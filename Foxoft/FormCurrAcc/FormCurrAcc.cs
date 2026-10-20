@@ -1,4 +1,6 @@
-﻿using DevExpress.XtraDataLayout;
+﻿using Foxoft.AppCode;
+using System.Threading.Tasks;
+using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.DXErrorProvider;
@@ -74,6 +76,7 @@ namespace Foxoft
         {
             LoadCurrAcc();
             LoadLayout();
+            UpdateGoogleContactCheckboxVisibility();
             dataLayoutControl1.IsValid(out List<string> errorList);
             CurrAccTypeCodeLookUpEdit_EditValueChanged(CurrAccTypeCodeLookUpEdit, EventArgs.Empty);
         }
@@ -127,6 +130,7 @@ namespace Foxoft
 
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;
             CurrAccDescTextEdit.Select();
+            UpdateGoogleContactCheckboxVisibility();
         }
 
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
@@ -144,8 +148,17 @@ namespace Foxoft
             {
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
 
-                if (!efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode))
+                bool isNew = !efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode);
+                if (isNew)
+                {
                     efMethods.InsertEntity(dcCurrAcc);
+
+                    bool autoCreateEnabled = Settings.Default.AppSetting?.AutoCreateGoogleContact ?? false;
+                    if (autoCreateEnabled && AutoCreateGoogleContactCheckEdit.Checked)
+                    {
+                        CreateGoogleContactInBackground(dcCurrAcc);
+                    }
+                }
                 else
                 {
                     dcCurrAcc.LastUpdatedUserName = Authorization.CurrAccCode;
@@ -162,6 +175,61 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
+        }
+
+        private void UpdateGoogleContactCheckboxVisibility()
+        {
+            bool isNew = string.IsNullOrEmpty(dcCurrAcc?.CurrAccCode) || !efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode);
+            bool autoCreateEnabled = (Settings.Default.AppSetting?.AutoCreateGoogleContact ?? false) && isNew;
+
+            if (autoCreateEnabled)
+            {
+                ItemForAutoCreateGoogleContact.Visibility = LayoutVisibility.Always;
+                AutoCreateGoogleContactCheckEdit.Checked = true;
+            }
+            else
+            {
+                ItemForAutoCreateGoogleContact.Visibility = LayoutVisibility.Never;
+                AutoCreateGoogleContactCheckEdit.Checked = false;
+            }
+        }
+
+        private void CreateGoogleContactInBackground(DcCurrAcc acc)
+        {
+            var snapshot = new DcCurrAcc
+            {
+                CurrAccCode = acc.CurrAccCode,
+                CurrAccDesc = acc.CurrAccDesc,
+                FirstName = acc.FirstName,
+                LastName = acc.LastName,
+                FatherName = acc.FatherName,
+                PhoneNum = acc.PhoneNum,
+                Address = acc.Address,
+                CurrAccTypeCode = acc.CurrAccTypeCode
+            };
+
+            if (acc.DcCurrAccContactDetails != null && acc.DcCurrAccContactDetails.Count > 0)
+            {
+                snapshot.DcCurrAccContactDetails = acc.DcCurrAccContactDetails
+                    .Select(cd => new DcCurrAccContactDetail
+                    {
+                        ContactTypeId = cd.ContactTypeId,
+                        ContactDesc = cd.ContactDesc
+                    }).ToList();
+            }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    using GoogleContactAPI api = new();
+                    await api.CreateContactAsync(snapshot);
+                }
+                catch
+                {
+                    // Fail gracefully in background
+                }
+            });
         }
 
         private bool CanChangeCurrAccCode()

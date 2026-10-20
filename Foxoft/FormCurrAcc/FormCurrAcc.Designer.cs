@@ -45,6 +45,8 @@ namespace Foxoft
             CreditLimitTextEdit = new DevExpress.XtraEditors.TextEdit();
             IsVipCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             IsDisabledCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            AutoCreateGoogleContactCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            ItemForAutoCreateGoogleContact = new DevExpress.XtraLayout.LayoutControlItem();
             BonusCardNumTextEdit = new DevExpress.XtraEditors.ButtonEdit();
             AddressTextEdit = new DevExpress.XtraEditors.TextEdit();
             PhoneNumTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -108,6 +110,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)CreditLimitTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IsVipCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)AutoCreateGoogleContactCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForAutoCreateGoogleContact).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BonusCardNumTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AddressTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PhoneNumTextEdit.Properties).BeginInit();
@@ -164,6 +168,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(CreditLimitTextEdit);
             dataLayoutControl1.Controls.Add(IsVipCheckEdit);
             dataLayoutControl1.Controls.Add(IsDisabledCheckEdit);
+            dataLayoutControl1.Controls.Add(AutoCreateGoogleContactCheckEdit);
             dataLayoutControl1.Controls.Add(BonusCardNumTextEdit);
             dataLayoutControl1.Controls.Add(AddressTextEdit);
             dataLayoutControl1.Controls.Add(PhoneNumTextEdit);
@@ -310,6 +315,16 @@ namespace Foxoft
             IsDisabledCheckEdit.Size = new Size(275, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
             IsDisabledCheckEdit.TabIndex = 17;
+            // 
+            // AutoCreateGoogleContactCheckEdit
+            // 
+            AutoCreateGoogleContactCheckEdit.Location = new Point(24, 306);
+            AutoCreateGoogleContactCheckEdit.Name = "AutoCreateGoogleContactCheckEdit";
+            AutoCreateGoogleContactCheckEdit.Properties.Caption = Resources.Form_CurrAcc_AutoCreateGoogleContact;
+            AutoCreateGoogleContactCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            AutoCreateGoogleContactCheckEdit.Size = new Size(275, 20);
+            AutoCreateGoogleContactCheckEdit.StyleController = dataLayoutControl1;
+            AutoCreateGoogleContactCheckEdit.TabIndex = 19;
             // 
             // BonusCardNumTextEdit
             // 
@@ -602,10 +617,10 @@ namespace Foxoft
             // layoutControlGroup3
             // 
             layoutControlGroup3.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForIsVip, ItemForBonusCardNum, ItemForCreditLimit, ItemForIsDisabled });
+            layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForIsVip, ItemForBonusCardNum, ItemForCreditLimit, ItemForIsDisabled, ItemForAutoCreateGoogleContact });
             layoutControlGroup3.Location = new Point(0, 213);
             layoutControlGroup3.Name = "layoutControlGroup3";
-            layoutControlGroup3.Size = new Size(584, 93);
+            layoutControlGroup3.Size = new Size(584, 117);
             layoutControlGroup3.Text = Resources.Form_CurrAcc_Group_Extra;
             // 
             // ItemForIsVip
@@ -643,6 +658,15 @@ namespace Foxoft
             ItemForIsDisabled.Name = "ItemForIsDisabled";
             ItemForIsDisabled.Size = new Size(279, 24);
             ItemForIsDisabled.TextVisible = false;
+            // 
+            // ItemForAutoCreateGoogleContact
+            // 
+            ItemForAutoCreateGoogleContact.Control = AutoCreateGoogleContactCheckEdit;
+            ItemForAutoCreateGoogleContact.ControlAlignment = ContentAlignment.TopLeft;
+            ItemForAutoCreateGoogleContact.Location = new Point(0, 48);
+            ItemForAutoCreateGoogleContact.Name = "ItemForAutoCreateGoogleContact";
+            ItemForAutoCreateGoogleContact.Size = new Size(560, 24);
+            ItemForAutoCreateGoogleContact.TextVisible = false;
             // 
             // layoutControlGroup2
             // 
@@ -828,6 +852,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)CreditLimitTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)IsVipCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)AutoCreateGoogleContactCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForAutoCreateGoogleContact).EndInit();
             ((System.ComponentModel.ISupportInitialize)BonusCardNumTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)AddressTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PhoneNumTextEdit.Properties).EndInit();
@@ -890,6 +916,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit CreditLimitTextEdit;
         private DevExpress.XtraEditors.CheckEdit IsVipCheckEdit;
         private DevExpress.XtraEditors.CheckEdit IsDisabledCheckEdit;
+        private DevExpress.XtraEditors.CheckEdit AutoCreateGoogleContactCheckEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForAutoCreateGoogleContact;
         private DevExpress.XtraEditors.ButtonEdit BonusCardNumTextEdit;
         private DevExpress.XtraEditors.TextEdit AddressTextEdit;
         private DevExpress.XtraEditors.TextEdit PhoneNumTextEdit;

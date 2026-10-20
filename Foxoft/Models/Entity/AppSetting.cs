@@ -1,4 +1,4 @@
-using Foxoft.Properties;
+﻿using Foxoft.Properties;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -135,6 +135,10 @@ namespace Foxoft.Models
 
         [Display(Name = nameof(Resources.Entity_AppSetting_RarExePath), ResourceType = typeof(Resources))]
         public string? RarExePath { get; set; }
+
+        [DefaultValueSql("0")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_AutoCreateGoogleContact), ResourceType = typeof(Resources))]
+        public bool AutoCreateGoogleContact { get; set; }
 
 
 
