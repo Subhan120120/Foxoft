@@ -48,6 +48,8 @@ namespace Foxoft
                 this.processCode = processCode;
         }
 
+        public event EventHandler<string>? InvoiceOpenRequested;
+
         private readonly Dictionary<Keys, Action> _shortcutActions = new();
 
         private void UcReturn_Load(object sender, EventArgs e)
@@ -714,7 +716,7 @@ namespace Foxoft
                             WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode),
                             CreatedUserName = Authorization.CurrAccCode,
                             IsMainTF = true,
-                            IsCompleted = true,
+                            IsCompleted = answer == DialogResult.No,
                             LoyaltyCardId = trInvoiceHeader.LoyaltyCardId,
                             TerminalId = Settings.Default.TerminalId,
                             DocumentDate = DateTime.Today,
@@ -805,7 +807,18 @@ namespace Foxoft
             {
                 if (answer == DialogResult.Yes)
                 {
-                    OpenFormInvoice(newDocNum);
+                    if (InvoiceOpenRequested != null)
+                    {
+                        InvoiceOpenRequested.Invoke(this, newDocNum);
+                    }
+                    else if (FindForm() is FormPOS formPOS)
+                    {
+                        _ = formPOS.OpenReturnInvoiceInSaleAsync(newDocNum);
+                    }
+                    else
+                    {
+                        OpenFormInvoice(newDocNum);
+                    }
                 }
 
                 ClearControlsInternal();

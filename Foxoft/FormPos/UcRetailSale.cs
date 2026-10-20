@@ -42,6 +42,9 @@ namespace Foxoft
         private bool _isClosingByLockEvent;
         private bool _closeRequestDialogOpen;
 
+        // Geri qaytarma status dəyişmə hadisəsi
+        public event EventHandler<bool>? InvoiceReturnStateChanged;
+
         // Dinamik shortcut sistemi
         private Dictionary<Keys, Action> shortcutActions = new();
 
@@ -458,6 +461,9 @@ namespace Foxoft
                 _cashOnlyCampaignApplied = false;
                 _promoCode = null;
             }
+
+            rowIndx = -1;
+            UpdateReturnUIState(false);
         }
 
         //private void ApplyCampaignsFromForm(bool showMessage = false, IEnumerable<int>? paymentMethodIds = null)
@@ -522,6 +528,17 @@ namespace Foxoft
             if (trInvoiceHeader is null || trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
                 return;
 
+            if (trInvoiceHeader.IsReturn)
+            {
+                if (!silentIfNone)
+                    XtraMessageBox.Show(
+                        Resources.Form_RetailSale_CampaignNotAllowedForReturn,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                return;
+            }
+
             if (gV_InvoiceLine.DataRowCount <= 0)
             {
                 if (!silentIfNone)
@@ -558,7 +575,7 @@ namespace Foxoft
 
         private void btn_CampaignDelete_Click(object sender, EventArgs e)
         {
-            if (trInvoiceHeader is null)
+            if (trInvoiceHeader is null || trInvoiceHeader.IsReturn)
                 return;
 
             if (XtraMessageBox.Show(
@@ -621,6 +638,18 @@ namespace Foxoft
 
         private void btn_PromoCode_Click(object sender, EventArgs e)
         {
+            if (trInvoiceHeader is null)
+                return;
+
+            if (trInvoiceHeader.IsReturn)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_CampaignNotAllowedForReturn,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
             string input = Interaction.InputBox(
                 Resources.Campaign_EnterPromoCode,
                 Resources.Campaign_PromoCodeTitle,
@@ -688,10 +717,24 @@ namespace Foxoft
             IEnumerable<int>? allowedPaymentMethodIds = null;
 
             bool cashOnlyApplied = false;
-            if (IsCampaignEnabled)
+            if (IsCampaignEnabled && trInvoiceHeader?.IsReturn != true)
                 cashOnlyApplied = TryApplyCashOnlyCampaign(ref paymentType, out allowedPaymentMethodIds);
 
-            decimal pay = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+            decimal invoiceSum = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+            decimal totalPaid = Math.Abs(efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode));
+            decimal remainingPay = invoiceSum - totalPaid;
+
+            if (remainingPay <= 0 && invoiceSum > 0)
+            {
+                XtraMessageBox.Show(
+                    Resources.Campaign_NoAmountToPay,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            decimal pay = remainingPay > 0 ? remainingPay : invoiceSum;
 
             using FormPayment formPayment = allowedPaymentMethodIds != null
                 ? new FormPayment(paymentType, pay, trInvoiceHeader, allowedPaymentMethodIds)
@@ -1117,10 +1160,81 @@ namespace Foxoft
 
                 InitCampaignService();
                 _cashOnlyCampaignApplied = _campaignService.HasCashOnlyCampaignApplied(InvoiceHeaderId);
+
+                rowIndx = gV_InvoiceLine.FocusedRowHandle;
+                if (rowIndx < 0 && gV_InvoiceLine.DataRowCount > 0)
+                    rowIndx = 0;
+
+                UpdateReturnUIState(trInvoiceHeader?.IsReturn == true);
             }
             finally
             {
                 SplashScreenManager.CloseForm(false);
+            }
+        }
+
+        public async Task<bool> OpenInvoiceByDocNumAsync(string docNum)
+        {
+            if (string.IsNullOrWhiteSpace(docNum))
+                return false;
+
+            TrInvoiceHeader header = efMethods.SelectInvoiceHeaderByDocNum(docNum);
+            if (header == null)
+                return false;
+
+            return await OpenInvoiceAsync(header.InvoiceHeaderId);
+        }
+
+        public async Task<bool> OpenInvoiceAsync(Guid targetInvoiceHeaderId)
+        {
+            if (targetInvoiceHeaderId == Guid.Empty)
+                return false;
+
+            if (!TryAcquireInvoiceLockForEdit(targetInvoiceHeaderId))
+                return false;
+
+            if (trInvoiceHeader is not null && trInvoiceHeader.InvoiceHeaderId != Guid.Empty && trInvoiceHeader.InvoiceHeaderId != targetInvoiceHeaderId)
+            {
+                _lockService.ReleaseLock(
+                    "Invoice",
+                    trInvoiceHeader.InvoiceHeaderId,
+                    Authorization.CurrAccCode,
+                    Environment.MachineName,
+                    _appInstanceId,
+                    _formInstanceId);
+            }
+
+            invoiceHeaderId = targetInvoiceHeaderId;
+
+            await LoadInvoiceAsync(targetInvoiceHeaderId);
+
+            CalcPaidAmount();
+            UpdateReturnUIState(trInvoiceHeader?.IsReturn == true);
+            Tag = trInvoiceHeader?.DocumentNumber;
+
+            return true;
+        }
+
+        private void UpdateReturnUIState(bool isReturn)
+        {
+            btn_CampaignApply.Enabled = !isReturn;
+            btn_CampaignDelete.Enabled = !isReturn;
+            btn_CampaignLog.Enabled = !isReturn;
+            btn_PromoCode.Enabled = !isReturn;
+            btn_InvoiceDiscount.Enabled = !isReturn;
+
+            InvoiceReturnStateChanged?.Invoke(this, isReturn);
+
+            gV_InvoiceLine.RefreshData();
+        }
+
+        private void gV_InvoiceLine_RowStyle(object sender, RowStyleEventArgs e)
+        {
+            if (e.RowHandle < 0) return;
+
+            if (trInvoiceHeader?.IsReturn == true)
+            {
+                e.Appearance.BackColor = Color.MistyRose;
             }
         }
 
@@ -1206,7 +1320,7 @@ namespace Foxoft
 
                 // ✅ uyğun sətr tapıldı -> qty artır
                 decimal oldQty = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, nameof(TrInvoiceLine.QtyOut)) ?? 0m);
-                decimal newQty = oldQty + qty;
+                decimal newQty = trInvoiceHeader?.IsReturn == true ? oldQty - qty : oldQty + qty;
 
                 gV_InvoiceLine.SetRowCellValue(i, nameof(TrInvoiceLine.QtyOut), newQty);
 
@@ -1340,7 +1454,7 @@ namespace Foxoft
 
             gV_InvoiceLine.SetFocusedRowCellValue(colProductCode, dcProduct.ProductCode);
             gV_InvoiceLine.SetFocusedRowCellValue(col_Price, dcProduct.RetailPrice);
-            gV_InvoiceLine.SetFocusedRowCellValue(colQtyOut, qty);
+            gV_InvoiceLine.SetFocusedRowCellValue(colQtyOut, trInvoiceHeader?.IsReturn == true ? -qty : qty);
             gV_InvoiceLine.SetFocusedRowCellValue(colProductCost, dcProduct.ProductCost);
             gV_InvoiceLine.SetFocusedRowCellValue(col_SalesPersonCode, salesman);
 
@@ -1421,6 +1535,16 @@ namespace Foxoft
 
         private void btn_InvoiceDiscount_Click(object sender, EventArgs e)
         {
+            if (trInvoiceHeader?.IsReturn == true)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_InvoiceDiscountNotAllowedForReturn,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             bool currAccHasClaims = efMethods.CurrAccHasClaims(
                 Authorization.CurrAccCode,
                 nameof(TrInvoiceLine.PosDiscount));
@@ -1435,7 +1559,7 @@ namespace Foxoft
                 return;
             }
 
-            decimal amount = efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId);
+            decimal amount = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
 
             if (gV_InvoiceLine.DataRowCount <= 0)
             {
@@ -1483,8 +1607,8 @@ namespace Foxoft
                 decimal posDiscount = Convert.ToDecimal(
                     gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.PosDiscount)));
 
-                decimal amount = Convert.ToDecimal(
-                    gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.Amount)));
+                decimal amount = Math.Abs(Convert.ToDecimal(
+                    gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.Amount))));
 
                 using (FormPosDiscount formPosDiscount = new(posDiscount, amount))
                 {
@@ -1636,6 +1760,16 @@ namespace Foxoft
 
         private void btn_CustomerAdd_Click(object sender, EventArgs e)
         {
+            if (trInvoiceHeader?.IsReturn == true)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_CannotChangeCustomerForReturn,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             using (FormCurrAcc formCustomer = new(CurrAccType.Customer, true))
             {
                 if (formCustomer.ShowDialog(this) == DialogResult.OK)
@@ -1674,6 +1808,16 @@ namespace Foxoft
 
         private void btn_CustomerSearch_Click(object sender, EventArgs e)
         {
+            if (trInvoiceHeader?.IsReturn == true)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_CannotChangeCustomerForReturn,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             using (FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false, trInvoiceHeader.CurrAccCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
@@ -1703,10 +1847,36 @@ namespace Foxoft
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
-                        gV_InvoiceLine.SetRowCellValue(
-                            rowIndx,
-                            nameof(TrInvoiceLine.QtyOut),
-                            formQty.input);
+                        if (trInvoiceHeader?.IsReturn == true)
+                        {
+                            var line = gV_InvoiceLine.GetRow(rowIndx) as TrInvoiceLine;
+                            if (line?.RelatedLineId != null)
+                            {
+                                var origLines = efMethods.SelectInvoiceLineByReturnLine(line.RelatedLineId, trInvoiceHeader.ProcessCode);
+                                decimal origQty = Math.Abs(origLines.Sum(x => x.QtyIn - x.QtyOut));
+                                if (origLines.Any() && formQty.input > origQty)
+                                {
+                                    XtraMessageBox.Show(
+                                        string.Format(Resources.Form_Invoice_ReturnQtyGreaterThanSale, origQty),
+                                        Resources.Common_Attention,
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning);
+                                    return;
+                                }
+                            }
+
+                            gV_InvoiceLine.SetRowCellValue(
+                                rowIndx,
+                                nameof(TrInvoiceLine.QtyOut),
+                                -formQty.input);
+                        }
+                        else
+                        {
+                            gV_InvoiceLine.SetRowCellValue(
+                                rowIndx,
+                                nameof(TrInvoiceLine.QtyOut),
+                                formQty.input);
+                        }
 
                         gV_InvoiceLine.RefreshData(); // footer yenilensin deye
                         SaveInvoice();
@@ -2043,7 +2213,7 @@ namespace Foxoft
                         else
                             return;
                     }
-                else if (!permitNegativeStock)
+                else if (trInvoiceHeader?.IsReturn != true && !permitNegativeStock)
                     if (balance <= 0m)
                     {
                         XtraMessageBox.Show(
@@ -2158,7 +2328,7 @@ namespace Foxoft
                 ? 0
                 : loyaltyService.GetInvoiceEarnAmount(trInvoiceHeader.InvoiceHeaderId);
 
-            if (IsCampaignEnabled)
+            if (IsCampaignEnabled && trInvoiceHeader?.IsReturn != true)
             {
                 RecalcCampaignsIfNeeded();
                 AutoApplyCampaignsIfConfigured();
@@ -2218,23 +2388,33 @@ namespace Foxoft
 
         private void CalcPaidAmount()
         {
+            if (trInvoiceHeader == null)
+                return;
+
             decimal cashSum = efMethods.SelectPaymentLinesCashSumByInvoice(
                 trInvoiceHeader.InvoiceHeaderId,
                 trInvoiceHeader.CurrAccCode);
-
-            lbl_InvoicePaidCashSum.Text =
-                Math.Round(cashSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             decimal cashlessSum = efMethods.SelectPaymentLinesCashlessSumByInvoice(
                 trInvoiceHeader.InvoiceHeaderId,
                 trInvoiceHeader.CurrAccCode);
 
-            lbl_InvoicePaidCashlessSum.Text =
-                Math.Round(cashlessSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
-
             decimal totalSum = efMethods.SelectPaymentLinesSumByInvoice(
                 trInvoiceHeader.InvoiceHeaderId,
                 trInvoiceHeader.CurrAccCode);
+
+            if (trInvoiceHeader.IsReturn)
+            {
+                cashSum = Math.Abs(cashSum);
+                cashlessSum = Math.Abs(cashlessSum);
+                totalSum = Math.Abs(totalSum);
+            }
+
+            lbl_InvoicePaidCashSum.Text =
+                Math.Round(cashSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+
+            lbl_InvoicePaidCashlessSum.Text =
+                Math.Round(cashlessSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             lbl_InvoicePaidTotalSum.Text =
                 Math.Round(totalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
@@ -2263,6 +2443,16 @@ namespace Foxoft
 
         private void Btn_LoyaltyCard_Click(object sender, EventArgs e)
         {
+            if (trInvoiceHeader?.IsReturn == true)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_RetailSale_CannotChangeCustomerForReturn,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn"))
             {
                 XtraMessageBox.Show(

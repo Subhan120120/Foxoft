@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -7090,5 +7090,14 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Common_InstallmentStatus" xml:space="preserve">
     <value>Hissəli Satış Statusu</value>
+  </data>
+  <data name="Form_RetailSale_CannotChangeCustomerForReturn" xml:space="preserve">
+    <value>Geri qaytarma qaiməsində müştəri dəyişdirilə bilməz.</value>
+  </data>
+  <data name="Form_RetailSale_InvoiceDiscountNotAllowedForReturn" xml:space="preserve">
+    <value>Geri qaytarma qaiməsində qaimə endirimi tətbiq edilə bilməz.</value>
+  </data>
+  <data name="Form_RetailSale_CampaignNotAllowedForReturn" xml:space="preserve">
+    <value>Geri qaytarma qaiməsində kampaniya tətbiq edilə bilməz.</value>
   </data>
 </root>

@@ -12,22 +12,48 @@ namespace Foxoft
     {
         private readonly EfMethods efMethods = new();
         private UcExpense ucExpense;
+        private UcRetailSale ucSale;
+        private UcReturn ucReturn;
 
         public FormPOS()
         {
             InitializeComponent();
 
-            UcRetailSale ucSale = new();
+            ucSale = new();
             ucSale.Dock = DockStyle.Fill;
             navPage_Sale.Controls.Add(ucSale);
 
-            UcReturn ucReturn = new("RS");
+            ucReturn = new("RS");
             ucReturn.Dock = DockStyle.Fill;
             navPage_Return.Controls.Add(ucReturn);
+
+            ucReturn.InvoiceOpenRequested += async (s, docNum) =>
+            {
+                await OpenReturnInvoiceInSaleAsync(docNum);
+            };
+
+            ucSale.InvoiceReturnStateChanged += (s, isReturn) =>
+            {
+                bCI_invoice.Caption = isReturn
+                    ? $"{Resources.Form_POS_Button_Sale} ({Resources.Entity_InvoiceHeader_IsReturn})"
+                    : Resources.Form_POS_Button_Sale;
+            };
 
             ucExpense = new();
             ucExpense.Dock = DockStyle.Fill;
             navPage_Expenses.Controls.Add(ucExpense);
+
+            AcceptButton = ucSale.btn_Enter;
+        }
+
+        public async Task OpenReturnInvoiceInSaleAsync(string docNum)
+        {
+            navigationFrame1.SelectedPage = navPage_Sale;
+            bCI_invoice.Checked = true;
+            bCI_return.Checked = false;
+            bCI_expenses.Checked = false;
+
+            await ucSale.OpenInvoiceByDocNumAsync(docNum);
 
             AcceptButton = ucSale.btn_Enter;
         }

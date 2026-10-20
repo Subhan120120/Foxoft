@@ -20094,5 +20094,20 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Common_InstallmentStatus", resourceCulture);
             }
         }
+        public static string Form_RetailSale_CannotChangeCustomerForReturn {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_CannotChangeCustomerForReturn", resourceCulture);
+            }
+        }
+        public static string Form_RetailSale_InvoiceDiscountNotAllowedForReturn {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_InvoiceDiscountNotAllowedForReturn", resourceCulture);
+            }
+        }
+        public static string Form_RetailSale_CampaignNotAllowedForReturn {
+            get {
+                return ResourceManager.GetString("Form_RetailSale_CampaignNotAllowedForReturn", resourceCulture);
+            }
+        }
     }
 }

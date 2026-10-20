@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -7090,5 +7090,14 @@ Please wait or choose another invoice.</value>
   </data>
   <data name="Common_InstallmentStatus" xml:space="preserve">
     <value>Installment Status</value>
+  </data>
+  <data name="Form_RetailSale_CannotChangeCustomerForReturn" xml:space="preserve">
+    <value>Customer cannot be changed on a return invoice.</value>
+  </data>
+  <data name="Form_RetailSale_InvoiceDiscountNotAllowedForReturn" xml:space="preserve">
+    <value>Invoice discount cannot be applied to a return invoice.</value>
+  </data>
+  <data name="Form_RetailSale_CampaignNotAllowedForReturn" xml:space="preserve">
+    <value>Campaigns cannot be applied to a return invoice.</value>
   </data>
 </root>

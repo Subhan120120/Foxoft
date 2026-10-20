@@ -747,6 +747,7 @@ namespace Foxoft
             gV_InvoiceLine.InitNewRow += gV_InvoiceLine_InitNewRow;
             gV_InvoiceLine.FocusedRowChanged += gV_InvoiceLine_FocusedRowChanged;
             gV_InvoiceLine.CellValueChanged += GV_InvoiceLine_CellValueChanged;
+            gV_InvoiceLine.RowStyle += gV_InvoiceLine_RowStyle;
             // 
             // colInvoiceHeaderId
             // 
