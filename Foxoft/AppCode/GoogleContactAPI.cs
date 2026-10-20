@@ -6,6 +6,8 @@ using Google.Apis.PeopleService.v1;
 using Google.Apis.PeopleService.v1.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
+using Foxoft.Models;
+using Foxoft.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
