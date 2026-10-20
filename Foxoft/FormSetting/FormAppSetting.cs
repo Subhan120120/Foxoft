@@ -86,54 +86,55 @@ namespace Foxoft
 
             dbContext.AppSettings
                 .Where(x => x.Id == 1)
-                .LoadAsync()
-                .ContinueWith(loadTask =>
-                {
-                    // If the load failed, throw so you see the real exception
-                    if (loadTask.IsFaulted)
-                        throw loadTask.Exception!;
+                .Load();
 
-                    // Bind source after load
-                    appSettingBindingSource.DataSource = dbContext.AppSettings.Local.ToBindingList();
+            appSettingBindingSource.DataSource = dbContext.AppSettings.Local.ToBindingList();
 
-                    // Get the loaded entity (or create it if not exists)
-                    AppSetting = dbContext.AppSettings.Local.FirstOrDefault(x => x.Id == 1);
-                    if (AppSetting is not null)
-                        AppSetting.AppFontSize = AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize);
+            AppSetting = dbContext.AppSettings.Local.FirstOrDefault(x => x.Id == 1);
+            
+            AppSetting.AppFontSize = AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize);
 
-                    OverpaymentModeImageComboBoxEdit.EditValue = (int)AppSetting.OverpaymentMode;
-                    // Now safe
-                    SetSelectedIdsManual(AppSetting.POSFindProductBy);
-
-                }, TaskScheduler.FromCurrentSynchronizationContext());
-
+            OverpaymentModeImageComboBoxEdit.EditValue = (int)AppSetting.OverpaymentMode;
+            SetSelectedIdsManual(AppSetting.POSFindProductBy);
         }
 
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            // Ensure AppSetting is not null
-            AppSetting ??= dbContext.AppSettings.Local.FirstOrDefault(x => x.Id == 1)
-                        ?? dbContext.AppSettings.FirstOrDefault(x => x.Id == 1);
+            try
+            {
+                if (!ValidateChildren())
+                    return;
 
-            decimal previousFontSize = AppFontSettings.NormalizeFontSize(Settings.Default.AppSetting?.AppFontSize);
+                AppSetting ??= dbContext.AppSettings.Local.FirstOrDefault(x => x.Id == 1)
+                            ?? dbContext.AppSettings.FirstOrDefault(x => x.Id == 1);
+                                
+                decimal previousFontSize = AppFontSettings.NormalizeFontSize(Settings.Default.AppSetting?.AppFontSize);
 
-            appSettingBindingSource.EndEdit();
-            AppSetting.POSFindProductBy = POSFindProductByCheckedComboBoxEdit.EditValue?.ToString()?.Trim() ?? "";
-            AppSetting.AppFontSize = AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize);
+                appSettingBindingSource.EndEdit();
+                AppSetting.POSFindProductBy = POSFindProductByCheckedComboBoxEdit.EditValue?.ToString()?.Trim() ?? "";
+                AppSetting.AppFontSize = AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize);
 
-            if (OverpaymentModeImageComboBoxEdit.EditValue is int modeVal)
-                AppSetting.OverpaymentMode = (OverpaymentMode)modeVal;
+                if (OverpaymentModeImageComboBoxEdit.EditValue is int modeVal)
+                    AppSetting.OverpaymentMode = (OverpaymentMode)modeVal;
 
-            ucMessagingSetting1.SaveMessagingSettings();
+                if (ucMessagingSetting1.IsLoaded)
+                    ucMessagingSetting1.SaveMessagingSettings();
 
-            dbContext.SaveChanges();
+                dbContext.SaveChanges();
 
-            Settings.Default.AppSetting = AppSetting;
-            Settings.Default.Save();
+                Settings.Default.AppSetting = AppSetting;
+                Settings.Default.Save();
 
-            if (AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize) != previousFontSize)
-                XtraMessageBox.Show(Resources.Message_AppFontSizeRestartRequired, Resources.Common_Attention);
+                if (AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize) != previousFontSize)
+                    XtraMessageBox.Show(Resources.Message_AppFontSizeRestartRequired, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    XtraMessageBox.Show(Resources.Common_SavedSuccessfully, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Btn_OptimizeDatabaseIndexes_Click(object sender, EventArgs e)

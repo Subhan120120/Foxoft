@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using Foxoft.AppCode;
 using Foxoft.AppCode.Service;
 using Foxoft.Models;
@@ -14,6 +14,7 @@ namespace Foxoft
 {
     public partial class UcMessagingSetting : XtraUserControl
     {
+        public bool IsLoaded { get; private set; }
         public UcMessagingSetting()
         {
             InitializeComponent();
@@ -61,6 +62,7 @@ namespace Foxoft
 
         public void LoadMessagingSettings()
         {
+            IsLoaded = true;
             using var db = new subContext();
             var appSetting = db.AppSettings.FirstOrDefault(x => x.Id == 1);
 
@@ -121,12 +123,15 @@ namespace Foxoft
 
         public void SaveMessagingSettings()
         {
+            if (!IsLoaded)
+                return;
+
             using var db = new subContext();
             var appSetting = db.AppSettings.FirstOrDefault(x => x.Id == 1);
 
             if (appSetting == null)
             {
-                appSetting = new AppSetting { Id = 1 };
+                appSetting = new AppSetting { DefaultUnitOfMeasureId = 1 };
                 db.AppSettings.Add(appSetting);
             }
 
@@ -152,7 +157,7 @@ namespace Foxoft
             var smsSetting = db.DcSmsProviderSettings.FirstOrDefault(x => x.Id == 1);
             if (smsSetting == null)
             {
-                smsSetting = new DcSmsProviderSetting { Id = 1, ProviderType = "GenericHttp" };
+                smsSetting = new DcSmsProviderSetting { ProviderType = "GenericHttp" };
                 db.DcSmsProviderSettings.Add(smsSetting);
             }
 
@@ -165,7 +170,7 @@ namespace Foxoft
             var whatsAppSetting = db.DcWhatsAppProviderSettings.FirstOrDefault(x => x.Id == 1);
             if (whatsAppSetting == null)
             {
-                whatsAppSetting = new DcWhatsAppProviderSetting { Id = 1 };
+                whatsAppSetting = new DcWhatsAppProviderSetting();
                 db.DcWhatsAppProviderSettings.Add(whatsAppSetting);
             }
 
