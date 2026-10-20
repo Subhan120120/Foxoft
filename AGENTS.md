@@ -12,6 +12,7 @@ subdirectory.
 - Do not hardcode SQL strings unless necessary.
 - For SQL Server queries, use aliases with `=` syntax.
 - Never run database update migrations (e.g., `dotnet ef database update`, `Update-Database`).
+- Strictly separate `DcUser` and `DcCurrAcc`: they have distinct roles and must never substitute for each other.
 
 ## Windows Forms And DevExpress
 
@@ -99,3 +100,24 @@ Required steps:
 ## Database Migrations
 
 - Never run database update migrations (e.g. `dotnet ef database update`, `Update-Database`, or any command that applies migrations directly to the database).
+
+## Separation of DcUser and DcCurrAcc
+
+`DcUser` and `DcCurrAcc` represent completely distinct domain entities and must never replace or substitute for one another:
+
+- **DcUser (`Main` Database / `mainContext`)**:
+  - Represents system/application users, login credentials, and user profiles.
+  - Primary key is `UserName`.
+  - Used for operator identification, authentication, audit tracking (`CreatedUserName`, `LastUpdatedUserName`), log sender identification (`Sender`), and user permissions.
+  - Resides globally in the `Main` database across companies.
+
+- **DcCurrAcc (`subContext` / Tenant Database)**:
+  - Represents business counterparties and current accounts in commercial/financial transactions.
+  - Includes customers, vendors, store accounts, and financial accounts.
+  - Primary key is `CurrAccCode`.
+  - Resides locally within each company's sub-database.
+
+- **Core Guidelines**:
+  - Never treat a `UserName` as a `CurrAccCode` or vice versa.
+  - Never add foreign key constraints from transaction/log tables (`TrMessageLogs`, etc.) to `DcCurrAcc` for fields that represent an application user (`Sender`, `CreatedUserName`, `LastUpdatedUserName`).
+  - Do not assume that every `DcUser` has a corresponding `DcCurrAcc` record. System users may exist without any counterparty account in the tenant database.
