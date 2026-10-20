@@ -195,6 +195,16 @@ namespace Foxoft
                     gridView1.Columns.Add(gridColumn);
                 }
             }
+            else if (column.FieldName == nameof(TrMessageLog.Sender))
+            {
+                if (gridView1.Columns[nameof(TrMessageLog.SenderDesc)] is null)
+                {
+                    gridColumn.Caption = Resources.Entity_User_UserDesc;
+                    gridColumn.FieldName = nameof(TrMessageLog.SenderDesc);
+                    gridColumn.UnboundDataType = typeof(string);
+                    gridView1.Columns.Add(gridColumn);
+                }
+            }
 
             gridColumn.VisibleIndex = column.VisibleIndex + 1;
         }
@@ -396,6 +406,16 @@ namespace Foxoft
                 {
                     DcCurrAcc currAcc = efMethods.SelectEntityById<DcCurrAcc>(value.ToString());
                     e.Value = currAcc?.CurrAccDesc;
+                }
+            }
+            else if (e.Column.FieldName == nameof(TrMessageLog.SenderDesc) && e.IsGetData)
+            {
+                object value = view.GetRowCellValue(rowInd, nameof(TrMessageLog.Sender));
+
+                if (value is not null)
+                {
+                    DcUser? user = efMethods.SelectMainUser(value.ToString());
+                    e.Value = user?.UserDesc;
                 }
             }
         }

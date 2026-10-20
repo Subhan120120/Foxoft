@@ -12585,14 +12585,7 @@ namespace Foxoft.Migrations
                         .HasForeignKey("CurrAccCode")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcSender")
-                        .WithMany()
-                        .HasForeignKey("Sender")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("DcCurrAcc");
-
-                    b.Navigation("DcSender");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrNotification", b =>

@@ -2854,7 +2854,7 @@ namespace Foxoft
                     ChannelCode = NotificationChannels.WhatsApp,
                     MessageType = dcProcess?.ProcessDesc,
                     Message = message,
-                    Sender = Authorization.CurrAccCode,
+                    Sender = Authorization.UserName,
                     CurrAccCode = trInvoiceHeader?.CurrAccCode,
                     ImageFileName = imageFileName,
                     IsSuccessful = isSuccessful,

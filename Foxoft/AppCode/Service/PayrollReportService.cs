@@ -288,7 +288,7 @@ namespace Foxoft.AppCode.Service
                     ChannelCode = NotificationChannels.WhatsApp,
                     MessageType = "Payroll",
                     Message = message,
-                    Sender = Authorization.CurrAccCode,
+                    Sender = Authorization.UserName,
                     CurrAccCode = currAccCode,
                     ImageFileName = imageFileName,
                     IsSuccessful = isSuccessful,

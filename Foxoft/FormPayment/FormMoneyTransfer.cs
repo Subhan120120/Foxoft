@@ -689,7 +689,7 @@ namespace Foxoft
                     ChannelCode = NotificationChannels.WhatsApp,
                     MessageType = trPaymentHeader?.DcProcess?.ProcessDesc,
                     Message = message,
-                    Sender = Authorization.CurrAccCode,
+                    Sender = Authorization.UserName,
                     CurrAccCode = trPaymentHeader?.CurrAccCode,
                     ImageFileName = imageFileName,
                     IsSuccessful = isSuccessful,

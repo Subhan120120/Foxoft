@@ -158,7 +158,7 @@ namespace Foxoft.AppCode.Service
                     MessageType = outbox.TrNotification.NotificationTypeCode,
                     Message = message,
                     IsSuccessful = true,
-                    Sender = Authorization.CurrAccCode,
+                    Sender = Authorization.UserName,
                     CurrAccCode = outbox.TrNotification.EntityType == NotificationEntityTypes.Customer ? outbox.TrNotification.EntityKey : null,
                     TryCount = outbox.TryCount,
                     LastTryDate = DateTime.Now
@@ -195,7 +195,7 @@ namespace Foxoft.AppCode.Service
                     MessageType = outbox.TrNotification.NotificationTypeCode,
                     Message = message,
                     IsSuccessful = true,
-                    Sender = Authorization.CurrAccCode,
+                    Sender = Authorization.UserName,
                     CurrAccCode = outbox.TrNotification.EntityType == NotificationEntityTypes.Customer ? outbox.TrNotification.EntityKey : null,
                     TryCount = outbox.TryCount,
                     LastTryDate = DateTime.Now
@@ -231,7 +231,7 @@ namespace Foxoft.AppCode.Service
                     Message = message,
                     IsSuccessful = false,
                     LastError = errorMessage,
-                    Sender = Authorization.CurrAccCode,
+                    Sender = Authorization.UserName,
                     CurrAccCode = outbox.TrNotification.EntityType == NotificationEntityTypes.Customer ? outbox.TrNotification.EntityKey : null,
                     TryCount = outbox.TryCount,
                     LastTryDate = DateTime.Now

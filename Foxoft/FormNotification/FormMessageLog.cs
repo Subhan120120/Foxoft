@@ -46,6 +46,9 @@ namespace Foxoft
         {
             Text = Resources.Form_MessageLog;
 
+            colSender.Caption = Resources.Entity_User;
+            colSenderName.Caption = Resources.Entity_User_UserDesc;
+
             lblCardBalance_Title.Text = Resources.Form_MessageLog_Summary_Balance_Title;
             lblCardBalance_Subtitle.Text = Resources.Form_MessageLog_Summary_Balance_Subtitle;
 
@@ -74,9 +77,29 @@ namespace Foxoft
                 dbContext.TrMessageLogs
                     .AsNoTracking()
                     .Include(x => x.DcCurrAcc)
-                    .Include(x => x.DcSender)
                     .OrderByDescending(x => x.CreatedDate)
                     .ToList());
+
+            try
+            {
+                using mainContext mainDb = new();
+                var userDict = mainDb.DcUsers
+                    .AsNoTracking()
+                    .Select(u => new { u.UserName, u.UserDesc })
+                    .ToDictionary(u => u.UserName, u => u.UserDesc, StringComparer.OrdinalIgnoreCase);
+
+                foreach (var item in list)
+                {
+                    if (!string.IsNullOrEmpty(item.Sender) && userDict.TryGetValue(item.Sender, out var userDesc))
+                    {
+                        item.SenderDesc = userDesc;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print($"Load users for TrMessageLog error: {ex.Message}");
+            }
 
             trMessageLogBindingSource.DataSource = list;
 
@@ -250,6 +273,9 @@ namespace Foxoft
 
         private void EnsureSendAgainColumnVisible()
         {
+            colSender.FieldName = nameof(TrMessageLog.Sender);
+            colSenderName.FieldName = nameof(TrMessageLog.SenderDesc);
+
             colSendAgain.Visible = true;
             colSendAgain.VisibleIndex = Math.Max(0, gV_MessageLogList.VisibleColumns.Count - 1);
             colSendAgain.Width = 110;

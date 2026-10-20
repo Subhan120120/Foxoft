@@ -33,7 +33,12 @@ namespace Foxoft.Models
         public bool IsSuccessful { get; set; }
 
         [StringLength(30)]
+        [Display(Name = nameof(Resources.Entity_User), ResourceType = typeof(Resources))]
         public string? Sender { get; set; }
+
+        [NotMapped]
+        [Display(Name = nameof(Resources.Entity_User_UserDesc), ResourceType = typeof(Resources))]
+        public string? SenderDesc { get; set; }
 
         [StringLength(30)]
         [Display(Name = nameof(Resources.Entity_TrMessageLog_CurrAccCode), ResourceType = typeof(Resources))]
@@ -60,8 +65,5 @@ namespace Foxoft.Models
 
         [ForeignKey(nameof(CurrAccCode))]
         public virtual DcCurrAcc? DcCurrAcc { get; set; }
-
-        [ForeignKey(nameof(Sender))]
-        public virtual DcCurrAcc? DcSender { get; set; }
     }
 }

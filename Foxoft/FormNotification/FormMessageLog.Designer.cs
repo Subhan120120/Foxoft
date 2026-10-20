@@ -1,4 +1,4 @@
-﻿using DevExpress.Utils;
+using DevExpress.Utils;
 using DevExpress.Utils.Svg;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -244,8 +244,8 @@ namespace Foxoft
             // 
             // colSenderName
             // 
-            colSenderName.Caption = "Sender First Name";
-            colSenderName.FieldName = "DcSender.CurrAccDesc";
+            colSenderName.Caption = "Sender Name";
+            colSenderName.FieldName = "SenderDesc";
             colSenderName.Name = "colSenderName";
             colSenderName.OptionsColumn.AllowEdit = false;
             colSenderName.Visible = true;

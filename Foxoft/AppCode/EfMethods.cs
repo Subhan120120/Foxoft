@@ -3534,10 +3534,6 @@ END
                 .Where(x => x.CurrAccCode == sourceCurrAccCode)
                 .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
 
-            context.TrMessageLogs
-                .Where(x => x.Sender == sourceCurrAccCode)
-                .ExecuteUpdate(s => s.SetProperty(p => p.Sender, targetCurrAccCode));
-
             // 14.1 TrCurrAccRelations
             context.TrCurrAccRelations
                 .Where(x => (x.CurrAccCode == sourceCurrAccCode && x.RelatedCurrAccCode == targetCurrAccCode) ||

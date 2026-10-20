@@ -46,8 +46,8 @@ namespace Foxoft.AppCode.Service
 
                     log.IsSuccessful = true;
                     log.LastError = null;
-                    log.Sender = Authorization.CurrAccCode ?? log.Sender;
-                    log.LastUpdatedUserName = Authorization.CurrAccCode ?? log.Sender;
+                    log.Sender = Authorization.UserName ?? log.Sender;
+                    log.LastUpdatedUserName = Authorization.UserName ?? log.Sender;
                     log.LastUpdatedDate = DateTime.Now;
 
                     db.TrCredits.Add(WhatsAppCreditService.CreateUsage(log.MessageType ?? string.Empty, log.ReceiverPhoneNumber!));
@@ -73,8 +73,8 @@ namespace Foxoft.AppCode.Service
 
                     log.IsSuccessful = true;
                     log.LastError = null;
-                    log.Sender = Authorization.CurrAccCode ?? log.Sender;
-                    log.LastUpdatedUserName = Authorization.CurrAccCode ?? log.Sender;
+                    log.Sender = Authorization.UserName ?? log.Sender;
+                    log.LastUpdatedUserName = Authorization.UserName ?? log.Sender;
                     log.LastUpdatedDate = DateTime.Now;
 
                     await db.SaveChangesAsync(ct);
@@ -87,7 +87,7 @@ namespace Foxoft.AppCode.Service
             catch (Exception ex)
             {
                 log.LastError = ex.Message;
-                log.LastUpdatedUserName = Authorization.CurrAccCode ?? log.Sender;
+                log.LastUpdatedUserName = Authorization.UserName ?? log.Sender;
                 log.LastUpdatedDate = DateTime.Now;
                 await db.SaveChangesAsync(ct);
                 throw;
