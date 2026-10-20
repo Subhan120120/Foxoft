@@ -1,4 +1,4 @@
-using DevExpress.XtraDataLayout;
+﻿using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.DXErrorProvider;
@@ -147,15 +147,20 @@ namespace Foxoft
             var te = (TextEdit)sender;
             var before = te.Text;
             var after = PhoneNumberFormat.FormatIntlPhone(before);
+
+            if (string.IsNullOrWhiteSpace(after))
+            {
+                te.EditValue = null;
+                dxErrorProvider1.ClearErrors();
+                return;
+            }
+
             te.Text = after;
 
-            if (!string.IsNullOrEmpty(te.Text))
-            {
-                if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(te.Text, dcCurrAcc.CurrAccCode))
-                    dxErrorProvider1.SetError(PhoneNumTextEdit, Resources.Validation_Phone_ExistsInAnotherStore, ErrorType.Warning);
-                else
-                    dxErrorProvider1.ClearErrors();
-            }
+            if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(te.Text, dcCurrAcc.CurrAccCode))
+                dxErrorProvider1.SetError(PhoneNumTextEdit, Resources.Validation_Phone_ExistsInAnotherStore, ErrorType.Warning);
+            else
+                dxErrorProvider1.ClearErrors();
         }
     }
 }

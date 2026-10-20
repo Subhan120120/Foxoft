@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.AppCode;
@@ -91,14 +91,14 @@ namespace Foxoft
                 ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
                 ContactDescTextEdit.Properties.Mask.EditMask = "+000 00 000-00-00";
                 ContactDescTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-                ContactDescTextEdit.Properties.NullValuePrompt = "";
-                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = false;
+                ContactDescTextEdit.Properties.NullValuePrompt = Resources.Common_PhonePrompt;
+                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = true;
                 ContactDescTextEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
 
                 // Default value for new records
                 if (isNew && string.IsNullOrWhiteSpace(dcContactDetail.ContactDesc))
                 {
-                    dcContactDetail.ContactDesc = "+994";
+                    dcContactDetail.ContactDesc = null;
                     ContactDescTextEdit.DataBindings["EditValue"]?.ReadValue();
                 }
             }
@@ -128,8 +128,8 @@ namespace Foxoft
                 ContactDescTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.None;
                 ContactDescTextEdit.Properties.Mask.EditMask = "";
                 ContactDescTextEdit.Properties.Mask.UseMaskAsDisplayFormat = false;
-                ContactDescTextEdit.Properties.NullValuePrompt = "";
-                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = false;
+                ContactDescTextEdit.Properties.NullValuePrompt = Resources.Common_PhonePrompt;
+                ContactDescTextEdit.Properties.NullValuePromptShowForEmptyValue = true;
                 ContactDescTextEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
 
                 // Clear phone/group default value
@@ -151,6 +151,9 @@ namespace Foxoft
             if (dcContactDetail == null)
                 return;
 
+
+            if (dcContactDetail.ContactDesc != null && (dcContactDetail.ContactDesc.Trim() == "+994" || dcContactDetail.ContactDesc.Trim() == "+"))
+                dcContactDetail.ContactDesc = null;
             if (string.IsNullOrWhiteSpace(dcContactDetail.ContactDesc))
             {
                 XtraMessageBox.Show(

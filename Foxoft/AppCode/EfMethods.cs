@@ -1,4 +1,4 @@
-using DevExpress.CodeParser;
+﻿using DevExpress.CodeParser;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
@@ -2728,6 +2728,9 @@ END
 
             phoneNum = new string((phoneNum ?? "")
                 .Where(char.IsDigit).ToArray());
+
+            if (string.IsNullOrWhiteSpace(phoneNum) || phoneNum.Length < 7)
+                return false;
 
             // compare against DB after stripping common symbols (translated to SQL REPLACE)
             return db.DcCurrAccs

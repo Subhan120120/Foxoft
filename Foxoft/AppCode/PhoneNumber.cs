@@ -1,16 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 
 namespace Foxoft
 {
     public static class PhoneNumberFormat
     {
-
         static readonly Regex RxNormalize = new(@"(?!^\+)\D+", RegexOptions.Compiled);
         static readonly Regex RxE164 = new(@"^\+[1-9]\d{6,14}$", RegexOptions.Compiled);
         static readonly Regex RxSplit = new(@"^\+(?<cc>[1-9]\d{0,2})(?<nn>\d{3,14})$", RegexOptions.Compiled);
@@ -19,9 +17,35 @@ namespace Foxoft
         {
             if (string.IsNullOrWhiteSpace(input)) return string.Empty;
 
+            string digits = new(input.Where(char.IsDigit).ToArray());
+
+            // Tək ölkə prefiksi və ya boş daxiletmədirsə, DB/modelə getməməsi üçün boş qaytarırıq
+            if (digits.Length == 0 || digits == "994" || (input.Trim().StartsWith("+") && digits.Length <= 3))
+                return string.Empty;
+
+            // Azərbaycan yerli nömrələri üçün avtomatik beynəlxalq prefiks təyini:
+            // 050XXXXXXX (10 rəqəm) -> 99450XXXXXXX
+            if (digits.Length == 10 && digits.StartsWith("0"))
+            {
+                digits = "994" + digits[1..];
+            }
+            // 50XXXXXXX (9 rəqəm) -> 99450XXXXXXX
+            else if (!input.TrimStart().StartsWith("+") && digits.Length == 9)
+            {
+                digits = "994" + digits;
+            }
+
             // 1) Normalizasiya: yalnız rəqəmlər və başdakı +
-            var s = RxNormalize.Replace(input.Trim(), "");
-            if (!s.StartsWith("+")) s = "+" + s.TrimStart('+'); // məcburi +
+            string s;
+            if (input.TrimStart().StartsWith("+"))
+            {
+                s = RxNormalize.Replace(input.Trim(), "");
+                if (!s.StartsWith("+")) s = "+" + s.TrimStart('+');
+            }
+            else
+            {
+                s = "+" + digits;
+            }
 
             // 2) E.164 yoxla
             if (!RxE164.IsMatch(s)) return s; // etibarsızsa dəyişmirik ki, istifadəçi düzəltsin
@@ -65,8 +89,5 @@ namespace Foxoft
 
             return $"+{cc} {formattedNational}".Trim();
         }
-
-
-
     }
 }

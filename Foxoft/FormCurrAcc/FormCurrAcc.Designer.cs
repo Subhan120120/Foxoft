@@ -348,16 +348,18 @@ namespace Foxoft
             AddressTextEdit.StyleController = dataLayoutControl1;
             AddressTextEdit.TabIndex = 14;
             // 
+            // 
             // PhoneNumTextEdit
             // 
             PhoneNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "PhoneNum", true));
-            PhoneNumTextEdit.EditValue = "+994";
             PhoneNumTextEdit.Location = new Point(145, 189);
             PhoneNumTextEdit.Name = "PhoneNumTextEdit";
             PhoneNumTextEdit.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
             PhoneNumTextEdit.Properties.MaskSettings.Set("allowBlankInput", true);
-            PhoneNumTextEdit.Properties.MaskSettings.Set("mask", "\\+?[1-9]\\d{0,2}([ ]?\\d{2,4}){2,6}");
+            PhoneNumTextEdit.Properties.MaskSettings.Set("mask", "(\\+?[0-9]\\d{0,2}([ ]?\\d{2,4}){2,6})?");
             PhoneNumTextEdit.Properties.MaskSettings.Set("showPlaceholders", false);
+            PhoneNumTextEdit.Properties.NullValuePrompt = Resources.Common_PhonePrompt;
+            PhoneNumTextEdit.Properties.ShowNullValuePrompt = DevExpress.XtraEditors.ShowNullValuePromptOptions.EmptyValue | DevExpress.XtraEditors.ShowNullValuePromptOptions.EditorFocused;
             PhoneNumTextEdit.Size = new Size(154, 20);
             PhoneNumTextEdit.StyleController = dataLayoutControl1;
             PhoneNumTextEdit.TabIndex = 13;

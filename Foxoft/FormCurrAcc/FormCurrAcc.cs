@@ -97,6 +97,12 @@ namespace Foxoft
 
 
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
+
+                //if (string.IsNullOrWhiteSpace(dcCurrAcc.PhoneNum) 
+                //    //|| dcCurrAcc.PhoneNum.Trim() == "+994" 
+                //    //|| dcCurrAcc.PhoneNum.Trim() == "+"
+                //    )
+                //    dcCurrAcc.PhoneNum = null;
                 BBI_MergeCurrAcc.Enabled = efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode);
             }
         }
@@ -124,7 +130,7 @@ namespace Foxoft
             string NewDocNum = efMethods.GetNextDocNum(true, "C", "CurrAccCode", "DcCurrAccs", 4);
             dcCurrAcc.CurrAccCode = NewDocNum;
             dcCurrAcc.LanguageCode = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-            dcCurrAcc.PhoneNum = "+994";
+            dcCurrAcc.PhoneNum = null;
             dcCurrAcc.CreatedUserName = Authorization.CurrAccCode;
             dcCurrAcc.LastUpdatedUserName = Authorization.CurrAccCode;
 
@@ -147,6 +153,12 @@ namespace Foxoft
             if (dataLayoutControl1.IsValid(dxErrorProvider1, out List<string> errorList))
             {
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
+
+                //if (string.IsNullOrWhiteSpace(dcCurrAcc.PhoneNum) 
+                //    //|| dcCurrAcc.PhoneNum.Trim() == "+994" 
+                //    //|| dcCurrAcc.PhoneNum.Trim() == "+"
+                //    )
+                //    dcCurrAcc.PhoneNum = null;
 
                 bool isNew = !efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode);
                 if (isNew)
@@ -400,15 +412,20 @@ namespace Foxoft
             var te = (TextEdit)sender;
             var before = te.Text;
             var after = PhoneNumberFormat.FormatIntlPhone(before);
+
+            if (string.IsNullOrWhiteSpace(after))
+            {
+                te.EditValue = null;
+                dxErrorProvider1.ClearErrors();
+                return;
+            }
+
             te.Text = after;
 
-            if (!string.IsNullOrEmpty(te.Text))
-            {
-                if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(te.Text, dcCurrAcc.CurrAccCode))
-                    dxErrorProvider1.SetError(PhoneNumTextEdit, Resources.Validation_Phone_ExistsInAnotherCurrAcc, ErrorType.Information);
-                else
-                    dxErrorProvider1.ClearErrors();
-            }
+            if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(te.Text, dcCurrAcc.CurrAccCode))
+                dxErrorProvider1.SetError(PhoneNumTextEdit, Resources.Validation_Phone_ExistsInAnotherCurrAcc, ErrorType.Information);
+            else
+                dxErrorProvider1.ClearErrors();
         }
 
         private void PhoneNumTextEdit_EditValueChanged(object sender, EventArgs e)
