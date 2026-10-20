@@ -279,9 +279,6 @@
   <data name="ERP_ACE_Parameters" xml:space="preserve">
     <value>Parametr</value>
   </data>
-  <data name="ERP_ACE_Users" xml:space="preserve">
-    <value>İstifadəçilər</value>
-  </data>
   <data name="ERP_ACE_StoreList" xml:space="preserve">
     <value>Mağazalar</value>
   </data>
@@ -308,9 +305,6 @@
   </data>
   <data name="Entity_AppSetting_AutoPrint" xml:space="preserve">
     <value>Avtomatik Çap</value>
-  </data>
-  <data name="Entity_AppSetting_PrinterName" xml:space="preserve">
-    <value>Printer Adı</value>
   </data>
   <data name="Entity_AppSetting_UsePriceList" xml:space="preserve">
     <value>Qiymət Siyahısından istifadə et</value>
@@ -551,12 +545,6 @@
   </data>
   <data name="Entity_CurrAcc_IsDefault" xml:space="preserve">
     <value>Varsayılan Müştəri</value>
-  </data>
-  <data name="Entity_TrCrmActivity" xml:space="preserve">
-    <value>CRM Aktivliyi</value>
-  </data>
-  <data name="Entity_TrCrmActivity_ActivityId" xml:space="preserve">
-    <value>Aktivlik Id</value>
   </data>
   <data name="Entity_TrCrmActivity_ActivityCode" xml:space="preserve">
     <value>Aktivlik Kodu</value>
@@ -1014,15 +1002,6 @@
   <data name="Entity_Product_UseInternet" xml:space="preserve">
     <value>İnternetdə İstifadə Et</value>
   </data>
-  <data name="Entity_Product_Image" xml:space="preserve">
-    <value>Şəkil</value>
-  </data>
-  <data name="Entity_Product_BalanceWarning" xml:space="preserve">
-    <value>Qalıq Xəbərdarlıq Səviyyəsi</value>
-  </data>
-  <data name="Entity_Product_Balance" xml:space="preserve">
-    <value>Qalıq</value>
-  </data>
   <data name="Entity_ProductScale" xml:space="preserve">
     <value>Tərəzi Məhsulu</value>
   </data>
@@ -1061,9 +1040,6 @@
   </data>
   <data name="Entity_Report_Query" xml:space="preserve">
     <value>Hesabat Sorğusu</value>
-  </data>
-  <data name="Entity_Report_Type" xml:space="preserve">
-    <value>Hesabat Tipi</value>
   </data>
   <data name="Entity_Report_Layout" xml:space="preserve">
     <value>Hesabat Dizaynı</value>
@@ -1608,9 +1584,6 @@
   <data name="Entity_StoreSetting_ImageFolder" xml:space="preserve">
     <value>Şəkil Qovluğu</value>
   </data>
-  <data name="Entity_StoreSetting_PrinterName" xml:space="preserve">
-    <value>Printer Adı</value>
-  </data>
   <data name="Entity_StoreSetting_SalesmanContinuity" xml:space="preserve">
     <value>Satıcı Sətiri Kopyala</value>
   </data>
@@ -1788,9 +1761,6 @@
   <data name="Entity_InvoiceHeader_CustomsDocumentNumber" xml:space="preserve">
     <value>Fərdi Sənəd Nömrəsi</value>
   </data>
-  <data name="Entity_InvoiceHeader_PosTerminalId" xml:space="preserve">
-    <value>POS Terminal</value>
-  </data>
   <data name="Entity_InvoiceHeader_IsSuspended" xml:space="preserve">
     <value>Asqıdadır</value>
   </data>
@@ -1932,17 +1902,11 @@
   <data name="Entity_Session_Id" xml:space="preserve">
     <value>Id</value>
   </data>
-  <data name="Entity_Session_CurrAccCode" xml:space="preserve">
-    <value>Cari Hesab Kodu</value>
-  </data>
   <data name="Entity_Session_PID" xml:space="preserve">
     <value>PID</value>
   </data>
   <data name="Entity_Session_IsBlocked" xml:space="preserve">
     <value>Bloklanıb</value>
-  </data>
-  <data name="Validation_Range" xml:space="preserve">
-    <value>{0} {1} ilə {2} arasında olmalıdır</value>
   </data>
   <data name="Entity_Product_Prices" xml:space="preserve">
     <value>Qiymətlər</value>
@@ -1977,9 +1941,6 @@
   <data name="Common_Site" xml:space="preserve">
     <value>Sayt</value>
   </data>
-  <data name="Form_AppSetting_Caption" xml:space="preserve">
-    <value>Tətbiq Ayarları</value>
-  </data>
   <data name="Form_AppSetting_Group_General" xml:space="preserve">
     <value>Ümumi</value>
   </data>
@@ -2006,12 +1967,6 @@
   </data>
   <data name="Form_AppSetting_WhatsAppProvider_API" xml:space="preserve">
     <value>API</value>
-  </data>
-  <data name="Entity_AppSetting_ClearMemory" xml:space="preserve">
-    <value>RAM-ı təmizlə</value>
-  </data>
-  <data name="Entity_AppSetting_OptimizeDatabaseIndexes_Button" xml:space="preserve">
-    <value>İndeksləri optimallaşdır</value>
   </data>
   <data name="Common_Ok" xml:space="preserve">
     <value>Təsdiq et</value>
@@ -2049,12 +2004,6 @@
   <data name="Common_ExportToExcel" xml:space="preserve">
     <value>Excelə göndər</value>
   </data>
-  <data name="Common_ImportFromExcel" xml:space="preserve">
-    <value>Exceldən qəbul et</value>
-  </data>
-  <data name="Common_Filter_ExportSuccess" xml:space="preserve">
-    <value>Filter uğurla Excel-ə ixrac edildi.</value>
-  </data>
   <data name="Common_Filter_ImportSuccess" xml:space="preserve">
     <value>Filter uğurla Excel-dən idxal edildi.</value>
   </data>
@@ -2063,9 +2012,6 @@
   </data>
   <data name="Common_Filter_NoDataToExport" xml:space="preserve">
     <value>Filter boşdur. İxrac ediləcək məlumat yoxdur.</value>
-  </data>
-  <data name="Common_Filter_ExcelDialogTitle" xml:space="preserve">
-    <value>Yalnız ilk sütünda olan məlumatlar daxil edilir.</value>
   </data>
   <data name="Common_Filter_ExcelDialogFilter" xml:space="preserve">
     <value>Excel Faylları (*.xls;*.xlsx)|*.xls;*.xlsx|Bütün fayllar (*.*)|*.*</value>
@@ -2084,9 +2030,6 @@
   </data>
   <data name="Common_Filter_Node_Tooltip" xml:space="preserve">
     <value>Cari şərtin dəyərlərini Excel ilə idarə et (idxal / ixrac)</value>
-  </data>
-  <data name="Common_Filter_Node_ExportSuccess" xml:space="preserve">
-    <value>Cari şərtin dəyərləri uğurla Excel-ə ixrac edildi.</value>
   </data>
   <data name="Common_Filter_Node_ImportSuccess" xml:space="preserve">
     <value>Cari şərtin dəyərləri uğurla Excel-dən idxal edildi.</value>
@@ -2165,50 +2108,17 @@
   <data name="Common_Query" xml:space="preserve">
     <value>Sorğu</value>
   </data>
-  <data name="Form_Change_Caption" xml:space="preserve">
-    <value>Pul qalığı</value>
-  </data>
-  <data name="Form_Change_Label_Cash" xml:space="preserve">
-    <value>Nağd ödəmə</value>
-  </data>
-  <data name="Form_Change_Label_Change" xml:space="preserve">
-    <value>Pul qalığı</value>
-  </data>
   <data name="Common_Clear" xml:space="preserve">
     <value>Təmizlə</value>
   </data>
   <data name="Common_Select" xml:space="preserve">
     <value>Seç</value>
   </data>
-  <data name="Form_ClaimCategoryList_Caption" xml:space="preserve">
-    <value>Yetki Kateqoriyaları</value>
-  </data>
-  <data name="Form_ClaimCategoryList_Button_Claims" xml:space="preserve">
-    <value>Yetkilər</value>
-  </data>
-  <data name="Common_ExpandAll" xml:space="preserve">
-    <value>Hamısını Aç</value>
-  </data>
-  <data name="Common_CollapseAll" xml:space="preserve">
-    <value>Hamısını Bağla</value>
-  </data>
-  <data name="Common_Role" xml:space="preserve">
-    <value>Rol</value>
-  </data>
-  <data name="Form_ClaimCategoryList_Summary" xml:space="preserve">
-    <value>Cəmi yetki: {0} | Seçilmiş: {1}</value>
-  </data>
   <data name="Form_ClaimCategoryList_RoleRequired" xml:space="preserve">
     <value>Zəhmət olmasa, rol seçin.</value>
   </data>
   <data name="Form_ClaimCategoryList_UnsavedChanges" xml:space="preserve">
     <value>Yadda saxlanılmamış dəyişikliklər var. Yadda saxlamaq istəyirsiniz?</value>
-  </data>
-  <data name="Form_ClaimCategoryList_ColCategory" xml:space="preserve">
-    <value>Kateqoriya / Yetki Kodu</value>
-  </data>
-  <data name="Form_ClaimCategoryList_ColDescription" xml:space="preserve">
-    <value>Yetki Açıqlaması</value>
   </data>
   <data name="Form_Common_Exists" xml:space="preserve">
     <value>Bu kodla data artıq mövcuddur.</value>
@@ -2249,9 +2159,6 @@
   </data>
   <data name="Form_Connection_CreateDatabase" xml:space="preserve">
     <value>Databaza yarat</value>
-  </data>
-  <data name="Form_Connection_Save" xml:space="preserve">
-    <value>Yadda saxla</value>
   </data>
   <data name="Form_Connection_Result_Success" xml:space="preserve">
     <value>Bağlantı uğurludur!</value>
@@ -2382,9 +2289,6 @@
   <data name="Common_File_ExcelFilter" xml:space="preserve">
     <value>Excel Faylı|*.xlsx</value>
   </data>
-  <data name="Form_CurrAccProfile_Caption" xml:space="preserve">
-    <value>İstifadəçi Yetkiləri</value>
-  </data>
   <data name="Form_CurrAccPermission_Caption" xml:space="preserve">
     <value>İstifadəçi Yetkiləri</value>
   </data>
@@ -2418,12 +2322,6 @@
   <data name="Form_CurrAccProfile_SaveRoles" xml:space="preserve">
     <value>Rolları Saxla</value>
   </data>
-  <data name="Form_CurrAccProfile_SavePassword" xml:space="preserve">
-    <value>Şifrəni Saxla</value>
-  </data>
-  <data name="Form_CurrAccProfile_PasswordChangedSuccessfully" xml:space="preserve">
-    <value>Şifrə uğurla dəyişdirildi.</value>
-  </data>
   <data name="Form_CurrAccProfile_RolesSavedSuccessfully" xml:space="preserve">
     <value>Rollar uğurla saxlanıldı.</value>
   </data>
@@ -2447,9 +2345,6 @@
   </data>
   <data name="Form_CurrAccProfile_NoRoleSelected" xml:space="preserve">
     <value>Heç bir rol seçilməyib.</value>
-  </data>
-  <data name="Form_CurrAccProfile_PasswordRequired" xml:space="preserve">
-    <value>Zəhmət olmasa yeni şifrəni daxil edin.</value>
   </data>
   <data name="Form_CurrAccProfile_NewRole" xml:space="preserve">
     <value>Yeni Rol</value>
@@ -2569,9 +2464,6 @@
   <data name="Common_Design" xml:space="preserve">
     <value>Dizayn</value>
   </data>
-  <data name="Common_PrintSending" xml:space="preserve">
-    <value>Çap göndərilir...</value>
-  </data>
   <data name="Common_PrintSent" xml:space="preserve">
     <value>Çap uğurla göndərildi.</value>
   </data>
@@ -2584,12 +2476,6 @@
   <data name="Form_HierarchyFeatureType_Caption" xml:space="preserve">
     <value>İyerarxiya Özəllik Tipləri</value>
   </data>
-  <data name="Form_HierarchyFeatureType_MakeGlobal" xml:space="preserve">
-    <value>Qlobala Sal</value>
-  </data>
-  <data name="Form_HierarchyFeatureType_RemoveGlobal" xml:space="preserve">
-    <value>Qlobaldan Çıxar</value>
-  </data>
   <data name="Form_HierarchyFeatureType_GlobalFeatures" xml:space="preserve">
     <value>Qlobal Özəlliklər (Bütün Kateqoriyalar)</value>
   </data>
@@ -2597,15 +2483,6 @@
     <value>Qlobal</value>
   </data>
   <data name="Form_HierarchyFeatureType_IsAssigned" xml:space="preserve">
-    <value>Seçilib</value>
-  </data>
-  <data name="Form_HierarchyFeatureType_Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="Form_HierarchyFeatureType_StatusGlobal" xml:space="preserve">
-    <value>Qlobal (Bütün kateqoriyalar)</value>
-  </data>
-  <data name="Form_HierarchyFeatureType_StatusAssigned" xml:space="preserve">
     <value>Seçilib</value>
   </data>
   <data name="Form_HierarchyFeatureType_StatusNotAssigned" xml:space="preserve">
@@ -2616,9 +2493,6 @@
   </data>
   <data name="Form_HierarchyFeatureType_ConfirmSaveChanges" xml:space="preserve">
     <value>Yadda saxlanılmamış dəyişikliklər var. Yadda saxlanılsın?</value>
-  </data>
-  <data name="Form_HierarchyFeatureType_SelectHierarchyToAssign" xml:space="preserve">
-    <value>Qlobaldan çıxarılan özəllik tipinin təyin ediləcəyi kateqoriyanı seçin.</value>
   </data>
   <data name="Form_HierarchyFeatureType_Scope" xml:space="preserve">
     <value>Tətbiq Statusu</value>
@@ -2665,17 +2539,11 @@
   <data name="Form_HierarchyList_Input_Title" xml:space="preserve">
     <value>Yeni İyerarxiya</value>
   </data>
-  <data name="Form_HierarchyList_Input_EditTitle" xml:space="preserve">
-    <value>İyerarxiyanı dəyiş</value>
-  </data>
   <data name="Form_Image_Caption" xml:space="preserve">
     <value>Şəkillər</value>
   </data>
   <data name="Form_Image_RibbonPage_Main" xml:space="preserve">
     <value>Şəkillər</value>
-  </data>
-  <data name="Form_Image_GalleryItemCaption" xml:space="preserve">
-    <value>Şəkil</value>
   </data>
   <data name="Form_Image_OpenDialogTitle" xml:space="preserve">
     <value>Foxoft üçün şəkil seçin.</value>
@@ -2719,17 +2587,11 @@
   <data name="Form_Image_NoImageInClipboard" xml:space="preserve">
     <value>Mübadilə buferində şəkil tapılmadı.</value>
   </data>
-  <data name="Form_Image_ImagesPasted" xml:space="preserve">
-    <value>{0} şəkil əlavə edildi.</value>
-  </data>
   <data name="Form_Image_InvoiceTitle" xml:space="preserve">
     <value>Qaimə şəkilləri</value>
   </data>
   <data name="Form_Image_DocNum" xml:space="preserve">
     <value>Qaimə №: {0}</value>
-  </data>
-  <data name="Form_Image_RotateSuccess" xml:space="preserve">
-    <value>Şəkil fırladıldı.</value>
   </data>
   <data name="Form_Image_RotateError" xml:space="preserve">
     <value>Şəkli fırlatmaq mümkün olmadı: {0}</value>
@@ -2740,17 +2602,11 @@
   <data name="Common_File_All" xml:space="preserve">
     <value>Bütün fayllar (*.*)|*.*</value>
   </data>
-  <data name="Form_Input_Caption" xml:space="preserve">
-    <value>Miqdar Daxil Edin</value>
-  </data>
   <data name="Form_Input_Label_Quantity" xml:space="preserve">
     <value>Miqdar</value>
   </data>
   <data name="Common_Validation_InputRange" xml:space="preserve">
     <value>Dəyər 0 ilə {0} arasında olmalıdır</value>
-  </data>
-  <data name="Form_InstallmentSale_Caption" xml:space="preserve">
-    <value>Taksit Satışları</value>
   </data>
   <data name="Form_InstallmentSale_RibbonPage_Main" xml:space="preserve">
     <value>Taksit</value>
@@ -2766,9 +2622,6 @@
   </data>
   <data name="Form_InstallmentSale_RibbonGroup_DateRange" xml:space="preserve">
     <value>Tarix Aralığı</value>
-  </data>
-  <data name="Form_InstallmentSale_RibbonGroup_Query" xml:space="preserve">
-    <value>Sorğu</value>
   </data>
   <data name="Form_InstallmentSale_Button_GridOptions" xml:space="preserve">
     <value>Dizayn Düzəltmə</value>
@@ -2848,9 +2701,6 @@
   <data name="FormInvoice_FastPrint" xml:space="preserve">
     <value>Sürətli Çap Et</value>
   </data>
-  <data name="FormInvoice_PrintSettingSave" xml:space="preserve">
-    <value>Yadda Saxla</value>
-  </data>
   <data name="FormInvoice_Test1" xml:space="preserve">
     <value>test</value>
   </data>
@@ -2914,32 +2764,11 @@
   <data name="FormInvoice_RibbonGroup_Report" xml:space="preserve">
     <value>Hesabat</value>
   </data>
-  <data name="FormInvoice_RibbonGroup_PrintSettings" xml:space="preserve">
-    <value>Print</value>
-  </data>
   <data name="FormInvoice_RibbonGroup_Test" xml:space="preserve">
     <value>Test</value>
   </data>
   <data name="FormInvoice_RibbonGroup_Show" xml:space="preserve">
     <value>Show</value>
-  </data>
-  <data name="FormInvoice_PaidCashless" xml:space="preserve">
-    <value>Nağdsız: </value>
-  </data>
-  <data name="FormInvoice_PaidCash" xml:space="preserve">
-    <value>Nağd: </value>
-  </data>
-  <data name="FormInvoice_PaidTotal" xml:space="preserve">
-    <value>Ödənilib: </value>
-  </data>
-  <data name="FormInvoice_InstallmentSum" xml:space="preserve">
-    <value>Taksit: </value>
-  </data>
-  <data name="FormInvoice_InstallmentCommissionSum" xml:space="preserve">
-    <value>Komissiya: </value>
-  </data>
-  <data name="FormInvoice_InstallmentTotalSum" xml:space="preserve">
-    <value>Toplam Taksit: </value>
   </data>
   <data name="FormInvoice_Group_InstallmentInfo" xml:space="preserve">
     <value>Taksit</value>
@@ -2953,14 +2782,8 @@
   <data name="FormInvoice_InstallmentGuarantors" xml:space="preserve">
     <value>Zaminlər</value>
   </data>
-  <data name="FormInvoice_InstallmentCommission" xml:space="preserve">
-    <value>Komissiya</value>
-  </data>
   <data name="FormInvoice_InstallmentGuarantor_CurrAccCode" xml:space="preserve">
     <value>Cari Hesab Kodu</value>
-  </data>
-  <data name="Common_Printer" xml:space="preserve">
-    <value>Printer</value>
   </data>
   <data name="Common_Confirm" xml:space="preserve">
     <value>Təsdiqlə</value>
@@ -3049,10 +2872,6 @@
   <data name="Form_Invoice_DeletePaymentsQuestion" xml:space="preserve">
     <value>Ödənişləri silmək istəyirsiniz?</value>
   </data>
-  <data name="Form_Invoice_PaymentIsZeroReturnToInvoice" xml:space="preserve">
-    <value>Ödəmə 0-a bərabərdir!
-Fakturaya qayıtmaq istəyirsiniz?</value>
-  </data>
   <data name="Form_Invoice_RowDeleteQuestion" xml:space="preserve">
     <value>Sətir silinsin?</value>
   </data>
@@ -3086,15 +2905,6 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_InvoiceHeaderList_Caption" xml:space="preserve">
     <value>Qaimə Siyahısı</value>
-  </data>
-  <data name="Form_InvoiceHeaderList_InvoiceIsOpen" xml:space="preserve">
-    <value>Qaimə açıqdır.</value>
-  </data>
-  <data name="Form_InvoiceLineList_Caption" xml:space="preserve">
-    <value>Qaimə Sətirləri</value>
-  </data>
-  <data name="Form_InvoiceLineList_Column_ProductCode" xml:space="preserve">
-    <value>Məhsul</value>
   </data>
   <data name="Form_InvoiceLineList_Column_ProductDesc" xml:space="preserve">
     <value>Məhsul Adı</value>
@@ -3138,9 +2948,6 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_Login_ConnectionString" xml:space="preserve">
     <value>Əlaqə sətri</value>
   </data>
-  <data name="Form_Login_LicenseInactive" xml:space="preserve">
-    <value>Lisenziya aktiv deyil!</value>
-  </data>
   <data name="Form_Login_LocalCurrencyNotSet" xml:space="preserve">
     <value>Yerli pul vahidi təyin olunmayıb</value>
   </data>
@@ -3149,12 +2956,6 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_Login_TerminalStoreMismatch" xml:space="preserve">
     <value>Seçilmiş terminal istifadəçiyə təyin edilmiş mağazaya aid deyil.</value>
-  </data>
-  <data name="Form_Login_LicenseDateInvalid" xml:space="preserve">
-    <value>Lisenziya tarixi etibarsızdır: {0}</value>
-  </data>
-  <data name="Form_Login_LicenseInactiveDb" xml:space="preserve">
-    <value>{0} üçün lisenziya aktiv deyil!</value>
   </data>
   <data name="Form_Login_GetKey" xml:space="preserve">
     <value>Açarı götür</value>
@@ -3282,9 +3083,6 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_MoneyTransfer_NumberNotDefined" xml:space="preserve">
     <value>Nömrə qeyd olunmayıb.</value>
   </data>
-  <data name="Form_Payment_Caption" xml:space="preserve">
-    <value>Ödəmə</value>
-  </data>
   <data name="Form_Payment_Group_Cash" xml:space="preserve">
     <value>Nağd</value>
   </data>
@@ -3318,14 +3116,8 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_Payment_Bonus" xml:space="preserve">
     <value>Bonus</value>
   </data>
-  <data name="Form_Payment_Puan" xml:space="preserve">
-    <value>Puan</value>
-  </data>
   <data name="Form_Payment_InputPad" xml:space="preserve">
     <value>Giriş Paneli</value>
-  </data>
-  <data name="Form_Payment_Button_Ok" xml:space="preserve">
-    <value>Ödə</value>
   </data>
   <data name="Form_Payment_Date" xml:space="preserve">
     <value>Tarix</value>
@@ -3335,15 +3127,6 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_Payment_CurrAccNotSelected" xml:space="preserve">
     <value>Cari Hesab Seçilməyib</value>
-  </data>
-  <data name="Form_Payment_CurrAccIdentityMissing" xml:space="preserve">
-    <value>Cari Hesabın Şəxsiyyət Vəsiqəsinin Nömrəsi yoxdur</value>
-  </data>
-  <data name="Form_Payment_CurrAccPhoneMissing" xml:space="preserve">
-    <value>Cari Hesabın Telefon Nömrəsi yoxdur</value>
-  </data>
-  <data name="Form_PaymentDetail_Caption" xml:space="preserve">
-    <value>Ödəmə</value>
   </data>
   <data name="Form_PaymentDetail_RibbonPage_Main" xml:space="preserve">
     <value>Ödəmə</value>
@@ -3591,9 +3374,6 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_PriceListHeaderList_Caption" xml:space="preserve">
     <value>Qiymət Siyahıları</value>
-  </data>
-  <data name="Form_Product_Caption" xml:space="preserve">
-    <value>Məhsul</value>
   </data>
   <data name="Form_Product_Button_ChangeProductCode" xml:space="preserve">
     <value>Məhsul kodunu dəyiş</value>
@@ -3846,9 +3626,6 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   </data>
   <data name="Form_ReportFilter_RibbonGroup_Excel" xml:space="preserve">
     <value>Excel</value>
-  </data>
-  <data name="Form_ReportGrid_Caption" xml:space="preserve">
-    <value>Hesabat cədvəli</value>
   </data>
   <data name="Form_ReportGrid_Column_Image" xml:space="preserve">
     <value>Şəkil</value>
@@ -4174,9 +3951,6 @@ Fakturaya qayıtmaq istəyirsiniz?</value>
   <data name="Form_Store_SelectImageFolder" xml:space="preserve">
     <value>Şəkil qovluğunu seçin</value>
   </data>
-  <data name="Form_Store_PrinterName" xml:space="preserve">
-    <value>Printer Adı</value>
-  </data>
   <data name="Form_Store_DefaultUnitOfMeasure" xml:space="preserve">
     <value>Standart ölçü vahidi</value>
   </data>
@@ -4253,9 +4027,6 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_RetailSale_NoPermission" xml:space="preserve">
     <value>Yetkiniz Yoxdur</value>
   </data>
-  <data name="Form_RetailSale_PaymentZero" xml:space="preserve">
-    <value>Ödəmə 0a bərabərdir</value>
-  </data>
   <data name="Form_RetailSale_SelectCustomer" xml:space="preserve">
     <value>Müştəri seçin</value>
   </data>
@@ -4282,9 +4053,6 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   </data>
   <data name="Form_RetailSale_Group_Customer" xml:space="preserve">
     <value>Müştəri</value>
-  </data>
-  <data name="Form_RetailSale_Button_Product" xml:space="preserve">
-    <value>Məhsul</value>
   </data>
   <data name="Form_RetailSale_Button_LineDiscount" xml:space="preserve">
     <value>Sətir Endirimi</value>
@@ -4349,9 +4117,6 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_RetailSale_Label_PrintCount" xml:space="preserve">
     <value>Çap Sayı</value>
   </data>
-  <data name="Form_Return_Group_ReturnInvoiceLine" xml:space="preserve">
-    <value>Geri Qaytarma</value>
-  </data>
   <data name="Form_Return_Group_InvoiceHeader" xml:space="preserve">
     <value>Faktura</value>
   </data>
@@ -4370,21 +4135,12 @@ Silmək üçün çeki ləğv etməlisiniz!</value>
   <data name="Form_Return_Message_NoQtyToReturn" xml:space="preserve">
     <value>Geri qaytarıla biləcək miqdar yoxdur.</value>
   </data>
-  <data name="Form_Return_Message_OpenInvoiceQuestion" xml:space="preserve">
-    <value>Qaiməni açmaq istəyirsiniz?</value>
-  </data>
   <data name="Form_Return_Message_ConfirmOptions" xml:space="preserve">
     <value>Qaytarış təsdiqlənsin?
 
 Bəli - Qaiməni aç
 Xeyr - Qaiməni açmadan yekunlaşdır
 İmtina - Geri qaytarmanı yekunlaşdırma</value>
-  </data>
-  <data name="Form_Return_Caption_OpenInvoice" xml:space="preserve">
-    <value>Qaiməni Aç</value>
-  </data>
-  <data name="Form_Return_Message_PaymentIsZero" xml:space="preserve">
-    <value>Ödəmə 0-a bərabərdir.</value>
   </data>
   <data name="Form_Return_Message_InvoiceNotFound" xml:space="preserve">
     <value>Belə bir sənəd yoxdur.</value>
@@ -4419,9 +4175,6 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   <data name="Form_Return_Message_CartEmpty" xml:space="preserve">
     <value>Qaytarılacaq məhsul seçilməyib.</value>
   </data>
-  <data name="Form_Return_Message_Success" xml:space="preserve">
-    <value>Qaytarma sənədi uğurla yaradıldı: {0}</value>
-  </data>
   <data name="Form_Return_Label_SearchBarcode" xml:space="preserve">
     <value>Barkod / Məhsul</value>
   </data>
@@ -4434,20 +4187,11 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   <data name="Form_Return_Label_TotalAmount" xml:space="preserve">
     <value>Faktura Məbləği</value>
   </data>
-  <data name="Form_Return_Tooltip_ReturnLine" xml:space="preserve">
-    <value>Qaytarılanlara əlavə et</value>
-  </data>
-  <data name="Form_Return_Tooltip_RemoveLine" xml:space="preserve">
-    <value>Qaytarılanlardan çıxart</value>
-  </data>
   <data name="Form_Return_Message_QtyExceedsRemaining" xml:space="preserve">
     <value>Qaytarılan say ({0}) qalan saydan ({1}) çox ola bilməz.</value>
   </data>
   <data name="Form_Return_Message_InvalidQty" xml:space="preserve">
     <value>Miqdar 0-dan böyük olmalıdır.</value>
-  </data>
-  <data name="Form_Return_TotalReturnAmount" xml:space="preserve">
-    <value>Cəmi Qaytarılan Məbləğ</value>
   </data>
   <data name="Form_WaitForm_Title" xml:space="preserve">
     <value>Yüklənir</value>
@@ -4476,9 +4220,6 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   <data name="Form_ERP_ACE_InventoryTransferReturnCustom" xml:space="preserve">
     <value>Anbarlar Arası Transfer Qaytarılması</value>
   </data>
-  <data name="Form_ERP_Count" xml:space="preserve">
-    <value>Sayım</value>
-  </data>
   <data name="Form_ERP_ACE_InvertoryCount" xml:space="preserve">
     <value>Məhsul Sayımı</value>
   </data>
@@ -4502,9 +4243,6 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   </data>
   <data name="Form_RetailSale_LCG_Payment" xml:space="preserve">
     <value>Ödəmə</value>
-  </data>
-  <data name="UC_Return_Col_Return" xml:space="preserve">
-    <value>Qaytar</value>
   </data>
   <data name="Entity_BarcodeOperationHeader_Name" xml:space="preserve">
     <value>Ad</value>
@@ -4536,17 +4274,11 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   <data name="Form_BarcodeOperations_DeleteConfirm_Delete" xml:space="preserve">
     <value>{0} nömrəli sənəd silinsin?\nBütün sətirlər silinəcək.</value>
   </data>
-  <data name="Form_BarcodeOperations_DeleteError" xml:space="preserve">
-    <value>Silmə xətası</value>
-  </data>
   <data name="Form_BarcodeOperations_SaveError" xml:space="preserve">
     <value>Saxlama xətası</value>
   </data>
   <data name="Form_BarcodeOperations_ReportNotFound" xml:space="preserve">
     <value>Hesabat sorğusu bazada tapılmadı</value>
-  </data>
-  <data name="Form_BarcodeOperations_ExportFileName" xml:space="preserve">
-    <value>Barkod Əməliyyatları</value>
   </data>
   <data name="Form_BarcodeOperations_Import_ProductNotFound" xml:space="preserve">
     <value>Bu kodda məhsul tapılmadı</value>
@@ -4592,9 +4324,6 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   </data>
   <data name="Entity_DcWhatsAppProviderSetting_ServerUrl" xml:space="preserve">
     <value>Server URL</value>
-  </data>
-  <data name="Validation_Range_Max" xml:space="preserve">
-    <value>{0} {1}dan kiçik olmalıdır</value>
   </data>
   <data name="Form_Invoice_NoCashReg" xml:space="preserve">
     <value>Belə bir kassa yoxdur.</value>
@@ -4653,9 +4382,6 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   <data name="Entity_Shortcut_ButtonDescription" xml:space="preserve">
     <value>Təsvir</value>
   </data>
-  <data name="FormShortcut_Title" xml:space="preserve">
-    <value>Qısayol Tənzimləmələri</value>
-  </data>
   <data name="FormShortcut_Save" xml:space="preserve">
     <value>Saxla</value>
   </data>
@@ -4664,9 +4390,6 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   </data>
   <data name="FormShortcut_DuplicateWarning" xml:space="preserve">
     <value>Bu qısayol artıq başqa düyməyə təyin olunub!</value>
-  </data>
-  <data name="Form_Login_Error" xml:space="preserve">
-    <value>Xəta: {0}</value>
   </data>
   <data name="Common_Error" xml:space="preserve">
     <value>Xəta</value>
@@ -4704,12 +4427,6 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   <data name="Campaign_ConfirmDelete" xml:space="preserve">
     <value>Seçilmiş kampaniya silinsin?</value>
   </data>
-  <data name="Invoice_PaymentZeroReturn" xml:space="preserve">
-    <value>Ödəmə 0-a bərabərdir! Fakturaya qayıtmaq istəyirsiz?</value>
-  </data>
-  <data name="Invoice_NoValueFoundForCodes" xml:space="preserve">
-    <value>Aşağıdakı kodlar üzrə dəyər tapılmadı.</value>
-  </data>
   <data name="Common_OpenConfirmation" xml:space="preserve">
     <value>Açmaq istəyirsiz?</value>
   </data>
@@ -4728,14 +4445,8 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   <data name="Campaign_NoCampaignApplied" xml:space="preserve">
     <value>Heç bir kampaniya tətbiq edilməyib.</value>
   </data>
-  <data name="Campaign_DiscountRemoved" xml:space="preserve">
-    <value>Kampaniya endirimi silindi.</value>
-  </data>
   <data name="Campaign_NoAmountToPay" xml:space="preserve">
     <value>Ödəniləcək məbləğ qalmayıb.</value>
-  </data>
-  <data name="Campaign_InvalidPassword" xml:space="preserve">
-    <value>Şifrə yanlışdır! Kampaniya tətbiq edilmədi.</value>
   </data>
   <data name="Campaign_NotApplied" xml:space="preserve">
     <value>Kampaniya tətbiq edilmədi.</value>
@@ -4943,29 +4654,11 @@ Tətbiq edilsin?</value>
   <data name="Form_InstallmentSale_Col_OverDueDays" xml:space="preserve">
     <value>Gecikən Günlər</value>
   </data>
-  <data name="Form_WhatsAppMessageLog" xml:space="preserve">
-    <value>WhatsApp Logu</value>
-  </data>
-  <data name="Entity_TrWhatsAppMessageLog_CurrAccCode" xml:space="preserve">
-    <value>Cari Hesab</value>
-  </data>
   <data name="Common_Status_Continuing" xml:space="preserve">
     <value>Dəvam edir</value>
   </data>
   <data name="Common_Status_Completed" xml:space="preserve">
     <value>Tamamlanıb</value>
-  </data>
-  <data name="Form_CreditList_Filter_Day" xml:space="preserve">
-    <value>Son Gün</value>
-  </data>
-  <data name="Form_CreditList_Filter_Week" xml:space="preserve">
-    <value>Son Həftə</value>
-  </data>
-  <data name="Form_CreditList_Filter_Month" xml:space="preserve">
-    <value>Son Ay</value>
-  </data>
-  <data name="Form_CreditList_RibbonGroup_Filter" xml:space="preserve">
-    <value>Filtr</value>
   </data>
   <data name="Form_InstallmentSale_Summary_Count_Title" xml:space="preserve">
     <value>Taksit Satış</value>
@@ -5000,15 +4693,6 @@ Tətbiq edilsin?</value>
   <data name="Common_Pieces" xml:space="preserve">
     <value>Ədəd</value>
   </data>
-  <data name="Entity_TrWhatsAppMessageLog_MessageType" xml:space="preserve">
-    <value>Mesaj Növü</value>
-  </data>
-  <data name="Common_Message" xml:space="preserve">
-    <value>Mesaj</value>
-  </data>
-  <data name="Common_Sender" xml:space="preserve">
-    <value>Göndərən</value>
-  </data>
   <data name="Common_Export" xml:space="preserve">
     <value>Export</value>
   </data>
@@ -5018,113 +4702,17 @@ Tətbiq edilsin?</value>
   <data name="FormInvoice_Next" xml:space="preserve">
     <value>Sonrakı</value>
   </data>
-  <data name="FormInvoice_RibbonGroup_Navigate" xml:space="preserve">
-    <value>Naviqasiya</value>
-  </data>
   <data name="FormInvoice_NoMoreInvoice" xml:space="preserve">
     <value>Daha qaimə yoxdur.</value>
   </data>
-  <data name="Form_WhatsAppMessageLog_Summary_Balance_Subtitle" xml:space="preserve">
-    <value>Mövcud Balans</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_Summary_Balance_Title" xml:space="preserve">
-    <value>SMS Balansı</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_Summary_Last30Days_Subtitle" xml:space="preserve">
-    <value>Son 30 gündə göndərildi</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_Summary_Last30Days_Title" xml:space="preserve">
-    <value>Son 30 Gün</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_Summary_Today_Subtitle" xml:space="preserve">
-    <value>Bugünkü Gün</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_Summary_Today_Title" xml:space="preserve">
-    <value>Bu gün göndərildi</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_Summary_Total_Subtitle" xml:space="preserve">
-    <value>Cəmi SMS göndərildi</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_Summary_Total_Title" xml:space="preserve">
-    <value>Cəmi Göndərilən</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_SendSelected" xml:space="preserve">
-    <value>Seçiləni göndər</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_SendAgain" xml:space="preserve">
-    <value>Yenidən göndər</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_Action" xml:space="preserve">
-    <value>Əməliyyat</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_SendAllUnsent" xml:space="preserve">
-    <value>Göndərilməyənlərin hamısını göndər</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_SendAllUnsentConfirm" xml:space="preserve">
-    <value>Bütün göndərilməyən WhatsApp mesajları göndərilsin?</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_SendResult" xml:space="preserve">
-    <value>Göndərildi: {0}, Uğursuz: {1}</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_NoUnsentMessages" xml:space="preserve">
-    <value>Göndərilməyən WhatsApp mesajı yoxdur.</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_AlreadySent" xml:space="preserve">
-    <value>Seçilmiş WhatsApp mesajı artıq göndərilib.</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_NotFound" xml:space="preserve">
-    <value>WhatsApp mesaj loqu tapılmadı.</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_PhoneRequired" xml:space="preserve">
-    <value>Qəbul edən telefon nömrəsi mütləqdir.</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_ImageFileNotFound" xml:space="preserve">
-    <value>WhatsApp mesajının şəkil faylı tapılmadı.</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_MessageRequired" xml:space="preserve">
-    <value>Mesaj mətni mütləqdir.</value>
-  </data>
   <data name="Form_MessagingSettings" xml:space="preserve">
     <value>Mesajlaşma tənzimləmələri</value>
-  </data>
-  <data name="Form_MessagingSettings_MessagingType" xml:space="preserve">
-    <value>Mesajlaşma növü</value>
-  </data>
-  <data name="Form_MessagingSettings_IsEnabled" xml:space="preserve">
-    <value>Aktiv</value>
-  </data>
-  <data name="Form_MessagingSettings_DaysBefore" xml:space="preserve">
-    <value>Gün qalmış</value>
-  </data>
-  <data name="Form_MessagingSettings_MessageTemplate" xml:space="preserve">
-    <value>SMS mətni</value>
-  </data>
-  <data name="Form_MessagingSettings_InstallmentReminder" xml:space="preserve">
-    <value>Kredit üzrə əvvəlcədən mesaj</value>
-  </data>
-  <data name="Form_MessagingSettings_InstallmentDueDay" xml:space="preserve">
-    <value>Ödəniş günü mesajı</value>
-  </data>
-  <data name="Form_MessagingSettings_ProductPurchase" xml:space="preserve">
-    <value>Məhsul alarkən mesaj</value>
-  </data>
-  <data name="Form_MessagingSettings_CreditClosed" xml:space="preserve">
-    <value>Kredit bağlandıqda mesaj</value>
-  </data>
-  <data name="Form_MessagingSettings_CreditPayment" xml:space="preserve">
-    <value>Kredit ödənişi zamanı mesaj</value>
-  </data>
-  <data name="Form_MessagingSettings_Birthday" xml:space="preserve">
-    <value>Doğum günü mesajı</value>
   </data>
   <data name="Form_MessagingSettings_Save" xml:space="preserve">
     <value>Saxla</value>
   </data>
   <data name="Form_MessagingSettings_SendNow" xml:space="preserve">
     <value>Mesajları göndər</value>
-  </data>
-  <data name="Form_MessagingSettings_SendSuccess" xml:space="preserve">
-    <value>Mesajlar uğurla göndərildi</value>
   </data>
   <data name="Form_MessagingSettings_SendFailed" xml:space="preserve">
     <value>Mesaj göndərilmədi: {0}</value>
@@ -5134,9 +4722,6 @@ Tətbiq edilsin?</value>
   </data>
   <data name="Form_MessagingSettings_SendResult" xml:space="preserve">
     <value>Göndərildi: {0}, Uğursuz: {1}</value>
-  </data>
-  <data name="Entity_TrWhatsAppMessageLog_IsSuccessful" xml:space="preserve">
-    <value>Göndərilib</value>
   </data>
   <data name="Common_InsufficientBalance" xml:space="preserve">
     <value>Balansınızda kifayət qədər vəsait yoxdur</value>
@@ -5164,9 +4749,6 @@ Tətbiq edilsin?</value>
   </data>
   <data name="Common_Next" xml:space="preserve">
     <value>Sonrakı</value>
-  </data>
-  <data name="Common_Navigate" xml:space="preserve">
-    <value>Naviqasiya</value>
   </data>
   <data name="Common_NoMoreRecords" xml:space="preserve">
     <value>Daha qeyd yoxdur.</value>
@@ -5246,9 +4828,6 @@ Tətbiq edilsin?</value>
   <data name="Entity_TrPayrollPeriod_IsClosed" xml:space="preserve">
     <value>Bağlanıb</value>
   </data>
-  <data name="Form_DepartmentEdit_Required_Name" xml:space="preserve">
-    <value>Şöbə adı mütləqdir.</value>
-  </data>
   <data name="Entity_TrEmployeePosition_StartDate" xml:space="preserve">
     <value>Başlama Tarixi</value>
   </data>
@@ -5263,9 +4842,6 @@ Tətbiq edilsin?</value>
   </data>
   <data name="Form_AttendanceList_DeleteConfirm" xml:space="preserve">
     <value>Seçilmiş davamiyyət qeydini silmək istəyirsiniz?</value>
-  </data>
-  <data name="Form_AttendanceEdit_Required_Employee" xml:space="preserve">
-    <value>Əməkdaş seçilməlidir.</value>
   </data>
   <data name="Entity_DcEmploymentType_TypeCode" xml:space="preserve">
     <value>Məşğulluq Növü Kodu</value>
@@ -5306,9 +4882,6 @@ Tətbiq edilsin?</value>
   <data name="Form_PositionList_DeleteConfirm" xml:space="preserve">
     <value>Seçilmiş vəzifəni silmək istəyirsiniz?</value>
   </data>
-  <data name="Form_PayrollPeriodEdit_Required_Name" xml:space="preserve">
-    <value>Dövr adı mütləqdir.</value>
-  </data>
   <data name="Form_PositionEdit_Caption_New" xml:space="preserve">
     <value>Yeni Vəzifə</value>
   </data>
@@ -5320,9 +4893,6 @@ Tətbiq edilsin?</value>
   </data>
   <data name="Form_PayrollPeriodEdit_Caption_Edit" xml:space="preserve">
     <value>Maaş Dövrünü Redaktə Et</value>
-  </data>
-  <data name="Entity_TrPayrollPeriod_EndDate" xml:space="preserve">
-    <value>Bitmə Tarixi</value>
   </data>
   <data name="Form_EmployeeContractList_Caption" xml:space="preserve">
     <value>Əmək Müqavilələri</value>
@@ -5339,14 +4909,8 @@ Tətbiq edilsin?</value>
   <data name="Form_EmployeePositionList_DeleteConfirm" xml:space="preserve">
     <value>Seçilmiş əməkdaş vəzifəsini silmək istəyirsiniz?</value>
   </data>
-  <data name="Form_EmployeeContractEdit_Required_Type" xml:space="preserve">
-    <value>Məşğulluq növü seçilməlidir.</value>
-  </data>
   <data name="Entity_DcPosition_IsActive" xml:space="preserve">
     <value>Aktiv</value>
-  </data>
-  <data name="Form_PositionEdit_Required_Name" xml:space="preserve">
-    <value>Vəzifə adı mütləqdir.</value>
   </data>
   <data name="Form_PayrollPeriodList_DeleteConfirm" xml:space="preserve">
     <value>Seçilmiş maaş dövrünü silmək istəyirsiniz?</value>
@@ -5390,17 +4954,8 @@ Tətbiq edilsin?</value>
   <data name="Form_EmployeeContractList_DeleteConfirm" xml:space="preserve">
     <value>Seçilmiş müqaviləni silmək istəyirsiniz?</value>
   </data>
-  <data name="Form_PayrollList_Caption" xml:space="preserve">
-    <value>Maaş Hesablamaları</value>
-  </data>
-  <data name="Form_EmployeePositionEdit_Required_Employee" xml:space="preserve">
-    <value>Əməkdaş seçilməlidir.</value>
-  </data>
   <data name="Form_PayrollPeriodEdit_Caption_New" xml:space="preserve">
     <value>Yeni Maaş Dövrü</value>
-  </data>
-  <data name="Form_EmployeeContractEdit_Required_Employee" xml:space="preserve">
-    <value>Əməkdaş seçilməlidir.</value>
   </data>
   <data name="Entity_TrEmployeeContract_CurrencyCode" xml:space="preserve">
     <value>Valyuta Kodu</value>
@@ -5408,14 +4963,8 @@ Tətbiq edilsin?</value>
   <data name="Entity_TrPayrollHeader_GrossSalary" xml:space="preserve">
     <value>Brut Maaş</value>
   </data>
-  <data name="Form_PayrollEdit_Required_Period" xml:space="preserve">
-    <value>Maaş dövrü seçilməlidir.</value>
-  </data>
   <data name="Entity_TrEmployeeContract_EmploymentTypeId" xml:space="preserve">
     <value>Məşğulluq Növü</value>
-  </data>
-  <data name="Form_EmployeePositionEdit_Required_Position" xml:space="preserve">
-    <value>Vəzifə seçilməlidir.</value>
   </data>
   <data name="Entity_TrEmployeeContract_StartDate" xml:space="preserve">
     <value>Başlama Tarixi</value>
@@ -5423,20 +4972,11 @@ Tətbiq edilsin?</value>
   <data name="Entity_TrEmployeeContract_CurrAccCode" xml:space="preserve">
     <value>Əməkdaş</value>
   </data>
-  <data name="Form_EmploymentTypeEdit_Required_Name" xml:space="preserve">
-    <value>Məşğulluq növü adı mütləqdir.</value>
-  </data>
   <data name="Form_AttendanceList_Caption" xml:space="preserve">
     <value>Davamiyyət</value>
   </data>
   <data name="Entity_DcPosition_PositionName" xml:space="preserve">
     <value>Vəzifə Adı</value>
-  </data>
-  <data name="Entity_TrPayrollHeader_PayrollPeriodId" xml:space="preserve">
-    <value>Maaş Dövrü</value>
-  </data>
-  <data name="Entity_TrPayrollPeriod_PeriodName" xml:space="preserve">
-    <value>Dövr Adı</value>
   </data>
   <data name="Form_PayrollPeriodList_Caption" xml:space="preserve">
     <value>Maaş Dövləri</value>
@@ -5459,9 +4999,6 @@ Tətbiq edilsin?</value>
   <data name="Entity_DcEmploymentType_IsActive" xml:space="preserve">
     <value>Aktiv</value>
   </data>
-  <data name="Form_PayrollEdit_Required_Employee" xml:space="preserve">
-    <value>Əməkdaş seçilməlidir.</value>
-  </data>
   <data name="Entity_TrPayrollPeriod_StartDate" xml:space="preserve">
     <value>Başlama Tarixi</value>
   </data>
@@ -5476,15 +5013,6 @@ Tətbiq edilsin?</value>
   </data>
   <data name="Entity_TrEmployeePosition_CurrAccCode" xml:space="preserve">
     <value>Əməkdaş</value>
-  </data>
-  <data name="Entity_TrPayrollHeader_DocumentDate" xml:space="preserve">
-    <value>Sənəd Tarixi</value>
-  </data>
-  <data name="Entity_TrPayrollHeader_DocumentNumber" xml:space="preserve">
-    <value>Sənəd Nömrəsi</value>
-  </data>
-  <data name="Entity_TrPayrollHeader_WorkedDays" xml:space="preserve">
-    <value>İş Günləri</value>
   </data>
   <data name="Entity_TrPayrollHeader_PeriodId" xml:space="preserve">
     <value>Maaş Dövrü</value>
@@ -5531,56 +5059,11 @@ Tətbiq edilsin?</value>
   <data name="ERP_ACE_PayrollList" xml:space="preserve">
     <value>Maaş Hesablamaları</value>
   </data>
-  <data name="ERP_ACE_Leaves" xml:space="preserve">
-    <value>Məzuniyyətlər</value>
-  </data>
-  <data name="ERP_ACE_Shifts" xml:space="preserve">
-    <value>Növbələr</value>
-  </data>
-  <data name="ERP_ACE_EmployeeShifts" xml:space="preserve">
-    <value>İşçi Növbələri</value>
-  </data>
-  <data name="Entity_TrLeave_LeaveType" xml:space="preserve">
-    <value>Məzuniyyət Növü</value>
-  </data>
-  <data name="Entity_TrLeave_LeaveStatus" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="Entity_TrLeave_Reason" xml:space="preserve">
-    <value>Səbəb</value>
-  </data>
-  <data name="Entity_DcShift_ShiftCode" xml:space="preserve">
-    <value>Növbə Kodu</value>
-  </data>
-  <data name="Entity_DcShift_ShiftName" xml:space="preserve">
-    <value>Növbə Adı</value>
-  </data>
-  <data name="Entity_DcShift_StartTime" xml:space="preserve">
-    <value>Başlama Vaxtı</value>
-  </data>
-  <data name="Entity_DcShift_EndTime" xml:space="preserve">
-    <value>Bitiş Vaxtı</value>
-  </data>
-  <data name="Entity_DcShift_IsActive" xml:space="preserve">
-    <value>Aktiv</value>
-  </data>
   <data name="ERP_ACE_Campaigns" xml:space="preserve">
     <value>Endirim Kampaniyaları</value>
   </data>
   <data name="ERP_ACE_Credits" xml:space="preserve">
     <value>Kredit Əməliyatları</value>
-  </data>
-  <data name="Entity_TrWhatsAppMessageLog_ImageFileName" xml:space="preserve">
-    <value>Şəkil faylı</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_ImagePreview" xml:space="preserve">
-    <value>Şəkil önizləmə</value>
-  </data>
-  <data name="Form_WhatsAppMessageLog_NoImage" xml:space="preserve">
-    <value>Şəkil yoxdur</value>
-  </data>
-  <data name="Entity_TrWhatsAppMessageLog_ImageData" xml:space="preserve">
-    <value>Şəkil</value>
   </data>
   <data name="Entity_InvoiceLineFeatureType" xml:space="preserve">
     <value>Faktura Sətiri Özəllik Tipi</value>
@@ -5890,9 +5373,6 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   <data name="Form_NotificationCenter_OpenRelated" xml:space="preserve">
     <value>Əlaqəlini aç</value>
   </data>
-  <data name="Form_NotificationCenter_RunStockCheck" xml:space="preserve">
-    <value>Stock yoxla</value>
-  </data>
   <data name="Form_NotificationCenter_Filter_All" xml:space="preserve">
     <value>Hamısı</value>
   </data>
@@ -5934,9 +5414,6 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   </data>
   <data name="Form_NotificationCenter_UnreadCount" xml:space="preserve">
     <value>Oxunmamış: {0}</value>
-  </data>
-  <data name="Form_NotificationCenter_StockCheckResult" xml:space="preserve">
-    <value>Stock yoxlaması tamamlandı. Təsirlənən bildiriş sayı: {0}.</value>
   </data>
   <data name="Form_NotificationCenter_NoRelatedEntity" xml:space="preserve">
     <value>Əlaqəli sənəd açıla bilmədi.</value>
@@ -6010,12 +5487,6 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   <data name="Form_NotificationRule_Placeholders" xml:space="preserve">
     <value>Mövcud dəyişənlər (əlavə etmək üçün klikləyin):</value>
   </data>
-  <data name="Form_NotificationRule_CharCount" xml:space="preserve">
-    <value>{0} simvol</value>
-  </data>
-  <data name="Form_NotificationRule_CharCountSms" xml:space="preserve">
-    <value>{0} simvol | {1} SMS</value>
-  </data>
   <data name="Form_NotificationRule_Parameters" xml:space="preserve">
     <value>Qayda Parametrləri</value>
   </data>
@@ -6031,14 +5502,8 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   <data name="Form_NotificationTemplate_Templates" xml:space="preserve">
     <value>Şablonlar</value>
   </data>
-  <data name="Form_NotificationTemplate_Data" xml:space="preserve">
-    <value>Şablon tənzimləmələri</value>
-  </data>
   <data name="Form_NotificationTemplate_DuplicateTemplate" xml:space="preserve">
     <value>Eyni bildiriş növü və dil üçün şablon artıq mövcuddur.</value>
-  </data>
-  <data name="ERP_ACE_NotificationTemplates" xml:space="preserve">
-    <value>Bildiriş Şablonları</value>
   </data>
   <data name="Form_NotificationRecipientRule" xml:space="preserve">
     <value>Bildiriş Alıcı Qaydaları</value>
@@ -6046,17 +5511,11 @@ Sənəd sahibinə bağlama sorğusu göndərilsin?</value>
   <data name="Form_NotificationRecipientRule_Rules" xml:space="preserve">
     <value>Alıcı Qaydaları</value>
   </data>
-  <data name="Form_NotificationRecipientRule_Data" xml:space="preserve">
-    <value>Qayda Parametrləri</value>
-  </data>
   <data name="Form_NotificationRecipientRule_AllStores" xml:space="preserve">
     <value>Bütün mağazalar</value>
   </data>
   <data name="Form_NotificationRecipientRule_DuplicateRule" xml:space="preserve">
     <value>Eyni bildiriş növü, rol və mağaza üçün alıcı qaydası artıq mövcuddur.</value>
-  </data>
-  <data name="ERP_ACE_NotificationRecipientRules" xml:space="preserve">
-    <value>Bildiriş Alıcı Qaydaları</value>
   </data>
   <data name="Form_HandOver_InvoiceLockedByOther" xml:space="preserve">
     <value>Bu qaimə hazırda {0} tərəfindən emal olunur.
@@ -6094,9 +5553,6 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Form_LoyaltyCard_CardNumberExists" xml:space="preserve">
     <value>Bu kart nömrəsi artıq mövcuddur.</value>
-  </data>
-  <data name="Entity_DcLoyaltyCard_LoyaltyCardId" xml:space="preserve">
-    <value>Kart ID</value>
   </data>
   <data name="Entity_DcLoyaltyCard_CardNumber" xml:space="preserve">
     <value>Kart Nömrəsi</value>
@@ -6185,23 +5641,11 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Form_PayrollList_CalculatePayroll" xml:space="preserve">
     <value>Maaş Hesabla</value>
   </data>
-  <data name="Form_PayrollWizard_Caption" xml:space="preserve">
-    <value>Maaş Hesablama Sehrbazı</value>
-  </data>
-  <data name="Form_PayrollWizard_WelcomeTitle" xml:space="preserve">
-    <value>Maaş Hesablama Sehrbazına Xoş Gəlmisiniz</value>
-  </data>
   <data name="Form_PayrollWizard_WelcomeText" xml:space="preserve">
     <value>Bu sehrbaz aktiv əmək müqavilələri əsasında işçilərin aylıq maaşlarını avtomatik hesablamağa imkan verir.</value>
   </data>
-  <data name="Form_PayrollWizard_EmployeesTitle" xml:space="preserve">
-    <value>İşçi Maaşları</value>
-  </data>
   <data name="Form_PayrollWizard_EmployeesText" xml:space="preserve">
     <value>Seçilmiş işçilər üçün maaş məbləğlərini yoxlayın və zərurət olduqda tənzimləyin.</value>
-  </data>
-  <data name="Form_PayrollWizard_CompletionTitle" xml:space="preserve">
-    <value>Maaş Hesablanması Tamamlandı</value>
   </data>
   <data name="Form_PayrollWizard_CompletionText" xml:space="preserve">
     <value>Maaş hesablanması tamamlandı. Məlumatları bazada saxlamaq üçün 'Son' düyməsini sıxın.</value>
@@ -6302,12 +5746,6 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Form_MessageLog_SendSelected" xml:space="preserve">
     <value>Seçiləni göndər</value>
   </data>
-  <data name="Form_MessageLog_SendAgain" xml:space="preserve">
-    <value>Yenidən göndər</value>
-  </data>
-  <data name="Form_MessageLog_Action" xml:space="preserve">
-    <value>Əməliyyat</value>
-  </data>
   <data name="Form_MessageLog_SendAllUnsent" xml:space="preserve">
     <value>Göndərilməyənlərin hamısını göndər</value>
   </data>
@@ -6334,12 +5772,6 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Form_MessageLog_MessageRequired" xml:space="preserve">
     <value>Mesaj mətni mütləqdir.</value>
-  </data>
-  <data name="Form_MessageLog_ImagePreview" xml:space="preserve">
-    <value>Şəkil Önizləmə</value>
-  </data>
-  <data name="Form_MessageLog_NoImage" xml:space="preserve">
-    <value>Şəkil Yoxdur</value>
   </data>
   <data name="Entity_AppSetting_AutoSendUnsentMessages" xml:space="preserve">
     <value>Kəsilmiş/Göndərilməyən mesajları avtomatik göndər</value>
@@ -6482,9 +5914,6 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Entity_DcBackupJob_LastStatus" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="Entity_DcBackupJob_LastErrorMessage" xml:space="preserve">
-    <value>Son Xəta</value>
-  </data>
   <data name="Form_BackupManager_Title" xml:space="preserve">
     <value>Baza Nüsxələnməsi (Backup) İdarəetməsi</value>
   </data>
@@ -6544,9 +5973,6 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Form_BackupJobEdit_AllDatabases" xml:space="preserve">
     <value>Bütün Bazalar (Dinamik Skan)</value>
-  </data>
-  <data name="Form_BackupJobEdit_SelectDatabases" xml:space="preserve">
-    <value>Bazaları Seçin</value>
   </data>
   <data name="Form_BackupJobEdit_Full" xml:space="preserve">
     <value>Tam (Full) Backup</value>
@@ -6878,12 +6304,6 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Form_PayrollEdit_WhatsAppCaption" xml:space="preserve">
     <value>Əmək haqqı: {0} ({1})</value>
   </data>
-  <data name="Form_PayrollEdit_SaveBeforeReport" xml:space="preserve">
-    <value>Hesabata baxmaq üçün əvvəlcə qeyd yadda saxlanmalıdır.</value>
-  </data>
-  <data name="Form_PayrollEdit_SaveBeforeWhatsapp" xml:space="preserve">
-    <value>WhatsApp ilə göndərmək üçün əvvəlcə qeyd yadda saxlanmalıdır.</value>
-  </data>
   <data name="Form_PayrollWizard_Button_SendWhatsapp" xml:space="preserve">
     <value>WhatsApp ilə Göndər</value>
   </data>
@@ -6898,27 +6318,6 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   </data>
   <data name="Form_PayrollWizard_WhatsAppWebBulkWarning" xml:space="preserve">
     <value>WhatsApp Web rejimində toplu göndəriş çoxsaylı brauzer pəncərəsi aça bilər. WhatsApp API rejimindən istifadə tövsiyə olunur. Davam edilsin?</value>
-  </data>
-  <data name="Report_PayrollSlip_Title" xml:space="preserve">
-    <value>ƏMƏK HAQQI VƏRƏQƏSİ</value>
-  </data>
-  <data name="Common_EmployeeSignature" xml:space="preserve">
-    <value>İşçinin imzası</value>
-  </data>
-  <data name="Common_ManagerSignature" xml:space="preserve">
-    <value>Rəhbərin imzası</value>
-  </data>
-  <data name="Entity_TrPayrollLine_Overtime" xml:space="preserve">
-    <value>Əlavə İş</value>
-  </data>
-  <data name="Entity_TrPayrollLine_Tax" xml:space="preserve">
-    <value>Vergi</value>
-  </data>
-  <data name="Entity_TrPayrollLine_Insurance" xml:space="preserve">
-    <value>Sığorta</value>
-  </data>
-  <data name="Entity_TrPayrollLine_Other" xml:space="preserve">
-    <value>Digər</value>
   </data>
     <data name="Entity_User" xml:space="preserve">
     <value>İstifadəçi</value>
