@@ -81,6 +81,10 @@ namespace Foxoft
             LoadCurrAccs(currAccTypeArr);
             LoadLayout();
 
+            bBI_GoogleContactWizard.Visibility = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "GoogleContactWizard")
+                ? BarItemVisibility.Always
+                : BarItemVisibility.Never;
+
             //Focus Special Row
             int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
             if (rowHandle != GridControl.InvalidRowHandle)
@@ -496,6 +500,11 @@ namespace Foxoft
 
         private void bBI_GoogleContactWizard_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, GoogleContactWizardClaim))
+            {
+                XtraMessageBox.Show(Resources.Common_AccessDenied);
+                return;
+            }
             List<string> selectedCodes = new();
 
             int[] selectedRowHandles = gV_CurrAccList.GetSelectedRows();

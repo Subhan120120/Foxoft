@@ -66,7 +66,7 @@ namespace Foxoft
             colBonusCardNum = new DevExpress.XtraGrid.Columns.GridColumn();
             colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
             colPhoneNum = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoPhoneNum = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             colBirthDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -80,21 +80,21 @@ namespace Foxoft
             BBI_test = new DevExpress.XtraBars.BarButtonItem();
             BBI_query = new DevExpress.XtraBars.BarButtonItem();
             BSI_Reports = new DevExpress.XtraBars.BarSubItem();
+            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            bBI_GoogleContactWizard = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            ribbonPageGroupTools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            bBI_GoogleContactWizard = new DevExpress.XtraBars.BarButtonItem();
-            ribbonPageGroupTools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccList).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoPhoneNum).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
             SuspendLayout();
@@ -106,7 +106,7 @@ namespace Foxoft
             gC_CurrAccList.Location = new Point(0, 158);
             gC_CurrAccList.MainView = gV_CurrAccList;
             gC_CurrAccList.Name = "gC_CurrAccList";
-            gC_CurrAccList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoPhoneNum });
+            gC_CurrAccList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemTextEdit1 });
             gC_CurrAccList.Size = new Size(858, 413);
             gC_CurrAccList.TabIndex = 0;
             gC_CurrAccList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_CurrAccList });
@@ -236,7 +236,7 @@ namespace Foxoft
             // 
             // colPhoneNum
             // 
-            colPhoneNum.ColumnEdit = repoPhoneNum;
+            colPhoneNum.ColumnEdit = repositoryItemTextEdit1;
             colPhoneNum.FieldName = "PhoneNum";
             colPhoneNum.Name = "colPhoneNum";
             colPhoneNum.Visible = true;
@@ -244,12 +244,12 @@ namespace Foxoft
             // 
             // repositoryItemTextEdit1
             // 
-            repoPhoneNum.AutoHeight = false;
-            repoPhoneNum.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            repoPhoneNum.MaskSettings.Set("MaskManagerSignature", "allowNull=False");
-            repoPhoneNum.MaskSettings.Set("mask", "f");
-            repoPhoneNum.Name = "repositoryItemTextEdit1";
-            repoPhoneNum.UseMaskAsDisplayFormat = true;
+            repositoryItemTextEdit1.AutoHeight = false;
+            repositoryItemTextEdit1.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
+            repositoryItemTextEdit1.MaskSettings.Set("MaskManagerSignature", "allowNull=False");
+            repositoryItemTextEdit1.MaskSettings.Set("mask", "f");
+            repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            repositoryItemTextEdit1.UseMaskAsDisplayFormat = true;
             // 
             // colBirthDate
             // 
@@ -278,7 +278,7 @@ namespace Foxoft
             // 
             // bBI_CurrAccNew
             // 
-            bBI_CurrAccNew.Caption = Resources.Common_New;                 // "Yeni" → resx
+            bBI_CurrAccNew.Caption = Resources.Common_New;
             bBI_CurrAccNew.Id = 1;
             bBI_CurrAccNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccNew.ImageOptions.SvgImage");
             bBI_CurrAccNew.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
@@ -287,7 +287,7 @@ namespace Foxoft
             // 
             // bBI_CurAccEdit
             // 
-            bBI_CurAccEdit.Caption = Resources.Common_Edit;                 // "Dəyiş" → resx
+            bBI_CurAccEdit.Caption = Resources.Common_Edit;
             bBI_CurAccEdit.Id = 2;
             bBI_CurAccEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccEdit.ImageOptions.SvgImage");
             bBI_CurAccEdit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
@@ -296,7 +296,7 @@ namespace Foxoft
             // 
             // bBI_ExportXlsx
             // 
-            bBI_ExportXlsx.Caption = Resources.Common_ExportToExcel;        // "Excelə Göndər" → resx
+            bBI_ExportXlsx.Caption = Resources.Common_ExportToExcel;
             bBI_ExportXlsx.Id = 6;
             bBI_ExportXlsx.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage");
             bBI_ExportXlsx.Name = "bBI_ExportXlsx";
@@ -304,7 +304,7 @@ namespace Foxoft
             // 
             // bBI_CurrAccDelete
             // 
-            bBI_CurrAccDelete.Caption = Resources.Common_Delete;            // "Sil" → resx
+            bBI_CurrAccDelete.Caption = Resources.Common_Delete;
             bBI_CurrAccDelete.Id = 7;
             bBI_CurrAccDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccDelete.ImageOptions.SvgImage");
             bBI_CurrAccDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Delete);
@@ -313,7 +313,7 @@ namespace Foxoft
             // 
             // bBI_CurAccRefresh
             // 
-            bBI_CurAccRefresh.Caption = Resources.Common_Refresh;           // "Yenilə" → resx
+            bBI_CurAccRefresh.Caption = Resources.Common_Refresh;
             bBI_CurAccRefresh.Id = 8;
             bBI_CurAccRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccRefresh.ImageOptions.SvgImage");
             bBI_CurAccRefresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
@@ -322,28 +322,28 @@ namespace Foxoft
             // 
             // barButtonItem3
             // 
-            barButtonItem3.Caption = Resources.Form_CurrAccList_Menu_CustomerReconciliation; // "Musteri ile Haqq Hesab" → resx
+            barButtonItem3.Caption = Resources.Form_CurrAccList_Menu_CustomerReconciliation;
             barButtonItem3.Id = 25;
             barButtonItem3.Name = "barButtonItem3";
             barButtonItem3.ItemClick += barButtonItem3_ItemClick;
             // 
             // barButtonItem4
             // 
-            barButtonItem4.Caption = Resources.Form_CurrAccList_Menu_ProductMovements;       // "Malin Butun Hereketi" → resx
+            barButtonItem4.Caption = Resources.Form_CurrAccList_Menu_ProductMovements;
             barButtonItem4.Id = 26;
             barButtonItem4.Name = "barButtonItem4";
             barButtonItem4.ItemClick += barButtonItem4_ItemClick;
             // 
             // BBI_test
             // 
-            BBI_test.Caption = Resources.Common_Test;                         // "test" → resx
+            BBI_test.Caption = Resources.Common_Test;
             BBI_test.Id = 27;
             BBI_test.Name = "BBI_test";
             BBI_test.ItemClick += BBI_test_ItemClick;
             // 
             // BBI_query
             // 
-            BBI_query.Caption = Resources.Common_Query;                       // "Sorğu" → resx
+            BBI_query.Caption = Resources.Common_Query;
             BBI_query.Id = 28;
             BBI_query.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_query.ImageOptions.SvgImage");
             BBI_query.Name = "BBI_query";
@@ -351,16 +351,33 @@ namespace Foxoft
             // 
             // BSI_Reports
             // 
-            BSI_Reports.Caption = Resources.Common_Report;                    // "Hesabat" → resx
+            BSI_Reports.Caption = Resources.Common_Report;
             BSI_Reports.Id = 30;
             BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
             BSI_Reports.Name = "BSI_Reports";
+            // 
+            // barButtonItem1
+            // 
+            barButtonItem1.Caption = Resources.Common_Test;
+            barButtonItem1.Id = 31;
+            barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
+            barButtonItem1.Name = "barButtonItem1";
+            barButtonItem1.ItemClick += barButtonItem1_ItemClick;
+            // 
+            // bBI_GoogleContactWizard
+            // 
+            bBI_GoogleContactWizard.Caption = Resources.Form_CurrAccList_Button_GoogleContactWizard;
+            bBI_GoogleContactWizard.Hint = Resources.Form_CurrAccList_Button_GoogleContactWizard_Tooltip;
+            bBI_GoogleContactWizard.Id = 32;
+            bBI_GoogleContactWizard.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_GoogleContactWizard.ImageOptions.SvgImage");
+            bBI_GoogleContactWizard.Name = "bBI_GoogleContactWizard";
+            bBI_GoogleContactWizard.ItemClick += bBI_GoogleContactWizard_ItemClick;
             // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = Resources.Form_CurrAccList_RibbonPage_Main;    // "Cari Hesab" → resx
+            ribbonPage1.Text = Resources.Form_CurrAccList_RibbonPage_Main;
             // 
             // ribbonPageGroup1
             // 
@@ -369,14 +386,20 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_CurrAccDelete);
             ribbonPageGroup1.ItemLinks.Add(bBI_CurAccRefresh);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = Resources.Form_CurrAccList_RibbonGroup_Manage; // "İdarə" → resx
+            ribbonPageGroup1.Text = Resources.Form_CurrAccList_RibbonGroup_Manage;
             // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.ItemLinks.Add(bBI_ExportXlsx);
             ribbonPageGroup3.ItemLinks.Add(BSI_Reports);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = Resources.Common_Report;                   // "Hesabat" → resx
+            ribbonPageGroup3.Text = Resources.Common_Report;
+            // 
+            // ribbonPage3
+            // 
+            ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroupTools, ribbonPageGroup2 });
+            ribbonPage3.Name = "ribbonPage3";
+            ribbonPage3.Text = Resources.Common_Settings;
             // 
             // ribbonPageGroupTools
             // 
@@ -384,18 +407,12 @@ namespace Foxoft
             ribbonPageGroupTools.Name = "ribbonPageGroupTools";
             ribbonPageGroupTools.Text = Resources.Common_Tools;
             // 
-            // ribbonPage3
-            // 
-            ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroupTools, ribbonPageGroup2 });
-            ribbonPage3.Name = "ribbonPage3";
-            ribbonPage3.Text = Resources.Common_Settings;                      // "Ayarlar" → resx
-            // 
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(BBI_query);
             ribbonPageGroup2.ItemLinks.Add(barButtonItem1);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = Resources.Common_Data;                     // "Data" → resx
+            ribbonPageGroup2.Text = Resources.Common_Data;
             // 
             // ribbonStatusBar1
             // 
@@ -415,23 +432,6 @@ namespace Foxoft
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = "ribbonPage2";
             // 
-            // barButtonItem1
-            // 
-            barButtonItem1.Caption = Resources.Common_Test;                    // "test" → resx
-            barButtonItem1.Id = 31;
-            barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
-            barButtonItem1.Name = "barButtonItem1";
-            barButtonItem1.ItemClick += barButtonItem1_ItemClick;
-            // 
-            // bBI_GoogleContactWizard
-            // 
-            bBI_GoogleContactWizard.Caption = Resources.Form_CurrAccList_Button_GoogleContactWizard;
-            bBI_GoogleContactWizard.Hint = Resources.Form_CurrAccList_Button_GoogleContactWizard_Tooltip;
-            bBI_GoogleContactWizard.Id = 32;
-            bBI_GoogleContactWizard.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_GoogleContactWizard.ImageOptions.SvgImage");
-            bBI_GoogleContactWizard.Name = "bBI_GoogleContactWizard";
-            bBI_GoogleContactWizard.ItemClick += bBI_GoogleContactWizard_ItemClick;
-            // 
             // FormCurrAccList
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -445,7 +445,7 @@ namespace Foxoft
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
-            Text = Resources.Form_CurrAccList_Caption;                         // "Cari Hesablar" → resx
+            Text = "Current Accounts";
             Activated += FormCurrAccList_Activated;
             Load += FormCurrAccList_Load;
             VisibleChanged += FormCurrAccList_VisibleChanged;
@@ -453,7 +453,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccList).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoPhoneNum).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuReports).EndInit();
             ResumeLayout(false);
@@ -511,5 +511,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem bBI_GoogleContactWizard;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupTools;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
     }
 }

@@ -1,4 +1,4 @@
-using Foxoft.AppCode;
+﻿using Foxoft.AppCode;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Models.Entity.RoleClaim;
@@ -898,7 +898,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "UnlockGracePeriodPayment", ClaimDesc = "Müddəti Bitmiş Ödənişi Dəyiş", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "BackupSettings", ClaimDesc = "Baza Nüsxələnməsi (Backup)", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "ChangeCurrAccPassword", ClaimDesc = "Cari Hesab Şifrəsi Təyini", ClaimTypeId = 1, CategoryId = 15 },
-                new DcClaim { ClaimCode = "Users", ClaimDesc = "İstifadəçilər", ClaimTypeId = 1, CategoryId = 15 }
+                new DcClaim { ClaimCode = "Users", ClaimDesc = "İstifadəçilər", ClaimTypeId = 1, CategoryId = 15 },
+                new DcClaim { ClaimCode = "GoogleContactWizard", ClaimDesc = "Google Kontaktlar", ClaimTypeId = 1, CategoryId = 19 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -1023,7 +1024,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 217, RoleCode = "Admin", ClaimCode = "BackupSettings" },
                 new TrRoleClaim { RoleClaimId = 218, RoleCode = "Admin", ClaimCode = "ChangeCurrAccPassword" },
                 new TrRoleClaim { RoleClaimId = 219, RoleCode = "Admin", ClaimCode = "DailyExpense" },
-                new TrRoleClaim { RoleClaimId = 220, RoleCode = "Admin", ClaimCode = "Users" }
+                new TrRoleClaim { RoleClaimId = 220, RoleCode = "Admin", ClaimCode = "Users" },
+                new TrRoleClaim { RoleClaimId = 221, RoleCode = "Admin", ClaimCode = "GoogleContactWizard" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

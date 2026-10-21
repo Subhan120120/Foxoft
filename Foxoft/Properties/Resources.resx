@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6681,5 +6681,8 @@ Google account: {1}</value>
   </data>
   <data name="Form_CurrAcc_AutoCreateGoogleContact" xml:space="preserve">
     <value>Auto Create Google Contact</value>
+  </data>
+  <data name="Form_CurrAcc_Question_AddToGoogleContacts" xml:space="preserve">
+    <value>Do you want to add contact to Google account?</value>
   </data>
 </root>

@@ -76,7 +76,6 @@ namespace Foxoft
         {
             LoadCurrAcc();
             LoadLayout();
-            UpdateGoogleContactCheckboxVisibility();
             dataLayoutControl1.IsValid(out List<string> errorList);
             CurrAccTypeCodeLookUpEdit_EditValueChanged(CurrAccTypeCodeLookUpEdit, EventArgs.Empty);
         }
@@ -136,7 +135,6 @@ namespace Foxoft
 
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;
             CurrAccDescTextEdit.Select();
-            UpdateGoogleContactCheckboxVisibility();
         }
 
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
@@ -166,9 +164,16 @@ namespace Foxoft
                     efMethods.InsertEntity(dcCurrAcc);
 
                     bool autoCreateEnabled = Settings.Default.AppSetting?.AutoCreateGoogleContact ?? false;
-                    if (autoCreateEnabled && AutoCreateGoogleContactCheckEdit.Checked)
+                    if (autoCreateEnabled)
                     {
-                        CreateGoogleContactInBackground(dcCurrAcc);
+                        if (XtraMessageBox.Show(
+                            Resources.Form_CurrAcc_Question_AddToGoogleContacts,
+                            Resources.Common_Attention,
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            CreateGoogleContactInBackground(dcCurrAcc);
+                        }
                     }
                 }
                 else
@@ -189,23 +194,7 @@ namespace Foxoft
             }
         }
 
-        private void UpdateGoogleContactCheckboxVisibility()
-        {
-            bool isNew = string.IsNullOrEmpty(dcCurrAcc?.CurrAccCode) || !efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode);
-            bool autoCreateEnabled = (Settings.Default.AppSetting?.AutoCreateGoogleContact ?? false) && isNew;
-
-            if (autoCreateEnabled)
-            {
-                ItemForAutoCreateGoogleContact.Visibility = LayoutVisibility.Always;
-                AutoCreateGoogleContactCheckEdit.Checked = true;
-            }
-            else
-            {
-                ItemForAutoCreateGoogleContact.Visibility = LayoutVisibility.Never;
-                AutoCreateGoogleContactCheckEdit.Checked = false;
-            }
-        }
-
+        
         private void CreateGoogleContactInBackground(DcCurrAcc acc)
         {
             var snapshot = new DcCurrAcc
