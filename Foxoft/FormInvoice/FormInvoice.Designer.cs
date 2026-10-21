@@ -1,4 +1,4 @@
-
+﻿
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Columns;
@@ -71,6 +71,7 @@ namespace Foxoft
             BBI_EditInvoice = new BarButtonItem();
             BBI_exportXLSX = new BarButtonItem();
             BBI_ImportExcel = new BarButtonItem();
+            addInvoiceWizard = new BarButtonItem();
             BBI_ReportPrintFast = new BarButtonItem();
             popupMenuPrinters = new PopupMenu(components);
             barButtonItem3 = new BarButtonItem();
@@ -465,9 +466,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog, BBI_PromoCodeCampaign, bBI_CampaignDelete, BBI_Previous, BBI_Next, bBI_OpenPayments, BSI_RelatedInvoices });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, addInvoiceWizard, BBI_ReportPrintFast, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman, BBI_SumSameProducts, BBI_CountingStock, BBI_LoyaltyCardInput, bBI_CampaignApply, bBI_CampaignLog, BBI_PromoCodeCampaign, bBI_CampaignDelete, BBI_Previous, BBI_Next, bBI_OpenPayments, BSI_RelatedInvoices });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 77;
+            ribbonControl1.MaxItemId = 78;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -589,6 +590,15 @@ namespace Foxoft
             BBI_ImportExcel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ImportExcel.ImageOptions.SvgImage");
             BBI_ImportExcel.Name = "BBI_ImportExcel";
             BBI_ImportExcel.ItemClick += BBI_ImportExcel_ItemClick;
+            // 
+            // addInvoiceWizard
+            // 
+            addInvoiceWizard.Caption = Resources.FormInvoice_AddInvoiceWizard;
+            addInvoiceWizard.Id = 77;
+            addInvoiceWizard.ImageOptions.Image = (Image)resources.GetObject("addInvoiceWizard.ImageOptions.Image");
+            addInvoiceWizard.ImageOptions.LargeImage = (Image)resources.GetObject("addInvoiceWizard.ImageOptions.LargeImage");
+            addInvoiceWizard.Name = "addInvoiceWizard";
+            addInvoiceWizard.ItemClick += addInvoiceWizard_ItemClick;
             // 
             // BBI_ReportPrintFast
             // 
@@ -883,9 +893,10 @@ namespace Foxoft
             // 
             // ribbonPageGroup9
             // 
+            ribbonPageGroup9.ItemLinks.Add(addInvoiceWizard);
             ribbonPageGroup9.ItemLinks.Add(barButtonItem2);
             ribbonPageGroup9.Name = "ribbonPageGroup9";
-            ribbonPageGroup9.Text = Resources.FormInvoice_RibbonGroup_Test;
+            ribbonPageGroup9.Text = Resources.FormInvoice_RibbonGroup_Tools;
             // 
             // ribbonPageGroup1
             // 
@@ -2472,6 +2483,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup RibbonPageGroup5;
         private DevExpress.XtraBars.BarButtonItem BBI_exportXLSX;
         private DevExpress.XtraBars.BarButtonItem BBI_ImportExcel;
+        private DevExpress.XtraBars.BarButtonItem addInvoiceWizard;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repoTxtEdit_TwilioInstance;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repoTxtEdit_TwilioToken;
         private DevExpress.XtraEditors.CheckEdit checkEdit_IsSent;

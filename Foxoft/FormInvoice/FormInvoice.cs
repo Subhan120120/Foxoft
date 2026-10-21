@@ -1,4 +1,4 @@
-
+﻿
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -27,6 +27,7 @@ using Foxoft.AppCode;
 using Foxoft.AppCode.Service;
 using Foxoft.AppCode.Services;
 using Foxoft.Models;
+using Foxoft.Models.ViewModel;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
@@ -206,6 +207,7 @@ namespace Foxoft
                 ["BBI_EditInvoice"] = BBI_ModifyInvoice,
                 ["BBI_exportXLSX"] = BBI_exportXLSX,
                 ["BBI_ImportExcel"] = BBI_ImportExcel,
+                ["addInvoiceWizard"] = addInvoiceWizard,
                 ["BBI_ReportPrintFast"] = BBI_ReportPrintFast,
                 ["BBI_picture"] = BBI_picture,
                 ["BBI_InvoiceExpenses"] = BBI_InvoiceExpenses
@@ -3630,6 +3632,137 @@ namespace Foxoft
                     Resources.Common_Error,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+
+        private void addInvoiceWizard_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (trInvoiceHeader is null)
+                return;
+
+            if (!EnsureInvoiceCanBeChanged())
+                return;
+
+            CommitInvoiceEditors();
+
+            using FormAddInvoiceWizard wizard = new(trInvoiceHeader, dcProcess, productTypeArr);
+            if (wizard.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            if (wizard.Result is null || wizard.Result.Lines.Count == 0)
+                return;
+
+            AddLinesFromOcrResult(wizard.Result, wizard.ApplyHeaderToInvoice);
+        }
+
+        private void AddLinesFromOcrResult(InvoiceOcrResult result, bool applyHeader)
+        {
+            var validLines = result.Lines
+                .Where(x => x.Selected && !string.IsNullOrWhiteSpace(x.MatchedProductCode))
+                .ToList();
+
+            if (validLines.Count == 0)
+            {
+                XtraMessageBox.Show(
+                    Resources.Form_InvoiceWizard_NoLinesSelected,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool oldLoading = _isLoading;
+            _isLoading = true;
+            gV_InvoiceLine.GridControl.BeginUpdate();
+            gV_InvoiceLine.BeginUpdate();
+
+            try
+            {
+                if (applyHeader)
+                {
+                    if (result.DocumentDate.HasValue)
+                    {
+                        trInvoiceHeader.DocumentDate = result.DocumentDate.Value;
+                        DocumentDateDateEdit.EditValue = result.DocumentDate.Value;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(result.DocumentNumber))
+                    {
+                        trInvoiceHeader.CustomsDocumentNumber = result.DocumentNumber;
+                        CustomsDocumentNumberTextEdit.EditValue = result.DocumentNumber;
+                    }
+                }
+
+                foreach (var lineVM in validLines)
+                {
+                    TrInvoiceLine line = new()
+                    {
+                        InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
+                        InvoiceLineId = Guid.NewGuid(),
+                        TrInvoiceHeader = trInvoiceHeader,
+                        ProductCode = lineVM.MatchedProductCode!,
+                        Barcode = !string.IsNullOrWhiteSpace(lineVM.MatchedBarcode) ? lineVM.MatchedBarcode : lineVM.OcrBarcode,
+                        UnitOfMeasureId = lineVM.UnitOfMeasureId,
+                        Price = lineVM.Price,
+                        CurrencyCode = Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN",
+                        ExchangeRate = 1f,
+                        PosDiscount = 0m,
+                        DiscountCampaign = 0m,
+                        VatRate = lineVM.VatRate,
+                        LineDescription = lineVM.LineDescription ?? lineVM.OcrProductName,
+                        CreatedDate = DateTime.Now,
+                        CreatedUserName = Authorization.CurrAccCode,
+                        LastUpdatedDate = DateTime.Now,
+                        LastUpdatedUserName = Authorization.CurrAccCode,
+                        TrInvoiceLineFeatures = new List<TrInvoiceLineFeature>(),
+                    };
+
+                    DcProduct? product = dbContext.DcProducts.Local.FirstOrDefault(x => x.ProductCode == line.ProductCode)
+                                        ?? dbContext.DcProducts.Find(line.ProductCode);
+
+                    if (product != null)
+                    {
+                        line.DcProduct = product;
+                        if (!line.UnitOfMeasureId.HasValue)
+                            line.UnitOfMeasureId = product.DefaultUnitOfMeasureId;
+                        line.ProductCost = product.ProductCost;
+                        if (line.Price == 0)
+                            line.Price = GetProductPriceByProcess(product);
+                    }
+
+                    line.Qty = lineVM.Qty > 0 ? lineVM.Qty : 1m;
+
+                    dbContext.TrInvoiceLines.Add(line);
+                }
+
+                trInvoiceHeadersBindingSource.ResetCurrentItem();
+                trInvoiceLinesBindingSource.ResetBindings(false);
+                gV_InvoiceLine.RefreshData();
+                UpdateInstallmentLabels();
+                UpdatePaidLabels();
+
+                if (dataLayoutControl1.IsValid(out _))
+                    SaveInvoice();
+
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_InvoiceWizard_LinesAdded, validLines.Count),
+                    Resources.Common_Info,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    $"{Resources.Common_ErrorOccurred}\n{ex.Message}",
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                gV_InvoiceLine.EndUpdate();
+                gV_InvoiceLine.GridControl.EndUpdate();
+                _isLoading = oldLoading;
             }
         }
 
