@@ -11,8 +11,6 @@ namespace Foxoft
     {
         public CustomSqlQuery SelectInvoice(Guid invoiceHeader)
         {
-            string qry = "";
-
             EfMethods efMethods = new();
             DcReport report = efMethods.SelectReportByName("Report_Embedded_InvoiceReport");
 

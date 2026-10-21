@@ -1,5 +1,7 @@
 ﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using Foxoft.AppCode;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -96,6 +98,9 @@ namespace Foxoft
 
             OverpaymentModeImageComboBoxEdit.EditValue = (int)AppSetting.OverpaymentMode;
             SetSelectedIdsManual(AppSetting.POSFindProductBy);
+
+            txtOpenAIApiKey.Text = Settings.Default.OpenAIApiKey ?? "";
+            cbeOpenAIModel.EditValue = string.IsNullOrWhiteSpace(Settings.Default.OpenAIModel) ? "gpt-4o" : Settings.Default.OpenAIModel;
         }
 
 
@@ -123,6 +128,8 @@ namespace Foxoft
 
                 dbContext.SaveChanges();
 
+                Settings.Default.OpenAIApiKey = txtOpenAIApiKey.Text.Trim();
+                Settings.Default.OpenAIModel = string.IsNullOrWhiteSpace(cbeOpenAIModel.Text) ? "gpt-4o" : cbeOpenAIModel.Text.Trim();
                 Settings.Default.AppSetting = AppSetting;
                 Settings.Default.Save();
 
@@ -147,6 +154,39 @@ namespace Foxoft
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        private void txtOpenAIApiKey_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            txtOpenAIApiKey.Properties.UseSystemPasswordChar = !txtOpenAIApiKey.Properties.UseSystemPasswordChar;
+            e.Button.Caption = txtOpenAIApiKey.Properties.UseSystemPasswordChar ? "Göstər" : "Gizlət";
+        }
+
+        private async void btn_TestOpenAI_Click(object sender, EventArgs e)
+        {
+            string apiKey = txtOpenAIApiKey.Text.Trim();
+            if (string.IsNullOrWhiteSpace(apiKey))
+            {
+                XtraMessageBox.Show(Resources.Form_InvoiceWizard_ApiKeyRequired, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            btn_TestOpenAI.Enabled = false;
+            try
+            {
+                InvoiceOcrService ocrService = new();
+                string model = string.IsNullOrWhiteSpace(cbeOpenAIModel.Text) ? "gpt-4o" : cbeOpenAIModel.Text.Trim();
+                var (success, message) = await ocrService.TestConnectionAsync(apiKey, model);
+                XtraMessageBox.Show(message, success ? Resources.Common_Info : Resources.Common_Error, MessageBoxButtons.OK, success ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btn_TestOpenAI.Enabled = true;
+            }
         }
     }
 }

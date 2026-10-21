@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Foxoft.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
@@ -57,6 +57,12 @@
     </Setting>
     <Setting Name="FavoritesMenus" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="OpenAIApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="OpenAIModel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gpt-4o</Value>
     </Setting>
   </Settings>
 </SettingsFile>

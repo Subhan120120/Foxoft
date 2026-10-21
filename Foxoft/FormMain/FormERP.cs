@@ -1,4 +1,4 @@
-using DevExpress.LookAndFeel;
+﻿using DevExpress.LookAndFeel;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
@@ -716,18 +716,21 @@ namespace Foxoft
 
         private void InitializeFavorites()
         {
-            StringCollection aceList = Settings.Default.FavoritesMenus;
+            StringCollection? aceList = Settings.Default.FavoritesMenus;
 
             if (aceList is null)
                 return;
 
-            foreach (string aCE in aceList)
+            ACG_Favorites.Elements.Clear();
+
+            foreach (string aCE in aceList.Cast<string>().Distinct())
             {
-                AccordionControlElement element = aC_Root.Elements
+                AccordionControlElement? element = aC_Root.Elements
+                                    .Where(x => x != ACG_Favorites)
                                     .SelectMany(x => x.Elements)
                                     .FirstOrDefault(x => x.Name == aCE);
 
-                if (element != null)
+                if (element != null && HasElementPermission(element.Name))
                 {
                     AccordionControlElement shortcut = new()
                     {
@@ -738,21 +741,25 @@ namespace Foxoft
                     };
                     shortcut.ImageOptions.SvgImage = element.ImageOptions.SvgImage;
 
-                    ACG_Favorites.Visible = true;
-
-                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, shortcut.Name);
-                    if (currAccHasClaims)
-                        ACG_Favorites.Elements.Add(shortcut);
-
-                    if (shortcut.Name == "PaymentDetail")
-                    {
-                        bool currAccHasMakePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "MakePayment");
-                        bool currAccHasReceivePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ReceivePayment");
-                        if (currAccHasMakePaymentClaims || currAccHasReceivePaymentClaims)
-                            ACG_Favorites.Elements.Add(aCE_PaymentDetail);
-                    }
+                    ACG_Favorites.Elements.Add(shortcut);
                 }
             }
+
+            ACG_Favorites.Visible = ACG_Favorites.Elements.Count > 0;
+        }
+
+        private bool HasElementPermission(string elementName)
+        {
+            if (elementName == "PaymentDetail")
+            {
+                bool currAccHasPaymentDetailClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
+                bool currAccHasMakePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "MakePayment");
+                bool currAccHasReceivePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ReceivePayment");
+
+                return currAccHasPaymentDetailClaims || currAccHasMakePaymentClaims || currAccHasReceivePaymentClaims;
+            }
+
+            return efMethods.CurrAccHasClaims(Authorization.CurrAccCode, elementName);
         }
 
         private void UserLookAndFeel_StyleChanged(object sender, EventArgs e)
@@ -837,31 +844,52 @@ namespace Foxoft
 
         private void BBI_FavoriteAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
-            AccordionControlElement newElement = new()
+            if (aCE_Active == null) return;
+
+            if (Settings.Default.FavoritesMenus is null)
+                Settings.Default.FavoritesMenus = new StringCollection();
+
+            if (!Settings.Default.FavoritesMenus.Contains(aCE_Active.Name))
             {
-                Name = aCE_Active.Name,
-                Text = aCE_Active.Text,
-                Style = ElementStyle.Item,
-                Tag = aCE_Active,
-            };
+                Settings.Default.FavoritesMenus.Add(aCE_Active.Name);
+                Settings.Default.Save();
+            }
 
-            newElement.ImageOptions.SvgImage = aCE_Active.ImageOptions.SvgImage;
+            if (!ACG_Favorites.Elements.Any(x => x.Name == aCE_Active.Name))
+            {
+                AccordionControlElement newElement = new()
+                {
+                    Name = aCE_Active.Name,
+                    Text = aCE_Active.Text,
+                    Style = ElementStyle.Item,
+                    Tag = aCE_Active,
+                };
 
-            ACG_Favorites.Visible = true;
-            ACG_Favorites.Elements.Add(newElement);
+                newElement.ImageOptions.SvgImage = aCE_Active.ImageOptions.SvgImage;
 
-            Settings.Default.FavoritesMenus.Add(newElement.Name);
-            Settings.Default.Save();
+                ACG_Favorites.Visible = true;
+                ACG_Favorites.Elements.Add(newElement);
+            }
         }
 
         private void BBI_FavoriteRemove_ItemClick(object sender, ItemClickEventArgs e)
         {
-            AccordionControlElement removeElement = ACG_Favorites.Elements.FirstOrDefault(x => x.Name == aCE_Active.Name);
+            if (aCE_Active == null) return;
 
-            ACG_Favorites.Elements.Remove(removeElement);
+            List<AccordionControlElement> removeElements = ACG_Favorites.Elements
+                .Where(x => x.Name == aCE_Active.Name)
+                .ToList();
 
-            Settings.Default.FavoritesMenus.Remove(removeElement.Name);
-            Settings.Default.Save();
+            foreach (AccordionControlElement removeElement in removeElements)
+                ACG_Favorites.Elements.Remove(removeElement);
+
+            if (Settings.Default.FavoritesMenus is not null)
+            {
+                while (Settings.Default.FavoritesMenus.Contains(aCE_Active.Name))
+                    Settings.Default.FavoritesMenus.Remove(aCE_Active.Name);
+
+                Settings.Default.Save();
+            }
 
             if (ACG_Favorites.Elements.Count == 0)
                 ACG_Favorites.Visible = false;
@@ -869,7 +897,7 @@ namespace Foxoft
 
         private void popupMenuAccordian_Popup(object sender, EventArgs e)
         {
-            bool isFavorite = Settings.Default.FavoritesMenus.Contains(aCE_Active.Name);
+            bool isFavorite = aCE_Active != null && (Settings.Default.FavoritesMenus?.Contains(aCE_Active.Name) ?? false);
             BBI_FavoriteRemove.Enabled = isFavorite;
             BBI_FavoriteAdd.Enabled = !isFavorite;
         }

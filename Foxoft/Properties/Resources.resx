@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6311,7 +6311,9 @@ Please wait or choose another invoice.</value>
     <value>WhatsApp messages will be sent for {0} selected employees. Do you want to continue?</value>
   </data>
   <data name="Form_PayrollWizard_SendWhatsappCompleted" xml:space="preserve">
-    <value>WhatsApp notifications completed.&#xA;Successful: {0}&#xA;Failed / No phone: {1}</value>
+    <value>WhatsApp notifications completed.
+Successful: {0}
+Failed / No phone: {1}</value>
   </data>
   <data name="Form_PayrollWizard_SendWhatsappOnFinish" xml:space="preserve">
     <value>Send via WhatsApp after finish</value>
@@ -6684,5 +6686,185 @@ Google account: {1}</value>
   </data>
   <data name="Form_CurrAcc_Question_AddToGoogleContacts" xml:space="preserve">
     <value>Do you want to add contact to Google account?</value>
+  </data>
+  <data name="FormInvoice_AddInvoiceWizard" xml:space="preserve">
+    <value>Invoice Wizard (AI OCR)</value>
+  </data>
+  <data name="FormInvoice_AddInvoiceWizard_Description" xml:space="preserve">
+    <value>Extract invoice items from image using AI OCR</value>
+  </data>
+  <data name="Form_InvoiceWizard_Title" xml:space="preserve">
+    <value>Invoice Wizard (AI OCR)</value>
+  </data>
+  <data name="Form_InvoiceWizard_SelectImage" xml:space="preserve">
+    <value>Select Image...</value>
+  </data>
+  <data name="Form_InvoiceWizard_PasteClipboard" xml:space="preserve">
+    <value>Paste from Clipboard</value>
+  </data>
+  <data name="Form_InvoiceWizard_ClearImage" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Form_InvoiceWizard_ProcessOcr" xml:space="preserve">
+    <value>Read with AI</value>
+  </data>
+  <data name="Form_InvoiceWizard_ApiKey" xml:space="preserve">
+    <value>OpenAI API Key:</value>
+  </data>
+  <data name="Form_InvoiceWizard_SaveApiKey" xml:space="preserve">
+    <value>Save Key</value>
+  </data>
+  <data name="Form_InvoiceWizard_Model" xml:space="preserve">
+    <value>Model:</value>
+  </data>
+  <data name="Form_InvoiceWizard_TestConnection" xml:space="preserve">
+    <value>Test Connection</value>
+  </data>
+  <data name="Form_InvoiceWizard_ApplyHeader" xml:space="preserve">
+    <value>Apply Header to Invoice</value>
+  </data>
+  <data name="Form_InvoiceWizard_DocNum" xml:space="preserve">
+    <value>Custom Doc No:</value>
+  </data>
+  <data name="Form_InvoiceWizard_DocDate" xml:space="preserve">
+    <value>Doc Date:</value>
+  </data>
+  <data name="Form_InvoiceWizard_Vendor" xml:space="preserve">
+    <value>Supplier / Vendor:</value>
+  </data>
+  <data name="Form_InvoiceWizard_Lines" xml:space="preserve">
+    <value>Extracted Invoice Lines</value>
+  </data>
+  <data name="Form_InvoiceWizard_SelectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="Form_InvoiceWizard_UnselectAll" xml:space="preserve">
+    <value>Unselect All</value>
+  </data>
+  <data name="Form_InvoiceWizard_MatchProduct" xml:space="preserve">
+    <value>Select Product...</value>
+  </data>
+  <data name="Form_InvoiceWizard_AutoMatch" xml:space="preserve">
+    <value>Rematch</value>
+  </data>
+  <data name="Form_InvoiceWizard_AddToInvoice" xml:space="preserve">
+    <value>Add to Invoice</value>
+  </data>
+  <data name="Form_InvoiceWizard_NoImageSelected" xml:space="preserve">
+    <value>Please add an invoice image first.</value>
+  </data>
+  <data name="Form_InvoiceWizard_ApiKeyRequired" xml:space="preserve">
+    <value>OpenAI API key is required.</value>
+  </data>
+  <data name="Form_InvoiceWizard_Processing" xml:space="preserve">
+    <value>Analyzing invoice image with AI, please wait...</value>
+  </data>
+  <data name="Form_InvoiceWizard_NoLinesSelected" xml:space="preserve">
+    <value>No lines selected to add to invoice.</value>
+  </data>
+  <data name="Form_InvoiceWizard_LinesAdded" xml:space="preserve">
+    <value>{0} line(s) successfully added to invoice.</value>
+  </data>
+  <data name="Form_InvoiceWizard_Success" xml:space="preserve">
+    <value>Invoice successfully scanned. Total {0} lines detected.</value>
+  </data>
+  <data name="Form_InvoiceWizard_StatusMatched" xml:space="preserve">
+    <value>Matched</value>
+  </data>
+  <data name="Form_InvoiceWizard_StatusUnmatched" xml:space="preserve">
+    <value>Not Found</value>
+  </data>
+  <data name="Form_InvoiceWizard_Summary" xml:space="preserve">
+    <value>Total: {0} | Selected: {1} | Matched: {2} | Total Amount: {3:n2} {4}</value>
+  </data>
+  <data name="Form_InvoiceWizard_ConnectionSuccess" xml:space="preserve">
+    <value>Connection to OpenAI API is successful!</value>
+  </data>
+  <data name="Form_InvoiceWizard_ConnectionFailed" xml:space="preserve">
+    <value>Failed to connect to OpenAI API: {0}</value>
+  </data>
+  <data name="Form_InvoiceWizard_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Form_InvoiceWizard_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Form_InvoiceWizard_ImageInfo" xml:space="preserve">
+    <value>Dimensions: {0}x{1} | Size: {2:n1} KB</value>
+  </data>
+  <data name="Form_InvoiceWizard_OpenFileDialog_Title" xml:space="preserve">
+    <value>Select Invoice Image</value>
+  </data>
+  <data name="Form_InvoiceWizard_OpenFileDialog_Filter" xml:space="preserve">
+    <value>Image Files (*.png;*.jpg;*.jpeg;*.bmp;*.webp)|*.png;*.jpg;*.jpeg;*.bmp;*.webp|All Files (*.*)|*.*</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColSelected" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColLineNumber" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColBarcode" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColOcrProductName" xml:space="preserve">
+    <value>OCR Product Name</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColProductCode" xml:space="preserve">
+    <value>Product Code</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColProductName" xml:space="preserve">
+    <value>Product Name</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColQty" xml:space="preserve">
+    <value>Qty</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColUnit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColPrice" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColAmount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColVatRate" xml:space="preserve">
+    <value>VAT %</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColNotes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Form_AppSetting_Group_OpenAI" xml:space="preserve">
+    <value>OpenAI (AI OCR)</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColNewProduct" xml:space="preserve">
+    <value>New Product</value>
+  </data>
+  <data name="Common_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Common_Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Form_InvoiceWizard_HeaderGroup" xml:space="preserve">
+    <value>Extracted Document Header</value>
+  </data>
+  <data name="Form_InvoiceWizard_NoClipboardImage" xml:space="preserve">
+    <value>No image found in clipboard.</value>
+  </data>
+  <data name="Form_InvoiceWizard_PastedFromClipboard" xml:space="preserve">
+    <value>Pasted from clipboard</value>
+  </data>
+  <data name="Form_InvoiceWizard_ClipboardError" xml:space="preserve">
+    <value>Error reading image from clipboard: {0}</value>
+  </data>
+  <data name="Form_InvoiceWizard_OperationCancelled" xml:space="preserve">
+    <value>Operation cancelled.</value>
+  </data>
+  <data name="Form_InvoiceWizard_UnmatchedRowsWarning" xml:space="preserve">
+    <value>Some selected lines do not have a matched product code. Only lines with product codes will be added to the invoice. Continue?</value>
   </data>
 </root>

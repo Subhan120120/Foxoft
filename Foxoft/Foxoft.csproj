@@ -365,6 +365,9 @@
 		<Compile Update="FormCurrAcc\FormCurrAccFeature.cs">
 			<SubType>Form</SubType>
 		</Compile>
+				<Compile Update="FormInvoice\FormAddInvoiceWizard.cs">
+			<SubType>Form</SubType>
+		</Compile>
 		<Compile Update="FormInvoice\FormInvoiceLineUndeliveredList.cs">
 			<SubType>Form</SubType>
 		</Compile>

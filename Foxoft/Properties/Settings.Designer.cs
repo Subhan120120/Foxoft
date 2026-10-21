@@ -312,5 +312,34 @@ namespace Foxoft.Properties
                 this["POSShowQuantityDialog"] = value;
             }
         }
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OpenAIApiKey
+        {
+            get
+            {
+                return ((string)(this["OpenAIApiKey"]));
+            }
+            set
+            {
+                this["OpenAIApiKey"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("gpt-4o")]
+        public string OpenAIModel
+        {
+            get
+            {
+                return ((string)(this["OpenAIModel"]));
+            }
+            set
+            {
+                this["OpenAIModel"] = value;
+            }
+        }
     }
 }

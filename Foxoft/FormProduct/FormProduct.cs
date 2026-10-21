@@ -1,4 +1,4 @@
-using DevExpress.Utils.Extensions;
+﻿using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -35,6 +35,7 @@ namespace Foxoft
         private const string ChangeProductCodeClaim = "ChangeProductCode";
 
         SettingStore settingStore;
+        private DcProduct? initialProduct;
 
         public FormProduct(byte productTypeCode, bool isNew)
         {
@@ -91,6 +92,12 @@ namespace Foxoft
             this.dcProduct.ProductCode = productCode;
             ProductCodeTextEdit.Properties.ReadOnly = true;
             ProductCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
+        }
+
+        public FormProduct(byte productTypeCode, bool isNew, DcProduct? templateProduct)
+            : this(productTypeCode, isNew)
+        {
+            this.initialProduct = templateProduct;
         }
 
         private void InitializeControlText()
@@ -172,8 +179,25 @@ namespace Foxoft
             dcProduct.ProductTypeCode = productTypeCode;
             dcProduct.CreatedUserName = Authorization.CurrAccCode;
             dcProduct.LastUpdatedUserName = Authorization.CurrAccCode;
-            dcProduct.DefaultUnitOfMeasureId = settingStore.DefaultUnitOfMeasureId;
+            dcProduct.DefaultUnitOfMeasureId = (initialProduct != null && initialProduct.DefaultUnitOfMeasureId > 0)
+                ? initialProduct.DefaultUnitOfMeasureId
+                : settingStore.DefaultUnitOfMeasureId;
             dcProduct.BalanceWarningLevel = null;
+
+            if (initialProduct != null)
+            {
+                if (!string.IsNullOrWhiteSpace(initialProduct.ProductDesc))
+                    dcProduct.ProductDesc = initialProduct.ProductDesc;
+
+                if (initialProduct.PurchasePrice > 0)
+                    dcProduct.PurchasePrice = initialProduct.PurchasePrice;
+
+                if (initialProduct.RetailPrice > 0)
+                    dcProduct.RetailPrice = initialProduct.RetailPrice;
+
+                if (initialProduct.WholesalePrice > 0)
+                    dcProduct.WholesalePrice = initialProduct.WholesalePrice;
+            }
 
             dcProductsBindingSource.DataSource = dcProduct;
 

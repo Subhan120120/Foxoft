@@ -534,8 +534,9 @@ namespace Foxoft
             btn_DeliverAll.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             btn_DeliverAll.ImageOptions.SvgImageSize = new Size(22, 22);
             btn_DeliverAll.Location = new Point(12, 553);
+            btn_DeliverAll.MaximumSize = new Size(0, 30);
             btn_DeliverAll.Name = "btn_DeliverAll";
-            btn_DeliverAll.Size = new Size(186, 56);
+            btn_DeliverAll.Size = new Size(186, 26);
             btn_DeliverAll.StyleController = lC_Root;
             btn_DeliverAll.TabIndex = 2;
             btn_DeliverAll.Text = Resources.Form_HandOver_Button_DeliverAll;
@@ -954,8 +955,9 @@ namespace Foxoft
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
             btn_Ok.ImageOptions.SvgImageSize = new Size(22, 22);
             btn_Ok.Location = new Point(734, 553);
+            btn_Ok.MaximumSize = new Size(0, 30);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new Size(132, 56);
+            btn_Ok.Size = new Size(132, 26);
             btn_Ok.StyleController = lC_Root;
             btn_Ok.TabIndex = 3;
             btn_Ok.Text = Resources.Common_Ok;
@@ -969,8 +971,9 @@ namespace Foxoft
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
             btn_Cancel.ImageOptions.SvgImageSize = new Size(22, 22);
             btn_Cancel.Location = new Point(870, 553);
+            btn_Cancel.MaximumSize = new Size(0, 30);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new Size(167, 56);
+            btn_Cancel.Size = new Size(167, 26);
             btn_Cancel.StyleController = lC_Root;
             btn_Cancel.TabIndex = 4;
             btn_Cancel.Text = Resources.Common_Cancel;
@@ -989,25 +992,28 @@ namespace Foxoft
             // 
             lCI_DeliverAll.Control = btn_DeliverAll;
             lCI_DeliverAll.Location = new Point(0, 541);
-            lCI_DeliverAll.MinSize = new Size(170, 56);
+            lCI_DeliverAll.MaxSize = new Size(0, 30);
+            lCI_DeliverAll.MinSize = new Size(170, 26);
             lCI_DeliverAll.Name = "lCI_DeliverAll";
-            lCI_DeliverAll.Size = new Size(190, 60);
+            lCI_DeliverAll.Size = new Size(190, 30);
             lCI_DeliverAll.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_DeliverAll.TextVisible = false;
             // 
             // emptySpace_1
             // 
             emptySpace_1.Location = new Point(190, 541);
+            emptySpace_1.MaxSize = new Size(0, 30);
             emptySpace_1.Name = "emptySpace_1";
-            emptySpace_1.Size = new Size(532, 60);
+            emptySpace_1.Size = new Size(532, 30);
             // 
             // lCI_Cash
             // 
             lCI_Cash.Control = btn_Ok;
             lCI_Cash.Location = new Point(722, 541);
+            lCI_Cash.MaxSize = new Size(0, 30);
             lCI_Cash.MinSize = new Size(78, 26);
             lCI_Cash.Name = "lCI_Cash";
-            lCI_Cash.Size = new Size(136, 60);
+            lCI_Cash.Size = new Size(136, 30);
             lCI_Cash.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Cash.TextVisible = false;
             // 
@@ -1015,9 +1021,10 @@ namespace Foxoft
             // 
             lCI_Cancel.Control = btn_Cancel;
             lCI_Cancel.Location = new Point(858, 541);
+            lCI_Cancel.MaxSize = new Size(0, 30);
             lCI_Cancel.MinSize = new Size(78, 26);
             lCI_Cancel.Name = "lCI_Cancel";
-            lCI_Cancel.Size = new Size(171, 60);
+            lCI_Cancel.Size = new Size(171, 30);
             lCI_Cancel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Cancel.TextVisible = false;
             // 

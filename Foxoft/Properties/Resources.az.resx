@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2499,6 +2499,15 @@
   </data>
   <data name="Form_HierarchyFeatureType_FilterSelected" xml:space="preserve">
     <value>Yalnız Seçilənlər</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RibbonGroup_Filter" xml:space="preserve">
+    <value>Filtr</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_RibbonGroup_Hierarchy" xml:space="preserve">
+    <value>İyerarxiya</value>
+  </data>
+  <data name="Form_HierarchyFeatureType_Hierarchy" xml:space="preserve">
+    <value>İyerarxiya</value>
   </data>
   <data name="Form_HierarchyList_Caption" xml:space="preserve">
     <value>İyerarxiya</value>
@@ -5845,15 +5854,6 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Common_Toast_Error" xml:space="preserve">
     <value>Xəta: {0}</value>
   </data>
-  <data name="Form_HierarchyFeatureType_RibbonGroup_Filter" xml:space="preserve">
-    <value>Filtr</value>
-  </data>
-  <data name="Form_HierarchyFeatureType_RibbonGroup_Hierarchy" xml:space="preserve">
-    <value>İyerarxiya</value>
-  </data>
-  <data name="Form_HierarchyFeatureType_Hierarchy" xml:space="preserve">
-    <value>İyerarxiya</value>
-  </data>
   <data name="Entity_AppSetting_AutoBackupEnabled" xml:space="preserve">
     <value>Avtomatik Backup Aktivdir</value>
   </data>
@@ -6070,7 +6070,7 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Entity_TrBackupLog_ErrorMessage" xml:space="preserve">
     <value>Xəta Mesajı</value>
   </data>
-    <data name="NotificationCategory_Stock" xml:space="preserve">
+  <data name="NotificationCategory_Stock" xml:space="preserve">
     <value>Anbar</value>
   </data>
   <data name="NotificationCategory_Sale" xml:space="preserve">
@@ -6311,7 +6311,9 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
     <value>Seçilmiş {0} əməkdaş üçün WhatsApp mesajı göndəriləcək. Davam edilsin?</value>
   </data>
   <data name="Form_PayrollWizard_SendWhatsappCompleted" xml:space="preserve">
-    <value>WhatsApp bildirişləri tamamlandı.&#xA;Uğurlu: {0}&#xA;Uğursuz / Nömrə yoxdur: {1}</value>
+    <value>WhatsApp bildirişləri tamamlandı.
+Uğurlu: {0}
+Uğursuz / Nömrə yoxdur: {1}</value>
   </data>
   <data name="Form_PayrollWizard_SendWhatsappOnFinish" xml:space="preserve">
     <value>Yadda saxladıqdan sonra WhatsApp ilə göndər</value>
@@ -6319,7 +6321,7 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Form_PayrollWizard_WhatsAppWebBulkWarning" xml:space="preserve">
     <value>WhatsApp Web rejimində toplu göndəriş çoxsaylı brauzer pəncərəsi aça bilər. WhatsApp API rejimindən istifadə tövsiyə olunur. Davam edilsin?</value>
   </data>
-    <data name="Entity_User" xml:space="preserve">
+  <data name="Entity_User" xml:space="preserve">
     <value>İstifadəçi</value>
   </data>
   <data name="Entity_User_UserName" xml:space="preserve">
@@ -6684,5 +6686,185 @@ Google hesabı: {1}</value>
   </data>
   <data name="Form_CurrAcc_Question_AddToGoogleContacts" xml:space="preserve">
     <value>Google hesabına kontakt əlavə olunsunmu?</value>
+  </data>
+  <data name="FormInvoice_AddInvoiceWizard" xml:space="preserve">
+    <value>Qaimə Sehrbazı (AI OCR)</value>
+  </data>
+  <data name="FormInvoice_AddInvoiceWizard_Description" xml:space="preserve">
+    <value>Şəkilləri AI ilə OCR oxuyub qaiməyə əlavə et</value>
+  </data>
+  <data name="Form_InvoiceWizard_Title" xml:space="preserve">
+    <value>Qaimə Sehrbazı (AI OCR)</value>
+  </data>
+  <data name="Form_InvoiceWizard_SelectImage" xml:space="preserve">
+    <value>Şəkil Seç...</value>
+  </data>
+  <data name="Form_InvoiceWizard_PasteClipboard" xml:space="preserve">
+    <value>Buferdən Yapışdır</value>
+  </data>
+  <data name="Form_InvoiceWizard_ClearImage" xml:space="preserve">
+    <value>Təmizlə</value>
+  </data>
+  <data name="Form_InvoiceWizard_ProcessOcr" xml:space="preserve">
+    <value>AI ilə Oxu</value>
+  </data>
+  <data name="Form_InvoiceWizard_ApiKey" xml:space="preserve">
+    <value>OpenAI API Açarı:</value>
+  </data>
+  <data name="Form_InvoiceWizard_SaveApiKey" xml:space="preserve">
+    <value>Açarı Yadda Saxla</value>
+  </data>
+  <data name="Form_InvoiceWizard_Model" xml:space="preserve">
+    <value>Model:</value>
+  </data>
+  <data name="Form_InvoiceWizard_TestConnection" xml:space="preserve">
+    <value>Əlaqəni Yoxla</value>
+  </data>
+  <data name="Form_InvoiceWizard_ApplyHeader" xml:space="preserve">
+    <value>Sənəd Başlığını Qaiməyə Tətbiq Et</value>
+  </data>
+  <data name="Form_InvoiceWizard_DocNum" xml:space="preserve">
+    <value>Fərdi Sənəd №:</value>
+  </data>
+  <data name="Form_InvoiceWizard_DocDate" xml:space="preserve">
+    <value>Sənəd Tarixi:</value>
+  </data>
+  <data name="Form_InvoiceWizard_Vendor" xml:space="preserve">
+    <value>Təchizatçı:</value>
+  </data>
+  <data name="Form_InvoiceWizard_Lines" xml:space="preserve">
+    <value>Oxunmuş Qaimə Sətirləri</value>
+  </data>
+  <data name="Form_InvoiceWizard_SelectAll" xml:space="preserve">
+    <value>Hamısını Seç</value>
+  </data>
+  <data name="Form_InvoiceWizard_UnselectAll" xml:space="preserve">
+    <value>Seçimi Ləğv Et</value>
+  </data>
+  <data name="Form_InvoiceWizard_MatchProduct" xml:space="preserve">
+    <value>Məhsul Seç...</value>
+  </data>
+  <data name="Form_InvoiceWizard_AutoMatch" xml:space="preserve">
+    <value>Yenidən Uyğunlaşdır</value>
+  </data>
+  <data name="Form_InvoiceWizard_AddToInvoice" xml:space="preserve">
+    <value>Qaiməyə Əlavə Et</value>
+  </data>
+  <data name="Form_InvoiceWizard_NoImageSelected" xml:space="preserve">
+    <value>Zəhmət olmasa, əvvəlcə qaimə şəkli əlavə edin.</value>
+  </data>
+  <data name="Form_InvoiceWizard_ApiKeyRequired" xml:space="preserve">
+    <value>OpenAI API açarı daxil edilməyib.</value>
+  </data>
+  <data name="Form_InvoiceWizard_Processing" xml:space="preserve">
+    <value>Qaimə şəkli AI ilə analiz edilir, zəhmət olmasa gözləyin...</value>
+  </data>
+  <data name="Form_InvoiceWizard_NoLinesSelected" xml:space="preserve">
+    <value>Qaiməyə əlavə etmək üçün heç bir sətir seçilməyib.</value>
+  </data>
+  <data name="Form_InvoiceWizard_LinesAdded" xml:space="preserve">
+    <value>{0} ədəd sətir qaiməyə uğurla əlavə edildi.</value>
+  </data>
+  <data name="Form_InvoiceWizard_Success" xml:space="preserve">
+    <value>Qaimə uğurla oxundu. Cəmi {0} sətir aşkar edildi.</value>
+  </data>
+  <data name="Form_InvoiceWizard_StatusMatched" xml:space="preserve">
+    <value>Uyğundur</value>
+  </data>
+  <data name="Form_InvoiceWizard_StatusUnmatched" xml:space="preserve">
+    <value>Tapılmadı</value>
+  </data>
+  <data name="Form_InvoiceWizard_Summary" xml:space="preserve">
+    <value>Cəmi: {0} | Seçilmiş: {1} | Uyğun: {2} | Cəmi Məbləğ: {3:n2} {4}</value>
+  </data>
+  <data name="Form_InvoiceWizard_ConnectionSuccess" xml:space="preserve">
+    <value>OpenAI API ilə əlaqə uğurludur!</value>
+  </data>
+  <data name="Form_InvoiceWizard_ConnectionFailed" xml:space="preserve">
+    <value>OpenAI API ilə əlaqə xətası: {0}</value>
+  </data>
+  <data name="Form_InvoiceWizard_Cancel" xml:space="preserve">
+    <value>Dayandır</value>
+  </data>
+  <data name="Form_InvoiceWizard_Close" xml:space="preserve">
+    <value>Bağla</value>
+  </data>
+  <data name="Form_InvoiceWizard_ImageInfo" xml:space="preserve">
+    <value>Ölçü: {0}x{1} | Həcm: {2:n1} KB</value>
+  </data>
+  <data name="Form_InvoiceWizard_OpenFileDialog_Title" xml:space="preserve">
+    <value>Qaimə Şəklini Seçin</value>
+  </data>
+  <data name="Form_InvoiceWizard_OpenFileDialog_Filter" xml:space="preserve">
+    <value>Şəkil Faylları (*.png;*.jpg;*.jpeg;*.bmp;*.webp)|*.png;*.jpg;*.jpeg;*.bmp;*.webp|Bütün Fayllar (*.*)|*.*</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColSelected" xml:space="preserve">
+    <value>Seç</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColLineNumber" xml:space="preserve">
+    <value>№</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColBarcode" xml:space="preserve">
+    <value>Barkod</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColOcrProductName" xml:space="preserve">
+    <value>OCR Məhsul Adı</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColProductCode" xml:space="preserve">
+    <value>Məhsul Kodu</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColProductName" xml:space="preserve">
+    <value>Məhsul Adı</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColQty" xml:space="preserve">
+    <value>Miqdar</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColUnit" xml:space="preserve">
+    <value>Ölçü Vahidi</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColPrice" xml:space="preserve">
+    <value>Qiymət</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColAmount" xml:space="preserve">
+    <value>Məbləğ</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColVatRate" xml:space="preserve">
+    <value>ƏDV %</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColNotes" xml:space="preserve">
+    <value>Qeyd</value>
+  </data>
+  <data name="Form_AppSetting_Group_OpenAI" xml:space="preserve">
+    <value>OpenAI (AI OCR)</value>
+  </data>
+  <data name="Form_InvoiceWizard_ColNewProduct" xml:space="preserve">
+    <value>Yeni Məhsul</value>
+  </data>
+  <data name="Common_Name" xml:space="preserve">
+    <value>Adı</value>
+  </data>
+  <data name="Common_Ready" xml:space="preserve">
+    <value>Hazır</value>
+  </data>
+  <data name="Form_InvoiceWizard_HeaderGroup" xml:space="preserve">
+    <value>Oxunmuş Sənəd Başlığı</value>
+  </data>
+  <data name="Form_InvoiceWizard_NoClipboardImage" xml:space="preserve">
+    <value>Mübadilə buferində şəkil tapılmadı.</value>
+  </data>
+  <data name="Form_InvoiceWizard_PastedFromClipboard" xml:space="preserve">
+    <value>Buferdən yapışdırıldı</value>
+  </data>
+  <data name="Form_InvoiceWizard_ClipboardError" xml:space="preserve">
+    <value>Şəkil buferdən oxunarkən xəta: {0}</value>
+  </data>
+  <data name="Form_InvoiceWizard_OperationCancelled" xml:space="preserve">
+    <value>Əməliyyat dayandırıldı.</value>
+  </data>
+  <data name="Form_InvoiceWizard_UnmatchedRowsWarning" xml:space="preserve">
+    <value>Bəzi seçilmiş sətirlər üçün məhsul kodu təyin edilməyib. Yalnız məhsul kodu olan sətirlər qaiməyə əlavə ediləcək. Davam edilsin?</value>
   </data>
 </root>

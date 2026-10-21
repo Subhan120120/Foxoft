@@ -54,6 +54,7 @@ namespace Foxoft
             //public decimal RemainingTotal => Lines.Sum(x => x.RemainingQty * (x.PriceLoc));
 
             // Detail VM – əvvəlki UnDeliveredViewModel-in yerinə
+       
             public sealed class Line
             {
                 public TrInvoiceLine TrInvoiceLine { get; set; }
