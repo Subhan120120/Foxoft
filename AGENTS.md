@@ -1,123 +1,112 @@
-# Foxoft Project Instructions
+# Foxoft Project Instructions & Development Rules
 
-These are persistent instructions for coding agents working in this repository.
-They apply to the entire project unless a more specific `AGENTS.md` exists in a
-subdirectory.
+These persistent instructions and rules apply to the entire Foxoft solution repository across all projects (`Foxoft`, `Foxoft.BackupWorker`, `Foxoft.NotificationWorker`, `Setup`, `TestRunner`). All coding agents and developers must strictly adhere to these standards.
 
-## Core Rules
+---
 
-- Keep designer-generated UI code only in `*.Designer.cs` files.
-- Prefer DevExpress components where possible, especially for Windows Forms UI.
-- Keep all user-facing text in `.resx` resource files and reference it through strongly typed resource properties.
-- Do not hardcode SQL strings unless necessary.
-- For SQL Server queries, use aliases with `=` syntax.
-- Never run database update migrations (e.g., `dotnet ef database update`, `Update-Database`).
-- Strictly separate `DcUser` and `DcCurrAcc`: they have distinct roles and must never substitute for each other.
+## 1. Windows Forms & DevExpress UI Standards
 
-## Windows Forms And DevExpress
+- **Preferred Controls**: Always use DevExpress controls instead of standard Windows Forms (`System.Windows.Forms`) controls whenever creating or updating UI views.
+- **Control Mapping**:
+  - `XtraForm` / `RibbonForm` instead of `Form`
+  - `SimpleButton` instead of `Button`
+  - `TextEdit`, `DateEdit`, `CheckEdit`, `LookUpEdit` instead of standard textboxes, checkboxes, and comboboxes
+  - `GridControl` & `GridView` instead of `DataGridView`
+  - `LayoutControl` instead of manual pixel placement or standard table/flow panels
+- **Consistency**: Maintain visual harmony with existing forms, utilizing the active DevExpress skin and vector palette.
 
-When creating or modifying Windows Forms interfaces, use DevExpress controls
-instead of standard WinForms controls where appropriate. Keep the UI modern,
-consistent, and compatible with the existing DevExpress-based project structure.
+---
 
-## Designer Code Separation
+## 2. Designer Code Separation
 
-For Windows Forms, always keep designer-generated UI code separate from the main
-form logic.
+Keep UI layout declarations and business logic completely isolated:
 
-Place all UI declarations, `InitializeComponent` logic, layout settings, and
-designer-related code only in `{FormName}.Designer.cs`.
+- **`{FormName}.Designer.cs`**:
+  - Contains **all** component declarations, `InitializeComponent()` logic, control layout, docking, styling, event subscriptions, and designer-generated code.
+  - Never place business logic, data queries, or domain processing here.
+- **`{FormName}.cs`**:
+  - Contains **only** business logic, data binding, and event handler implementations.
+  - Never instantiate, position, or configure UI layout elements directly in this file.
 
-Do not add designer components or UI initialization code to `{FormName}.cs`.
-That file must contain only business logic and event handler implementations.
+---
 
-## Localization
+## 3. Localization & Resource Management
 
-For all C# WinForms code, never hardcode user-facing UI text.
+All user-facing UI text must be localizable. Never hardcode user-visible strings in C# code or designer files.
 
-All labels, captions, button texts, form titles, menu items, tooltips, dialogs,
-notifications, validation messages, error messages, and other visible text must
-be stored in the appropriate `.resx` resource files and referenced through
-strongly typed resource properties in the form code.
+- **Resource Placement**: Store all strings in the appropriate `.resx` files (e.g., `Properties\Resources.resx` and `Properties\Resources.az.resx`).
+- **Access Pattern**: Reference strings exclusively via strongly typed resource properties (e.g., `Properties.Resources.Common_Save`).
+- **Key Naming Conventions**:
+  | Category | Naming Pattern | Examples |
+  | :--- | :--- | :--- |
+  | **Form-specific text** | `Form_<FormName>_<Context>` | `Form_Product_Title`, `Form_CurrAcc_AutoCreateGoogleContact` |
+  | **Shared / Reusable actions** | `Common_<Action/Term>` | `Common_Save`, `Common_Cancel`, `Common_Delete`, `Common_Confirm` |
+  | **Entity fields & Grid columns** | `Entity_<EntityName>_<FieldName>` | `Entity_Product_Barcode`, `Entity_CurrAcc_PhoneNumber` |
 
-Resource key naming rules:
+---
 
-- Form-specific texts must use the pattern `Form_Product_*`.
-- Common reusable texts must use the pattern `Common_*`.
-- Common examples: `Common_Save`, `Common_Copy`, `Common_Delete`.
-- Field names and grid column captions must use the related entity resource key:
-  `Entity_EntityName_FieldName`.
+## 4. Resource Encoding & Character Integrity (Strict UTF-8)
 
-Keep all WinForms code fully localization-friendly and avoid hardcoded UI strings
-in form logic or designer code.
+Resource files containing Azerbaijani characters must maintain strict encoding integrity to prevent Mojibake (text corruption):
 
-## Resource Encoding
+- **Target Characters**: Must reliably preserve Azerbaijani letters: `ə`, `ş`, `ğ`, `ö`, `ü`, `ı`, `ç`, `Ə`, `Ş`, `Ğ`, `Ö`, `Ü`, `İ`, `Ç`.
+- **Prohibited Encodings**: Never read, parse, or save `.resx` / `.az.resx` files with default ANSI, Windows-1252, or ASCII encodings.
+- **PowerShell File I/O**:
+  - Do not use bare `Get-Content` or `Set-Content` without explicit `-Encoding utf8`.
+  - Prefer robust .NET UTF-8 APIs:
+    - Reading: `[System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)`
+    - Writing: `[System.IO.File]::WriteAllText($path, $text, [System.Text.Encoding]::UTF8)`
+- **C# File I/O**: Always pass `System.Text.Encoding.UTF8` to stream readers, stream writers, or XML writers.
+- **Integrity Verification**: Ensure characters remain human-readable and are not corrupted (e.g., `Məşğulluq` must never become `MÉ™ÅŸÄŸulluq`, `mütləqdir` must never become `mÃ¼tlÉ™qdir`).
 
-When reading, modifying, or writing XML-based resource files (`.resx` or
-`.az.resx`), always handle encoding strictly as UTF-8. Preserve multi-byte
-Azerbaijani characters such as `ə`, `ş`, `ğ`, `ö`, `ü`, `ı`, `ç`, `Ə`, `Ş`,
-`Ğ`, `Ö`, `Ü`, `İ`, and `Ç`.
+---
 
-Rules for resource encoding:
+## 5. FormERP Navigation & Permission Claims
 
-1. Never use default ANSI or Windows-1252 encoding to parse, read, or save
-   resource files containing non-ASCII characters. This prevents Mojibake and
-   corrupted text.
-2. In PowerShell, never use `Get-Content` or `Set-Content` without explicitly
-   specifying `-Encoding utf8`.
-3. Prefer reliable UTF-8 APIs in PowerShell:
-   `[System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)` and
-   `[System.IO.File]::WriteAllText($path, $text, [System.Text.Encoding]::UTF8)`.
-4. In C#, always pass `System.Text.Encoding.UTF8` when calling file I/O
-   operations or XML readers/writers.
-5. After edits, verify that Azerbaijani letters remain human-readable and are
-   not double-encoded into garbled patterns such as `MÉ™ÅŸÄŸulluq` instead of
-   `Məşğulluq`, or `mÃ¼tlÉ™qdir` instead of `mütləqdir`.
+When registering a new menu entry in the main ERP navigation tree:
 
-## FormERP Navigation Permissions
+- **Trigger**: An `AccordionControlElement` is added to `FormERP.Designer.cs`.
+- **Mandatory Seed Data Steps**:
+  1. **Control Name**: Locate the unique `Name` assigned to the `AccordionControlElement` in `FormERP.cs` (inside `InitComponentName`).
+  2. **Add Claim (`DcClaim`)**: Add a corresponding `DcClaim` record inside the `modelBuilder.Entity<DcClaim>().HasData(...)` block in `subContext.cs`.
+  3. **Assign to Admin (`TrRoleClaim`)**: Add a corresponding `TrRoleClaim` record in the `modelBuilder.Entity<TrRoleClaim>().HasData(...)` block in `subContext.cs`, binding the new claim to the `"Admin"` role.
+  4. **Sequential Identity**: Verify that `RoleClaimId` is unique and follows the existing sequential ID scheme.
 
-If a new `AccordionControlElement` is added to the `FormERP` navigation menu,
-usually in `FormERP.Designer.cs`, also add a corresponding permission claim to
-`subContext.cs` as seed data.
+---
 
-Required steps:
+## 6. Domain Boundary: Strict Separation of `DcUser` and `DcCurrAcc`
 
-1. Identify the `Name` property of the new `AccordionControlElement` set in
-   `FormERP.cs` within `InitComponentName`.
-2. Add a new `DcClaim` entry to the
-   `modelBuilder.Entity<DcClaim>().HasData(...)` section in `subContext.cs`.
-3. Add a new `TrRoleClaim` entry to the
-   `modelBuilder.Entity<TrRoleClaim>().HasData(...)` section in `subContext.cs`,
-   assigning the new claim to the `"Admin"` role.
-4. Ensure the `RoleClaimId` in `TrRoleClaim` is unique and follows the existing
-   sequence.
+`DcUser` and `DcCurrAcc` represent two fundamentally distinct domain concepts and must never substitute, replace, or be confused with one another:
 
-## SQL
+| Property | `DcUser` | `DcCurrAcc` |
+| :--- | :--- | :--- |
+| **Database** | Global `Main` database (`mainContext`) | Tenant Company database (`subContext`) |
+| **Primary Key** | `UserName` (string) | `CurrAccCode` (string) |
+| **Domain Meaning** | Application users, operators, login authentication, system credentials, user permissions | Business counterparties, clients, vendors, internal cash/bank accounts, partner accounts |
+| **Audit & Identity** | Audit stamps (`CreatedUserName`, `LastUpdatedUserName`), log actors (`Sender` in message/system logs) | Financial and trade transaction counterparty (`CurrAccCode`) |
 
-- Do not hardcode SQL strings unless necessary.
-- For SQL Server queries, use aliases with `=` syntax.
+### Strict Rules:
+- **No Swapping**: Never use a `UserName` where a `CurrAccCode` is expected, or vice-versa.
+- **No Foreign Keys**: Never add foreign key constraints from transaction or log tables (`TrMessageLogs`, etc.) to `DcCurrAcc` for user identity columns (`Sender`, `CreatedUserName`, `LastUpdatedUserName`).
+- **No Existence Assumption**: Do not assume every `DcUser` has a matching `DcCurrAcc` entry in a tenant database. System users can operate without counterparty accounts.
 
-## Database Migrations
+---
 
-- Never run database update migrations (e.g. `dotnet ef database update`, `Update-Database`, or any command that applies migrations directly to the database).
+## 7. SQL Query Standards & EF Core
 
-## Separation of DcUser and DcCurrAcc
+- **ORM Preference**: Prefer LINQ queries with EF Core. Avoid raw SQL strings unless performance or complex queries strictly require it.
+- **SQL Server Alias Syntax**: When writing raw SQL queries for SQL Server, always use the `=` syntax for column aliases instead of `AS`:
+  ```sql
+  -- Correct:
+  SELECT TotalAmount = SUM(Amount), CustomerCode = CurrAccCode FROM TrInvoiceHeaders ...
 
-`DcUser` and `DcCurrAcc` represent completely distinct domain entities and must never replace or substitute for one another:
+  -- Incorrect:
+  SELECT SUM(Amount) AS TotalAmount, CurrAccCode AS CustomerCode FROM TrInvoiceHeaders ...
+  ```
 
-- **DcUser (`Main` Database / `mainContext`)**:
-  - Represents system/application users, login credentials, and user profiles.
-  - Primary key is `UserName`.
-  - Used for operator identification, authentication, audit tracking (`CreatedUserName`, `LastUpdatedUserName`), log sender identification (`Sender`), and user permissions.
-  - Resides globally in the `Main` database across companies.
+---
 
-- **DcCurrAcc (`subContext` / Tenant Database)**:
-  - Represents business counterparties and current accounts in commercial/financial transactions.
-  - Includes customers, vendors, store accounts, and financial accounts.
-  - Primary key is `CurrAccCode`.
-  - Resides locally within each company's sub-database.
+## 8. Database Migrations Safety
 
-- **Core Guidelines**:
-  - Never treat a `UserName` as a `CurrAccCode` or vice versa.
-  - Never add foreign key constraints from transaction/log tables (`TrMessageLogs`, etc.) to `DcCurrAcc` for fields that represent an application user (`Sender`, `CreatedUserName`, `LastUpdatedUserName`).
-  - Do not assume that every `DcUser` has a corresponding `DcCurrAcc` record. System users may exist without any counterparty account in the tenant database.
+- **STRICT PROHIBITION**: Never execute commands that apply migrations directly to databases (e.g., `dotnet ef database update`, `Update-Database`, or executing DDL scripts against active databases).
+- Migrations may only be scaffolded or generated (`dotnet ef migrations add <MigrationName>`), never applied automatically.

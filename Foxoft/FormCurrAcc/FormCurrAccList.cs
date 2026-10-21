@@ -1,4 +1,4 @@
-﻿using DevExpress.Data.Mask;
+using DevExpress.Data.Mask;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -500,7 +500,7 @@ namespace Foxoft
 
         private void bBI_GoogleContactWizard_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, GoogleContactWizardClaim))
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "GoogleContactWizard"))
             {
                 XtraMessageBox.Show(Resources.Common_AccessDenied);
                 return;
