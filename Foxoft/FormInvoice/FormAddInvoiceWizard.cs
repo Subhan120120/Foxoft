@@ -159,13 +159,63 @@ namespace Foxoft
             {
                 Title = Resources.Form_InvoiceWizard_OpenFileDialog_Title,
                 Filter = Resources.Form_InvoiceWizard_OpenFileDialog_Filter,
-                Multiselect = false
+                Multiselect = false,
+                RestoreDirectory = true
             };
+
+            string defaultDir = GetDefaultInvoiceImageDirectory();
+            if (!string.IsNullOrWhiteSpace(defaultDir) && Directory.Exists(defaultDir))
+            {
+                dialog.InitialDirectory = defaultDir;
+            }
 
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 LoadImageFromFile(dialog.FileName);
             }
+        }
+
+        private string GetDefaultInvoiceImageDirectory()
+        {
+            try
+            {
+                EfMethods efMethods = new();
+                SettingStore? settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+                if (string.IsNullOrWhiteSpace(settingStore?.ImageFolder))
+                    return string.Empty;
+
+                string invoicesRoot = CustomExtensions.CombinePath(settingStore.ImageFolder, "Invoices");
+                string docNum = _invoiceHeader?.DocumentNumber?.Trim() ?? string.Empty;
+
+                if (!string.IsNullOrWhiteSpace(docNum))
+                {
+                    string invoiceFolder = CustomExtensions.CombinePath(invoicesRoot, docNum);
+                    try
+                    {
+                        if (!Directory.Exists(invoiceFolder))
+                            Directory.CreateDirectory(invoiceFolder);
+                    }
+                    catch
+                    {
+                        // ignore permission or path errors
+                    }
+
+                    if (Directory.Exists(invoiceFolder))
+                        return invoiceFolder;
+                }
+
+                if (Directory.Exists(invoicesRoot))
+                    return invoicesRoot;
+
+                if (Directory.Exists(settingStore.ImageFolder))
+                    return settingStore.ImageFolder;
+            }
+            catch
+            {
+                // ignore
+            }
+
+            return string.Empty;
         }
 
         private void pictureEditInvoice_ImageChanged(object sender, EventArgs e)

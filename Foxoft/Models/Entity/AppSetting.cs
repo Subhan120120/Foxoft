@@ -140,6 +140,10 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_AutoCreateGoogleContact), ResourceType = typeof(Resources))]
         public bool AutoCreateGoogleContact { get; set; }
 
+        [Column(TypeName = "nvarchar(max)")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_GoogleToken), ResourceType = typeof(Resources))]
+        public string? GoogleToken { get; set; }
+
 
 
         [ForeignKey("LocalCurrencyCode")]

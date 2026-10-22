@@ -1,4 +1,4 @@
-using DevExpress.XtraBars;
+﻿using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraBars.Ribbon.ViewInfo;
 using DevExpress.XtraEditors;
@@ -357,6 +357,21 @@ namespace Foxoft
 
             dialog.Multiselect = true;
             dialog.Title = Resources.Form_Image_OpenDialogTitle;
+            dialog.RestoreDirectory = true;
+
+            string folderPath = CurrentFolderPath;
+            if (!string.IsNullOrWhiteSpace(folderPath))
+            {
+                try
+                {
+                    if (!Directory.Exists(folderPath))
+                        Directory.CreateDirectory(folderPath);
+                }
+                catch { }
+
+                if (Directory.Exists(folderPath))
+                    dialog.InitialDirectory = folderPath;
+            }
 
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6866,5 +6866,8 @@ Google hesabı: {1}</value>
   </data>
   <data name="Form_InvoiceWizard_UnmatchedRowsWarning" xml:space="preserve">
     <value>Bəzi seçilmiş sətirlər üçün məhsul kodu təyin edilməyib. Yalnız məhsul kodu olan sətirlər qaiməyə əlavə ediləcək. Davam edilsin?</value>
+  </data>
+  <data name="Entity_AppSetting_GoogleToken" xml:space="preserve">
+    <value>Google Token</value>
   </data>
 </root>

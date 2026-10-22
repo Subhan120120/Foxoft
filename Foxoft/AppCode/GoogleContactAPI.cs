@@ -1,4 +1,4 @@
-using Google.Apis.Auth.OAuth2;
+﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.PeopleService.v1;
 using Google.Apis.PeopleService.v1.Data;
 using Google.Apis.Services;
@@ -45,7 +45,7 @@ namespace Foxoft.AppCode
                 new[] { PeopleServiceService.Scope.Contacts },
                 "user",
                 ct,
-                new FileDataStore(TokenPath, true));
+                new CompanyGoogleTokenDataStore(TokenPath));
 
             _peopleService = new PeopleServiceService(new BaseClientService.Initializer
             {
@@ -88,8 +88,8 @@ namespace Foxoft.AppCode
                 _peopleService?.Dispose();
                 _peopleService = null;
 
-                if (Directory.Exists(TokenPath))
-                    Directory.Delete(TokenPath, true);
+                CompanyGoogleTokenDataStore store = new(TokenPath);
+                _ = store.ClearAsync();
             }
             catch
             {
