@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -68,7 +68,7 @@ namespace Foxoft
             btnClearImage.Hint = Resources.Form_InvoiceWizard_ClearImage;
 
             btnProcessOcr.Caption = Resources.Form_InvoiceWizard_ProcessOcr;
-            btnProcessOcr.Hint = Resources.Form_InvoiceWizard_ProcessOcr;
+            btnProcessOcr.Hint = $"{Resources.Form_InvoiceWizard_ProcessOcr} ({CreditService.OcrCreditCost:N2} {Resources.Form_NotificationCenter_Filter_Credit})";
 
             if (pictureEditInvoice.Image == null)
                 lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
@@ -441,10 +441,22 @@ namespace Foxoft
                 return;
             }
 
+            // Check & deduct 0.10 credit
+            if (!CreditService.TryDeductOcrCredit(out string? creditError, CreditService.OcrCreditCost, $"Qaimə AI OCR ({_currentImages.Count} şəkil)"))
+            {
+                XtraMessageBox.Show(
+                    creditError ?? Resources.Common_InsufficientBalance,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             string model = Settings.Default.OpenAIModel?.Trim() ?? string.Empty;
             if (string.IsNullOrWhiteSpace(model))
                 model = "gpt-4o";
 
+            bool ocrSucceeded = false;
             SetProcessingState(true);
             _ocrCts = new CancellationTokenSource();
 
@@ -455,6 +467,8 @@ namespace Foxoft
                     apiKey,
                     model,
                     _ocrCts.Token);
+
+                ocrSucceeded = true;
 
                 // Auto-match products against database
                 InvoiceOcrProductMatcher.MatchLines(result.Lines, _productTypeArr, vendorCode: _invoiceHeader?.CurrAccCode);
@@ -488,10 +502,15 @@ namespace Foxoft
             }
             catch (OperationCanceledException)
             {
+                if (!ocrSucceeded)
+                    CreditService.RefundOcrCredit(CreditService.OcrCreditCost, "Qaimə AI OCR ləğv edildi (kredit qaytarıldı)");
+
                 lblStatus.Text = Resources.Form_InvoiceWizard_OperationCancelled;
             }
             catch (Exception ex)
             {
+                if (!ocrSucceeded)
+                    CreditService.RefundOcrCredit(CreditService.OcrCreditCost, $"Qaim\u0259 AI OCR x\u0259tas\u0131 (kredit qaytar\u0131ld\u0131): {ex.Message}");
                 XtraMessageBox.Show(
                     $"{Resources.Common_ErrorOccurred}\n{ex.Message}",
                     Resources.Common_Error,

@@ -643,7 +643,7 @@ namespace Foxoft
 
             Guid messageLogId = Guid.NewGuid();
 
-            if (!WhatsAppCreditService.HasEnoughBalance())
+            if (!CreditService.HasEnoughWhatsAppBalance())
             {
                 SaveWhatsAppLog(trPaymentHeader.PaymentHeaderId, formattedNumber, memoryStream, caption, isSuccessful: false, errorMessage: Resources.Common_InsufficientBalance, messageLogId: messageLogId);
                 MessageToastService.ShowUnsentToast(NotificationChannels.WhatsApp, formattedNumber, Resources.Common_InsufficientBalance, messageLogId);
@@ -698,7 +698,7 @@ namespace Foxoft
                 });
 
                 if (isSuccessful)
-                    ctx.TrCredits.Add(WhatsAppCreditService.CreateUsage(trPaymentHeader?.DcProcess?.ProcessDesc, receiverPhone));
+                    ctx.TrCredits.Add(CreditService.CreateWhatsAppUsage(trPaymentHeader?.DcProcess?.ProcessDesc, receiverPhone));
 
                 ctx.SaveChanges();
             }

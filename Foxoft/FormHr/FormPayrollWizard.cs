@@ -562,7 +562,7 @@ namespace Foxoft
             }
             else
             {
-                if (!WhatsAppCreditService.HasEnoughBalance())
+                if (!CreditService.HasEnoughWhatsAppBalance())
                 {
                     XtraMessageBox.Show(this,
                         Properties.Resources.Common_InsufficientBalance,

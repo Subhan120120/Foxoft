@@ -131,7 +131,7 @@ namespace Foxoft.AppCode.Service
                     string.IsNullOrWhiteSpace(apiSetting.ApiKey))
                     throw new InvalidOperationException(Resources.Payment_ApiSettingsIncomplete);
 
-                if (!WhatsAppCreditService.HasEnoughBalance(_db))
+                if (!CreditService.HasEnoughWhatsAppBalance(_db))
                     throw new InvalidOperationException(Resources.Common_InsufficientBalance);
 
                 string message = ExtractMessage(outbox.Payload);
@@ -140,7 +140,7 @@ namespace Foxoft.AppCode.Service
                 using EvolutionApiClient client = new(apiSetting.ServerUrl, apiSetting.InstanceName, apiSetting.ApiKey);
                 await client.SendTextAsync(normalizedReceiver, message, ct);
 
-                _db.TrCredits.Add(WhatsAppCreditService.CreateUsage(outbox.TrNotification.NotificationTypeCode, normalizedReceiver));
+                _db.TrCredits.Add(CreditService.CreateWhatsAppUsage(outbox.TrNotification.NotificationTypeCode, normalizedReceiver));
 
                 Guid? documentHeaderId = null;
                 if (outbox.TrNotification.EntityType == NotificationEntityTypes.Invoice &&

@@ -39,7 +39,7 @@ namespace Foxoft.AppCode.Service
 
                     ValidateApiSettings(apiSetting);
 
-                    if (!WhatsAppCreditService.HasEnoughBalance(db))
+                    if (!CreditService.HasEnoughWhatsAppBalance(db))
                         throw new InvalidOperationException(Resources.Common_InsufficientBalance);
 
                     await SendLoggedWhatsAppMessageAsync(apiSetting!, log, ct);
@@ -50,7 +50,7 @@ namespace Foxoft.AppCode.Service
                     log.LastUpdatedUserName = Authorization.UserName ?? log.Sender;
                     log.LastUpdatedDate = DateTime.Now;
 
-                    db.TrCredits.Add(WhatsAppCreditService.CreateUsage(log.MessageType ?? string.Empty, log.ReceiverPhoneNumber!));
+                    db.TrCredits.Add(CreditService.CreateWhatsAppUsage(log.MessageType ?? string.Empty, log.ReceiverPhoneNumber!));
 
                     await db.SaveChangesAsync(ct);
                 }
@@ -189,7 +189,7 @@ namespace Foxoft.AppCode.Service
                     {
                         ValidateApiSettings(waSetting);
 
-                        if (!WhatsAppCreditService.HasEnoughBalance(db))
+                        if (!CreditService.HasEnoughWhatsAppBalance(db))
                         {
                             log.LastError = Resources.Common_InsufficientBalance;
                             failedCount++;
@@ -202,7 +202,7 @@ namespace Foxoft.AppCode.Service
                         log.LastError = null;
                         log.LastUpdatedDate = DateTime.Now;
 
-                        db.TrCredits.Add(WhatsAppCreditService.CreateUsage(log.MessageType ?? string.Empty, log.ReceiverPhoneNumber!));
+                        db.TrCredits.Add(CreditService.CreateWhatsAppUsage(log.MessageType ?? string.Empty, log.ReceiverPhoneNumber!));
                         sentCount++;
                     }
                     else if (isSms)

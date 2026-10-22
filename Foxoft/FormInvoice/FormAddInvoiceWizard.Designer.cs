@@ -230,8 +230,8 @@
             btnMatchSettings.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             btnMatchSettings.Caption = "Settings";
             btnMatchSettings.Id = 5;
+            btnMatchSettings.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnMatchSettings.ImageOptions.SvgImage");
             btnMatchSettings.Name = "btnMatchSettings";
-            btnMatchSettings.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             btnMatchSettings.ItemClick += btnMatchSettings_ItemClick;
             // 
             // standaloneBarDockControlLines
