@@ -64,5 +64,8 @@
     <Setting Name="OpenAIModel" Type="System.String" Scope="User">
       <Value Profile="(Default)">gpt-4o</Value>
     </Setting>
+    <Setting Name="ProductMatchSettings" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

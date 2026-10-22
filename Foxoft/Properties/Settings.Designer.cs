@@ -341,5 +341,20 @@ namespace Foxoft.Properties
                 this["OpenAIModel"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ProductMatchSettings
+        {
+            get
+            {
+                return ((string)(this["ProductMatchSettings"]));
+            }
+            set
+            {
+                this["ProductMatchSettings"] = value;
+            }
+        }
     }
 }

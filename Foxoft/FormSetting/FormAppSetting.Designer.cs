@@ -71,6 +71,8 @@ namespace Foxoft
             cbeOpenAIModel = new DevExpress.XtraEditors.ComboBoxEdit();
             ItemForTestOpenAI = new DevExpress.XtraLayout.LayoutControlItem();
             btn_TestOpenAI = new DevExpress.XtraEditors.SimpleButton();
+            btn_ProductMatchSettings = new DevExpress.XtraEditors.SimpleButton();
+            ItemForProductMatchSettings = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItemLeft = new DevExpress.XtraLayout.EmptySpaceItem();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -152,6 +154,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForOpenAIModel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cbeOpenAIModel.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTestOpenAI).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductMatchSettings).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItemLeft).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroupGeneral).BeginInit();
@@ -241,6 +244,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(txtOpenAIApiKey);
             dataLayoutControl1.Controls.Add(cbeOpenAIModel);
             dataLayoutControl1.Controls.Add(btn_TestOpenAI);
+            dataLayoutControl1.Controls.Add(btn_ProductMatchSettings);
             dataLayoutControl1.DataSource = appSettingBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.Location = new Point(0, 0);
@@ -745,10 +749,11 @@ namespace Foxoft
             layoutControlGroupOpenAi.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             ItemForOpenAIApiKey,
             ItemForOpenAIModel,
-            ItemForTestOpenAI});
+            ItemForTestOpenAI,
+            ItemForProductMatchSettings});
             layoutControlGroupOpenAi.Location = new Point(0, 285);
             layoutControlGroupOpenAi.Name = "layoutControlGroupOpenAi";
-            layoutControlGroupOpenAi.Size = new Size(389, 120);
+            layoutControlGroupOpenAi.Size = new Size(389, 146);
             layoutControlGroupOpenAi.Text = Resources.Form_AppSetting_Group_OpenAI;
             // 
             // ItemForOpenAIApiKey
@@ -776,6 +781,24 @@ namespace Foxoft
             ItemForTestOpenAI.Name = "ItemForTestOpenAI";
             ItemForTestOpenAI.Size = new Size(365, 26);
             ItemForTestOpenAI.TextVisible = false;
+            // 
+            // btn_ProductMatchSettings
+            // 
+            btn_ProductMatchSettings.Location = new Point(12, 384);
+            btn_ProductMatchSettings.Name = "btn_ProductMatchSettings";
+            btn_ProductMatchSettings.Size = new Size(365, 22);
+            btn_ProductMatchSettings.StyleController = dataLayoutControl1;
+            btn_ProductMatchSettings.TabIndex = 31;
+            btn_ProductMatchSettings.Text = Resources.Form_InvoiceWizard_MatchSettings;
+            btn_ProductMatchSettings.Click += btn_ProductMatchSettings_Click;
+            // 
+            // ItemForProductMatchSettings
+            // 
+            ItemForProductMatchSettings.Control = btn_ProductMatchSettings;
+            ItemForProductMatchSettings.Location = new Point(0, 74);
+            ItemForProductMatchSettings.Name = "ItemForProductMatchSettings";
+            ItemForProductMatchSettings.Size = new Size(365, 26);
+            ItemForProductMatchSettings.TextVisible = false;
             // 
             // emptySpaceItemLeft
             // 
@@ -1053,6 +1076,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForOpenAIModel).EndInit();
             ((System.ComponentModel.ISupportInitialize)cbeOpenAIModel.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTestOpenAI).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductMatchSettings).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItemLeft).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroupGeneral).EndInit();
@@ -1108,6 +1132,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.ComboBoxEdit cbeOpenAIModel;
         private DevExpress.XtraLayout.LayoutControlItem ItemForTestOpenAI;
         private DevExpress.XtraEditors.SimpleButton btn_TestOpenAI;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForProductMatchSettings;
+        private DevExpress.XtraEditors.SimpleButton btn_ProductMatchSettings;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItemLeft;
         private DevExpress.XtraEditors.SimpleButton btn_Save;
         private DevExpress.XtraEditors.SimpleButton btn_OptimizeDatabaseIndexes;

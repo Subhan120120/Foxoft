@@ -28,6 +28,7 @@
             standaloneBarDockControlImage = new DevExpress.XtraBars.StandaloneBarDockControl();
             barLinesTools = new DevExpress.XtraBars.Bar();
             btnAutoMatch = new DevExpress.XtraBars.BarButtonItem();
+            btnMatchSettings = new DevExpress.XtraBars.BarButtonItem();
             standaloneBarDockControlLines = new DevExpress.XtraBars.StandaloneBarDockControl();
             barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -127,8 +128,8 @@
             barManagerImage.DockControls.Add(standaloneBarDockControlImage);
             barManagerImage.DockControls.Add(standaloneBarDockControlLines);
             barManagerImage.Form = this;
-            barManagerImage.Items.AddRange(new DevExpress.XtraBars.BarItem[] { btnSelectImage, btnPasteImage, btnClearImage, btnProcessOcr, btnAutoMatch });
-            barManagerImage.MaxItemId = 5;
+            barManagerImage.Items.AddRange(new DevExpress.XtraBars.BarItem[] { btnSelectImage, btnPasteImage, btnClearImage, btnProcessOcr, btnAutoMatch, btnMatchSettings });
+            barManagerImage.MaxItemId = 6;
             // 
             // barImageTools
             // 
@@ -205,7 +206,7 @@
             barLinesTools.DockCol = 0;
             barLinesTools.DockRow = 0;
             barLinesTools.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
-            barLinesTools.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(btnAutoMatch) });
+            barLinesTools.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(btnAutoMatch), new DevExpress.XtraBars.LinkPersistInfo(btnMatchSettings) });
             barLinesTools.OptionsBar.AllowQuickCustomization = false;
             barLinesTools.OptionsBar.DrawBorder = false;
             barLinesTools.OptionsBar.DrawDragBorder = false;
@@ -223,6 +224,15 @@
             btnAutoMatch.Name = "btnAutoMatch";
             btnAutoMatch.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             btnAutoMatch.ItemClick += btnAutoMatch_ItemClick;
+            // 
+            // btnMatchSettings
+            // 
+            btnMatchSettings.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            btnMatchSettings.Caption = "Settings";
+            btnMatchSettings.Id = 5;
+            btnMatchSettings.Name = "btnMatchSettings";
+            btnMatchSettings.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            btnMatchSettings.ItemClick += btnMatchSettings_ItemClick;
             // 
             // standaloneBarDockControlLines
             // 
@@ -843,6 +853,7 @@
         private DevExpress.XtraEditors.GroupControl groupControlLines;
         private DevExpress.XtraBars.Bar barLinesTools;
         private DevExpress.XtraBars.BarButtonItem btnAutoMatch;
+        private DevExpress.XtraBars.BarButtonItem btnMatchSettings;
         private DevExpress.XtraBars.StandaloneBarDockControl standaloneBarDockControlLines;
         private MyGridControl gridControlLines;
         private MyGridView gridViewLines;

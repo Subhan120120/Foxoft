@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6869,5 +6869,62 @@ Google account: {1}</value>
   </data>
   <data name="Entity_AppSetting_GoogleToken" xml:space="preserve">
     <value>Google Token</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Title" xml:space="preserve">
+    <value>Product Matching Settings</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Info" xml:space="preserve">
+    <value>Configure how document product names read by AI are matched with internal catalog items. Methods are evaluated sequentially from top to bottom:</value>
+  </data>
+  <data name="Form_ProductMatchSetting_GroupMethods" xml:space="preserve">
+    <value>Active Matching Methods</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier1" xml:space="preserve">
+    <value>Tier 1: Barcode &amp; Product Code (Exact)</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier1_Desc" xml:space="preserve">
+    <value>100% exact lookup by barcode or internal product code. Directly assigns product if a matching barcode is found on the invoice (e.g. 8690123456789 or P-00123).</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier2" xml:space="preserve">
+    <value>Tier 2: Category &amp; Custom Stop-Words Stripping</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier2_Desc" xml:space="preserve">
+    <value>Strips database product categories (hierarchy) and user-specified custom words from invoice line names.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_CustomStopWords" xml:space="preserve">
+    <value>Custom Stop-words (comma-separated):</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier3" xml:space="preserve">
+    <value>Tier 3: Model / Part Number Normalization &amp; Brand Check</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier3_Desc" xml:space="preserve">
+    <value>Extracts alphanumeric model codes (e.g. 65M450RE, NFFD-179BGT) and brand name to match products with high precision.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier4" xml:space="preserve">
+    <value>Tier 4: Order-Independent Token Overlap</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier4_Desc" xml:space="preserve">
+    <value>Matches by word overlap percentage regardless of word ordering. Identifies products even if words appear in different sequences.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier5" xml:space="preserve">
+    <value>Tier 5: Fuzzy (Levenshtein) Similarity</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier5_Desc" xml:space="preserve">
+    <value>Tolerates minor typographical or scan recognition errors in OCR text using similarity percentage threshold.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_FuzzyPercent" xml:space="preserve">
+    <value>Fuzzy similarity threshold (%)</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier6" xml:space="preserve">
+    <value>Tier 6: Vendor Purchase History &amp; Mapping Memory</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier6_Desc" xml:space="preserve">
+    <value>Applies previously accepted product mappings and purchase history from this vendor.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_ResetDefaults" xml:space="preserve">
+    <value>Reset to Defaults (1, 3, 4, 6)</value>
+  </data>
+  <data name="Form_InvoiceWizard_MatchSettings" xml:space="preserve">
+    <value>Matching Settings</value>
   </data>
 </root>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6869,5 +6869,62 @@ Google hesabı: {1}</value>
   </data>
   <data name="Entity_AppSetting_GoogleToken" xml:space="preserve">
     <value>Google Token</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Title" xml:space="preserve">
+    <value>Məhsul Uyğunlaşdırma Ayarları</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Info" xml:space="preserve">
+    <value>Sənəddən (qaimə, faktura) AI ilə oxunan məhsul adlarının daxili kataloqla necə uyğunlaşdırılacağını təyin edin. Metodlar yuxarıdan aşağıya ardıcıl icra olunur:</value>
+  </data>
+  <data name="Form_ProductMatchSetting_GroupMethods" xml:space="preserve">
+    <value>Aktiv Uyğunlaşdırma Metodları</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier1" xml:space="preserve">
+    <value>Pillə 1: Ştrixkod və Artikul (Dəqiq kod)</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier1_Desc" xml:space="preserve">
+    <value>Ştrixkod və ya daxili artikul nömrəsi ilə 100% dəqiq axtarış aparır. Qaimədə ştrixkod mövcud olduqda məhsul birbaşa təyin edilir (məs: 8690123456789 və ya P-00123).</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier2" xml:space="preserve">
+    <value>Pillə 2: Kateqoriya və Fərdi Sözlərin Təmizlənməsi (Stop-words)</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier2_Desc" xml:space="preserve">
+    <value>Bazadakı daxili kateqoriyaları (iyerarxiya) və aşağıda qeyd olunan xüsusi sözləri qaimə adından təmizləyərək axtarır.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_CustomStopWords" xml:space="preserve">
+    <value>Fərdi Stop-words (vergüllə ayrılmış):</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier3" xml:space="preserve">
+    <value>Pillə 3: Model / Part Number normalizasiyası və brend yoxlaması</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier3_Desc" xml:space="preserve">
+    <value>Məhsulun model və ya hissə nömrəsini (məs: 65M450RE, NFFD-179BGT) və brend adını çıxararaq yüksək dəqiqliklə uyğunlaşdırır.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier4" xml:space="preserve">
+    <value>Pillə 4: Sıradan asılı olmayan Token Overlap (Söz kəsişməsi)</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier4_Desc" xml:space="preserve">
+    <value>Söz sırasından asılı olmadan OCR mətni ilə bazadakı sözlərin kəsişmə faizini yoxlayır. Sözlərin sırası fərqli olduqda belə tapır.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier5" xml:space="preserve">
+    <value>Pillə 5: Qeyri-səlis (Fuzzy / Levenshtein) oxşarlıq</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier5_Desc" xml:space="preserve">
+    <value>OCR oxunuşunda yaranan hərf və ya simvol xətalarını (çap və ya skan qüsurlarını) dözümlülük faizi ilə müqayisə edir.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_FuzzyPercent" xml:space="preserve">
+    <value>Fuzzy oxşarlıq həddi (%)</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier6" xml:space="preserve">
+    <value>Pillə 6: Təchizatçı Yaddaşı (Vendor Purchase History)</value>
+  </data>
+  <data name="Form_ProductMatchSetting_Tier6_Desc" xml:space="preserve">
+    <value>Bu təchizatçıdan əvvəllər qəbul edilmiş qaimə sətirlərindəki təsdiqlənmiş məhsul adlarını və alış tarixçəsini xatırlayaraq tətbiq edir.</value>
+  </data>
+  <data name="Form_ProductMatchSetting_ResetDefaults" xml:space="preserve">
+    <value>Standartlara Qaytar (1, 3, 4, 6)</value>
+  </data>
+  <data name="Form_InvoiceWizard_MatchSettings" xml:space="preserve">
+    <value>Uyğunlaşdırma Ayarları</value>
   </data>
 </root>

@@ -1,4 +1,4 @@
-# Foxoft Project Instructions & Development Rules
+﻿# Foxoft Project Instructions & Development Rules
 
 These persistent instructions and rules apply to the entire Foxoft solution repository across all projects (`Foxoft`, `Foxoft.BackupWorker`, `Foxoft.NotificationWorker`, `Setup`, `TestRunner`). All coding agents and developers must strictly adhere to these standards.
 
@@ -45,19 +45,66 @@ All user-facing UI text must be localizable. Never hardcode user-visible strings
 
 ---
 
-## 4. Resource Encoding & Character Integrity (Strict UTF-8)
+## 4. Resource Encoding & Character Integrity (Strict UTF-8 & Zero-Mojibake Protocol)
 
-Resource files containing Azerbaijani characters must maintain strict encoding integrity to prevent Mojibake (text corruption):
+Resource files (`.resx`, `.az.resx`), source files (`.cs`), and designer files containing Azerbaijani characters must maintain 100% encoding integrity at all times. Text corruption (Mojibake) is strictly prohibited.
 
-- **Target Characters**: Must reliably preserve Azerbaijani letters: `ə`, `ş`, `ğ`, `ö`, `ü`, `ı`, `ç`, `Ə`, `Ş`, `Ğ`, `Ö`, `Ü`, `İ`, `Ç`.
-- **Prohibited Encodings**: Never read, parse, or save `.resx` / `.az.resx` files with default ANSI, Windows-1252, or ASCII encodings.
-- **PowerShell File I/O**:
-  - Do not use bare `Get-Content` or `Set-Content` without explicit `-Encoding utf8`.
-  - Prefer robust .NET UTF-8 APIs:
-    - Reading: `[System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)`
-    - Writing: `[System.IO.File]::WriteAllText($path, $text, [System.Text.Encoding]::UTF8)`
-- **C# File I/O**: Always pass `System.Text.Encoding.UTF8` to stream readers, stream writers, or XML writers.
-- **Integrity Verification**: Ensure characters remain human-readable and are not corrupted (e.g., `Məşğulluq` must never become `MÉ™ÅŸÄŸulluq`, `mütləqdir` must never become `mÃ¼tlÉ™qdir`).
+### 4.1 Target Azerbaijani Characters
+Must reliably preserve:
+- **Lowercase**: `ə`, `ğ`, `ş`, `ç`, `ı`, `ö`, `ü`
+- **Uppercase**: `Ə`, `Ğ`, `Ş`, `Ç`, `I` (or `İ`), `Ö`, `Ü`
+
+### 4.2 Prohibited Practices & Root Causes of Mojibake (NEVER DO THIS)
+1. **Never pass literal Azerbaijani characters in PowerShell commands/scripts**:
+   - Windows PowerShell 5.1 runs under ANSI/OEM codepage (Windows-1254/1252/857).
+   - Any literal Azerbaijani string written directly in a `.ps1` file or passed through the command line is misparsed as ANSI before reaching .NET, producing double-encoded UTF-8 mojibake (e.g. `ə` -> `É™`, `ş` -> `ÅŸ`, `ğ` -> `ÄŸ`, `ç` -> `Ã§`, `ü` -> `Ã¼`, `ö` -> `Ã¶`, `Ə` -> `Æ `).
+2. **Never omit UTF-8 BOM on `.resx` files**:
+   - Visual Studio and Windows Forms resource generators expect UTF-8 with BOM (`EF BB BF`).
+   - Files saved without BOM or with ANSI encoding cause designer text corruption and build warnings.
+3. **Never use standard PowerShell file-writing cmdlets**:
+   - Do NOT use `Set-Content`, `Out-File`, `Add-Content`, or bare redirection (`>`).
+
+### 4.3 Mandatory Protocol for Adding / Modifying Azerbaijani Text
+
+#### Protocol A: Preferred Method — Built-in Agent Tools (`edit_file`, `write_file`)
+- **Always** use the agent's native `edit_file` or `write_file` tools to edit `.resx` and `.cs` files. These tools operate strictly in clean UTF-8 without shell codepage interference.
+
+#### Protocol B: Programmatic / Script Method — Pure Unicode Escape Sequences Only
+- If creating a script or C# helper to update `.resx` files or strings, **NEVER put raw Azerbaijani letters directly in the script code**.
+- **Always use standard Unicode escape sequences** (`\uXXXX`). Unicode escapes are pure 7-bit ASCII and can never be corrupted by any shell, editor, or compiler:
+  | Azerbaijani Letter | Unicode Escape | Azerbaijani Letter | Unicode Escape |
+  | :--- | :--- | :--- | :--- |
+  | `ə` | `\u0259` | `Ə` | `\u018F` |
+  | `ğ` | `\u011F` | `Ğ` | `\u011E` |
+  | `ş` | `\u015F` | `Ş` | `\u015E` |
+  | `ç` | `\u00E7` | `Ç` | `\u00C7` |
+  | `ı` (dotless) | `\u0131` | `İ` (dotted) | `\u0130` |
+  | `ö` | `\u00F6` | `Ö` | `\u00D6` |
+  | `ü` | `\u00FC` | `Ü` | `\u00DC` |
+
+#### Protocol C: Strict UTF-8 with BOM for .NET File I/O
+When writing `.resx` or `.cs` files via .NET APIs:
+- **Always specify UTF-8 with BOM**: `new System.Text.UTF8Encoding(true)`
+  - **C#**: `File.WriteAllText(path, text, new System.Text.UTF8Encoding(true));`
+  - **PowerShell**: `[System.IO.File]::WriteAllText($path, $text, (New-Object System.Text.UTF8Encoding($true)))`
+- **Reading**: `[System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)`
+
+### 4.4 Mandatory Post-Edit Verification (Zero-Tolerance Gate)
+After ANY task modifying `.resx` or `.cs` files, the agent MUST run this verification check before finishing:
+```powershell
+$text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)
+if ($text -match '[\u00C0-\u00FF][\u0080-\u00BF]|\u2122') {
+    throw "Mojibake detected in $path!"
+}
+```
+**Sanity Checklist**: Verify human-readable Azerbaijani words:
+- `Məhsul` (NOT `MÉ™hsul`)
+- `Uyğunlaşdırma` (NOT `UyÄŸunlaÅŸdÄ±rma`)
+- `Pillə` (NOT `PillÉ™`)
+- `Ştrixkod` (NOT `Åžtrixkod`)
+- `Əməliyyat` (NOT `Æ mÉ™liyyat`)
+- `Məbləğ` (NOT `MÉ™blÉ™ÄŸ`)
+- `Ölçü` (NOT `Ã–lÃ§Ã¼`)
 
 ---
 

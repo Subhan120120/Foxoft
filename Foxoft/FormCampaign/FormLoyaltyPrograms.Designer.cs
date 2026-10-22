@@ -112,7 +112,7 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(BBI_Refresh);
             ribbonPageGroup1.ItemLinks.Add(BBI_Delete);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "ÆmÉ™liyyat";
+            ribbonPageGroup1.Text = "Əməliyyat";
             // 
             // gridControl1
             // 

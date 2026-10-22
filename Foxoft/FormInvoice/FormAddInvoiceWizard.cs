@@ -84,6 +84,8 @@ namespace Foxoft
             groupControlLines.Text = Resources.Form_InvoiceWizard_Lines;
             btnAutoMatch.Caption = Resources.Form_InvoiceWizard_AutoMatch;
             btnAutoMatch.Hint = Resources.Form_InvoiceWizard_AutoMatch;
+            btnMatchSettings.Caption = Resources.Form_InvoiceWizard_MatchSettings;
+            btnMatchSettings.Hint = Resources.Form_ProductMatchSetting_Title;
 
             // Grid column captions
             colSelected.Caption = Resources.Form_InvoiceWizard_ColSelected;
@@ -455,7 +457,7 @@ namespace Foxoft
                     _ocrCts.Token);
 
                 // Auto-match products against database
-                InvoiceOcrProductMatcher.MatchLines(result.Lines, _productTypeArr);
+                InvoiceOcrProductMatcher.MatchLines(result.Lines, _productTypeArr, vendorCode: _invoiceHeader?.CurrAccCode);
 
                 // Populate UI
                 _linesList.Clear();
@@ -519,6 +521,7 @@ namespace Foxoft
             btnPasteImage.Enabled = !isProcessing;
             btnClearImage.Enabled = !isProcessing;
             btnAutoMatch.Enabled = !isProcessing;
+            btnMatchSettings.Enabled = !isProcessing;
             btnAddToInvoice.Enabled = !isProcessing;
 
             lblStatus.Text = isProcessing
@@ -528,9 +531,20 @@ namespace Foxoft
 
         private void btnAutoMatch_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            InvoiceOcrProductMatcher.MatchLines(_linesList, _productTypeArr);
+            InvoiceOcrProductMatcher.MatchLines(_linesList, _productTypeArr, vendorCode: _invoiceHeader?.CurrAccCode);
             gridViewLines.RefreshData();
             UpdateSummary();
+        }
+
+        private void btnMatchSettings_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            using FormProductMatchSetting form = new();
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                InvoiceOcrProductMatcher.MatchLines(_linesList, _productTypeArr, form.Options, _invoiceHeader?.CurrAccCode);
+                gridViewLines.RefreshData();
+                UpdateSummary();
+            }
         }
 
 

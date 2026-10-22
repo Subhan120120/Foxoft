@@ -188,5 +188,11 @@ namespace Foxoft
                 btn_TestOpenAI.Enabled = true;
             }
         }
+
+        private void btn_ProductMatchSettings_Click(object sender, EventArgs e)
+        {
+            using FormProductMatchSetting form = new();
+            form.ShowDialog(this);
+        }
     }
 }
