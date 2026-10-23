@@ -28,8 +28,6 @@ namespace Foxoft
             TextWriterTraceListener myTextListener = new(myFile);
             Trace.Listeners.Add(myTextListener);
          }
-
       }
-
    }
 }

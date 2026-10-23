@@ -1190,6 +1190,17 @@ namespace Foxoft
             if (targetInvoiceHeaderId == Guid.Empty)
                 return false;
 
+            TrInvoiceHeader targetHeader = efMethods.SelectInvoiceHeader(targetInvoiceHeaderId);
+            if (targetHeader?.IsReturn == true && !efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleReturn"))
+            {
+                XtraMessageBox.Show(
+                    Resources.Common_NoPermission,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return false;
+            }
+
             if (!TryAcquireInvoiceLockForEdit(targetInvoiceHeaderId))
                 return false;
 
@@ -2363,6 +2374,16 @@ namespace Foxoft
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
+                if (form.trInvoiceHeader?.IsReturn == true && !efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleReturn"))
+                {
+                    XtraMessageBox.Show(
+                        Resources.Common_NoPermission,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
                 if (TryAcquireInvoiceLockForEdit(form.trInvoiceHeader.InvoiceHeaderId))
                 {
                     if (trInvoiceHeader is not null && trInvoiceHeader.InvoiceHeaderId != Guid.Empty && trInvoiceHeader.InvoiceHeaderId != form.trInvoiceHeader.InvoiceHeaderId)

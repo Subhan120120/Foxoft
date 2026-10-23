@@ -48,6 +48,12 @@ namespace Foxoft
 
         public async Task OpenReturnInvoiceInSaleAsync(string docNum)
         {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleReturn"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission);
+                return;
+            }
+
             navigationFrame1.SelectedPage = navPage_Sale;
             bCI_invoice.Checked = true;
             bCI_return.Checked = false;
@@ -68,6 +74,8 @@ namespace Foxoft
             bool hasExpenseClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense")
                                 || efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DailyExpense");
             bCI_expenses.Visibility = hasExpenseClaim ? BarItemVisibility.Always : BarItemVisibility.Never;
+            bool hasReturnClaim = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleReturn");
+            bCI_return.Visibility = hasReturnClaim ? BarItemVisibility.Always : BarItemVisibility.Never;
         }
 
         private void bCI_CheckedChanged(object sender, ItemClickEventArgs e)
@@ -89,6 +97,12 @@ namespace Foxoft
 
         private void bCI_return_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleReturn"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission);
+                return;
+            }
+
             navigationFrame1.SelectedPage = navPage_Return;
             BarCheckItem clickedBtn = e.Item as BarCheckItem;
             foreach (BarItem control in toolbarFormManager1.Items)
