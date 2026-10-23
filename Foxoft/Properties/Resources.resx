@@ -6927,4 +6927,7 @@ Google account: {1}</value>
   <data name="Form_InvoiceWizard_MatchSettings" xml:space="preserve">
     <value>Matching Settings</value>
   </data>
+  <data name="Form_InvoiceWizard_PromptProcessOcr" xml:space="preserve">
+    <value>Image has been added. Do you want to read it with AI? ({0:N2} credits)</value>
+  </data>
 </root>

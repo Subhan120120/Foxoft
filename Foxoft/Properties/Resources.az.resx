@@ -6927,4 +6927,7 @@ Google hesabı: {1}</value>
   <data name="Form_InvoiceWizard_MatchSettings" xml:space="preserve">
     <value>Uyğunlaşdırma Ayarları</value>
   </data>
+  <data name="Form_InvoiceWizard_PromptProcessOcr" xml:space="preserve">
+    <value>Şəkil əlavə edildi. AI ilə oxudulsun? ({0:N2} kredit)</value>
+  </data>
 </root>

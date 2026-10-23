@@ -20339,6 +20339,12 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_InvoiceWizard_PromptProcessOcr {
+            get {
+                return ResourceManager.GetString("Form_InvoiceWizard_PromptProcessOcr", resourceCulture);
+            }
+        }
+
         public static string Form_InvoiceWizard_MatchSettings {
             get {
                 return ResourceManager.GetString("Form_InvoiceWizard_MatchSettings", resourceCulture);

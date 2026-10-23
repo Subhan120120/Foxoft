@@ -222,27 +222,17 @@ namespace Foxoft
 
         private void pictureEditInvoice_ImageChanged(object sender, EventArgs e)
         {
+            _currentImages.Clear();
+
             if (pictureEditInvoice.Image != null)
             {
-                if (_currentImages.Count == 0)
-                {
-                    try
-                    {
-                        byte[] bytes = ImageToPngBytes(pictureEditInvoice.Image);
-                        _currentImages.Clear();
-                        _currentImages.Add(bytes);
-                        double kb = bytes.Length / 1024.0;
-                        lblImageInfo.Text = string.Format(Resources.Form_InvoiceWizard_ImageInfo, pictureEditInvoice.Image.Width, pictureEditInvoice.Image.Height, kb);
-                    }
-                    catch
-                    {
-                        // ignore
-                    }
-                }
+                double kb = (pictureEditInvoice.Image.Width * pictureEditInvoice.Image.Height * 4) / 1024.0;
+                lblImageInfo.Text = string.Format(Resources.Form_InvoiceWizard_ImageInfo, pictureEditInvoice.Image.Width, pictureEditInvoice.Image.Height, kb);
+
+                PromptProcessOcrAfterImageAdded();
             }
             else
             {
-                _currentImages.Clear();
                 lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
             }
         }
@@ -360,12 +350,12 @@ namespace Foxoft
 
         private void SetImage(byte[] imageBytes, string sourceName)
         {
-            _currentImages.Clear();
-            _currentImages.Add(imageBytes);
-
             using var ms = new MemoryStream(imageBytes);
             using var bmp = new Bitmap(ms);
             pictureEditInvoice.Image = new Bitmap(bmp);
+
+            _currentImages.Clear();
+            _currentImages.Add(imageBytes);
 
             double kb = imageBytes.Length / 1024.0;
             lblImageInfo.Text = $"{sourceName} | " + string.Format(Resources.Form_InvoiceWizard_ImageInfo, bmp.Width, bmp.Height, kb);
@@ -399,6 +389,36 @@ namespace Foxoft
         }
 
         private async void btnProcessOcr_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            await ProcessOcrAsync();
+        }
+
+        private void PromptProcessOcrAfterImageAdded()
+        {
+            if (_isProcessing)
+                return;
+
+            BeginInvoke(new Action(async () =>
+            {
+                if (_isProcessing || pictureEditInvoice.Image == null || IsDisposed)
+                    return;
+
+                string msg = string.Format(Resources.Form_InvoiceWizard_PromptProcessOcr, CreditService.OcrCreditCost);
+                DialogResult dialogResult = XtraMessageBox.Show(
+                    this,
+                    msg,
+                    Resources.Common_Confirm,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    await ProcessOcrAsync();
+                }
+            }));
+        }
+
+        private async Task ProcessOcrAsync()
         {
             if (_isProcessing)
                 return;
