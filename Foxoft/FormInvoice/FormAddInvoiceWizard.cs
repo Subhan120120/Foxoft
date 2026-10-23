@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -30,6 +30,7 @@ namespace Foxoft
         private readonly InvoiceOcrService _ocrService = new();
         private CancellationTokenSource? _ocrCts;
         private bool _isProcessing;
+        private bool _isRotatingImage;
 
         public InvoiceOcrResult? Result { get; private set; }
         public bool ApplyHeaderToInvoice => chkApplyHeader.Checked;
@@ -69,6 +70,14 @@ namespace Foxoft
 
             btnProcessOcr.Caption = Resources.Form_InvoiceWizard_ProcessOcr;
             btnProcessOcr.Hint = $"{Resources.Form_InvoiceWizard_ProcessOcr} ({CreditService.OcrCreditCost:N2} {Resources.Form_NotificationCenter_Filter_Credit})";
+
+            btnRotateLeft.Caption = Resources.Form_Image_RotateLeft;
+            btnRotateLeft.Hint = $"{Resources.Form_Image_RotateLeft} (Ctrl+L)";
+            btnRotateLeft.Enabled = pictureEditInvoice.Image != null;
+
+            btnRotateRight.Caption = Resources.Form_Image_RotateRight;
+            btnRotateRight.Hint = $"{Resources.Form_Image_RotateRight} (Ctrl+R)";
+            btnRotateRight.Enabled = pictureEditInvoice.Image != null;
 
             if (pictureEditInvoice.Image == null)
                 lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
@@ -144,6 +153,16 @@ namespace Foxoft
             if (e.Control && e.KeyCode == Keys.V)
             {
                 PasteImageFromClipboard();
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.L)
+            {
+                RotateImage(RotateFlipType.Rotate270FlipNone);
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.R)
+            {
+                RotateImage(RotateFlipType.Rotate90FlipNone);
                 e.Handled = true;
             }
         }
@@ -222,7 +241,13 @@ namespace Foxoft
 
         private void pictureEditInvoice_ImageChanged(object sender, EventArgs e)
         {
+            if (_isRotatingImage)
+                return;
+
             _currentImages.Clear();
+
+            btnRotateLeft.Enabled = pictureEditInvoice.Image != null;
+            btnRotateRight.Enabled = pictureEditInvoice.Image != null;
 
             if (pictureEditInvoice.Image != null)
             {
@@ -366,6 +391,56 @@ namespace Foxoft
             _currentImages.Clear();
             pictureEditInvoice.Image = null;
             lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
+        }
+
+        private void btnRotateLeft_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            RotateImage(RotateFlipType.Rotate270FlipNone);
+        }
+
+        private void btnRotateRight_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            RotateImage(RotateFlipType.Rotate90FlipNone);
+        }
+
+        private void RotateImage(RotateFlipType rotateFlipType)
+        {
+            if (pictureEditInvoice.Image == null || _isProcessing)
+                return;
+
+            try
+            {
+                Image rotated = (Image)pictureEditInvoice.Image.Clone();
+                rotated.RotateFlip(rotateFlipType);
+
+                byte[] rotatedBytes = ImageToPngBytes(rotated);
+
+                _currentImages.Clear();
+                _currentImages.Add(rotatedBytes);
+
+                _isRotatingImage = true;
+                try
+                {
+                    Image? oldImg = pictureEditInvoice.Image;
+                    pictureEditInvoice.Image = rotated;
+                    oldImg?.Dispose();
+                }
+                finally
+                {
+                    _isRotatingImage = false;
+                }
+
+                double kb = rotatedBytes.Length / 1024.0;
+                lblImageInfo.Text = string.Format(Resources.Form_InvoiceWizard_ImageInfo, rotated.Width, rotated.Height, kb);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_Image_RotateError, ex.Message),
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void pictureEditInvoice_DragEnter(object sender, DragEventArgs e)
@@ -559,6 +634,8 @@ namespace Foxoft
             btnSelectImage.Enabled = !isProcessing;
             btnPasteImage.Enabled = !isProcessing;
             btnClearImage.Enabled = !isProcessing;
+            btnRotateLeft.Enabled = !isProcessing && pictureEditInvoice.Image != null;
+            btnRotateRight.Enabled = !isProcessing && pictureEditInvoice.Image != null;
             btnAutoMatch.Enabled = !isProcessing;
             btnMatchSettings.Enabled = !isProcessing;
             btnAddToInvoice.Enabled = !isProcessing;

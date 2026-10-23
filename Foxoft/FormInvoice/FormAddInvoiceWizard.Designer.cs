@@ -1,4 +1,4 @@
-﻿namespace Foxoft
+namespace Foxoft
 {
     partial class FormAddInvoiceWizard
     {
@@ -24,6 +24,8 @@
             btnSelectImage = new DevExpress.XtraBars.BarButtonItem();
             btnPasteImage = new DevExpress.XtraBars.BarButtonItem();
             btnClearImage = new DevExpress.XtraBars.BarButtonItem();
+            btnRotateLeft = new DevExpress.XtraBars.BarButtonItem();
+            btnRotateRight = new DevExpress.XtraBars.BarButtonItem();
             btnProcessOcr = new DevExpress.XtraBars.BarButtonItem();
             standaloneBarDockControlImage = new DevExpress.XtraBars.StandaloneBarDockControl();
             barLinesTools = new DevExpress.XtraBars.Bar();
@@ -128,8 +130,8 @@
             barManagerImage.DockControls.Add(standaloneBarDockControlImage);
             barManagerImage.DockControls.Add(standaloneBarDockControlLines);
             barManagerImage.Form = this;
-            barManagerImage.Items.AddRange(new DevExpress.XtraBars.BarItem[] { btnSelectImage, btnPasteImage, btnClearImage, btnProcessOcr, btnAutoMatch, btnMatchSettings });
-            barManagerImage.MaxItemId = 6;
+            barManagerImage.Items.AddRange(new DevExpress.XtraBars.BarItem[] { btnSelectImage, btnPasteImage, btnRotateLeft, btnRotateRight, btnClearImage, btnProcessOcr, btnAutoMatch, btnMatchSettings });
+            barManagerImage.MaxItemId = 8;
             // 
             // barImageTools
             // 
@@ -138,7 +140,7 @@
             barImageTools.DockCol = 0;
             barImageTools.DockRow = 0;
             barImageTools.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
-            barImageTools.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(btnSelectImage), new DevExpress.XtraBars.LinkPersistInfo(btnPasteImage), new DevExpress.XtraBars.LinkPersistInfo(btnClearImage), new DevExpress.XtraBars.LinkPersistInfo(btnProcessOcr) });
+            barImageTools.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(btnSelectImage), new DevExpress.XtraBars.LinkPersistInfo(btnPasteImage), new DevExpress.XtraBars.LinkPersistInfo(btnRotateLeft), new DevExpress.XtraBars.LinkPersistInfo(btnRotateRight), new DevExpress.XtraBars.LinkPersistInfo(btnClearImage), new DevExpress.XtraBars.LinkPersistInfo(btnProcessOcr) });
             barImageTools.OptionsBar.AllowQuickCustomization = false;
             barImageTools.OptionsBar.DrawBorder = false;
             barImageTools.OptionsBar.DrawDragBorder = false;
@@ -175,6 +177,28 @@
             btnClearImage.Name = "btnClearImage";
             btnClearImage.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             btnClearImage.ItemClick += btnClearImage_ItemClick;
+            // 
+            // btnRotateLeft
+            // 
+            btnRotateLeft.Caption = "Rotate Left";
+            btnRotateLeft.Id = 6;
+            btnRotateLeft.ImageOptions.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/diagramicons/rotate_left90.svg");
+            btnRotateLeft.ImageOptions.SvgImageSize = new Size(16, 16);
+            btnRotateLeft.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.L);
+            btnRotateLeft.Name = "btnRotateLeft";
+            btnRotateLeft.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            btnRotateLeft.ItemClick += btnRotateLeft_ItemClick;
+            // 
+            // btnRotateRight
+            // 
+            btnRotateRight.Caption = "Rotate Right";
+            btnRotateRight.Id = 7;
+            btnRotateRight.ImageOptions.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/diagramicons/rotate_right90.svg");
+            btnRotateRight.ImageOptions.SvgImageSize = new Size(16, 16);
+            btnRotateRight.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.R);
+            btnRotateRight.Name = "btnRotateRight";
+            btnRotateRight.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            btnRotateRight.ItemClick += btnRotateRight_ItemClick;
             // 
             // btnProcessOcr
             // 
@@ -831,6 +855,8 @@
         private DevExpress.XtraBars.BarButtonItem btnSelectImage;
         private DevExpress.XtraBars.BarButtonItem btnPasteImage;
         private DevExpress.XtraBars.BarButtonItem btnClearImage;
+        private DevExpress.XtraBars.BarButtonItem btnRotateLeft;
+        private DevExpress.XtraBars.BarButtonItem btnRotateRight;
         private DevExpress.XtraBars.BarButtonItem btnProcessOcr;
         private DevExpress.XtraBars.StandaloneBarDockControl standaloneBarDockControlImage;
         private DevExpress.XtraBars.BarDockControl barDockControlTop;
