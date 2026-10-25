@@ -94,29 +94,11 @@ namespace Foxoft.Models
                     UserDesc = "Administrator",
                     IsDisabled = false,
                     RowGuid = new System.Guid("11111111-1111-1111-1111-111111111111")
-                },
-                new DcUser
-                {
-                    UserName = "C-000001",
-                    Password = "123",
-                    UserDesc = "Administrator",
-                    IsDisabled = false,
-                    RowGuid = new System.Guid("22222222-2222-2222-2222-222222222222")
-                },
-                new DcUser
-                {
-                    UserName = "CA-1",
-                    Password = "123",
-                    UserDesc = "Administrator",
-                    IsDisabled = false,
-                    RowGuid = new System.Guid("33333333-3333-3333-3333-333333333333")
                 }
             );
 
             modelBuilder.Entity<TrUserCompany>().HasData(
-                new TrUserCompany { UserCompanyId = 1, CompanyCode = "Company01", UserName = "admin" },
-                new TrUserCompany { UserCompanyId = 2, CompanyCode = "Company01", UserName = "C-000001" },
-                new TrUserCompany { UserCompanyId = 3, CompanyCode = "Company01", UserName = "CA-1" }
+                new TrUserCompany { UserCompanyId = 1, CompanyCode = "Company01", UserName = "admin" }
             );
         }
 
