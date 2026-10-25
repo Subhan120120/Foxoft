@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6935,5 +6935,71 @@ Google account: {1}</value>
   </data>
   <data name="Form_InvoiceWizard_PromptProcessOcr" xml:space="preserve">
     <value>Image has been added. Do you want to read it with AI? ({0:N2} credits)</value>
+  </data>
+  <data name="Form_ProductFeature_SearchWithAi" xml:space="preserve">
+    <value>Fill with AI</value>
+  </data>
+  <data name="Form_ProductFeature_CancelAi" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Form_ProductFeature_SearchQuery" xml:space="preserve">
+    <value>Search Query / Product Name</value>
+  </data>
+  <data name="Form_ProductFeature_CostHint" xml:space="preserve">
+    <value>Cost: {0:N2} ₼</value>
+  </data>
+  <data name="Form_ProductFeature_ColOrder" xml:space="preserve">
+    <value>№</value>
+  </data>
+  <data name="Form_ProductFeature_ColFeatureType" xml:space="preserve">
+    <value>Feature Type</value>
+  </data>
+  <data name="Form_ProductFeature_ColAiResult" xml:space="preserve">
+    <value>AI Result (Web)</value>
+  </data>
+  <data name="Form_ProductFeature_ColStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Form_ProductFeature_ColMatchedFeature" xml:space="preserve">
+    <value>Selected Feature</value>
+  </data>
+  <data name="Form_ProductFeature_ColAction" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Form_ProductFeature_BtnCreate" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Form_ProductFeature_StatusMatched" xml:space="preserve">
+    <value>Matched</value>
+  </data>
+  <data name="Form_ProductFeature_StatusNotFound" xml:space="preserve">
+    <value>Not Found</value>
+  </data>
+  <data name="Form_ProductFeature_StatusEmpty" xml:space="preserve">
+    <value>Not Set</value>
+  </data>
+  <data name="Form_ProductFeature_StatusSearching" xml:space="preserve">
+    <value>Searching web with AI...</value>
+  </data>
+  <data name="Form_ProductFeature_SuccessSummary" xml:space="preserve">
+    <value>Product features successfully retrieved and matched.</value>
+  </data>
+  <data name="Form_ProductFeature_NoFeaturesFound" xml:space="preserve">
+    <value>No features found for this product.</value>
+  </data>
+  <data name="Form_ProductFeature_SummaryStats" xml:space="preserve">
+    <value>Total: {0} | Matched: {1} | Needs creation: {2}</value>
+  </data>
+  <data name="Form_ProductFeature_SelectFeatureHint" xml:space="preserve">
+    <value>[Select feature]</value>
+  </data>
+  <data name="Form_ProductFeature_PromptConfirmAi" xml:space="preserve">
+    <value>Search product features on web using AI?</value>
+  </data>
+  <data name="Form_ProductFeature_ApiKeyRequired" xml:space="preserve">
+    <value>AI API key is required.</value>
+  </data>
+  <data name="Form_ProductFeature_AllAssigned" xml:space="preserve">
+    <value>All product features are already assigned.</value>
   </data>
 </root>

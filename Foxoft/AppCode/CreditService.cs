@@ -9,10 +9,12 @@ namespace Foxoft.AppCode
         // Tariff / Cost Constants
         public const decimal WhatsAppCost = 0.05m;
         public const decimal OcrCreditCost = 0.10m;
+        public const decimal ProductFeatureAiCost = 0.05m;
 
         // Service Type Constants (matches TrCredit.ServiceType)
         public const string ServiceTypeWhatsApp = "WhatsApp";
         public const string ServiceTypeAiOcr = "AI OCR";
+        public const string ServiceTypeProductFeatureAi = "AI Feature";
 
         #region Balance Inquiries
 
@@ -60,6 +62,17 @@ namespace Foxoft.AppCode
             return HasEnoughOcrBalance(db, requiredAmount);
         }
 
+        public static bool HasEnoughFeatureAiBalance(subContext db, decimal requiredAmount = ProductFeatureAiCost)
+        {
+            return HasEnoughBalance(db, requiredAmount);
+        }
+
+        public static bool HasEnoughFeatureAiBalance(decimal requiredAmount = ProductFeatureAiCost)
+        {
+            using var db = new subContext();
+            return HasEnoughFeatureAiBalance(db, requiredAmount);
+        }
+
         #endregion
 
         #region Usage Creation
@@ -85,6 +98,12 @@ namespace Foxoft.AppCode
         {
             string desc = !string.IsNullOrWhiteSpace(description) ? description : "Qaimə AI OCR oxunuşu";
             return CreateUsage(ServiceTypeAiOcr, cost, desc);
+        }
+
+        public static TrCredit CreateFeatureAiUsage(decimal cost = ProductFeatureAiCost, string? description = null)
+        {
+            string desc = !string.IsNullOrWhiteSpace(description) ? description : "Məhsul özəlliklərinin AI axtarışı";
+            return CreateUsage(ServiceTypeProductFeatureAi, cost, desc);
         }
 
         #endregion
@@ -129,6 +148,12 @@ namespace Foxoft.AppCode
             return TryDeduct(out errorMessage, ServiceTypeAiOcr, cost, desc);
         }
 
+        public static bool TryDeductFeatureAiCredit(out string? errorMessage, decimal cost = ProductFeatureAiCost, string? description = null)
+        {
+            string desc = !string.IsNullOrWhiteSpace(description) ? description : "Məhsul özəlliklərinin AI axtarışı";
+            return TryDeduct(out errorMessage, ServiceTypeProductFeatureAi, cost, desc);
+        }
+
         #endregion
 
         #region Refund
@@ -164,6 +189,12 @@ namespace Foxoft.AppCode
         {
             string desc = !string.IsNullOrWhiteSpace(description) ? description : "AI OCR geri qaytarılma";
             Refund(ServiceTypeAiOcr, cost, desc);
+        }
+
+        public static void RefundFeatureAiCredit(decimal cost = ProductFeatureAiCost, string? description = null)
+        {
+            string desc = !string.IsNullOrWhiteSpace(description) ? description : "Məhsul özəllikləri AI ləğv edildi (kredit qaytarıldı)";
+            Refund(ServiceTypeProductFeatureAi, cost, desc);
         }
 
         #endregion

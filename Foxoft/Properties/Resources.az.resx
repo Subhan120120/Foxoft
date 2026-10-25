@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6935,5 +6935,71 @@ Google hesabı: {1}</value>
   </data>
   <data name="Form_InvoiceWizard_PromptProcessOcr" xml:space="preserve">
     <value>Şəkil əlavə edildi. AI ilə oxudulsun? ({0:N2} kredit)</value>
+  </data>
+  <data name="Form_ProductFeature_SearchWithAi" xml:space="preserve">
+    <value>AI ilə doldur</value>
+  </data>
+  <data name="Form_ProductFeature_CancelAi" xml:space="preserve">
+    <value>Dayandır</value>
+  </data>
+  <data name="Form_ProductFeature_SearchQuery" xml:space="preserve">
+    <value>Axtarış sorğusu / Məhsul adı</value>
+  </data>
+  <data name="Form_ProductFeature_CostHint" xml:space="preserve">
+    <value>Xidmət haqqı: {0:N2} ₼</value>
+  </data>
+  <data name="Form_ProductFeature_ColOrder" xml:space="preserve">
+    <value>№</value>
+  </data>
+  <data name="Form_ProductFeature_ColFeatureType" xml:space="preserve">
+    <value>Özəllik Növü</value>
+  </data>
+  <data name="Form_ProductFeature_ColAiResult" xml:space="preserve">
+    <value>AI Nəticəsi (Web)</value>
+  </data>
+  <data name="Form_ProductFeature_ColStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Form_ProductFeature_ColMatchedFeature" xml:space="preserve">
+    <value>Seçilmiş Özəllik</value>
+  </data>
+  <data name="Form_ProductFeature_ColAction" xml:space="preserve">
+    <value>Əməliyyat</value>
+  </data>
+  <data name="Form_ProductFeature_BtnCreate" xml:space="preserve">
+    <value>Yarat</value>
+  </data>
+  <data name="Form_ProductFeature_StatusMatched" xml:space="preserve">
+    <value>Uyğunlaşdı</value>
+  </data>
+  <data name="Form_ProductFeature_StatusNotFound" xml:space="preserve">
+    <value>Tapılmadı</value>
+  </data>
+  <data name="Form_ProductFeature_StatusEmpty" xml:space="preserve">
+    <value>Təyin edilməyib</value>
+  </data>
+  <data name="Form_ProductFeature_StatusSearching" xml:space="preserve">
+    <value>AI ilə internetdə axtarılır...</value>
+  </data>
+  <data name="Form_ProductFeature_SuccessSummary" xml:space="preserve">
+    <value>Məhsul özəllikləri uğurla tapıldı və uyğunlaşdırıldı.</value>
+  </data>
+  <data name="Form_ProductFeature_NoFeaturesFound" xml:space="preserve">
+    <value>Məhsula uyğun özəlliklər tapılmadı.</value>
+  </data>
+  <data name="Form_ProductFeature_SummaryStats" xml:space="preserve">
+    <value>Cəmi: {0} | Uyğunlaşdı: {1} | Yaradılmalıdır: {2}</value>
+  </data>
+  <data name="Form_ProductFeature_SelectFeatureHint" xml:space="preserve">
+    <value>[Özəllik seçin]</value>
+  </data>
+  <data name="Form_ProductFeature_PromptConfirmAi" xml:space="preserve">
+    <value>Məhsul özəllikləri internetdə AI vasitəsilə axtarılsın?</value>
+  </data>
+  <data name="Form_ProductFeature_ApiKeyRequired" xml:space="preserve">
+    <value>AI API açarı tələb olunur.</value>
+  </data>
+  <data name="Form_ProductFeature_AllAssigned" xml:space="preserve">
+    <value>Bütün məhsul özəllikləri artıq təyin edilib.</value>
   </data>
 </root>

@@ -1,4 +1,4 @@
-﻿using DevExpress.Mvvm.Native;
+using DevExpress.Mvvm.Native;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -34,6 +34,7 @@ namespace Foxoft
         string[] SpecialColumnsHide = new string[] { };
         LayoutControlItem Control_Id = new();
         LayoutControlItem Control_2 = new();
+        private T? _templateEntity;
 
         public FormCommon(string processCode, bool isNew, string fieldName_Id)
         {
@@ -61,6 +62,12 @@ namespace Foxoft
         {
             this.FieldName_2 = fieldName_2;
             this.Value_2 = value_2;
+        }
+
+        public FormCommon(string processCode, bool isNew, string fieldName_Id, object value_Id, string fieldName_2, object value_2, string[]? specialColumnsHide, T? templateEntity)
+            : this(processCode, isNew, fieldName_Id, value_Id, fieldName_2, value_2, specialColumnsHide)
+        {
+            _templateEntity = templateEntity;
         }
 
         private void FormCommon_Load(object sender, EventArgs e)
@@ -223,13 +230,29 @@ namespace Foxoft
                 property_2?.SetValue(Entity, value_2);
             }
 
+            if (_templateEntity != null && Entity != null)
+            {
+                foreach (var prop in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                {
+                    if (prop.CanRead && prop.CanWrite && prop.Name != FieldName_Id && prop.Name != FieldName_2)
+                    {
+                        var val = prop.GetValue(_templateEntity);
+                        if (val != null)
+                            prop.SetValue(Entity, val);
+                    }
+                }
+            }
+
             string tableName = dbContext.Model.FindEntityType(typeof(T)).GetTableName();
 
             string NewDocNum = efMethods.GetNextDocNum(false, ProcessCode, FieldName_Id, tableName, 4);
 
             bindingSource1.DataSource = Entity;
 
-            Control_Id.Control.Text = NewDocNum;
+            if (Value_Id != null && !string.IsNullOrWhiteSpace(Value_Id.ToString()))
+                Control_Id.Control.Text = Value_Id.ToString();
+            else
+                Control_Id.Control.Text = NewDocNum;
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)

@@ -20357,6 +20357,138 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_ProductFeature_SearchWithAi {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_SearchWithAi", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_CancelAi {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_CancelAi", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_SearchQuery {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_SearchQuery", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_CostHint {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_CostHint", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_ColOrder {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_ColOrder", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_ColFeatureType {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_ColFeatureType", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_ColAiResult {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_ColAiResult", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_ColStatus {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_ColStatus", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_ColMatchedFeature {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_ColMatchedFeature", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_ColAction {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_ColAction", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_BtnCreate {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_BtnCreate", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_StatusMatched {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_StatusMatched", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_StatusNotFound {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_StatusNotFound", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_StatusEmpty {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_StatusEmpty", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_StatusSearching {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_StatusSearching", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_SuccessSummary {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_SuccessSummary", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_NoFeaturesFound {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_NoFeaturesFound", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_SummaryStats {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_SummaryStats", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_SelectFeatureHint {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_SelectFeatureHint", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_PromptConfirmAi {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_PromptConfirmAi", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_ApiKeyRequired {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_ApiKeyRequired", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_AllAssigned {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_AllAssigned", resourceCulture);
+            }
+        }
+
         public static string Form_InvoiceWizard_MatchSettings {
             get {
                 return ResourceManager.GetString("Form_InvoiceWizard_MatchSettings", resourceCulture);

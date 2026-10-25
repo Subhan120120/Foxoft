@@ -920,9 +920,7 @@ namespace Foxoft.Models
                new TrCurrAccRole { CurrAccRoleId = 1, CurrAccCode = "C-000001", RoleCode = "Admin" });
 
             modelBuilder.Entity<TrUserStore>().HasData(
-                new TrUserStore { UserStoreId = 1, UserName = "admin", StoreCode = "MGZ01" },
-                new TrUserStore { UserStoreId = 2, UserName = "C-000001", StoreCode = "MGZ01" },
-                new TrUserStore { UserStoreId = 3, UserName = "CA-1", StoreCode = "MGZ01" }
+                new TrUserStore { UserStoreId = 1, UserName = "admin", StoreCode = "MGZ01" }
             );
 
             modelBuilder.Entity<TrRoleClaim>().HasData(

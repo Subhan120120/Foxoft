@@ -1,4 +1,4 @@
-﻿using DevExpress.CodeParser;
+using DevExpress.CodeParser;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
@@ -3064,6 +3064,11 @@ END
         }
 
         public int UpdateDcFeature_Value(byte featureTypeId, string productCode, string value)
+        {
+            return UpdateDcFeature_Value((int)featureTypeId, productCode, value);
+        }
+
+        public int UpdateDcFeature_Value(int featureTypeId, string productCode, string value)
         {
             using subContext db = new();
             TrProductFeature pf = db.TrProductFeatures.FirstOrDefault(x => x.FeatureTypeId == featureTypeId && x.ProductCode == productCode);

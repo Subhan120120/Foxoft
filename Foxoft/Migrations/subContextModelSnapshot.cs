@@ -40,6 +40,11 @@ namespace Foxoft.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("1");
 
+                    b.Property<bool>("AutoCreateGoogleContact")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
+
                     b.Property<bool>("AutoPrint")
                         .HasColumnType("bit");
 
@@ -96,6 +101,12 @@ namespace Foxoft.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
+
+                    b.Property<string>("OpenAIApiKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OpenAIModel")
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<byte>("OverpaymentMode")
                         .HasColumnType("tinyint");
@@ -188,6 +199,7 @@ namespace Foxoft.Migrations
                             Id = 1,
                             AppFontSize = 10m,
                             AutoBackupEnabled = true,
+                            AutoCreateGoogleContact = false,
                             AutoPrint = false,
                             AutoSave = false,
                             AutoSendIntervalSeconds = 30,
@@ -198,6 +210,7 @@ namespace Foxoft.Migrations
                             InstallmentReminderDaysBefore = 2,
                             LockReturnDocument = false,
                             NotifyBalanceWarningLevel = false,
+                            OpenAIModel = "gpt-4o",
                             OverpaymentMode = (byte)0,
                             POSMergeSameProducts = false,
                             POSShowQuantityDialog = false,
@@ -948,6 +961,71 @@ namespace Foxoft.Migrations
                     b.HasKey("CurrAccFeatureTypeId");
 
                     b.ToTable("DcCurrAccFeatureTypes");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcCurrAccRelationType", b =>
+                {
+                    b.Property<int>("RelationTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RelationTypeId"));
+
+                    b.Property<string>("RelationTypeName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("RelationTypeId");
+
+                    b.ToTable("DcCurrAccRelationTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            RelationTypeId = 1,
+                            RelationTypeName = "Qardaşı"
+                        },
+                        new
+                        {
+                            RelationTypeId = 2,
+                            RelationTypeName = "Valideyni"
+                        },
+                        new
+                        {
+                            RelationTypeId = 3,
+                            RelationTypeName = "Övladı"
+                        },
+                        new
+                        {
+                            RelationTypeId = 4,
+                            RelationTypeName = "Həyat yoldaşı"
+                        },
+                        new
+                        {
+                            RelationTypeId = 5,
+                            RelationTypeName = "Filialı"
+                        },
+                        new
+                        {
+                            RelationTypeId = 6,
+                            RelationTypeName = "Ana şirkəti"
+                        },
+                        new
+                        {
+                            RelationTypeId = 7,
+                            RelationTypeName = "Zamin"
+                        },
+                        new
+                        {
+                            RelationTypeId = 8,
+                            RelationTypeName = "Nümayəndə"
+                        },
+                        new
+                        {
+                            RelationTypeId = 9,
+                            RelationTypeName = "Digər"
+                        });
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAccType", b =>
@@ -5616,7 +5694,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CurrAccList",
-                            ReportQuery = "select DcCurrAccs.CurrAccCode\n, CurrAccDesc\n, Balance = ISNULL(SUM(CAST(Amount as money)), 0)\n, PhoneNum\n, IsVIP\n, CurrAccTypeCode\n, PersonalTypeCode\n, IsDisabled\nfrom \nDcCurrAccs \nleft join \n(\n	select CurrAccCode\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\n	from TrInvoiceLines il\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS')\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\n\n	UNION ALL \n	\n	select CurrAccCode\n	, Amount = PaymentLoc -- 200 usd\n	from TrPaymentLines pl\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	\n	where 1=1 AND pl.PaymentTypeCode != 4\n	--and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\n\n	UNION ALL\n\n	select CurrAccCode = prh.CurrAccCode\n	, Amount = prh.NetSalary\n	from TrPayrollHeaders prh\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\n	where 1 = 1\n	--and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\nwhere 1 = 1 \n	and IsDisabled = 0\n	--and DcCurrAccs.IsVIP = 1 \n	--and balance.CurrAccCode = '1403'\ngroup by DcCurrAccs.CurrAccCode\n, CurrAccDesc\n, PhoneNum\n, IsVIP\n, CurrAccTypeCode\n, IsDisabled\n, PersonalTypeCode\norder by CurrAccDesc",
+                            ReportQuery = "select DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, Balance = ISNULL(SUM(CAST(Amount as money)), 0)\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\n, PersonalTypeCode\r\n, IsDisabled\r\nfrom \r\nDcCurrAccs \r\nleft join \r\n(\r\n	select CurrAccCode\r\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS')\r\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL \r\n	\r\n	select CurrAccCode\r\n	, Amount = PaymentLoc -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	\r\n	where 1=1 AND pl.PaymentTypeCode != 4\r\n	--and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL\r\n\r\n	select CurrAccCode = prh.CurrAccCode\r\n	, Amount = (case \r\n		when prl.PayrollItemType in (1, 2, 3) then prl.AmountLoc \r\n		when prl.PayrollItemType in (4, 5, 6) then -prl.AmountLoc \r\n		else 0 end)\r\n	from TrPayrollLines prl\r\n	inner join TrPayrollHeaders prh on prl.PayrollHeaderId = prh.Id\r\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\n	where 1 = 1\r\n	--and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\r\nwhere 1 = 1 \r\n	and IsDisabled = 0\r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\n, IsDisabled\r\n, PersonalTypeCode\r\norder by CurrAccDesc",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -5686,7 +5764,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_PaymentReport",
-                            ReportQuery = "\r\n\r\nselect ph.*\r\n	, ProcessDesc\r\n	, pl.PaymentLineId\r\n	, pl.PaymentTypeCode\r\n	, pl.Payment\r\n	, pl.PaymentLoc\r\n	, pl.CurrencyCode\r\n	, pl.ExchangeRate\r\n	, pl.LineDescription\r\n	, pl.CashRegisterCode\r\n	, pl.PaymentMethodId\r\n	, cari.CurrAccDesc\r\n	, cari.PhoneNum\r\n	, CashRegisterDesc = kassa.CurrAccDesc\r\n	, DcPaymentTypes.PaymentTypeDesc\r\n	, CurrAccBalance = dbo.CurrAccBalance(ph.CurrAccCode, CAST(ph.OperationDate as Datetime) + CAST(ph.OperationTime as Datetime))\r\n	\r\n	, StorePhoneNum = store.PhoneNum\r\n	, StoreAddress = store.Address\r\n\r\n	from TrPaymentLines pl \r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n	left join DcPaymentTypes on DcPaymentTypes.PaymentTypeCode = pl.PaymentTypeCode\r\n	left join DcCurrAccs cari on cari.CurrAccCode = ph.CurrAccCode\r\n	left join DcCurrAccs kassa on kassa.CurrAccCode = pl.CashRegisterCode\r\n	left join DcProcesses on DcProcesses.ProcessCode = ph.ProcessCode\r\n	left join DcCurrAccs store on store.CurrAccCode = ph.StoreCode\r\n	left join DcCurrencies on DcCurrencies.CurrencyCode = pl.CurrencyCode\r\n\r\n	where ph.PaymentHeaderId = @PaymentHeaderId\n	order by DocumentDate\n",
+                            ReportQuery = "\r\n\r\nselect ph.*\r\n	, ProcessDesc\r\n	, pl.PaymentLineId\r\n	, pl.PaymentTypeCode\r\n	, pl.Payment\r\n	, pl.PaymentLoc\r\n	, pl.CurrencyCode\r\n	, pl.ExchangeRate\r\n	, pl.LineDescription\r\n	, pl.CashRegisterCode\r\n	, pl.PaymentMethodId\r\n	, cari.CurrAccDesc\r\n	, cari.PhoneNum\r\n	, CashRegisterDesc = kassa.CurrAccDesc\r\n	, DcPaymentTypes.PaymentTypeDesc\r\n	, CurrAccBalance = dbo.CurrAccBalance(ph.CurrAccCode, CAST(ph.OperationDate as Datetime) + CAST(ph.OperationTime as Datetime))\r\n	\r\n	, StorePhoneNum = store.PhoneNum\r\n	, StoreAddress = store.Address\r\n\r\n	from TrPaymentLines pl \r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n	left join DcPaymentTypes on DcPaymentTypes.PaymentTypeCode = pl.PaymentTypeCode\r\n	left join DcCurrAccs cari on cari.CurrAccCode = ph.CurrAccCode\r\n	left join DcCurrAccs kassa on kassa.CurrAccCode = pl.CashRegisterCode\r\n	left join DcProcesses on DcProcesses.ProcessCode = ph.ProcessCode\r\n	left join DcCurrAccs store on store.CurrAccCode = ph.StoreCode\r\n	left join DcCurrencies on DcCurrencies.CurrencyCode = pl.CurrencyCode\r\n\r\n	where ph.PaymentHeaderId = @PaymentHeaderId\r\n	order by DocumentDate\r\n",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -5696,7 +5774,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_PayrollReport",
-                            ReportQuery = "select prh.Id\n	, prh.CurrAccCode\n	, prh.PayrollPeriodId\n	, prh.GrossSalary\n	, prh.NetSalary\n	, PayrollLineId = prl.Id\n	, prl.PayrollItemType\n	, PayrollItemTypeName = case prl.PayrollItemType\n		when 1 then 'Maaş'\n		when 2 then 'Bonus'\n		when 3 then 'Əlavə İş'\n		when 4 then 'Vergi'\n		when 5 then 'Sığorta'\n		when 6 then 'Tutulma'\n		else 'Digər'\n	  end\n	, LineDescription = prl.Description\n	, prl.Amount\n	, prl.CurrencyCode\n	, prl.ExchangeRate\n	, prl.AmountLoc\n	, cari.CurrAccDesc\n	, cari.FirstName\n	, cari.LastName\n	, cari.PhoneNum\n	, EmployeeName = isnull(nullif(cari.CurrAccDesc, ''), rtrim(isnull(cari.FirstName, '') + ' ' + isnull(cari.LastName, '')))\n	, prp.PeriodYear\n	, prp.PeriodMonth\n	, PeriodName = right('0000' + cast(prp.PeriodYear as varchar(4)), 4) + '-' + right('00' + cast(prp.PeriodMonth as varchar(2)), 2)\n\n	from TrPayrollLines prl\n	inner join TrPayrollHeaders prh on prl.PayrollHeaderId = prh.Id\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\n	left join DcCurrAccs cari on cari.CurrAccCode = prh.CurrAccCode\n\n	where prh.Id = @PayrollHeaderId\n	order by prl.PayrollItemType\n",
+                            ReportQuery = "select prh.Id\r\n	, prh.CurrAccCode\r\n	, prh.PayrollPeriodId\r\n	, GrossSalary = (\r\n		select isnull(sum(l.AmountLoc), 0)\r\n		from TrPayrollLines l\r\n		where l.PayrollHeaderId = prh.Id\r\n		  and l.PayrollItemType in (1, 2, 3)\r\n	)\r\n	, NetSalary = (\r\n		select isnull(sum(case \r\n			when l.PayrollItemType in (1, 2, 3) then l.AmountLoc \r\n			when l.PayrollItemType in (4, 5, 6) then -l.AmountLoc \r\n			else 0 end), 0)\r\n		from TrPayrollLines l\r\n		where l.PayrollHeaderId = prh.Id\r\n	)\r\n	, CurrAccBalance = dbo.CurrAccBalance(prh.CurrAccCode, isnull(cast(eomonth(datefromparts(prp.PeriodYear, prp.PeriodMonth, 1)) as datetime) + cast('23:59:59' as datetime), getdate()))\r\n	, PayrollLineId = prl.Id\r\n	, prl.PayrollItemType\r\n	, PayrollItemTypeName = case prl.PayrollItemType\r\n		when 1 then 'Maaş'\r\n		when 2 then 'Bonus'\r\n		when 3 then 'Əlavə İş'\r\n		when 4 then 'Vergi'\r\n		when 5 then 'Sığorta'\r\n		when 6 then 'Tutulma'\r\n		else 'Digər'\r\n	  end\r\n	, LineDescription = prl.Description\r\n	, prl.Amount\r\n	, prl.CurrencyCode\r\n	, prl.ExchangeRate\r\n	, prl.AmountLoc\r\n	, cari.CurrAccDesc\r\n	, cari.FirstName\r\n	, cari.LastName\r\n	, cari.PhoneNum\r\n	, EmployeeName = isnull(nullif(cari.CurrAccDesc, ''), rtrim(isnull(cari.FirstName, '') + ' ' + isnull(cari.LastName, '')))\r\n	, prp.PeriodYear\r\n	, prp.PeriodMonth\r\n	, PeriodName = right('0000' + cast(prp.PeriodYear as varchar(4)), 4) + '-' + right('00' + cast(prp.PeriodMonth as varchar(2)), 2)\r\n\r\n	from TrPayrollLines prl\r\n	inner join TrPayrollHeaders prh on prl.PayrollHeaderId = prh.Id\r\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\n	left join DcCurrAccs cari on cari.CurrAccCode = prh.CurrAccCode\r\n\r\n	where prh.Id = @PayrollHeaderId\r\n	order by prl.PayrollItemType\r\n",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -5707,7 +5785,7 @@ namespace Foxoft.Migrations
                             ReportCategoryId = 5,
                             ReportLayout = "",
                             ReportName = "Xərclər",
-                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nselect Price\r\n, ProductDesc\r\n, CurrencyCode\r\n, NetAmountLoc\r\n, DocumentDate \r\n, LineDescription\r\n, StoreCode\r\nfrom TrInvoiceLines\r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nwhere ProcessCode = 'EX'\r\n\r\nUNION ALL\r\n\r\nselect Price = prh.GrossSalary\r\n, ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)\r\n, CurrencyCode = 'AZN'\r\n, NetAmountLoc = prh.GrossSalary\r\n, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))\r\n, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')\r\n, StoreCode = DcCurrAccs.StoreCode\r\nfrom TrPayrollHeaders prh\r\nleft join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\nleft join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode",
+                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nselect Price\r\n, ProductDesc\r\n, CurrencyCode\r\n, NetAmountLoc\r\n, DocumentDate \r\n, LineDescription\r\n, StoreCode\r\nfrom TrInvoiceLines\r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nwhere ProcessCode = 'EX'\r\n\r\nUNION ALL\r\n\r\nselect Price = isnull((\r\n    select sum(l.AmountLoc)\r\n    from TrPayrollLines l\r\n    where l.PayrollHeaderId = prh.Id\r\n      and l.PayrollItemType in (1, 2, 3)\r\n), 0)\r\n, ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)\r\n, CurrencyCode = 'AZN'\r\n, NetAmountLoc = isnull((\r\n    select sum(l.AmountLoc)\r\n    from TrPayrollLines l\r\n    where l.PayrollHeaderId = prh.Id\r\n      and l.PayrollItemType in (1, 2, 3)\r\n), 0)\r\n, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))\r\n, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')\r\n, StoreCode = DcCurrAccs.StoreCode\r\nfrom TrPayrollHeaders prh\r\nleft join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\nleft join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -5729,7 +5807,7 @@ namespace Foxoft.Migrations
                             ReportCategoryId = 1,
                             ReportLayout = "",
                             ReportName = "Cari Hesab ilə Əməliyatlar",
-                            ReportQuery = "select 	CurrAccDesc\n	--, ProductDesc\n	, NetAmountLoc\n	, PaymentLoc\n	, [Ara Toplam] = sum(Summary) OVER (ORDER BY DocumentDate, DocumentTime )\n	, ProcessDesc\n	, DocumentNumber\n	, CurrAccCode\n	, DocumentDate\n	, DocumentTime\n	, InvoiceHeaderId\n	, PaymentHeaderId\n	, PayrollHeaderId\n	, LineDescription\n	, IsReturn\n	, StoreCode\n	--, LineId\nfrom (\n	select FirstName\n	, CurrAccDesc\n	--, ProductDesc\n	, ih.InvoiceHeaderId\n	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)\n	, PayrollHeaderId = cast(cast(0 as binary) as uniqueidentifier)\n	, NetAmountLoc = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\n	, PaymentLoc= 0\n	, Summary = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\n	, ProcessDesc = IIF(IsReturn = 1, ProcessDesc + ' - Geri Qaytarma', ProcessDesc)\n	, DocumentNumber\n	, ih.StoreCode\n	, ih.CurrAccCode\n	, ih.DocumentDate\n	, ih.DocumentTime\n	, LineDescription = ih.Description\n	, ih.ProcessCode\n	, IsReturn\n	--, LineId = InvoiceLineId\n	from TrInvoiceLines \n	left join TrInvoiceHeaders ih on TrInvoiceLines.InvoiceHeaderId = ih.InvoiceHeaderId\n	left join DcCurrAccs on ih.CurrAccCode = DcCurrAccs.CurrAccCode\n	left join DcProcesses on DcProcesses.ProcessCode = ih.ProcessCode\n	--left join DcProducts on DcProducts.ProductCode = TrInvoiceLines.ProductCode\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )\n	group by FirstName\n			, CurrAccDesc\n			, ProcessDesc\n			, DocumentNumber\n			, ih.InvoiceHeaderId\n			, ih.CurrAccCode\n			, ih.DocumentDate	\n			, ih.DocumentTime\n			, ih.Description\n			, ih.StoreCode\n			, ih.ProcessCode\n			, IsReturn\n	\n	UNION ALL \n	\n	select FirstName\n	--, ProductCode = ''\n	, CurrAccDesc = CurrAccDesc\n	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)\n	, TrPaymentHeaders.PaymentHeaderId\n	, PayrollHeaderId = cast(cast(0 as binary) as uniqueidentifier)\n	, NetAmountLoc = 0\n	, PaymentLoc\n	, Summary = PaymentLoc\n	, ProcessDesc = IIF(PaymentTypeCode = 3, N'Bonus', N'Ödəniş')\n	, DocumentNumber\n	, TrPaymentHeaders.StoreCode\n	, TrPaymentHeaders.CurrAccCode\n	, DocumentDate = TrPaymentHeaders.OperationDate\n	, DocumentTime = TrPaymentHeaders.OperationTime\n	, LineDescription\n	, ProcessCode = 'PA'\n	, IsReturn = CAST(0 as bit)\n	--, LineId = PaymentLineId\n	from TrPaymentLines\n	left join TrPaymentHeaders on TrPaymentLines.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId\n	left join DcCurrAccs  on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode	\n\n	UNION ALL\n\n	select FirstName = DcCurrAccs.FirstName\n	, CurrAccDesc = DcCurrAccs.CurrAccDesc\n	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)\n	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)\n	, PayrollHeaderId = prh.Id\n	, NetAmountLoc = prh.NetSalary\n	, PaymentLoc = 0\n	, Summary = prh.NetSalary\n	, ProcessDesc = N'Əməkhaqqı'\n	, DocumentNumber = CONCAT('PR-', prp.PeriodYear, '-', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2))\n	, StoreCode = DcCurrAccs.StoreCode\n	, CurrAccCode = prh.CurrAccCode\n	, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))\n	, DocumentTime = CAST('23:59:59' AS TIME)\n	, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı')\n	, ProcessCode = 'PR'\n	, IsReturn = CAST(0 as bit)\n	from TrPayrollHeaders prh\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\n	left join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode\n\n) as CurrAccExtra where 1=1 {CurrAccCode}\n\norder by DocumentDate, DocumentTime",
+                            ReportQuery = "select 	CurrAccDesc\r\n	--, ProductDesc\r\n	, NetAmountLoc\r\n	, PaymentLoc\r\n	, [Ara Toplam] = sum(Summary) OVER (ORDER BY DocumentDate, DocumentTime )\r\n	, ProcessDesc\r\n	, DocumentNumber\r\n	, CurrAccCode\r\n	, DocumentDate\r\n	, DocumentTime\r\n	, InvoiceHeaderId\r\n	, PaymentHeaderId\r\n	, PayrollHeaderId\r\n	, LineDescription\r\n	, IsReturn\r\n	, StoreCode\r\n	--, LineId\r\nfrom (\r\n	select FirstName\r\n	, CurrAccDesc\r\n	--, ProductDesc\r\n	, ih.InvoiceHeaderId\r\n	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, PayrollHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, NetAmountLoc = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, PaymentLoc= 0\r\n	, Summary = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, ProcessDesc = IIF(IsReturn = 1, ProcessDesc + ' - Geri Qaytarma', ProcessDesc)\r\n	, DocumentNumber\r\n	, ih.StoreCode\r\n	, ih.CurrAccCode\r\n	, ih.DocumentDate\r\n	, ih.DocumentTime\r\n	, LineDescription = ih.Description\r\n	, ih.ProcessCode\r\n	, IsReturn\r\n	--, LineId = InvoiceLineId\r\n	from TrInvoiceLines \r\n	left join TrInvoiceHeaders ih on TrInvoiceLines.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	left join DcCurrAccs on ih.CurrAccCode = DcCurrAccs.CurrAccCode\r\n	left join DcProcesses on DcProcesses.ProcessCode = ih.ProcessCode\r\n	--left join DcProducts on DcProducts.ProductCode = TrInvoiceLines.ProductCode\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )\r\n	group by FirstName\r\n			, CurrAccDesc\r\n			, ProcessDesc\r\n			, DocumentNumber\r\n			, ih.InvoiceHeaderId\r\n			, ih.CurrAccCode\r\n			, ih.DocumentDate	\r\n			, ih.DocumentTime\r\n			, ih.Description\r\n			, ih.StoreCode\r\n			, ih.ProcessCode\r\n			, IsReturn\r\n	\r\n	UNION ALL \r\n	\r\n	select FirstName\r\n	--, ProductCode = ''\r\n	, CurrAccDesc = CurrAccDesc\r\n	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, TrPaymentHeaders.PaymentHeaderId\r\n	, PayrollHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, NetAmountLoc = 0\r\n	, PaymentLoc\r\n	, Summary = PaymentLoc\r\n	, ProcessDesc = IIF(PaymentTypeCode = 3, N'Bonus', N'Ödəniş')\r\n	, DocumentNumber\r\n	, TrPaymentHeaders.StoreCode\r\n	, TrPaymentHeaders.CurrAccCode\r\n	, DocumentDate = TrPaymentHeaders.OperationDate\r\n	, DocumentTime = TrPaymentHeaders.OperationTime\r\n	, LineDescription\r\n	, ProcessCode = 'PA'\r\n	, IsReturn = CAST(0 as bit)\r\n	--, LineId = PaymentLineId\r\n	from TrPaymentLines\r\n	left join TrPaymentHeaders on TrPaymentLines.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId\r\n	left join DcCurrAccs  on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode	\r\n\r\n	UNION ALL\r\n\r\n	select FirstName = DcCurrAccs.FirstName\r\n	, CurrAccDesc = DcCurrAccs.CurrAccDesc\r\n	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, PayrollHeaderId = prh.Id\r\n	, NetAmountLoc = calc.NetSalary\r\n	, PaymentLoc = 0\r\n	, Summary = calc.NetSalary\r\n	, ProcessDesc = N'Əməkhaqqı'\r\n	, DocumentNumber = CONCAT('PR-', prp.PeriodYear, '-', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2))\r\n	, StoreCode = DcCurrAccs.StoreCode\r\n	, CurrAccCode = prh.CurrAccCode\r\n	, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))\r\n	, DocumentTime = CAST('23:59:59' AS TIME)\r\n	, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı')\r\n	, ProcessCode = 'PR'\r\n	, IsReturn = CAST(0 as bit)\r\n	from TrPayrollHeaders prh\r\n	cross apply (\r\n		select NetSalary = isnull(sum(case \r\n			when l.PayrollItemType in (1, 2, 3) then l.AmountLoc \r\n			when l.PayrollItemType in (4, 5, 6) then -l.AmountLoc \r\n			else 0 end), 0)\r\n		from TrPayrollLines l\r\n		where l.PayrollHeaderId = prh.Id\r\n	) calc\r\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\n	left join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode\r\n\r\n) as CurrAccExtra where 1=1 {CurrAccCode}\r\n\r\norder by DocumentDate, DocumentTime",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -5751,7 +5829,7 @@ namespace Foxoft.Migrations
                             ReportCategoryId = 7,
                             ReportLayout = "",
                             ReportName = "Gəlir",
-                            ReportQuery = "\r\n\r\nSELECT \r\n Menfeet = Satis - Maya\r\n, [Net Menfeet] = Satis - Maya - Xərc\r\n, *\r\nFROM  (\r\nselect  TrInvoiceLines.InvoiceLineId\r\n, TrInvoiceHeaders.InvoiceHeaderId\r\n, TrInvoiceLines.ProductCode\r\n, ProductDesc\r\n, Price\r\n, PriceLoc\r\n, Amount\r\n, NetAmountLoc\r\n, TrInvoiceLines.PosDiscount\r\n, QtyIn\r\n, QtyOut\r\n, Satis = case when TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') then NetAmountLoc else 0 end\r\n, Maya = CASE WHEN TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') THEN (QtyOut - QtyIn) * COALESCE(ProductCost, 0) ELSE 0 END\r\n, Xərc = case when TrInvoiceHeaders.ProcessCode = 'EX' then NetAmountLoc else 0 end\r\n, Artirma = case when TrInvoiceHeaders.ProcessCode = 'CI' then NetAmountLoc else 0 end\r\n, Silinme = case when TrInvoiceHeaders.ProcessCode = 'CO' then NetAmountLoc else 0 end\r\n, IsReturn\r\n, ProductCost\r\n--, SonQiymet = dbo.GetProductCost(TrInvoiceLines.ProductCode, CAST(TrInvoiceHeaders.DocumentDate AS DATETIME) + CAST(TrInvoiceHeaders.DocumentTime AS DATETIME))\r\n, LineDescription\r\n, SalesPersonCode\r\n, CurrencyCode\r\n, ExchangeRate\r\n, TrInvoiceHeaders.ProcessCode\r\n, ProcessDesc\r\n, InvoiceNumber = DocumentNumber\r\n--, Faiz =Round( ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)  / NULLIF(ProductCost,0) * 100,2)\r\n, DocumentDate\r\n, DocumentTime\r\n, OperationDate\r\n, OperationTime\r\n, Description\r\n, TrInvoiceHeaders.CurrAccCode\r\n, DcCurrAccs.CurrAccDesc\r\n, DcCurrAccTypes.CurrAccTypeDesc\r\n, DcCurrAccs.CurrAccTypeCode\r\n, TrInvoiceHeaders.OfficeCode\r\n, TrInvoiceHeaders.StoreCode\r\n, WarehouseCode\r\n, CustomsDocumentNumber\r\n, PosTerminalId\r\n, IsSuspended\r\n, IsCompleted\r\n, IsSalesViaInternet\r\n, IsLocked\r\n, DcProducts.ProductTypeCode\r\n, ProductTypeDesc\r\n, UsePos\r\n, PromotionCode\r\n, TaxRate\r\n, RetailPrice\r\n, PurchasePrice\r\n, WholesalePrice\r\n, TrInvoiceLines.CreatedDate\r\n, TrInvoiceLines.CreatedUserName\r\n, TrInvoiceLineExts.PriceDiscountedLoc\r\n\r\nfrom TrInvoiceLines \r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join TrInvoiceLineExts on TrInvoiceLineExts.InvoiceLineId = TrInvoiceLines.InvoiceLineId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nleft join DcProductTypes on DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode\r\nleft join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\nleft join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\nleft join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode	\r\n\r\nwhere TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'WS', 'RS', 'IS', 'EX')\r\n--and DocumentNumber = 'RS-000012'\r\n\r\nUNION ALL\r\n\r\nselect InvoiceLineId = cast(cast(0 as binary) as uniqueidentifier)\r\n, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n, ProductCode = ''\r\n, ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)\r\n, Price = prh.GrossSalary\r\n, PriceLoc = prh.GrossSalary\r\n, Amount = prh.GrossSalary\r\n, NetAmountLoc = prh.GrossSalary\r\n, PosDiscount = cast(0 as decimal(18, 2))\r\n, QtyIn = cast(0 as decimal(18, 4))\r\n, QtyOut = cast(0 as decimal(18, 4))\r\n, Satis = cast(0 as decimal(18, 2))\r\n, Maya = cast(0 as decimal(18, 2))\r\n, Xərc = prh.GrossSalary\r\n, Artirma = cast(0 as decimal(18, 2))\r\n, Silinme = cast(0 as decimal(18, 2))\r\n, IsReturn = cast(0 as bit)\r\n, ProductCost = cast(0 as decimal(18, 2))\r\n, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')\r\n, SalesPersonCode = ''\r\n, CurrencyCode = 'AZN'\r\n, ExchangeRate = cast(1 as decimal(18, 4))\r\n, ProcessCode = 'PR'\r\n, ProcessDesc = N'Əməkhaqqı'\r\n, InvoiceNumber = CONCAT('PR-', prp.PeriodYear, '-', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2))\r\n, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))\r\n, DocumentTime = CAST('23:59:59' AS TIME)\r\n, OperationDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))\r\n, OperationTime = CAST('23:59:59' AS TIME)\r\n, Description = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı')\r\n, CurrAccCode = prh.CurrAccCode\r\n, CurrAccDesc = DcCurrAccs.CurrAccDesc\r\n, CurrAccTypeDesc = DcCurrAccTypes.CurrAccTypeDesc\r\n, CurrAccTypeCode = DcCurrAccs.CurrAccTypeCode\r\n, OfficeCode = ''\r\n, StoreCode = DcCurrAccs.StoreCode\r\n, WarehouseCode = ''\r\n, CustomsDocumentNumber = ''\r\n, PosTerminalId = cast(null as int)\r\n, IsSuspended = cast(0 as bit)\r\n, IsCompleted = cast(1 as bit)\r\n, IsSalesViaInternet = cast(0 as bit)\r\n, IsLocked = prp.IsClosed\r\n, ProductTypeCode = cast(null as int)\r\n, ProductTypeDesc = ''\r\n, UsePos = cast(0 as bit)\r\n, PromotionCode = ''\r\n, TaxRate = cast(0 as decimal(18, 2))\r\n, RetailPrice = cast(0 as decimal(18, 2))\r\n, PurchasePrice = cast(0 as decimal(18, 2))\r\n, WholesalePrice = cast(0 as decimal(18, 2))\r\n, CreatedDate = cast(null as datetime)\r\n, CreatedUserName = ''\r\n, PriceDiscountedLoc = cast(0 as decimal(18, 2))\r\nfrom TrPayrollHeaders prh\r\nleft join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\nleft join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\n) Dvijok\r\norder by Dvijok.DocumentDate\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+                            ReportQuery = "SELECT \r\n    GrossProfit = Sales - Cost                  -- Ümumi Mənfəət\r\n  , NetProfit   = Sales - Cost - Expense        -- Xalis Mənfəət\r\n  , *\r\nFROM (\r\n    SELECT  \r\n        TrInvoiceLines.InvoiceLineId\r\n      , TrInvoiceHeaders.InvoiceHeaderId\r\n      , TrInvoiceLines.ProductCode\r\n      , ProductDesc\r\n      , Price\r\n      , PriceLoc\r\n      , Amount\r\n      , NetAmountLoc\r\n      , TrInvoiceLines.PosDiscount\r\n      , QtyIn\r\n      , QtyOut\r\n      , Sales     = CASE WHEN TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') THEN NetAmountLoc ELSE 0 END\r\n      , Cost      = CASE WHEN TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') THEN (QtyOut - QtyIn) * COALESCE(ProductCost, 0) ELSE 0 END\r\n      , Expense   = CASE WHEN TrInvoiceHeaders.ProcessCode = 'EX' THEN NetAmountLoc ELSE 0 END\r\n      , Increase  = CASE WHEN TrInvoiceHeaders.ProcessCode = 'CI' THEN NetAmountLoc ELSE 0 END\r\n      , WriteOff  = CASE WHEN TrInvoiceHeaders.ProcessCode = 'CO' THEN NetAmountLoc ELSE 0 END\r\n      , IsReturn\r\n      , ProductCost\r\n      , LineDescription\r\n      , SalesPersonCode\r\n      , CurrencyCode\r\n      , ExchangeRate\r\n      , TrInvoiceHeaders.ProcessCode\r\n      , ProcessDesc\r\n      , InvoiceNumber = DocumentNumber\r\n      , DocumentDate\r\n      , DocumentTime\r\n      , OperationDate\r\n      , OperationTime\r\n      , Description\r\n      , TrInvoiceHeaders.CurrAccCode\r\n      , DcCurrAccs.CurrAccDesc\r\n      , DcCurrAccTypes.CurrAccTypeDesc\r\n      , DcCurrAccs.CurrAccTypeCode\r\n      , TrInvoiceHeaders.OfficeCode\r\n      , TrInvoiceHeaders.StoreCode\r\n      , WarehouseCode\r\n      , CustomsDocumentNumber\r\n      , IsSuspended\r\n      , IsCompleted\r\n      , IsSalesViaInternet\r\n      , IsLocked\r\n      , DcProducts.ProductTypeCode\r\n      , ProductTypeDesc\r\n      , UsePos\r\n      , PromotionCode\r\n      , TaxRate\r\n      , RetailPrice\r\n      , PurchasePrice\r\n      , WholesalePrice\r\n      , TrInvoiceLines.CreatedDate\r\n      , TrInvoiceLines.CreatedUserName\r\n      , TrInvoiceLineExts.PriceDiscountedLoc\r\n    FROM TrInvoiceLines \r\n    LEFT JOIN TrInvoiceHeaders ON TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\n    LEFT JOIN TrInvoiceLineExts ON TrInvoiceLineExts.InvoiceLineId = TrInvoiceLines.InvoiceLineId\r\n    LEFT JOIN DcProducts ON TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\n    LEFT JOIN DcProductTypes ON DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode\r\n    LEFT JOIN DcCurrAccs ON TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\n    LEFT JOIN DcCurrAccTypes ON DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\n    LEFT JOIN DcProcesses ON TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\n    LEFT JOIN DcCurrAccs AS SalesPerson ON TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode    \r\n    WHERE TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'WS', 'RS', 'IS', 'EX')\r\n\r\n    UNION ALL\r\n\r\n    SELECT \r\n        InvoiceLineId      = CAST(CAST(0 AS BINARY) AS UNIQUEIDENTIFIER)\r\n      , InvoiceHeaderId    = CAST(CAST(0 AS BINARY) AS UNIQUEIDENTIFIER)\r\n      , ProductCode        = ''\r\n      , ProductDesc        = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)\r\n      , Price              = Calc.GrossSalary\r\n      , PriceLoc           = Calc.GrossSalary\r\n      , Amount             = Calc.GrossSalary\r\n      , NetAmountLoc       = Calc.GrossSalary\r\n      , PosDiscount        = CAST(0 AS DECIMAL(18, 2))\r\n      , QtyIn              = CAST(0 AS DECIMAL(18, 4))\r\n      , QtyOut             = CAST(0 AS DECIMAL(18, 4))\r\n      , Sales              = CAST(0 AS DECIMAL(18, 2))\r\n      , Cost               = CAST(0 AS DECIMAL(18, 2))\r\n      , Expense            = Calc.GrossSalary\r\n      , Increase           = CAST(0 AS DECIMAL(18, 2))\r\n      , WriteOff           = CAST(0 AS DECIMAL(18, 2))\r\n      , IsReturn           = CAST(0 AS BIT)\r\n      , ProductCost        = CAST(0 AS DECIMAL(18, 2))\r\n      , LineDescription    = CONCAT(Prp.PeriodYear, ' / ', RIGHT('0' + CAST(Prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')\r\n      , SalesPersonCode    = ''\r\n      , CurrencyCode       = 'AZN'\r\n      , ExchangeRate       = CAST(1 AS DECIMAL(18, 4))\r\n      , ProcessCode        = 'PR'\r\n      , ProcessDesc        = N'Əməkhaqqı'\r\n      , InvoiceNumber      = CONCAT('PR-', Prp.PeriodYear, '-', RIGHT('0' + CAST(Prp.PeriodMonth AS VARCHAR(2)), 2))\r\n      , DocumentDate       = EOMONTH(DATEFROMPARTS(Prp.PeriodYear, Prp.PeriodMonth, 1))\r\n      , DocumentTime       = CAST('23:59:59' AS TIME)\r\n      , OperationDate      = EOMONTH(DATEFROMPARTS(Prp.PeriodYear, Prp.PeriodMonth, 1))\r\n      , OperationTime      = CAST('23:59:59' AS TIME)\r\n      , Description        = CONCAT(Prp.PeriodYear, ' / ', RIGHT('0' + CAST(Prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı')\r\n      , CurrAccCode        = Prh.CurrAccCode\r\n      , CurrAccDesc        = DcCurrAccs.CurrAccDesc\r\n      , CurrAccTypeDesc    = DcCurrAccTypes.CurrAccTypeDesc\r\n      , CurrAccTypeCode    = DcCurrAccs.CurrAccTypeCode\r\n      , OfficeCode         = ''\r\n      , StoreCode          = DcCurrAccs.StoreCode\r\n      , WarehouseCode      = ''\r\n      , CustomsDocumentNumber = ''\r\n      , IsSuspended        = CAST(0 AS BIT)\r\n      , IsCompleted        = CAST(1 AS BIT)\r\n      , IsSalesViaInternet = CAST(0 AS BIT)\r\n      , IsLocked           = Prp.IsClosed\r\n      , ProductTypeCode    = CAST(NULL AS INT)\r\n      , ProductTypeDesc    = ''\r\n      , UsePos             = CAST(0 AS BIT)\r\n      , PromotionCode      = ''\r\n      , TaxRate            = CAST(0 AS DECIMAL(18, 2))\r\n      , RetailPrice        = CAST(0 AS DECIMAL(18, 2))\r\n      , PurchasePrice      = CAST(0 AS DECIMAL(18, 2))\r\n      , WholesalePrice     = CAST(0 AS DECIMAL(18, 2))\r\n      , CreatedDate        = CAST(NULL AS DATETIME)\r\n      , CreatedUserName    = ''\r\n      , PriceDiscountedLoc = CAST(0 AS DECIMAL(18, 2))\r\n    FROM TrPayrollHeaders Prh\r\n    CROSS APPLY (\r\n        SELECT GrossSalary = ISNULL(SUM(L.AmountLoc), 0)\r\n        FROM TrPayrollLines L\r\n        WHERE L.PayrollHeaderId = Prh.Id\r\n          AND L.PayrollItemType IN (1, 2, 3)\r\n    ) Calc\r\n    LEFT JOIN DcPayrollPeriods Prp ON Prh.PayrollPeriodId = Prp.Id\r\n    LEFT JOIN DcCurrAccs ON Prh.CurrAccCode = DcCurrAccs.CurrAccCode\r\n    LEFT JOIN DcCurrAccTypes ON DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\n) MovementQuery\r\nORDER BY MovementQuery.DocumentDate;",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -5806,7 +5884,7 @@ namespace Foxoft.Migrations
                             ReportCategoryId = 1,
                             ReportLayout = "",
                             ReportName = "Alacaqlar",
-                            ReportQuery = "--declare @EndDate date = dateadd(DAY, 1, getdate())\n--declare @EndTime time =  '00:00:00.000'\n\nselect DcCurrAccs.CurrAccCode\n, CurrAccDesc\n, PhoneNum\n, IsVIP\n, Amount = sum(isnull(Amount,0))\n, DcCurrAccs.CurrAccTypeCode\n, CurrAccTypeDesc\n	from \nDcCurrAccs \nleft join \n(\n	select CurrAccCode\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\n	from TrInvoiceLines il\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\n--	where 1=1\n--	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\n\n	UNION ALL \n	\n	select CurrAccCode\n	, Amount = PaymentLoc -- 200 usd\n	from TrPaymentLines pl\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\n--	where 1=1 \n--	and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\n\n	UNION ALL\n\n	select CurrAccCode = prh.CurrAccCode\n	, Amount = prh.NetSalary\n	from TrPayrollHeaders prh\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\n--	where 1=1\n--	and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\njoin DcCurrAccTypes on DcCurrAccTypes.CurrAccTypeCode = DcCurrAccs.CurrAccTypeCode\nwhere 1 = 1 \n	and DcCurrAccs.CurrAccTypeCode in (1, 2, 3)\n	--and DcCurrAccs.IsVIP = 1 \n	--and balance.CurrAccCode = '1403'\ngroup by DcCurrAccs.CurrAccCode\n, CurrAccDesc\n, PhoneNum\n, IsVIP\n, DcCurrAccs.CurrAccTypeCode\n, CurrAccTypeDesc\n\nhaving   sum(Amount) < 0\norder by CurrAccDesc",
+                            ReportQuery = "--declare @EndDate date = dateadd(DAY, 1, getdate())\r\n--declare @EndTime time =  '00:00:00.000'\r\n\r\nselect DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, Amount = sum(isnull(Amount,0))\r\n, DcCurrAccs.CurrAccTypeCode\r\n, CurrAccTypeDesc\r\n	from \r\nDcCurrAccs \r\nleft join \r\n(\r\n	select CurrAccCode\r\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n--	where 1=1\r\n--	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL \r\n	\r\n	select CurrAccCode\r\n	, Amount = PaymentLoc -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n--	where 1=1 \r\n--	and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL\r\n\r\n	select CurrAccCode = prh.CurrAccCode\r\n	, Amount = (case \r\n		when prl.PayrollItemType in (1, 2, 3) then prl.AmountLoc \r\n		when prl.PayrollItemType in (4, 5, 6) then -prl.AmountLoc \r\n		else 0 end)\r\n	from TrPayrollLines prl\r\n	inner join TrPayrollHeaders prh on prl.PayrollHeaderId = prh.Id\r\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\n--	where 1=1\r\n--	and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\r\njoin DcCurrAccTypes on DcCurrAccTypes.CurrAccTypeCode = DcCurrAccs.CurrAccTypeCode\r\nwhere 1 = 1 \r\n	and DcCurrAccs.CurrAccTypeCode in (1, 2, 3)\r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, DcCurrAccs.CurrAccTypeCode\r\n, CurrAccTypeDesc\r\n\r\nhaving   sum(Amount) < 0\r\norder by CurrAccDesc",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -5817,7 +5895,7 @@ namespace Foxoft.Migrations
                             ReportCategoryId = 2,
                             ReportLayout = "",
                             ReportName = "Verəcəklər",
-                            ReportQuery = "--declare @EndDate date = dateadd(DAY, 1, getdate())\n--declare @EndTime time =  '00:00:00.000'\n\nselect DcCurrAccs.CurrAccCode\n, CurrAccDesc\n, PhoneNum\n, IsVIP\n, Amount = sum(Amount)\nfrom \nDcCurrAccs \nleft join \n(\n	select CurrAccCode\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\n	from TrInvoiceLines il\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\n--	where 1=1\n--	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\n\n	UNION ALL \n	\n	select CurrAccCode\n	, Amount = PaymentLoc -- 200 usd\n	from TrPaymentLines pl\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\n--	where 1=1 \n--	and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\n\n	UNION ALL\n\n	select CurrAccCode = prh.CurrAccCode\n	, Amount = prh.NetSalary\n	from TrPayrollHeaders prh\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\n--	where 1=1\n--	and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\nwhere 1 = 1 \nand CurrAccTypeCode in (1,2,3)\n	--and DcCurrAccs.IsVIP = 1 \n	--and balance.CurrAccCode = '1403'\ngroup by DcCurrAccs.CurrAccCode\n, CurrAccDesc\n, PhoneNum\n, IsVIP\n\nhaving   sum(Amount) > 0",
+                            ReportQuery = "--declare @EndDate date = dateadd(DAY, 1, getdate())\r\n--declare @EndTime time =  '00:00:00.000'\r\n\r\nselect DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, Amount = sum(Amount)\r\nfrom \r\nDcCurrAccs \r\nleft join \r\n(\r\n	select CurrAccCode\r\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n--	where 1=1\r\n--	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL \r\n	\r\n	select CurrAccCode\r\n	, Amount = PaymentLoc -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n--	where 1=1 \r\n--	and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL\r\n\r\n	select CurrAccCode = prh.CurrAccCode\r\n	, Amount = (case \r\n		when prl.PayrollItemType in (1, 2, 3) then prl.AmountLoc \r\n		when prl.PayrollItemType in (4, 5, 6) then -prl.AmountLoc \r\n		else 0 end)\r\n	from TrPayrollLines prl\r\n	inner join TrPayrollHeaders prh on prl.PayrollHeaderId = prh.Id\r\n	left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\n--	where 1=1\r\n--	and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=\r\n--	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\r\nwhere 1 = 1 \r\nand CurrAccTypeCode in (1,2,3)\r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n\r\nhaving   sum(Amount) > 0",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -7466,6 +7544,14 @@ namespace Foxoft.Migrations
                             ClaimDesc = "İstifadəçilər",
                             ClaimTypeId = (byte)1,
                             Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "GoogleContactWizard",
+                            CategoryId = 19,
+                            ClaimDesc = "Google Kontaktlar",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         });
                 });
 
@@ -7988,6 +8074,7 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("CurrAccCode")
                         .IsRequired()
+                        .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<DateTime>("LastUpdatedDate")
@@ -8006,8 +8093,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CurrAccRoleId");
-
-                    b.HasIndex("CurrAccCode");
 
                     b.HasIndex("RoleCode");
 
@@ -8862,6 +8947,14 @@ namespace Foxoft.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 221,
+                            ClaimCode = "GoogleContactWizard",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
                         });
                 });
 
@@ -9655,6 +9748,64 @@ namespace Foxoft.Migrations
                     b.HasIndex("CurrAccFeatureCode", "CurrAccFeatureTypeId");
 
                     b.ToTable("TrCurrAccFeatures");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCurrAccRelation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("RelatedCurrAccCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("RelationTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.HasIndex("RelatedCurrAccCode");
+
+                    b.HasIndex("RelationTypeId");
+
+                    b.ToTable("TrCurrAccRelations");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrEmployeeContract", b =>
@@ -10522,8 +10673,6 @@ namespace Foxoft.Migrations
                     b.HasKey("MessageLogId");
 
                     b.HasIndex("CurrAccCode");
-
-                    b.HasIndex("Sender");
 
                     b.ToTable("TrMessageLogs");
 
@@ -11443,10 +11592,83 @@ namespace Foxoft.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurrAccCode")
+                    b.ToTable("TrSessions");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrUserStore", b =>
+                {
+                    b.Property<int>("UserStoreId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserStoreId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("StoreCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("UserStoreId");
+
+                    b.HasIndex("StoreCode");
+
+                    b.HasIndex("UserName")
                         .IsUnique();
 
-                    b.ToTable("TrSessions");
+                    b.ToTable("TrUserStores");
+
+                    b.HasData(
+                        new
+                        {
+                            UserStoreId = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StoreCode = "MGZ01",
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            UserStoreId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StoreCode = "MGZ01",
+                            UserName = "C-000001"
+                        },
+                        new
+                        {
+                            UserStoreId = 3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StoreCode = "MGZ01",
+                            UserName = "CA-1"
+                        });
                 });
 
             modelBuilder.Entity("Foxoft.Models.trInvoiceLineExt", b =>
@@ -12251,6 +12473,32 @@ namespace Foxoft.Migrations
                     b.Navigation("DcCurrAccFeatureType");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrCurrAccRelation", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("TrCurrAccRelations")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "RelatedDcCurrAcc")
+                        .WithMany("RelatedTrCurrAccRelations")
+                        .HasForeignKey("RelatedCurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAccRelationType", "DcCurrAccRelationType")
+                        .WithMany("TrCurrAccRelations")
+                        .HasForeignKey("RelationTypeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("DcCurrAccRelationType");
+
+                    b.Navigation("RelatedDcCurrAcc");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrEmployeeContract", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
@@ -12930,6 +13178,16 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrUserStore", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
+                        .WithMany("TrUserStores")
+                        .HasForeignKey("StoreCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DcStore");
+                });
 
             modelBuilder.Entity("Foxoft.Models.trInvoiceLineExt", b =>
                 {
@@ -12991,6 +13249,8 @@ namespace Foxoft.Migrations
 
                     b.Navigation("DcStoreTrPaymentHeaders");
 
+                    b.Navigation("RelatedTrCurrAccRelations");
+
                     b.Navigation("SettingStore")
                         .IsRequired();
 
@@ -12999,6 +13259,8 @@ namespace Foxoft.Migrations
                     b.Navigation("TrAttendances");
 
                     b.Navigation("TrCurrAccFeatures");
+
+                    b.Navigation("TrCurrAccRelations");
 
                     b.Navigation("TrEmployeeContracts");
 
@@ -13021,6 +13283,8 @@ namespace Foxoft.Migrations
                     b.Navigation("TrPayrollHeaders");
 
                     b.Navigation("TrReportCustomizations");
+
+                    b.Navigation("TrUserStores");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAccFeature", b =>
@@ -13031,6 +13295,11 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcCurrAccFeatureType", b =>
                 {
                     b.Navigation("TrCurrAccFeatures");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcCurrAccRelationType", b =>
+                {
+                    b.Navigation("TrCurrAccRelations");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAccType", b =>
