@@ -10,6 +10,7 @@ namespace Foxoft.AppCode
         public const decimal WhatsAppCost = 0.05m;
         public const decimal OcrCreditCost = 0.10m;
         public const decimal ProductFeatureAiCost = 0.05m;
+        public const decimal AiCostMultiplier = 6.8m;
 
         // Service Type Constants (matches TrCredit.ServiceType)
         public const string ServiceTypeWhatsApp = "WhatsApp";
@@ -71,6 +72,78 @@ namespace Foxoft.AppCode
         {
             using var db = new subContext();
             return HasEnoughFeatureAiBalance(db, requiredAmount);
+        }
+
+        public static decimal CalculateCreditFromCost(decimal costUsd, decimal multiplier = AiCostMultiplier)
+        {
+            if (costUsd <= 0) return 0m;
+            decimal credit = costUsd * multiplier;
+            return Math.Max(0.01m, Math.Round(credit, 2, MidpointRounding.AwayFromZero));
+        }
+
+        public static decimal CalculateCostUsd(string model, int inputTokens, int outputTokens, int webSearchCount = 0)
+        {
+            if (inputTokens <= 0 && outputTokens <= 0)
+            {
+                inputTokens = 1000;
+                outputTokens = 300;
+            }
+
+            string m = (model ?? string.Empty).ToLowerInvariant().Trim();
+
+            decimal inputRatePerMillion;
+            decimal outputRatePerMillion;
+
+            if (m.Contains("mini") && !m.Contains("o1") && !m.Contains("o3"))
+            {
+                // gpt-4o-mini, gpt-4.1-mini: $0.15 input / $0.60 output per 1M tokens
+                inputRatePerMillion = 0.15m;
+                outputRatePerMillion = 0.60m;
+            }
+            else if (m.Contains("o3-mini") || m.Contains("o1-mini"))
+            {
+                // o3-mini: $1.10 / $4.40 per 1M tokens
+                inputRatePerMillion = 1.10m;
+                outputRatePerMillion = 4.40m;
+            }
+            else if (m.Contains("o1"))
+            {
+                // o1: $15.00 / $60.00 per 1M tokens
+                inputRatePerMillion = 15.00m;
+                outputRatePerMillion = 60.00m;
+            }
+            else if (m.Contains("gpt-4-turbo") || m.Contains("gpt-4-0125") || m.Contains("gpt-4-1106"))
+            {
+                // gpt-4-turbo: $10.00 / $30.00 per 1M tokens
+                inputRatePerMillion = 10.00m;
+                outputRatePerMillion = 30.00m;
+            }
+            else if (m.Contains("gpt-4.1"))
+            {
+                // gpt-4.1: $2.00 / $8.00 per 1M tokens
+                inputRatePerMillion = 2.00m;
+                outputRatePerMillion = 8.00m;
+            }
+            else if (m.Contains("gpt-3.5"))
+            {
+                // gpt-3.5-turbo: $0.50 / $1.50 per 1M tokens
+                inputRatePerMillion = 0.50m;
+                outputRatePerMillion = 1.50m;
+            }
+            else
+            {
+                // Default: gpt-4o ($2.50 input / $10.00 output per 1M tokens)
+                inputRatePerMillion = 2.50m;
+                outputRatePerMillion = 10.00m;
+            }
+
+            decimal tokenCost = (inputTokens * (inputRatePerMillion / 1_000_000m))
+                              + (outputTokens * (outputRatePerMillion / 1_000_000m));
+
+            // OpenAI web search tool pricing: $5.00 per 1,000 queries = $0.005 per query
+            decimal webSearchCost = webSearchCount * 0.005m;
+
+            return tokenCost + webSearchCost;
         }
 
         #endregion
@@ -198,5 +271,30 @@ namespace Foxoft.AppCode
         }
 
         #endregion
+    }
+
+    public class AiCancelledException : OperationCanceledException
+    {
+        public decimal ActualCostUsd { get; }
+        public decimal CreditRequired { get; }
+        public int InputTokens { get; }
+        public int OutputTokens { get; }
+        public string Description { get; }
+
+        public AiCancelledException(
+            decimal actualCostUsd,
+            decimal creditRequired,
+            int inputTokens,
+            int outputTokens,
+            string description,
+            Exception? innerException = null)
+            : base(description, innerException)
+        {
+            ActualCostUsd = actualCostUsd;
+            CreditRequired = creditRequired;
+            InputTokens = inputTokens;
+            OutputTokens = outputTokens;
+            Description = description;
+        }
     }
 }

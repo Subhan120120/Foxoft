@@ -58,12 +58,7 @@
     <Setting Name="FavoritesMenus" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OpenAIApiKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="OpenAIModel" Type="System.String" Scope="User">
-      <Value Profile="(Default)">gpt-4o</Value>
-    </Setting>
+
     <Setting Name="ProductMatchSettings" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

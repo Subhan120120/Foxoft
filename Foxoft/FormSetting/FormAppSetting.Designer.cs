@@ -708,6 +708,7 @@ namespace Foxoft
                         // 
             // txtOpenAIApiKey
             // 
+            txtOpenAIApiKey.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "OpenAIApiKey", true));
             txtOpenAIApiKey.Location = new Point(164, 310);
             txtOpenAIApiKey.Name = "txtOpenAIApiKey";
             txtOpenAIApiKey.Properties.UseSystemPasswordChar = true;
@@ -721,6 +722,7 @@ namespace Foxoft
             // cbeOpenAIModel
             // 
             cbeOpenAIModel.EditValue = "gpt-4o";
+            cbeOpenAIModel.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "OpenAIModel", true));
             cbeOpenAIModel.Location = new Point(164, 334);
             cbeOpenAIModel.Name = "cbeOpenAIModel";
             cbeOpenAIModel.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {

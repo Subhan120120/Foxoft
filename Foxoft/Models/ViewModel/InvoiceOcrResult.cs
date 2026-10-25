@@ -13,6 +13,13 @@ namespace Foxoft.Models.ViewModel
         public string? Currency { get; set; }
         public string? Notes { get; set; }
         public List<InvoiceOcrLineVM> Lines { get; set; } = new();
+
+        public int InputTokens { get; set; }
+        public int OutputTokens { get; set; }
+        public int TotalTokens { get; set; }
+        public string ModelUsed { get; set; } = string.Empty;
+        public decimal ActualCostUsd { get; set; }
+        public decimal CreditRequired { get; set; }
     }
 
     public class InvoiceOcrLineVM : INotifyPropertyChanged

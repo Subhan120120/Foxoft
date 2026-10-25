@@ -147,8 +147,28 @@ Important rules:
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", apiKey.Trim());
             request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-            using var response = await _httpClient.SendAsync(request, ct);
-            string responseString = await response.Content.ReadAsStringAsync(ct);
+            int estimatedInputTokens = imageList.Count * 1105 + 400;
+            decimal estimatedInputCost = CreditService.CalculateCostUsd(effectiveModel, estimatedInputTokens, 0, 0);
+            decimal estimatedCredit = CreditService.CalculateCreditFromCost(estimatedInputCost);
+
+            HttpResponseMessage? response = null;
+            string? responseString = null;
+
+            try
+            {
+                response = await _httpClient.SendAsync(request, ct);
+                responseString = await response.Content.ReadAsStringAsync(ct);
+            }
+            catch (OperationCanceledException ex)
+            {
+                throw new AiCancelledException(
+                    estimatedInputCost,
+                    estimatedCredit,
+                    estimatedInputTokens,
+                    0,
+                    $"Qaimə AI OCR ləğv edildi ({imageList.Count} şəkil) - {estimatedCredit:F2} kredit",
+                    ex);
+            }
 
             if (!response.IsSuccessStatusCode)
             {
@@ -156,10 +176,10 @@ Important rules:
                 throw new InvalidOperationException($"OpenAI API xətası: {err}");
             }
 
-            return ParseOpenAiResponse(responseString);
+            return ParseOpenAiResponse(responseString, effectiveModel);
         }
 
-        private static InvoiceOcrResult ParseOpenAiResponse(string responseJson)
+        private static InvoiceOcrResult ParseOpenAiResponse(string responseJson, string fallbackModel = "gpt-4o")
         {
             using var doc = JsonDocument.Parse(responseJson);
             var root = doc.RootElement;
@@ -190,6 +210,33 @@ Important rules:
             var contentRoot = contentDoc.RootElement;
 
             InvoiceOcrResult result = new();
+
+            // Extract usage tokens and calculate dynamic cost & credit
+            int inputTokens = 0;
+            int outputTokens = 0;
+            string modelUsed = fallbackModel;
+
+            if (root.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String)
+            {
+                string m = modelProp.GetString() ?? string.Empty;
+                if (!string.IsNullOrWhiteSpace(m))
+                    modelUsed = m;
+            }
+
+            if (root.TryGetProperty("usage", out var usageProp))
+            {
+                if (usageProp.TryGetProperty("prompt_tokens", out var pTok))
+                    inputTokens = pTok.GetInt32();
+                if (usageProp.TryGetProperty("completion_tokens", out var cTok))
+                    outputTokens = cTok.GetInt32();
+            }
+
+            result.InputTokens = inputTokens;
+            result.OutputTokens = outputTokens;
+            result.TotalTokens = inputTokens + outputTokens;
+            result.ModelUsed = modelUsed;
+            result.ActualCostUsd = CreditService.CalculateCostUsd(modelUsed, inputTokens, outputTokens, 0);
+            result.CreditRequired = CreditService.CalculateCreditFromCost(result.ActualCostUsd);
 
             if (contentRoot.TryGetProperty("documentNumber", out var docNumProp) && docNumProp.ValueKind == JsonValueKind.String)
                 result.DocumentNumber = docNumProp.GetString();

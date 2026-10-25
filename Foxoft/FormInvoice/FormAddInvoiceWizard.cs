@@ -69,7 +69,7 @@ namespace Foxoft
             btnClearImage.Hint = Resources.Form_InvoiceWizard_ClearImage;
 
             btnProcessOcr.Caption = Resources.Form_InvoiceWizard_ProcessOcr;
-            btnProcessOcr.Hint = $"{Resources.Form_InvoiceWizard_ProcessOcr} ({CreditService.OcrCreditCost:N2} {Resources.Form_NotificationCenter_Filter_Credit})";
+            btnProcessOcr.Hint = Resources.Form_InvoiceWizard_ProcessOcr;
 
             btnRotateLeft.Caption = Resources.Form_Image_RotateLeft;
             btnRotateLeft.Hint = $"{Resources.Form_Image_RotateLeft} (Ctrl+L)";
@@ -478,7 +478,7 @@ namespace Foxoft
                 if (_isProcessing || pictureEditInvoice.Image == null || IsDisposed)
                     return;
 
-                string msg = string.Format(Resources.Form_InvoiceWizard_PromptProcessOcr, CreditService.OcrCreditCost);
+                string msg = Resources.Form_InvoiceWizard_PromptProcessOcr;
                 DialogResult dialogResult = XtraMessageBox.Show(
                     this,
                     msg,
@@ -533,11 +533,12 @@ namespace Foxoft
                 return;
             }
 
-            // Check & deduct 0.10 credit
-            if (!CreditService.TryDeductOcrCredit(out string? creditError, CreditService.OcrCreditCost, $"Qaimə AI OCR ({_currentImages.Count} şəkil)"))
+            // Check if user has sufficient credit balance before calling AI
+            decimal currentBalance = CreditService.GetBalance();
+            if (currentBalance < 0.01m)
             {
                 XtraMessageBox.Show(
-                    creditError ?? Resources.Common_InsufficientBalance,
+                    Resources.Common_InsufficientBalance,
                     Resources.Common_Attention,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
@@ -549,7 +550,7 @@ namespace Foxoft
             if (string.IsNullOrWhiteSpace(model))
                 model = "gpt-4o";
 
-            bool ocrSucceeded = false;
+
             SetProcessingState(true);
             _ocrCts = new CancellationTokenSource();
 
@@ -561,7 +562,15 @@ namespace Foxoft
                     model,
                     _ocrCts.Token);
 
-                ocrSucceeded = true;
+
+
+                // Dynamic credit deduction: 6.8x actual cost (like FormProductFeature)
+                decimal creditToDeduct = result.CreditRequired;
+                if (creditToDeduct > 0)
+                {
+                    string creditDesc = $"Qaimə AI OCR ({_currentImages.Count} şəkil) - {creditToDeduct:F2} kredit";
+                    CreditService.TryDeductOcrCredit(out _, creditToDeduct, creditDesc);
+                }
 
                 // Auto-match products against database
                 InvoiceOcrProductMatcher.MatchLines(result.Lines, _productTypeArr, vendorCode: _invoiceHeader?.CurrAccCode);
@@ -588,22 +597,52 @@ namespace Foxoft
                 UpdateSummary();
 
                 XtraMessageBox.Show(
-                    string.Format(Resources.Form_InvoiceWizard_Success, result.Lines.Count),
+                    $"{string.Format(Resources.Form_InvoiceWizard_Success, result.Lines.Count)}\n\n{string.Format(Resources.Form_ProductFeature_UsedCredit, creditToDeduct)}",
                     Resources.Common_Info,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException ex)
             {
-                if (!ocrSucceeded)
-                    CreditService.RefundOcrCredit(CreditService.OcrCreditCost, "Qaimə AI OCR ləğv edildi (kredit qaytarıldı)");
 
-                lblStatus.Text = Resources.Form_InvoiceWizard_OperationCancelled;
+
+
+                decimal creditToDeduct = 0m;
+                string? creditDesc = null;
+
+                if (ex is AiCancelledException aiEx && aiEx.CreditRequired > 0)
+                {
+                    creditToDeduct = aiEx.CreditRequired;
+                    creditDesc = aiEx.Description;
+                }
+                else
+                {
+                    int inTokens = _currentImages.Count * 1105 + 400;
+                    decimal cost = CreditService.CalculateCostUsd(model, inTokens, 0, 0);
+                    creditToDeduct = CreditService.CalculateCreditFromCost(cost);
+                    creditDesc = $"Qaimə AI OCR ləğv edildi ({_currentImages.Count} şəkil) - {creditToDeduct:F2} kredit";
+                }
+
+                if (creditToDeduct > 0)
+                {
+                    CreditService.TryDeductOcrCredit(out _, creditToDeduct, creditDesc);
+                }
+
+                string costMsg = creditToDeduct > 0
+                    ? $"\n\n{string.Format(Resources.Form_ProductFeature_UsedCredit, creditToDeduct)}"
+                    : string.Empty;
+
+                lblStatus.Text = Resources.Common_OperationCancelled;
+                XtraMessageBox.Show(
+                    $"{Resources.Common_OperationCancelled}{costMsg}",
+                    Resources.Common_Info,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                if (!ocrSucceeded)
-                    CreditService.RefundOcrCredit(CreditService.OcrCreditCost, $"Qaim\u0259 AI OCR x\u0259tas\u0131 (kredit qaytar\u0131ld\u0131): {ex.Message}");
+
+
                 XtraMessageBox.Show(
                     $"{Resources.Common_ErrorOccurred}\n{ex.Message}",
                     Resources.Common_Error,

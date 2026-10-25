@@ -1386,6 +1386,12 @@ namespace Foxoft.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Show.
         /// </summary>
+        public static string Common_OperationCancelled {
+            get {
+                return ResourceManager.GetString("Common_OperationCancelled", resourceCulture);
+            }
+        }
+
         public static string Common_Show {
             get {
                 return ResourceManager.GetString("Common_Show", resourceCulture);
@@ -20486,6 +20492,12 @@ namespace Foxoft.Properties {
         public static string Form_ProductFeature_AllAssigned {
             get {
                 return ResourceManager.GetString("Form_ProductFeature_AllAssigned", resourceCulture);
+            }
+        }
+
+        public static string Form_ProductFeature_UsedCredit {
+            get {
+                return ResourceManager.GetString("Form_ProductFeature_UsedCredit", resourceCulture);
             }
         }
 

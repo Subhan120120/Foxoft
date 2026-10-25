@@ -21,6 +21,13 @@ namespace Foxoft.AppCode.Service
     {
         public string? ProductIdentified { get; set; }
         public List<ProductFeatureAiItem> Features { get; set; } = new();
+        public int InputTokens { get; set; }
+        public int OutputTokens { get; set; }
+        public int TotalTokens { get; set; }
+        public int WebSearchCount { get; set; }
+        public string ModelUsed { get; set; } = string.Empty;
+        public decimal ActualCostUsd { get; set; }
+        public decimal CreditRequired { get; set; }
     }
 
     public class ProductFeatureAiItem
@@ -61,6 +68,11 @@ namespace Foxoft.AppCode.Service
                 throw new ArgumentException("Məhsul adı və ya axtarış mətni daxil edilməlidir.", nameof(productName));
 
             string effectiveModel = string.IsNullOrWhiteSpace(model) ? "gpt-4o" : model.Trim();
+
+            decimal accumulatedCost = 0m;
+            int accumulatedInputTokens = 0;
+            int accumulatedOutputTokens = 0;
+            int accumulatedWebSearches = 0;
 
             string systemPrompt = @"You are an expert product catalog and technical specification extraction assistant for ERP systems.
 Your task is to search the web for the manufacturer technical specifications of the given product, and extract values ONLY for the specified target feature types in 'featureTypesToExtract'.
@@ -105,6 +117,10 @@ For each requested feature type:
 
             string userPrompt = JsonSerializer.Serialize(userPayloadObj);
 
+            int estimatedInputTokens = (userPrompt.Length / 3) + 600;
+            decimal estimatedInputCost = CreditService.CalculateCostUsd(effectiveModel, estimatedInputTokens, 0, 1);
+            decimal estimatedCredit = CreditService.CalculateCreditFromCost(estimatedInputCost);
+
             // Attempt 1: Responses API with web_search tool
             try
             {
@@ -128,14 +144,29 @@ For each requested feature type:
                 if (response.IsSuccessStatusCode)
                 {
                     string responseString = await response.Content.ReadAsStringAsync(ct);
-                    var parsed = TryParseResponsesApiOutput(responseString);
+                    var parsed = TryParseResponsesApiOutput(responseString, effectiveModel);
                     if (parsed != null && parsed.Features.Count > 0)
                         return parsed;
+
+                    // If HTTP was successful but output structure differed, retain Attempt 1 cost
+                    var attempt1 = TryExtractUsageFromResponsesJson(responseString, effectiveModel);
+                    accumulatedCost += attempt1.cost;
+                    accumulatedInputTokens += attempt1.inputTokens;
+                    accumulatedOutputTokens += attempt1.outputTokens;
+                    accumulatedWebSearches += attempt1.webSearches;
                 }
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException ex)
             {
-                throw;
+                decimal totalCost = accumulatedCost > 0 ? accumulatedCost : estimatedInputCost;
+                decimal totalCredit = CreditService.CalculateCreditFromCost(totalCost);
+                throw new AiCancelledException(
+                    totalCost,
+                    totalCredit,
+                    accumulatedInputTokens > 0 ? accumulatedInputTokens : estimatedInputTokens,
+                    accumulatedOutputTokens,
+                    $"Məhsul AI ləğv edildi ({productName}) - {totalCredit:F2} kredit",
+                    ex);
             }
             catch
             {
@@ -160,34 +191,65 @@ For each requested feature type:
             chatRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", apiKey.Trim());
             chatRequest.Content = new StringContent(chatJson, Encoding.UTF8, "application/json");
 
-            using var chatResponse = await _httpClient.SendAsync(chatRequest, ct);
-            string chatResponseString = await chatResponse.Content.ReadAsStringAsync(ct);
-
-            if (!chatResponse.IsSuccessStatusCode)
+            string chatResponseString;
+            try
             {
-                string err = ExtractErrorMessage(chatResponseString) ?? $"HTTP {(int)chatResponse.StatusCode}: {chatResponse.ReasonPhrase}";
-                throw new InvalidOperationException($"AI API xətası: {err}");
+                using var chatResponse = await _httpClient.SendAsync(chatRequest, ct);
+                chatResponseString = await chatResponse.Content.ReadAsStringAsync(ct);
+
+                if (!chatResponse.IsSuccessStatusCode)
+                {
+                    string err = ExtractErrorMessage(chatResponseString) ?? $"HTTP {(int)chatResponse.StatusCode}: {chatResponse.ReasonPhrase}";
+                    throw new InvalidOperationException($"AI API xətası: {err}");
+                }
+            }
+            catch (OperationCanceledException ex)
+            {
+                decimal totalCost = accumulatedCost + estimatedInputCost;
+                decimal totalCredit = CreditService.CalculateCreditFromCost(totalCost);
+                throw new AiCancelledException(
+                    totalCost,
+                    totalCredit,
+                    accumulatedInputTokens + estimatedInputTokens,
+                    accumulatedOutputTokens,
+                    $"Məhsul AI ləğv edildi ({productName}) - {totalCredit:F2} kredit",
+                    ex);
             }
 
-            return ParseChatCompletionsResponse(chatResponseString);
+            var result = ParseChatCompletionsResponse(chatResponseString, effectiveModel);
+            if (accumulatedCost > 0)
+            {
+                result.ActualCostUsd += accumulatedCost;
+                result.InputTokens += accumulatedInputTokens;
+                result.OutputTokens += accumulatedOutputTokens;
+                result.TotalTokens = result.InputTokens + result.OutputTokens;
+                result.WebSearchCount += accumulatedWebSearches;
+                result.CreditRequired = CreditService.CalculateCreditFromCost(result.ActualCostUsd);
+            }
+            return result;
         }
 
-        private static ProductFeatureAiResult? TryParseResponsesApiOutput(string responseJson)
+        public static decimal CalculateCostUsd(string model, int inputTokens, int outputTokens, int webSearchCount)
+            => CreditService.CalculateCostUsd(model, inputTokens, outputTokens, webSearchCount);
+
+        private static ProductFeatureAiResult? TryParseResponsesApiOutput(string responseJson, string fallbackModel)
         {
             try
             {
                 using var doc = JsonDocument.Parse(responseJson);
                 var root = doc.RootElement;
 
+                ProductFeatureAiResult? result = null;
+
                 // Check "output_text" first
                 if (root.TryGetProperty("output_text", out var outTextProp) && outTextProp.ValueKind == JsonValueKind.String)
                 {
                     string txt = outTextProp.GetString() ?? string.Empty;
-                    return ParseFeatureJson(txt);
+                    result = ParseFeatureJson(txt);
                 }
 
                 // Check "output" array
-                if (root.TryGetProperty("output", out var outArray) && outArray.ValueKind == JsonValueKind.Array)
+                if (result == null && root.TryGetProperty("output", out var outArray) && outArray.ValueKind == JsonValueKind.Array)
                 {
                     foreach (var item in outArray.EnumerateArray())
                     {
@@ -197,13 +259,70 @@ For each requested feature type:
                             {
                                 if (c.TryGetProperty("text", out var textProp) && textProp.ValueKind == JsonValueKind.String)
                                 {
-                                    var res = ParseFeatureJson(textProp.GetString() ?? string.Empty);
-                                    if (res != null) return res;
+                                    result = ParseFeatureJson(textProp.GetString() ?? string.Empty);
+                                    if (result != null) break;
                                 }
                             }
                         }
+                        if (result != null) break;
                     }
                 }
+
+                if (result == null)
+                    return null;
+
+                // Extract usage, model, and web search tool calls
+                int inputTokens = 0;
+                int outputTokens = 0;
+                int webSearchCount = 0;
+                string modelUsed = fallbackModel;
+
+                if (root.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String)
+                {
+                    string m = modelProp.GetString() ?? string.Empty;
+                    if (!string.IsNullOrWhiteSpace(m))
+                        modelUsed = m;
+                }
+
+                if (root.TryGetProperty("usage", out var usageProp))
+                {
+                    if (usageProp.TryGetProperty("input_tokens", out var inTok))
+                        inputTokens = inTok.GetInt32();
+                    else if (usageProp.TryGetProperty("prompt_tokens", out var pTok))
+                        inputTokens = pTok.GetInt32();
+
+                    if (usageProp.TryGetProperty("output_tokens", out var outTok))
+                        outputTokens = outTok.GetInt32();
+                    else if (usageProp.TryGetProperty("completion_tokens", out var cTok))
+                        outputTokens = cTok.GetInt32();
+                }
+
+                if (root.TryGetProperty("output", out var outArr) && outArr.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var item in outArr.EnumerateArray())
+                    {
+                        if (item.TryGetProperty("type", out var typeProp) && typeProp.ValueKind == JsonValueKind.String)
+                        {
+                            string t = typeProp.GetString() ?? string.Empty;
+                            if (t.IndexOf("search", StringComparison.OrdinalIgnoreCase) >= 0)
+                                webSearchCount++;
+                        }
+                    }
+                }
+
+                // Responses API with web_search tool performs at least 1 search
+                if (webSearchCount == 0)
+                    webSearchCount = 1;
+
+                result.InputTokens = inputTokens;
+                result.OutputTokens = outputTokens;
+                result.TotalTokens = inputTokens + outputTokens;
+                result.WebSearchCount = webSearchCount;
+                result.ModelUsed = modelUsed;
+                result.ActualCostUsd = CalculateCostUsd(modelUsed, inputTokens, outputTokens, webSearchCount);
+                result.CreditRequired = CreditService.CalculateCreditFromCost(result.ActualCostUsd);
+
+                return result;
             }
             catch
             {
@@ -212,7 +331,7 @@ For each requested feature type:
             return null;
         }
 
-        private static ProductFeatureAiResult ParseChatCompletionsResponse(string responseJson)
+        private static ProductFeatureAiResult ParseChatCompletionsResponse(string responseJson, string fallbackModel)
         {
             using var doc = JsonDocument.Parse(responseJson);
             var root = doc.RootElement;
@@ -230,7 +349,90 @@ For each requested feature type:
             if (result == null)
                 throw new InvalidOperationException("AI cavabı JSON formatında təhlil edilə bilmədi.");
 
+            int inputTokens = 0;
+            int outputTokens = 0;
+            string modelUsed = fallbackModel;
+
+            if (root.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String)
+            {
+                string m = modelProp.GetString() ?? string.Empty;
+                if (!string.IsNullOrWhiteSpace(m))
+                    modelUsed = m;
+            }
+
+            if (root.TryGetProperty("usage", out var usageProp))
+            {
+                if (usageProp.TryGetProperty("prompt_tokens", out var pTok))
+                    inputTokens = pTok.GetInt32();
+                if (usageProp.TryGetProperty("completion_tokens", out var cTok))
+                    outputTokens = cTok.GetInt32();
+            }
+
+            result.InputTokens = inputTokens;
+            result.OutputTokens = outputTokens;
+            result.TotalTokens = inputTokens + outputTokens;
+            result.WebSearchCount = 0;
+            result.ModelUsed = modelUsed;
+            result.ActualCostUsd = CalculateCostUsd(modelUsed, inputTokens, outputTokens, 0);
+            result.CreditRequired = CreditService.CalculateCreditFromCost(result.ActualCostUsd);
+
             return result;
+        }
+
+        private static (int inputTokens, int outputTokens, int webSearches, decimal cost) TryExtractUsageFromResponsesJson(string responseJson, string fallbackModel)
+        {
+            try
+            {
+                using var doc = JsonDocument.Parse(responseJson);
+                var root = doc.RootElement;
+                int inTok = 0;
+                int outTok = 0;
+                int searches = 0;
+                string model = fallbackModel;
+
+                if (root.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String)
+                {
+                    string m = modelProp.GetString() ?? string.Empty;
+                    if (!string.IsNullOrWhiteSpace(m))
+                        model = m;
+                }
+
+                if (root.TryGetProperty("usage", out var usageProp))
+                {
+                    if (usageProp.TryGetProperty("input_tokens", out var inProp))
+                        inTok = inProp.GetInt32();
+                    else if (usageProp.TryGetProperty("prompt_tokens", out var pProp))
+                        inTok = pProp.GetInt32();
+
+                    if (usageProp.TryGetProperty("output_tokens", out var outProp))
+                        outTok = outProp.GetInt32();
+                    else if (usageProp.TryGetProperty("completion_tokens", out var cProp))
+                        outTok = cProp.GetInt32();
+                }
+
+                if (root.TryGetProperty("output", out var outArr) && outArr.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var item in outArr.EnumerateArray())
+                    {
+                        if (item.TryGetProperty("type", out var typeProp) && typeProp.ValueKind == JsonValueKind.String)
+                        {
+                            string t = typeProp.GetString() ?? string.Empty;
+                            if (t.IndexOf("search", StringComparison.OrdinalIgnoreCase) >= 0)
+                                searches++;
+                        }
+                    }
+                }
+
+                if (searches == 0)
+                    searches = 1;
+
+                decimal cost = CalculateCostUsd(model, inTok, outTok, searches);
+                return (inTok, outTok, searches, cost);
+            }
+            catch
+            {
+                return (0, 0, 0, 0m);
+            }
         }
 
         private static ProductFeatureAiResult? ParseFeatureJson(string rawJson)

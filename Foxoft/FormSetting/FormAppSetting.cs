@@ -98,9 +98,6 @@ namespace Foxoft
 
             OverpaymentModeImageComboBoxEdit.EditValue = (int)AppSetting.OverpaymentMode;
             SetSelectedIdsManual(AppSetting.POSFindProductBy);
-
-            txtOpenAIApiKey.Text = Settings.Default.OpenAIApiKey ?? "";
-            cbeOpenAIModel.EditValue = string.IsNullOrWhiteSpace(Settings.Default.OpenAIModel) ? "gpt-4o" : Settings.Default.OpenAIModel;
         }
 
 
@@ -128,8 +125,8 @@ namespace Foxoft
 
                 dbContext.SaveChanges();
 
-                Settings.Default.OpenAIApiKey = txtOpenAIApiKey.Text.Trim();
-                Settings.Default.OpenAIModel = string.IsNullOrWhiteSpace(cbeOpenAIModel.Text) ? "gpt-4o" : cbeOpenAIModel.Text.Trim();
+
+
                 Settings.Default.AppSetting = AppSetting;
                 Settings.Default.Save();
 

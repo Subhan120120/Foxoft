@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -217,9 +217,8 @@ namespace Foxoft
             if (XtraMessageBox.Show(promptMsg, Resources.Common_Attention, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            string apiKey = Settings.Default.OpenAIApiKey?.Trim() ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(apiKey))
-                apiKey = Settings.Default.AppSetting?.OpenAIApiKey?.Trim() ?? string.Empty;
+            string apiKey = Settings.Default.AppSetting?.OpenAIApiKey?.Trim() ?? string.Empty;
+
 
             if (string.IsNullOrWhiteSpace(apiKey))
             {
@@ -227,16 +226,16 @@ namespace Foxoft
                 return;
             }
 
-            // Deduct 0.05 credit
-            if (!CreditService.TryDeductFeatureAiCredit(out string? creditError, CreditService.ProductFeatureAiCost, $"Məhsul AI özəllikləri ({_dcProduct.ProductCode})"))
+            // Check if user has sufficient credit balance before calling AI
+            decimal currentBalance = CreditService.GetBalance();
+            if (currentBalance < 0.01m)
             {
-                XtraMessageBox.Show(creditError ?? Resources.Common_InsufficientBalance, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show(Resources.Common_InsufficientBalance, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string model = Settings.Default.OpenAIModel?.Trim() ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(model))
-                model = Settings.Default.AppSetting?.OpenAIModel?.Trim() ?? string.Empty;
+            string model = Settings.Default.AppSetting?.OpenAIModel?.Trim() ?? string.Empty;
+
             if (string.IsNullOrWhiteSpace(model))
                 model = "gpt-4o";
 
@@ -275,6 +274,14 @@ namespace Foxoft
                     _aiCts.Token);
 
                 succeeded = true;
+
+                // Dynamic credit deduction: 6.8x actual cost (without exposing multiplier to user)
+                decimal creditToDeduct = result.CreditRequired;
+                if (creditToDeduct > 0)
+                {
+                    string creditDesc = $"Məhsul AI ({_dcProduct.ProductCode}) - {creditToDeduct:F2} kredit";
+                    CreditService.TryDeductFeatureAiCredit(out _, creditToDeduct, creditDesc);
+                }
 
                 // Match AI results with existing database features for unassigned lines
                 int matchedCount = 0;
@@ -354,22 +361,51 @@ namespace Foxoft
                 gridViewFeatures.RefreshData();
                 UpdateSummary();
 
+                string statsMsg = string.Format(Resources.Form_ProductFeature_SummaryStats, _featureLines.Count, _featureLines.Count(l => l.Status == FeatureMatchStatus.Matched), _featureLines.Count(l => l.Status == FeatureMatchStatus.NotFound));
+                string costMsg = string.Format(Resources.Form_ProductFeature_UsedCredit, creditToDeduct);
+
                 XtraMessageBox.Show(
-                    string.Format(Resources.Form_ProductFeature_SummaryStats, _featureLines.Count, matchedCount, newCount),
+                    $"{Resources.Form_ProductFeature_SuccessSummary}\n{statsMsg}\n\n{costMsg}",
                     Resources.Common_Info,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException ex)
             {
-                if (!succeeded)
-                    CreditService.RefundFeatureAiCredit(CreditService.ProductFeatureAiCost, "Məhsul AI axtarışı ləğv edildi (kredit qaytarıldı)");
+                decimal creditToDeduct = 0m;
+                string? creditDesc = null;
+
+                if (ex is AiCancelledException aiEx && aiEx.CreditRequired > 0)
+                {
+                    creditToDeduct = aiEx.CreditRequired;
+                    creditDesc = aiEx.Description;
+                }
+                else
+                {
+                    int inTokens = (query.Length / 3) + 600;
+                    decimal cost = CreditService.CalculateCostUsd(model, inTokens, 0, 1);
+                    creditToDeduct = CreditService.CalculateCreditFromCost(cost);
+                    creditDesc = $"Məhsul AI ləğv edildi ({_dcProduct?.ProductCode ?? query}) - {creditToDeduct:F2} kredit";
+                }
+
+                if (creditToDeduct > 0)
+                {
+                    CreditService.TryDeductFeatureAiCredit(out _, creditToDeduct, creditDesc);
+                }
+
+                string costMsg = creditToDeduct > 0
+                    ? $"\n\n{string.Format(Resources.Form_ProductFeature_UsedCredit, creditToDeduct)}"
+                    : string.Empty;
+
+                lblStatus.Text = Resources.Common_OperationCancelled;
+                XtraMessageBox.Show(
+                    $"{Resources.Common_OperationCancelled}{costMsg}",
+                    Resources.Common_Info,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                if (!succeeded)
-                    CreditService.RefundFeatureAiCredit(CreditService.ProductFeatureAiCost, $"Məhsul AI axtarışı xətası (kredit qaytarıldı): {ex.Message}");
-
                 XtraMessageBox.Show($"{Resources.Common_ErrorOccurred}\n{ex.Message}", Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
