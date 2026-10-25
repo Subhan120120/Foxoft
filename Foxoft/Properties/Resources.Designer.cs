@@ -20231,6 +20231,18 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Entity_AppSetting_OpenAIApiKey {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_OpenAIApiKey", resourceCulture);
+            }
+        }
+
+        public static string Entity_AppSetting_OpenAIModel {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_OpenAIModel", resourceCulture);
+            }
+        }
+
         public static string Form_ProductMatchSetting_Title {
             get {
                 return ResourceManager.GetString("Form_ProductMatchSetting_Title", resourceCulture);

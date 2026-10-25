@@ -6870,6 +6870,12 @@ Google hesabı: {1}</value>
   <data name="Entity_AppSetting_GoogleToken" xml:space="preserve">
     <value>Google Token</value>
   </data>
+  <data name="Entity_AppSetting_OpenAIApiKey" xml:space="preserve">
+    <value>OpenAI API Açarı</value>
+  </data>
+  <data name="Entity_AppSetting_OpenAIModel" xml:space="preserve">
+    <value>OpenAI Modeli</value>
+  </data>
   <data name="Form_ProductMatchSetting_Title" xml:space="preserve">
     <value>Məhsul Uyğunlaşdırma Ayarları</value>
   </data>

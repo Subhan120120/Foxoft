@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -522,10 +522,7 @@ namespace Foxoft
                 return;
             }
 
-            string apiKey = Settings.Default.OpenAIApiKey?.Trim() ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(apiKey))
-                apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY")?.Trim() ?? string.Empty;
-
+            string apiKey = Settings.Default.AppSetting?.OpenAIApiKey?.Trim() ?? string.Empty;
             if (string.IsNullOrWhiteSpace(apiKey))
             {
                 XtraMessageBox.Show(
@@ -547,7 +544,8 @@ namespace Foxoft
                 return;
             }
 
-            string model = Settings.Default.OpenAIModel?.Trim() ?? string.Empty;
+            string model = Settings.Default.AppSetting?.OpenAIModel?.Trim() ?? string.Empty;
+
             if (string.IsNullOrWhiteSpace(model))
                 model = "gpt-4o";
 

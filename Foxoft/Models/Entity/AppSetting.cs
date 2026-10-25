@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+using Foxoft.Properties;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -143,6 +143,14 @@ namespace Foxoft.Models
         [Column(TypeName = "nvarchar(max)")]
         [Display(Name = nameof(Resources.Entity_AppSetting_GoogleToken), ResourceType = typeof(Resources))]
         public string? GoogleToken { get; set; }
+
+        [Column(TypeName = "nvarchar(max)")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_OpenAIApiKey), ResourceType = typeof(Resources))]
+        public string? OpenAIApiKey { get; set; }
+
+        [Column(TypeName = "nvarchar(50)")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_OpenAIModel), ResourceType = typeof(Resources))]
+        public string? OpenAIModel { get; set; } = "gpt-4o";
 
 
 
