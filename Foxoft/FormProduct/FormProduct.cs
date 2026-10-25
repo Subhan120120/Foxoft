@@ -32,9 +32,10 @@ namespace Foxoft
         string imageFilePath = string.Empty;
         private byte productTypeCode;
         private bool isNew;
+        private bool isImageChanged;
         private const string ChangeProductCodeClaim = "ChangeProductCode";
 
-        SettingStore settingStore;
+        SettingStore? settingStore;
         private DcProduct? initialProduct;
 
         public FormProduct(byte productTypeCode, bool isNew)
@@ -147,20 +148,31 @@ namespace Foxoft
 
         private void LoadPictureBoxImage()
         {
-            if (File.Exists(imageFilePath))
+            try
             {
-                using (var fs = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                if (File.Exists(imageFilePath))
                 {
-                    try
+                    using (var fs = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
-                        using (Image img = Image.FromStream(fs, true, false))
+                        try
                         {
-                            Bitmap myBitmap = new(img);
-                            pictureEdit.Image = myBitmap;
+                            using (Image img = Image.FromStream(fs, true, false))
+                            {
+                                Bitmap myBitmap = new(img);
+                                pictureEdit.Image = myBitmap;
+                            }
                         }
+                        catch (Exception) { }
                     }
-                    catch (Exception) { }
                 }
+                else
+                {
+                    pictureEdit.Image = null;
+                }
+            }
+            finally
+            {
+                isImageChanged = false;
             }
         }
 
@@ -181,7 +193,7 @@ namespace Foxoft
             dcProduct.LastUpdatedUserName = Authorization.CurrAccCode;
             dcProduct.DefaultUnitOfMeasureId = (initialProduct != null && initialProduct.DefaultUnitOfMeasureId > 0)
                 ? initialProduct.DefaultUnitOfMeasureId
-                : settingStore.DefaultUnitOfMeasureId;
+                : settingStore?.DefaultUnitOfMeasureId ?? 1;
             dcProduct.BalanceWarningLevel = null;
 
             if (initialProduct != null)
@@ -214,8 +226,14 @@ namespace Foxoft
 
         private void SaveImage()
         {
+            if (!isImageChanged)
+                return;
+
             try
             {
+                productFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "Products", dcProduct.ProductCode);
+                imageFilePath = CustomExtensions.CombinePath(productFolder, dcProduct.ProductCode + ".jpg");
+
                 if (string.IsNullOrWhiteSpace(productFolder) || string.IsNullOrWhiteSpace(imageFilePath))
                     return;
 
@@ -224,20 +242,33 @@ namespace Foxoft
                     if (!Directory.Exists(productFolder))
                         Directory.CreateDirectory(productFolder);
 
-                    pictureEdit.Image.Save(imageFilePath);
+                    using (MemoryStream ms = new())
+                    {
+                        using (Bitmap bmp = new(pictureEdit.Image))
+                        {
+                            bmp.Save(ms, ImageFormat.Jpeg);
+                        }
+                        File.WriteAllBytes(imageFilePath, ms.ToArray());
+                    }
+
+                    isImageChanged = false;
                     GC.Collect();
                 }
                 else
                 {
                     if (File.Exists(imageFilePath))
                         File.Delete(imageFilePath);
+
+                    isImageChanged = false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
+                XtraMessageBox.Show(
                     string.Format(Resources.Form_Product_Message_SaveImageError, ex.Message),
-                    Resources.Common_ErrorTitle);
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -372,7 +403,7 @@ namespace Foxoft
 
         private void pictureEdit_EditValueChanged(object sender, EventArgs e)
         {
-
+            isImageChanged = true;
         }
 
         private void galleryControl1_MouseDown(object sender, MouseEventArgs e) // select with right click
@@ -459,6 +490,48 @@ namespace Foxoft
         }
 
 
+        private void SaveGalleryImage(Image image)
+        {
+            if (string.IsNullOrWhiteSpace(productFolder))
+                return;
+
+            try
+            {
+                if (!Directory.Exists(productFolder))
+                    Directory.CreateDirectory(productFolder);
+
+                string fileName = "";
+                for (int i = 1; i <= 50; i++)
+                {
+                    fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
+                    string filePath = Path.Combine(productFolder, fileName);
+                    if (!File.Exists(filePath))
+                        break;
+                }
+
+                string savePath = Path.Combine(productFolder, fileName);
+
+                using (MemoryStream ms = new())
+                {
+                    using (Bitmap bmp = new(image))
+                    {
+                        bmp.Save(ms, ImageFormat.Jpeg);
+                    }
+                    File.WriteAllBytes(savePath, ms.ToArray());
+                }
+
+                LoadGalleryImages();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    ex.Message,
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
         private void BBI_GalleryLoad_ItemClick(object sender, ItemClickEventArgs e)
         {
             OpenFileDialog openFileDialog = new();
@@ -467,34 +540,19 @@ namespace Foxoft
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (string.IsNullOrWhiteSpace(productFolder))
-                    return;
-
                 try
                 {
-                    using Image loadedImage = Image.FromFile(openFileDialog.FileName);
-
-                    if (!Directory.Exists(productFolder))
-                        Directory.CreateDirectory(productFolder);
-
-                    string fileName = "";
-                    for (int i = 1; i <= 50; i++)
-                    {
-                        fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
-                        string filePath = Path.Combine(productFolder, fileName);
-                        if (!File.Exists(filePath))
-                            break;
-                    }
-
-                    string savePath = Path.Combine(productFolder, fileName);
-
-                    loadedImage.Save(savePath, ImageFormat.Jpeg);
-
-                    LoadGalleryImages();
+                    using FileStream fs = new(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    using Image loadedImage = Image.FromStream(fs);
+                    SaveGalleryImage(loadedImage);
                 }
                 catch (Exception ex)
                 {
-                    XtraMessageBox.Show(ex.Message, Resources.Common_ErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    XtraMessageBox.Show(
+                        ex.Message,
+                        Resources.Common_Error,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
             }
         }
@@ -529,36 +587,9 @@ namespace Foxoft
             if (Clipboard.ContainsImage())
             {
                 using Image? clipboardImage = Clipboard.GetImage();
-
                 if (clipboardImage != null)
                 {
-                    if (string.IsNullOrWhiteSpace(productFolder))
-                        return;
-
-                    try
-                    {
-                        if (!Directory.Exists(productFolder))
-                            Directory.CreateDirectory(productFolder);
-
-                        string fileName = "";
-                        for (int i = 1; i <= 50; i++)
-                        {
-                            fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
-                            string filePath = Path.Combine(productFolder, fileName);
-                            if (!File.Exists(filePath))
-                                break;
-                        }
-
-                        string savePath = Path.Combine(productFolder, fileName);
-
-                        clipboardImage.Save(savePath, ImageFormat.Jpeg);
-
-                        LoadGalleryImages();
-                    }
-                    catch (Exception ex)
-                    {
-                        XtraMessageBox.Show(ex.Message, Resources.Common_ErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    SaveGalleryImage(clipboardImage);
                 }
             }
             else
@@ -826,12 +857,19 @@ namespace Foxoft
             {
                 dcProduct = dcProductsBindingSource.Current as DcProduct;
                 if (isNew)
+                {
                     if (!efMethods.ProductExist(dcProduct.ProductCode))
                         efMethods.InsertProduct(dcProduct);
                     else
-                        MessageBox.Show(
+                    {
+                        XtraMessageBox.Show(
                             Resources.Form_Product_Message_ProductCodeExists,
-                            Resources.Common_Attention);
+                            Resources.Common_Attention,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
                 else
                 {
                     dcProduct.LastUpdatedUserName = Authorization.CurrAccCode;
@@ -856,12 +894,19 @@ namespace Foxoft
             {
                 dcProduct = dcProductsBindingSource.Current as DcProduct;
                 if (isNew)
+                {
                     if (!efMethods.ProductExist(dcProduct.ProductCode))
                         efMethods.InsertProduct(dcProduct);
                     else
-                        MessageBox.Show(
+                    {
+                        XtraMessageBox.Show(
                             Resources.Form_Product_Message_ProductCodeExists,
-                            Resources.Common_Attention);
+                            Resources.Common_Attention,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
                 else
                 {
                     dcProduct.LastUpdatedUserName = Authorization.CurrAccCode;
