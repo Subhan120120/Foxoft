@@ -194,6 +194,13 @@ namespace Foxoft
         {
             if (_isProcessing) return;
 
+            // Authorization check for AI usage
+            if (!_efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ProductFeatureAi"))
+            {
+                XtraMessageBox.Show(Resources.Common_NoPermission, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // Check if there are any unassigned lines
             var unassignedLines = _featureLines.Where(l => string.IsNullOrWhiteSpace(l.MatchedFeatureCode)).ToList();
             if (unassignedLines.Count == 0)

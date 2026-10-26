@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -28,6 +28,7 @@ namespace Foxoft
         private readonly BindingList<InvoiceOcrLineVM> _linesList = new();
         private readonly List<byte[]> _currentImages = new();
         private readonly InvoiceOcrService _ocrService = new();
+        private readonly EfMethods _efMethods = new();
         private CancellationTokenSource? _ocrCts;
         private bool _isProcessing;
         private bool _isRotatingImage;
@@ -497,6 +498,16 @@ namespace Foxoft
         {
             if (_isProcessing)
                 return;
+
+            if (!_efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "InvoiceAiOcr"))
+            {
+                XtraMessageBox.Show(
+                    Resources.Common_NoPermission,
+                    Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
 
             // Ensure image bytes are populated from pictureEdit if needed
             if (_currentImages.Count == 0 && pictureEditInvoice.Image != null)

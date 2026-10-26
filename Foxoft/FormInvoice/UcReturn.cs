@@ -716,7 +716,7 @@ namespace Foxoft
                             WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode),
                             CreatedUserName = Authorization.CurrAccCode,
                             IsMainTF = true,
-                            IsCompleted = answer == DialogResult.No,
+                            IsCompleted = true,
                             LoyaltyCardId = trInvoiceHeader.LoyaltyCardId,
                             TerminalId = Settings.Default.TerminalId,
                             DocumentDate = DateTime.Today,
