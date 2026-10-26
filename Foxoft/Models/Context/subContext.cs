@@ -62,7 +62,7 @@ namespace Foxoft.Models
         public DbSet<TrSession> TrSessions { get; set; }
         public DbSet<DcWarehouse> DcWarehouses { get; set; }
         public DbSet<MigrationHistory> MigrationHistory { get; set; }
-        public DbSet<TrCurrAccRole> TrCurrAccRoles { get; set; }
+        public DbSet<TrUserRole> TrUserRoles { get; set; }
         public DbSet<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
         public DbSet<TrInvoiceLine> TrInvoiceLines { get; set; }
         public DbSet<TrPaymentHeader> TrPaymentHeaders { get; set; }
@@ -513,12 +513,12 @@ namespace Foxoft.Models
                 entity.Property(e => e.CurrAccCode).HasMaxLength(30).IsRequired();
             });
 
-            modelBuilder.Entity<TrCurrAccRole>(entity =>
+            modelBuilder.Entity<TrUserRole>(entity =>
             {
-                entity.HasKey(e => e.CurrAccRoleId);
-                entity.Property(e => e.CurrAccCode).HasMaxLength(30).IsRequired();
+                entity.HasKey(e => e.UserRoleId);
+                entity.Property(e => e.UserName).HasMaxLength(30).IsRequired();
                 entity.HasOne(d => d.DcRole)
-                    .WithMany(p => p.TrCurrAccRoles)
+                    .WithMany(p => p.TrUserRoles)
                     .HasForeignKey(d => d.RoleCode);
             });
 
@@ -918,8 +918,8 @@ namespace Foxoft.Models
                 new DcRole { RoleCode = "PurchaseManager", RoleDesc = "Satınalma meneceri" }
                 );
 
-            modelBuilder.Entity<TrCurrAccRole>().HasData(
-               new TrCurrAccRole { CurrAccRoleId = 1, CurrAccCode = "C-000001", RoleCode = "Admin" });
+            modelBuilder.Entity<TrUserRole>().HasData(
+               new TrUserRole { UserRoleId = 1, UserName = "admin", RoleCode = "Admin" });
 
             modelBuilder.Entity<TrUserStore>().HasData(
                 new TrUserStore { UserStoreId = 1, UserName = "admin", StoreCode = "MGZ01" }

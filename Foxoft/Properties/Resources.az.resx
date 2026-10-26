@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1648,6 +1648,18 @@
     <value>Cari Hesab</value>
   </data>
   <data name="Entity_CurrAccRole_RoleCode" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="Entity_UserRole" xml:space="preserve">
+    <value>u{0130}stifadu{0259}u{00E7}i Rolu</value>
+  </data>
+  <data name="Entity_UserRole_Id" xml:space="preserve">
+    <value>u{0130}stifadu{0259}u{00E7}i Rol Id</value>
+  </data>
+  <data name="Entity_UserRole_UserName" xml:space="preserve">
+    <value>u{0130}stifadu{0259}u{00E7}i Adu{0131}</value>
+  </data>
+  <data name="Entity_UserRole_RoleCode" xml:space="preserve">
     <value>Rol</value>
   </data>
   <data name="Entity_FormReport" xml:space="preserve">

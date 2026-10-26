@@ -1,4 +1,4 @@
-using Foxoft.AppCode.Service;
+﻿using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
@@ -483,9 +483,9 @@ namespace Foxoft.AppCode
                         if (!string.IsNullOrWhiteSpace(actorCurrAccCode))
                             targetUsers.Add(actorCurrAccCode);
 
-                        List<string> adminUsers = await db.TrCurrAccRoles
+                        List<string> adminUsers = await db.TrUserRoles
                             .Where(x => x.RoleCode == "Admin")
-                            .Select(x => x.CurrAccCode)
+                            .Select(x => x.UserName)
                             .ToListAsync(ct);
 
                         foreach (string admin in adminUsers)

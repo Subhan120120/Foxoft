@@ -1330,15 +1330,17 @@ END
             //});
         }
 
-        public List<TrCurrAccRole> SelectCurrAccRole(string currAccCode)
+        public List<TrUserRole> SelectUserRoles(string userName)
         {
             using subContext db = new();
 
-            List<TrCurrAccRole> currAccRoles = db.TrCurrAccRoles.Include(x => x.DcRole)
-                                                                  .Where(x => x.CurrAccCode == currAccCode)
-                                                                  .ToList();
-            return currAccRoles;
+            List<TrUserRole> userRoles = db.TrUserRoles.Include(x => x.DcRole)
+                                                          .Where(x => x.UserName == userName)
+                                                          .ToList();
+            return userRoles;
         }
+
+        public List<TrUserRole> SelectCurrAccRole(string currAccCode) => SelectUserRoles(currAccCode);
 
         public List<CurrAccRoleVM> SelectCurrAccRoleVMs(string currAccCode)
         {
@@ -1347,8 +1349,8 @@ END
             var allRoles = db.DcRoles.AsNoTracking().OrderBy(r => r.RoleDesc).ToList();
             var assignedRoles = string.IsNullOrWhiteSpace(currAccCode)
                 ? new HashSet<string>()
-                : db.TrCurrAccRoles.AsNoTracking()
-                    .Where(x => x.CurrAccCode == currAccCode)
+                : db.TrUserRoles.AsNoTracking()
+                    .Where(x => x.UserName == currAccCode)
                     .Select(x => x.RoleCode)
                     .ToHashSet();
 
@@ -1372,8 +1374,8 @@ END
                 using var transaction = db.Database.BeginTransaction();
                 try
                 {
-                    var existingRoles = db.TrCurrAccRoles
-                        .Where(x => x.CurrAccCode == currAccCode)
+                    var existingRoles = db.TrUserRoles
+                        .Where(x => x.UserName == currAccCode)
                         .ToList();
 
                     var targetCodes = new HashSet<string>(assignedRoleCodes?.Where(c => !string.IsNullOrWhiteSpace(c)) ?? Enumerable.Empty<string>());
@@ -1382,18 +1384,18 @@ END
                     var toRemove = existingRoles.Where(x => !targetCodes.Contains(x.RoleCode)).ToList();
                     if (toRemove.Count > 0)
                     {
-                        db.TrCurrAccRoles.RemoveRange(toRemove);
+                        db.TrUserRoles.RemoveRange(toRemove);
                     }
 
                     var toAddCodes = targetCodes.Where(code => !existingCodes.Contains(code)).ToList();
                     if (toAddCodes.Count > 0)
                     {
-                        var newRoles = toAddCodes.Select(code => new TrCurrAccRole
+                        var newRoles = toAddCodes.Select(code => new TrUserRole
                         {
-                            CurrAccCode = currAccCode,
+                            UserName = currAccCode,
                             RoleCode = code
                         });
-                        db.TrCurrAccRoles.AddRange(newRoles);
+                        db.TrUserRoles.AddRange(newRoles);
                     }
 
                     db.SaveChanges();
@@ -1413,8 +1415,8 @@ END
 
             var userRoles = string.IsNullOrWhiteSpace(currAccCode)
                 ? new List<string>()
-                : db.TrCurrAccRoles.AsNoTracking()
-                    .Where(x => x.CurrAccCode == currAccCode)
+                : db.TrUserRoles.AsNoTracking()
+                    .Where(x => x.UserName == currAccCode)
                     .Select(x => x.RoleCode)
                     .ToList();
 
@@ -2885,8 +2887,8 @@ END
         public List<DcRole> SelectRolesByCurrAcc(string CurrAccCode)
         {
             using subContext db = new();
-            return db.DcRoles.Include(x => x.TrCurrAccRoles)
-                    .Where(o => o.TrCurrAccRoles.Any(x => x.CurrAccCode == CurrAccCode))
+            return db.DcRoles.Include(x => x.TrUserRoles)
+                    .Where(o => o.TrUserRoles.Any(x => x.UserName == CurrAccCode))
                     .ToList();
         }
 
@@ -2899,18 +2901,18 @@ END
 
             bool hasClaim;
 
-            hasClaim = db.TrCurrAccRoles.Include(x => x.DcRole)
+            hasClaim = db.TrUserRoles.Include(x => x.DcRole)
                                        .ThenInclude(x => x.TrRoleClaims)
-                                    .Where(x => x.CurrAccCode == currAccCode)
+                                    .Where(x => x.UserName == currAccCode)
                                     .Any(x => x.DcRole.TrRoleClaims.Any(x => x.ClaimCode == claim));
 
             if (!hasClaim)
-                hasClaim = db.TrCurrAccRoles.Include(x => x.DcRole)
+                hasClaim = db.TrUserRoles.Include(x => x.DcRole)
                            .ThenInclude(x => x.TrRoleClaims)
                            .ThenInclude(x => x.DcClaim)
                            .ThenInclude(x => x.TrClaimReports)
                            .ThenInclude(x => x.DcReport)
-                        .Where(x => x.CurrAccCode == currAccCode)
+                        .Where(x => x.UserName == currAccCode)
                         .Any(x => x.DcRole.TrRoleClaims.Any(x => x.DcClaim.TrClaimReports.Any(x => x.DcReport.ReportId.ToString() == claim)));
 
             return hasClaim;
@@ -3446,18 +3448,18 @@ END
                 .Where(x => x.RedirectedCurrAccCode == sourceCurrAccCode)
                 .ExecuteUpdate(s => s.SetProperty(p => p.RedirectedCurrAccCode, targetCurrAccCode));
 
-            // 2. TrCurrAccRoles
-            var targetRoles = context.TrCurrAccRoles
-                .Where(x => x.CurrAccCode == targetCurrAccCode)
+            // 2. TrUserRoles
+            var targetRoles = context.TrUserRoles
+                .Where(x => x.UserName == targetCurrAccCode)
                 .Select(x => x.RoleCode)
                 .ToList();
 
-            context.TrCurrAccRoles
-                .Where(x => x.CurrAccCode == sourceCurrAccCode && !targetRoles.Contains(x.RoleCode))
-                .ExecuteUpdate(s => s.SetProperty(p => p.CurrAccCode, targetCurrAccCode));
+            context.TrUserRoles
+                .Where(x => x.UserName == sourceCurrAccCode && !targetRoles.Contains(x.RoleCode))
+                .ExecuteUpdate(s => s.SetProperty(p => p.UserName, targetCurrAccCode));
 
-            context.TrCurrAccRoles
-                .Where(x => x.CurrAccCode == sourceCurrAccCode)
+            context.TrUserRoles
+                .Where(x => x.UserName == sourceCurrAccCode)
                 .ExecuteDelete();
 
             // 3. TrInvoiceHeaders

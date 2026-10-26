@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1648,6 +1648,18 @@
     <value>Current Account</value>
   </data>
   <data name="Entity_CurrAccRole_RoleCode" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Entity_UserRole" xml:space="preserve">
+    <value>User Role</value>
+  </data>
+  <data name="Entity_UserRole_Id" xml:space="preserve">
+    <value>User Role Id</value>
+  </data>
+  <data name="Entity_UserRole_UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="Entity_UserRole_RoleCode" xml:space="preserve">
     <value>Role</value>
   </data>
   <data name="Entity_FormReport" xml:space="preserve">

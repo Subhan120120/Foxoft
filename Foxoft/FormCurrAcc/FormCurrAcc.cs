@@ -346,7 +346,7 @@ namespace Foxoft
                 SET XACT_ABORT ON;
 
                 ALTER TABLE DcPaymentMethods NOCHECK CONSTRAINT ALL;
-                ALTER TABLE TrCurrAccRoles NOCHECK CONSTRAINT ALL;
+                ALTER TABLE TrUserRoles NOCHECK CONSTRAINT ALL;
                 ALTER TABLE TrInvoiceHeaders NOCHECK CONSTRAINT ALL;
                 ALTER TABLE TrInvoiceLines NOCHECK CONSTRAINT ALL;
                 ALTER TABLE TrPaymentHeaders NOCHECK CONSTRAINT ALL;
@@ -359,14 +359,14 @@ namespace Foxoft
                 WHERE CurrAccCode = @OldDocNum;
 
                 UPDATE DcPaymentMethods SET RedirectedCurrAccCode = @NewDocNum WHERE RedirectedCurrAccCode = @OldDocNum;
-                UPDATE TrCurrAccRoles SET CurrAccCode = @NewDocNum WHERE CurrAccCode = @OldDocNum;
+                UPDATE TrUserRoles SET UserName = @NewDocNum WHERE UserName = @OldDocNum;
                 UPDATE TrInvoiceHeaders SET CurrAccCode = @NewDocNum WHERE CurrAccCode = @OldDocNum;
                 UPDATE TrInvoiceLines SET SalesPersonCode = @NewDocNum WHERE SalesPersonCode = @OldDocNum;
                 UPDATE TrPaymentHeaders SET CurrAccCode = @NewDocNum WHERE CurrAccCode = @OldDocNum;
                 UPDATE TrSessions SET CurrAccCode = @NewDocNum WHERE CurrAccCode = @OldDocNum;
 
                 ALTER TABLE DcPaymentMethods WITH CHECK CHECK CONSTRAINT ALL;
-                ALTER TABLE TrCurrAccRoles WITH CHECK CHECK CONSTRAINT ALL;
+                ALTER TABLE TrUserRoles WITH CHECK CHECK CONSTRAINT ALL;
                 ALTER TABLE TrInvoiceHeaders WITH CHECK CHECK CONSTRAINT ALL;
                 ALTER TABLE TrInvoiceLines WITH CHECK CHECK CONSTRAINT ALL;
                 ALTER TABLE TrPaymentHeaders WITH CHECK CHECK CONSTRAINT ALL;

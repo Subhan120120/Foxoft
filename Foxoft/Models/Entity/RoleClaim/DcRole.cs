@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Foxoft.Properties;
 
@@ -7,7 +7,7 @@ namespace Foxoft.Models.Entity.RoleClaim
     [Display(Name = nameof(Resources.Entity_Role), ResourceType = typeof(Resources))]
     public partial class DcRole : BaseEntity
     {
-        public DcRole() { TrRoleClaims = new HashSet<TrRoleClaim>(); TrCurrAccRoles = new HashSet<TrCurrAccRole>(); }
+        public DcRole() { TrRoleClaims = new HashSet<TrRoleClaim>(); TrUserRoles = new HashSet<TrUserRole>(); }
 
         [Key]
         [Display(Name = nameof(Resources.Entity_Role_Code), ResourceType = typeof(Resources))]
@@ -19,6 +19,6 @@ namespace Foxoft.Models.Entity.RoleClaim
         public string RoleDesc { get; set; }
 
         public virtual ICollection<TrRoleClaim> TrRoleClaims { get; set; }
-        public virtual ICollection<TrCurrAccRole> TrCurrAccRoles { get; set; }
+        public virtual ICollection<TrUserRole> TrUserRoles { get; set; }
     }
 }

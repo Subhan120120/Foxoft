@@ -7552,6 +7552,22 @@ namespace Foxoft.Migrations
                             ClaimDesc = "Google Kontaktlar",
                             ClaimTypeId = (byte)1,
                             Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "ProductFeatureAi",
+                            CategoryId = 18,
+                            ClaimDesc = "Məhsul Özəllikləri AI",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InvoiceAiOcr",
+                            CategoryId = 2,
+                            ClaimDesc = "Qaimə AI OCR",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         });
                 });
 
@@ -8050,62 +8066,6 @@ namespace Foxoft.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportId = 18
-                        });
-                });
-
-            modelBuilder.Entity("Foxoft.Models.Entity.RoleClaim.TrCurrAccRole", b =>
-                {
-                    b.Property<int>("CurrAccRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CurrAccRoleId"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("CreatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<string>("CurrAccCode")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<DateTime>("LastUpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("LastUpdatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<string>("RoleCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CurrAccRoleId");
-
-                    b.HasIndex("RoleCode");
-
-                    b.ToTable("TrCurrAccRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            CurrAccRoleId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrAccCode = "C-000001",
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleCode = "Admin"
                         });
                 });
 
@@ -8955,6 +8915,78 @@ namespace Foxoft.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 222,
+                            ClaimCode = "ProductFeatureAi",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 223,
+                            ClaimCode = "InvoiceAiOcr",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.Entity.RoleClaim.TrUserRole", b =>
+                {
+                    b.Property<int>("UserRoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("RoleCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("UserRoleId");
+
+                    b.HasIndex("RoleCode");
+
+                    b.ToTable("TrUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserRoleId = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin",
+                            UserName = "admin"
                         });
                 });
 
@@ -11652,22 +11684,6 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StoreCode = "MGZ01",
                             UserName = "admin"
-                        },
-                        new
-                        {
-                            UserStoreId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StoreCode = "MGZ01",
-                            UserName = "C-000001"
-                        },
-                        new
-                        {
-                            UserStoreId = 3,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StoreCode = "MGZ01",
-                            UserName = "CA-1"
                         });
                 });
 
@@ -12213,17 +12229,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcReport");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.Entity.RoleClaim.TrCurrAccRole", b =>
-                {
-                    b.HasOne("Foxoft.Models.Entity.RoleClaim.DcRole", "DcRole")
-                        .WithMany("TrCurrAccRoles")
-                        .HasForeignKey("RoleCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcRole");
-                });
-
             modelBuilder.Entity("Foxoft.Models.Entity.RoleClaim.TrRoleClaim", b =>
                 {
                     b.HasOne("Foxoft.Models.Entity.RoleClaim.DcClaim", "DcClaim")
@@ -12239,6 +12244,17 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.Navigation("DcClaim");
+
+                    b.Navigation("DcRole");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.Entity.RoleClaim.TrUserRole", b =>
+                {
+                    b.HasOne("Foxoft.Models.Entity.RoleClaim.DcRole", "DcRole")
+                        .WithMany("TrUserRoles")
+                        .HasForeignKey("RoleCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("DcRole");
                 });
@@ -13576,9 +13592,9 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.Entity.RoleClaim.DcRole", b =>
                 {
-                    b.Navigation("TrCurrAccRoles");
-
                     b.Navigation("TrRoleClaims");
+
+                    b.Navigation("TrUserRoles");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrBarcodeOperationHeader", b =>

@@ -1,4 +1,4 @@
-using Foxoft.Models;
+﻿using Foxoft.Models;
 using Foxoft.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -512,10 +512,10 @@ namespace Foxoft.AppCode.Service
 
             foreach (DcNotificationRecipientRule rule in rules)
             {
-                var userCodes = _db.TrCurrAccRoles
+                var userCodes = _db.TrUserRoles
                     .AsNoTracking()
                     .Where(x => x.RoleCode == rule.RoleCode)
-                    .Select(x => x.CurrAccCode);
+                    .Select(x => x.UserName);
 
                 IQueryable<DcCurrAcc> query = _db.DcCurrAccs
                     .AsNoTracking()
