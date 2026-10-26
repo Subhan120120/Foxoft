@@ -1,4 +1,4 @@
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
@@ -672,14 +672,38 @@ namespace Foxoft
                 }
             }
 
-            DialogResult answer = XtraMessageBox.Show(
-                Resources.Form_Return_Message_ConfirmOptions,
-                Resources.Form_Return_Caption_Confirmation,
-                MessageBoxButtons.YesNoCancel,
-                MessageBoxIcon.Question);
+            bool hasAllowUnderPayment = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "AllowUnderPayment");
+            bool shouldOpenInvoice;
+            bool isCompleted;
 
-            if (answer != DialogResult.Yes && answer != DialogResult.No)
-                return;
+            if (hasAllowUnderPayment)
+            {
+                DialogResult answer = XtraMessageBox.Show(
+                    Resources.Form_Return_Message_ConfirmOptions,
+                    Resources.Form_Return_Caption_Confirmation,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
+
+                if (answer != DialogResult.Yes && answer != DialogResult.No)
+                    return;
+
+                shouldOpenInvoice = answer == DialogResult.Yes;
+                isCompleted = true;
+            }
+            else
+            {
+                DialogResult answer = XtraMessageBox.Show(
+                    Resources.Form_Return_Message_ConfirmQuestion,
+                    Resources.Form_Return_Caption_Confirmation,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (answer != DialogResult.Yes)
+                    return;
+
+                shouldOpenInvoice = true;
+                isCompleted = false;
+            }
 
             using subContext db = new();
             var strategy = db.Database.CreateExecutionStrategy();
@@ -716,7 +740,7 @@ namespace Foxoft
                             WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode),
                             CreatedUserName = Authorization.CurrAccCode,
                             IsMainTF = true,
-                            IsCompleted = true,
+                            IsCompleted = isCompleted,
                             LoyaltyCardId = trInvoiceHeader.LoyaltyCardId,
                             TerminalId = Settings.Default.TerminalId,
                             DocumentDate = DateTime.Today,
@@ -805,7 +829,7 @@ namespace Foxoft
 
             if (isSuccess)
             {
-                if (answer == DialogResult.Yes)
+                if (shouldOpenInvoice)
                 {
                     if (InvoiceOpenRequested != null)
                     {

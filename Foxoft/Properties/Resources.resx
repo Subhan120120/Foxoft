@@ -4154,6 +4154,9 @@ Yes - Open invoice
 No - Finalize without opening invoice
 Cancel - Cancel return</value>
   </data>
+  <data name="Form_Return_Message_ConfirmQuestion" xml:space="preserve">
+    <value>Confirm return?</value>
+  </data>
   <data name="Form_Return_Message_InvoiceNotFound" xml:space="preserve">
     <value>Document not found.</value>
   </data>

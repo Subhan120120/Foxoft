@@ -18133,6 +18133,15 @@ namespace Foxoft.Properties {
         ///No - Finalize without opening invoice
         ///Cancel - Cancel return.
         /// </summary>
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm return?.
+        /// </summary>
+        public static string Form_Return_Message_ConfirmQuestion {
+            get {
+                return ResourceManager.GetString("Form_Return_Message_ConfirmQuestion", resourceCulture);
+            }
+        }
+        
         public static string Form_Return_Message_ConfirmOptions {
             get {
                 return ResourceManager.GetString("Form_Return_Message_ConfirmOptions", resourceCulture);
