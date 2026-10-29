@@ -23,9 +23,9 @@ namespace Foxoft
             barImageTools = new DevExpress.XtraBars.Bar();
             btnSelectImage = new DevExpress.XtraBars.BarButtonItem();
             btnPasteImage = new DevExpress.XtraBars.BarButtonItem();
-            btnClearImage = new DevExpress.XtraBars.BarButtonItem();
             btnRotateLeft = new DevExpress.XtraBars.BarButtonItem();
             btnRotateRight = new DevExpress.XtraBars.BarButtonItem();
+            btnClearImage = new DevExpress.XtraBars.BarButtonItem();
             btnProcessOcr = new DevExpress.XtraBars.BarButtonItem();
             standaloneBarDockControlImage = new DevExpress.XtraBars.StandaloneBarDockControl();
             barLinesTools = new DevExpress.XtraBars.Bar();
@@ -168,21 +168,11 @@ namespace Foxoft
             btnPasteImage.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             btnPasteImage.ItemClick += btnPasteImage_ItemClick;
             // 
-            // btnClearImage
-            // 
-            btnClearImage.Caption = "Clear Image";
-            btnClearImage.Id = 2;
-            btnClearImage.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnClearImage.ImageOptions.SvgImage");
-            btnClearImage.ImageOptions.SvgImageSize = new Size(16, 16);
-            btnClearImage.Name = "btnClearImage";
-            btnClearImage.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-            btnClearImage.ItemClick += btnClearImage_ItemClick;
-            // 
             // btnRotateLeft
             // 
             btnRotateLeft.Caption = "Rotate Left";
             btnRotateLeft.Id = 6;
-            btnRotateLeft.ImageOptions.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/diagramicons/rotate_left90.svg");
+            btnRotateLeft.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnRotateLeft.ImageOptions.SvgImage");
             btnRotateLeft.ImageOptions.SvgImageSize = new Size(16, 16);
             btnRotateLeft.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.L);
             btnRotateLeft.Name = "btnRotateLeft";
@@ -193,12 +183,22 @@ namespace Foxoft
             // 
             btnRotateRight.Caption = "Rotate Right";
             btnRotateRight.Id = 7;
-            btnRotateRight.ImageOptions.SvgImage = DevExpress.Images.ImageResourceCache.Default.GetSvgImage("svgimages/diagramicons/rotate_right90.svg");
+            btnRotateRight.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnRotateRight.ImageOptions.SvgImage");
             btnRotateRight.ImageOptions.SvgImageSize = new Size(16, 16);
             btnRotateRight.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.R);
             btnRotateRight.Name = "btnRotateRight";
             btnRotateRight.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             btnRotateRight.ItemClick += btnRotateRight_ItemClick;
+            // 
+            // btnClearImage
+            // 
+            btnClearImage.Caption = "Clear Image";
+            btnClearImage.Id = 2;
+            btnClearImage.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnClearImage.ImageOptions.SvgImage");
+            btnClearImage.ImageOptions.SvgImageSize = new Size(16, 16);
+            btnClearImage.Name = "btnClearImage";
+            btnClearImage.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            btnClearImage.ItemClick += btnClearImage_ItemClick;
             // 
             // btnProcessOcr
             // 
@@ -332,6 +332,7 @@ namespace Foxoft
             pictureEditInvoice.Location = new Point(0, 28);
             pictureEditInvoice.Margin = new Padding(3, 2, 3, 2);
             pictureEditInvoice.Name = "pictureEditInvoice";
+            pictureEditInvoice.Properties.AllowScrollViaMouseDrag = true;
             pictureEditInvoice.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
             pictureEditInvoice.Properties.ShowScrollBars = true;
             pictureEditInvoice.Properties.ShowZoomSubMenu = DevExpress.Utils.DefaultBoolean.True;
