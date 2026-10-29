@@ -1,4 +1,4 @@
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
@@ -32,7 +32,7 @@ namespace Foxoft
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(UcReturn));
             lC_Root = new LayoutControl();
-            btnEdit_InvoiceHeader = new ButtonEdit();
+            btnEdit_DocmentNumber = new ButtonEdit();
             txt_CurrAccDesc = new TextEdit();
             txt_DocDate = new TextEdit();
             txt_TotalAmount = new TextEdit();
@@ -75,12 +75,12 @@ namespace Foxoft
             lCG_Root = new LayoutControlGroup();
             lCG_InvoiceHeader = new LayoutControlGroup();
             lCI_InvoiceHeader = new LayoutControlItem();
-            lCI_CurrAccDesc = new LayoutControlItem();
-            lCI_DocDate = new LayoutControlItem();
             lCI_TotalAmount = new LayoutControlItem();
             lCI_BarcodeSearch = new LayoutControlItem();
             lCI_ReturnAll = new LayoutControlItem();
             lCI_Clear = new LayoutControlItem();
+            lCI_CurrAccDesc = new LayoutControlItem();
+            lCI_DocDate = new LayoutControlItem();
             lCG_InvoiceLine = new LayoutControlGroup();
             lCI_InvoiceLine = new LayoutControlItem();
             splitterMain = new SplitterItem();
@@ -95,7 +95,7 @@ namespace Foxoft
             lCI_Cancel = new LayoutControlItem();
             ((ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
-            ((ISupportInitialize)btnEdit_InvoiceHeader.Properties).BeginInit();
+            ((ISupportInitialize)btnEdit_DocmentNumber.Properties).BeginInit();
             ((ISupportInitialize)txt_CurrAccDesc.Properties).BeginInit();
             ((ISupportInitialize)txt_DocDate.Properties).BeginInit();
             ((ISupportInitialize)txt_TotalAmount.Properties).BeginInit();
@@ -112,12 +112,12 @@ namespace Foxoft
             ((ISupportInitialize)lCG_Root).BeginInit();
             ((ISupportInitialize)lCG_InvoiceHeader).BeginInit();
             ((ISupportInitialize)lCI_InvoiceHeader).BeginInit();
-            ((ISupportInitialize)lCI_CurrAccDesc).BeginInit();
-            ((ISupportInitialize)lCI_DocDate).BeginInit();
             ((ISupportInitialize)lCI_TotalAmount).BeginInit();
             ((ISupportInitialize)lCI_BarcodeSearch).BeginInit();
             ((ISupportInitialize)lCI_ReturnAll).BeginInit();
             ((ISupportInitialize)lCI_Clear).BeginInit();
+            ((ISupportInitialize)lCI_CurrAccDesc).BeginInit();
+            ((ISupportInitialize)lCI_DocDate).BeginInit();
             ((ISupportInitialize)lCG_InvoiceLine).BeginInit();
             ((ISupportInitialize)lCI_InvoiceLine).BeginInit();
             ((ISupportInitialize)splitterMain).BeginInit();
@@ -134,7 +134,7 @@ namespace Foxoft
             // 
             // lC_Root
             // 
-            lC_Root.Controls.Add(btnEdit_InvoiceHeader);
+            lC_Root.Controls.Add(btnEdit_DocmentNumber);
             lC_Root.Controls.Add(txt_CurrAccDesc);
             lC_Root.Controls.Add(txt_DocDate);
             lC_Root.Controls.Add(txt_TotalAmount);
@@ -153,18 +153,19 @@ namespace Foxoft
             lC_Root.Size = new Size(1200, 780);
             lC_Root.TabIndex = 0;
             // 
-            // btnEdit_InvoiceHeader
+            // btnEdit_DocNum
             // 
-            btnEdit_InvoiceHeader.Location = new Point(123, 36);
-            btnEdit_InvoiceHeader.Name = "btnEdit_InvoiceHeader";
-            btnEdit_InvoiceHeader.Properties.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnEdit_InvoiceHeader.Properties.Appearance.Options.UseFont = true;
-            btnEdit_InvoiceHeader.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Search), new EditorButton(ButtonPredefines.Clear) });
-            btnEdit_InvoiceHeader.Size = new Size(236, 24);
-            btnEdit_InvoiceHeader.StyleController = lC_Root;
-            btnEdit_InvoiceHeader.TabIndex = 1;
-            btnEdit_InvoiceHeader.ButtonClick += btnEdit_InvoiceHeader_ButtonClick;
-            btnEdit_InvoiceHeader.KeyDown += btnEdit_InvoiceHeader_KeyDown;
+            btnEdit_DocmentNumber.Location = new Point(123, 36);
+            btnEdit_DocmentNumber.Name = "btnEdit_DocNum";
+            btnEdit_DocmentNumber.Properties.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnEdit_DocmentNumber.Properties.Appearance.Options.UseFont = true;
+            btnEdit_DocmentNumber.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Search), new EditorButton(ButtonPredefines.Clear) });
+            btnEdit_DocmentNumber.Size = new Size(236, 24);
+            btnEdit_DocmentNumber.StyleController = lC_Root;
+            btnEdit_DocmentNumber.TabIndex = 1;
+            btnEdit_DocmentNumber.ButtonClick += btnEdit_DocmentNumber_ButtonClick;
+            btnEdit_DocmentNumber.KeyDown += btnEdit_DocmentNumber_KeyDown;
+            btnEdit_DocmentNumber.PreviewKeyDown += btnEdit_DocmentNumber_PreviewKeyDown;
             // 
             // txt_CurrAccDesc
             // 
@@ -684,34 +685,12 @@ namespace Foxoft
             // 
             lCI_InvoiceHeader.AppearanceItemCaption.Font = new Font("Segoe UI", 9F);
             lCI_InvoiceHeader.AppearanceItemCaption.Options.UseFont = true;
-            lCI_InvoiceHeader.Control = btnEdit_InvoiceHeader;
+            lCI_InvoiceHeader.Control = btnEdit_DocmentNumber;
             lCI_InvoiceHeader.Location = new Point(0, 0);
             lCI_InvoiceHeader.Name = "lCI_InvoiceHeader";
             lCI_InvoiceHeader.Size = new Size(348, 28);
             lCI_InvoiceHeader.Text = Resources.Form_Return_Label_InvoiceHeader;
             lCI_InvoiceHeader.TextSize = new Size(96, 15);
-            // 
-            // lCI_CurrAccDesc
-            // 
-            lCI_CurrAccDesc.AppearanceItemCaption.Font = new Font("Segoe UI", 9F);
-            lCI_CurrAccDesc.AppearanceItemCaption.Options.UseFont = true;
-            lCI_CurrAccDesc.Control = txt_CurrAccDesc;
-            lCI_CurrAccDesc.Location = new Point(348, 0);
-            lCI_CurrAccDesc.Name = "lCI_CurrAccDesc";
-            lCI_CurrAccDesc.Size = new Size(594, 28);
-            lCI_CurrAccDesc.Text = Resources.Form_Return_Label_CurrAcc;
-            lCI_CurrAccDesc.TextSize = new Size(96, 15);
-            // 
-            // lCI_DocDate
-            // 
-            lCI_DocDate.AppearanceItemCaption.Font = new Font("Segoe UI", 9F);
-            lCI_DocDate.AppearanceItemCaption.Options.UseFont = true;
-            lCI_DocDate.Control = txt_DocDate;
-            lCI_DocDate.Location = new Point(348, 28);
-            lCI_DocDate.Name = "lCI_DocDate";
-            lCI_DocDate.Size = new Size(297, 28);
-            lCI_DocDate.Text = Resources.Form_Return_Label_DocDate;
-            lCI_DocDate.TextSize = new Size(96, 15);
             // 
             // lCI_TotalAmount
             // 
@@ -750,6 +729,28 @@ namespace Foxoft
             lCI_Clear.Name = "lCI_Clear";
             lCI_Clear.Size = new Size(232, 28);
             lCI_Clear.TextVisible = false;
+            // 
+            // lCI_CurrAccDesc
+            // 
+            lCI_CurrAccDesc.AppearanceItemCaption.Font = new Font("Segoe UI", 9F);
+            lCI_CurrAccDesc.AppearanceItemCaption.Options.UseFont = true;
+            lCI_CurrAccDesc.Control = txt_CurrAccDesc;
+            lCI_CurrAccDesc.Location = new Point(348, 0);
+            lCI_CurrAccDesc.Name = "lCI_CurrAccDesc";
+            lCI_CurrAccDesc.Size = new Size(594, 28);
+            lCI_CurrAccDesc.Text = Resources.Form_Return_Label_CurrAcc;
+            lCI_CurrAccDesc.TextSize = new Size(96, 15);
+            // 
+            // lCI_DocDate
+            // 
+            lCI_DocDate.AppearanceItemCaption.Font = new Font("Segoe UI", 9F);
+            lCI_DocDate.AppearanceItemCaption.Options.UseFont = true;
+            lCI_DocDate.Control = txt_DocDate;
+            lCI_DocDate.Location = new Point(348, 28);
+            lCI_DocDate.Name = "lCI_DocDate";
+            lCI_DocDate.Size = new Size(297, 28);
+            lCI_DocDate.Text = Resources.Form_Return_Label_DocDate;
+            lCI_DocDate.TextSize = new Size(96, 15);
             // 
             // lCG_InvoiceLine
             // 
@@ -868,7 +869,7 @@ namespace Foxoft
             Load += UcReturn_Load;
             ((ISupportInitialize)lC_Root).EndInit();
             lC_Root.ResumeLayout(false);
-            ((ISupportInitialize)btnEdit_InvoiceHeader.Properties).EndInit();
+            ((ISupportInitialize)btnEdit_DocmentNumber.Properties).EndInit();
             ((ISupportInitialize)txt_CurrAccDesc.Properties).EndInit();
             ((ISupportInitialize)txt_DocDate.Properties).EndInit();
             ((ISupportInitialize)txt_TotalAmount.Properties).EndInit();
@@ -885,12 +886,12 @@ namespace Foxoft
             ((ISupportInitialize)lCG_Root).EndInit();
             ((ISupportInitialize)lCG_InvoiceHeader).EndInit();
             ((ISupportInitialize)lCI_InvoiceHeader).EndInit();
-            ((ISupportInitialize)lCI_CurrAccDesc).EndInit();
-            ((ISupportInitialize)lCI_DocDate).EndInit();
             ((ISupportInitialize)lCI_TotalAmount).EndInit();
             ((ISupportInitialize)lCI_BarcodeSearch).EndInit();
             ((ISupportInitialize)lCI_ReturnAll).EndInit();
             ((ISupportInitialize)lCI_Clear).EndInit();
+            ((ISupportInitialize)lCI_CurrAccDesc).EndInit();
+            ((ISupportInitialize)lCI_DocDate).EndInit();
             ((ISupportInitialize)lCG_InvoiceLine).EndInit();
             ((ISupportInitialize)lCI_InvoiceLine).EndInit();
             ((ISupportInitialize)splitterMain).EndInit();
@@ -912,7 +913,7 @@ namespace Foxoft
         private LayoutControlGroup lCG_Root;
 
         private LayoutControlGroup lCG_InvoiceHeader;
-        private ButtonEdit btnEdit_InvoiceHeader;
+        private ButtonEdit btnEdit_DocmentNumber;
         private LayoutControlItem lCI_InvoiceHeader;
         private TextEdit txt_CurrAccDesc;
         private LayoutControlItem lCI_CurrAccDesc;

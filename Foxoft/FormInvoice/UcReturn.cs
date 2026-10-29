@@ -103,6 +103,14 @@ namespace Foxoft
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
+            if (keyData == Keys.Enter && (btnEdit_DocmentNumber.Focused || btnEdit_DocmentNumber.ContainsFocus))
+            {
+                btnEdit_DocmentNumber.DoValidate();
+                string docNum = (btnEdit_DocmentNumber.EditValue?.ToString() ?? btnEdit_DocmentNumber.Text)?.Trim() ?? string.Empty;
+                LoadInvoiceByDocNum(docNum);
+                return true;
+            }
+
             if (_shortcutActions.TryGetValue(keyData, out Action? action))
             {
                 if ((keyData & Keys.KeyCode) == Keys.Escape)
@@ -185,7 +193,7 @@ namespace Foxoft
 
         #region Invoice Search & Loading
 
-        private void btnEdit_InvoiceHeader_ButtonClick(object sender, ButtonPressedEventArgs e)
+        private void btnEdit_DocmentNumber_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             if (e.Button.Index == 0) // Search
             {
@@ -197,16 +205,27 @@ namespace Foxoft
             }
         }
 
-        private void btnEdit_InvoiceHeader_KeyDown(object sender, KeyEventArgs e)
+        private void btnEdit_DocmentNumber_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                string docNum = btnEdit_InvoiceHeader.Text?.Trim() ?? string.Empty;
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                btnEdit_DocmentNumber.DoValidate();
+                string docNum = (btnEdit_DocmentNumber.EditValue?.ToString() ?? btnEdit_DocmentNumber.Text)?.Trim() ?? string.Empty;
                 LoadInvoiceByDocNum(docNum);
             }
             else if (e.KeyCode == Keys.F4)
             {
                 SelectDocNum();
+            }
+        }
+
+        private void btnEdit_DocmentNumber_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.IsInputKey = true;
             }
         }
 
@@ -231,6 +250,57 @@ namespace Foxoft
             }
         }
 
+        private TrInvoiceHeader? FindInvoiceHeader(string docNum)
+        {
+            if (string.IsNullOrWhiteSpace(docNum))
+                return null;
+
+            // 1. Direct match (e.g. "RS-124223")
+            TrInvoiceHeader? header = efMethods.SelectInvoiceHeaderByDocNum(docNum);
+            if (header != null)
+                return header;
+
+            // 2. Try uppercase if different (e.g. "rs-124223" -> "RS-124223")
+            string upperDocNum = docNum.ToUpperInvariant();
+            if (!string.Equals(docNum, upperDocNum, StringComparison.Ordinal))
+            {
+                header = efMethods.SelectInvoiceHeaderByDocNum(upperDocNum);
+                if (header != null)
+                    return header;
+            }
+
+            if (!string.IsNullOrEmpty(processCode))
+            {
+                string pCode = processCode.ToUpperInvariant();
+
+                // 3. Try with processCode prefix (e.g. "124223" -> "RS-124223")
+                string prefixed = $"{pCode}-{docNum}";
+                header = efMethods.SelectInvoiceHeaderByDocNum(prefixed);
+                if (header != null)
+                    return header;
+
+                // 4. Try without hyphen if user typed "RS124223"
+                if (upperDocNum.StartsWith(pCode, StringComparison.OrdinalIgnoreCase) && upperDocNum.Length > pCode.Length)
+                {
+                    string rest = upperDocNum.Substring(pCode.Length).TrimStart('-', ' ');
+                    header = efMethods.SelectInvoiceHeaderByDocNum($"{pCode}-{rest}");
+                    if (header != null)
+                        return header;
+                }
+
+                // 5. Try with 6-digit zero padding (e.g. "124" -> "RS-000124")
+                if (int.TryParse(docNum.Trim(), out _))
+                {
+                    string padded = $"{pCode}-{docNum.Trim().PadLeft(6, '0')}";
+                    header = efMethods.SelectInvoiceHeaderByDocNum(padded);
+                    if (header != null)
+                        return header;
+                }
+            }
+
+            return null;
+        }
+
         private void LoadInvoiceByDocNum(string docNum)
         {
             if (string.IsNullOrWhiteSpace(docNum))
@@ -248,10 +318,24 @@ namespace Foxoft
                     return;
             }
 
-            TrInvoiceHeader header = efMethods.SelectInvoiceHeaderByDocNum(docNum);
-            if (header != null && (string.IsNullOrEmpty(processCode) || header.ProcessCode == processCode) && !header.IsReturn)
+            TrInvoiceHeader? header = FindInvoiceHeader(docNum);
+            if (header != null && (string.IsNullOrEmpty(processCode) || string.Equals(header.ProcessCode, processCode, StringComparison.OrdinalIgnoreCase)))
             {
-                LoadInvoice(header.InvoiceHeaderId);
+                if (header.IsReturn)
+                {
+                    XtraMessageBox.Show(
+                        Resources.Form_Return_Message_DocumentIsReturn,
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    btnEdit_DocmentNumber.Focus();
+                    btnEdit_DocmentNumber.SelectAll();
+                }
+                else
+                {
+                    LoadInvoice(header.InvoiceHeaderId);
+                }
             }
             else
             {
@@ -260,6 +344,9 @@ namespace Foxoft
                     Resources.Common_Attention,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+
+                btnEdit_DocmentNumber.Focus();
+                btnEdit_DocmentNumber.SelectAll();
             }
         }
 
@@ -278,7 +365,7 @@ namespace Foxoft
                 return;
             }
 
-            btnEdit_InvoiceHeader.EditValue = trInvoiceHeader.DocumentNumber;
+            btnEdit_DocmentNumber.EditValue = trInvoiceHeader.DocumentNumber;
             txt_CurrAccDesc.EditValue = trInvoiceHeader.DcCurrAcc?.CurrAccDesc ?? trInvoiceHeader.CurrAccCode;
             txt_DocDate.EditValue = trInvoiceHeader.DocumentDate.ToString("dd.MM.yyyy");
 
@@ -881,7 +968,7 @@ namespace Foxoft
             ReturnCart.Clear();
             OriginalLines.Clear();
 
-            btnEdit_InvoiceHeader.EditValue = null;
+            btnEdit_DocmentNumber.EditValue = null;
             txt_CurrAccDesc.EditValue = null;
             txt_DocDate.EditValue = null;
             txt_TotalAmount.EditValue = null;

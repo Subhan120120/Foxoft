@@ -4169,6 +4169,9 @@ Xeyr - Qaiməni açmadan yekunlaşdır
   <data name="Form_Return_Message_ConfirmQuestion" xml:space="preserve">
     <value>Qaytarış təsdiqlənsin?</value>
   </data>
+  <data name="Form_Return_Message_DocumentIsReturn" xml:space="preserve">
+    <value>Daxil edilən sənəd geri qaytarma sənədidir.</value>
+  </data>
   <data name="Form_Return_Message_InvoiceNotFound" xml:space="preserve">
     <value>Belə bir sənəd yoxdur.</value>
   </data>

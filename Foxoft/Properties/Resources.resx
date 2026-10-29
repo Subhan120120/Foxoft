@@ -4169,6 +4169,9 @@ Cancel - Cancel return</value>
   <data name="Form_Return_Message_ConfirmQuestion" xml:space="preserve">
     <value>Confirm return?</value>
   </data>
+  <data name="Form_Return_Message_DocumentIsReturn" xml:space="preserve">
+    <value>The entered document is a return document.</value>
+  </data>
   <data name="Form_Return_Message_InvoiceNotFound" xml:space="preserve">
     <value>Document not found.</value>
   </data>
