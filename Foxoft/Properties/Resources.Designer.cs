@@ -20411,6 +20411,18 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_InvoiceWizard_AutoSaveImage {
+            get {
+                return ResourceManager.GetString("Form_InvoiceWizard_AutoSaveImage", resourceCulture);
+            }
+        }
+
+        public static string Form_InvoiceWizard_AutoSaveImage_Hint {
+            get {
+                return ResourceManager.GetString("Form_InvoiceWizard_AutoSaveImage_Hint", resourceCulture);
+            }
+        }
+
         public static string Form_InvoiceWizard_PromptProcessOcr {
             get {
                 return ResourceManager.GetString("Form_InvoiceWizard_PromptProcessOcr", resourceCulture);

@@ -32,6 +32,8 @@ namespace Foxoft
         private CancellationTokenSource? _ocrCts;
         private bool _isProcessing;
         private bool _isRotatingImage;
+        private bool _isSettingImageInternally;
+        private string? _lastSavedImagePath;
 
         public InvoiceOcrResult? Result { get; private set; }
         public bool ApplyHeaderToInvoice => chkApplyHeader.Checked;
@@ -52,6 +54,7 @@ namespace Foxoft
             LoadUnitsOfMeasure();
             InitGrid();
             InitHeaderFields();
+            chkAutoSaveInvoiceImage.Checked = Settings.Default.AutoSaveInvoiceImage;
             UpdateSummary();
         }
 
@@ -85,6 +88,9 @@ namespace Foxoft
 
             // Header panel controls
             groupControlHeader.Text = Resources.Form_InvoiceWizard_HeaderGroup;
+            chkAutoSaveInvoiceImage.Properties.Caption = Resources.Form_InvoiceWizard_AutoSaveImage;
+            chkAutoSaveInvoiceImage.ToolTip = Resources.Form_InvoiceWizard_AutoSaveImage_Hint;
+
             chkApplyHeader.Properties.Caption = Resources.Form_InvoiceWizard_ApplyHeader;
             layoutItemDocNum.Text = Resources.Form_InvoiceWizard_DocNum;
             layoutItemDocDate.Text = Resources.Form_InvoiceWizard_DocDate;
@@ -245,8 +251,6 @@ namespace Foxoft
             if (_isRotatingImage)
                 return;
 
-            _currentImages.Clear();
-
             btnRotateLeft.Enabled = pictureEditInvoice.Image != null;
             btnRotateRight.Enabled = pictureEditInvoice.Image != null;
 
@@ -255,11 +259,32 @@ namespace Foxoft
                 double kb = (pictureEditInvoice.Image.Width * pictureEditInvoice.Image.Height * 4) / 1024.0;
                 lblImageInfo.Text = string.Format(Resources.Form_InvoiceWizard_ImageInfo, pictureEditInvoice.Image.Width, pictureEditInvoice.Image.Height, kb);
 
+                if (!_isSettingImageInternally)
+                {
+                    byte[] bytes = ImageToPngBytes(pictureEditInvoice.Image);
+                    _currentImages.Clear();
+                    _currentImages.Add(bytes);
+                    AutoSaveImageIfEnabled(null, bytes);
+                }
+
                 PromptProcessOcrAfterImageAdded();
             }
             else
             {
+                _currentImages.Clear();
+                _lastSavedImagePath = null;
                 lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
+            }
+        }
+
+        private void chkAutoSaveInvoiceImage_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.AutoSaveInvoiceImage = chkAutoSaveInvoiceImage.Checked;
+            Settings.Default.Save();
+
+            if (chkAutoSaveInvoiceImage.Checked && pictureEditInvoice.Image != null && string.IsNullOrWhiteSpace(_lastSavedImagePath))
+            {
+                AutoSaveImageIfEnabled(null, _currentImages.Count > 0 ? _currentImages[0] : null);
             }
         }
 
@@ -362,7 +387,7 @@ namespace Foxoft
             {
                 byte[] bytes = File.ReadAllBytes(filePath);
                 string fileName = Path.GetFileName(filePath);
-                SetImage(bytes, fileName);
+                SetImage(bytes, fileName, sourceFilePath: filePath);
             }
             catch (Exception ex)
             {
@@ -374,22 +399,33 @@ namespace Foxoft
             }
         }
 
-        private void SetImage(byte[] imageBytes, string sourceName)
+        private void SetImage(byte[] imageBytes, string sourceName, string? sourceFilePath = null)
         {
-            using var ms = new MemoryStream(imageBytes);
-            using var bmp = new Bitmap(ms);
-            pictureEditInvoice.Image = new Bitmap(bmp);
+            _isSettingImageInternally = true;
+            try
+            {
+                using var ms = new MemoryStream(imageBytes);
+                using var bmp = new Bitmap(ms);
+                pictureEditInvoice.Image = new Bitmap(bmp);
+            }
+            finally
+            {
+                _isSettingImageInternally = false;
+            }
 
             _currentImages.Clear();
             _currentImages.Add(imageBytes);
 
             double kb = imageBytes.Length / 1024.0;
-            lblImageInfo.Text = $"{sourceName} | " + string.Format(Resources.Form_InvoiceWizard_ImageInfo, bmp.Width, bmp.Height, kb);
+            lblImageInfo.Text = $"{sourceName} | " + string.Format(Resources.Form_InvoiceWizard_ImageInfo, pictureEditInvoice.Image.Width, pictureEditInvoice.Image.Height, kb);
+
+            AutoSaveImageIfEnabled(sourceFilePath, imageBytes);
         }
 
         private void btnClearImage_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             _currentImages.Clear();
+            _lastSavedImagePath = null;
             pictureEditInvoice.Image = null;
             lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
         }
@@ -433,6 +469,8 @@ namespace Foxoft
 
                 double kb = rotatedBytes.Length / 1024.0;
                 lblImageInfo.Text = string.Format(Resources.Form_InvoiceWizard_ImageInfo, rotated.Width, rotated.Height, kb);
+
+                UpdateAutoSavedImageOnRotate(rotated);
             }
             catch (Exception ex)
             {
@@ -442,6 +480,121 @@ namespace Foxoft
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+        }
+
+        private void AutoSaveImageIfEnabled(string? sourceFilePath = null, byte[]? imageBytes = null)
+        {
+            if (!chkAutoSaveInvoiceImage.Checked)
+                return;
+
+            try
+            {
+                string targetFolder = GetDefaultInvoiceImageDirectory();
+                if (string.IsNullOrWhiteSpace(targetFolder))
+                    return;
+
+                if (!Directory.Exists(targetFolder))
+                    Directory.CreateDirectory(targetFolder);
+
+                if (!string.IsNullOrWhiteSpace(sourceFilePath) && File.Exists(sourceFilePath))
+                {
+                    string sourceDir = Path.GetDirectoryName(Path.GetFullPath(sourceFilePath))?.TrimEnd('\\', '/') ?? string.Empty;
+                    string destDir = Path.GetFullPath(targetFolder).TrimEnd('\\', '/');
+
+                    if (string.Equals(sourceDir, destDir, StringComparison.OrdinalIgnoreCase))
+                    {
+                        _lastSavedImagePath = sourceFilePath;
+                        return;
+                    }
+
+                    string fileName = Path.GetFileName(sourceFilePath);
+                    string destPath = GetUniqueFilePath(targetFolder, fileName);
+                    File.Copy(sourceFilePath, destPath, true);
+                    _lastSavedImagePath = destPath;
+                }
+                else
+                {
+                    byte[]? bytesToSave = imageBytes;
+                    if ((bytesToSave == null || bytesToSave.Length == 0) && pictureEditInvoice.Image != null)
+                    {
+                        bytesToSave = ImageToPngBytes(pictureEditInvoice.Image);
+                    }
+
+                    if (bytesToSave != null && bytesToSave.Length > 0)
+                    {
+                        string docNum = _invoiceHeader?.DocumentNumber?.Trim() ?? string.Empty;
+                        string prefix = string.IsNullOrWhiteSpace(docNum) ? "IMG" : docNum;
+                        string fileName = $"{prefix}_{DateTime.Now:yyyyMMdd_HHmmss_fff}.jpg";
+                        string destPath = Path.Combine(targetFolder, fileName);
+
+                        using MemoryStream ms = new(bytesToSave);
+                        using Image img = Image.FromStream(ms);
+                        using Bitmap bmp = new(img);
+                        bmp.Save(destPath, ImageFormat.Jpeg);
+                        _lastSavedImagePath = destPath;
+                    }
+                }
+            }
+            catch
+            {
+                // Auto-save errors should not disrupt user workflow
+            }
+        }
+
+        private void UpdateAutoSavedImageOnRotate(Image rotatedImage)
+        {
+            if (!chkAutoSaveInvoiceImage.Checked || string.IsNullOrWhiteSpace(_lastSavedImagePath) || !File.Exists(_lastSavedImagePath))
+                return;
+
+            try
+            {
+                string targetFolder = GetDefaultInvoiceImageDirectory();
+                if (string.IsNullOrWhiteSpace(targetFolder))
+                    return;
+
+                string fileDir = Path.GetDirectoryName(Path.GetFullPath(_lastSavedImagePath))?.TrimEnd('\\', '/') ?? string.Empty;
+                string destDir = Path.GetFullPath(targetFolder).TrimEnd('\\', '/');
+                if (!string.Equals(fileDir, destDir, StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                string ext = Path.GetExtension(_lastSavedImagePath).ToLowerInvariant();
+                ImageFormat fmt = ext switch
+                {
+                    ".png" => ImageFormat.Png,
+                    ".bmp" => ImageFormat.Bmp,
+                    _ => ImageFormat.Jpeg
+                };
+
+                string tempFile = _lastSavedImagePath + ".tmp";
+                using (Bitmap bmp = new(rotatedImage))
+                {
+                    bmp.Save(tempFile, fmt);
+                }
+                File.Delete(_lastSavedImagePath);
+                File.Move(tempFile, _lastSavedImagePath);
+            }
+            catch
+            {
+                // Ignore rotation file save errors silently
+            }
+        }
+
+        private static string GetUniqueFilePath(string folderPath, string originalFileName)
+        {
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(originalFileName);
+            string extension = Path.GetExtension(originalFileName);
+
+            string filePath = Path.Combine(folderPath, originalFileName);
+            int counter = 1;
+
+            while (File.Exists(filePath))
+            {
+                string newFileName = $"{fileNameWithoutExtension}_{counter}{extension}";
+                filePath = Path.Combine(folderPath, newFileName);
+                counter++;
+            }
+
+            return filePath;
         }
 
         private void pictureEditInvoice_DragEnter(object sender, DragEventArgs e)

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -6953,6 +6953,12 @@ Google account: {1}</value>
   </data>
   <data name="Form_InvoiceWizard_MatchSettings" xml:space="preserve">
     <value>Matching Settings</value>
+  </data>
+  <data name="Form_InvoiceWizard_AutoSaveImage" xml:space="preserve">
+    <value>Auto-save to Invoice Folder</value>
+  </data>
+  <data name="Form_InvoiceWizard_AutoSaveImage_Hint" xml:space="preserve">
+    <value>Automatically copy and save added images to the invoice folder</value>
   </data>
   <data name="Form_InvoiceWizard_PromptProcessOcr" xml:space="preserve">
     <value>Image has been added. Do you want to read it with AI?</value>

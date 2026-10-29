@@ -315,6 +315,21 @@ namespace Foxoft.Properties
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoSaveInvoiceImage
+        {
+            get
+            {
+                return ((bool)(this["AutoSaveInvoiceImage"]));
+            }
+            set
+            {
+                this["AutoSaveInvoiceImage"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ProductMatchSettings
         {
