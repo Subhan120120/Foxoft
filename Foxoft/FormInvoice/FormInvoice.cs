@@ -3709,7 +3709,7 @@ namespace Foxoft
                         PosDiscount = 0m,
                         DiscountCampaign = 0m,
                         VatRate = lineVM.VatRate,
-                        LineDescription = lineVM.LineDescription ?? lineVM.OcrProductName,
+                        LineDescription = !string.IsNullOrWhiteSpace(lineVM.LineDescription) ? lineVM.LineDescription : null,
                         CreatedDate = DateTime.Now,
                         CreatedUserName = Authorization.CurrAccCode,
                         LastUpdatedDate = DateTime.Now,
