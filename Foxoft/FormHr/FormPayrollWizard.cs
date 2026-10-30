@@ -26,7 +26,7 @@ namespace Foxoft
         {
             InitializeComponent();
             LoadCurrencies();
-            LoadPeriods();
+            LoadPeriods(); 
         }
 
         private void LoadCurrencies()
