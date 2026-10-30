@@ -308,7 +308,24 @@ namespace Foxoft
                     using var saveDb = new subContext();
                     using var transaction = saveDb.Database.BeginTransaction();
 
-                    foreach (var item in selectedEmployees)
+                    var period = saveDb.DcPayrollPeriods.AsNoTracking().FirstOrDefault(x => x.Id == periodId);
+                    if (period == null) return;
+
+                    DateTime periodStartDate = new(period.PeriodYear, period.PeriodMonth, 1);
+                    int daysInMonth = DateTime.DaysInMonth(period.PeriodYear, period.PeriodMonth);
+                    DateTime periodEndDate = new(period.PeriodYear, period.PeriodMonth, daysInMonth, 23, 59, 59);
+
+                    var validContractCodes = saveDb.TrEmployeeContracts.AsNoTracking()
+                        .Where(x => x.StartDate <= periodEndDate && (x.EndDate == null || (x.EndDate >= periodStartDate && x.EndDate >= x.StartDate)))
+                        .Select(x => x.CurrAccCode)
+                        .Distinct()
+                        .ToHashSet();
+
+                    var validSelectedEmployees = selectedEmployees
+                        .Where(x => validContractCodes.Contains(x.CurrAccCode))
+                        .ToList();
+
+                    foreach (var item in validSelectedEmployees)
                     {
                         decimal rate = item.ExchangeRate == 0 ? 1m : (decimal)item.ExchangeRate;
                         decimal baseSalaryLoc = Math.Round(item.BaseSalary / rate, 2);
