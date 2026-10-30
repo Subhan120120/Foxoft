@@ -78,25 +78,36 @@ namespace Foxoft
 
             DateTime periodStartDate = new(period.PeriodYear, period.PeriodMonth, 1);
             int daysInMonth = DateTime.DaysInMonth(period.PeriodYear, period.PeriodMonth);
-            DateTime periodEndDate = new(period.PeriodYear, period.PeriodMonth, daysInMonth);
+            DateTime periodEndDate = new(period.PeriodYear, period.PeriodMonth, daysInMonth, 23, 59, 59);
 
             var employees = db.DcCurrAccs.AsNoTracking()
                 .Where(x => x.CurrAccTypeCode == CurrAccType.Personnel && !x.IsDisabled)
                 .OrderBy(x => x.CurrAccCode)
                 .ToList();
 
-            var employeeCodes = employees.Select(x => x.CurrAccCode).ToList();
+            var personnelCodes = employees.Select(x => x.CurrAccCode).ToList();
 
             var contracts = db.TrEmployeeContracts.AsNoTracking()
-                .Include(x => x.EmploymentType)
-                .Where(x => employeeCodes.Contains(x.CurrAccCode) && x.StartDate <= periodEndDate && (x.EndDate == null || x.EndDate >= periodStartDate))
+                .Include(x => x.EmploymentType).Where(x => personnelCodes.Contains(x.CurrAccCode) && x.StartDate <= periodEndDate && (x.EndDate == null || (x.EndDate >= periodStartDate && x.EndDate >= x.StartDate)))
+
                 .OrderByDescending(x => x.StartDate)
                 .ToList();
 
+            var validContractEmployeeCodes = contracts
+                .Select(x => x.CurrAccCode)
+                .Distinct()
+                .ToHashSet();
+
+            employees = employees
+                .Where(x => validContractEmployeeCodes.Contains(x.CurrAccCode))
+                .ToList();
+
+            var employeeCodes = employees.Select(x => x.CurrAccCode).ToList();
+
             var positions = db.TrEmployeePositions.AsNoTracking()
                 .Include(x => x.Position)
-                .ThenInclude(x => x.Department)
-                .Where(x => employeeCodes.Contains(x.CurrAccCode) && x.StartDate <= periodEndDate && (x.EndDate == null || x.EndDate >= periodStartDate))
+                .ThenInclude(x => x.Department).Where(p => employeeCodes.Contains(p.CurrAccCode) && p.StartDate <= periodEndDate && (p.EndDate == null || (p.EndDate >= periodStartDate && p.EndDate >= p.StartDate)))
+
                 .OrderByDescending(x => x.StartDate)
                 .ToList();
 
