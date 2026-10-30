@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -82,9 +82,6 @@ namespace Foxoft
             btnRotateRight.Caption = Resources.Form_Image_RotateRight;
             btnRotateRight.Hint = $"{Resources.Form_Image_RotateRight} (Ctrl+R)";
             btnRotateRight.Enabled = pictureEditInvoice.Image != null;
-
-            if (pictureEditInvoice.Image == null)
-                lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
 
             // Header panel controls
             groupControlHeader.Text = Resources.Form_InvoiceWizard_HeaderGroup;
@@ -256,8 +253,6 @@ namespace Foxoft
 
             if (pictureEditInvoice.Image != null)
             {
-                double kb = (pictureEditInvoice.Image.Width * pictureEditInvoice.Image.Height * 4) / 1024.0;
-                lblImageInfo.Text = string.Format(Resources.Form_InvoiceWizard_ImageInfo, pictureEditInvoice.Image.Width, pictureEditInvoice.Image.Height, kb);
 
                 if (!_isSettingImageInternally)
                 {
@@ -273,7 +268,6 @@ namespace Foxoft
             {
                 _currentImages.Clear();
                 _lastSavedImagePath = null;
-                lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
             }
         }
 
@@ -416,9 +410,6 @@ namespace Foxoft
             _currentImages.Clear();
             _currentImages.Add(imageBytes);
 
-            double kb = imageBytes.Length / 1024.0;
-            lblImageInfo.Text = $"{sourceName} | " + string.Format(Resources.Form_InvoiceWizard_ImageInfo, pictureEditInvoice.Image.Width, pictureEditInvoice.Image.Height, kb);
-
             AutoSaveImageIfEnabled(sourceFilePath, imageBytes);
         }
 
@@ -427,7 +418,6 @@ namespace Foxoft
             _currentImages.Clear();
             _lastSavedImagePath = null;
             pictureEditInvoice.Image = null;
-            lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
         }
 
         private void btnRotateLeft_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -466,9 +456,6 @@ namespace Foxoft
                 {
                     _isRotatingImage = false;
                 }
-
-                double kb = rotatedBytes.Length / 1024.0;
-                lblImageInfo.Text = string.Format(Resources.Form_InvoiceWizard_ImageInfo, rotated.Width, rotated.Height, kb);
 
                 UpdateAutoSavedImageOnRotate(rotated);
             }

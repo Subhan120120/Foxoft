@@ -238,6 +238,7 @@ namespace Foxoft
                 selectedFilePath = null;
                 pe_Preview.Image?.Dispose();
                 pe_Preview.Image = null;
+                lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
                 bsi_SelectedInfo.Caption = Resources.Form_Image_NoImageSelected;
 
                 bbi_Copy.Enabled = false;
@@ -254,6 +255,7 @@ namespace Foxoft
                 selectedFilePath = null;
                 pe_Preview.Image?.Dispose();
                 pe_Preview.Image = null;
+                lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
                 bsi_SelectedInfo.Caption = Resources.Form_Image_NoImageSelected;
                 return;
             }
@@ -270,7 +272,9 @@ namespace Foxoft
 
                     FileInfo fi = new(filePath);
                     string fileSizeStr = FormatFileSize(fi.Length);
-                    bsi_SelectedInfo.Caption = $"{fi.Name} | {fullImg.Width}x{fullImg.Height} px | {fileSizeStr} | {fi.LastWriteTime:dd.MM.yyyy HH:mm}";
+                    string imageInfo = string.Format(Resources.Form_Image_ImageInfo, fullImg.Width, fullImg.Height, fileSizeStr);
+                    lblImageInfo.Text = $"{fi.Name} | {imageInfo}";
+                    bsi_SelectedInfo.Caption = $"{fi.Name} | {imageInfo} | {fi.LastWriteTime:dd.MM.yyyy HH:mm}";
                 }
 
                 bbi_Copy.Enabled = true;
@@ -281,6 +285,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
+                lblImageInfo.Text = ex.Message;
                 bsi_SelectedInfo.Caption = ex.Message;
             }
         }
@@ -593,6 +598,7 @@ namespace Foxoft
                 pe_Preview.Image?.Dispose();
                 pe_Preview.Image = null;
                 selectedFilePath = null;
+                lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
 
                 File.Delete(filePath);
 

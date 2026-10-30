@@ -1,4 +1,4 @@
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.Utils.Drawing;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -68,6 +68,7 @@ namespace Foxoft
             galleryControl1 = new GalleryControl();
             galleryControlClient1 = new GalleryControlClient();
             pe_Preview = new DevExpress.XtraEditors.PictureEdit();
+            lblImageInfo = new DevExpress.XtraEditors.LabelControl();
 
             ((ISupportInitialize)ribbonControl1).BeginInit();
             ((ISupportInitialize)popupMenu_Gallery).BeginInit();
@@ -349,6 +350,7 @@ namespace Foxoft
             splitContainerControl1.Panel1.Controls.Add(galleryControl1);
             splitContainerControl1.Panel1.Text = "Panel_Gallery";
             splitContainerControl1.Panel2.Controls.Add(pe_Preview);
+            splitContainerControl1.Panel2.Controls.Add(lblImageInfo);
             splitContainerControl1.Panel2.Text = "Panel_Preview";
             splitContainerControl1.Size = new Size(1100, 518);
             splitContainerControl1.SplitterPosition = 520;
@@ -402,6 +404,20 @@ namespace Foxoft
             pe_Preview.DragEnter += FormImage_DragEnter;
             pe_Preview.MouseDoubleClick += pe_Preview_MouseDoubleClick;
             pe_Preview.MouseDown += pe_Preview_MouseDown;
+            // 
+            // lblImageInfo
+            // 
+            lblImageInfo.Appearance.ForeColor = Color.Gray;
+            lblImageInfo.Appearance.Options.UseForeColor = true;
+            lblImageInfo.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            lblImageInfo.Dock = DockStyle.Bottom;
+            lblImageInfo.Location = new Point(0, 496);
+            lblImageInfo.Margin = new Padding(3, 2, 3, 2);
+            lblImageInfo.Name = "lblImageInfo";
+            lblImageInfo.Padding = new Padding(7, 0, 0, 0);
+            lblImageInfo.Size = new Size(570, 22);
+            lblImageInfo.TabIndex = 1;
+            lblImageInfo.Text = Resources.Form_Image_NoImageSelected;
 
             // 
             // FormImage
@@ -467,6 +483,7 @@ namespace Foxoft
         private GalleryControl galleryControl1;
         private GalleryControlClient galleryControlClient1;
         private DevExpress.XtraEditors.PictureEdit pe_Preview;
+        private DevExpress.XtraEditors.LabelControl lblImageInfo;
         private PopupMenu popupMenu_Gallery;
     }
 }

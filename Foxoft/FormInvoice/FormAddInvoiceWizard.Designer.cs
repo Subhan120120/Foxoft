@@ -1,4 +1,4 @@
-namespace Foxoft
+﻿namespace Foxoft
 {
     partial class FormAddInvoiceWizard
     {
@@ -38,7 +38,6 @@ namespace Foxoft
             barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             splitContainerMain = new DevExpress.XtraEditors.SplitContainerControl();
             pictureEditInvoice = new DevExpress.XtraEditors.PictureEdit();
-            lblImageInfo = new DevExpress.XtraEditors.LabelControl();
             panelImageBottom = new DevExpress.XtraEditors.PanelControl();
             chkAutoSaveInvoiceImage = new DevExpress.XtraEditors.CheckEdit();
             groupControlLines = new DevExpress.XtraEditors.GroupControl();
@@ -351,29 +350,13 @@ namespace Foxoft
             // panelImageBottom
             // 
             panelImageBottom.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            panelImageBottom.Controls.Add(lblImageInfo);
             panelImageBottom.Controls.Add(chkAutoSaveInvoiceImage);
             panelImageBottom.Dock = DockStyle.Bottom;
             panelImageBottom.Location = new Point(0, 545);
             panelImageBottom.Margin = new Padding(3, 2, 3, 2);
             panelImageBottom.Name = "panelImageBottom";
             panelImageBottom.Size = new Size(536, 22);
-            panelImageBottom.TabIndex = 2;
-            // 
-            // lblImageInfo
-            // 
-            lblImageInfo.Appearance.ForeColor = Color.Gray;
-            lblImageInfo.Appearance.Options.UseForeColor = true;
-            lblImageInfo.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            lblImageInfo.Dock = DockStyle.Fill;
-            lblImageInfo.Location = new Point(0, 0);
-            lblImageInfo.Margin = new Padding(3, 2, 3, 2);
-            lblImageInfo.Name = "lblImageInfo";
-            lblImageInfo.Padding = new Padding(7, 0, 0, 0);
-            lblImageInfo.Size = new Size(536, 20);
-            lblImageInfo.TabIndex = 0;
-            lblImageInfo.Text = "No image selected";
-            // 
+            panelImageBottom.TabIndex = 2;            // 
             // chkAutoSaveInvoiceImage
             // 
             chkAutoSaveInvoiceImage.Dock = DockStyle.Right;
@@ -897,7 +880,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
         private DevExpress.XtraEditors.PictureEdit pictureEditInvoice;
-        private DevExpress.XtraEditors.LabelControl lblImageInfo;
         private DevExpress.XtraEditors.PanelControl panelImageBottom;
         private DevExpress.XtraEditors.CheckEdit chkAutoSaveInvoiceImage;
         private DevExpress.XtraEditors.GroupControl groupControlHeader;
