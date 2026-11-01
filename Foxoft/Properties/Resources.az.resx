@@ -7194,4 +7194,10 @@ Google hesabı: {1}</value>
   <data name="Validation_AddendumStartDateRequired" xml:space="preserve">
     <value>Qüvvəyə minmə tarixi tələb olunur.</value>
   </data>
+  <data name="Form_EmployeeContract_InitialTerms" xml:space="preserve">
+    <value>İlkin Şərtlər</value>
+  </data>
+  <data name="Form_EmployeeContract_InitialTermsDesc" xml:space="preserve">
+    <value>İlkin müqavilə əməkhaqqı şərtləri</value>
+  </data>
 </root>

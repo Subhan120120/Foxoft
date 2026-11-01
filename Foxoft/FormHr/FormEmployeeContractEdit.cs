@@ -57,20 +57,12 @@ namespace Foxoft
 
             lkpType.Properties.DataSource = types;
 
-            var currencies = db.DcCurrencies.AsNoTracking()
-                .OrderBy(x => x.CurrencyCode)
-                .Select(x => new { x.CurrencyCode, x.CurrencyDesc })
-                .ToList();
-
-            lkpCurrency.Properties.DataSource = currencies;
-
             if (id == null)
             {
                 entity = new TrEmployeeContract
                 {
                     Id = Guid.NewGuid(),
-                    StartDate = DateTime.Today,
-                    BaseSalary = 0
+                    StartDate = DateTime.Today
                 };
             }
             else
@@ -91,8 +83,6 @@ namespace Foxoft
             lkpType.EditValue = entity.EmploymentTypeId;
             dtStart.DateTime = entity.StartDate;
             dtEnd.EditValue = entity.EndDate;
-            calcSalary.EditValue = entity.BaseSalary;
-            lkpCurrency.EditValue = entity.CurrencyCode;
 
             LoadAddenda();
         }
@@ -161,7 +151,9 @@ namespace Foxoft
 
             using var f = new FormEmployeeContractAddendumEdit(id.Value, null);
             if (f.ShowDialog(this) == DialogResult.OK)
+            {
                 LoadAddenda();
+            }
         }
 
         private void EditAddendum()
@@ -172,7 +164,9 @@ namespace Foxoft
 
             using var f = new FormEmployeeContractAddendumEdit(id.Value, addendumId.Value);
             if (f.ShowDialog(this) == DialogResult.OK)
+            {
                 LoadAddenda();
+            }
         }
 
         private void DeleteAddendum()
@@ -216,8 +210,6 @@ namespace Foxoft
             entity.EmploymentTypeId = (Guid)lkpType.EditValue;
             entity.StartDate = dtStart.DateTime.Date;
             entity.EndDate = dtEnd.EditValue == null ? null : dtEnd.DateTime.Date;
-            entity.BaseSalary = calcSalary.Value;
-            entity.CurrencyCode = lkpCurrency.EditValue?.ToString();
 
             if (entity.EndDate != null && entity.EndDate < entity.StartDate)
             {
@@ -233,10 +225,21 @@ namespace Foxoft
                 return;
             }
 
-            if (id == null) db.TrEmployeeContracts.Add(entity);
-            else db.Entry(entity).State = EntityState.Modified;
+            if (id == null)
+            {
+                db.TrEmployeeContracts.Add(entity);
+                db.SaveChanges();
 
-            db.SaveChanges();
+                // Prompt user to enter the initial compensation terms/salary
+                using var f = new FormEmployeeContractAddendumEdit(entity.Id, null);
+                f.ShowDialog(this);
+            }
+            else
+            {
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
             DialogResult = DialogResult.OK;
         }
 

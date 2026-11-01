@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Foxoft.Models
 {
@@ -31,12 +32,18 @@ namespace Foxoft.Models
 
         public DateTime? EndDate { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal BaseSalary { get; set; }
-
-        [StringLength(3)]
-        public string? CurrencyCode { get; set; } // AZN, USD, ...
-
         public virtual ICollection<TrEmployeeContractAddendum> Addenda { get; set; } = new HashSet<TrEmployeeContractAddendum>();
+
+        [NotMapped]
+        public decimal BaseSalary => Addenda
+            .OrderByDescending(a => a.StartDate)
+            .Select(a => a.BaseSalary)
+            .FirstOrDefault();
+
+        [NotMapped]
+        public string? CurrencyCode => Addenda
+            .OrderByDescending(a => a.StartDate)
+            .Select(a => a.CurrencyCode)
+            .FirstOrDefault();
     }
 }

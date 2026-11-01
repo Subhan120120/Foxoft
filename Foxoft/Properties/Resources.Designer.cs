@@ -20898,5 +20898,17 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Validation_AddendumStartDateRequired", resourceCulture);
             }
         }
+
+        public static string Form_EmployeeContract_InitialTerms {
+            get {
+                return ResourceManager.GetString("Form_EmployeeContract_InitialTerms", resourceCulture);
+            }
+        }
+
+        public static string Form_EmployeeContract_InitialTermsDesc {
+            get {
+                return ResourceManager.GetString("Form_EmployeeContract_InitialTermsDesc", resourceCulture);
+            }
+        }
     }
 }

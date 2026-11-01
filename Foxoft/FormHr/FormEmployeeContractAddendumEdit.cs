@@ -61,8 +61,8 @@ namespace Foxoft
                     .OrderByDescending(a => a.StartDate)
                     .FirstOrDefault();
 
-                decimal defaultSalary = latestAddendum?.BaseSalary ?? contract.BaseSalary;
-                string defaultCurrency = latestAddendum?.CurrencyCode ?? contract.CurrencyCode ?? "AZN";
+                decimal defaultSalary = latestAddendum?.BaseSalary ?? 0m;
+                string defaultCurrency = latestAddendum?.CurrencyCode ?? Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
 
                 entity = new TrEmployeeContractAddendum
                 {

@@ -7194,4 +7194,10 @@ Google account: {1}</value>
   <data name="Validation_AddendumStartDateRequired" xml:space="preserve">
     <value>Effective date is required.</value>
   </data>
+  <data name="Form_EmployeeContract_InitialTerms" xml:space="preserve">
+    <value>Initial Terms</value>
+  </data>
+  <data name="Form_EmployeeContract_InitialTermsDesc" xml:space="preserve">
+    <value>Initial contract compensation terms</value>
+  </data>
 </root>

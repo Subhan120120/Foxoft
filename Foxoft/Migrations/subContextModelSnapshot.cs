@@ -9846,9 +9846,6 @@ namespace Foxoft.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("BaseSalary")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("ContractNumber")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -9856,10 +9853,6 @@ namespace Foxoft.Migrations
                     b.Property<string>("CurrAccCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("CurrencyCode")
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
 
                     b.Property<Guid>("EmploymentTypeId")
                         .HasColumnType("uniqueidentifier");

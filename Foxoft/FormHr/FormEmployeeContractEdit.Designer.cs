@@ -24,8 +24,6 @@ namespace Foxoft
             this.lkpType = new DevExpress.XtraEditors.LookUpEdit();
             this.dtStart = new DevExpress.XtraEditors.DateEdit();
             this.dtEnd = new DevExpress.XtraEditors.DateEdit();
-            this.calcSalary = new DevExpress.XtraEditors.CalcEdit();
-            this.lkpCurrency = new DevExpress.XtraEditors.LookUpEdit();
             this.btnAddAddendum = new DevExpress.XtraEditors.SimpleButton();
             this.btnEditAddendum = new DevExpress.XtraEditors.SimpleButton();
             this.btnDeleteAddendum = new DevExpress.XtraEditors.SimpleButton();
@@ -44,8 +42,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.dtStart.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtEnd.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtEnd.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.calcSalary.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lkpCurrency.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridAddenda)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.viewAddenda)).BeginInit();
             this.SuspendLayout();
@@ -69,18 +65,6 @@ namespace Foxoft
                 new DevExpress.XtraEditors.Controls.LookUpColumnInfo("TypeName", Foxoft.Properties.Resources.Entity_DcEmploymentType_TypeName)
             });
 
-            this.lkpCurrency.Properties.DisplayMember = "CurrencyCode";
-            this.lkpCurrency.Properties.ValueMember = "CurrencyCode";
-            this.lkpCurrency.Properties.NullText = "";
-            this.lkpCurrency.Properties.ShowHeader = true;
-            this.lkpCurrency.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
-            this.lkpCurrency.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoFilter;
-            this.lkpCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            this.lkpCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", Foxoft.Properties.Resources.Entity_TrEmployeeContract_CurrencyCode),
-                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", Foxoft.Properties.Resources.Entity_PaymentHeader_Description)
-            });
-
             this.dtStart.Properties.NullText = "";
             this.dtStart.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             this.dtStart.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -88,8 +72,6 @@ namespace Foxoft
             this.dtEnd.Properties.NullText = "";
             this.dtEnd.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             this.dtEnd.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-
-            this.calcSalary.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
 
             // Addenda section
             this.btnAddAddendum.Text = Foxoft.Properties.Resources.Form_EmployeeContractList_AddAddendum;
@@ -113,8 +95,6 @@ namespace Foxoft
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_EmploymentTypeId, this.lkpType);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_StartDate, this.dtStart);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_EndDate, this.dtEnd);
-            this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_BaseSalary, this.calcSalary);
-            this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_CurrencyCode, this.lkpCurrency);
 
             var addendaGroup = root.AddGroup();
             addendaGroup.Text = Foxoft.Properties.Resources.Form_EmployeeContractEdit_AddendaGroup;
@@ -138,7 +118,7 @@ namespace Foxoft
             // FormEmployeeContractEdit
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(750, 620);
+            this.ClientSize = new System.Drawing.Size(750, 560);
             this.Name = "FormEmployeeContractEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "";
@@ -153,8 +133,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.dtStart.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtEnd.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtEnd.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.calcSalary.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lkpCurrency.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridAddenda)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.viewAddenda)).EndInit();
             this.ResumeLayout(false);
@@ -169,8 +147,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.LookUpEdit lkpType;
         private DevExpress.XtraEditors.DateEdit dtStart;
         private DevExpress.XtraEditors.DateEdit dtEnd;
-        private DevExpress.XtraEditors.CalcEdit calcSalary;
-        private DevExpress.XtraEditors.LookUpEdit lkpCurrency;
         private DevExpress.XtraEditors.SimpleButton btnAddAddendum;
         private DevExpress.XtraEditors.SimpleButton btnEditAddendum;
         private DevExpress.XtraEditors.SimpleButton btnDeleteAddendum;
