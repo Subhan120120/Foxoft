@@ -6453,6 +6453,21 @@ Failed / No phone: {1}</value>
   <data name="Form_PayrollWizard_SendWhatsappOnFinish" xml:space="preserve">
     <value>Send via WhatsApp after finish</value>
   </data>
+  <data name="Form_PayrollWizard_ExportPaymentsOnFinish" xml:space="preserve">
+    <value>Export payments to Excel on finish</value>
+  </data>
+  <data name="Form_PayrollWizard_Button_ExportPayments" xml:space="preserve">
+    <value>Export Payments to Excel</value>
+  </data>
+  <data name="Form_PayrollWizard_ExportPaymentsConfirm" xml:space="preserve">
+    <value>Do you want to export the paid payments to an Excel file?</value>
+  </data>
+  <data name="Form_PayrollWizard_ExportPaymentsFileName" xml:space="preserve">
+    <value>Payment_List</value>
+  </data>
+  <data name="Form_PayrollWizard_NoPaymentsToExport" xml:space="preserve">
+    <value>No payments found to export.</value>
+  </data>
   <data name="Form_PayrollWizard_WhatsAppWebBulkWarning" xml:space="preserve">
     <value>Bulk sending via WhatsApp Web will open multiple browser tabs. Using WhatsApp API is recommended. Do you want to continue?</value>
   </data>

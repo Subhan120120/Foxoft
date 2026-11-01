@@ -22,6 +22,7 @@ namespace Foxoft.Models.ViewModel
         private bool _paySelected = true;
         private decimal _payAmount;
         private string? _cashRegisterCode;
+        private string? _paymentDocumentNumber;
         private int? _paymentMethodId;
         private string? _paymentDescription;
         private string _paymentCurrencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
@@ -244,6 +245,19 @@ namespace Foxoft.Models.ViewModel
                 if (_cashRegisterCode != value)
                 {
                     _cashRegisterCode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string? PaymentDocumentNumber
+        {
+            get => _paymentDocumentNumber;
+            set
+            {
+                if (_paymentDocumentNumber != value)
+                {
+                    _paymentDocumentNumber = value;
                     OnPropertyChanged();
                 }
             }

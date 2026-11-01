@@ -103,16 +103,20 @@ namespace Foxoft
             repoLookUpPayCashRegister = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             colPayCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colPayExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPayDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             panelControlPaymentButtons = new DevExpress.XtraEditors.PanelControl();
             btnPaySelectAll = new DevExpress.XtraEditors.SimpleButton();
             btnPayUnselectAll = new DevExpress.XtraEditors.SimpleButton();
             btnApplyBalances = new DevExpress.XtraEditors.SimpleButton();
             btnApplyNetSalaries = new DevExpress.XtraEditors.SimpleButton();
             btnResetPayments = new DevExpress.XtraEditors.SimpleButton();
+            btnPayExportExcel = new DevExpress.XtraEditors.SimpleButton();
             completionWizardPage1 = new DevExpress.XtraWizard.CompletionWizardPage();
             lblCompletionInfo = new DevExpress.XtraEditors.LabelControl();
             lblSummary = new DevExpress.XtraEditors.LabelControl();
+            chkExportPaymentsOnFinish = new DevExpress.XtraEditors.CheckEdit();
             chkSendWhatsappOnFinish = new DevExpress.XtraEditors.CheckEdit();
+            btnExportPaymentsCompletion = new DevExpress.XtraEditors.SimpleButton();
             btnSendWhatsappCompletion = new DevExpress.XtraEditors.SimpleButton();
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             ((System.ComponentModel.ISupportInitialize)wizardControl1).BeginInit();
@@ -164,6 +168,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelControlPaymentButtons).BeginInit();
             panelControlPaymentButtons.SuspendLayout();
             completionWizardPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)chkExportPaymentsOnFinish.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)chkSendWhatsappOnFinish.Properties).BeginInit();
             SuspendLayout();
             // 
@@ -840,7 +845,7 @@ namespace Foxoft
             // 
             // gridViewPayment
             // 
-            gridViewPayment.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaySelected, colPayCurrAccCode, colPayEmployeeName, colPayDepartmentName, colPayPositionName, colPayNetSalaryLoc, colPayBalanceAfterPayroll, colPayCurrencyCode, colPayExchangeRate, colPayAmount, colPayCashRegisterCode });
+            gridViewPayment.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaySelected, colPayDocumentNumber, colPayCurrAccCode, colPayEmployeeName, colPayDepartmentName, colPayPositionName, colPayNetSalaryLoc, colPayBalanceAfterPayroll, colPayCurrencyCode, colPayExchangeRate, colPayAmount, colPayCashRegisterCode });
             gridViewPayment.GridControl = gridControlPayment;
             gridViewPayment.Name = "gridViewPayment";
             gridViewPayment.OptionsView.ColumnAutoWidth = false;
@@ -848,6 +853,16 @@ namespace Foxoft
             gridViewPayment.OptionsView.ShowFooter = true;
             gridViewPayment.CustomDrawRowIndicator += GridViewPayment_CustomDrawRowIndicator;
             gridViewPayment.CellValueChanged += GridViewPayment_CellValueChanged;
+            // 
+            // colPayDocumentNumber
+            // 
+            colPayDocumentNumber.Caption = Properties.Resources.Entity_PaymentHeader_DocumentNumber;
+            colPayDocumentNumber.FieldName = "PaymentDocumentNumber";
+            colPayDocumentNumber.Name = "colPayDocumentNumber";
+            colPayDocumentNumber.OptionsColumn.AllowEdit = false;
+            colPayDocumentNumber.Visible = false;
+            colPayDocumentNumber.VisibleIndex = 1;
+            colPayDocumentNumber.Width = 110;
             // 
             // colPaySelected
             // 
@@ -1007,6 +1022,7 @@ namespace Foxoft
             panelControlPaymentButtons.Controls.Add(btnApplyBalances);
             panelControlPaymentButtons.Controls.Add(btnApplyNetSalaries);
             panelControlPaymentButtons.Controls.Add(btnResetPayments);
+            panelControlPaymentButtons.Controls.Add(btnPayExportExcel);
             panelControlPaymentButtons.Dock = System.Windows.Forms.DockStyle.Top;
             panelControlPaymentButtons.Location = new System.Drawing.Point(0, 0);
             panelControlPaymentButtons.Name = "panelControlPaymentButtons";
@@ -1058,11 +1074,22 @@ namespace Foxoft
             btnResetPayments.Text = Properties.Resources.Form_PayrollWizard_BtnResetPayments;
             btnResetPayments.Click += BtnResetPayments_Click;
             // 
+            // btnPayExportExcel
+            // 
+            btnPayExportExcel.Location = new System.Drawing.Point(635, 5);
+            btnPayExportExcel.Name = "btnPayExportExcel";
+            btnPayExportExcel.Size = new System.Drawing.Size(120, 25);
+            btnPayExportExcel.TabIndex = 5;
+            btnPayExportExcel.Text = Properties.Resources.Common_ExportToExcel;
+            btnPayExportExcel.Click += BtnPayExportExcel_Click;
+            // 
             // completionWizardPage1
             // 
             completionWizardPage1.Controls.Add(lblCompletionInfo);
             completionWizardPage1.Controls.Add(lblSummary);
+            completionWizardPage1.Controls.Add(chkExportPaymentsOnFinish);
             completionWizardPage1.Controls.Add(chkSendWhatsappOnFinish);
+            completionWizardPage1.Controls.Add(btnExportPaymentsCompletion);
             completionWizardPage1.Controls.Add(btnSendWhatsappCompletion);
             completionWizardPage1.FinishText = Properties.Resources.Form_PayrollWizard_CompletionText;
             completionWizardPage1.Name = "completionWizardPage1";
@@ -1091,20 +1118,37 @@ namespace Foxoft
             lblSummary.Size = new System.Drawing.Size(550, 0);
             lblSummary.TabIndex = 1;
             // 
+            // chkExportPaymentsOnFinish
+            // 
+            chkExportPaymentsOnFinish.Location = new System.Drawing.Point(30, 230);
+            chkExportPaymentsOnFinish.Name = "chkExportPaymentsOnFinish";
+            chkExportPaymentsOnFinish.Properties.Caption = Properties.Resources.Form_PayrollWizard_ExportPaymentsOnFinish;
+            chkExportPaymentsOnFinish.Size = new System.Drawing.Size(450, 20);
+            chkExportPaymentsOnFinish.TabIndex = 2;
+            // 
             // chkSendWhatsappOnFinish
             // 
             chkSendWhatsappOnFinish.Location = new System.Drawing.Point(30, 260);
             chkSendWhatsappOnFinish.Name = "chkSendWhatsappOnFinish";
             chkSendWhatsappOnFinish.Properties.Caption = Properties.Resources.Form_PayrollWizard_SendWhatsappOnFinish;
             chkSendWhatsappOnFinish.Size = new System.Drawing.Size(450, 20);
-            chkSendWhatsappOnFinish.TabIndex = 2;
+            chkSendWhatsappOnFinish.TabIndex = 3;
+            // 
+            // btnExportPaymentsCompletion
+            // 
+            btnExportPaymentsCompletion.Location = new System.Drawing.Point(30, 295);
+            btnExportPaymentsCompletion.Name = "btnExportPaymentsCompletion";
+            btnExportPaymentsCompletion.Size = new System.Drawing.Size(180, 30);
+            btnExportPaymentsCompletion.TabIndex = 4;
+            btnExportPaymentsCompletion.Text = Properties.Resources.Form_PayrollWizard_Button_ExportPayments;
+            btnExportPaymentsCompletion.Click += BtnExportPaymentsCompletion_Click;
             // 
             // btnSendWhatsappCompletion
             // 
-            btnSendWhatsappCompletion.Location = new System.Drawing.Point(30, 295);
+            btnSendWhatsappCompletion.Location = new System.Drawing.Point(220, 295);
             btnSendWhatsappCompletion.Name = "btnSendWhatsappCompletion";
             btnSendWhatsappCompletion.Size = new System.Drawing.Size(180, 30);
-            btnSendWhatsappCompletion.TabIndex = 3;
+            btnSendWhatsappCompletion.TabIndex = 5;
             btnSendWhatsappCompletion.Text = Properties.Resources.Form_PayrollWizard_Button_SendWhatsapp;
             btnSendWhatsappCompletion.Click += BtnSendWhatsappCompletion_Click;
             // 
@@ -1169,6 +1213,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)panelControlPaymentButtons).EndInit();
             panelControlPaymentButtons.ResumeLayout(false);
             completionWizardPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)chkExportPaymentsOnFinish.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)chkSendWhatsappOnFinish.Properties).EndInit();
             ResumeLayout(false);
         }
@@ -1240,9 +1285,11 @@ namespace Foxoft
         private DevExpress.XtraEditors.SimpleButton btnApplyBalances;
         private DevExpress.XtraEditors.SimpleButton btnApplyNetSalaries;
         private DevExpress.XtraEditors.SimpleButton btnResetPayments;
+        private DevExpress.XtraEditors.SimpleButton btnPayExportExcel;
         private MyGridControl gridControlPayment;
         private MyGridView gridViewPayment;
         private DevExpress.XtraGrid.Columns.GridColumn colPaySelected;
+        private DevExpress.XtraGrid.Columns.GridColumn colPayDocumentNumber;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repoCheckPaySelected;
         private DevExpress.XtraGrid.Columns.GridColumn colPayCurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colPayEmployeeName;
@@ -1258,7 +1305,9 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colPayExchangeRate;
         private DevExpress.XtraEditors.LabelControl lblCompletionInfo;
         private DevExpress.XtraEditors.LabelControl lblSummary;
+        private DevExpress.XtraEditors.CheckEdit chkExportPaymentsOnFinish;
         private DevExpress.XtraEditors.CheckEdit chkSendWhatsappOnFinish;
+        private DevExpress.XtraEditors.SimpleButton btnExportPaymentsCompletion;
         private DevExpress.XtraEditors.SimpleButton btnSendWhatsappCompletion;
         private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
     }

@@ -25,6 +25,7 @@ namespace Foxoft
         private List<DcCurrency> currencies = new();
         private List<DcCurrAcc> cashRegisters = new();
         private EfMethods efMethods = new();
+        private bool paymentsAlreadyExecuted = false;
 
         public FormPayrollWizard()
         {
@@ -141,6 +142,7 @@ namespace Foxoft
 
         private void LkpPeriod_EditValueChanged(object sender, EventArgs e)
         {
+            paymentsAlreadyExecuted = false;
             employeeList.Clear();
             paymentBindingList.Clear();
             gridControlPayment.DataSource = null;
@@ -522,11 +524,39 @@ namespace Foxoft
                 ? string.Format(Properties.Resources.Form_PayrollWizard_SuccessWithPaymentMessage, payrollCount, paymentCount, totalPaidAmount, payCurr)
                 : string.Format(Properties.Resources.Form_PayrollWizard_SuccessMessage, payrollCount);
 
-            XtraMessageBox.Show(this,
-                msg,
-                Properties.Resources.Common_Info,
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            if (paymentCount > 0)
+            {
+                if (chkExportPaymentsOnFinish.Checked)
+                {
+                    XtraMessageBox.Show(this,
+                        msg,
+                        Properties.Resources.Common_Info,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    ExportPaidPaymentsToExcel();
+                }
+                else
+                {
+                    string questionMsg = msg + "\n\n" + Properties.Resources.Form_PayrollWizard_ExportPaymentsConfirm;
+                    if (XtraMessageBox.Show(this,
+                        questionMsg,
+                        Properties.Resources.Common_Confirm,
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        ExportPaidPaymentsToExcel();
+                    }
+                }
+            }
+            else
+            {
+                XtraMessageBox.Show(this,
+                    msg,
+                    Properties.Resources.Common_Info,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
 
         private bool SaveSelectedPayrollsAndPayments(
@@ -575,6 +605,13 @@ namespace Foxoft
 
                         if (dbHeader == null)
                         {
+                            dbHeader = saveDb.TrPayrollHeaders
+                                .Include(x => x.Lines)
+                                .FirstOrDefault(x => x.PayrollPeriodId == periodId && x.CurrAccCode == item.CurrAccCode);
+                        }
+
+                        if (dbHeader == null)
+                        {
                             var newHeaderId = Guid.NewGuid();
                             dbHeader = new TrPayrollHeader
                             {
@@ -582,8 +619,9 @@ namespace Foxoft
                                 CurrAccCode = item.CurrAccCode,
                                 PayrollPeriodId = periodId
                             };
+                            saveDb.TrPayrollHeaders.Add(dbHeader);
 
-                            dbHeader.Lines.Add(new TrPayrollLine
+                            var salaryLine = new TrPayrollLine
                             {
                                 Id = Guid.NewGuid(),
                                 PayrollHeaderId = newHeaderId,
@@ -593,12 +631,13 @@ namespace Foxoft
                                 CurrencyCode = item.CurrencyCode,
                                 ExchangeRate = item.ExchangeRate,
                                 AmountLoc = baseSalaryLoc
-                            });
+                            };
+                            saveDb.TrPayrollLines.Add(salaryLine);
 
                             if (item.Bonus > 0)
                             {
                                 decimal bonusLoc = Math.Round(item.Bonus / rate, 2);
-                                dbHeader.Lines.Add(new TrPayrollLine
+                                var bonusLine = new TrPayrollLine
                                 {
                                     Id = Guid.NewGuid(),
                                     PayrollHeaderId = newHeaderId,
@@ -608,13 +647,14 @@ namespace Foxoft
                                     CurrencyCode = item.CurrencyCode,
                                     ExchangeRate = item.ExchangeRate,
                                     AmountLoc = bonusLoc
-                                });
+                                };
+                                saveDb.TrPayrollLines.Add(bonusLine);
                             }
 
                             if (item.Deduction > 0)
                             {
                                 decimal deductionLoc = Math.Round(item.Deduction / rate, 2);
-                                dbHeader.Lines.Add(new TrPayrollLine
+                                var deductionLine = new TrPayrollLine
                                 {
                                     Id = Guid.NewGuid(),
                                     PayrollHeaderId = newHeaderId,
@@ -624,13 +664,9 @@ namespace Foxoft
                                     CurrencyCode = item.CurrencyCode,
                                     ExchangeRate = item.ExchangeRate,
                                     AmountLoc = deductionLoc
-                                });
+                                };
+                                saveDb.TrPayrollLines.Add(deductionLine);
                             }
-
-                            saveDb.TrPayrollHeaders.Add(dbHeader);
-
-                            item.AlreadyExists = true;
-                            item.ExistingPayrollHeaderId = newHeaderId;
                         }
                         else
                         {
@@ -638,7 +674,7 @@ namespace Foxoft
                             var salaryLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Salary);
                             if (salaryLine == null)
                             {
-                                dbHeader.Lines.Add(new TrPayrollLine
+                                var newSalaryLine = new TrPayrollLine
                                 {
                                     Id = Guid.NewGuid(),
                                     PayrollHeaderId = dbHeader.Id,
@@ -648,7 +684,8 @@ namespace Foxoft
                                     CurrencyCode = item.CurrencyCode,
                                     ExchangeRate = item.ExchangeRate,
                                     AmountLoc = baseSalaryLoc
-                                });
+                                };
+                                saveDb.TrPayrollLines.Add(newSalaryLine);
                             }
                             else
                             {
@@ -666,7 +703,7 @@ namespace Foxoft
                                 decimal bonusLoc = Math.Round(item.Bonus / rate, 2);
                                 if (bonusLine == null)
                                 {
-                                    dbHeader.Lines.Add(new TrPayrollLine
+                                    var newBonusLine = new TrPayrollLine
                                     {
                                         Id = Guid.NewGuid(),
                                         PayrollHeaderId = dbHeader.Id,
@@ -676,7 +713,8 @@ namespace Foxoft
                                         CurrencyCode = item.CurrencyCode,
                                         ExchangeRate = item.ExchangeRate,
                                         AmountLoc = bonusLoc
-                                    });
+                                    };
+                                    saveDb.TrPayrollLines.Add(newBonusLine);
                                 }
                                 else
                                 {
@@ -699,7 +737,7 @@ namespace Foxoft
                                 decimal deductionLoc = Math.Round(item.Deduction / rate, 2);
                                 if (deductionLine == null)
                                 {
-                                    dbHeader.Lines.Add(new TrPayrollLine
+                                    var newDeductionLine = new TrPayrollLine
                                     {
                                         Id = Guid.NewGuid(),
                                         PayrollHeaderId = dbHeader.Id,
@@ -709,7 +747,8 @@ namespace Foxoft
                                         CurrencyCode = item.CurrencyCode,
                                         ExchangeRate = item.ExchangeRate,
                                         AmountLoc = deductionLoc
-                                    });
+                                    };
+                                    saveDb.TrPayrollLines.Add(newDeductionLine);
                                 }
                                 else
                                 {
@@ -736,13 +775,16 @@ namespace Foxoft
 
                         if (payEmployees.Any())
                         {
-                            ExecuteBulkPayments(
-                                saveDb,
-                                payEmployees,
-                                defaultCashRegCode,
-                                paymentDate,
-                                defaultMethodId,
-                                defaultPaymentDesc);
+                            if (!paymentsAlreadyExecuted)
+                            {
+                                ExecuteBulkPayments(
+                                    saveDb,
+                                    payEmployees,
+                                    defaultCashRegCode,
+                                    paymentDate,
+                                    defaultMethodId,
+                                    defaultPaymentDesc);
+                            }
 
                             createdPayments = payEmployees.Count;
                             sumPaid = payEmployees.Sum(x => x.PayAmount);
@@ -751,6 +793,12 @@ namespace Foxoft
 
                     saveDb.SaveChanges();
                     transaction.Commit();
+
+                    paymentsAlreadyExecuted = true;
+                    foreach (var item in selectedEmployees)
+                    {
+                        item.AlreadyExists = true;
+                    }
                 });
 
                 paymentsCreatedCount = createdPayments;
@@ -786,6 +834,14 @@ namespace Foxoft
                 nameof(subContext.TrPaymentHeaders),
                 6);
 
+            string officeCode = !string.IsNullOrEmpty(Authorization.OfficeCode)
+                ? Authorization.OfficeCode
+                : (efMethods.SelectOffices().FirstOrDefault()?.OfficeCode ?? "ofs01");
+
+            string storeCode = !string.IsNullOrEmpty(Authorization.StoreCode)
+                ? Authorization.StoreCode
+                : (efMethods.SelectStores().FirstOrDefault()?.CurrAccCode ?? "mgz01");
+
             int docNumOffset = 0;
 
             for (int i = 0; i < payEmployees.Count; i++)
@@ -793,12 +849,15 @@ namespace Foxoft
                 var emp = payEmployees[i];
                 string docNum = IncrementDocNum(baseDocNum, docNumOffset);
 
-                while (saveDb.TrPaymentHeaders.Any(x => x.DocumentNumber == docNum))
+                while (saveDb.TrPaymentHeaders.Any(x => x.DocumentNumber == docNum) ||
+                       saveDb.TrPaymentHeaders.Local.Any(x => x.DocumentNumber == docNum))
                 {
                     docNumOffset++;
                     docNum = IncrementDocNum(baseDocNum, docNumOffset);
                 }
                 docNumOffset++;
+
+                emp.PaymentDocumentNumber = docNum;
 
                 string cashRegCode = !string.IsNullOrWhiteSpace(emp.CashRegisterCode)
                     ? emp.CashRegisterCode!
@@ -837,8 +896,8 @@ namespace Foxoft
                     OperationDate = paymentDate,
                     OperationTime = DateTime.Now.TimeOfDay,
                     CurrAccCode = emp.CurrAccCode,
-                    OfficeCode = Authorization.OfficeCode ?? "01",
-                    StoreCode = Authorization.StoreCode ?? "01",
+                    OfficeCode = officeCode,
+                    StoreCode = storeCode,
                     Description = lineDesc,
                     PaymentKindId = PaymentKind.Payment,
                     IsMainTF = true,
@@ -862,6 +921,7 @@ namespace Foxoft
 
                 paymentHeader.TrPaymentLines.Add(paymentLine);
                 saveDb.TrPaymentHeaders.Add(paymentHeader);
+                saveDb.TrPaymentLines.Add(paymentLine);
             }
         }
 
@@ -1276,6 +1336,107 @@ namespace Foxoft
         {
             if (e.Info.IsRowIndicator && e.RowHandle >= 0)
                 e.Info.DisplayText = (e.RowHandle + 1).ToString();
+        }
+
+        private void BtnExportPaymentsCompletion_Click(object sender, EventArgs e)
+        {
+            gridViewEmployees.CloseEditor();
+            gridViewEmployees.UpdateCurrentRow();
+            gridViewPayment.CloseEditor();
+            gridViewPayment.UpdateCurrentRow();
+
+            var payList = paymentBindingList.Where(x => x.PaySelected && x.PayAmount > 0).ToList();
+            if (!payList.Any())
+            {
+                payList = employeeList.Where(x => x.PaySelected && x.PayAmount > 0).ToList();
+            }
+
+            if (!payList.Any())
+            {
+                XtraMessageBox.Show(this,
+                    Properties.Resources.Form_PayrollWizard_NoPaymentsToExport,
+                    Properties.Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            ExportPaidPaymentsToExcel(payList);
+        }
+
+        private void BtnPayExportExcel_Click(object sender, EventArgs e)
+        {
+            gridViewPayment.CloseEditor();
+            gridViewPayment.UpdateCurrentRow();
+
+            var payList = paymentBindingList.Where(x => x.PaySelected && x.PayAmount > 0).ToList();
+            if (!payList.Any())
+            {
+                payList = employeeList.Where(x => x.PaySelected && x.PayAmount > 0).ToList();
+            }
+
+            if (!payList.Any())
+            {
+                XtraMessageBox.Show(this,
+                    Properties.Resources.Form_PayrollWizard_NoPaymentsToExport,
+                    Properties.Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            ExportPaidPaymentsToExcel(payList);
+        }
+
+        public void ExportPaidPaymentsToExcel(List<PayrollWizardEmployeeVM>? targetPayments = null)
+        {
+            targetPayments ??= paymentBindingList.Where(x => x.PaySelected && x.PayAmount > 0).ToList();
+            if (!targetPayments.Any())
+            {
+                targetPayments = employeeList.Where(x => x.PaySelected && x.PayAmount > 0).ToList();
+            }
+
+            if (!targetPayments.Any())
+            {
+                XtraMessageBox.Show(this,
+                    Properties.Resources.Form_PayrollWizard_NoPaymentsToExport,
+                    Properties.Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            var originalDataSource = gridControlPayment.DataSource;
+            bool originalColSelectedVisible = colPaySelected.Visible;
+            bool originalColDocNumVisible = colPayDocumentNumber.Visible;
+            int originalColDocNumIndex = colPayDocumentNumber.VisibleIndex;
+
+            try
+            {
+                colPaySelected.Visible = false;
+                if (targetPayments.Any(x => !string.IsNullOrEmpty(x.PaymentDocumentNumber)))
+                {
+                    colPayDocumentNumber.Visible = true;
+                    colPayDocumentNumber.VisibleIndex = 0;
+                }
+
+                gridControlPayment.DataSource = targetPayments;
+                gridControlPayment.RefreshDataSource();
+                gridViewPayment.BestFitColumns();
+
+                string periodText = lkpPeriod.Text?.Replace(" ", "_").Replace(":", "-") ?? "Payroll";
+                string defaultFileName = $"{periodText}_{Properties.Resources.Form_PayrollWizard_ExportPaymentsFileName}";
+
+                CustomExtensions.ExportToExcel(this, defaultFileName, gridControlPayment);
+            }
+            finally
+            {
+                colPaySelected.Visible = originalColSelectedVisible;
+                colPayDocumentNumber.Visible = originalColDocNumVisible;
+                colPayDocumentNumber.VisibleIndex = originalColDocNumIndex;
+                gridControlPayment.DataSource = originalDataSource;
+                gridControlPayment.RefreshDataSource();
+            }
         }
     }
 }

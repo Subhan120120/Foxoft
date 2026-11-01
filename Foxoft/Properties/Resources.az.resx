@@ -6453,6 +6453,21 @@ Uğursuz / Nömrə yoxdur: {1}</value>
   <data name="Form_PayrollWizard_SendWhatsappOnFinish" xml:space="preserve">
     <value>Yadda saxladıqdan sonra WhatsApp ilə göndər</value>
   </data>
+  <data name="Form_PayrollWizard_ExportPaymentsOnFinish" xml:space="preserve">
+    <value>Tamamlandıqda ödənişləri Excel-ə göndər</value>
+  </data>
+  <data name="Form_PayrollWizard_Button_ExportPayments" xml:space="preserve">
+    <value>Ödənişləri Excel-ə göndər</value>
+  </data>
+  <data name="Form_PayrollWizard_ExportPaymentsConfirm" xml:space="preserve">
+    <value>Ödənilən ödənişləri Excel faylına ixrac etmək istəyirsiniz?</value>
+  </data>
+  <data name="Form_PayrollWizard_ExportPaymentsFileName" xml:space="preserve">
+    <value>Odenis_Siyahisi</value>
+  </data>
+  <data name="Form_PayrollWizard_NoPaymentsToExport" xml:space="preserve">
+    <value>İxrac ediləcək heç bir ödəniş tapılmadı.</value>
+  </data>
   <data name="Form_PayrollWizard_WhatsAppWebBulkWarning" xml:space="preserve">
     <value>WhatsApp Web rejimində toplu göndəriş çoxsaylı brauzer pəncərəsi aça bilər. WhatsApp API rejimindən istifadə tövsiyə olunur. Davam edilsin?</value>
   </data>
