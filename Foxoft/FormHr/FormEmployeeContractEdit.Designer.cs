@@ -20,11 +20,17 @@ namespace Foxoft
             this.layout = new DevExpress.XtraLayout.LayoutControl();
             this.btnEmployee = new DevExpress.XtraEditors.ButtonEdit();
             this.txtEmployeeName = new DevExpress.XtraEditors.TextEdit();
+            this.txtContractNumber = new DevExpress.XtraEditors.TextEdit();
             this.lkpType = new DevExpress.XtraEditors.LookUpEdit();
             this.dtStart = new DevExpress.XtraEditors.DateEdit();
             this.dtEnd = new DevExpress.XtraEditors.DateEdit();
             this.calcSalary = new DevExpress.XtraEditors.CalcEdit();
             this.lkpCurrency = new DevExpress.XtraEditors.LookUpEdit();
+            this.btnAddAddendum = new DevExpress.XtraEditors.SimpleButton();
+            this.btnEditAddendum = new DevExpress.XtraEditors.SimpleButton();
+            this.btnDeleteAddendum = new DevExpress.XtraEditors.SimpleButton();
+            this.gridAddenda = new MyGridControl();
+            this.viewAddenda = new MyGridView();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
 
@@ -32,6 +38,7 @@ namespace Foxoft
             this.layout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnEmployee.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmployeeName.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtContractNumber.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lkpType.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtStart.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtStart.Properties)).BeginInit();
@@ -39,6 +46,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.dtEnd.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.calcSalary.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lkpCurrency.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridAddenda)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewAddenda)).BeginInit();
             this.SuspendLayout();
 
             this.layout.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -56,8 +65,9 @@ namespace Foxoft
             this.lkpType.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoFilter;
             this.lkpType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             this.lkpType.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("TypeCode", Foxoft.Properties.Resources.Entity_DcEmploymentType_TypeCode),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("TypeName", Foxoft.Properties.Resources.Entity_DcEmploymentType_TypeName)});
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("TypeCode", Foxoft.Properties.Resources.Entity_DcEmploymentType_TypeCode),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("TypeName", Foxoft.Properties.Resources.Entity_DcEmploymentType_TypeName)
+            });
 
             this.lkpCurrency.Properties.DisplayMember = "CurrencyCode";
             this.lkpCurrency.Properties.ValueMember = "CurrencyCode";
@@ -67,8 +77,9 @@ namespace Foxoft
             this.lkpCurrency.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoFilter;
             this.lkpCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             this.lkpCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", Foxoft.Properties.Resources.Entity_TrEmployeeContract_CurrencyCode),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", Foxoft.Properties.Resources.Entity_PaymentHeader_Description)});
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", Foxoft.Properties.Resources.Entity_TrEmployeeContract_CurrencyCode),
+                new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", Foxoft.Properties.Resources.Entity_PaymentHeader_Description)
+            });
 
             this.dtStart.Properties.NullText = "";
             this.dtStart.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -80,17 +91,42 @@ namespace Foxoft
 
             this.calcSalary.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
 
+            // Addenda section
+            this.btnAddAddendum.Text = Foxoft.Properties.Resources.Form_EmployeeContractList_AddAddendum;
+            this.btnEditAddendum.Text = Foxoft.Properties.Resources.Common_Edit;
+            this.btnDeleteAddendum.Text = Foxoft.Properties.Resources.Common_Delete;
+
+            this.gridAddenda.MainView = this.viewAddenda;
+            this.gridAddenda.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { this.viewAddenda });
+            this.viewAddenda.GridControl = this.gridAddenda;
+            this.viewAddenda.OptionsBehavior.Editable = false;
+            this.viewAddenda.OptionsView.ShowGroupPanel = false;
+            this.viewAddenda.OptionsView.ColumnAutoWidth = true;
+
             this.btnSave.Text = Foxoft.Properties.Resources.Common_Save;
             this.btnCancel.Text = Foxoft.Properties.Resources.Common_Cancel;
 
             this.layout.Root = root;
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_CurrAccCode, this.btnEmployee);
             this.layout.AddItem(Foxoft.Properties.Resources.Common_EmployeeName, this.txtEmployeeName);
+            this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_ContractNumber, this.txtContractNumber);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_EmploymentTypeId, this.lkpType);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_StartDate, this.dtStart);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_EndDate, this.dtEnd);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_BaseSalary, this.calcSalary);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_TrEmployeeContract_CurrencyCode, this.lkpCurrency);
+
+            var addendaGroup = root.AddGroup();
+            addendaGroup.Text = Foxoft.Properties.Resources.Form_EmployeeContractEdit_AddendaGroup;
+            addendaGroup.GroupBordersVisible = true;
+
+            var addendaBtnGroup = addendaGroup.AddGroup();
+            addendaBtnGroup.GroupBordersVisible = false;
+            addendaBtnGroup.AddItem("", this.btnAddAddendum);
+            addendaBtnGroup.AddItem("", this.btnEditAddendum);
+            addendaBtnGroup.AddItem("", this.btnDeleteAddendum);
+
+            addendaGroup.AddItem("", this.gridAddenda);
 
             var btnGroup = root.AddGroup();
             btnGroup.GroupBordersVisible = false;
@@ -102,7 +138,7 @@ namespace Foxoft
             // FormEmployeeContractEdit
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 420);
+            this.ClientSize = new System.Drawing.Size(750, 620);
             this.Name = "FormEmployeeContractEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "";
@@ -111,6 +147,7 @@ namespace Foxoft
             this.layout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnEmployee.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmployeeName.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtContractNumber.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lkpType.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtStart.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtStart.Properties)).EndInit();
@@ -118,6 +155,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.dtEnd.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.calcSalary.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lkpCurrency.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridAddenda)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewAddenda)).EndInit();
             this.ResumeLayout(false);
         }
 
@@ -126,11 +165,17 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControl layout;
         private DevExpress.XtraEditors.ButtonEdit btnEmployee;
         private DevExpress.XtraEditors.TextEdit txtEmployeeName;
+        private DevExpress.XtraEditors.TextEdit txtContractNumber;
         private DevExpress.XtraEditors.LookUpEdit lkpType;
         private DevExpress.XtraEditors.DateEdit dtStart;
         private DevExpress.XtraEditors.DateEdit dtEnd;
         private DevExpress.XtraEditors.CalcEdit calcSalary;
         private DevExpress.XtraEditors.LookUpEdit lkpCurrency;
+        private DevExpress.XtraEditors.SimpleButton btnAddAddendum;
+        private DevExpress.XtraEditors.SimpleButton btnEditAddendum;
+        private DevExpress.XtraEditors.SimpleButton btnDeleteAddendum;
+        private MyGridControl gridAddenda;
+        private MyGridView viewAddenda;
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private DevExpress.XtraEditors.SimpleButton btnCancel;
     }

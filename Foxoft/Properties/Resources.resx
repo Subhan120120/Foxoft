@@ -7146,4 +7146,52 @@ Google account: {1}</value>
   <data name="Form_ProductFeature_UsedCredit" xml:space="preserve">
     <value>Used credit: {0:F2}</value>
   </data>
+  <data name="Entity_TrEmployeeContract_ContractNumber" xml:space="preserve">
+    <value>Contract No</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_AddendumNumber" xml:space="preserve">
+    <value>Addendum No</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_StartDate" xml:space="preserve">
+    <value>Effective Date</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_BaseSalary" xml:space="preserve">
+    <value>New Base Salary</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_Description" xml:space="preserve">
+    <value>Reason / Legal Basis</value>
+  </data>
+  <data name="Form_EmployeeContractEdit_AddendaGroup" xml:space="preserve">
+    <value>Contract Addenda &amp; Salary Changes</value>
+  </data>
+  <data name="Form_EmployeeContractList_AddAddendum" xml:space="preserve">
+    <value>New Addendum</value>
+  </data>
+  <data name="Form_EmployeeContractList_InitialSalary" xml:space="preserve">
+    <value>Initial Salary</value>
+  </data>
+  <data name="Form_EmployeeContractList_CurrentSalary" xml:space="preserve">
+    <value>Current Salary</value>
+  </data>
+  <data name="Form_EmployeeContractList_AddendumCount" xml:space="preserve">
+    <value>Addenda Count</value>
+  </data>
+  <data name="Form_EmployeeContractAddendumEdit_Caption_New" xml:space="preserve">
+    <value>New Contract Addendum</value>
+  </data>
+  <data name="Form_EmployeeContractAddendumEdit_Caption_Edit" xml:space="preserve">
+    <value>Edit Contract Addendum</value>
+  </data>
+  <data name="Form_EmployeeContractAddendumList_DeleteConfirm" xml:space="preserve">
+    <value>Delete selected contract addendum?</value>
+  </data>
+  <data name="Form_EmployeeContractEdit_SaveFirstToAddAddendum" xml:space="preserve">
+    <value>Please save the contract first before managing addenda.</value>
+  </data>
+  <data name="Validation_AddendumStartDateRequired" xml:space="preserve">
+    <value>Effective date is required.</value>
+  </data>
 </root>

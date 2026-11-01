@@ -20,6 +20,7 @@ namespace Foxoft
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.btnNew = new DevExpress.XtraBars.BarButtonItem();
             this.btnEdit = new DevExpress.XtraBars.BarButtonItem();
+            this.btnAddAddendum = new DevExpress.XtraBars.BarButtonItem();
             this.btnDelete = new DevExpress.XtraBars.BarButtonItem();
             this.btnRefresh = new DevExpress.XtraBars.BarButtonItem();
             this.btnClose = new DevExpress.XtraBars.BarButtonItem();
@@ -40,11 +41,12 @@ namespace Foxoft
             this.ribbon.SearchEditItem,
             this.btnNew,
             this.btnEdit,
+            this.btnAddAddendum,
             this.btnDelete,
             this.btnRefresh,
             this.btnClose});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 6;
+            this.ribbon.MaxItemId = 7;
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -62,22 +64,28 @@ namespace Foxoft
             this.btnEdit.Id = 2;
             this.btnEdit.Name = "btnEdit";
             // 
+            // btnAddAddendum
+            // 
+            this.btnAddAddendum.Caption = Foxoft.Properties.Resources.Form_EmployeeContractList_AddAddendum;
+            this.btnAddAddendum.Id = 3;
+            this.btnAddAddendum.Name = "btnAddAddendum";
+            // 
             // btnDelete
             // 
             this.btnDelete.Caption = Foxoft.Properties.Resources.Common_Delete;
-            this.btnDelete.Id = 3;
+            this.btnDelete.Id = 4;
             this.btnDelete.Name = "btnDelete";
             // 
             // btnRefresh
             // 
             this.btnRefresh.Caption = Foxoft.Properties.Resources.Common_Refresh;
-            this.btnRefresh.Id = 4;
+            this.btnRefresh.Id = 5;
             this.btnRefresh.Name = "btnRefresh";
             // 
             // btnClose
             // 
             this.btnClose.Caption = Foxoft.Properties.Resources.Common_Close;
-            this.btnClose.Id = 5;
+            this.btnClose.Id = 6;
             this.btnClose.Name = "btnClose";
             // 
             // ribbonPage1
@@ -91,6 +99,7 @@ namespace Foxoft
             // 
             this.ribbonPageGroup1.ItemLinks.Add(this.btnNew);
             this.ribbonPageGroup1.ItemLinks.Add(this.btnEdit);
+            this.ribbonPageGroup1.ItemLinks.Add(this.btnAddAddendum);
             this.ribbonPageGroup1.ItemLinks.Add(this.btnDelete);
             this.ribbonPageGroup1.ItemLinks.Add(this.btnRefresh);
             this.ribbonPageGroup1.ItemLinks.Add(this.btnClose);
@@ -140,6 +149,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
         private DevExpress.XtraBars.BarButtonItem btnNew;
         private DevExpress.XtraBars.BarButtonItem btnEdit;
+        private DevExpress.XtraBars.BarButtonItem btnAddAddendum;
         private DevExpress.XtraBars.BarButtonItem btnDelete;
         private DevExpress.XtraBars.BarButtonItem btnRefresh;
         private DevExpress.XtraBars.BarButtonItem btnClose;

@@ -567,19 +567,20 @@ namespace Foxoft
                 using var db = new subContext();
                 var today = DateTime.Today;
                 var activeContract = db.TrEmployeeContracts.AsNoTracking()
+                    .Include(x => x.Addenda)
                     .Where(x => x.CurrAccCode == currAccCode && x.StartDate <= today && (x.EndDate == null || x.EndDate >= today))
                     .OrderByDescending(x => x.StartDate)
                     .FirstOrDefault();
 
                 if (activeContract != null)
                 {
-                    string currCode = activeContract.CurrencyCode ?? Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+                    var (effectiveSalary, currCode) = activeContract.GetEffectiveSalary(today, Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN");
                     float rate = 1f;
                     var cur = db.DcCurrencies.AsNoTracking().FirstOrDefault(c => c.CurrencyCode == currCode);
                     if (cur != null && cur.ExchangeRate > 0)
                         rate = cur.ExchangeRate;
 
-                    decimal amt = activeContract.BaseSalary;
+                    decimal amt = effectiveSalary;
                     decimal amtLoc = Math.Round(amt / (decimal)rate, 2);
 
                     var salaryLine = new TrPayrollLine

@@ -9849,6 +9849,10 @@ namespace Foxoft.Migrations
                     b.Property<decimal>("BaseSalary")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ContractNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("CurrAccCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)");
@@ -9873,6 +9877,43 @@ namespace Foxoft.Migrations
                     b.HasIndex("EmploymentTypeId");
 
                     b.ToTable("TrEmployeeContracts");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrEmployeeContractAddendum", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AddendumNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("BaseSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ContractId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CurrencyCode")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
+
+                    b.ToTable("TrEmployeeContractAddenda");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrEmployeePosition", b =>
@@ -12534,6 +12575,17 @@ namespace Foxoft.Migrations
                     b.Navigation("EmploymentType");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrEmployeeContractAddendum", b =>
+                {
+                    b.HasOne("Foxoft.Models.TrEmployeeContract", "Contract")
+                        .WithMany("Addenda")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contract");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrEmployeePosition", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
@@ -13600,6 +13652,11 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrBarcodeOperationHeader", b =>
                 {
                     b.Navigation("TrBarcodeOperationLines");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrEmployeeContract", b =>
+                {
+                    b.Navigation("Addenda");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInstallment", b =>

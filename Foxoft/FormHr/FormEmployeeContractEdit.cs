@@ -12,7 +12,7 @@ namespace Foxoft
     {
         private readonly subContext db = new();
         private readonly Guid? id;
-        private TrEmployeeContract entity;
+        private TrEmployeeContract entity = null!;
 
         public FormEmployeeContractEdit(Guid? contractId)
         {
@@ -25,6 +25,12 @@ namespace Foxoft
 
             btnSave.Click += (_, __) => Save();
             btnCancel.Click += (_, __) => DialogResult = DialogResult.Cancel;
+
+            btnAddAddendum.Click += (_, __) => AddAddendum();
+            btnEditAddendum.Click += (_, __) => EditAddendum();
+            btnDeleteAddendum.Click += (_, __) => DeleteAddendum();
+            viewAddenda.DoubleClick += (_, __) => EditAddendum();
+
             Load += (_, __) => LoadEntity();
         }
 
@@ -80,12 +86,114 @@ namespace Foxoft
                 }
             }
 
+            txtContractNumber.Text = entity.ContractNumber;
             btnEmployee.EditValue = entity.CurrAccCode;
             lkpType.EditValue = entity.EmploymentTypeId;
             dtStart.DateTime = entity.StartDate;
             dtEnd.EditValue = entity.EndDate;
             calcSalary.EditValue = entity.BaseSalary;
             lkpCurrency.EditValue = entity.CurrencyCode;
+
+            LoadAddenda();
+        }
+
+        private void LoadAddenda()
+        {
+            if (id == null)
+            {
+                gridAddenda.DataSource = null;
+                btnAddAddendum.Enabled = false;
+                btnEditAddendum.Enabled = false;
+                btnDeleteAddendum.Enabled = false;
+                return;
+            }
+
+            btnAddAddendum.Enabled = true;
+
+            using var aDb = new subContext();
+            var addenda = aDb.TrEmployeeContractAddenda.AsNoTracking()
+                .Where(x => x.ContractId == id.Value)
+                .OrderByDescending(x => x.StartDate)
+                .Select(x => new
+                {
+                    x.Id,
+                    x.AddendumNumber,
+                    x.StartDate,
+                    x.EndDate,
+                    x.BaseSalary,
+                    x.CurrencyCode,
+                    x.Description
+                })
+                .ToList();
+
+            gridAddenda.DataSource = addenda;
+
+            if (viewAddenda.Columns["Id"] != null) viewAddenda.Columns["Id"].Visible = false;
+            if (viewAddenda.Columns["AddendumNumber"] != null) viewAddenda.Columns["AddendumNumber"].Caption = Properties.Resources.Entity_TrEmployeeContractAddendum_AddendumNumber;
+            if (viewAddenda.Columns["StartDate"] != null) viewAddenda.Columns["StartDate"].Caption = Properties.Resources.Entity_TrEmployeeContractAddendum_StartDate;
+            if (viewAddenda.Columns["EndDate"] != null) viewAddenda.Columns["EndDate"].Caption = Properties.Resources.Entity_TrEmployeeContractAddendum_EndDate;
+            if (viewAddenda.Columns["BaseSalary"] != null) viewAddenda.Columns["BaseSalary"].Caption = Properties.Resources.Entity_TrEmployeeContractAddendum_BaseSalary;
+            if (viewAddenda.Columns["CurrencyCode"] != null) viewAddenda.Columns["CurrencyCode"].Caption = Properties.Resources.Entity_TrEmployeeContract_CurrencyCode;
+            if (viewAddenda.Columns["Description"] != null) viewAddenda.Columns["Description"].Caption = Properties.Resources.Entity_TrEmployeeContractAddendum_Description;
+
+            viewAddenda.BestFitColumns();
+
+            btnEditAddendum.Enabled = addenda.Count > 0;
+            btnDeleteAddendum.Enabled = addenda.Count > 0;
+        }
+
+        private Guid? FocusedAddendumId()
+        {
+            var row = viewAddenda.GetFocusedRow();
+            if (row == null) return null;
+            var prop = row.GetType().GetProperty("Id");
+            return prop == null ? null : (Guid?)prop.GetValue(row);
+        }
+
+        private void AddAddendum()
+        {
+            if (id == null)
+            {
+                XtraMessageBox.Show(this, Properties.Resources.Form_EmployeeContractEdit_SaveFirstToAddAddendum,
+                    Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using var f = new FormEmployeeContractAddendumEdit(id.Value, null);
+            if (f.ShowDialog(this) == DialogResult.OK)
+                LoadAddenda();
+        }
+
+        private void EditAddendum()
+        {
+            if (id == null) return;
+            var addendumId = FocusedAddendumId();
+            if (addendumId == null) return;
+
+            using var f = new FormEmployeeContractAddendumEdit(id.Value, addendumId.Value);
+            if (f.ShowDialog(this) == DialogResult.OK)
+                LoadAddenda();
+        }
+
+        private void DeleteAddendum()
+        {
+            if (id == null) return;
+            var addendumId = FocusedAddendumId();
+            if (addendumId == null) return;
+
+            if (XtraMessageBox.Show(this, Properties.Resources.Form_EmployeeContractAddendumList_DeleteConfirm,
+                Properties.Resources.Common_Confirm, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            using var dDb = new subContext();
+            var rowToDelete = dDb.TrEmployeeContractAddenda.FirstOrDefault(x => x.Id == addendumId.Value);
+            if (rowToDelete != null)
+            {
+                dDb.TrEmployeeContractAddenda.Remove(rowToDelete);
+                dDb.SaveChanges();
+            }
+
+            LoadAddenda();
         }
 
         private void Save()
@@ -103,6 +211,7 @@ namespace Foxoft
                 return;
             }
 
+            entity.ContractNumber = txtContractNumber.Text?.Trim();
             entity.CurrAccCode = btnEmployee.EditValue?.ToString();
             entity.EmploymentTypeId = (Guid)lkpType.EditValue;
             entity.StartDate = dtStart.DateTime.Date;
@@ -129,6 +238,12 @@ namespace Foxoft
 
             db.SaveChanges();
             DialogResult = DialogResult.OK;
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            db.Dispose();
         }
     }
 }

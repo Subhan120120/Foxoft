@@ -168,6 +168,7 @@ namespace Foxoft
 
             var contracts = db.TrEmployeeContracts.AsNoTracking()
                 .Include(x => x.EmploymentType)
+                .Include(x => x.Addenda)
                 .Where(x => personnelCodes.Contains(x.CurrAccCode) && x.StartDate <= periodEndDate && (x.EndDate == null || (x.EndDate >= periodStartDate && x.EndDate >= x.StartDate)))
                 .OrderByDescending(x => x.StartDate)
                 .ToList();
@@ -211,15 +212,17 @@ namespace Foxoft
                 string? posName = activePosition?.Position?.PositionName;
                 string? deptName = activePosition?.Position?.Department?.DepartmentName;
 
-                decimal baseSalary = activeContract?.BaseSalary ?? 0;
+                var (effectiveBaseSalary, effectiveCurrCode) = activeContract != null
+                    ? activeContract.GetEffectiveSalaryForPeriod(periodStartDate, periodEndDate, defaultCurrency?.CurrencyCode ?? "AZN")
+                    : (0m, defaultCurrency?.CurrencyCode ?? "AZN");
+
+                decimal baseSalary = effectiveBaseSalary;
                 decimal bonus = 0;
                 decimal deduction = 0;
                 bool alreadyExists = existingPayroll != null;
                 Guid? existingId = existingPayroll?.Id;
 
-                string currCode = !string.IsNullOrEmpty(activeContract?.CurrencyCode)
-                    ? activeContract.CurrencyCode.Trim()
-                    : (defaultCurrency?.CurrencyCode ?? "AZN");
+                string currCode = effectiveCurrCode;
 
                 var matchedCurrency = currencies.FirstOrDefault(c => string.Equals(c.CurrencyCode?.Trim(), currCode, StringComparison.OrdinalIgnoreCase)) ?? defaultCurrency;
                 float exRate = matchedCurrency?.ExchangeRate ?? 1f;

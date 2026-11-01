@@ -20,6 +20,7 @@ namespace Foxoft
 
             btnNew.ItemClick += (_, __) => NewItem();
             btnEdit.ItemClick += (_, __) => EditItem();
+            btnAddAddendum.ItemClick += (_, __) => AddAddendum();
             btnDelete.ItemClick += (_, __) => DeleteItem();
             btnRefresh.ItemClick += (_, __) => LoadData();
             btnClose.ItemClick += (_, __) => Close();
@@ -37,10 +38,12 @@ namespace Foxoft
             var list = db.TrEmployeeContracts.AsNoTracking()
                 .Include(x => x.DcCurrAcc)
                 .Include(x => x.EmploymentType)
+                .Include(x => x.Addenda)
                 .OrderBy(x => x.CurrAccCode)
                 .Select(x => new
                 {
                     x.Id,
+                    x.ContractNumber,
                     x.CurrAccCode,
                     EmployeeName = (!string.IsNullOrEmpty(x.DcCurrAcc.CurrAccDesc)
                         ? x.DcCurrAcc.CurrAccDesc
@@ -48,21 +51,26 @@ namespace Foxoft
                     EmploymentTypeName = x.EmploymentType != null ? x.EmploymentType.TypeName : "",
                     x.StartDate,
                     x.EndDate,
-                    x.BaseSalary,
-                    x.CurrencyCode
+                    InitialSalary = x.BaseSalary,
+                    CurrentSalary = x.Addenda.OrderByDescending(a => a.StartDate).Select(a => (decimal?)a.BaseSalary).FirstOrDefault() ?? x.BaseSalary,
+                    CurrencyCode = x.Addenda.OrderByDescending(a => a.StartDate).Select(a => a.CurrencyCode).FirstOrDefault() ?? x.CurrencyCode,
+                    AddendumCount = x.Addenda.Count
                 })
                 .ToList();
 
             gridControl1.DataSource = list;
 
             if (gridView1.Columns["Id"] != null) gridView1.Columns["Id"].Visible = false;
+            if (gridView1.Columns["ContractNumber"] != null) gridView1.Columns["ContractNumber"].Caption = Properties.Resources.Entity_TrEmployeeContract_ContractNumber;
             if (gridView1.Columns["CurrAccCode"] != null) gridView1.Columns["CurrAccCode"].Caption = Properties.Resources.Entity_TrEmployeeContract_CurrAccCode;
             if (gridView1.Columns["EmployeeName"] != null) gridView1.Columns["EmployeeName"].Caption = Properties.Resources.Common_EmployeeName;
             if (gridView1.Columns["EmploymentTypeName"] != null) gridView1.Columns["EmploymentTypeName"].Caption = Properties.Resources.Entity_TrEmployeeContract_EmploymentTypeId;
             if (gridView1.Columns["StartDate"] != null) gridView1.Columns["StartDate"].Caption = Properties.Resources.Entity_TrEmployeeContract_StartDate;
             if (gridView1.Columns["EndDate"] != null) gridView1.Columns["EndDate"].Caption = Properties.Resources.Entity_TrEmployeeContract_EndDate;
-            if (gridView1.Columns["BaseSalary"] != null) gridView1.Columns["BaseSalary"].Caption = Properties.Resources.Entity_TrEmployeeContract_BaseSalary;
+            if (gridView1.Columns["InitialSalary"] != null) gridView1.Columns["InitialSalary"].Caption = Properties.Resources.Form_EmployeeContractList_InitialSalary;
+            if (gridView1.Columns["CurrentSalary"] != null) gridView1.Columns["CurrentSalary"].Caption = Properties.Resources.Form_EmployeeContractList_CurrentSalary;
             if (gridView1.Columns["CurrencyCode"] != null) gridView1.Columns["CurrencyCode"].Caption = Properties.Resources.Entity_TrEmployeeContract_CurrencyCode;
+            if (gridView1.Columns["AddendumCount"] != null) gridView1.Columns["AddendumCount"].Caption = Properties.Resources.Form_EmployeeContractList_AddendumCount;
 
             gridView1.BestFitColumns();
         }
@@ -92,6 +100,16 @@ namespace Foxoft
                 LoadData();
         }
 
+        private void AddAddendum()
+        {
+            var id = FocusedId();
+            if (id == null) return;
+
+            using var f = new FormEmployeeContractAddendumEdit(id.Value, null);
+            if (f.ShowDialog(this) == DialogResult.OK)
+                LoadData();
+        }
+
         private void DeleteItem()
         {
             var id = FocusedId();
@@ -101,12 +119,19 @@ namespace Foxoft
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            var entity = db.TrEmployeeContracts.FirstOrDefault(x => x.Id == id.Value);
-            if (entity == null) return;
+            var entity = db.TrEmployeeContracts.Find(id.Value);
+            if (entity != null)
+            {
+                db.TrEmployeeContracts.Remove(entity);
+                db.SaveChanges();
+                LoadData();
+            }
+        }
 
-            db.TrEmployeeContracts.Remove(entity);
-            db.SaveChanges();
-            LoadData();
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            db.Dispose();
         }
     }
 }

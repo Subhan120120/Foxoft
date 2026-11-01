@@ -99,6 +99,7 @@ namespace Foxoft.Models
         public DbSet<DcEmploymentType> DcEmploymentTypes { get; set; }
         public DbSet<TrEmployeePosition> TrEmployeePositions { get; set; }
         public DbSet<TrEmployeeContract> TrEmployeeContracts { get; set; }
+        public DbSet<TrEmployeeContractAddendum> TrEmployeeContractAddenda { get; set; }
         public DbSet<TrAttendance> TrAttendances { get; set; }
         public DbSet<DcPayrollPeriod> DcPayrollPeriods { get; set; }
         public DbSet<TrPayrollHeader> TrPayrollHeaders { get; set; }
@@ -330,6 +331,14 @@ namespace Foxoft.Models
             modelBuilder.Entity<SlugifyResult>() // function
                         .HasNoKey()
                         .ToView(nameof(SlugifyResult));
+
+            modelBuilder.Entity<TrEmployeeContractAddendum>(entity =>
+            {
+                entity.HasOne(d => d.Contract)
+                    .WithMany(p => p.Addenda)
+                    .HasForeignKey(d => d.ContractId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             // more foreign key same table configure
             modelBuilder.Entity<TrPaymentHeader>(e =>

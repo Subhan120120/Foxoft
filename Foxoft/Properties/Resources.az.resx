@@ -7146,4 +7146,52 @@ Google hesabı: {1}</value>
   <data name="Form_ProductFeature_UsedCredit" xml:space="preserve">
     <value>İstifadə olunan kredit: {0:F2}</value>
   </data>
+  <data name="Entity_TrEmployeeContract_ContractNumber" xml:space="preserve">
+    <value>Müqavilə №</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_AddendumNumber" xml:space="preserve">
+    <value>Saziş №</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_StartDate" xml:space="preserve">
+    <value>Qüvvəyə Minmə Tarixi</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_EndDate" xml:space="preserve">
+    <value>Bitmə Tarixi</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_BaseSalary" xml:space="preserve">
+    <value>Yeni Əsas Maaş</value>
+  </data>
+  <data name="Entity_TrEmployeeContractAddendum_Description" xml:space="preserve">
+    <value>Dəyişikliyin Əsası / Səbəb</value>
+  </data>
+  <data name="Form_EmployeeContractEdit_AddendaGroup" xml:space="preserve">
+    <value>Əlavə Sazişlər və Maaş Dəyişikliyi Tarixçəsi</value>
+  </data>
+  <data name="Form_EmployeeContractList_AddAddendum" xml:space="preserve">
+    <value>Yeni Əlavə Saziş</value>
+  </data>
+  <data name="Form_EmployeeContractList_InitialSalary" xml:space="preserve">
+    <value>İlkin Maaş</value>
+  </data>
+  <data name="Form_EmployeeContractList_CurrentSalary" xml:space="preserve">
+    <value>Cari Maaş</value>
+  </data>
+  <data name="Form_EmployeeContractList_AddendumCount" xml:space="preserve">
+    <value>Saziş Sayı</value>
+  </data>
+  <data name="Form_EmployeeContractAddendumEdit_Caption_New" xml:space="preserve">
+    <value>Yeni Əlavə Saziş</value>
+  </data>
+  <data name="Form_EmployeeContractAddendumEdit_Caption_Edit" xml:space="preserve">
+    <value>Əlavə Sazişi Redaktə Et</value>
+  </data>
+  <data name="Form_EmployeeContractAddendumList_DeleteConfirm" xml:space="preserve">
+    <value>Seçilmiş əlavə sazişi silmək istəyirsiniz?</value>
+  </data>
+  <data name="Form_EmployeeContractEdit_SaveFirstToAddAddendum" xml:space="preserve">
+    <value>Əlavə sazişləri idarə etmək üçün əvvəlcə müqaviləni yadda saxlayın.</value>
+  </data>
+  <data name="Validation_AddendumStartDateRequired" xml:space="preserve">
+    <value>Qüvvəyə minmə tarixi tələb olunur.</value>
+  </data>
 </root>
