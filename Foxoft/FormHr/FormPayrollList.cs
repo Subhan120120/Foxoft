@@ -1,4 +1,4 @@
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -266,6 +266,8 @@ namespace Foxoft
         private void FormPayrollList_Load(object sender, EventArgs e)
         {
             LoadData();
+            view.ActiveFilterString = $"[Period] = '{DateTime.Today:yyyy-MM}'";
+            view.BestFitColumns();
         }
 
         private void BtnNew_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

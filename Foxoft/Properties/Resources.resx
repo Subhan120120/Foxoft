@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -5698,8 +5698,119 @@ Please wait or choose another invoice.</value>
   <data name="Form_PayrollWizard_Status_New" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="Form_PayrollWizard_PaymentPageCaption" xml:space="preserve">
+    <value>Payment of Employee Balances</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentSettingsPageCaption" xml:space="preserve">
+    <value>Payment Settings</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentSettingsPageText" xml:space="preserve">
+    <value>Configure payment parameters and rules for salary balance disbursement.</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentListPageCaption" xml:space="preserve">
+    <value>Payment List</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentListPageText" xml:space="preserve">
+    <value>Review generated payments and adjust individual amounts if needed.</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentSettings_Group" xml:space="preserve">
+    <value>Payment Parameters</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentRule_Label" xml:space="preserve">
+    <value>Payment Amount Rule:</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentRule_Balance" xml:space="preserve">
+    <value>By remaining balance (Pay positive balances after payroll)</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentRule_NetSalary" xml:space="preserve">
+    <value>By net salary (Pay only current month's net salary)</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentRule_Manual" xml:space="preserve">
+    <value>Manual assignment (Start with 0 amounts)</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentSettings_Info" xml:space="preserve">
+    <value>When payment creation is confirmed, the employee payment list will be generated in the next step based on the selected rule.</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentPageText" xml:space="preserve">
+    <value>Configure employee payable balances and cash/bank payment details.</value>
+  </data>
+  <data name="Form_PayrollWizard_AutoPayBalances" xml:space="preserve">
+    <value>Automatically create payment documents for payable balances</value>
+  </data>
+  <data name="Form_PayrollWizard_CashRegister" xml:space="preserve">
+    <value>Cash Register / Bank Account</value>
+  </data>
+  <data name="Form_PayrollWizard_CashRegisterRequired" xml:space="preserve">
+    <value>Please select a cash register or bank account for payment.</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentDate" xml:space="preserve">
+    <value>Payment Date</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentMethod" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentDesc" xml:space="preserve">
+    <value>Payment Note</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentDescDefault" xml:space="preserve">
+    <value>Salary payment - {0}</value>
+  </data>
+  <data name="Form_PayrollWizard_BtnApplyBalances" xml:space="preserve">
+    <value>Apply Balances</value>
+  </data>
+  <data name="Form_PayrollWizard_BtnApplyNetSalaries" xml:space="preserve">
+    <value>Apply Net Salaries</value>
+  </data>
+  <data name="Form_PayrollWizard_BtnResetPayments" xml:space="preserve">
+    <value>Reset Amounts</value>
+  </data>
+  <data name="Form_PayrollWizard_ColPreviousBalance" xml:space="preserve">
+    <value>Previous Balance</value>
+  </data>
+  <data name="Form_PayrollWizard_ColBalanceAfterPayroll" xml:space="preserve">
+    <value>Balance After Payroll</value>
+  </data>
+  <data name="Form_PayrollWizard_ColPayAmount" xml:space="preserve">
+    <value>Payment Amount</value>
+  </data>
+  <data name="Form_PayrollWizard_ColPaySelected" xml:space="preserve">
+    <value>Pay</value>
+  </data>
+  <data name="Form_PayrollWizard_NoEmployeesToPayConfirm" xml:space="preserve">
+    <value>No employees or amounts are selected for payment. Do you want to proceed without creating payments?</value>
+  </data>
+  <data name="Form_PayrollWizard_SuccessWithPaymentMessage" xml:space="preserve">
+    <value>{0} payroll records and {1} payment documents (total {2:N2} {3}) saved successfully.</value>
+  </data>
+  <data name="Form_PayrollWizard_SummaryPay_Title" xml:space="preserve">
+    <value>Automatic Payment</value>
+  </data>
+  <data name="Form_PayrollWizard_SummaryPay_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Form_PayrollWizard_SummaryPay_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Form_PayrollWizard_SummaryPay_EmployeesCount" xml:space="preserve">
+    <value>Employees to be paid</value>
+  </data>
+  <data name="Form_PayrollWizard_SummaryPay_TotalAmount" xml:space="preserve">
+    <value>Total payment amount</value>
+  </data>
   <data name="Form_PayrollWizard_Status_Exists" xml:space="preserve">
     <value>Exists</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentCurrency" xml:space="preserve">
+    <value>Payment Currency</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentExchangeRate" xml:space="preserve">
+    <value>Payment Exchange Rate</value>
+  </data>
+  <data name="Form_PayrollWizard_PaymentCurrencyRequired" xml:space="preserve">
+    <value>Please select a payment currency.</value>
+  </data>
+  <data name="Form_PayrollWizard_ColPayExchangeRate" xml:space="preserve">
+    <value>Exchange Rate</value>
   </data>
   <data name="Entity_TrPayrollHeader_Bonus" xml:space="preserve">
     <value>Bonus</value>

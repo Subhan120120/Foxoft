@@ -18,6 +18,14 @@ namespace Foxoft.Models.ViewModel
         private float _exchangeRate = 1f;
         private bool _alreadyExists;
         private Guid? _existingPayrollHeaderId;
+        private decimal _previousBalance;
+        private bool _paySelected = true;
+        private decimal _payAmount;
+        private string? _cashRegisterCode;
+        private int? _paymentMethodId;
+        private string? _paymentDescription;
+        private string _paymentCurrencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+        private float _paymentExchangeRate = 1f;
 
         public bool Selected
         {
@@ -63,6 +71,7 @@ namespace Foxoft.Models.ViewModel
                     OnPropertyChanged(nameof(GrossSalaryLoc));
                     OnPropertyChanged(nameof(NetSalaryLoc));
                     OnPropertyChanged(nameof(AmountLoc));
+                    OnPropertyChanged(nameof(BalanceAfterPayroll));
                 }
             }
         }
@@ -81,6 +90,7 @@ namespace Foxoft.Models.ViewModel
                     OnPropertyChanged(nameof(GrossSalaryLoc));
                     OnPropertyChanged(nameof(NetSalaryLoc));
                     OnPropertyChanged(nameof(AmountLoc));
+                    OnPropertyChanged(nameof(BalanceAfterPayroll));
                 }
             }
         }
@@ -97,6 +107,7 @@ namespace Foxoft.Models.ViewModel
                     OnPropertyChanged(nameof(NetSalary));
                     OnPropertyChanged(nameof(NetSalaryLoc));
                     OnPropertyChanged(nameof(AmountLoc));
+                    OnPropertyChanged(nameof(BalanceAfterPayroll));
                 }
             }
         }
@@ -117,6 +128,7 @@ namespace Foxoft.Models.ViewModel
                     OnPropertyChanged(nameof(GrossSalaryLoc));
                     OnPropertyChanged(nameof(NetSalaryLoc));
                     OnPropertyChanged(nameof(AmountLoc));
+                    OnPropertyChanged(nameof(BalanceAfterPayroll));
                 }
             }
         }
@@ -133,6 +145,7 @@ namespace Foxoft.Models.ViewModel
                     OnPropertyChanged(nameof(GrossSalaryLoc));
                     OnPropertyChanged(nameof(NetSalaryLoc));
                     OnPropertyChanged(nameof(AmountLoc));
+                    OnPropertyChanged(nameof(BalanceAfterPayroll));
                 }
             }
         }
@@ -179,6 +192,150 @@ namespace Foxoft.Models.ViewModel
         {
             get => _existingPayrollHeaderId;
             set { if (_existingPayrollHeaderId != value) { _existingPayrollHeaderId = value; OnPropertyChanged(); } }
+        }
+
+        public decimal PreviousBalance
+        {
+            get => _previousBalance;
+            set
+            {
+                if (_previousBalance != value)
+                {
+                    _previousBalance = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(BalanceAfterPayroll));
+                }
+            }
+        }
+
+        public decimal BalanceAfterPayroll => PreviousBalance + NetSalaryLoc;
+
+        public bool PaySelected
+        {
+            get => _paySelected;
+            set
+            {
+                if (_paySelected != value)
+                {
+                    _paySelected = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public decimal PayAmount
+        {
+            get => _payAmount;
+            set
+            {
+                if (_payAmount != value)
+                {
+                    _payAmount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string? CashRegisterCode
+        {
+            get => _cashRegisterCode;
+            set
+            {
+                if (_cashRegisterCode != value)
+                {
+                    _cashRegisterCode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int? PaymentMethodId
+        {
+            get => _paymentMethodId;
+            set
+            {
+                if (_paymentMethodId != value)
+                {
+                    _paymentMethodId = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string? PaymentDescription
+        {
+            get => _paymentDescription;
+            set
+            {
+                if (_paymentDescription != value)
+                {
+                    _paymentDescription = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string PaymentCurrencyCode
+        {
+            get => _paymentCurrencyCode;
+            set
+            {
+                if (_paymentCurrencyCode != value)
+                {
+                    _paymentCurrencyCode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public float PaymentExchangeRate
+        {
+            get => _paymentExchangeRate;
+            set
+            {
+                if (_paymentExchangeRate != value)
+                {
+                    _paymentExchangeRate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public void ApplyBalanceToPayAmount(string? payCurrency = null, float? payExchangeRate = null)
+        {
+            if (!string.IsNullOrEmpty(payCurrency))
+                PaymentCurrencyCode = payCurrency;
+            if (payExchangeRate.HasValue && payExchangeRate.Value > 0)
+                PaymentExchangeRate = payExchangeRate.Value;
+
+            decimal targetBalanceLoc = BalanceAfterPayroll > 0 ? BalanceAfterPayroll : 0;
+            decimal rate = PaymentExchangeRate <= 0 ? 1m : (decimal)PaymentExchangeRate;
+            PayAmount = Math.Round(targetBalanceLoc * rate, 2);
+            PaySelected = PayAmount > 0;
+        }
+
+        public void ApplyNetSalaryToPayAmount(string? payCurrency = null, float? payExchangeRate = null)
+        {
+            if (!string.IsNullOrEmpty(payCurrency))
+                PaymentCurrencyCode = payCurrency;
+            if (payExchangeRate.HasValue && payExchangeRate.Value > 0)
+                PaymentExchangeRate = payExchangeRate.Value;
+
+            decimal targetSalaryLoc = NetSalaryLoc > 0 ? NetSalaryLoc : 0;
+            decimal rate = PaymentExchangeRate <= 0 ? 1m : (decimal)PaymentExchangeRate;
+            PayAmount = Math.Round(targetSalaryLoc * rate, 2);
+            PaySelected = PayAmount > 0;
+        }
+
+        public void ResetPayAmount(string? payCurrency = null, float? payExchangeRate = null)
+        {
+            if (!string.IsNullOrEmpty(payCurrency))
+                PaymentCurrencyCode = payCurrency;
+            if (payExchangeRate.HasValue && payExchangeRate.Value > 0)
+                PaymentExchangeRate = payExchangeRate.Value;
+
+            PayAmount = 0;
+            PaySelected = false;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
