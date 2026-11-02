@@ -5818,6 +5818,9 @@ Zəhmət olmasa gözləyin və ya başqa qaimə seçin.</value>
   <data name="Form_PayrollWizard_ColPayExchangeRate" xml:space="preserve">
     <value>Məzənnə</value>
   </data>
+  <data name="Entity_TrPayrollHeader_Overtime" xml:space="preserve">
+    <value>Əlavə İş</value>
+  </data>
   <data name="Entity_TrPayrollHeader_Bonus" xml:space="preserve">
     <value>Mükafat</value>
   </data>

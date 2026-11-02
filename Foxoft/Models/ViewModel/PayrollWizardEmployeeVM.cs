@@ -13,7 +13,9 @@ namespace Foxoft.Models.ViewModel
         private string? _positionName;
         private decimal _baseSalary;
         private decimal _bonus;
+        private decimal _overtime;
         private decimal _deduction;
+        private decimal _otherDeductions;
         private string _currencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
         private float _exchangeRate = 1f;
         private bool _alreadyExists;
@@ -96,6 +98,25 @@ namespace Foxoft.Models.ViewModel
             }
         }
 
+        public decimal Overtime
+        {
+            get => _overtime;
+            set
+            {
+                if (_overtime != value)
+                {
+                    _overtime = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(GrossSalary));
+                    OnPropertyChanged(nameof(NetSalary));
+                    OnPropertyChanged(nameof(GrossSalaryLoc));
+                    OnPropertyChanged(nameof(NetSalaryLoc));
+                    OnPropertyChanged(nameof(AmountLoc));
+                    OnPropertyChanged(nameof(BalanceAfterPayroll));
+                }
+            }
+        }
+
         public decimal Deduction
         {
             get => _deduction;
@@ -113,9 +134,26 @@ namespace Foxoft.Models.ViewModel
             }
         }
 
-        public decimal GrossSalary => BaseSalary + Bonus;
+        public decimal OtherDeductions
+        {
+            get => _otherDeductions;
+            set
+            {
+                if (_otherDeductions != value)
+                {
+                    _otherDeductions = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(NetSalary));
+                    OnPropertyChanged(nameof(NetSalaryLoc));
+                    OnPropertyChanged(nameof(AmountLoc));
+                    OnPropertyChanged(nameof(BalanceAfterPayroll));
+                }
+            }
+        }
 
-        public decimal NetSalary => GrossSalary - Deduction;
+        public decimal GrossSalary => BaseSalary + Bonus + Overtime;
+
+        public decimal NetSalary => GrossSalary - Deduction - OtherDeductions;
 
         public string CurrencyCode
         {

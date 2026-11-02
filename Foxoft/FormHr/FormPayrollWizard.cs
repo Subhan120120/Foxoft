@@ -220,7 +220,9 @@ namespace Foxoft
 
                 decimal baseSalary = effectiveBaseSalary;
                 decimal bonus = 0;
+                decimal overtime = 0;
                 decimal deduction = 0;
+                decimal otherDeductions = 0;
                 bool alreadyExists = existingPayroll != null;
                 Guid? existingId = existingPayroll?.Id;
 
@@ -244,11 +246,19 @@ namespace Foxoft
                     }
 
                     bonus = existingPayroll.Lines
-                        .Where(l => l.PayrollItemType == PayrollItemType.Bonus || l.PayrollItemType == PayrollItemType.Overtime)
+                        .Where(l => l.PayrollItemType == PayrollItemType.Bonus)
+                        .Sum(l => l.Amount);
+
+                    overtime = existingPayroll.Lines
+                        .Where(l => l.PayrollItemType == PayrollItemType.Overtime)
                         .Sum(l => l.Amount);
 
                     deduction = existingPayroll.Lines
-                        .Where(l => l.PayrollItemType == PayrollItemType.Tax || l.PayrollItemType == PayrollItemType.Insurance || l.PayrollItemType == PayrollItemType.Deduction)
+                        .Where(l => l.PayrollItemType == PayrollItemType.Deduction)
+                        .Sum(l => l.Amount);
+
+                    otherDeductions = existingPayroll.Lines
+                        .Where(l => l.PayrollItemType == PayrollItemType.Tax || l.PayrollItemType == PayrollItemType.Insurance)
                         .Sum(l => l.Amount);
 
                     existingNetSalaryLoc = existingPayroll.NetSalary;
@@ -267,7 +277,9 @@ namespace Foxoft
                     PositionName = posName,
                     BaseSalary = baseSalary,
                     Bonus = bonus,
+                    Overtime = overtime,
                     Deduction = deduction,
+                    OtherDeductions = otherDeductions,
                     CurrencyCode = currCode,
                     ExchangeRate = exRate,
                     AlreadyExists = alreadyExists,
@@ -651,6 +663,23 @@ namespace Foxoft
                                 saveDb.TrPayrollLines.Add(bonusLine);
                             }
 
+                            if (item.Overtime > 0)
+                            {
+                                decimal overtimeLoc = Math.Round(item.Overtime / rate, 2);
+                                var overtimeLine = new TrPayrollLine
+                                {
+                                    Id = Guid.NewGuid(),
+                                    PayrollHeaderId = newHeaderId,
+                                    PayrollItemType = PayrollItemType.Overtime,
+                                    Description = Properties.Resources.Entity_TrPayrollHeader_Overtime,
+                                    Amount = item.Overtime,
+                                    CurrencyCode = item.CurrencyCode,
+                                    ExchangeRate = item.ExchangeRate,
+                                    AmountLoc = overtimeLoc
+                                };
+                                saveDb.TrPayrollLines.Add(overtimeLine);
+                            }
+
                             if (item.Deduction > 0)
                             {
                                 decimal deductionLoc = Math.Round(item.Deduction / rate, 2);
@@ -670,8 +699,9 @@ namespace Foxoft
                         }
                         else
                         {
-                            // Sync Salary Line
-                            var salaryLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Salary);
+                            // 1. Sync Salary Line
+                            var salaryLines = dbHeader.Lines.Where(x => x.PayrollItemType == PayrollItemType.Salary).ToList();
+                            var salaryLine = salaryLines.FirstOrDefault();
                             if (salaryLine == null)
                             {
                                 var newSalaryLine = new TrPayrollLine
@@ -694,10 +724,14 @@ namespace Foxoft
                                 salaryLine.ExchangeRate = item.ExchangeRate;
                                 salaryLine.AmountLoc = baseSalaryLoc;
                                 salaryLine.Description = Properties.Resources.Form_PayrollEdit_BaseSalaryFromContract;
+
+                                if (salaryLines.Count > 1)
+                                    saveDb.TrPayrollLines.RemoveRange(salaryLines.Skip(1));
                             }
 
-                            // Sync Bonus Line
-                            var bonusLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Bonus);
+                            // 2. Sync Bonus Line
+                            var bonusLines = dbHeader.Lines.Where(x => x.PayrollItemType == PayrollItemType.Bonus).ToList();
+                            var bonusLine = bonusLines.FirstOrDefault();
                             if (item.Bonus > 0)
                             {
                                 decimal bonusLoc = Math.Round(item.Bonus / rate, 2);
@@ -723,15 +757,57 @@ namespace Foxoft
                                     bonusLine.ExchangeRate = item.ExchangeRate;
                                     bonusLine.AmountLoc = bonusLoc;
                                     bonusLine.Description = Properties.Resources.Entity_TrPayrollHeader_Bonus;
+
+                                    if (bonusLines.Count > 1)
+                                        saveDb.TrPayrollLines.RemoveRange(bonusLines.Skip(1));
                                 }
                             }
-                            else if (bonusLine != null)
+                            else if (bonusLines.Any())
                             {
-                                saveDb.TrPayrollLines.Remove(bonusLine);
+                                saveDb.TrPayrollLines.RemoveRange(bonusLines);
                             }
 
-                            // Sync Deduction Line
-                            var deductionLine = dbHeader.Lines.FirstOrDefault(x => x.PayrollItemType == PayrollItemType.Deduction);
+                            // 3. Sync Overtime Line
+                            var overtimeLines = dbHeader.Lines.Where(x => x.PayrollItemType == PayrollItemType.Overtime).ToList();
+                            var overtimeLine = overtimeLines.FirstOrDefault();
+                            if (item.Overtime > 0)
+                            {
+                                decimal overtimeLoc = Math.Round(item.Overtime / rate, 2);
+                                if (overtimeLine == null)
+                                {
+                                    var newOvertimeLine = new TrPayrollLine
+                                    {
+                                        Id = Guid.NewGuid(),
+                                        PayrollHeaderId = dbHeader.Id,
+                                        PayrollItemType = PayrollItemType.Overtime,
+                                        Description = Properties.Resources.Entity_TrPayrollHeader_Overtime,
+                                        Amount = item.Overtime,
+                                        CurrencyCode = item.CurrencyCode,
+                                        ExchangeRate = item.ExchangeRate,
+                                        AmountLoc = overtimeLoc
+                                    };
+                                    saveDb.TrPayrollLines.Add(newOvertimeLine);
+                                }
+                                else
+                                {
+                                    overtimeLine.Amount = item.Overtime;
+                                    overtimeLine.CurrencyCode = item.CurrencyCode;
+                                    overtimeLine.ExchangeRate = item.ExchangeRate;
+                                    overtimeLine.AmountLoc = overtimeLoc;
+                                    overtimeLine.Description = Properties.Resources.Entity_TrPayrollHeader_Overtime;
+
+                                    if (overtimeLines.Count > 1)
+                                        saveDb.TrPayrollLines.RemoveRange(overtimeLines.Skip(1));
+                                }
+                            }
+                            else if (overtimeLines.Any())
+                            {
+                                saveDb.TrPayrollLines.RemoveRange(overtimeLines);
+                            }
+
+                            // 4. Sync Deduction Line
+                            var deductionLines = dbHeader.Lines.Where(x => x.PayrollItemType == PayrollItemType.Deduction).ToList();
+                            var deductionLine = deductionLines.FirstOrDefault();
                             if (item.Deduction > 0)
                             {
                                 decimal deductionLoc = Math.Round(item.Deduction / rate, 2);
@@ -757,11 +833,14 @@ namespace Foxoft
                                     deductionLine.ExchangeRate = item.ExchangeRate;
                                     deductionLine.AmountLoc = deductionLoc;
                                     deductionLine.Description = Properties.Resources.Entity_TrPayrollHeader_Deduction;
+
+                                    if (deductionLines.Count > 1)
+                                        saveDb.TrPayrollLines.RemoveRange(deductionLines.Skip(1));
                                 }
                             }
-                            else if (deductionLine != null)
+                            else if (deductionLines.Any())
                             {
-                                saveDb.TrPayrollLines.Remove(deductionLine);
+                                saveDb.TrPayrollLines.RemoveRange(deductionLines);
                             }
                         }
                     }

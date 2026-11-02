@@ -5818,6 +5818,9 @@ Please wait or choose another invoice.</value>
   <data name="Form_PayrollWizard_ColPayExchangeRate" xml:space="preserve">
     <value>Exchange Rate</value>
   </data>
+  <data name="Entity_TrPayrollHeader_Overtime" xml:space="preserve">
+    <value>Overtime</value>
+  </data>
   <data name="Entity_TrPayrollHeader_Bonus" xml:space="preserve">
     <value>Bonus</value>
   </data>

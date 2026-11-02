@@ -47,6 +47,8 @@ namespace Foxoft
             repoCalcBaseSalary = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             colBonus = new DevExpress.XtraGrid.Columns.GridColumn();
             repoCalcBonus = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            colOvertime = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoCalcOvertime = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             colDeduction = new DevExpress.XtraGrid.Columns.GridColumn();
             repoCalcDeduction = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             colGrossSalary = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -249,14 +251,14 @@ namespace Foxoft
             gridControlEmployees.Location = new System.Drawing.Point(0, 36);
             gridControlEmployees.MainView = gridViewEmployees;
             gridControlEmployees.Name = "gridControlEmployees";
-            gridControlEmployees.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoCheckSelected, repoCalcBaseSalary, repoCalcBonus, repoCalcDeduction, repoLookUpCurrency, repoCalcExchangeRate });
+            gridControlEmployees.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoCheckSelected, repoCalcBaseSalary, repoCalcBonus, repoCalcOvertime, repoCalcDeduction, repoLookUpCurrency, repoCalcExchangeRate });
             gridControlEmployees.Size = new System.Drawing.Size(968, 421);
             gridControlEmployees.TabIndex = 1;
             gridControlEmployees.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewEmployees });
             // 
             // gridViewEmployees
             // 
-            gridViewEmployees.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colSelected, colCurrAccCode, colEmployeeName, colPositionName, colDepartmentName, colBaseSalary, colBonus, colDeduction, colGrossSalary, colNetSalary, colCurrencyCode, colExchangeRate, colNetSalaryLoc, colPreviousBalance, colBalanceAfterPayroll, colStatus });
+            gridViewEmployees.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colSelected, colCurrAccCode, colEmployeeName, colPositionName, colDepartmentName, colBaseSalary, colBonus, colOvertime, colDeduction, colGrossSalary, colNetSalary, colCurrencyCode, colExchangeRate, colNetSalaryLoc, colPreviousBalance, colBalanceAfterPayroll, colStatus });
             gridViewEmployees.GridControl = gridControlEmployees;
             gridViewEmployees.Name = "gridViewEmployees";
             gridViewEmployees.OptionsView.ColumnAutoWidth = false;
@@ -369,6 +371,30 @@ namespace Foxoft
             repoCalcBonus.Mask.EditMask = "n2";
             repoCalcBonus.Name = "repoCalcBonus";
             // 
+            // colOvertime
+            // 
+            colOvertime.Caption = Properties.Resources.Entity_TrPayrollHeader_Overtime;
+            colOvertime.ColumnEdit = repoCalcOvertime;
+            colOvertime.DisplayFormat.FormatString = "n2";
+            colOvertime.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colOvertime.FieldName = "Overtime";
+            colOvertime.Name = "colOvertime";
+            colOvertime.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Overtime", "{0:n2}") });
+            colOvertime.Visible = true;
+            colOvertime.VisibleIndex = 7;
+            colOvertime.Width = 90;
+            // 
+            // repoCalcOvertime
+            // 
+            repoCalcOvertime.AutoHeight = false;
+            repoCalcOvertime.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoCalcOvertime.DisplayFormat.FormatString = "n2";
+            repoCalcOvertime.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            repoCalcOvertime.EditFormat.FormatString = "n2";
+            repoCalcOvertime.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            repoCalcOvertime.Mask.EditMask = "n2";
+            repoCalcOvertime.Name = "repoCalcOvertime";
+            // 
             // colDeduction
             // 
             colDeduction.Caption = Properties.Resources.Entity_TrPayrollHeader_Deduction;
@@ -379,7 +405,7 @@ namespace Foxoft
             colDeduction.Name = "colDeduction";
             colDeduction.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Deduction", "{0:n2}") });
             colDeduction.Visible = true;
-            colDeduction.VisibleIndex = 7;
+            colDeduction.VisibleIndex = 8;
             colDeduction.Width = 90;
             // 
             // repoCalcDeduction
@@ -403,7 +429,7 @@ namespace Foxoft
             colGrossSalary.OptionsColumn.AllowEdit = false;
             colGrossSalary.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GrossSalary", "{0:n2}") });
             colGrossSalary.Visible = true;
-            colGrossSalary.VisibleIndex = 8;
+            colGrossSalary.VisibleIndex = 9;
             colGrossSalary.Width = 100;
             // 
             // colNetSalary
@@ -416,7 +442,7 @@ namespace Foxoft
             colNetSalary.OptionsColumn.AllowEdit = false;
             colNetSalary.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetSalary", "{0:n2}") });
             colNetSalary.Visible = true;
-            colNetSalary.VisibleIndex = 9;
+            colNetSalary.VisibleIndex = 10;
             colNetSalary.Width = 100;
             // 
             // colCurrencyCode
@@ -426,7 +452,7 @@ namespace Foxoft
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
-            colCurrencyCode.VisibleIndex = 10;
+            colCurrencyCode.VisibleIndex = 11;
             colCurrencyCode.Width = 70;
             // 
             // repoLookUpCurrency
@@ -456,7 +482,7 @@ namespace Foxoft
             colExchangeRate.FieldName = "ExchangeRate";
             colExchangeRate.Name = "colExchangeRate";
             colExchangeRate.Visible = true;
-            colExchangeRate.VisibleIndex = 11;
+            colExchangeRate.VisibleIndex = 12;
             colExchangeRate.Width = 85;
             // 
             // repoCalcExchangeRate
@@ -480,7 +506,7 @@ namespace Foxoft
             colNetSalaryLoc.OptionsColumn.AllowEdit = false;
             colNetSalaryLoc.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetSalaryLoc", "{0:n2}") });
             colNetSalaryLoc.Visible = true;
-            colNetSalaryLoc.VisibleIndex = 12;
+            colNetSalaryLoc.VisibleIndex = 13;
             colNetSalaryLoc.Width = 100;
             // 
             // colPreviousBalance
@@ -493,7 +519,7 @@ namespace Foxoft
             colPreviousBalance.OptionsColumn.AllowEdit = false;
             colPreviousBalance.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PreviousBalance", "{0:n2}") });
             colPreviousBalance.Visible = true;
-            colPreviousBalance.VisibleIndex = 13;
+            colPreviousBalance.VisibleIndex = 14;
             colPreviousBalance.Width = 105;
             // 
             // colBalanceAfterPayroll
@@ -506,7 +532,7 @@ namespace Foxoft
             colBalanceAfterPayroll.OptionsColumn.AllowEdit = false;
             colBalanceAfterPayroll.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "BalanceAfterPayroll", "{0:n2}") });
             colBalanceAfterPayroll.Visible = true;
-            colBalanceAfterPayroll.VisibleIndex = 14;
+            colBalanceAfterPayroll.VisibleIndex = 15;
             colBalanceAfterPayroll.Width = 115;
             // 
             // colStatus
@@ -516,7 +542,7 @@ namespace Foxoft
             colStatus.Name = "colStatus";
             colStatus.OptionsColumn.AllowEdit = false;
             colStatus.Visible = true;
-            colStatus.VisibleIndex = 15;
+            colStatus.VisibleIndex = 16;
             colStatus.Width = 90;
             // 
             // panelControlTop
@@ -1245,6 +1271,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcBaseSalary;
         private DevExpress.XtraGrid.Columns.GridColumn colBonus;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcBonus;
+        private DevExpress.XtraGrid.Columns.GridColumn colOvertime;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcOvertime;
         private DevExpress.XtraGrid.Columns.GridColumn colDeduction;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcDeduction;
         private DevExpress.XtraGrid.Columns.GridColumn colGrossSalary;
