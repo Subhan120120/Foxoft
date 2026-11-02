@@ -14,6 +14,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using DevExpress.Utils.Menu;
+using System.Diagnostics;
+using System.Drawing.Imaging;
+using System.Linq;
 
 namespace Foxoft
 {
@@ -24,6 +28,10 @@ namespace Foxoft
         bool isCustomer;
         public DcCurrAcc dcCurrAcc = new();
         private const string ChangeCurrAccCodeClaim = "ChangeCurrAccCode";
+        SettingStore? settingStore;
+        string currAccFolder = string.Empty;
+        string imageFilePath = string.Empty;
+        private bool isImageChanged;
 
         public FormCurrAcc()
         {
@@ -74,8 +82,18 @@ namespace Foxoft
 
         private void FormCurrAcc_Load(object sender, EventArgs e)
         {
+            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+
+            if (!string.IsNullOrWhiteSpace(settingStore?.ImageFolder) && !CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+            {
+                try { Directory.CreateDirectory(settingStore.ImageFolder); }
+                catch (UnauthorizedAccessException) { }
+                catch (DirectoryNotFoundException) { }
+            }
             LoadCurrAcc();
             LoadLayout();
+            UpdateImagePath();
+            LoadPictureBoxImage();
             dataLayoutControl1.IsValid(out List<string> errorList);
             CurrAccTypeCodeLookUpEdit_EditValueChanged(CurrAccTypeCodeLookUpEdit, EventArgs.Empty);
         }
@@ -135,6 +153,8 @@ namespace Foxoft
 
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;
             CurrAccDescTextEdit.Select();
+            pictureEdit.Image = null;
+            isImageChanged = false;
         }
 
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
@@ -182,6 +202,8 @@ namespace Foxoft
                     dcCurrAcc.LastUpdatedDate = DateTime.Now;
                     dbContext.SaveChanges();
                 }
+
+                SaveImage();
 
                 BBI_MergeCurrAcc.Enabled = true;
 
@@ -487,6 +509,187 @@ namespace Foxoft
         private void MergeCurrAccs(string sourceCurrAccCode, string targetCurrAccCode)
         {
             efMethods.MergeCurrAccs(sourceCurrAccCode, targetCurrAccCode);
+        }
+
+        private void UpdateImagePath()
+        {
+            currAccFolder = CustomExtensions.CombinePath(settingStore?.ImageFolder, "CurrAccs", dcCurrAcc?.CurrAccCode);
+            imageFilePath = CustomExtensions.CombinePath(currAccFolder, dcCurrAcc?.CurrAccCode + ".jpg");
+        }
+
+        private void LoadPictureBoxImage()
+        {
+            try
+            {
+                if (File.Exists(imageFilePath))
+                {
+                    using (var fs = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    {
+                        try
+                        {
+                            using (Image img = Image.FromStream(fs, true, false))
+                            {
+                                Bitmap myBitmap = new(img);
+                                pictureEdit.Image = myBitmap;
+                            }
+                        }
+                        catch (Exception) { }
+                    }
+                }
+                else
+                {
+                    pictureEdit.Image = null;
+                }
+            }
+            finally
+            {
+                isImageChanged = false;
+            }
+        }
+
+        private void SaveImage()
+        {
+            if (!isImageChanged)
+                return;
+
+            try
+            {
+                UpdateImagePath();
+
+                if (string.IsNullOrWhiteSpace(currAccFolder) || string.IsNullOrWhiteSpace(imageFilePath))
+                    return;
+
+                if (pictureEdit.Image is not null)
+                {
+                    if (!Directory.Exists(currAccFolder))
+                        Directory.CreateDirectory(currAccFolder);
+
+                    using (MemoryStream ms = new())
+                    {
+                        using (Bitmap bmp = new(pictureEdit.Image))
+                        {
+                            bmp.Save(ms, ImageFormat.Jpeg);
+                        }
+                        File.WriteAllBytes(imageFilePath, ms.ToArray());
+                    }
+
+                    isImageChanged = false;
+                    GC.Collect();
+                }
+                else
+                {
+                    if (File.Exists(imageFilePath))
+                        File.Delete(imageFilePath);
+
+                    isImageChanged = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(
+                    string.Format(Resources.Form_CurrAcc_Message_SaveImageError, ex.Message),
+                    Resources.Common_Error,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void openFileDialog()
+        {
+            OpenFileDialog dialog = new();
+            dialog.Filter =
+                "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" +
+                "All files (*.*)|*.*";
+
+            dialog.Title = Resources.Form_CurrAcc_OpenFileDialog_Title;
+
+            DialogResult dr = dialog.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                foreach (string file in dialog.FileNames)
+                {
+                    try
+                    {
+                        using (FileStream fs = new(file, FileMode.Open, FileAccess.Read))
+                        {
+                            using (Image img = Image.FromStream(fs, true, false))
+                            {
+                                Bitmap myBitmap = new(img);
+                                pictureEdit.Image = myBitmap;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            $"{Resources.Common_ErrorTitle}: {ex.Message}",
+                            Resources.Common_ErrorTitle);
+                    }
+                }
+            }
+        }
+
+        private void pictureEdit_DoubleClick(object sender, EventArgs e)
+        {
+            if (File.Exists(imageFilePath))
+            {
+                ProcessStartInfo startInfo = new(imageFilePath);
+                startInfo.UseShellExecute = true;
+                Process.Start(startInfo);
+            }
+        }
+
+        private void pictureEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            isImageChanged = true;
+        }
+
+        private void pictureEdit_PopupMenuShowing(object sender, DevExpress.XtraEditors.Events.PopupMenuShowingEventArgs e)
+        {
+            void RemoveMenuItem(StringId tag)
+            {
+                var itemToRemove = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == tag);
+                if (itemToRemove != null)
+                    e.PopupMenu.Items.Remove(itemToRemove);
+            }
+
+            void AddMenuItem(string caption, DXMenuItem oldItem, EventHandler clickHandler, bool enabled = true)
+            {
+                if (oldItem == null) return;
+                var newItem = new DXMenuItem(caption, clickHandler, oldItem.GetImage()) { Enabled = enabled, Tag = oldItem.Tag };
+                e.PopupMenu.Items.Add(newItem);
+            }
+
+            var cutItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuCut);
+            var saveItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuSave);
+            var loadItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuLoad);
+            var pasteItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuPaste);
+            var deleteItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuDelete);
+
+            AddMenuItem(Resources.Common_Paste, pasteItem, PictureEdit_PasteItem_Click, Clipboard.ContainsImage());
+            AddMenuItem(Resources.Common_Load, loadItem, PictureEdit_LoadItem_Click);
+            AddMenuItem(Resources.Common_Delete, deleteItem, PictureEdit_DeleteItem_Click, pictureEdit.Image != null);
+
+            RemoveMenuItem(StringId.PictureEditMenuCut);
+            RemoveMenuItem(StringId.PictureEditMenuSave);
+            RemoveMenuItem(StringId.PictureEditMenuLoad);
+            RemoveMenuItem(StringId.PictureEditMenuPaste);
+            RemoveMenuItem(StringId.PictureEditMenuDelete);
+        }
+
+        private void PictureEdit_LoadItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog();
+        }
+
+        private void PictureEdit_DeleteItem_Click(object sender, EventArgs e)
+        {
+            pictureEdit.Image = null;
+        }
+
+        private void PictureEdit_PasteItem_Click(object sender, EventArgs e)
+        {
+            pictureEdit.Image = Clipboard.GetImage();
         }
     }
 }

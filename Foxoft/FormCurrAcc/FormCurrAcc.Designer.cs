@@ -94,11 +94,14 @@ namespace Foxoft
             ItemForDataLanguageCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPersonalTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForCurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
+            pictureEdit = new DevExpress.XtraEditors.PictureEdit();
+            ItemForPicture = new DevExpress.XtraLayout.LayoutControlItem();
             bindingSource1 = new BindingSource(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CurrAccCodeTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FirstNameTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LastNameTextEdit.Properties).BeginInit();
@@ -147,6 +150,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForDataLanguageCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPersonalTypeCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccDesc).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPicture).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
             SuspendLayout();
@@ -174,6 +178,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(OfficeCodeLookUpEdit);
             dataLayoutControl1.Controls.Add(StoreCodeLookUpEdit);
             dataLayoutControl1.Controls.Add(PersonalTypeCodeLookUpEdit);
+            dataLayoutControl1.Controls.Add(pictureEdit);
             dataLayoutControl1.DataSource = dcCurrAccsBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForOfficeCode });
@@ -182,7 +187,7 @@ namespace Foxoft
             dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(1023, 140, 650, 400);
             dataLayoutControl1.OptionsFocus.MoveFocusRightToLeft = false;
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new Size(604, 369);
+            dataLayoutControl1.Size = new Size(760, 369);
             dataLayoutControl1.TabIndex = 0;
             dataLayoutControl1.Text = "dataLayoutControl1";
             dataLayoutControl1.FieldRetrieving += dataLayoutControl1_FieldRetrieving;
@@ -446,6 +451,19 @@ namespace Foxoft
             PersonalTypeCodeLookUpEdit.StyleController = dataLayoutControl1;
             PersonalTypeCodeLookUpEdit.TabIndex = 21;
             // 
+            // pictureEdit
+            // 
+            pictureEdit.Location = new Point(572, 12);
+            pictureEdit.Name = "pictureEdit";
+            pictureEdit.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+            pictureEdit.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
+            pictureEdit.Size = new Size(176, 209);
+            pictureEdit.StyleController = dataLayoutControl1;
+            pictureEdit.TabIndex = 22;
+            pictureEdit.PopupMenuShowing += pictureEdit_PopupMenuShowing;
+            pictureEdit.EditValueChanged += pictureEdit_EditValueChanged;
+            pictureEdit.DoubleClick += pictureEdit_DoubleClick;
+            // 
             // barManager1
             // 
             barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] { bar1, bar3 });
@@ -538,7 +556,7 @@ namespace Foxoft
             barDockControlTop.Dock = DockStyle.Top;
             barDockControlTop.Location = new Point(0, 0);
             barDockControlTop.Manager = barManager1;
-            barDockControlTop.Size = new Size(604, 0);
+            barDockControlTop.Size = new Size(760, 0);
             // 
             // barDockControlBottom
             // 
@@ -546,7 +564,7 @@ namespace Foxoft
             barDockControlBottom.Dock = DockStyle.Bottom;
             barDockControlBottom.Location = new Point(0, 369);
             barDockControlBottom.Manager = barManager1;
-            barDockControlBottom.Size = new Size(604, 61);
+            barDockControlBottom.Size = new Size(760, 61);
             // 
             // barDockControlLeft
             // 
@@ -560,7 +578,7 @@ namespace Foxoft
             // 
             barDockControlRight.CausesValidation = false;
             barDockControlRight.Dock = DockStyle.Right;
-            barDockControlRight.Location = new Point(604, 0);
+            barDockControlRight.Location = new Point(760, 0);
             barDockControlRight.Manager = barManager1;
             barDockControlRight.Size = new Size(0, 369);
             // 
@@ -579,7 +597,7 @@ namespace Foxoft
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { autoGeneratedGroup0 });
             Root.Name = "Root";
-            Root.Size = new Size(604, 369);
+            Root.Size = new Size(760, 369);
             Root.TextVisible = false;
             // 
             // autoGeneratedGroup0
@@ -587,10 +605,10 @@ namespace Foxoft
             autoGeneratedGroup0.AllowDrawBackground = false;
             autoGeneratedGroup0.CustomizationFormText = "autoGeneratedGroup0";
             autoGeneratedGroup0.GroupBordersVisible = false;
-            autoGeneratedGroup0.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForCurrAccCode, layoutControlGroup3, layoutControlGroup2, ItemForCurrAccTypeCode, layoutControlItem1, layoutControlItem2, emptySpaceItem1, ItemForStoreCode, ItemForDataLanguageCode, ItemForPersonalTypeCode, ItemForCurrAccDesc });
+            autoGeneratedGroup0.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForCurrAccCode, layoutControlGroup3, layoutControlGroup2, ItemForCurrAccTypeCode, layoutControlItem1, layoutControlItem2, emptySpaceItem1, ItemForStoreCode, ItemForDataLanguageCode, ItemForPersonalTypeCode, ItemForCurrAccDesc, ItemForPicture });
             autoGeneratedGroup0.Location = new Point(0, 0);
             autoGeneratedGroup0.Name = "autoGeneratedGroup0";
-            autoGeneratedGroup0.Size = new Size(584, 349);
+            autoGeneratedGroup0.Size = new Size(740, 349);
             // 
             // ItemForCurrAccCode
             // 
@@ -598,7 +616,7 @@ namespace Foxoft
             ItemForCurrAccCode.ControlAlignment = ContentAlignment.TopLeft;
             ItemForCurrAccCode.Location = new Point(0, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            ItemForCurrAccCode.Size = new Size(291, 24);
+            ItemForCurrAccCode.Size = new Size(280, 24);
             ItemForCurrAccCode.TextSize = new Size(109, 13);
             // 
             // layoutControlGroup3
@@ -607,16 +625,16 @@ namespace Foxoft
             layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForIsVip, ItemForBonusCardNum, ItemForCreditLimit, ItemForIsDisabled });
             layoutControlGroup3.Location = new Point(0, 213);
             layoutControlGroup3.Name = "layoutControlGroup3";
-            layoutControlGroup3.Size = new Size(584, 117);
+            layoutControlGroup3.Size = new Size(740, 117);
             layoutControlGroup3.Text = Resources.Form_CurrAcc_Group_Extra;
             // 
             // ItemForIsVip
             // 
             ItemForIsVip.Control = IsVipCheckEdit;
             ItemForIsVip.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForIsVip.Location = new Point(279, 24);
+            ItemForIsVip.Location = new Point(358, 24);
             ItemForIsVip.Name = "ItemForIsVip";
-            ItemForIsVip.Size = new Size(281, 24);
+            ItemForIsVip.Size = new Size(358, 24);
             ItemForIsVip.TextVisible = false;
             // 
             // ItemForBonusCardNum
@@ -625,16 +643,16 @@ namespace Foxoft
             ItemForBonusCardNum.ControlAlignment = ContentAlignment.TopLeft;
             ItemForBonusCardNum.Location = new Point(0, 0);
             ItemForBonusCardNum.Name = "ItemForBonusCardNum";
-            ItemForBonusCardNum.Size = new Size(279, 24);
+            ItemForBonusCardNum.Size = new Size(358, 24);
             ItemForBonusCardNum.TextSize = new Size(109, 13);
             // 
             // ItemForCreditLimit
             // 
             ItemForCreditLimit.Control = CreditLimitTextEdit;
             ItemForCreditLimit.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForCreditLimit.Location = new Point(279, 0);
+            ItemForCreditLimit.Location = new Point(358, 0);
             ItemForCreditLimit.Name = "ItemForCreditLimit";
-            ItemForCreditLimit.Size = new Size(281, 24);
+            ItemForCreditLimit.Size = new Size(358, 24);
             ItemForCreditLimit.TextSize = new Size(109, 13);
             // 
             // ItemForIsDisabled
@@ -643,7 +661,7 @@ namespace Foxoft
             ItemForIsDisabled.ControlAlignment = ContentAlignment.TopLeft;
             ItemForIsDisabled.Location = new Point(0, 24);
             ItemForIsDisabled.Name = "ItemForIsDisabled";
-            ItemForIsDisabled.Size = new Size(279, 24);
+            ItemForIsDisabled.Size = new Size(358, 24);
             ItemForIsDisabled.TextVisible = false;
             // 
             // layoutControlGroup2
@@ -652,16 +670,16 @@ namespace Foxoft
             layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForAddress, ItemForFirstName, ItemForLastName, ItemForFatherName, ItemForPhoneNum, ItemForBirthDate, ItemForIdentityNum, ItemForTaxNum });
             layoutControlGroup2.Location = new Point(0, 72);
             layoutControlGroup2.Name = "layoutControlGroup2";
-            layoutControlGroup2.Size = new Size(584, 141);
+            layoutControlGroup2.Size = new Size(560, 141);
             layoutControlGroup2.Text = Resources.Form_CurrAcc_Group_Personal;
             // 
             // ItemForAddress
             // 
             ItemForAddress.Control = AddressTextEdit;
             ItemForAddress.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForAddress.Location = new Point(279, 72);
+            ItemForAddress.Location = new Point(268, 72);
             ItemForAddress.Name = "ItemForAddress";
-            ItemForAddress.Size = new Size(281, 24);
+            ItemForAddress.Size = new Size(268, 24);
             ItemForAddress.TextSize = new Size(109, 13);
             // 
             // ItemForFirstName
@@ -670,7 +688,7 @@ namespace Foxoft
             ItemForFirstName.ControlAlignment = ContentAlignment.TopLeft;
             ItemForFirstName.Location = new Point(0, 0);
             ItemForFirstName.Name = "ItemForFirstName";
-            ItemForFirstName.Size = new Size(279, 24);
+            ItemForFirstName.Size = new Size(268, 24);
             ItemForFirstName.TextSize = new Size(109, 13);
             // 
             // ItemForLastName
@@ -679,7 +697,7 @@ namespace Foxoft
             ItemForLastName.ControlAlignment = ContentAlignment.TopLeft;
             ItemForLastName.Location = new Point(0, 24);
             ItemForLastName.Name = "ItemForLastName";
-            ItemForLastName.Size = new Size(279, 24);
+            ItemForLastName.Size = new Size(268, 24);
             ItemForLastName.TextSize = new Size(109, 13);
             // 
             // ItemForFatherName
@@ -688,7 +706,7 @@ namespace Foxoft
             ItemForFatherName.ControlAlignment = ContentAlignment.TopLeft;
             ItemForFatherName.Location = new Point(0, 48);
             ItemForFatherName.Name = "ItemForFatherName";
-            ItemForFatherName.Size = new Size(279, 24);
+            ItemForFatherName.Size = new Size(268, 24);
             ItemForFatherName.TextSize = new Size(109, 13);
             // 
             // ItemForPhoneNum
@@ -697,34 +715,34 @@ namespace Foxoft
             ItemForPhoneNum.ControlAlignment = ContentAlignment.TopLeft;
             ItemForPhoneNum.Location = new Point(0, 72);
             ItemForPhoneNum.Name = "ItemForPhoneNum";
-            ItemForPhoneNum.Size = new Size(279, 24);
+            ItemForPhoneNum.Size = new Size(268, 24);
             ItemForPhoneNum.TextSize = new Size(109, 13);
             // 
             // ItemForBirthDate
             // 
             ItemForBirthDate.Control = BirthDateDateEdit;
             ItemForBirthDate.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForBirthDate.Location = new Point(279, 0);
+            ItemForBirthDate.Location = new Point(268, 0);
             ItemForBirthDate.Name = "ItemForBirthDate";
-            ItemForBirthDate.Size = new Size(281, 24);
+            ItemForBirthDate.Size = new Size(268, 24);
             ItemForBirthDate.TextSize = new Size(109, 13);
             // 
             // ItemForIdentityNum
             // 
             ItemForIdentityNum.Control = IdentityNumTextEdit;
             ItemForIdentityNum.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForIdentityNum.Location = new Point(279, 24);
+            ItemForIdentityNum.Location = new Point(268, 24);
             ItemForIdentityNum.Name = "ItemForIdentityNum";
-            ItemForIdentityNum.Size = new Size(281, 24);
+            ItemForIdentityNum.Size = new Size(268, 24);
             ItemForIdentityNum.TextSize = new Size(109, 13);
             // 
             // ItemForTaxNum
             // 
             ItemForTaxNum.Control = TaxNumTextEdit;
             ItemForTaxNum.ControlAlignment = ContentAlignment.TopLeft;
-            ItemForTaxNum.Location = new Point(279, 48);
+            ItemForTaxNum.Location = new Point(268, 48);
             ItemForTaxNum.Name = "ItemForTaxNum";
-            ItemForTaxNum.Size = new Size(281, 24);
+            ItemForTaxNum.Size = new Size(268, 24);
             ItemForTaxNum.TextSize = new Size(109, 13);
             // 
             // ItemForCurrAccTypeCode
@@ -733,14 +751,14 @@ namespace Foxoft
             ItemForCurrAccTypeCode.ControlAlignment = ContentAlignment.TopLeft;
             ItemForCurrAccTypeCode.Location = new Point(0, 24);
             ItemForCurrAccTypeCode.Name = "ItemForCurrAccTypeCode";
-            ItemForCurrAccTypeCode.Size = new Size(291, 24);
+            ItemForCurrAccTypeCode.Size = new Size(280, 24);
             ItemForCurrAccTypeCode.TextSize = new Size(109, 13);
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Ok;
             layoutControlItem1.ControlAlignment = ContentAlignment.TopLeft;
-            layoutControlItem1.Location = new Point(503, 306);
+            layoutControlItem1.Location = new Point(659, 306);
             layoutControlItem1.MinSize = new Size(78, 26);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(81, 43);
@@ -751,7 +769,7 @@ namespace Foxoft
             // 
             layoutControlItem2.Control = btn_Cancel;
             layoutControlItem2.ControlAlignment = ContentAlignment.TopLeft;
-            layoutControlItem2.Location = new Point(423, 306);
+            layoutControlItem2.Location = new Point(579, 306);
             layoutControlItem2.MinSize = new Size(78, 26);
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(80, 43);
@@ -762,30 +780,30 @@ namespace Foxoft
             // 
             emptySpaceItem1.Location = new Point(0, 306);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(423, 43);
+            emptySpaceItem1.Size = new Size(579, 43);
             // 
             // ItemForStoreCode
             // 
             ItemForStoreCode.Control = StoreCodeLookUpEdit;
-            ItemForStoreCode.Location = new Point(291, 0);
+            ItemForStoreCode.Location = new Point(280, 0);
             ItemForStoreCode.Name = "ItemForStoreCode";
-            ItemForStoreCode.Size = new Size(293, 24);
+            ItemForStoreCode.Size = new Size(280, 24);
             ItemForStoreCode.TextSize = new Size(109, 13);
             // 
             // ItemForDataLanguageCode
             // 
             ItemForDataLanguageCode.Control = DataLanguageCodeTextEdit;
-            ItemForDataLanguageCode.Location = new Point(291, 48);
+            ItemForDataLanguageCode.Location = new Point(280, 48);
             ItemForDataLanguageCode.Name = "ItemForDataLanguageCode";
-            ItemForDataLanguageCode.Size = new Size(293, 24);
+            ItemForDataLanguageCode.Size = new Size(280, 24);
             ItemForDataLanguageCode.TextSize = new Size(109, 13);
             // 
             // ItemForPersonalTypeCode
             // 
             ItemForPersonalTypeCode.Control = PersonalTypeCodeLookUpEdit;
-            ItemForPersonalTypeCode.Location = new Point(291, 24);
+            ItemForPersonalTypeCode.Location = new Point(280, 24);
             ItemForPersonalTypeCode.Name = "ItemForPersonalTypeCode";
-            ItemForPersonalTypeCode.Size = new Size(293, 24);
+            ItemForPersonalTypeCode.Size = new Size(280, 24);
             ItemForPersonalTypeCode.TextSize = new Size(109, 13);
             // 
             // ItemForCurrAccDesc
@@ -793,8 +811,18 @@ namespace Foxoft
             ItemForCurrAccDesc.Control = CurrAccDescTextEdit;
             ItemForCurrAccDesc.Location = new Point(0, 48);
             ItemForCurrAccDesc.Name = "ItemForCurrAccDesc";
-            ItemForCurrAccDesc.Size = new Size(291, 24);
+            ItemForCurrAccDesc.Size = new Size(280, 24);
             ItemForCurrAccDesc.TextSize = new Size(109, 13);
+            // 
+            // ItemForPicture
+            // 
+            ItemForPicture.Control = pictureEdit;
+            ItemForPicture.Location = new Point(560, 0);
+            ItemForPicture.MinSize = new Size(24, 24);
+            ItemForPicture.Name = "ItemForPicture";
+            ItemForPicture.Size = new Size(180, 213);
+            ItemForPicture.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            ItemForPicture.TextVisible = false;
             // 
             // bindingSource1
             // 
@@ -809,7 +837,7 @@ namespace Foxoft
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.EnableAllowFocusChange;
-            ClientSize = new Size(604, 430);
+            ClientSize = new Size(760, 430);
             Controls.Add(dataLayoutControl1);
             Controls.Add(barDockControlLeft);
             Controls.Add(barDockControlRight);
@@ -841,6 +869,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)OfficeCodeLookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)StoreCodeLookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PersonalTypeCodeLookUpEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)barManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)barAndDockingController1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForOfficeCode).EndInit();
@@ -869,6 +898,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForDataLanguageCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPersonalTypeCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccDesc).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPicture).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
             ResumeLayout(false);
@@ -940,6 +970,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
         private DevExpress.XtraEditors.LookUpEdit PersonalTypeCodeLookUpEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPersonalTypeCode;
+        private DevExpress.XtraEditors.PictureEdit pictureEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForPicture;
         private DevExpress.XtraBars.BarButtonItem BBI_HumanResources;
     }
 }

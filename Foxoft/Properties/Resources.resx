@@ -2238,6 +2238,12 @@
   <data name="Form_CurrAcc_Message_SaveFirst" xml:space="preserve">
     <value>Please save the current account first before setting a password.</value>
   </data>
+  <data name="Form_CurrAcc_OpenFileDialog_Title" xml:space="preserve">
+    <value>Select image for Foxoft.</value>
+  </data>
+  <data name="Form_CurrAcc_Message_SaveImageError" xml:space="preserve">
+    <value>Error code 154485: {0}</value>
+  </data>
   <data name="Form_CurrAccPassword_Title" xml:space="preserve">
     <value>Set User Password</value>
   </data>
