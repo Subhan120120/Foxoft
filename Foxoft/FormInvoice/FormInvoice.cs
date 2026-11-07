@@ -1998,6 +1998,32 @@ namespace Foxoft
             }
         }
 
+        /// <summary>Satıcı bonusunu sinxronlaşdırır; xəta satışın saxlanmasını bloklamır, yalnız xəbərdarlıq göstərilir.</summary>
+        private void SyncSalesBonusSafe(Guid invoiceHeaderId)
+        {
+            try
+            {
+                new SalesBonusService().SyncInvoice(invoiceHeaderId, Authorization.CurrAccCode);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, Resources.Entity_SalesBonusTxn, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        /// <summary>Faktura silinməzdən əvvəl ona aid satıcı bonuslarını mənfi sətirlərlə ləğv edir.</summary>
+        private void ReverseSalesBonusSafe(Guid invoiceHeaderId)
+        {
+            try
+            {
+                new SalesBonusService().ReverseInvoiceBeforeDelete(invoiceHeaderId, Authorization.CurrAccCode);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, Resources.Entity_SalesBonusTxn, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         private bool SaveInvoice()
         {
             if (trInvoiceHeader is null)
@@ -2067,6 +2093,8 @@ namespace Foxoft
 
             var result = _loyaltyService.SyncInvoiceEarn(trInvoiceHeader);
             txt_LoyaltyEarn.EditValue = result.EarnAmount;
+
+            SyncSalesBonusSafe(trInvoiceHeader.InvoiceHeaderId);
 
             if (IsInstallmentProcess())
             {
@@ -2643,6 +2671,8 @@ namespace Foxoft
             {
                 efMethods.DeleteInstallmentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
             }
+
+            ReverseSalesBonusSafe(trInvoiceHeader.InvoiceHeaderId);
 
             efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
 
@@ -5560,6 +5590,8 @@ namespace Foxoft
             {
                 efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
                 UpdatePaidLabels();
+
+                SyncSalesBonusSafe(trInvoiceHeader.InvoiceHeaderId); // ödənişə bağlı bonus geri alınır
             }
         }
 

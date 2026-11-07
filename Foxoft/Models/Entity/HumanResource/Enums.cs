@@ -45,4 +45,14 @@ namespace Foxoft.Models
         Deduction = 6,
         Other = 99
     }
+
+    /// <summary>
+    /// Əməkhaqqı sətrinin mənbəyi. SalesBonus sətirləri satıcı bonus jurnalından (TrSalesBonusTxns) avtomatik formalaşır.
+    /// </summary>
+    public enum PayrollLineSource : byte
+    {
+        Manual = 0,
+        Contract = 1,
+        SalesBonus = 2
+    }
 }

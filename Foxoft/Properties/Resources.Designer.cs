@@ -20983,5 +20983,707 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_EmployeeContract_InitialTermsDesc", resourceCulture);
             }
         }
+
+        public static string ERP_ACE_SalesBonusPlans {
+            get {
+                return ResourceManager.GetString("ERP_ACE_SalesBonusPlans", resourceCulture);
+            }
+        }
+
+        public static string ERP_ACE_SalesBonusAssignments {
+            get {
+                return ResourceManager.GetString("ERP_ACE_SalesBonusAssignments", resourceCulture);
+            }
+        }
+
+        public static string ERP_ACE_SalesBonusTxns {
+            get {
+                return ResourceManager.GetString("ERP_ACE_SalesBonusTxns", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_PlanName {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_PlanName", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_Description {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_Description", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_CalcMethod {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_CalcMethod", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_TriggerType {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_TriggerType", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_TierMode {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_TierMode", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_PeriodType {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_PeriodType", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_Rate {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_Rate", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_FixedAmount {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_FixedAmount", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_TargetAmount {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_TargetAmount", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_TargetMinAchievementPercent {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_TargetMinAchievementPercent", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_MinBaseAmount {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_MinBaseAmount", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_MaxBonusAmount {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_MaxBonusAmount", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_ProcessCodes {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_ProcessCodes", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_IsActive {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_IsActive", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlan_RateOverride {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlan_RateOverride", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlanTier {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlanTier", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlanTier_FromValue {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlanTier_FromValue", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlanTier_ToValue {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlanTier_ToValue", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlanTier_Rate {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlanTier_Rate", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusPlanTier_FixedAmount {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusPlanTier_FixedAmount", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusAssignment {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusAssignment", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusAssignment_PlanId {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusAssignment_PlanId", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusAssignment_SalesPersonCode {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusAssignment_SalesPersonCode", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusAssignment_StartDate {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusAssignment_StartDate", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusAssignment_EndDate {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusAssignment_EndDate", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusAssignment_TargetAmount {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusAssignment_TargetAmount", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusAssignment_IsActive {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusAssignment_IsActive", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusAssignment_Note {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusAssignment_Note", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_TxnType {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_TxnType", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_DocumentDate {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_DocumentDate", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_Period {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_Period", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_BaseAmount {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_BaseAmount", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_Rate {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_Rate", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_Amount {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_Amount", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_InvoiceDocumentNumber {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_InvoiceDocumentNumber", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_PaymentDocumentNumber {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_PaymentDocumentNumber", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_PayrollStatus {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_PayrollStatus", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_PayrollIncluded {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_PayrollIncluded", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_PayrollPending {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_PayrollPending", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_Note {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_Note", resourceCulture);
+            }
+        }
+
+        public static string Entity_SalesBonusTxn_CalcDetails {
+            get {
+                return ResourceManager.GetString("Entity_SalesBonusTxn_CalcDetails", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusCalcMethod_SalesAmountPercent {
+            get {
+                return ResourceManager.GetString("Enum_BonusCalcMethod_SalesAmountPercent", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusCalcMethod_GrossProfitPercent {
+            get {
+                return ResourceManager.GetString("Enum_BonusCalcMethod_GrossProfitPercent", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusCalcMethod_PerUnitSold {
+            get {
+                return ResourceManager.GetString("Enum_BonusCalcMethod_PerUnitSold", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusCalcMethod_SalesTargetAchievement {
+            get {
+                return ResourceManager.GetString("Enum_BonusCalcMethod_SalesTargetAchievement", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusCalcMethod_CollectionPercent {
+            get {
+                return ResourceManager.GetString("Enum_BonusCalcMethod_CollectionPercent", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusCalcMethod_FixedAmount {
+            get {
+                return ResourceManager.GetString("Enum_BonusCalcMethod_FixedAmount", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusCalcMethod_TieredSalesPercent {
+            get {
+                return ResourceManager.GetString("Enum_BonusCalcMethod_TieredSalesPercent", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusTierMode_Progressive {
+            get {
+                return ResourceManager.GetString("Enum_BonusTierMode_Progressive", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusTierMode_Retroactive {
+            get {
+                return ResourceManager.GetString("Enum_BonusTierMode_Retroactive", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusTriggerType_OnInvoiceConfirm {
+            get {
+                return ResourceManager.GetString("Enum_BonusTriggerType_OnInvoiceConfirm", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusTriggerType_OnCustomerPayment {
+            get {
+                return ResourceManager.GetString("Enum_BonusTriggerType_OnCustomerPayment", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusTriggerType_Manual {
+            get {
+                return ResourceManager.GetString("Enum_BonusTriggerType_Manual", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusPeriodType_Monthly {
+            get {
+                return ResourceManager.GetString("Enum_BonusPeriodType_Monthly", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusPeriodType_Quarterly {
+            get {
+                return ResourceManager.GetString("Enum_BonusPeriodType_Quarterly", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusPeriodType_Yearly {
+            get {
+                return ResourceManager.GetString("Enum_BonusPeriodType_Yearly", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusTxnType_Earn {
+            get {
+                return ResourceManager.GetString("Enum_BonusTxnType_Earn", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusTxnType_Reverse {
+            get {
+                return ResourceManager.GetString("Enum_BonusTxnType_Reverse", resourceCulture);
+            }
+        }
+
+        public static string Enum_BonusTxnType_Adjust {
+            get {
+                return ResourceManager.GetString("Enum_BonusTxnType_Adjust", resourceCulture);
+            }
+        }
+
+        public static string SalesBonus_Note_Invoice {
+            get {
+                return ResourceManager.GetString("SalesBonus_Note_Invoice", resourceCulture);
+            }
+        }
+
+        public static string SalesBonus_Note_Return {
+            get {
+                return ResourceManager.GetString("SalesBonus_Note_Return", resourceCulture);
+            }
+        }
+
+        public static string SalesBonus_Note_Payment {
+            get {
+                return ResourceManager.GetString("SalesBonus_Note_Payment", resourceCulture);
+            }
+        }
+
+        public static string SalesBonus_Note_InvoiceDeleted {
+            get {
+                return ResourceManager.GetString("SalesBonus_Note_InvoiceDeleted", resourceCulture);
+            }
+        }
+
+        public static string SalesBonus_Note_Manual {
+            get {
+                return ResourceManager.GetString("SalesBonus_Note_Manual", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanList_Caption {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanList_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanList_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanList_DeleteConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanList_AssignmentCount {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanList_AssignmentCount", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanList_HasTxns {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanList_HasTxns", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_Caption_New {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_Caption_New", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_Caption_Edit {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_Caption_Edit", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_TiersGroup {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_TiersGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_TierHint {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_TierHint", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_ProductsGroup {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_ProductsGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_CategoriesGroup {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_CategoriesGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_CalcMethodLocked {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_CalcMethodLocked", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_ProductExists {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_ProductExists", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_CategoryExists {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_CategoryExists", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_TiersRequired {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_TiersRequired", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusPlanEdit_NameExists {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusPlanEdit_NameExists", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusAssignmentList_Caption {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusAssignmentList_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusAssignmentList_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusAssignmentList_DeleteConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusAssignmentEdit_Caption_New {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusAssignmentEdit_Caption_New", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusAssignmentEdit_Caption_Edit {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusAssignmentEdit_Caption_Edit", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusAssignmentEdit_Overlap {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusAssignmentEdit_Overlap", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusTxnList_Caption {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusTxnList_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusTxnList_Calculate {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusTxnList_Calculate", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusTxnList_Adjustment {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusTxnList_Adjustment", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusTxnList_Details {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusTxnList_Details", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusTxnList_OnlyPending {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusTxnList_OnlyPending", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusTxnList_DateFrom {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusTxnList_DateFrom", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusTxnList_DateTo {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusTxnList_DateTo", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusTxnDetails_Caption {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusTxnDetails_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_Caption {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_Year {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_Year", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_Month {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_Month", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_IncludeAutoPlans {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_IncludeAutoPlans", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_Scope {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_Scope", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_Expected {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_Expected", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_Posted {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_Posted", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_Delta {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_Delta", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_NoChanges {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_NoChanges", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_PostConfirm {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_PostConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_PostDone {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_PostDone", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusCalc_Post {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusCalc_Post", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusAdjustment_Caption {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusAdjustment_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusAdjustment_AmountRequired {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusAdjustment_AmountRequired", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusAdjustment_NoteRequired {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusAdjustment_NoteRequired", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollWizard_SalesBonus {
+            get {
+                return ResourceManager.GetString("Form_PayrollWizard_SalesBonus", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollEdit_LoadSalesBonus {
+            get {
+                return ResourceManager.GetString("Form_PayrollEdit_LoadSalesBonus", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollEdit_SalesBonusLineDesc {
+            get {
+                return ResourceManager.GetString("Form_PayrollEdit_SalesBonusLineDesc", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollEdit_NoSalesBonus {
+            get {
+                return ResourceManager.GetString("Form_PayrollEdit_NoSalesBonus", resourceCulture);
+            }
+        }
+
+        public static string Form_PayrollEdit_SalesBonusLoaded {
+            get {
+                return ResourceManager.GetString("Form_PayrollEdit_SalesBonusLoaded", resourceCulture);
+            }
+        }
     }
 }

@@ -764,6 +764,8 @@ namespace Foxoft
                 trInvoiceHeader.IsCompleted = true;
                 dbContext.SaveChanges();
 
+                SyncSalesBonusSafe(completedInvoiceId);
+
                 CalcPaidAmount();
 
                 if (Settings.Default.AppSetting?.AutoPrint == true)
@@ -1492,6 +1494,8 @@ namespace Foxoft
 
                 if (dialogResult == DialogResult.Yes)
                 {
+                    ReverseSalesBonusSafe(trInvoiceHeader.InvoiceHeaderId);
+
                     int result = efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
 
                     if (result >= 0)
@@ -2304,6 +2308,32 @@ namespace Foxoft
             }
         }
 
+        /// <summary>Satıcı bonusunu sinxronlaşdırır; xəta satışı bloklamır, yalnız xəbərdarlıq göstərilir.</summary>
+        private void SyncSalesBonusSafe(Guid invoiceHeaderId)
+        {
+            try
+            {
+                new SalesBonusService().SyncInvoice(invoiceHeaderId, Authorization.CurrAccCode);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, Resources.Entity_SalesBonusTxn, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        /// <summary>Çek ləğv edilməzdən əvvəl ona aid satıcı bonuslarını mənfi sətirlərlə ləğv edir.</summary>
+        private void ReverseSalesBonusSafe(Guid invoiceHeaderId)
+        {
+            try
+            {
+                new SalesBonusService().ReverseInvoiceBeforeDelete(invoiceHeaderId, Authorization.CurrAccCode);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, Resources.Entity_SalesBonusTxn, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         private bool SaveInvoice()
         {
             if (trInvoiceHeader is null)
@@ -2353,6 +2383,9 @@ namespace Foxoft
         {
             Guid completedInvoiceId = trInvoiceHeader?.InvoiceHeaderId ?? Guid.Empty;
             efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+
+            if (completedInvoiceId != Guid.Empty)
+                SyncSalesBonusSafe(completedInvoiceId);
 
             if (gV_InvoiceLine.DataRowCount > 0 && Settings.Default.AppSetting?.AutoPrint == true && completedInvoiceId != Guid.Empty)
             {

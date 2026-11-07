@@ -1,11 +1,4 @@
 
-
-
-
-
-
-
-
 select Price
 , ProductDesc
 , CurrencyCode
@@ -26,7 +19,7 @@ select Price = isnull((
     where l.PayrollHeaderId = prh.Id
       and l.PayrollItemType in (1, 2, 3)
 ), 0)
-, ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)
+, ProductDesc = N'Əməkhaqqı'
 , CurrencyCode = 'AZN'
 , NetAmountLoc = isnull((
     select sum(l.AmountLoc)

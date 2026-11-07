@@ -543,6 +543,16 @@ namespace Foxoft
 
             CreateHeaderAndInsertLines();
 
+            // Satıcı bonusu: "Müştəri ödəniş etdikdə" rejimli planlar üçün ödənilmiş hissəyə görə bonus açılır
+            try
+            {
+                new SalesBonusService().SyncPayment(trPaymentHeader.PaymentHeaderId, Authorization.CurrAccCode);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, Resources.Entity_SalesBonusTxn, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
             // bonus varsa -> Redeem/Refund txn sync
             if (trPaymentLineBonus.PaymentLoc > 0 && HasInvoice() && trInvoiceHeader?.LoyaltyCardId != null)
             {

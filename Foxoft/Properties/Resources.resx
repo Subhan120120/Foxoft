@@ -7224,4 +7224,355 @@ Google account: {1}</value>
   <data name="Form_EmployeeContract_InitialTermsDesc" xml:space="preserve">
     <value>Initial contract compensation terms</value>
   </data>
+  <data name="ERP_ACE_SalesBonusPlans" xml:space="preserve">
+    <value>Sales Bonus Plans</value>
+  </data>
+  <data name="ERP_ACE_SalesBonusAssignments" xml:space="preserve">
+    <value>Bonus Plan Assignments</value>
+  </data>
+  <data name="ERP_ACE_SalesBonusTxns" xml:space="preserve">
+    <value>Sales Bonus Ledger</value>
+  </data>
+  <data name="Entity_SalesBonusPlan" xml:space="preserve">
+    <value>Sales Bonus Plan</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_PlanName" xml:space="preserve">
+    <value>Plan Name</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_CalcMethod" xml:space="preserve">
+    <value>Calculation Method</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_TriggerType" xml:space="preserve">
+    <value>When to Calculate</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_TierMode" xml:space="preserve">
+    <value>Tier Mode</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_PeriodType" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_Rate" xml:space="preserve">
+    <value>Rate (% or amount per unit)</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_FixedAmount" xml:space="preserve">
+    <value>Fixed Amount</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_TargetAmount" xml:space="preserve">
+    <value>Sales Target (plan)</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_TargetMinAchievementPercent" xml:space="preserve">
+    <value>Minimum Achievement %</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_MinBaseAmount" xml:space="preserve">
+    <value>Minimum Base Amount</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_MaxBonusAmount" xml:space="preserve">
+    <value>Maximum Bonus (cap)</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_ProcessCodes" xml:space="preserve">
+    <value>Sales Processes (RS,WS,IS)</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_IsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Entity_SalesBonusPlan_RateOverride" xml:space="preserve">
+    <value>Rate Override</value>
+  </data>
+  <data name="Entity_SalesBonusPlanTier" xml:space="preserve">
+    <value>Tier</value>
+  </data>
+  <data name="Entity_SalesBonusPlanTier_FromValue" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Entity_SalesBonusPlanTier_ToValue" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Entity_SalesBonusPlanTier_Rate" xml:space="preserve">
+    <value>Rate %</value>
+  </data>
+  <data name="Entity_SalesBonusPlanTier_FixedAmount" xml:space="preserve">
+    <value>Fixed Amount</value>
+  </data>
+  <data name="Entity_SalesBonusAssignment" xml:space="preserve">
+    <value>Bonus Plan Assignment</value>
+  </data>
+  <data name="Entity_SalesBonusAssignment_PlanId" xml:space="preserve">
+    <value>Bonus Plan</value>
+  </data>
+  <data name="Entity_SalesBonusAssignment_SalesPersonCode" xml:space="preserve">
+    <value>Salesperson</value>
+  </data>
+  <data name="Entity_SalesBonusAssignment_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="Entity_SalesBonusAssignment_EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="Entity_SalesBonusAssignment_TargetAmount" xml:space="preserve">
+    <value>Personal Target (overrides plan)</value>
+  </data>
+  <data name="Entity_SalesBonusAssignment_IsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Entity_SalesBonusAssignment_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Entity_SalesBonusTxn" xml:space="preserve">
+    <value>Sales Bonus Transaction</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_TxnType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_DocumentDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_Period" xml:space="preserve">
+    <value>Bonus Period</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_BaseAmount" xml:space="preserve">
+    <value>Base Amount</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_Rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_Amount" xml:space="preserve">
+    <value>Bonus Amount</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_InvoiceDocumentNumber" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_PaymentDocumentNumber" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_PayrollStatus" xml:space="preserve">
+    <value>Payroll</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_PayrollIncluded" xml:space="preserve">
+    <value>Included in payroll</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_PayrollPending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Entity_SalesBonusTxn_CalcDetails" xml:space="preserve">
+    <value>Calculation Details</value>
+  </data>
+  <data name="Enum_BonusCalcMethod_SalesAmountPercent" xml:space="preserve">
+    <value>Percent of sales amount</value>
+  </data>
+  <data name="Enum_BonusCalcMethod_GrossProfitPercent" xml:space="preserve">
+    <value>Percent of gross profit</value>
+  </data>
+  <data name="Enum_BonusCalcMethod_PerUnitSold" xml:space="preserve">
+    <value>Per unit sold</value>
+  </data>
+  <data name="Enum_BonusCalcMethod_SalesTargetAchievement" xml:space="preserve">
+    <value>Sales target achievement</value>
+  </data>
+  <data name="Enum_BonusCalcMethod_CollectionPercent" xml:space="preserve">
+    <value>Percent of collected payments</value>
+  </data>
+  <data name="Enum_BonusCalcMethod_FixedAmount" xml:space="preserve">
+    <value>Fixed bonus</value>
+  </data>
+  <data name="Enum_BonusCalcMethod_TieredSalesPercent" xml:space="preserve">
+    <value>Tiered percent by sales interval</value>
+  </data>
+  <data name="Enum_BonusTierMode_Progressive" xml:space="preserve">
+    <value>Progressive (each tier at its own rate)</value>
+  </data>
+  <data name="Enum_BonusTierMode_Retroactive" xml:space="preserve">
+    <value>Retroactive (last tier rate applied to whole amount)</value>
+  </data>
+  <data name="Enum_BonusTriggerType_OnInvoiceConfirm" xml:space="preserve">
+    <value>When invoice is confirmed</value>
+  </data>
+  <data name="Enum_BonusTriggerType_OnCustomerPayment" xml:space="preserve">
+    <value>When customer pays</value>
+  </data>
+  <data name="Enum_BonusTriggerType_Manual" xml:space="preserve">
+    <value>Manually</value>
+  </data>
+  <data name="Enum_BonusPeriodType_Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Enum_BonusPeriodType_Quarterly" xml:space="preserve">
+    <value>Quarterly</value>
+  </data>
+  <data name="Enum_BonusPeriodType_Yearly" xml:space="preserve">
+    <value>Yearly</value>
+  </data>
+  <data name="Enum_BonusTxnType_Earn" xml:space="preserve">
+    <value>Earned</value>
+  </data>
+  <data name="Enum_BonusTxnType_Reverse" xml:space="preserve">
+    <value>Reversed</value>
+  </data>
+  <data name="Enum_BonusTxnType_Adjust" xml:space="preserve">
+    <value>Manual adjustment</value>
+  </data>
+  <data name="SalesBonus_Note_Invoice" xml:space="preserve">
+    <value>Invoice {0}</value>
+  </data>
+  <data name="SalesBonus_Note_Return" xml:space="preserve">
+    <value>Return {0}</value>
+  </data>
+  <data name="SalesBonus_Note_Payment" xml:space="preserve">
+    <value>Payment {0}</value>
+  </data>
+  <data name="SalesBonus_Note_InvoiceDeleted" xml:space="preserve">
+    <value>Invoice deleted: {0}</value>
+  </data>
+  <data name="SalesBonus_Note_Manual" xml:space="preserve">
+    <value>Manual calculation</value>
+  </data>
+  <data name="Form_SalesBonusPlanList_Caption" xml:space="preserve">
+    <value>Sales Bonus Plans</value>
+  </data>
+  <data name="Form_SalesBonusPlanList_DeleteConfirm" xml:space="preserve">
+    <value>Delete the selected bonus plan?</value>
+  </data>
+  <data name="Form_SalesBonusPlanList_AssignmentCount" xml:space="preserve">
+    <value>Assigned Salespersons</value>
+  </data>
+  <data name="Form_SalesBonusPlanList_HasTxns" xml:space="preserve">
+    <value>This plan has bonus transactions and cannot be deleted. Deactivate it instead.</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_Caption_New" xml:space="preserve">
+    <value>New Sales Bonus Plan</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_Caption_Edit" xml:space="preserve">
+    <value>Edit Sales Bonus Plan</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_TiersGroup" xml:space="preserve">
+    <value>Tiers / Target Bands</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_TierHint" xml:space="preserve">
+    <value>Sales tiers: From &lt; amount &lt;= To (e.g. 0-5000 = 1%, 5000-10000 = 2%). Target bands: From &lt;= achievement % &lt; To. Leave "To" empty for the last tier.</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_ProductsGroup" xml:space="preserve">
+    <value>Product Filter (empty = all products)</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_CategoriesGroup" xml:space="preserve">
+    <value>Category Filter (empty = all categories)</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_CalcMethodLocked" xml:space="preserve">
+    <value>The calculation method cannot be changed because bonus transactions already exist for this plan.</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_ProductExists" xml:space="preserve">
+    <value>This product is already in the list.</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_CategoryExists" xml:space="preserve">
+    <value>This category is already in the list.</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_TiersRequired" xml:space="preserve">
+    <value>At least one tier is required for this calculation method.</value>
+  </data>
+  <data name="Form_SalesBonusPlanEdit_NameExists" xml:space="preserve">
+    <value>A plan with this name already exists.</value>
+  </data>
+  <data name="Form_SalesBonusAssignmentList_Caption" xml:space="preserve">
+    <value>Bonus Plan Assignments</value>
+  </data>
+  <data name="Form_SalesBonusAssignmentList_DeleteConfirm" xml:space="preserve">
+    <value>Delete the selected assignment?</value>
+  </data>
+  <data name="Form_SalesBonusAssignmentEdit_Caption_New" xml:space="preserve">
+    <value>New Assignment</value>
+  </data>
+  <data name="Form_SalesBonusAssignmentEdit_Caption_Edit" xml:space="preserve">
+    <value>Edit Assignment</value>
+  </data>
+  <data name="Form_SalesBonusAssignmentEdit_Overlap" xml:space="preserve">
+    <value>This salesperson already has an overlapping active assignment for the same plan.</value>
+  </data>
+  <data name="Form_SalesBonusTxnList_Caption" xml:space="preserve">
+    <value>Sales Bonus Ledger</value>
+  </data>
+  <data name="Form_SalesBonusTxnList_Calculate" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
+  <data name="Form_SalesBonusTxnList_Adjustment" xml:space="preserve">
+    <value>Adjustment</value>
+  </data>
+  <data name="Form_SalesBonusTxnList_Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Form_SalesBonusTxnList_OnlyPending" xml:space="preserve">
+    <value>Only not yet in payroll</value>
+  </data>
+  <data name="Form_SalesBonusTxnList_DateFrom" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Form_SalesBonusTxnList_DateTo" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Form_SalesBonusTxnDetails_Caption" xml:space="preserve">
+    <value>Bonus Calculation Details</value>
+  </data>
+  <data name="Form_SalesBonusCalc_Caption" xml:space="preserve">
+    <value>Sales Bonus Calculation</value>
+  </data>
+  <data name="Form_SalesBonusCalc_Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="Form_SalesBonusCalc_Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Form_SalesBonusCalc_IncludeAutoPlans" xml:space="preserve">
+    <value>Also recalculate automatic plans</value>
+  </data>
+  <data name="Form_SalesBonusCalc_Scope" xml:space="preserve">
+    <value>Scope</value>
+  </data>
+  <data name="Form_SalesBonusCalc_Expected" xml:space="preserve">
+    <value>Calculated</value>
+  </data>
+  <data name="Form_SalesBonusCalc_Posted" xml:space="preserve">
+    <value>Already Posted</value>
+  </data>
+  <data name="Form_SalesBonusCalc_Delta" xml:space="preserve">
+    <value>Difference to Post</value>
+  </data>
+  <data name="Form_SalesBonusCalc_NoChanges" xml:space="preserve">
+    <value>No differences found. Nothing to post.</value>
+  </data>
+  <data name="Form_SalesBonusCalc_PostConfirm" xml:space="preserve">
+    <value>{0} transactions with a total of {1:n2} will be posted. Continue?</value>
+  </data>
+  <data name="Form_SalesBonusCalc_PostDone" xml:space="preserve">
+    <value>{0} transactions posted (total {1:n2}).</value>
+  </data>
+  <data name="Form_SalesBonusCalc_Post" xml:space="preserve">
+    <value>Post</value>
+  </data>
+  <data name="Form_SalesBonusAdjustment_Caption" xml:space="preserve">
+    <value>Manual Bonus Adjustment</value>
+  </data>
+  <data name="Form_SalesBonusAdjustment_AmountRequired" xml:space="preserve">
+    <value>Amount must be different from zero.</value>
+  </data>
+  <data name="Form_SalesBonusAdjustment_NoteRequired" xml:space="preserve">
+    <value>A note is required for manual adjustments.</value>
+  </data>
+  <data name="Form_PayrollWizard_SalesBonus" xml:space="preserve">
+    <value>Sales Bonus</value>
+  </data>
+  <data name="Form_PayrollEdit_LoadSalesBonus" xml:space="preserve">
+    <value>Load Sales Bonus</value>
+  </data>
+  <data name="Form_PayrollEdit_SalesBonusLineDesc" xml:space="preserve">
+    <value>Sales bonus (automatic)</value>
+  </data>
+  <data name="Form_PayrollEdit_NoSalesBonus" xml:space="preserve">
+    <value>No pending sales bonus found for this employee.</value>
+  </data>
+  <data name="Form_PayrollEdit_SalesBonusLoaded" xml:space="preserve">
+    <value>Sales bonus of {0:n2} loaded ({1} pending transactions).</value>
+  </data>
 </root>

@@ -47,6 +47,7 @@ namespace Foxoft
             repoCalcBaseSalary = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             colBonus = new DevExpress.XtraGrid.Columns.GridColumn();
             repoCalcBonus = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            colSalesBonus = new DevExpress.XtraGrid.Columns.GridColumn();
             colOvertime = new DevExpress.XtraGrid.Columns.GridColumn();
             repoCalcOvertime = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             colDeduction = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -258,7 +259,7 @@ namespace Foxoft
             // 
             // gridViewEmployees
             // 
-            gridViewEmployees.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colSelected, colCurrAccCode, colEmployeeName, colPositionName, colDepartmentName, colBaseSalary, colBonus, colOvertime, colDeduction, colGrossSalary, colNetSalary, colCurrencyCode, colExchangeRate, colNetSalaryLoc, colPreviousBalance, colBalanceAfterPayroll, colStatus });
+            gridViewEmployees.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colSelected, colCurrAccCode, colEmployeeName, colPositionName, colDepartmentName, colBaseSalary, colBonus, colSalesBonus, colOvertime, colDeduction, colGrossSalary, colNetSalary, colCurrencyCode, colExchangeRate, colNetSalaryLoc, colPreviousBalance, colBalanceAfterPayroll, colStatus });
             gridViewEmployees.GridControl = gridControlEmployees;
             gridViewEmployees.Name = "gridViewEmployees";
             gridViewEmployees.OptionsView.ColumnAutoWidth = false;
@@ -370,9 +371,22 @@ namespace Foxoft
             repoCalcBonus.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             repoCalcBonus.Mask.EditMask = "n2";
             repoCalcBonus.Name = "repoCalcBonus";
-            // 
+            //
+            // colSalesBonus
+            //
+            colSalesBonus.Caption = Properties.Resources.Form_PayrollWizard_SalesBonus;
+            colSalesBonus.DisplayFormat.FormatString = "n2";
+            colSalesBonus.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colSalesBonus.FieldName = "SalesBonus";
+            colSalesBonus.Name = "colSalesBonus";
+            colSalesBonus.OptionsColumn.AllowEdit = false;
+            colSalesBonus.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "SalesBonus", "{0:n2}") });
+            colSalesBonus.Visible = true;
+            colSalesBonus.VisibleIndex = 7;
+            colSalesBonus.Width = 100;
+            //
             // colOvertime
-            // 
+            //
             colOvertime.Caption = Properties.Resources.Entity_TrPayrollHeader_Overtime;
             colOvertime.ColumnEdit = repoCalcOvertime;
             colOvertime.DisplayFormat.FormatString = "n2";
@@ -1271,6 +1285,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcBaseSalary;
         private DevExpress.XtraGrid.Columns.GridColumn colBonus;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcBonus;
+        private DevExpress.XtraGrid.Columns.GridColumn colSalesBonus;
         private DevExpress.XtraGrid.Columns.GridColumn colOvertime;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcOvertime;
         private DevExpress.XtraGrid.Columns.GridColumn colDeduction;

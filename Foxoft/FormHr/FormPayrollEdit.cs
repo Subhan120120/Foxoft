@@ -190,7 +190,8 @@ namespace Foxoft
                             Amount = x.Amount,
                             CurrencyCode = x.CurrencyCode,
                             ExchangeRate = x.ExchangeRate,
-                            AmountLoc = x.AmountLoc
+                            AmountLoc = x.AmountLoc,
+                            LineSource = x.LineSource
                         }).ToList()
                 );
                 
@@ -259,6 +260,81 @@ namespace Foxoft
         private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
             ShowReportPreview();
+        }
+
+        /// <summary>
+        /// Satıcı bonus jurnalından bu işçinin hələ əməkhaqqına daxil edilməmiş bonuslarını
+        /// "Satış bonusu (avtomatik)" sətri kimi gətirir. Sətir saxlanılanda bonuslar sənədə bağlanır.
+        /// </summary>
+        private void bBI_LoadSalesBonus_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            string? currAccCode = btnEditEmployee.EditValue?.ToString();
+            if (string.IsNullOrWhiteSpace(currAccCode))
+            {
+                XtraMessageBox.Show(this, string.Format(Properties.Resources.Validation_Required, Properties.Resources.Entity_TrPayrollHeader_CurrAccCode),
+                    Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (lkpPeriod.EditValue is not Guid periodId)
+            {
+                XtraMessageBox.Show(this, string.Format(Properties.Resources.Validation_Required, Properties.Resources.Entity_TrPayrollHeader_PeriodId),
+                    Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var db = new subContext();
+            DateTime periodEnd = GetPeriodEndDate(db, periodId);
+
+            decimal pendingTotal = SalesBonusService.GetPendingBonusTotal(db, currAccCode, periodEnd);
+            int pendingCount = SalesBonusService.GetPendingTxns(db, currAccCode, periodEnd).Count;
+            decimal attachedTotal = id.HasValue ? SalesBonusService.GetAttachedBonusTotal(db, entity.Id) : 0m;
+            decimal total = Math.Round(pendingTotal + attachedTotal, 2);
+
+            if (pendingCount == 0 && total == 0)
+            {
+                XtraMessageBox.Show(this, Properties.Resources.Form_PayrollEdit_NoSalesBonus,
+                    Properties.Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            viewLines.CloseEditor();
+            viewLines.UpdateCurrentRow();
+
+            string localCurrencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+            TrPayrollLine? line = lines.FirstOrDefault(x => x.LineSource == PayrollLineSource.SalesBonus);
+            if (line == null)
+            {
+                line = new TrPayrollLine
+                {
+                    Id = Guid.NewGuid(),
+                    PayrollHeaderId = entity.Id,
+                    PayrollItemType = PayrollItemType.Bonus,
+                    LineSource = PayrollLineSource.SalesBonus
+                };
+                lines.Add(line);
+            }
+
+            line.Description = Properties.Resources.Form_PayrollEdit_SalesBonusLineDesc;
+            line.Amount = total;
+            line.CurrencyCode = localCurrencyCode;
+            line.ExchangeRate = 1f;
+            line.AmountLoc = total;
+
+            viewLines.RefreshData();
+            RecalculateTotals();
+
+            XtraMessageBox.Show(this, string.Format(Properties.Resources.Form_PayrollEdit_SalesBonusLoaded, total, pendingCount),
+                Properties.Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private static DateTime GetPeriodEndDate(subContext db, Guid periodId)
+        {
+            DcPayrollPeriod? period = db.DcPayrollPeriods.AsNoTracking().FirstOrDefault(x => x.Id == periodId);
+            if (period == null)
+                return DateTime.Today;
+
+            return new DateTime(period.PeriodYear, period.PeriodMonth, DateTime.DaysInMonth(period.PeriodYear, period.PeriodMonth));
         }
 
         private void ShowReportPreview()
@@ -444,11 +520,15 @@ namespace Foxoft
                                 Amount = ln.Amount,
                                 CurrencyCode = currCode,
                                 ExchangeRate = exRate,
-                                AmountLoc = amtLoc
+                                AmountLoc = amtLoc,
+                                LineSource = ln.LineSource
                             });
                         }
 
                         saveDb.TrPayrollHeaders.Add(newHeader);
+                        saveDb.SaveChanges();
+
+                        SyncSalesBonusAttachment(saveDb, newHeader.Id, newHeader.CurrAccCode, newHeader.PayrollPeriodId);
                         saveDb.SaveChanges();
                         tran.Commit();
 
@@ -493,7 +573,8 @@ namespace Foxoft
                                     Amount = ln.Amount,
                                     CurrencyCode = currCode,
                                     ExchangeRate = exRate,
-                                    AmountLoc = amtLoc
+                                    AmountLoc = amtLoc,
+                                    LineSource = ln.LineSource
                                 });
                             }
                             else
@@ -504,9 +585,13 @@ namespace Foxoft
                                 existing.CurrencyCode = currCode;
                                 existing.ExchangeRate = exRate;
                                 existing.AmountLoc = amtLoc;
+                                existing.LineSource = ln.LineSource;
                             }
                         }
 
+                        saveDb.SaveChanges();
+
+                        SyncSalesBonusAttachment(saveDb, dbEntity.Id, dbEntity.CurrAccCode, dbEntity.PayrollPeriodId);
                         saveDb.SaveChanges();
                         tran.Commit();
                     }
@@ -523,6 +608,25 @@ namespace Foxoft
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Sənəddə "Satış bonusu" sətri varsa jurnaldakı gözləyən bonuslar bu sənədə bağlanır;
+        /// sətir silinibsə əvvəl bağlanmış bonuslar azad edilir (yenidən gözləyən olur).
+        /// </summary>
+        private void SyncSalesBonusAttachment(subContext saveDb, Guid payrollHeaderId, string currAccCode, Guid periodId)
+        {
+            bool hasSalesBonusLine = lines.Any(x => x.LineSource == PayrollLineSource.SalesBonus);
+
+            if (hasSalesBonusLine)
+            {
+                DateTime periodEnd = GetPeriodEndDate(saveDb, periodId);
+                SalesBonusService.AttachPendingToPayroll(saveDb, currAccCode, periodEnd, payrollHeaderId);
+            }
+            else
+            {
+                SalesBonusService.DetachFromPayroll(saveDb, payrollHeaderId);
             }
         }
 

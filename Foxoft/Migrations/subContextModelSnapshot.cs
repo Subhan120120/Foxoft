@@ -4523,6 +4523,165 @@ namespace Foxoft.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcSalesBonusPlan", b =>
+                {
+                    b.Property<Guid>("SalesBonusPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte>("CalcMethod")
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<decimal>("FixedAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<decimal?>("MaxBonusAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MinBaseAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<byte>("PeriodType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("PlanName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ProcessCodes")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(9,4)");
+
+                    b.Property<decimal>("TargetAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TargetMinAchievementPercent")
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<byte>("TierMode")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("TriggerType")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("SalesBonusPlanId");
+
+                    b.HasIndex("PlanName")
+                        .IsUnique();
+
+                    b.ToTable("DcSalesBonusPlans");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcSalesBonusPlanCategory", b =>
+                {
+                    b.Property<Guid>("SalesBonusPlanCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("HierarchyCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal?>("RateOverride")
+                        .HasColumnType("decimal(9,4)");
+
+                    b.Property<Guid>("SalesBonusPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SalesBonusPlanCategoryId");
+
+                    b.HasIndex("HierarchyCode");
+
+                    b.HasIndex("SalesBonusPlanId", "HierarchyCode")
+                        .IsUnique();
+
+                    b.ToTable("DcSalesBonusPlanCategories");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcSalesBonusPlanProduct", b =>
+                {
+                    b.Property<Guid>("SalesBonusPlanProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProductCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<decimal?>("RateOverride")
+                        .HasColumnType("decimal(9,4)");
+
+                    b.Property<Guid>("SalesBonusPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SalesBonusPlanProductId");
+
+                    b.HasIndex("ProductCode");
+
+                    b.HasIndex("SalesBonusPlanId", "ProductCode")
+                        .IsUnique();
+
+                    b.ToTable("DcSalesBonusPlanProducts");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcSalesBonusPlanTier", b =>
+                {
+                    b.Property<Guid>("SalesBonusPlanTierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("FixedAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("FromValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(9,4)");
+
+                    b.Property<Guid>("SalesBonusPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("ToValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("SalesBonusPlanTierId");
+
+                    b.HasIndex("SalesBonusPlanId", "FromValue");
+
+                    b.ToTable("DcSalesBonusPlanTiers");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcSerialNumber", b =>
                 {
                     b.Property<string>("SerialNumberCode")
@@ -7568,6 +7727,38 @@ namespace Foxoft.Migrations
                             ClaimDesc = "Qaimə AI OCR",
                             ClaimTypeId = (byte)1,
                             Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "SalesBonusPlans",
+                            CategoryId = 23,
+                            ClaimDesc = "Satıcı Bonus Planları",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "SalesBonusAssignments",
+                            CategoryId = 23,
+                            ClaimDesc = "Bonus Plan Təyinatları",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "SalesBonusTxns",
+                            CategoryId = 23,
+                            ClaimDesc = "Satıcı Bonus Jurnalı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "SalesBonusCalculate",
+                            CategoryId = 23,
+                            ClaimDesc = "Satıcı Bonusu Hesablama və Düzəliş",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         });
                 });
 
@@ -8928,6 +9119,38 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 223,
                             ClaimCode = "InvoiceAiOcr",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 224,
+                            ClaimCode = "SalesBonusPlans",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 225,
+                            ClaimCode = "SalesBonusAssignments",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 226,
+                            ClaimCode = "SalesBonusTxns",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 227,
+                            ClaimCode = "SalesBonusCalculate",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
@@ -11285,6 +11508,11 @@ namespace Foxoft.Migrations
                     b.Property<float>("ExchangeRate")
                         .HasColumnType("real");
 
+                    b.Property<byte>("LineSource")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValue((byte)0);
+
                     b.Property<Guid>("PayrollHeaderId")
                         .HasColumnType("uniqueidentifier");
 
@@ -11611,6 +11839,182 @@ namespace Foxoft.Migrations
                     b.ToTable("TrProductFeatures");
 
                     b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrSalesBonusAssignment", b =>
+                {
+                    b.Property<Guid>("SalesBonusAssignmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<Guid>("SalesBonusPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SalesPersonCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<decimal?>("TargetAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("SalesBonusAssignmentId");
+
+                    b.HasIndex("SalesBonusPlanId");
+
+                    b.HasIndex("SalesPersonCode", "StartDate");
+
+                    b.ToTable("TrSalesBonusAssignments");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrSalesBonusTxn", b =>
+                {
+                    b.Property<Guid>("SalesBonusTxnId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("BaseAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CalcDetails")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("CalcMethod")
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("DocumentDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("InvoiceDocumentNumber")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<Guid?>("InvoiceHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("PaymentDocumentNumber")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<Guid?>("PaymentHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PayrollHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("PeriodNo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PeriodYear")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(9,4)");
+
+                    b.Property<Guid?>("RelatedTxnId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("SalesBonusAssignmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SalesBonusPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SalesPersonCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<byte>("TriggerType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("TxnType")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("SalesBonusTxnId");
+
+                    b.HasIndex("InvoiceHeaderId");
+
+                    b.HasIndex("PaymentHeaderId");
+
+                    b.HasIndex("PayrollHeaderId");
+
+                    b.HasIndex("RelatedTxnId");
+
+                    b.HasIndex("SalesBonusAssignmentId");
+
+                    b.HasIndex("SalesPersonCode", "DocumentDate");
+
+                    b.HasIndex("SalesBonusPlanId", "SalesPersonCode", "PeriodYear", "PeriodNo");
+
+                    b.ToTable("TrSalesBonusTxns");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrSession", b =>
@@ -12075,6 +12479,55 @@ namespace Foxoft.Migrations
                     b.Navigation("DcPriceType");
 
                     b.Navigation("DcProduct");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcSalesBonusPlanCategory", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
+                        .WithMany()
+                        .HasForeignKey("HierarchyCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcSalesBonusPlan", "DcSalesBonusPlan")
+                        .WithMany("Categories")
+                        .HasForeignKey("SalesBonusPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DcHierarchy");
+
+                    b.Navigation("DcSalesBonusPlan");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcSalesBonusPlanProduct", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
+                        .WithMany()
+                        .HasForeignKey("ProductCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcSalesBonusPlan", "DcSalesBonusPlan")
+                        .WithMany("Products")
+                        .HasForeignKey("SalesBonusPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DcProduct");
+
+                    b.Navigation("DcSalesBonusPlan");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcSalesBonusPlanTier", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcSalesBonusPlan", "DcSalesBonusPlan")
+                        .WithMany("Tiers")
+                        .HasForeignKey("SalesBonusPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DcSalesBonusPlan");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcSerialNumber", b =>
@@ -13239,6 +13692,79 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrSalesBonusAssignment", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcSalesBonusPlan", "DcSalesBonusPlan")
+                        .WithMany("Assignments")
+                        .HasForeignKey("SalesBonusPlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany()
+                        .HasForeignKey("SalesPersonCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("DcSalesBonusPlan");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrSalesBonusTxn", b =>
+                {
+                    b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
+                        .WithMany()
+                        .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Foxoft.Models.TrPaymentHeader", "TrPaymentHeader")
+                        .WithMany()
+                        .HasForeignKey("PaymentHeaderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Foxoft.Models.TrPayrollHeader", "TrPayrollHeader")
+                        .WithMany()
+                        .HasForeignKey("PayrollHeaderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Foxoft.Models.TrSalesBonusTxn", "RelatedTxn")
+                        .WithMany()
+                        .HasForeignKey("RelatedTxnId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Foxoft.Models.TrSalesBonusAssignment", "TrSalesBonusAssignment")
+                        .WithMany("Txns")
+                        .HasForeignKey("SalesBonusAssignmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Foxoft.Models.DcSalesBonusPlan", "DcSalesBonusPlan")
+                        .WithMany("Txns")
+                        .HasForeignKey("SalesBonusPlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany()
+                        .HasForeignKey("SalesPersonCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("DcSalesBonusPlan");
+
+                    b.Navigation("RelatedTxn");
+
+                    b.Navigation("TrInvoiceHeader");
+
+                    b.Navigation("TrPaymentHeader");
+
+                    b.Navigation("TrPayrollHeader");
+
+                    b.Navigation("TrSalesBonusAssignment");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrUserStore", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
@@ -13546,6 +14072,19 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProducts");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcSalesBonusPlan", b =>
+                {
+                    b.Navigation("Assignments");
+
+                    b.Navigation("Categories");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("Tiers");
+
+                    b.Navigation("Txns");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcSerialNumber", b =>
                 {
                     b.Navigation("TrInvoiceLines");
@@ -13709,6 +14248,11 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>
                 {
                     b.Navigation("TrPriceListLines");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrSalesBonusAssignment", b =>
+                {
+                    b.Navigation("Txns");
                 });
 #pragma warning restore 612, 618
         }

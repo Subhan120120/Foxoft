@@ -170,13 +170,24 @@ namespace Foxoft
             try
             {
                 dbContext.SaveChanges();
-                return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{Resources.Form_PaymentDetail_InvalidData} \n \n {ex}");
                 return false;
             }
+
+            // Satıcı bonusu: müştəri ödənişi "Müştəri ödəniş etdikdə" rejimli planları yeniləyir
+            try
+            {
+                new SalesBonusService().SyncPayment(trPaymentHeader.PaymentHeaderId, Authorization.CurrAccCode);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, Resources.Entity_SalesBonusTxn, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            return true;
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -339,9 +350,26 @@ namespace Foxoft
 
                 if (MessageBox.Show(Resources.Common_DeleteConfirm, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
+                    string? deletedCurrAccCode = trPaymentHeader.CurrAccCode;
+                    Guid? deletedInvoiceId = trPaymentHeader.InvoiceHeaderId;
+
                     efMethods.DeleteEntityById<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId);
 
                     //efMethods.DeletePaymentLinesByPaymentHeader
+
+                    // Satıcı bonusu: silinən ödənişə görə verilmiş bonus geri alınır
+                    try
+                    {
+                        SalesBonusService bonusService = new();
+                        if (deletedInvoiceId.HasValue)
+                            bonusService.SyncInvoice(deletedInvoiceId.Value, Authorization.CurrAccCode);
+                        if (!string.IsNullOrWhiteSpace(deletedCurrAccCode))
+                            bonusService.SyncCustomer(deletedCurrAccCode, Authorization.CurrAccCode);
+                    }
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, Resources.Entity_SalesBonusTxn, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
 
                     ClearControlsAddNew();
                 }

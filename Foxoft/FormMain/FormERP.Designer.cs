@@ -144,6 +144,9 @@ namespace Foxoft
             ACE_PayrollPeriods = new AccordionControlElement();
             ACE_Attendances = new AccordionControlElement();
             ACE_PayrollList = new AccordionControlElement();
+            ACE_SalesBonusPlans = new AccordionControlElement();
+            ACE_SalesBonusAssignments = new AccordionControlElement();
+            ACE_SalesBonusTxns = new AccordionControlElement();
             ACE_CrmActivityList = new AccordionControlElement();
             aCE_Reports = new AccordionControlElement();
             aCE_Setting = new AccordionControlElement();
@@ -899,7 +902,7 @@ namespace Foxoft
             // 
             // aCE_HumanResource
             // 
-            aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances, ACE_PayrollList, ACE_CrmActivityList });
+            aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances, ACE_PayrollList, ACE_SalesBonusPlans, ACE_SalesBonusAssignments, ACE_SalesBonusTxns, ACE_CrmActivityList });
             aCE_HumanResource.Expanded = true;
             aCE_HumanResource.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage");
             aCE_HumanResource.Name = "aCE_HumanResource";
@@ -960,9 +963,30 @@ namespace Foxoft
             ACE_PayrollList.Name = "ACE_PayrollList";
             ACE_PayrollList.Style = ElementStyle.Item;
             ACE_PayrollList.Text = Resources.ERP_ACE_PayrollList;
-            // 
+            //
+            // ACE_SalesBonusPlans
+            //
+            ACE_SalesBonusPlans.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollList.ImageOptions.SvgImage");
+            ACE_SalesBonusPlans.Name = "ACE_SalesBonusPlans";
+            ACE_SalesBonusPlans.Style = ElementStyle.Item;
+            ACE_SalesBonusPlans.Text = Resources.ERP_ACE_SalesBonusPlans;
+            //
+            // ACE_SalesBonusAssignments
+            //
+            ACE_SalesBonusAssignments.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_EmployeePositions.ImageOptions.SvgImage");
+            ACE_SalesBonusAssignments.Name = "ACE_SalesBonusAssignments";
+            ACE_SalesBonusAssignments.Style = ElementStyle.Item;
+            ACE_SalesBonusAssignments.Text = Resources.ERP_ACE_SalesBonusAssignments;
+            //
+            // ACE_SalesBonusTxns
+            //
+            ACE_SalesBonusTxns.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollPeriods.ImageOptions.SvgImage");
+            ACE_SalesBonusTxns.Name = "ACE_SalesBonusTxns";
+            ACE_SalesBonusTxns.Style = ElementStyle.Item;
+            ACE_SalesBonusTxns.Text = Resources.ERP_ACE_SalesBonusTxns;
+            //
             // ACE_CrmActivityList
-            // 
+            //
             ACE_CrmActivityList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CrmActivityList.ImageOptions.SvgImage");
             ACE_CrmActivityList.Name = "ACE_CrmActivityList";
             ACE_CrmActivityList.Style = ElementStyle.Item;
@@ -1217,6 +1241,9 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_BarcodeOperations;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator11;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PayrollList;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_SalesBonusPlans;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_SalesBonusAssignments;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_SalesBonusTxns;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_LoyaltyCards;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_LoyaltyPrograms;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_TerminalList;

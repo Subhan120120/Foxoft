@@ -37,6 +37,9 @@ namespace Foxoft.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal AmountLoc { get; set; }
 
+        /// <summary>Sətrin mənbəyi: manual, müqavilə və ya satıcı bonus jurnalı (avtomatik).</summary>
+        public PayrollLineSource LineSource { get; set; } = PayrollLineSource.Manual;
+
         public virtual DcCurrency? DcCurrency { get; set; }
     }
 }

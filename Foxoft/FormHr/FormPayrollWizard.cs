@@ -226,6 +226,9 @@ namespace Foxoft
                 bool alreadyExists = existingPayroll != null;
                 Guid? existingId = existingPayroll?.Id;
 
+                // Satıcı bonus jurnalı: dövr sonuna qədər hələ heç bir əməkhaqqıya daxil edilməmiş bonuslar
+                decimal salesBonus = SalesBonusService.GetPendingBonusTotal(db, emp.CurrAccCode, periodEndDate);
+
                 string currCode = effectiveCurrCode;
 
                 var matchedCurrency = currencies.FirstOrDefault(c => string.Equals(c.CurrencyCode?.Trim(), currCode, StringComparison.OrdinalIgnoreCase)) ?? defaultCurrency;
@@ -246,8 +249,11 @@ namespace Foxoft
                     }
 
                     bonus = existingPayroll.Lines
-                        .Where(l => l.PayrollItemType == PayrollItemType.Bonus)
+                        .Where(l => l.PayrollItemType == PayrollItemType.Bonus && l.LineSource != PayrollLineSource.SalesBonus)
                         .Sum(l => l.Amount);
+
+                    // Bu sənədə artıq bağlanmış satıcı bonusları + yeni gözləyənlər
+                    salesBonus += SalesBonusService.GetAttachedBonusTotal(db, existingPayroll.Id);
 
                     overtime = existingPayroll.Lines
                         .Where(l => l.PayrollItemType == PayrollItemType.Overtime)
@@ -277,6 +283,7 @@ namespace Foxoft
                     PositionName = posName,
                     BaseSalary = baseSalary,
                     Bonus = bonus,
+                    SalesBonus = Math.Round(salesBonus, 2),
                     Overtime = overtime,
                     Deduction = deduction,
                     OtherDeductions = otherDeductions,
@@ -601,6 +608,11 @@ namespace Foxoft
                     using var saveDb = new subContext();
                     using var transaction = saveDb.Database.BeginTransaction();
 
+                    DcPayrollPeriod? payrollPeriod = saveDb.DcPayrollPeriods.AsNoTracking().FirstOrDefault(x => x.Id == periodId);
+                    DateTime periodEndDate = payrollPeriod != null
+                        ? new DateTime(payrollPeriod.PeriodYear, payrollPeriod.PeriodMonth, DateTime.DaysInMonth(payrollPeriod.PeriodYear, payrollPeriod.PeriodMonth))
+                        : DateTime.Today;
+
                     // 1. Save or sync payroll records
                     foreach (var item in selectedEmployees)
                     {
@@ -696,6 +708,8 @@ namespace Foxoft
                                 };
                                 saveDb.TrPayrollLines.Add(deductionLine);
                             }
+
+                            SyncSalesBonusLine(saveDb, dbHeader, item, periodEndDate);
                         }
                         else
                         {
@@ -729,8 +743,8 @@ namespace Foxoft
                                     saveDb.TrPayrollLines.RemoveRange(salaryLines.Skip(1));
                             }
 
-                            // 2. Sync Bonus Line
-                            var bonusLines = dbHeader.Lines.Where(x => x.PayrollItemType == PayrollItemType.Bonus).ToList();
+                            // 2. Sync Bonus Line (satıcı bonus sətri ayrıca sinxronlaşdırılır)
+                            var bonusLines = dbHeader.Lines.Where(x => x.PayrollItemType == PayrollItemType.Bonus && x.LineSource != PayrollLineSource.SalesBonus).ToList();
                             var bonusLine = bonusLines.FirstOrDefault();
                             if (item.Bonus > 0)
                             {
@@ -842,6 +856,9 @@ namespace Foxoft
                             {
                                 saveDb.TrPayrollLines.RemoveRange(deductionLines);
                             }
+
+                            // 5. Sync Sales Bonus Line (satıcı bonus jurnalından)
+                            SyncSalesBonusLine(saveDb, dbHeader, item, periodEndDate);
                         }
                     }
 
@@ -896,6 +913,50 @@ namespace Foxoft
                     MessageBoxIcon.Error);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Satıcı bonus jurnalındakı gözləyən bonusları bu əməkhaqqı sənədinə bağlayır və
+        /// "Satış bonusu (avtomatik)" sətrini yaradır/yeniləyir. Sətir yerli valyutadadır.
+        /// </summary>
+        private static void SyncSalesBonusLine(subContext saveDb, TrPayrollHeader header, PayrollWizardEmployeeVM item, DateTime periodEndDate)
+        {
+            SalesBonusService.AttachPendingToPayroll(saveDb, item.CurrAccCode, periodEndDate, header.Id);
+
+            decimal total = Math.Round(item.SalesBonus, 2);
+            string localCurrencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+
+            var salesBonusLines = header.Lines.Where(x => x.LineSource == PayrollLineSource.SalesBonus).ToList();
+
+            if (total == 0)
+            {
+                if (salesBonusLines.Count > 0)
+                    saveDb.TrPayrollLines.RemoveRange(salesBonusLines);
+                return;
+            }
+
+            TrPayrollLine? line = salesBonusLines.FirstOrDefault();
+            if (line == null)
+            {
+                line = new TrPayrollLine
+                {
+                    Id = Guid.NewGuid(),
+                    PayrollHeaderId = header.Id,
+                    PayrollItemType = PayrollItemType.Bonus,
+                    LineSource = PayrollLineSource.SalesBonus
+                };
+                saveDb.TrPayrollLines.Add(line);
+            }
+            else if (salesBonusLines.Count > 1)
+            {
+                saveDb.TrPayrollLines.RemoveRange(salesBonusLines.Skip(1));
+            }
+
+            line.Description = Properties.Resources.Form_PayrollEdit_SalesBonusLineDesc;
+            line.Amount = total;
+            line.CurrencyCode = localCurrencyCode;
+            line.ExchangeRate = 1f;
+            line.AmountLoc = total;
         }
 
         private void ExecuteBulkPayments(

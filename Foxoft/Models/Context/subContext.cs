@@ -110,6 +110,15 @@ namespace Foxoft.Models
         public DbSet<DcLoyaltyCard> DcLoyaltyCards { get; set; }
         public DbSet<DcLoyaltyProgram> DcLoyaltyPrograms { get; set; }
         public DbSet<TrLoyaltyTxn> TrLoyaltyTxns { get; set; }
+
+        // Satıcı bonus modulu
+        public DbSet<DcSalesBonusPlan> DcSalesBonusPlans { get; set; }
+        public DbSet<DcSalesBonusPlanTier> DcSalesBonusPlanTiers { get; set; }
+        public DbSet<DcSalesBonusPlanProduct> DcSalesBonusPlanProducts { get; set; }
+        public DbSet<DcSalesBonusPlanCategory> DcSalesBonusPlanCategories { get; set; }
+        public DbSet<TrSalesBonusAssignment> TrSalesBonusAssignments { get; set; }
+        public DbSet<TrSalesBonusTxn> TrSalesBonusTxns { get; set; }
+
         public DbSet<DocumentLock> DocumentLocks { get; set; }
         public DbSet<DocumentLockAudit> DocumentLockAudits { get; set; }
 
@@ -535,6 +544,106 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            // Satıcı bonus modulu
+            modelBuilder.Entity<DcSalesBonusPlan>(entity =>
+            {
+                entity.Property(e => e.SalesBonusPlanId).ValueGeneratedNever();
+                entity.Property(e => e.CalcMethod).HasConversion<byte>().HasColumnType("tinyint");
+                entity.Property(e => e.TriggerType).HasConversion<byte>().HasColumnType("tinyint");
+                entity.Property(e => e.TierMode).HasConversion<byte>().HasColumnType("tinyint");
+                entity.Property(e => e.PeriodType).HasConversion<byte>().HasColumnType("tinyint");
+            });
+
+            modelBuilder.Entity<DcSalesBonusPlanTier>(entity =>
+            {
+                entity.Property(e => e.SalesBonusPlanTierId).ValueGeneratedNever();
+                entity.HasOne(d => d.DcSalesBonusPlan)
+                      .WithMany(p => p.Tiers)
+                      .HasForeignKey(d => d.SalesBonusPlanId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<DcSalesBonusPlanProduct>(entity =>
+            {
+                entity.Property(e => e.SalesBonusPlanProductId).ValueGeneratedNever();
+                entity.HasOne(d => d.DcSalesBonusPlan)
+                      .WithMany(p => p.Products)
+                      .HasForeignKey(d => d.SalesBonusPlanId)
+                      .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(d => d.DcProduct)
+                      .WithMany()
+                      .HasForeignKey(d => d.ProductCode)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<DcSalesBonusPlanCategory>(entity =>
+            {
+                entity.Property(e => e.SalesBonusPlanCategoryId).ValueGeneratedNever();
+                entity.HasOne(d => d.DcSalesBonusPlan)
+                      .WithMany(p => p.Categories)
+                      .HasForeignKey(d => d.SalesBonusPlanId)
+                      .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(d => d.DcHierarchy)
+                      .WithMany()
+                      .HasForeignKey(d => d.HierarchyCode)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrSalesBonusAssignment>(entity =>
+            {
+                entity.Property(e => e.SalesBonusAssignmentId).ValueGeneratedNever();
+                entity.HasOne(d => d.DcSalesBonusPlan)
+                      .WithMany(p => p.Assignments)
+                      .HasForeignKey(d => d.SalesBonusPlanId)
+                      .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.DcCurrAcc)
+                      .WithMany()
+                      .HasForeignKey(d => d.SalesPersonCode)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrSalesBonusTxn>(entity =>
+            {
+                entity.Property(e => e.SalesBonusTxnId).ValueGeneratedNever();
+                entity.Property(e => e.TxnType).HasConversion<byte>().HasColumnType("tinyint");
+                entity.Property(e => e.CalcMethod).HasConversion<byte>().HasColumnType("tinyint");
+                entity.Property(e => e.TriggerType).HasConversion<byte>().HasColumnType("tinyint");
+
+                entity.HasOne(d => d.DcSalesBonusPlan)
+                      .WithMany(p => p.Txns)
+                      .HasForeignKey(d => d.SalesBonusPlanId)
+                      .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.TrSalesBonusAssignment)
+                      .WithMany(p => p.Txns)
+                      .HasForeignKey(d => d.SalesBonusAssignmentId)
+                      .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(d => d.DcCurrAcc)
+                      .WithMany()
+                      .HasForeignKey(d => d.SalesPersonCode)
+                      .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.TrInvoiceHeader)
+                      .WithMany()
+                      .HasForeignKey(d => d.InvoiceHeaderId)
+                      .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(d => d.TrPaymentHeader)
+                      .WithMany()
+                      .HasForeignKey(d => d.PaymentHeaderId)
+                      .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(d => d.TrPayrollHeader)
+                      .WithMany()
+                      .HasForeignKey(d => d.PayrollHeaderId)
+                      .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(d => d.RelatedTxn)
+                      .WithMany()
+                      .HasForeignKey(d => d.RelatedTxnId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrPayrollLine>(entity =>
+            {
+                entity.Property(e => e.LineSource).HasConversion<byte>().HasColumnType("tinyint").HasDefaultValue(PayrollLineSource.Manual);
+            });
+
 
             modelBuilder.Entity<MigrationHistory>(entity =>
             {
@@ -906,7 +1015,11 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "Users", ClaimDesc = "İstifadəçilər", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "GoogleContactWizard", ClaimDesc = "Google Kontaktlar", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "ProductFeatureAi", ClaimDesc = "Məhsul Özəllikləri AI", ClaimTypeId = 1, CategoryId = 18 },
-                new DcClaim { ClaimCode = "InvoiceAiOcr", ClaimDesc = "Qaimə AI OCR", ClaimTypeId = 1, CategoryId = 2 }
+                new DcClaim { ClaimCode = "InvoiceAiOcr", ClaimDesc = "Qaimə AI OCR", ClaimTypeId = 1, CategoryId = 2 },
+                new DcClaim { ClaimCode = "SalesBonusPlans", ClaimDesc = "Satıcı Bonus Planları", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "SalesBonusAssignments", ClaimDesc = "Bonus Plan Təyinatları", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "SalesBonusTxns", ClaimDesc = "Satıcı Bonus Jurnalı", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "SalesBonusCalculate", ClaimDesc = "Satıcı Bonusu Hesablama və Düzəliş", ClaimTypeId = 1, CategoryId = 23 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -1032,7 +1145,11 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 220, RoleCode = "Admin", ClaimCode = "Users" },
                 new TrRoleClaim { RoleClaimId = 221, RoleCode = "Admin", ClaimCode = "GoogleContactWizard" },
                 new TrRoleClaim { RoleClaimId = 222, RoleCode = "Admin", ClaimCode = "ProductFeatureAi" },
-                new TrRoleClaim { RoleClaimId = 223, RoleCode = "Admin", ClaimCode = "InvoiceAiOcr" }
+                new TrRoleClaim { RoleClaimId = 223, RoleCode = "Admin", ClaimCode = "InvoiceAiOcr" },
+                new TrRoleClaim { RoleClaimId = 224, RoleCode = "Admin", ClaimCode = "SalesBonusPlans" },
+                new TrRoleClaim { RoleClaimId = 225, RoleCode = "Admin", ClaimCode = "SalesBonusAssignments" },
+                new TrRoleClaim { RoleClaimId = 226, RoleCode = "Admin", ClaimCode = "SalesBonusTxns" },
+                new TrRoleClaim { RoleClaimId = 227, RoleCode = "Admin", ClaimCode = "SalesBonusCalculate" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

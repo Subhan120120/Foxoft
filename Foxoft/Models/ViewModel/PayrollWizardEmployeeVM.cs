@@ -16,6 +16,7 @@ namespace Foxoft.Models.ViewModel
         private decimal _overtime;
         private decimal _deduction;
         private decimal _otherDeductions;
+        private decimal _salesBonus;
         private string _currencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
         private float _exchangeRate = 1f;
         private bool _alreadyExists;
@@ -151,7 +152,38 @@ namespace Foxoft.Models.ViewModel
             }
         }
 
-        public decimal GrossSalary => BaseSalary + Bonus + Overtime;
+        /// <summary>Satıcı bonus jurnalından (TrSalesBonusTxns) gələn, hələ əməkhaqqına daxil edilməmiş bonus. Yerli valyutada.</summary>
+        public decimal SalesBonus
+        {
+            get => _salesBonus;
+            set
+            {
+                if (_salesBonus != value)
+                {
+                    _salesBonus = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SalesBonusInCurrency));
+                    OnPropertyChanged(nameof(GrossSalary));
+                    OnPropertyChanged(nameof(NetSalary));
+                    OnPropertyChanged(nameof(GrossSalaryLoc));
+                    OnPropertyChanged(nameof(NetSalaryLoc));
+                    OnPropertyChanged(nameof(AmountLoc));
+                    OnPropertyChanged(nameof(BalanceAfterPayroll));
+                }
+            }
+        }
+
+        /// <summary>Satış bonusunun əməkhaqqı valyutasına çevrilmiş dəyəri (AmountLoc = Amount / ExchangeRate qaydası ilə).</summary>
+        public decimal SalesBonusInCurrency
+        {
+            get
+            {
+                decimal rate = ExchangeRate == 0 ? 1m : (decimal)ExchangeRate;
+                return Math.Round(SalesBonus * rate, 2);
+            }
+        }
+
+        public decimal GrossSalary => BaseSalary + Bonus + Overtime + SalesBonusInCurrency;
 
         public decimal NetSalary => GrossSalary - Deduction - OtherDeductions;
 
@@ -181,6 +213,9 @@ namespace Foxoft.Models.ViewModel
                 {
                     _exchangeRate = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(SalesBonusInCurrency));
+                    OnPropertyChanged(nameof(GrossSalary));
+                    OnPropertyChanged(nameof(NetSalary));
                     OnPropertyChanged(nameof(GrossSalaryLoc));
                     OnPropertyChanged(nameof(NetSalaryLoc));
                     OnPropertyChanged(nameof(AmountLoc));

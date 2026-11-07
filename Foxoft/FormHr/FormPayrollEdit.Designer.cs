@@ -24,6 +24,7 @@ namespace Foxoft
             this.bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_reportPreview = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_SendWhatsapp = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_LoadSalesBonus = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.rpgOperations = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rpgTools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -65,10 +66,11 @@ namespace Foxoft
                 this.ribbonControl1.ExpandCollapseItem,
                 this.bBI_SaveAndClose,
                 this.bBI_reportPreview,
-                this.bBI_SendWhatsapp
+                this.bBI_SendWhatsapp,
+                this.bBI_LoadSalesBonus
             });
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 5;
+            this.ribbonControl1.MaxItemId = 6;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
                 this.ribbonPage1
@@ -103,9 +105,17 @@ namespace Foxoft
             this.bBI_SendWhatsapp.Name = "bBI_SendWhatsapp";
             this.bBI_SendWhatsapp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SendWhatsapp_ItemClick);
 
-            // 
+            //
+            // bBI_LoadSalesBonus
+            //
+            this.bBI_LoadSalesBonus.Caption = Foxoft.Properties.Resources.Form_PayrollEdit_LoadSalesBonus;
+            this.bBI_LoadSalesBonus.Id = 4;
+            this.bBI_LoadSalesBonus.Name = "bBI_LoadSalesBonus";
+            this.bBI_LoadSalesBonus.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_LoadSalesBonus_ItemClick);
+
+            //
             // ribbonPage1
-            // 
+            //
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
                 this.rpgOperations,
                 this.rpgTools,
@@ -125,6 +135,7 @@ namespace Foxoft
             // rpgTools
             // 
             this.rpgTools.ItemLinks.Add(this.bBI_reportPreview);
+            this.rpgTools.ItemLinks.Add(this.bBI_LoadSalesBonus);
             this.rpgTools.Name = "rpgTools";
             this.rpgTools.Text = Foxoft.Properties.Resources.Form_PaymentDetail_RibbonGroup_Tools;
 
@@ -249,6 +260,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_SaveAndClose;
         private DevExpress.XtraBars.BarButtonItem bBI_reportPreview;
         private DevExpress.XtraBars.BarButtonItem bBI_SendWhatsapp;
+        private DevExpress.XtraBars.BarButtonItem bBI_LoadSalesBonus;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraBars.Alerter.AlertControl alertControl1;

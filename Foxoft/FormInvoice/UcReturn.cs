@@ -797,6 +797,7 @@ namespace Foxoft
 
             string newDocNum = string.Empty;
             bool isSuccess = false;
+            Guid returnHeaderIdForBonus = Guid.Empty;
 
             try
             {
@@ -813,6 +814,7 @@ namespace Foxoft
                             6);
 
                         Guid returnHeaderId = Guid.NewGuid();
+                        returnHeaderIdForBonus = returnHeaderId;
 
                         TrInvoiceHeader returnHeader = new()
                         {
@@ -916,6 +918,16 @@ namespace Foxoft
 
             if (isSuccess)
             {
+                // Satıcı bonusu: qaytarma əsas fakturaya netləşdirilir, fərq mənfi sətir kimi yazılır (tranzaksiya commit-dən sonra).
+                try
+                {
+                    new SalesBonusService().SyncInvoice(returnHeaderIdForBonus, Authorization.CurrAccCode);
+                }
+                catch (Exception ex)
+                {
+                    XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, Resources.Entity_SalesBonusTxn, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
                 if (shouldOpenInvoice)
                 {
                     if (InvoiceOpenRequested != null)
