@@ -622,9 +622,9 @@ namespace Foxoft.Models
                       .HasForeignKey(d => d.SalesPersonCode)
                       .OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(d => d.TrInvoiceHeader)
-                      .WithMany()
+                      .WithMany(p => p.TrSalesBonusTxns)
                       .HasForeignKey(d => d.InvoiceHeaderId)
-                      .OnDelete(DeleteBehavior.SetNull);
+                      .OnDelete(DeleteBehavior.Cascade);
                 entity.HasOne(d => d.TrPaymentHeader)
                       .WithMany()
                       .HasForeignKey(d => d.PaymentHeaderId)

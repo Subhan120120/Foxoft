@@ -17,6 +17,7 @@ namespace Foxoft.Models
             TrPaymentHeaders = new HashSet<TrPaymentHeader>();
             InverseRelatedHeaders = new HashSet<TrInvoiceHeader>();
             TrLoyaltyTxns = new HashSet<TrLoyaltyTxn>();
+            TrSalesBonusTxns = new HashSet<TrSalesBonusTxn>();
         }
 
         [Key]
@@ -185,6 +186,7 @@ namespace Foxoft.Models
         public virtual ICollection<TrInvoiceHeader> InverseRelatedHeaders { get; set; } // Navigation property for the inverse relationship
 
         public virtual ICollection<TrLoyaltyTxn> TrLoyaltyTxns { get; set; }
+        public virtual ICollection<TrSalesBonusTxn> TrSalesBonusTxns { get; set; }
         //public virtual ICollection<TrInvoiceCampaignLog> TrInvoiceCampaignLogs { get; set; }
     }
 }

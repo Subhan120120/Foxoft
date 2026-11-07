@@ -1,4 +1,4 @@
-
+﻿
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -2672,7 +2672,7 @@ namespace Foxoft
                 efMethods.DeleteInstallmentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
             }
 
-            ReverseSalesBonusSafe(trInvoiceHeader.InvoiceHeaderId);
+
 
             efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId, Authorization.CurrAccCode);
 

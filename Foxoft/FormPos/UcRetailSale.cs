@@ -1,4 +1,4 @@
-using DevExpress.DataAccess.Sql;
+﻿using DevExpress.DataAccess.Sql;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
@@ -1494,7 +1494,7 @@ namespace Foxoft
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    ReverseSalesBonusSafe(trInvoiceHeader.InvoiceHeaderId);
+
 
                     int result = efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
 

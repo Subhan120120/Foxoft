@@ -112,7 +112,7 @@ namespace Foxoft.Models
 
         public virtual DcCurrAcc DcCurrAcc { get; set; } = null!;
 
-        [DeleteBehavior(DeleteBehavior.SetNull)]
+        [DeleteBehavior(DeleteBehavior.Cascade)]
         public virtual TrInvoiceHeader? TrInvoiceHeader { get; set; }
 
         [DeleteBehavior(DeleteBehavior.SetNull)]
