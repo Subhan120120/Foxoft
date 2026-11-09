@@ -44,7 +44,7 @@ namespace Foxoft.Migrations
                                     FROM TrPaymentLines pl
                                     LEFT JOIN TrPaymentHeaders ph ON pl.PaymentHeaderId = ph.PaymentHeaderId
                                     WHERE ph.CurrAccCode = @CurrAccCode
-                                      AND (CAST(ph.DocumentDate AS DATETIME) + CAST(ph.DocumentTime AS DATETIME)) <= @DateTime
+                                      AND (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <= @DateTime
                                 ), 
                                 0
                             )
