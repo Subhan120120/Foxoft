@@ -86,25 +86,96 @@ namespace Foxoft
             var root = new DevExpress.XtraLayout.LayoutControlGroup { EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True };
 
             // enum lookups
-            foreach (var lkp in new[] { this.lkpCalcMethod, this.lkpTriggerType, this.lkpTierMode, this.lkpPeriodType })
-            {
-                lkp.Properties.DisplayMember = "Text";
-                lkp.Properties.ValueMember = "Value";
-                lkp.Properties.NullText = "";
-                lkp.Properties.ShowHeader = false;
-                lkp.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-                lkp.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-                lkp.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Text", "") });
-                lkp.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
-            }
+            this.lkpCalcMethod.Properties.DisplayMember = "Text";
+            this.lkpCalcMethod.Properties.ValueMember = "Value";
+            this.lkpCalcMethod.Properties.NullText = "";
+            this.lkpCalcMethod.Properties.ShowHeader = false;
+            this.lkpCalcMethod.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.lkpCalcMethod.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            this.lkpCalcMethod.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Text", "") });
+            this.lkpCalcMethod.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+
+            this.lkpTriggerType.Properties.DisplayMember = "Text";
+            this.lkpTriggerType.Properties.ValueMember = "Value";
+            this.lkpTriggerType.Properties.NullText = "";
+            this.lkpTriggerType.Properties.ShowHeader = false;
+            this.lkpTriggerType.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.lkpTriggerType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            this.lkpTriggerType.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Text", "") });
+            this.lkpTriggerType.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+
+            this.lkpTierMode.Properties.DisplayMember = "Text";
+            this.lkpTierMode.Properties.ValueMember = "Value";
+            this.lkpTierMode.Properties.NullText = "";
+            this.lkpTierMode.Properties.ShowHeader = false;
+            this.lkpTierMode.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.lkpTierMode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            this.lkpTierMode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Text", "") });
+            this.lkpTierMode.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+
+            this.lkpPeriodType.Properties.DisplayMember = "Text";
+            this.lkpPeriodType.Properties.ValueMember = "Value";
+            this.lkpPeriodType.Properties.NullText = "";
+            this.lkpPeriodType.Properties.ShowHeader = false;
+            this.lkpPeriodType.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.lkpPeriodType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            this.lkpPeriodType.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Text", "") });
+            this.lkpPeriodType.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
 
             // numeric editors
-            ConfigureSpin(this.spinRate, 4, 0m, 1000000m);
-            ConfigureSpin(this.spinFixedAmount, 2, -100000000m, 100000000m);
-            ConfigureSpin(this.spinTargetAmount, 2, 0m, 1000000000m);
-            ConfigureSpin(this.spinTargetMinAchievement, 2, 0m, 1000m);
-            ConfigureSpin(this.spinMinBaseAmount, 2, 0m, 1000000000m);
-            ConfigureSpin(this.spinMaxBonusAmount, 2, 0m, 1000000000m);
+            this.spinRate.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinRate.Properties.DisplayFormat.FormatString = "n4";
+            this.spinRate.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinRate.Properties.EditFormat.FormatString = "n4";
+            this.spinRate.Properties.Mask.EditMask = "n4";
+            this.spinRate.Properties.MinValue = 0m;
+            this.spinRate.Properties.MaxValue = 1000000m;
+            this.spinRate.Properties.Increment = 0.5m;
+
+            this.spinFixedAmount.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinFixedAmount.Properties.DisplayFormat.FormatString = "n2";
+            this.spinFixedAmount.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinFixedAmount.Properties.EditFormat.FormatString = "n2";
+            this.spinFixedAmount.Properties.Mask.EditMask = "n2";
+            this.spinFixedAmount.Properties.MinValue = -100000000m;
+            this.spinFixedAmount.Properties.MaxValue = 100000000m;
+            this.spinFixedAmount.Properties.Increment = 1m;
+
+            this.spinTargetAmount.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinTargetAmount.Properties.DisplayFormat.FormatString = "n2";
+            this.spinTargetAmount.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinTargetAmount.Properties.EditFormat.FormatString = "n2";
+            this.spinTargetAmount.Properties.Mask.EditMask = "n2";
+            this.spinTargetAmount.Properties.MinValue = 0m;
+            this.spinTargetAmount.Properties.MaxValue = 1000000000m;
+            this.spinTargetAmount.Properties.Increment = 1m;
+
+            this.spinTargetMinAchievement.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinTargetMinAchievement.Properties.DisplayFormat.FormatString = "n2";
+            this.spinTargetMinAchievement.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinTargetMinAchievement.Properties.EditFormat.FormatString = "n2";
+            this.spinTargetMinAchievement.Properties.Mask.EditMask = "n2";
+            this.spinTargetMinAchievement.Properties.MinValue = 0m;
+            this.spinTargetMinAchievement.Properties.MaxValue = 1000m;
+            this.spinTargetMinAchievement.Properties.Increment = 1m;
+
+            this.spinMinBaseAmount.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinMinBaseAmount.Properties.DisplayFormat.FormatString = "n2";
+            this.spinMinBaseAmount.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinMinBaseAmount.Properties.EditFormat.FormatString = "n2";
+            this.spinMinBaseAmount.Properties.Mask.EditMask = "n2";
+            this.spinMinBaseAmount.Properties.MinValue = 0m;
+            this.spinMinBaseAmount.Properties.MaxValue = 1000000000m;
+            this.spinMinBaseAmount.Properties.Increment = 1m;
+
+            this.spinMaxBonusAmount.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinMaxBonusAmount.Properties.DisplayFormat.FormatString = "n2";
+            this.spinMaxBonusAmount.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.spinMaxBonusAmount.Properties.EditFormat.FormatString = "n2";
+            this.spinMaxBonusAmount.Properties.Mask.EditMask = "n2";
+            this.spinMaxBonusAmount.Properties.MinValue = 0m;
+            this.spinMaxBonusAmount.Properties.MaxValue = 1000000000m;
+            this.spinMaxBonusAmount.Properties.Increment = 1m;
             this.spinMaxBonusAmount.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             this.spinMaxBonusAmount.Properties.NullText = "";
 
@@ -314,19 +385,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gridCategories)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.viewCategories)).EndInit();
             this.ResumeLayout(false);
-        }
-
-        private static void ConfigureSpin(DevExpress.XtraEditors.SpinEdit spin, int decimals, decimal min, decimal max)
-        {
-            string format = "n" + decimals;
-            spin.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            spin.Properties.DisplayFormat.FormatString = format;
-            spin.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            spin.Properties.EditFormat.FormatString = format;
-            spin.Properties.Mask.EditMask = format;
-            spin.Properties.MinValue = min;
-            spin.Properties.MaxValue = max;
-            spin.Properties.Increment = decimals >= 4 ? 0.5m : 1m;
         }
 
         #endregion

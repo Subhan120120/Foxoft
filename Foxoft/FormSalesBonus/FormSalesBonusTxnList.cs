@@ -1,10 +1,18 @@
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Grid;
+using Foxoft.AppCode;
 using Foxoft.AppCode.Service;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using static Foxoft.AppCode.Service.SalesBonusCalculator;
@@ -14,7 +22,10 @@ namespace Foxoft
     public partial class FormSalesBonusTxnList : RibbonForm
     {
         private readonly EfMethods efMethods = new();
+        private readonly DocumentLockService _lockService = new(new subContext());
         private bool canCalculate;
+        private GridColumn prevColumn = null;
+        private int prevRow = -1;
 
         public FormSalesBonusTxnList()
         {
@@ -47,12 +58,265 @@ namespace Foxoft
                 if (e.Info.IsRowIndicator && e.RowHandle >= 0)
                     e.Info.DisplayText = (e.RowHandle + 1).ToString();
             };
+            gridView1.ShowingEditor += GridView1_ShowingEditor;
+
+            ConfigureHyperLinkColumns();
 
             Load += (_, __) =>
             {
                 LoadPlans();
                 LoadData();
             };
+        }
+
+        private void GridView1_ShowingEditor(object sender, CancelEventArgs e)
+        {
+            if (sender is GridView view)
+            {
+                if (prevColumn != view.FocusedColumn || prevRow != view.FocusedRowHandle)
+                    e.Cancel = true;
+                prevColumn = view.FocusedColumn;
+                prevRow = view.FocusedRowHandle;
+            }
+        }
+
+        private void ConfigureHyperLinkColumns()
+        {
+            GridColumn col_InvoiceNum = colInvoice ?? gridView1.Columns["InvoiceDocumentNumber"];
+            if (col_InvoiceNum is not null)
+            {
+                RepositoryItemHyperLinkEdit HLE_InvoiceNum = new();
+                HLE_InvoiceNum.SingleClick = true;
+                HLE_InvoiceNum.OpenLink += RepoHLE_DocumentNumber_OpenLink;
+                col_InvoiceNum.ColumnEdit = HLE_InvoiceNum;
+                col_InvoiceNum.OptionsColumn.AllowEdit = true;
+                col_InvoiceNum.OptionsColumn.ReadOnly = true;
+            }
+
+            GridColumn col_PaymentNum = colPayment ?? gridView1.Columns["PaymentDocumentNumber"];
+            if (col_PaymentNum is not null)
+            {
+                RepositoryItemHyperLinkEdit HLE_PaymentNum = new();
+                HLE_PaymentNum.SingleClick = true;
+                HLE_PaymentNum.OpenLink += RepoHLE_DocumentNumber_OpenLink;
+                col_PaymentNum.ColumnEdit = HLE_PaymentNum;
+                col_PaymentNum.OptionsColumn.AllowEdit = true;
+                col_PaymentNum.OptionsColumn.ReadOnly = true;
+            }
+        }
+
+        private void RepoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+            prevColumn = null;
+            prevRow = -1;
+            e.Handled = true;
+
+            string? strDocNum = e.EditValue?.ToString();
+            if (string.IsNullOrEmpty(strDocNum))
+            {
+                object? objDocNum = gridView1.GetFocusedRowCellValue("InvoiceDocumentNumber")
+                                 ?? gridView1.GetFocusedValue();
+                strDocNum = objDocNum?.ToString();
+            }
+
+            if (!string.IsNullOrEmpty(strDocNum))
+            {
+                bool isOpen = InvoiceIsOpen(strDocNum);
+
+                if (!isOpen)
+                    OpenFormInvoice(strDocNum);
+            }
+        }
+
+        private bool InvoiceIsOpen(string docNum)
+        {
+            bool isOpen = false;
+            Process[]? processes = Process.GetProcessesByName("Foxoft");
+            foreach (Process? process in processes)
+            {
+                List<WindowInfo> childWindows = WindowsAPI.GetMDIChildWindowsOfProcess(process);
+                foreach (WindowInfo? window in childWindows)
+                {
+                    if (window.Tag == docNum)
+                    {
+                        isOpen = true;
+                        XtraMessageBox.Show(Resources.Form_ReportGrid_Message_InvoiceIsOpen);
+                    }
+                }
+            }
+
+            return isOpen;
+        }
+
+        private void OpenFormInvoice(string strDocNum)
+        {
+            TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
+            TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
+
+            if (trInvoiceHeader is not null)
+            {
+                string claim = CustomExtensions.GetClaim(trInvoiceHeader.ProcessCode);
+
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show(Resources.Common_AccessDenied);
+                    return;
+                }
+
+                FormERP? formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                if (formERP == null)
+                    return;
+
+                Guid formInstanceId = Guid.NewGuid();
+                byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
+
+                if (TryAcquireInvoiceLockForEdit(trInvoiceHeader.InvoiceHeaderId, formERP, formInstanceId))
+                {
+                    FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
+                    frm._formInstanceId = formInstanceId;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                        formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+            }
+            else if (trPaymentHeader is not null)
+            {
+                bool currAccHasMakePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "MakePayment");
+                bool currAccHasReceivePaymentClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ReceivePayment");
+
+                if (!(currAccHasMakePaymentClaims || currAccHasReceivePaymentClaims))
+                {
+                    MessageBox.Show(Resources.Common_AccessDenied);
+                    return;
+                }
+
+                if (trPaymentHeader.ProcessCode == "PA")
+                {
+                    FormPaymentDetail frm = new(trPaymentHeader.PaymentHeaderId);
+                    FormERP? formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    if (formERP?.parentRibbonControl.MergedPages.Count > 0)
+                        formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+                else if (trPaymentHeader.ProcessCode == "CT")
+                {
+                    FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
+                    FormERP? formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    if (formERP?.parentRibbonControl.MergedPages.Count > 0)
+                        formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+            }
+            else
+            {
+                MessageBox.Show(Resources.Common_NotFound);
+            }
+        }
+
+        private bool TryActivateOpenInvoiceWindow(Guid invoiceHeaderId, FormERP formERP)
+        {
+            if (formERP == null)
+                return false;
+
+            foreach (Form child in formERP.MdiChildren)
+            {
+                if (child is FormInvoice frm &&
+                    frm.trInvoiceHeader?.InvoiceHeaderId == invoiceHeaderId)
+                {
+                    if (frm.WindowState == FormWindowState.Minimized)
+                        frm.WindowState = FormWindowState.Normal;
+
+                    frm.BringToFront();
+                    frm.Activate();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool TryAcquireInvoiceLockForEdit(Guid invoiceHeaderId, FormERP formERP, Guid formInstanceId)
+        {
+            var res = _lockService.TryAcquireLock(
+                documentType: "Invoice",
+                documentId: invoiceHeaderId,
+                userId: Authorization.CurrAccCode,
+                machineName: Environment.MachineName,
+                appInstanceId: formERP._appInstanceId,
+                formInstanceId: formInstanceId,
+                clientProcessId: Process.GetCurrentProcess().Id,
+                timeout: TimeSpan.FromMinutes(10),
+                reason: "Edit invoice");
+
+            if (!res.Acquired)
+            {
+                if (res.LockedBy == Authorization.CurrAccCode &&
+                    res.AppInstanceId == formERP._appInstanceId)
+                {
+                    if (TryActivateOpenInvoiceWindow(invoiceHeaderId, formERP))
+                        return false;
+                }
+
+                bool canTakeover = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DocumentLockTakeover");
+
+                if (canTakeover)
+                {
+                    var answer = XtraMessageBox.Show(
+                        string.Format(Resources.Form_Invoice_LockTakeoverQuestion, res.LockedByName),
+                        Resources.Form_Invoice_LockTakeoverCaption,
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (answer == DialogResult.Yes)
+                    {
+                        var takeoverRes = _lockService.ForceTakeoverLock(
+                            documentType: "Invoice",
+                            documentId: invoiceHeaderId,
+                            newUserId: Authorization.CurrAccCode,
+                            machineName: Environment.MachineName,
+                            appInstanceId: formERP._appInstanceId,
+                            formInstanceId: formInstanceId,
+                            clientProcessId: Process.GetCurrentProcess().Id,
+                            reason: "Force takeover by authorized user");
+
+                        if (takeoverRes.Acquired)
+                            return true;
+                    }
+
+                    return false;
+                }
+
+                var closeAnswer = XtraMessageBox.Show(
+                    string.Format(
+                        Resources.Form_Invoice_LockedQuestion,
+                        res.LockedByName,
+                        res.MachineName,
+                        res.LockedAtUtc?.ToString("yyyy-MM-dd HH:mm:ss"),
+                        res.LastHeartbeatAtUtc?.ToString("yyyy-MM-dd HH:mm:ss")),
+                    Resources.Form_Invoice_LockedCaption,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (closeAnswer == DialogResult.Yes)
+                {
+                    _lockService.RequestOwnerToClose(
+                        documentType: "Invoice",
+                        documentId: invoiceHeaderId,
+                        requestedByUserId: Authorization.CurrAccCode,
+                        note: "Another user wants to edit this invoice.");
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         private void BtnSalesPerson_ButtonClick(object sender, ButtonPressedEventArgs e)
