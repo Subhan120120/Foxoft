@@ -21494,6 +21494,90 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_SalesBonusAssignmentList_BatchAssign {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusAssignmentList_BatchAssign", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_Title {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_Title", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_Assign {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_Assign", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_Personnel {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_Personnel", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_SelectAll {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_SelectAll", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_UnselectAll {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_UnselectAll", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_SelectedCount {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_SelectedCount", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_NoPersonnelSelected {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_NoPersonnelSelected", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_CloseExisting {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_CloseExisting", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_CurrentPlan {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_CurrentPlan", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_Confirm {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_Confirm", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_ConfirmWithRemoval {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_ConfirmWithRemoval", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_ConfirmRemoveAll {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_ConfirmRemoveAll", resourceCulture);
+            }
+        }
+
+        public static string Form_SalesBonusBatchAssign_Success {
+            get {
+                return ResourceManager.GetString("Form_SalesBonusBatchAssign_Success", resourceCulture);
+            }
+        }
+
         public static string Form_SalesBonusAssignmentList_DeleteConfirm {
             get {
                 return ResourceManager.GetString("Form_SalesBonusAssignmentList_DeleteConfirm", resourceCulture);

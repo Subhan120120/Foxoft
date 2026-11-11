@@ -46,7 +46,7 @@ namespace Foxoft
 
             var btnGroup = root.AddGroup();
             btnGroup.GroupBordersVisible = false;
-            btnGroup.AddItem("", this.btnClose);
+            btnGroup.AddItem("", this.btnClose).TextVisible = false;
 
             this.Controls.Add(this.layout);
 

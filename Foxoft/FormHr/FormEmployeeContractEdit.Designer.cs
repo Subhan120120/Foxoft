@@ -102,16 +102,16 @@ namespace Foxoft
 
             var addendaBtnGroup = addendaGroup.AddGroup();
             addendaBtnGroup.GroupBordersVisible = false;
-            addendaBtnGroup.AddItem("", this.btnAddAddendum);
-            addendaBtnGroup.AddItem("", this.btnEditAddendum);
-            addendaBtnGroup.AddItem("", this.btnDeleteAddendum);
+            addendaBtnGroup.AddItem("", this.btnAddAddendum).TextVisible = false;
+            addendaBtnGroup.AddItem("", this.btnEditAddendum).TextVisible = false;
+            addendaBtnGroup.AddItem("", this.btnDeleteAddendum).TextVisible = false;
 
-            addendaGroup.AddItem("", this.gridAddenda);
+            addendaGroup.AddItem("", this.gridAddenda).TextVisible = false;
 
             var btnGroup = root.AddGroup();
             btnGroup.GroupBordersVisible = false;
-            btnGroup.AddItem("", this.btnSave);
-            btnGroup.AddItem("", this.btnCancel);
+            btnGroup.AddItem("", this.btnSave).TextVisible = false;
+            btnGroup.AddItem("", this.btnCancel).TextVisible = false;
 
             this.Controls.Add(this.layout);
 

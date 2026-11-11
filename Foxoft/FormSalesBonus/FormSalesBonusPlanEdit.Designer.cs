@@ -318,39 +318,39 @@ namespace Foxoft
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_SalesBonusPlan_MinBaseAmount, this.spinMinBaseAmount);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_SalesBonusPlan_MaxBonusAmount, this.spinMaxBonusAmount);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_SalesBonusPlan_ProcessCodes, this.txtProcessCodes);
-            this.layout.AddItem("", this.chkIsActive);
+            this.layout.AddItem("", this.chkIsActive).TextVisible = false;
 
             var tabbed = root.AddTabbedGroup();
 
             var tabTiers = tabbed.AddTabPage();
             tabTiers.Text = Foxoft.Properties.Resources.Form_SalesBonusPlanEdit_TiersGroup;
-            tabTiers.AddItem("", this.lblTierHint);
+            tabTiers.AddItem("", this.lblTierHint).TextVisible = false;
             var tierBtnGroup = tabTiers.AddGroup();
             tierBtnGroup.GroupBordersVisible = false;
-            tierBtnGroup.AddItem("", this.btnAddTier);
-            tierBtnGroup.AddItem("", this.btnRemoveTier);
-            tabTiers.AddItem("", this.gridTiers);
+            tierBtnGroup.AddItem("", this.btnAddTier).TextVisible = false;
+            tierBtnGroup.AddItem("", this.btnRemoveTier).TextVisible = false;
+            tabTiers.AddItem("", this.gridTiers).TextVisible = false;
 
             var tabProducts = tabbed.AddTabPage();
             tabProducts.Text = Foxoft.Properties.Resources.Form_SalesBonusPlanEdit_ProductsGroup;
             var productBtnGroup = tabProducts.AddGroup();
             productBtnGroup.GroupBordersVisible = false;
-            productBtnGroup.AddItem("", this.btnAddProduct);
-            productBtnGroup.AddItem("", this.btnRemoveProduct);
-            tabProducts.AddItem("", this.gridProducts);
+            productBtnGroup.AddItem("", this.btnAddProduct).TextVisible = false;
+            productBtnGroup.AddItem("", this.btnRemoveProduct).TextVisible = false;
+            tabProducts.AddItem("", this.gridProducts).TextVisible = false;
 
             var tabCategories = tabbed.AddTabPage();
             tabCategories.Text = Foxoft.Properties.Resources.Form_SalesBonusPlanEdit_CategoriesGroup;
             var categoryBtnGroup = tabCategories.AddGroup();
             categoryBtnGroup.GroupBordersVisible = false;
-            categoryBtnGroup.AddItem("", this.btnAddCategory);
-            categoryBtnGroup.AddItem("", this.btnRemoveCategory);
-            tabCategories.AddItem("", this.gridCategories);
+            categoryBtnGroup.AddItem("", this.btnAddCategory).TextVisible = false;
+            categoryBtnGroup.AddItem("", this.btnRemoveCategory).TextVisible = false;
+            tabCategories.AddItem("", this.gridCategories).TextVisible = false;
 
             var btnGroup = root.AddGroup();
             btnGroup.GroupBordersVisible = false;
-            btnGroup.AddItem("", this.btnSave);
-            btnGroup.AddItem("", this.btnCancel);
+            btnGroup.AddItem("", this.btnSave).TextVisible = false;
+            btnGroup.AddItem("", this.btnCancel).TextVisible = false;
 
             this.Controls.Add(this.layout);
 

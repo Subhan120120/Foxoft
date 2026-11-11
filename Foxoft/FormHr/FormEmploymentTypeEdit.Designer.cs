@@ -41,12 +41,12 @@ namespace Foxoft
             this.layout.Root = root;
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_DcEmploymentType_TypeCode, this.txtCode);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_DcEmploymentType_TypeName, this.txtName);
-            this.layout.AddItem("", this.chkActive);
+            this.layout.AddItem("", this.chkActive).TextVisible = false;
 
             var btnGroup = root.AddGroup();
             btnGroup.GroupBordersVisible = false;
-            btnGroup.AddItem("", this.btnSave);
-            btnGroup.AddItem("", this.btnCancel);
+            btnGroup.AddItem("", this.btnSave).TextVisible = false;
+            btnGroup.AddItem("", this.btnCancel).TextVisible = false;
 
             this.Controls.Add(this.layout);
 

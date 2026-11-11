@@ -94,13 +94,13 @@ namespace Foxoft
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_SalesBonusAssignment_StartDate, this.dtStart);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_SalesBonusAssignment_EndDate, this.dtEnd);
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_SalesBonusAssignment_TargetAmount, this.spinTargetAmount);
-            this.layout.AddItem("", this.chkIsActive);
+            this.layout.AddItem("", this.chkIsActive).TextVisible = false;
             this.layout.AddItem(Foxoft.Properties.Resources.Entity_SalesBonusAssignment_Note, this.txtNote);
 
             var btnGroup = root.AddGroup();
             btnGroup.GroupBordersVisible = false;
-            btnGroup.AddItem("", this.btnSave);
-            btnGroup.AddItem("", this.btnCancel);
+            btnGroup.AddItem("", this.btnSave).TextVisible = false;
+            btnGroup.AddItem("", this.btnCancel).TextVisible = false;
 
             this.Controls.Add(this.layout);
 

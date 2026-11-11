@@ -159,7 +159,7 @@ namespace Foxoft
             this.layoutFilter.AddItem(Foxoft.Properties.Resources.Form_SalesBonusTxnList_DateTo, this.dtTo);
             this.layoutFilter.AddItem(Foxoft.Properties.Resources.Entity_SalesBonusAssignment_SalesPersonCode, this.btnSalesPerson);
             this.layoutFilter.AddItem(Foxoft.Properties.Resources.Entity_SalesBonusAssignment_PlanId, this.lkpPlan);
-            this.layoutFilter.AddItem("", this.chkOnlyPending);
+            this.layoutFilter.AddItem("", this.chkOnlyPending).TextVisible = false;
             //
             // gridControl1
             //

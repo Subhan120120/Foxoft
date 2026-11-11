@@ -27,35 +27,7 @@ select  PaymentLineId
 
 , CurrAccDesc = Case when ih.ProcessCode IN ('EX', 'EI') then DcProducts.ProductDesc else DcCurrAccs.CurrAccDesc end 
 
---, [Cari Hesab Balansı] = (
---	ISNULL((
---		select sum((QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100)))
---		from TrInvoiceLines il
---		left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId
---		where ih.CurrAccCode = TrPaymentHeaders.CurrAccCode
---		  and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT')
---		  and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=
---		      (CAST(TrPaymentHeaders.DocumentDate AS DATETIME) + CAST(TrPaymentHeaders.DocumentTime AS DATETIME))
---	), 0)
---	+ 
---	ISNULL((
---		select sum(pl.PaymentLoc)
---		from TrPaymentLines pl
---		left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	
---		where ph.CurrAccCode = TrPaymentHeaders.CurrAccCode 
---		  and (CAST(ph.DocumentDate AS DATETIME) + CAST(ph.DocumentTime AS DATETIME)) <=
---		      (CAST(TrPaymentHeaders.DocumentDate AS DATETIME) + CAST(TrPaymentHeaders.DocumentTime AS DATETIME))
---	), 0)
---	+
---	ISNULL((
---		select sum(prh.NetSalary)
---		from TrPayrollHeaders prh
---		left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id
---		where prh.CurrAccCode = TrPaymentHeaders.CurrAccCode
---		  and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=
---		      (CAST(TrPaymentHeaders.DocumentDate AS DATETIME) + CAST(TrPaymentHeaders.DocumentTime AS DATETIME))
---	), 0)
---)
+--, [Cari Hesab Balansı] = dbo.CurrAccBalance(ph.CurrAccCode, CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME))
 
 from TrPaymentLines pl
 left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId

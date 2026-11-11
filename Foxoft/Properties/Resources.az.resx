@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -7478,6 +7478,48 @@ Google hesabı: {1}</value>
   </data>
   <data name="Form_SalesBonusAssignmentList_Caption" xml:space="preserve">
     <value>Bonus Plan Təyinatları</value>
+  </data>
+  <data name="Form_SalesBonusAssignmentList_BatchAssign" xml:space="preserve">
+    <value>Toplu Təyinat</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Title" xml:space="preserve">
+    <value>Toplu Bonus Planı Təyinatı</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Assign" xml:space="preserve">
+    <value>Təyin Et</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Personnel" xml:space="preserve">
+    <value>Personallar</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_SelectAll" xml:space="preserve">
+    <value>Hamısını seç</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_UnselectAll" xml:space="preserve">
+    <value>Seçimi təmizlə</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_SelectedCount" xml:space="preserve">
+    <value>Seçilmiş: {0}</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_NoPersonnelSelected" xml:space="preserve">
+    <value>Zəhmət olmasa ən azı bir personal seçin.</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_CloseExisting" xml:space="preserve">
+    <value>Mövcud üst-üstə düşən aktiv təyinatları bağla</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_CurrentPlan" xml:space="preserve">
+    <value>Mövcud Aktiv Plan</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Confirm" xml:space="preserve">
+    <value>Seçilmiş {0} personala '{1}' planı təyin edilsin?</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_ConfirmWithRemoval" xml:space="preserve">
+    <value>Seçilmiş {0} personala '{1}' planı təyin edilsin və {2} personalın təyinatı ləğv edilsin?</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_ConfirmRemoveAll" xml:space="preserve">
+    <value>'{0}' planı üzrə bütün {1} personalın təyinatı ləğv edilsin?</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Success" xml:space="preserve">
+    <value>{0} personala bonus planı uğurla təyin edildi.</value>
   </data>
   <data name="Form_SalesBonusAssignmentList_DeleteConfirm" xml:space="preserve">
     <value>Seçilmiş təyinat silinsin?</value>

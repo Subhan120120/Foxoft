@@ -209,12 +209,12 @@ namespace Foxoft
 
             var grpLines = root.AddGroup();
             grpLines.Text = Foxoft.Properties.Resources.Form_PayrollEdit_Lines;
-            grpLines.AddItem("", this.gridLines);
+            grpLines.AddItem("", this.gridLines).TextVisible = false;
 
             var grpLineButtons = root.AddGroup();
             grpLineButtons.GroupBordersVisible = false;
-            grpLineButtons.AddItem("", this.btnAddLine);
-            grpLineButtons.AddItem("", this.btnRemoveLine);
+            grpLineButtons.AddItem("", this.btnAddLine).TextVisible = false;
+            grpLineButtons.AddItem("", this.btnRemoveLine).TextVisible = false;
 
             var grpTotals = root.AddGroup();
             grpTotals.Text = Foxoft.Properties.Resources.Form_PayrollEdit_Totals;

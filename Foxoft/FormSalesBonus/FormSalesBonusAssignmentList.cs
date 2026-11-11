@@ -4,6 +4,7 @@ using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -17,6 +18,7 @@ namespace Foxoft
             Load += (_, __) => LoadData();
 
             btnNew.ItemClick += (_, __) => NewItem();
+            btnBatchAssign.ItemClick += (_, __) => BatchAssign();
             btnEdit.ItemClick += (_, __) => EditItem();
             btnDelete.ItemClick += (_, __) => DeleteItem();
             btnRefresh.ItemClick += (_, __) => LoadData();
@@ -44,6 +46,7 @@ namespace Foxoft
                 .Select(x => new
                 {
                     Id = x.SalesBonusAssignmentId,
+                    SalesBonusPlanId = x.SalesBonusPlanId,
                     x.SalesPersonCode,
                     SalesPersonName = EmployeeName(x.DcCurrAcc),
                     PlanName = x.DcSalesBonusPlan?.PlanName,
@@ -75,9 +78,25 @@ namespace Foxoft
             return prop == null ? null : (Guid?)prop.GetValue(row);
         }
 
+        private Guid? FocusedPlanId()
+        {
+            var row = gridView1.GetFocusedRow();
+            if (row == null) return null;
+            var prop = row.GetType().GetProperty("SalesBonusPlanId");
+            return prop == null ? null : (Guid?)prop.GetValue(row);
+        }
+
         private void NewItem()
         {
             using var f = new FormSalesBonusAssignmentEdit(null);
+            if (f.ShowDialog(this) == DialogResult.OK)
+                LoadData();
+        }
+
+        private void BatchAssign()
+        {
+            Guid? planId = FocusedPlanId();
+            using var f = new FormSalesBonusBatchAssign(planId);
             if (f.ShowDialog(this) == DialogResult.OK)
                 LoadData();
         }
@@ -94,8 +113,32 @@ namespace Foxoft
 
         private void DeleteItem()
         {
-            var id = FocusedId();
-            if (id == null) return;
+            var selectedRows = gridView1.GetSelectedRows();
+            var ids = new List<Guid>();
+            if (selectedRows != null && selectedRows.Length > 0)
+            {
+                foreach (int handle in selectedRows)
+                {
+                    if (handle >= 0)
+                    {
+                        var row = gridView1.GetRow(handle);
+                        if (row != null)
+                        {
+                            var prop = row.GetType().GetProperty("Id");
+                            if (prop?.GetValue(row) is Guid id)
+                                ids.Add(id);
+                        }
+                    }
+                }
+            }
+
+            if (ids.Count == 0)
+            {
+                var id = FocusedId();
+                if (id != null) ids.Add(id.Value);
+            }
+
+            if (ids.Count == 0) return;
 
             if (XtraMessageBox.Show(this, Properties.Resources.Form_SalesBonusAssignmentList_DeleteConfirm, Properties.Resources.Common_Confirm,
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
@@ -104,10 +147,10 @@ namespace Foxoft
             try
             {
                 using var db = new subContext();
-                var entity = db.TrSalesBonusAssignments.FirstOrDefault(x => x.SalesBonusAssignmentId == id.Value);
-                if (entity == null) return;
+                var entities = db.TrSalesBonusAssignments.Where(x => ids.Contains(x.SalesBonusAssignmentId)).ToList();
+                if (entities.Count == 0) return;
 
-                db.TrSalesBonusAssignments.Remove(entity);
+                db.TrSalesBonusAssignments.RemoveRange(entities);
                 db.SaveChanges();
                 LoadData();
             }
@@ -116,6 +159,11 @@ namespace Foxoft
                 XtraMessageBox.Show(this, ex.InnerException?.Message ?? ex.Message, Properties.Resources.Common_Attention,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void FormSalesBonusAssignmentList_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -167,12 +167,12 @@ namespace Foxoft
             var optionGroup = root.AddGroup();
             optionGroup.GroupBordersVisible = false;
             optionGroup.DefaultLayoutType = DevExpress.XtraLayout.Utils.LayoutType.Horizontal;
-            optionGroup.AddItem("", this.chkIncludeAuto);
-            optionGroup.AddItem("", this.btnPreview);
-            optionGroup.AddItem("", this.btnPost);
-            optionGroup.AddItem("", this.btnClose);
+            optionGroup.AddItem("", this.chkIncludeAuto).TextVisible = false;
+            optionGroup.AddItem("", this.btnPreview).TextVisible = false;
+            optionGroup.AddItem("", this.btnPost).TextVisible = false;
+            optionGroup.AddItem("", this.btnClose).TextVisible = false;
 
-            root.AddItem("", this.gridControl1);
+            root.AddItem("", this.gridControl1).TextVisible = false;
 
             this.Controls.Add(this.layout);
 

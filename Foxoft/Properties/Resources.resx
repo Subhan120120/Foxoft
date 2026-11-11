@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -7478,6 +7478,48 @@ Google account: {1}</value>
   </data>
   <data name="Form_SalesBonusAssignmentList_Caption" xml:space="preserve">
     <value>Bonus Plan Assignments</value>
+  </data>
+  <data name="Form_SalesBonusAssignmentList_BatchAssign" xml:space="preserve">
+    <value>Batch Assign</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Title" xml:space="preserve">
+    <value>Batch Bonus Assignment</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Assign" xml:space="preserve">
+    <value>Assign</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Personnel" xml:space="preserve">
+    <value>Personnel</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_SelectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_UnselectAll" xml:space="preserve">
+    <value>Clear Selection</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_SelectedCount" xml:space="preserve">
+    <value>Selected: {0}</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_NoPersonnelSelected" xml:space="preserve">
+    <value>Please select at least one employee.</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_CloseExisting" xml:space="preserve">
+    <value>Close overlapping active assignments</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_CurrentPlan" xml:space="preserve">
+    <value>Current Active Plan</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Confirm" xml:space="preserve">
+    <value>Assign plan '{1}' to {0} selected employee(s)?</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_ConfirmWithRemoval" xml:space="preserve">
+    <value>Assign plan '{1}' to {0} employee(s) and remove from {2} employee(s)?</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_ConfirmRemoveAll" xml:space="preserve">
+    <value>Remove assignment of plan '{0}' from all {1} employee(s)?</value>
+  </data>
+  <data name="Form_SalesBonusBatchAssign_Success" xml:space="preserve">
+    <value>Bonus plan successfully assigned to {0} employee(s).</value>
   </data>
   <data name="Form_SalesBonusAssignmentList_DeleteConfirm" xml:space="preserve">
     <value>Delete the selected assignment?</value>
