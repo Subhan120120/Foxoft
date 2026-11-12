@@ -342,5 +342,20 @@ namespace Foxoft.Properties
                 this["ProductMatchSettings"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CountingAutoAddCostPrice
+        {
+            get
+            {
+                return ((bool)(this["CountingAutoAddCostPrice"]));
+            }
+            set
+            {
+                this["CountingAutoAddCostPrice"] = value;
+            }
+        }
     }
 }

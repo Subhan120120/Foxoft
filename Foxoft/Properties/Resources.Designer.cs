@@ -10094,6 +10094,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automatically add cost price.
+        /// </summary>
+        public static string Form_Counting_CheckEdit_AutoAddCostPrice {
+            get {
+                return ResourceManager.GetString("Form_Counting_CheckEdit_AutoAddCostPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Store.
         /// </summary>
         public static string Form_Counting_LUE_Store_NullText {

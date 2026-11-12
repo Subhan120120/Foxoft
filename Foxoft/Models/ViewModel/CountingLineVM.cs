@@ -116,6 +116,11 @@ namespace Foxoft.Models.ViewModel
         [Display(Name = nameof(Resources.Entity_InvoiceLine_WorkerCode), ResourceType = typeof(Resources))]
         public string? WorkerCode { get; set; }
 
+        [Column(TypeName = "money")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductCost), ResourceType = typeof(Resources))]
+        public decimal? ProductCost { get; set; }
+
         [NotMapped]
         [Display(Name = nameof(Resources.Common_Balance), ResourceType = typeof(Resources))]
         public decimal Balance { get; set; }

@@ -42,6 +42,7 @@ namespace Foxoft
             LUE_StoreCode = new DevExpress.XtraEditors.LookUpEdit();
             LUE_WarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
             checkEdit_ResetUncountedProductBalance = new DevExpress.XtraEditors.CheckEdit();
+            checkEdit_AutoAddCostPrice = new DevExpress.XtraEditors.CheckEdit();
             completionWizardPage1 = new DevExpress.XtraWizard.CompletionWizardPage();
             wizardPage2 = new DevExpress.XtraWizard.WizardPage();
             gridControl1 = new MyGridControl();
@@ -69,12 +70,14 @@ namespace Foxoft
             colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
             colPosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            colProductCost = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)wizardControl1).BeginInit();
             wizardControl1.SuspendLayout();
             welcomeWizardPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LUE_StoreCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LUE_WarehouseCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_ResetUncountedProductBalance.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)checkEdit_AutoAddCostPrice.Properties).BeginInit();
             wizardPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLineBindingSource).BeginInit();
@@ -86,7 +89,7 @@ namespace Foxoft
             colDifference.FieldName = "Difference";
             colDifference.Name = "colDifference";
             colDifference.Visible = true;
-            colDifference.VisibleIndex = 11;
+            colDifference.VisibleIndex = 12;
             // 
             // wizardControl1
             // 
@@ -108,6 +111,7 @@ namespace Foxoft
             welcomeWizardPage1.Controls.Add(LUE_StoreCode);
             welcomeWizardPage1.Controls.Add(LUE_WarehouseCode);
             welcomeWizardPage1.Controls.Add(checkEdit_ResetUncountedProductBalance);
+            welcomeWizardPage1.Controls.Add(checkEdit_AutoAddCostPrice);
             welcomeWizardPage1.Margin = new Padding(4, 3, 4, 3);
             welcomeWizardPage1.Name = "welcomeWizardPage1";
             welcomeWizardPage1.Size = new Size(767, 396);
@@ -145,6 +149,14 @@ namespace Foxoft
             checkEdit_ResetUncountedProductBalance.Size = new Size(255, 20);
             checkEdit_ResetUncountedProductBalance.TabIndex = 1;
             // 
+            // checkEdit_AutoAddCostPrice
+            // 
+            checkEdit_AutoAddCostPrice.Location = new Point(3, 124);
+            checkEdit_AutoAddCostPrice.Name = "checkEdit_AutoAddCostPrice";
+            checkEdit_AutoAddCostPrice.Properties.Caption = Resources.Form_Counting_CheckEdit_AutoAddCostPrice;
+            checkEdit_AutoAddCostPrice.Size = new Size(275, 20);
+            checkEdit_AutoAddCostPrice.TabIndex = 2;
+            // 
             // completionWizardPage1
             // 
             completionWizardPage1.Margin = new Padding(4, 3, 4, 3);
@@ -175,7 +187,7 @@ namespace Foxoft
             // 
             // gridView1
             // 
-            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colRelatedLineId, colProductCode, colQty, colQtyIn, colQtyOut, colUnitOfMeasureId, colPrice, colPriceLoc, colAmount, colAmountLoc, colNetAmount, colNetAmountLoc, colDiscountCampaign, colLineDescription, colSerialNumberCode, colBalance, colCurrencyCode, colExchangeRate, colPosDiscount, colDifference, col_ProductDesc });
+            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colRelatedLineId, colProductCode, colQty, colQtyIn, colQtyOut, colUnitOfMeasureId, colPrice, colPriceLoc, colAmount, colAmountLoc, colNetAmount, colNetAmountLoc, colDiscountCampaign, colLineDescription, colSerialNumberCode, colBalance, colCurrencyCode, colExchangeRate, colPosDiscount, colDifference, col_ProductDesc, colProductCost });
             gridFormatRule1.Column = colDifference;
             gridFormatRule1.Name = "ruleNegative";
             formatConditionRuleValue1.Appearance.ForeColor = Color.Red;
@@ -252,6 +264,17 @@ namespace Foxoft
             colPrice.Visible = true;
             colPrice.VisibleIndex = 5;
             // 
+            // colProductCost
+            // 
+            colProductCost.Caption = Resources.Entity_InvoiceLine_ProductCost;
+            colProductCost.DisplayFormat.FormatString = "{0:0.####}";
+            colProductCost.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colProductCost.FieldName = "ProductCost";
+            colProductCost.Name = "colProductCost";
+            colProductCost.OptionsColumn.AllowEdit = false;
+            colProductCost.Visible = true;
+            colProductCost.VisibleIndex = 6;
+            // 
             // colPriceLoc
             // 
             colPriceLoc.FieldName = "PriceLoc";
@@ -272,7 +295,7 @@ namespace Foxoft
             colNetAmount.FieldName = "NetAmount";
             colNetAmount.Name = "colNetAmount";
             colNetAmount.Visible = true;
-            colNetAmount.VisibleIndex = 8;
+            colNetAmount.VisibleIndex = 9;
             // 
             // colNetAmountLoc
             // 
@@ -289,7 +312,7 @@ namespace Foxoft
             colLineDescription.FieldName = "LineDescription";
             colLineDescription.Name = "colLineDescription";
             colLineDescription.Visible = true;
-            colLineDescription.VisibleIndex = 9;
+            colLineDescription.VisibleIndex = 10;
             // 
             // colSerialNumberCode
             // 
@@ -303,14 +326,14 @@ namespace Foxoft
             colBalance.FieldName = "Balance";
             colBalance.Name = "colBalance";
             colBalance.Visible = true;
-            colBalance.VisibleIndex = 10;
+            colBalance.VisibleIndex = 11;
             // 
             // colCurrencyCode
             // 
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
-            colCurrencyCode.VisibleIndex = 6;
+            colCurrencyCode.VisibleIndex = 7;
             // 
             // colExchangeRate
             // 
@@ -323,7 +346,7 @@ namespace Foxoft
             colPosDiscount.Name = "colPosDiscount";
             colPosDiscount.OptionsFilter.AllowFilter = false;
             colPosDiscount.Visible = true;
-            colPosDiscount.VisibleIndex = 7;
+            colPosDiscount.VisibleIndex = 8;
             // 
             // col_ProductDesc
             // 
@@ -354,6 +377,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)LUE_StoreCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)LUE_WarehouseCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_ResetUncountedProductBalance.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)checkEdit_AutoAddCostPrice.Properties).EndInit();
             wizardPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLineBindingSource).EndInit();
@@ -368,6 +392,7 @@ namespace Foxoft
         private DevExpress.XtraWizard.WelcomeWizardPage welcomeWizardPage1;
         private DevExpress.XtraWizard.CompletionWizardPage completionWizardPage1;
         private DevExpress.XtraEditors.CheckEdit checkEdit_ResetUncountedProductBalance;
+        private DevExpress.XtraEditors.CheckEdit checkEdit_AutoAddCostPrice;
         private DevExpress.XtraWizard.WizardPage wizardPage2;
         private MyGridControl gridControl1;
         private MyGridView gridView1;
@@ -397,5 +422,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.LookUpEdit LUE_StoreCode;
         private DevExpress.XtraGrid.Columns.GridColumn colDifference;
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn colProductCost;
     }
 }

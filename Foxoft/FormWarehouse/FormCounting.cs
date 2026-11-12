@@ -2,7 +2,9 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraWizard;
 using Foxoft.Migrations;
 using Foxoft.Models;
+using Foxoft.Models.Entity;
 using Foxoft.Models.ViewModel;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,22 +21,39 @@ namespace Foxoft
 {
     public partial class FormCounting : Form
     {
-        List<CountingLineVM> countingVM;
-        EfMethods efMethods = new EfMethods();
-        Guid relatedInvoiceId;
+        private List<CountingLineVM> countingVM;
+        private readonly List<TrInvoiceLine> rawInvoiceLines;
+        private readonly EfMethods efMethods = new();
+        private readonly Guid relatedInvoiceId;
+
         public FormCounting(List<TrInvoiceLine> invoiceLines, Guid relatedInvoiceId)
         {
             InitializeComponent();
 
             this.relatedInvoiceId = relatedInvoiceId;
-            this.countingVM = AutoMapper<TrInvoiceLine, CountingLineVM>.MapList(invoiceLines);
+            this.rawInvoiceLines = invoiceLines ?? new List<TrInvoiceLine>();
+            this.countingVM = AutoMapper<TrInvoiceLine, CountingLineVM>.MapList(rawInvoiceLines);
             LUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
+
+            if (!string.IsNullOrEmpty(Authorization.StoreCode) && LUE_StoreCode.EditValue == null)
+            {
+                LUE_StoreCode.EditValue = Authorization.StoreCode;
+            }
+
+            checkEdit_AutoAddCostPrice.Checked = Settings.Default.CountingAutoAddCostPrice;
         }
 
         private void WizardControl1_NextClick(object sender, WizardCommandButtonClickEventArgs e)
         {
             if (e.Page == welcomeWizardPage1)
             {
+                countingVM = AutoMapper<TrInvoiceLine, CountingLineVM>.MapList(rawInvoiceLines);
+
+                if (checkEdit_AutoAddCostPrice.Checked)
+                {
+                    ApplyProductCosts(countingVM);
+                }
+
                 // Aggregate identical products
                 countingVM = countingVM
                     .GroupBy(x => new
@@ -47,7 +66,8 @@ namespace Foxoft
                         x.PriceLoc,
                         x.ExchangeRate,
                         x.PosDiscount,
-                        x.VatRate
+                        x.VatRate,
+                        x.ProductCost
                     })
                     .Select(g =>
                     {
@@ -63,10 +83,12 @@ namespace Foxoft
                     })
                     .ToList();
 
+                string warehouseCode = LUE_WarehouseCode.EditValue?.ToString();
+
                 countingVM.ForEach(x =>
                 {
-                    x.Balance = CalcProductBalance(x.SerialNumberCode, x.ProductCode, LUE_WarehouseCode.EditValue?.ToString(), 0);
-                    x.Difference = x.Qty - CalcProductBalance(x.SerialNumberCode, x.ProductCode, LUE_WarehouseCode.EditValue?.ToString(), 0);
+                    x.Balance = CalcProductBalance(x.SerialNumberCode, x.ProductCode, warehouseCode, 0);
+                    x.Difference = x.Qty - x.Balance;
                 });
 
                 gridControl1.DataSource = countingVM;
@@ -79,9 +101,59 @@ namespace Foxoft
             }
         }
 
+        private void ApplyProductCosts(List<CountingLineVM> lines)
+        {
+            if (lines == null || lines.Count == 0)
+                return;
+
+            List<string> productCodes = lines
+                .Where(x => !string.IsNullOrEmpty(x.ProductCode))
+                .Select(x => x.ProductCode)
+                .Distinct()
+                .ToList();
+
+            if (productCodes.Count == 0)
+                return;
+
+            using subContext db = new();
+
+            Dictionary<string, decimal> costDict = new(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var chunk in productCodes.Chunk(1000))
+            {
+                var chunkCosts = db.DcProducts
+                    .Where(p => chunk.Contains(p.ProductCode))
+                    .Select(p => new
+                    {
+                        p.ProductCode,
+                        Cost = SqlFunctions.GetProductCost(p.ProductCode, null),
+                        p.PurchasePrice
+                    })
+                    .ToList();
+
+                foreach (var item in chunkCosts)
+                {
+                    decimal effectiveCost = item.Cost > 0 ? item.Cost : (item.PurchasePrice > 0 ? item.PurchasePrice : 0m);
+                    costDict[item.ProductCode] = effectiveCost;
+                }
+            }
+
+            foreach (var line in lines)
+            {
+                if (costDict.TryGetValue(line.ProductCode, out decimal cost) && cost > 0)
+                {
+                    line.ProductCost = cost;
+                    line.Price = cost;
+                }
+            }
+        }
+
         private void WizardControl1_FinishClick(object sender, CancelEventArgs e)
         {
             string warehouseCode = LUE_WarehouseCode.EditValue?.ToString();
+
+            Settings.Default.CountingAutoAddCostPrice = checkEdit_AutoAddCostPrice.Checked;
+            Settings.Default.Save();
 
             if (countingVM.Where(x => x.Difference > 0).Any())
             {
@@ -127,6 +199,7 @@ namespace Foxoft
                     invoiceLine.SerialNumberCode = x.SerialNumberCode;
                     invoiceLine.UnitOfMeasureId = x.UnitOfMeasureId;
                     invoiceLine.VatRate = x.VatRate;
+                    invoiceLine.ProductCost = x.ProductCost ?? (x.Price > 0 ? x.Price : null);
 
                     efMethods.InsertEntity<TrInvoiceLine>(invoiceLine);
                 });
@@ -176,6 +249,7 @@ namespace Foxoft
                     invoiceLine.SerialNumberCode = x.SerialNumberCode;
                     invoiceLine.UnitOfMeasureId = x.UnitOfMeasureId;
                     invoiceLine.VatRate = x.VatRate;
+                    invoiceLine.ProductCost = x.ProductCost ?? (x.Price > 0 ? x.Price : null);
 
                     efMethods.InsertEntity<TrInvoiceLine>(invoiceLine);
                 });
@@ -217,6 +291,34 @@ namespace Foxoft
 
                     efMethods.InsertEntity<TrInvoiceHeader>(resetHeader);
 
+                    Dictionary<string, decimal>? uncountedCostDict = null;
+                    if (checkEdit_AutoAddCostPrice.Checked)
+                    {
+                        var uncountedCodes = productsWithStock.Select(p => p.ProductCode).Distinct().ToList();
+                        uncountedCostDict = new Dictionary<string, decimal>(StringComparer.OrdinalIgnoreCase);
+
+                        foreach (var chunk in uncountedCodes.Chunk(1000))
+                        {
+                            var chunkCosts = db.DcProducts
+                                .Where(p => chunk.Contains(p.ProductCode))
+                                .Select(p => new
+                                {
+                                    p.ProductCode,
+                                    Cost = SqlFunctions.GetProductCost(p.ProductCode, null),
+                                    p.PurchasePrice
+                                })
+                                .ToList();
+
+                            foreach (var item in chunkCosts)
+                            {
+                                decimal effectiveCost = item.Cost > 0 ? item.Cost : (item.PurchasePrice > 0 ? item.PurchasePrice : 0m);
+                                uncountedCostDict[item.ProductCode] = effectiveCost;
+                            }
+                        }
+                    }
+
+                    string localCurrency = Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+
                     foreach (var p in productsWithStock)
                     {
                         TrInvoiceLine resetLine = new();
@@ -225,6 +327,18 @@ namespace Foxoft
                         resetLine.CreatedDate = DateTime.Now;
                         resetLine.CreatedUserName = Authorization.CurrAccCode;
                         resetLine.ProductCode = p.ProductCode;
+                        resetLine.CurrencyCode = localCurrency;
+                        resetLine.ExchangeRate = 1;
+
+                        decimal cost = 0m;
+                        if (checkEdit_AutoAddCostPrice.Checked && uncountedCostDict != null && uncountedCostDict.TryGetValue(p.ProductCode, out decimal foundCost))
+                        {
+                            cost = foundCost;
+                        }
+
+                        resetLine.Price = cost;
+                        resetLine.PriceLoc = cost;
+                        resetLine.ProductCost = cost > 0 ? cost : null;
 
                         if (p.Balance > 0)
                             resetLine.QtyOut = p.Balance;
