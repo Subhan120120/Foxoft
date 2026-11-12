@@ -71,6 +71,7 @@ namespace Foxoft
             colPosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductCost = new DevExpress.XtraGrid.Columns.GridColumn();
+            colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)wizardControl1).BeginInit();
             wizardControl1.SuspendLayout();
             welcomeWizardPage1.SuspendLayout();
@@ -89,7 +90,7 @@ namespace Foxoft
             colDifference.FieldName = "Difference";
             colDifference.Name = "colDifference";
             colDifference.Visible = true;
-            colDifference.VisibleIndex = 12;
+            colDifference.VisibleIndex = 13;
             // 
             // wizardControl1
             // 
@@ -187,7 +188,7 @@ namespace Foxoft
             // 
             // gridView1
             // 
-            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colRelatedLineId, colProductCode, colQty, colQtyIn, colQtyOut, colUnitOfMeasureId, colPrice, colPriceLoc, colAmount, colAmountLoc, colNetAmount, colNetAmountLoc, colDiscountCampaign, colLineDescription, colSerialNumberCode, colBalance, colCurrencyCode, colExchangeRate, colPosDiscount, colDifference, col_ProductDesc, colProductCost });
+            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colRelatedLineId, colProductCode, colBarcode, colQty, colQtyIn, colQtyOut, colUnitOfMeasureId, colPrice, colPriceLoc, colAmount, colAmountLoc, colNetAmount, colNetAmountLoc, colDiscountCampaign, colLineDescription, colSerialNumberCode, colBalance, colCurrencyCode, colExchangeRate, colPosDiscount, colDifference, col_ProductDesc, colProductCost });
             gridFormatRule1.Column = colDifference;
             gridFormatRule1.Name = "ruleNegative";
             formatConditionRuleValue1.Appearance.ForeColor = Color.Red;
@@ -233,12 +234,20 @@ namespace Foxoft
             colProductCode.Visible = true;
             colProductCode.VisibleIndex = 1;
             // 
+            // colBarcode
+            // 
+            colBarcode.Caption = Resources.Entity_InvoiceLine_Barcode;
+            colBarcode.FieldName = "Barcode";
+            colBarcode.Name = "colBarcode";
+            colBarcode.Visible = true;
+            colBarcode.VisibleIndex = 2;
+            // 
             // colQty
             // 
             colQty.FieldName = "Qty";
             colQty.Name = "colQty";
             colQty.Visible = true;
-            colQty.VisibleIndex = 3;
+            colQty.VisibleIndex = 4;
             // 
             // colQtyIn
             // 
@@ -255,14 +264,14 @@ namespace Foxoft
             colUnitOfMeasureId.FieldName = "UnitOfMeasureId";
             colUnitOfMeasureId.Name = "colUnitOfMeasureId";
             colUnitOfMeasureId.Visible = true;
-            colUnitOfMeasureId.VisibleIndex = 4;
+            colUnitOfMeasureId.VisibleIndex = 5;
             // 
             // colPrice
             // 
             colPrice.FieldName = "Price";
             colPrice.Name = "colPrice";
             colPrice.Visible = true;
-            colPrice.VisibleIndex = 5;
+            colPrice.VisibleIndex = 6;
             // 
             // colProductCost
             // 
@@ -273,7 +282,7 @@ namespace Foxoft
             colProductCost.Name = "colProductCost";
             colProductCost.OptionsColumn.AllowEdit = false;
             colProductCost.Visible = true;
-            colProductCost.VisibleIndex = 6;
+            colProductCost.VisibleIndex = 7;
             // 
             // colPriceLoc
             // 
@@ -295,7 +304,7 @@ namespace Foxoft
             colNetAmount.FieldName = "NetAmount";
             colNetAmount.Name = "colNetAmount";
             colNetAmount.Visible = true;
-            colNetAmount.VisibleIndex = 9;
+            colNetAmount.VisibleIndex = 10;
             // 
             // colNetAmountLoc
             // 
@@ -312,7 +321,7 @@ namespace Foxoft
             colLineDescription.FieldName = "LineDescription";
             colLineDescription.Name = "colLineDescription";
             colLineDescription.Visible = true;
-            colLineDescription.VisibleIndex = 10;
+            colLineDescription.VisibleIndex = 11;
             // 
             // colSerialNumberCode
             // 
@@ -326,14 +335,14 @@ namespace Foxoft
             colBalance.FieldName = "Balance";
             colBalance.Name = "colBalance";
             colBalance.Visible = true;
-            colBalance.VisibleIndex = 11;
+            colBalance.VisibleIndex = 12;
             // 
             // colCurrencyCode
             // 
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
-            colCurrencyCode.VisibleIndex = 7;
+            colCurrencyCode.VisibleIndex = 8;
             // 
             // colExchangeRate
             // 
@@ -346,7 +355,7 @@ namespace Foxoft
             colPosDiscount.Name = "colPosDiscount";
             colPosDiscount.OptionsFilter.AllowFilter = false;
             colPosDiscount.Visible = true;
-            colPosDiscount.VisibleIndex = 8;
+            colPosDiscount.VisibleIndex = 9;
             // 
             // col_ProductDesc
             // 
@@ -356,7 +365,7 @@ namespace Foxoft
             col_ProductDesc.OptionsFilter.AllowFilter = false;
             col_ProductDesc.UnboundDataType = typeof(string);
             col_ProductDesc.Visible = true;
-            col_ProductDesc.VisibleIndex = 2;
+            col_ProductDesc.VisibleIndex = 3;
             // 
             // FormCounting
             // 
@@ -423,5 +432,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colDifference;
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCost;
+        private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
     }
 }

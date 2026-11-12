@@ -79,6 +79,7 @@ namespace Foxoft
                         first.AmountLoc = g.Sum(x => x.AmountLoc);
                         first.NetAmount = g.Sum(x => x.NetAmount);
                         first.NetAmountLoc = g.Sum(x => x.NetAmountLoc);
+                        first.Barcode = g.FirstOrDefault(x => !string.IsNullOrEmpty(x.Barcode))?.Barcode ?? first.Barcode;
                         return first;
                     })
                     .ToList();
@@ -196,6 +197,7 @@ namespace Foxoft
                     invoiceLine.Price = x.Price;
                     invoiceLine.PriceLoc = x.PriceLoc;
                     invoiceLine.ProductCode = x.ProductCode;
+                    invoiceLine.Barcode = x.Barcode;
                     invoiceLine.SerialNumberCode = x.SerialNumberCode;
                     invoiceLine.UnitOfMeasureId = x.UnitOfMeasureId;
                     invoiceLine.VatRate = x.VatRate;
@@ -246,6 +248,7 @@ namespace Foxoft
                     invoiceLine.Price = x.Price;
                     invoiceLine.PriceLoc = x.PriceLoc;
                     invoiceLine.ProductCode = x.ProductCode;
+                    invoiceLine.Barcode = x.Barcode;
                     invoiceLine.SerialNumberCode = x.SerialNumberCode;
                     invoiceLine.UnitOfMeasureId = x.UnitOfMeasureId;
                     invoiceLine.VatRate = x.VatRate;
