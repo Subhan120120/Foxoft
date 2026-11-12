@@ -122,7 +122,7 @@ JSON schema:
 }
 
 Important rules:
-1. Extract EVERY table line item faithfully.
+1. Extract EVERY table line item faithfully in the exact top-to-bottom sequence as they appear in the document. Ensure lineNumber reflects this 1-based sequential order.
 2. Clean and preserve barcodes if visible (digits only, e.g. EAN13).
 3. If unit price is missing but amount and quantity exist, calculate unitPrice = amount / qty.
 4. If amount is missing, calculate amount = qty * unitPrice.
@@ -268,8 +268,8 @@ Important rules:
                     InvoiceOcrLineVM line = new();
                     line.Selected = true;
 
-                    if (lineElem.TryGetProperty("lineNumber", out var lnProp) && lnProp.TryGetInt32(out var ln))
-                        line.LineNumber = ln;
+                    if (lineElem.TryGetProperty("lineNumber", out var lnProp))
+                        line.LineNumber = GetInt(lnProp, index);
                     else
                         line.LineNumber = index;
 
@@ -306,9 +306,28 @@ Important rules:
                     result.Lines.Add(line);
                     index++;
                 }
+
+                if (result.Lines.Count > 1 && result.Lines.Any(x => x.LineNumber > 0))
+                {
+                    result.Lines = result.Lines
+                        .OrderBy(x => x.LineNumber > 0 ? x.LineNumber : int.MaxValue)
+                        .ToList();
+                }
             }
 
             return result;
+        }
+
+        private static int GetInt(JsonElement element, int defaultValue)
+        {
+            if (element.ValueKind == JsonValueKind.Number && element.TryGetInt32(out var i))
+                return i;
+
+            if (element.ValueKind == JsonValueKind.String &&
+                int.TryParse(element.GetString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var parsed))
+                return parsed;
+
+            return defaultValue;
         }
 
         private static decimal GetDecimal(JsonElement element, decimal defaultValue)

@@ -3723,8 +3723,23 @@ namespace Foxoft
                     }
                 }
 
-                foreach (var lineVM in validLines)
+                DateTime baseDate = DateTime.Now;
+                var existingLines = dbContext.TrInvoiceLines.Local
+                    .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                    .ToList();
+
+                if (existingLines.Count > 0)
                 {
+                    DateTime maxExistingDate = existingLines.Max(x => x.CreatedDate);
+                    if (maxExistingDate >= baseDate)
+                        baseDate = maxExistingDate.AddMilliseconds(50);
+                }
+
+                for (int i = 0; i < validLines.Count; i++)
+                {
+                    var lineVM = validLines[i];
+                    DateTime lineCreatedDate = baseDate.AddMilliseconds((i + 1) * 50);
+
                     TrInvoiceLine line = new()
                     {
                         InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
@@ -3740,9 +3755,9 @@ namespace Foxoft
                         DiscountCampaign = 0m,
                         VatRate = lineVM.VatRate,
                         LineDescription = !string.IsNullOrWhiteSpace(lineVM.LineDescription) ? lineVM.LineDescription : null,
-                        CreatedDate = DateTime.Now,
+                        CreatedDate = lineCreatedDate,
                         CreatedUserName = Authorization.CurrAccCode,
-                        LastUpdatedDate = DateTime.Now,
+                        LastUpdatedDate = lineCreatedDate,
                         LastUpdatedUserName = Authorization.CurrAccCode,
                         TrInvoiceLineFeatures = new List<TrInvoiceLineFeature>(),
                     };

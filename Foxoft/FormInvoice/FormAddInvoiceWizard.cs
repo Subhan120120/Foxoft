@@ -995,7 +995,25 @@ namespace Foxoft
             gridViewLines.CloseEditor();
             gridViewLines.UpdateCurrentRow();
 
-            var selectedLines = _linesList.Where(x => x.Selected).ToList();
+            // Preserve the exact visible order from gridViewLines
+            List<InvoiceOcrLineVM> orderedLines = new();
+            for (int i = 0; i < gridViewLines.DataRowCount; i++)
+            {
+                int rowHandle = gridViewLines.GetRowHandle(i);
+                if (gridViewLines.GetRow(rowHandle) is InvoiceOcrLineVM line)
+                {
+                    orderedLines.Add(line);
+                }
+            }
+
+            // In case any lines were filtered out from view, append remaining lines
+            foreach (var line in _linesList)
+            {
+                if (!orderedLines.Contains(line))
+                    orderedLines.Add(line);
+            }
+
+            var selectedLines = orderedLines.Where(x => x.Selected).ToList();
             if (selectedLines.Count == 0)
             {
                 XtraMessageBox.Show(
@@ -1020,7 +1038,7 @@ namespace Foxoft
             Result.DocumentNumber = txtDocNum.Text.Trim();
             Result.DocumentDate = dtDocDate.DateTime != default ? dtDocDate.DateTime : null;
             Result.VendorName = txtVendor.Text.Trim();
-            Result.Lines = _linesList.ToList();
+            Result.Lines = orderedLines;
 
             DialogResult = DialogResult.OK;
             Close();
