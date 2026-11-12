@@ -43,27 +43,49 @@ namespace Foxoft
 
             if (SqlServerConnected())
             {
-                mainContext mainDb = new();
-                if (!mainDb.Database.CanConnect())
-                    mainDb.Database.EnsureCreated();
-
-                subContext subDb = new();
-                if (subDb.Database.CanConnect())
+                try
                 {
-                    //db.Database.Migrate();
-                    //string sql = db.Database.GenerateCreateScript();
+                    mainContext mainDb = new();
+                    if (!mainDb.Database.CanConnect())
+                        mainDb.Database.EnsureCreated();
+                }
+                catch (Exception ex)
+                {
+                    SplashScreenManager.CloseForm();
+                    XtraMessageBox.Show(
+                        string.Format(
+                            Resources.Message_ServerConnectionError,
+                            Settings.Default.MainConnString,
+                            ex.Message),
+                        Resources.Common_Attention,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
 
+                    Application.Run(new FormConnectionStringBuilder(Settings.Default.MainConnString));
+                    return;
+                }
+
+                try
+                {
                     UpdateLicense();
-
-                    SplashScreenManager.CloseForm();
-                    AppFontSettings.ApplyFromDatabase();
-                    Application.Run(new FormLogin());
                 }
-                else
+                catch
                 {
-                    SplashScreenManager.CloseForm();
-                    Application.Run(new FormConnectionStringBuilder(subDb.Database.GetConnectionString()));
+                    // License update failure should never block application launch
                 }
+
+                SplashScreenManager.CloseForm();
+
+                try
+                {
+                    AppFontSettings.ApplyFromDatabase();
+                }
+                catch
+                {
+                    AppFontSettings.Apply();
+                }
+
+                Application.Run(new FormLogin());
             }
 
             bool SqlServerConnected()
@@ -100,71 +122,78 @@ namespace Foxoft
 
             bool UpdateLicense()
             {
-                if (!NetworkConnectivityHelper.IsInternetAvailable(1500))
-                    return false;
-
-                using GoogleDriveAPI googleDriveAPI = new();
-                using MemoryStream excelStream = googleDriveAPI.DownloadAsStream("1F_FHrpN3eLC1jfXXHmxQklttwq-P8v1v");
-
-                ExcelDataSource excelDataSource = new();
-                excelDataSource.Stream = excelStream;
-                excelDataSource.StreamDocumentFormat = ExcelDocumentFormat.Xlsx;
-
-                ExcelWorksheetSettings worksheetSettings = new(0);
-
-                ExcelSourceOptions excelOptions = new();
-                excelOptions.ImportSettings = worksheetSettings;
-                excelOptions.UseFirstRowAsHeader = true;
-                excelOptions.SkipHiddenRows = false;
-                excelOptions.SkipHiddenColumns = false;
-
-                excelDataSource.SourceOptions = excelOptions;
-                excelDataSource.Fill();
-
-                IList list = ((IListSource)excelDataSource).GetList();
-
-                if (list == null || list.Count == 0)
-                    return false;
-
-                DevExpress.DataAccess.Native.Excel.DataView dataView = (DevExpress.DataAccess.Native.Excel.DataView)list;
-                List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
-
-                int companyCodeIndex = props.FindIndex(p => string.Equals(p.Name, "CompanyCode", StringComparison.OrdinalIgnoreCase));
-                int licenseIndex = props.FindIndex(p => string.Equals(p.Name, "License", StringComparison.OrdinalIgnoreCase));
-                int dueDateIndex = props.FindIndex(p => string.Equals(p.Name, "DueDate", StringComparison.OrdinalIgnoreCase));
-
-                if (companyCodeIndex == -1 || licenseIndex == -1 || dueDateIndex == -1)
-                    return false;
-
-                List<DcCompany> companies = efMethods.SelectCompanies();
-
-                foreach (DevExpress.DataAccess.Native.Excel.ViewRow row in list)
+                try
                 {
-                    string companyCode = props[companyCodeIndex].GetValue(row)?.ToString()?.Trim() ?? string.Empty;
-                    string license = props[licenseIndex].GetValue(row)?.ToString()?.Trim() ?? string.Empty;
-                    string dueDate = props[dueDateIndex].GetValue(row)?.ToString()?.Trim() ?? string.Empty;
+                    if (!NetworkConnectivityHelper.IsInternetAvailable(1500))
+                        return false;
 
-                    if (string.IsNullOrEmpty(companyCode) || string.IsNullOrEmpty(license) || string.IsNullOrEmpty(dueDate))
-                        continue;
+                    using GoogleDriveAPI googleDriveAPI = new();
+                    using MemoryStream excelStream = googleDriveAPI.DownloadAsStream("1F_FHrpN3eLC1jfXXHmxQklttwq-P8v1v");
 
-                    if (LicenseService.IsHardwareMatching(license))
+                    ExcelDataSource excelDataSource = new();
+                    excelDataSource.Stream = excelStream;
+                    excelDataSource.StreamDocumentFormat = ExcelDocumentFormat.Xlsx;
+
+                    ExcelWorksheetSettings worksheetSettings = new(0);
+
+                    ExcelSourceOptions excelOptions = new();
+                    excelOptions.ImportSettings = worksheetSettings;
+                    excelOptions.UseFirstRowAsHeader = true;
+                    excelOptions.SkipHiddenRows = false;
+                    excelOptions.SkipHiddenColumns = false;
+
+                    excelDataSource.SourceOptions = excelOptions;
+                    excelDataSource.Fill();
+
+                    IList list = ((IListSource)excelDataSource).GetList();
+
+                    if (list == null || list.Count == 0)
+                        return false;
+
+                    DevExpress.DataAccess.Native.Excel.DataView dataView = (DevExpress.DataAccess.Native.Excel.DataView)list;
+                    List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
+
+                    int companyCodeIndex = props.FindIndex(p => string.Equals(p.Name, "CompanyCode", StringComparison.OrdinalIgnoreCase));
+                    int licenseIndex = props.FindIndex(p => string.Equals(p.Name, "License", StringComparison.OrdinalIgnoreCase));
+                    int dueDateIndex = props.FindIndex(p => string.Equals(p.Name, "DueDate", StringComparison.OrdinalIgnoreCase));
+
+                    if (companyCodeIndex == -1 || licenseIndex == -1 || dueDateIndex == -1)
+                        return false;
+
+                    List<DcCompany> companies = efMethods.SelectCompanies();
+
+                    foreach (DevExpress.DataAccess.Native.Excel.ViewRow row in list)
                     {
-                        if (DateTime.TryParseExact(dueDate, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDueDate))
-                        {
-                            string encrypt = LicenseService.EncryptLicense(companyCode, license, parsedDueDate);
+                        string companyCode = props[companyCodeIndex].GetValue(row)?.ToString()?.Trim() ?? string.Empty;
+                        string license = props[licenseIndex].GetValue(row)?.ToString()?.Trim() ?? string.Empty;
+                        string dueDate = props[dueDateIndex].GetValue(row)?.ToString()?.Trim() ?? string.Empty;
 
-                            foreach (DcCompany company in companies)
+                        if (string.IsNullOrEmpty(companyCode) || string.IsNullOrEmpty(license) || string.IsNullOrEmpty(dueDate))
+                            continue;
+
+                        if (LicenseService.IsHardwareMatching(license))
+                        {
+                            if (DateTime.TryParseExact(dueDate, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDueDate))
                             {
-                                if (string.Equals(company.CompanyCode, companyCode, StringComparison.OrdinalIgnoreCase))
+                                string encrypt = LicenseService.EncryptLicense(companyCode, license, parsedDueDate);
+
+                                foreach (DcCompany company in companies)
                                 {
-                                    efMethods.UpdateAppSettingLicense(encrypt, company.CompanyCode);
+                                    if (string.Equals(company.CompanyCode, companyCode, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        efMethods.UpdateAppSettingLicense(encrypt, company.CompanyCode);
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                return true;
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
     }

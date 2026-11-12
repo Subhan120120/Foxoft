@@ -77,99 +77,110 @@ namespace Foxoft
                 }
             }
 
-            // 3. Sub-context session & user role configuration
-            string? assignedStoreCode = efMethods.SelectUserStoreCode(user);
-            DcCurrAcc? userCurrAcc = efMethods.SelectEntityById<DcCurrAcc>(user);
-
-            if (!string.IsNullOrEmpty(assignedStoreCode))
+            try
             {
-                DcCurrAcc store = efMethods.SelectStore(assignedStoreCode);
-                if (store == null && !string.Equals(user, "admin", StringComparison.OrdinalIgnoreCase))
-                {
-                    XtraMessageBox.Show(Properties.Resources.Auth_StoreNotActive);
-                    return false;
-                }
-            }
-            else if (userCurrAcc != null)
-            {
-                DcCurrAcc store = efMethods.SelectStore(userCurrAcc.StoreCode);
-                if (store == null && !string.Equals(user, "admin", StringComparison.OrdinalIgnoreCase))
-                {
-                    XtraMessageBox.Show(Properties.Resources.Auth_StoreNotActive);
-                    return false;
-                }
-            }
+                // 3. Sub-context session & user role configuration
+                string? assignedStoreCode = !string.IsNullOrWhiteSpace(companyCode)
+                    ? efMethods.SelectUserStoreCode(user, companyCode)
+                    : efMethods.SelectUserStoreCode(user);
 
-            List<TrSession> trSessions = efMethods.SelectEntities<TrSession>();
+                DcCurrAcc? userCurrAcc = efMethods.SelectEntityById<DcCurrAcc>(user);
 
-            foreach (var session in trSessions)
-            {
-                try
+                if (!string.IsNullOrEmpty(assignedStoreCode))
                 {
-                    var process = Process.GetProcessById(session.PID);
-
-                    if (!string.Equals(process.ProcessName, "Foxoft.exe", StringComparison.InvariantCultureIgnoreCase))
+                    DcCurrAcc store = efMethods.SelectStore(assignedStoreCode);
+                    if (store == null && !string.Equals(user, "admin", StringComparison.OrdinalIgnoreCase))
                     {
-                        efMethods.DeleteEntity(session);
-                    }
-                    else if (string.Equals(session.CurrAccCode, user, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        XtraMessageBox.Show(Properties.Resources.Auth_UserAlreadyLoggedIn);
+                        XtraMessageBox.Show(Properties.Resources.Auth_StoreNotActive);
                         return false;
                     }
                 }
-                catch (ArgumentException)
+                else if (userCurrAcc != null)
                 {
-                    efMethods.DeleteEntity(session);
+                    DcCurrAcc store = efMethods.SelectStore(userCurrAcc.StoreCode);
+                    if (store == null && !string.Equals(user, "admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                        XtraMessageBox.Show(Properties.Resources.Auth_StoreNotActive);
+                        return false;
+                    }
                 }
-            }
 
-            efMethods.InsertEntity(new TrSession
-            {
-                CurrAccCode = user,
-                PID = Process.GetCurrentProcess().Id,
-                CreatedDate = DateTime.Now
-            });
+                List<TrSession> trSessions = efMethods.SelectEntities<TrSession>();
 
-            Authorization.CurrAccCode = user;
-            Authorization.UserDesc = mainUser?.UserDesc
-                ?? efMethods.SelectCurrAcc(user)?.CurrAccDesc
-                ?? user;
-            Authorization.DcRoles = efMethods.SelectRolesByCurrAcc(user);
-            if ((Authorization.DcRoles == null || Authorization.DcRoles.Count == 0) &&
-                string.Equals(user, "admin", StringComparison.OrdinalIgnoreCase))
-            {
-                Authorization.DcRoles = new List<DcRole>
+                foreach (var session in trSessions)
                 {
-                    new DcRole { RoleCode = "Admin", RoleDesc = "Administrator" }
-                };
-            }
+                    try
+                    {
+                        var process = Process.GetProcessById(session.PID);
 
-            if (!string.IsNullOrEmpty(assignedStoreCode))
-            {
-                Authorization.StoreCode = assignedStoreCode;
-                DcCurrAcc store = efMethods.SelectStore(assignedStoreCode);
-                if (store != null)
+                        if (!string.Equals(process.ProcessName, "Foxoft.exe", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            efMethods.DeleteEntity(session);
+                        }
+                        else if (string.Equals(session.CurrAccCode, user, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            XtraMessageBox.Show(Properties.Resources.Auth_UserAlreadyLoggedIn);
+                            return false;
+                        }
+                    }
+                    catch (ArgumentException)
+                    {
+                        efMethods.DeleteEntity(session);
+                    }
+                }
+
+                efMethods.InsertEntity(new TrSession
                 {
-                    Authorization.OfficeCode = store.OfficeCode;
+                    CurrAccCode = user,
+                    PID = Process.GetCurrentProcess().Id,
+                    CreatedDate = DateTime.Now
+                });
+
+                Authorization.CurrAccCode = user;
+                Authorization.UserDesc = mainUser?.UserDesc
+                    ?? efMethods.SelectCurrAcc(user)?.CurrAccDesc
+                    ?? user;
+                Authorization.DcRoles = efMethods.SelectRolesByCurrAcc(user);
+                if ((Authorization.DcRoles == null || Authorization.DcRoles.Count == 0) &&
+                    string.Equals(user, "admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    Authorization.DcRoles = new List<DcRole>
+                    {
+                        new DcRole { RoleCode = "Admin", RoleDesc = "Administrator" }
+                    };
+                }
+
+                if (!string.IsNullOrEmpty(assignedStoreCode))
+                {
+                    Authorization.StoreCode = assignedStoreCode;
+                    DcCurrAcc store = efMethods.SelectStore(assignedStoreCode);
+                    if (store != null)
+                    {
+                        Authorization.OfficeCode = store.OfficeCode;
+                    }
+                    else
+                    {
+                        Authorization.OfficeCode = efMethods.SelectOffices().FirstOrDefault()?.OfficeCode;
+                    }
+                }
+                else if (userCurrAcc != null)
+                {
+                    Authorization.StoreCode = userCurrAcc.StoreCode;
+                    Authorization.OfficeCode = userCurrAcc.OfficeCode;
                 }
                 else
                 {
+                    Authorization.StoreCode = efMethods.SelectStores().FirstOrDefault()?.CurrAccCode;
                     Authorization.OfficeCode = efMethods.SelectOffices().FirstOrDefault()?.OfficeCode;
                 }
-            }
-            else if (userCurrAcc != null)
-            {
-                Authorization.StoreCode = userCurrAcc.StoreCode;
-                Authorization.OfficeCode = userCurrAcc.OfficeCode;
-            }
-            else
-            {
-                Authorization.StoreCode = efMethods.SelectStores().FirstOrDefault()?.CurrAccCode;
-                Authorization.OfficeCode = efMethods.SelectOffices().FirstOrDefault()?.OfficeCode;
-            }
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(string.Format(Properties.Resources.Form_Login_DatabaseConnectionFailed, ex.Message), Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
     }

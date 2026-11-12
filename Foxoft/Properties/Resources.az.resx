@@ -3017,6 +3017,15 @@
   <data name="Form_Login_DatabaseConnectionFailed" xml:space="preserve">
     <value>Verilənlər bazasına qoşulmaq mümkün olmadı: {0}</value>
   </data>
+  <data name="Form_Login_DatabaseCorruptedOrInaccessible" xml:space="preserve">
+    <value>'{0}' şirkətinin verilənlər bazası zədələnib və ya əlçatmazdır: {1}&#x000A;&#x000A;Zəhmət olmasa başqa şirkət seçin və ya baza bağlantısını tənzimləyin.</value>
+  </data>
+  <data name="Form_Login_AutoSwitchedToHealthyCompany" xml:space="preserve">
+    <value>Əvvəlki seçilmiş '{0}' şirkətinin bazası əlçatmaz olduğuna görə '{1}' şirkətinə keçid edildi.</value>
+  </data>
+  <data name="Form_Login_ConfirmSelectCorruptedCompany" xml:space="preserve">
+    <value>'{0}' şirkətinin bazasına qoşulmaq mümkün olmadı:&#x000A;{1}&#x000A;&#x000A;Yenə də bu şirkəti seçmək istəyirsiniz? (Baza sazlamalarını düzəltmək üçün)</value>
+  </data>
   <data name="Notification_LicenseExpireSoon_Title" xml:space="preserve">
     <value>Lisenziya Xəbərdarlığı</value>
   </data>

@@ -3017,6 +3017,15 @@
   <data name="Form_Login_DatabaseConnectionFailed" xml:space="preserve">
     <value>Could not connect to database: {0}</value>
   </data>
+  <data name="Form_Login_DatabaseCorruptedOrInaccessible" xml:space="preserve">
+    <value>The database for company '{0}' is corrupted or inaccessible: {1}&#x000A;&#x000A;Please select another company or configure the connection.</value>
+  </data>
+  <data name="Form_Login_AutoSwitchedToHealthyCompany" xml:space="preserve">
+    <value>The previously selected company database '{0}' was inaccessible. Automatically switched to healthy company '{1}'.</value>
+  </data>
+  <data name="Form_Login_ConfirmSelectCorruptedCompany" xml:space="preserve">
+    <value>Could not connect to company '{0}' database:&#x000A;{1}&#x000A;&#x000A;Do you still want to select this company to configure its connection?</value>
+  </data>
   <data name="Notification_LicenseExpireSoon_Title" xml:space="preserve">
     <value>License Expiration Warning</value>
   </data>

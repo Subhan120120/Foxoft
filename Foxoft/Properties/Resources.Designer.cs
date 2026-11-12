@@ -13425,6 +13425,33 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The database for company '{0}' is corrupted or inaccessible...
+        /// </summary>
+        public static string Form_Login_DatabaseCorruptedOrInaccessible {
+            get {
+                return ResourceManager.GetString("Form_Login_DatabaseCorruptedOrInaccessible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The previously selected company database '{0}' was inaccessible. Automatically switched to healthy company '{1}'..
+        /// </summary>
+        public static string Form_Login_AutoSwitchedToHealthyCompany {
+            get {
+                return ResourceManager.GetString("Form_Login_AutoSwitchedToHealthyCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not connect to company '{0}' database...
+        /// </summary>
+        public static string Form_Login_ConfirmSelectCorruptedCompany {
+            get {
+                return ResourceManager.GetString("Form_Login_ConfirmSelectCorruptedCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Get Key.
         /// </summary>
         public static string Form_Login_GetKey {

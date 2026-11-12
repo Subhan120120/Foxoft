@@ -3238,20 +3238,28 @@ END
 
         public void UpdateAppSettingLicense(string license, string databaseName)
         {
-            subContext db = new();
-            string connString = db.Database.GetConnectionString();
+            if (string.IsNullOrWhiteSpace(databaseName))
+                return;
 
-            var builder = new SqlConnectionStringBuilder(connString);
-            builder.InitialCatalog = databaseName;
-
-            using (db = new subContext(new DbContextOptionsBuilder<subContext>().UseSqlServer(Foxoft.AppCode.SqlLanguageHelper.GetLocalizedConnectionString(builder.ConnectionString)).Options))
+            try
             {
+                string connString = CompanyDatabaseHelper.BuildConnectionString(databaseName, timeoutSeconds: 3);
+
+                var options = new DbContextOptionsBuilder<subContext>()
+                    .UseSqlServer(SqlLanguageHelper.GetLocalizedConnectionString(connString))
+                    .Options;
+
+                using var db = new subContext(options);
                 if (db.Database.CanConnect())
                 {
                     AppSetting appSetting = new() { Id = 1, License = license };
                     db.Entry(appSetting).Property(x => x.License).IsModified = true;
                     db.SaveChanges();
                 }
+            }
+            catch
+            {
+                // Silently ignore license update failure for an inaccessible company database
             }
         }
 
