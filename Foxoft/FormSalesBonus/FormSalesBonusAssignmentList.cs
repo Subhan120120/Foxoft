@@ -160,10 +160,5 @@ namespace Foxoft
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void FormSalesBonusAssignmentList_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

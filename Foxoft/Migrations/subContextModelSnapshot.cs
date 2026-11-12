@@ -4,7 +4,6 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,10 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-
     partial class subContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -2057,7 +2054,7 @@ namespace Foxoft.Migrations
                             IsEnabled = true,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NotificationTypeCode = "NegativeStock",
-                            RoleCode = "WarehouseUser"
+                            RoleCode = "Warehouseman"
                         },
                         new
                         {
@@ -2066,7 +2063,7 @@ namespace Foxoft.Migrations
                             IsEnabled = true,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NotificationTypeCode = "StockTransferPending",
-                            RoleCode = "WarehouseUser"
+                            RoleCode = "Warehouseman"
                         },
                         new
                         {
@@ -2075,7 +2072,7 @@ namespace Foxoft.Migrations
                             IsEnabled = true,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NotificationTypeCode = "StockTransferRejected",
-                            RoleCode = "WarehouseUser"
+                            RoleCode = "Warehouseman"
                         },
                         new
                         {
@@ -2084,7 +2081,7 @@ namespace Foxoft.Migrations
                             IsEnabled = true,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NotificationTypeCode = "InventoryDifference",
-                            RoleCode = "WarehouseUser"
+                            RoleCode = "Warehouseman"
                         },
                         new
                         {
@@ -2113,7 +2110,7 @@ namespace Foxoft.Migrations
                             IsEnabled = true,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NotificationTypeCode = "ProductStockWarning",
-                            RoleCode = "WarehouseUser",
+                            RoleCode = "Warehouseman",
                             StoreCode = "MGZ01"
                         },
                         new
@@ -2123,7 +2120,7 @@ namespace Foxoft.Migrations
                             IsEnabled = true,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NotificationTypeCode = "ProductOutOfStock",
-                            RoleCode = "WarehouseUser",
+                            RoleCode = "Warehouseman",
                             StoreCode = "MGZ01"
                         });
                 });
@@ -5947,7 +5944,7 @@ namespace Foxoft.Migrations
                             ReportCategoryId = 5,
                             ReportLayout = "",
                             ReportName = "Xərclər",
-                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nselect Price\r\n, ProductDesc\r\n, CurrencyCode\r\n, NetAmountLoc\r\n, DocumentDate \r\n, LineDescription\r\n, StoreCode\r\nfrom TrInvoiceLines\r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nwhere ProcessCode = 'EX'\r\n\r\nUNION ALL\r\n\r\nselect Price = isnull((\r\n    select sum(l.AmountLoc)\r\n    from TrPayrollLines l\r\n    where l.PayrollHeaderId = prh.Id\r\n      and l.PayrollItemType in (1, 2, 3)\r\n), 0)\r\n, ProductDesc = CONCAT(N'Əməkhaqqı - ', DcCurrAccs.CurrAccDesc)\r\n, CurrencyCode = 'AZN'\r\n, NetAmountLoc = isnull((\r\n    select sum(l.AmountLoc)\r\n    from TrPayrollLines l\r\n    where l.PayrollHeaderId = prh.Id\r\n      and l.PayrollItemType in (1, 2, 3)\r\n), 0)\r\n, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))\r\n, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')\r\n, StoreCode = DcCurrAccs.StoreCode\r\nfrom TrPayrollHeaders prh\r\nleft join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\nleft join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode",
+                            ReportQuery = "\r\nselect Price\r\n, ProductDesc\r\n, CurrencyCode\r\n, NetAmountLoc\r\n, DocumentDate \r\n, LineDescription\r\n, StoreCode\r\nfrom TrInvoiceLines\r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nwhere ProcessCode = 'EX'\r\n\r\nUNION ALL\r\n\r\nselect Price = isnull((\r\n    select sum(l.AmountLoc)\r\n    from TrPayrollLines l\r\n    where l.PayrollHeaderId = prh.Id\r\n      and l.PayrollItemType in (1, 2, 3)\r\n), 0)\r\n, ProductDesc = N'Əməkhaqqı'\r\n, CurrencyCode = 'AZN'\r\n, NetAmountLoc = isnull((\r\n    select sum(l.AmountLoc)\r\n    from TrPayrollLines l\r\n    where l.PayrollHeaderId = prh.Id\r\n      and l.PayrollItemType in (1, 2, 3)\r\n), 0)\r\n, DocumentDate = EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1))\r\n, LineDescription = CONCAT(prp.PeriodYear, ' / ', RIGHT('0' + CAST(prp.PeriodMonth AS VARCHAR(2)), 2), N' dövrü üzrə əməkhaqqı (', DcCurrAccs.CurrAccDesc, ')')\r\n, StoreCode = DcCurrAccs.StoreCode\r\nfrom TrPayrollHeaders prh\r\nleft join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\nleft join DcCurrAccs on prh.CurrAccCode = DcCurrAccs.CurrAccCode",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -5958,7 +5955,7 @@ namespace Foxoft.Migrations
                             ReportCategoryId = 5,
                             ReportLayout = "",
                             ReportName = "Pulun Hərəkəti",
-                            ReportQuery = "select  PaymentLineId\r\n, ph.PaymentHeaderId\r\n, ph.InvoiceHeaderId\r\n, InvoiceNumber = ih.DocumentNumber\r\n, DcPaymentTypes.PaymentTypeCode\r\n, PaymentTypeDesc\r\n, PaymentLoc\r\n, Payment\r\n, pl.CurrencyCode\r\n, pl.LineDescription\r\n, ph.DocumentNumber\r\n, ph.DocumentDate\r\n, ph.DocumentTime\r\n, ph.OperationDate\r\n, ph.OperationTime\r\n, PaymentKindId\r\n, ph.CurrAccCode\r\n, CashRegisterCode\r\n, FirstName\r\n, ph.StoreCode\r\n, pl.CreatedDate\r\n, pl.CreatedUserName\r\n, pl.ExchangeRate\r\n, OperationType\r\n, CurrAccTypeCode\r\n, ih.Description\r\n\r\n, CurrAccDesc = Case when ih.ProcessCode IN ('EX', 'EI') then DcProducts.ProductDesc else DcCurrAccs.CurrAccDesc end \r\n\r\n--, [Cari Hesab Balansı] = (\r\n--	ISNULL((\r\n--		select sum((QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100)))\r\n--		from TrInvoiceLines il\r\n--		left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n--		where ih.CurrAccCode = TrPaymentHeaders.CurrAccCode\r\n--		  and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT')\r\n--		  and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n--		      (CAST(TrPaymentHeaders.DocumentDate AS DATETIME) + CAST(TrPaymentHeaders.DocumentTime AS DATETIME))\r\n--	), 0)\r\n--	+ \r\n--	ISNULL((\r\n--		select sum(pl.PaymentLoc)\r\n--		from TrPaymentLines pl\r\n--		left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	\r\n--		where ph.CurrAccCode = TrPaymentHeaders.CurrAccCode \r\n--		  and (CAST(ph.DocumentDate AS DATETIME) + CAST(ph.DocumentTime AS DATETIME)) <=\r\n--		      (CAST(TrPaymentHeaders.DocumentDate AS DATETIME) + CAST(TrPaymentHeaders.DocumentTime AS DATETIME))\r\n--	), 0)\r\n--	+\r\n--	ISNULL((\r\n--		select sum(prh.NetSalary)\r\n--		from TrPayrollHeaders prh\r\n--		left join DcPayrollPeriods prp on prh.PayrollPeriodId = prp.Id\r\n--		where prh.CurrAccCode = TrPaymentHeaders.CurrAccCode\r\n--		  and (CAST(EOMONTH(DATEFROMPARTS(prp.PeriodYear, prp.PeriodMonth, 1)) AS DATETIME) + CAST('23:59:59' AS DATETIME)) <=\r\n--		      (CAST(TrPaymentHeaders.DocumentDate AS DATETIME) + CAST(TrPaymentHeaders.DocumentTime AS DATETIME))\r\n--	), 0)\r\n--)\r\n\r\nfrom TrPaymentLines pl\r\nleft join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\nleft join TrInvoiceHeaders ih on ph.InvoiceHeaderId = ih.InvoiceHeaderId\r\nleft join DcCurrAccs on ph.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcPaymentTypes on pl.PaymentTypeCode = DcPaymentTypes.PaymentTypeCode\r\nleft join TrInvoiceLines il on il.InvoiceLineId = pl.PaymentLineId\r\nleft Join DcProducts on il.ProductCode = DcProducts.ProductCode\r\norder by ph.OperationDate asc, ph.OperationTime asc",
+                            ReportQuery = "select  PaymentLineId\r\n, ph.PaymentHeaderId\r\n, ph.InvoiceHeaderId\r\n, InvoiceNumber = ih.DocumentNumber\r\n, DcPaymentTypes.PaymentTypeCode\r\n, PaymentTypeDesc\r\n, PaymentLoc\r\n, Payment\r\n, pl.CurrencyCode\r\n, pl.LineDescription\r\n, ph.DocumentNumber\r\n, ph.DocumentDate\r\n, ph.DocumentTime\r\n, ph.OperationDate\r\n, ph.OperationTime\r\n, PaymentKindId\r\n, ph.CurrAccCode\r\n, CashRegisterCode\r\n, FirstName\r\n, ph.StoreCode\r\n, pl.CreatedDate\r\n, pl.CreatedUserName\r\n, pl.ExchangeRate\r\n, OperationType\r\n, CurrAccTypeCode\r\n, ih.Description\r\n\r\n, CurrAccDesc = Case when ih.ProcessCode IN ('EX', 'EI') then DcProducts.ProductDesc else DcCurrAccs.CurrAccDesc end \r\n\r\n--, [Cari Hesab Balansı] = dbo.CurrAccBalance(ph.CurrAccCode, CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME))\r\n\r\nfrom TrPaymentLines pl\r\nleft join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\nleft join TrInvoiceHeaders ih on ph.InvoiceHeaderId = ih.InvoiceHeaderId\r\nleft join DcCurrAccs on ph.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcPaymentTypes on pl.PaymentTypeCode = DcPaymentTypes.PaymentTypeCode\r\nleft join TrInvoiceLines il on il.InvoiceLineId = pl.PaymentLineId\r\nleft Join DcProducts on il.ProductCode = DcProducts.ProductCode\r\norder by ph.OperationDate asc, ph.OperationTime asc",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -8083,24 +8080,10 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            RoleCode = "MGZ",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleDesc = "Mağaza İstifadəçisi"
-                        },
-                        new
-                        {
                             RoleCode = "StoreManager",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleDesc = "Mağaza müdiri"
-                        },
-                        new
-                        {
-                            RoleCode = "WarehouseUser",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleDesc = "Anbarçı"
+                            RoleDesc = "Mağaza Müdiri"
                         },
                         new
                         {
@@ -8108,6 +8091,34 @@ namespace Foxoft.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleDesc = "Satınalma meneceri"
+                        },
+                        new
+                        {
+                            RoleCode = "Warehouseman",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleDesc = "Anbardar"
+                        },
+                        new
+                        {
+                            RoleCode = "Cashier",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleDesc = "Kassir"
+                        },
+                        new
+                        {
+                            RoleCode = "Manager",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleDesc = "Manager"
+                        },
+                        new
+                        {
+                            RoleCode = "Creditor",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleDesc = "Kredit Mütəxəssisi"
                         });
                 });
 
@@ -9157,6 +9168,2414 @@ namespace Foxoft.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 228,
+                            ClaimCode = "RetailSaleInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 229,
+                            ClaimCode = "RetailSaleOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 230,
+                            ClaimCode = "RetailSaleReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 231,
+                            ClaimCode = "PosDiscount",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 232,
+                            ClaimCode = "PosNewInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 233,
+                            ClaimCode = "AllowUnderPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 234,
+                            ClaimCode = "Products",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 235,
+                            ClaimCode = "PriceList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 236,
+                            ClaimCode = "BarcodeOperations",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 237,
+                            ClaimCode = "CurrAccs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 238,
+                            ClaimCode = "LoyaltyCards",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 239,
+                            ClaimCode = "BonusEarn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 240,
+                            ClaimCode = "BonusPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 241,
+                            ClaimCode = "CashRegs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 242,
+                            ClaimCode = "ReceivePayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 243,
+                            ClaimCode = "PaymentDetail",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 244,
+                            ClaimCode = "DailyExpense",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 245,
+                            ClaimCode = "Count",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 246,
+                            ClaimCode = "CountIn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 247,
+                            ClaimCode = "CountOut",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 248,
+                            ClaimCode = "InventoryTransfer",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 249,
+                            ClaimCode = "TransferApproval",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 250,
+                            ClaimCode = "Waybill",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 251,
+                            ClaimCode = "WaybillIn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 252,
+                            ClaimCode = "WaybillOut",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 253,
+                            ClaimCode = "RetailPurchaseInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 254,
+                            ClaimCode = "WholePurchaseInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 255,
+                            ClaimCode = "RetailPurchaseOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 256,
+                            ClaimCode = "WholePurchaseOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 257,
+                            ClaimCode = "RetailPurchaseReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 258,
+                            ClaimCode = "WholePurchaseReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 259,
+                            ClaimCode = "Products",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 260,
+                            ClaimCode = "BarcodeOperations",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 261,
+                            ClaimCode = "WarehouseList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 262,
+                            ClaimCode = "InvoiceLineFeatureType",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 263,
+                            ClaimCode = "ProductFeatureType",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 264,
+                            ClaimCode = "DeleteInvoiceIT",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 265,
+                            ClaimCode = "DeleteLineIT",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 266,
+                            ClaimCode = "DeleteInvoiceCN",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 267,
+                            ClaimCode = "DeleteLineCN",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 268,
+                            ClaimCode = "DeleteInvoiceCI",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 269,
+                            ClaimCode = "DeleteLineCI",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 270,
+                            ClaimCode = "DeleteInvoiceCO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 271,
+                            ClaimCode = "DeleteLineCO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Warehouseman"
+                        },
+                        new
+                        {
+                            RoleClaimId = 272,
+                            ClaimCode = "InstallmentSaleInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 273,
+                            ClaimCode = "InstallmentSaleOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 274,
+                            ClaimCode = "InstallmentSaleReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 275,
+                            ClaimCode = "InstallmentSales",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 276,
+                            ClaimCode = "CreditList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 277,
+                            ClaimCode = "PaymentPlanList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 278,
+                            ClaimCode = "PaymentMethodList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 279,
+                            ClaimCode = "CurrAccCreditLimit",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 280,
+                            ClaimCode = "InstallmentCommissionChange",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 281,
+                            ClaimCode = "CurrAccs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 282,
+                            ClaimCode = "ReceivePayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 283,
+                            ClaimCode = "PaymentDetail",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 284,
+                            ClaimCode = "CrmActivityList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 285,
+                            ClaimCode = "Products",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 286,
+                            ClaimCode = "PriceList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 287,
+                            ClaimCode = "LoyaltyCards",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 288,
+                            ClaimCode = "BonusEarn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
+                        },
+                        new
+                        {
+                            RoleClaimId = 289,
+                            ClaimCode = "RetailPurchaseInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 290,
+                            ClaimCode = "RetailPurchaseOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 291,
+                            ClaimCode = "RetailPurchaseReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 292,
+                            ClaimCode = "RetailPurchaseReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 293,
+                            ClaimCode = "WholePurchaseInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 294,
+                            ClaimCode = "WholePurchaseOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 295,
+                            ClaimCode = "WholePurchaseReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 296,
+                            ClaimCode = "WholePurchaseReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 297,
+                            ClaimCode = "ChangePriceRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 298,
+                            ClaimCode = "ChangePriceWP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 299,
+                            ClaimCode = "DeleteInvoiceRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 300,
+                            ClaimCode = "DeleteInvoiceWP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 301,
+                            ClaimCode = "DeleteInvoiceRPO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 302,
+                            ClaimCode = "DeleteInvoiceWPO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 303,
+                            ClaimCode = "DeleteLineRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 304,
+                            ClaimCode = "DeleteLineWP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 305,
+                            ClaimCode = "DeleteLineRPO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 306,
+                            ClaimCode = "DeleteLineWPO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 307,
+                            ClaimCode = "Products",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 308,
+                            ClaimCode = "PriceList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 309,
+                            ClaimCode = "Column_ProductCost",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 310,
+                            ClaimCode = "BarcodeOperations",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 311,
+                            ClaimCode = "ProductFeatureType",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 312,
+                            ClaimCode = "CurrAccs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 313,
+                            ClaimCode = "WarehouseList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 314,
+                            ClaimCode = "Waybill",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 315,
+                            ClaimCode = "WaybillIn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 316,
+                            ClaimCode = "ButunHesabatlar",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 317,
+                            ClaimCode = "NotificationCenter",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "PurchaseManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 318,
+                            ClaimCode = "RetailSaleInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 319,
+                            ClaimCode = "RetailSaleOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 320,
+                            ClaimCode = "RetailSaleReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 321,
+                            ClaimCode = "RetailSaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 322,
+                            ClaimCode = "PosDiscount",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 323,
+                            ClaimCode = "PosNewInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 324,
+                            ClaimCode = "AllowUnderPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 325,
+                            ClaimCode = "ChangePriceRS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 326,
+                            ClaimCode = "DeleteInvoiceRS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 327,
+                            ClaimCode = "DeleteLineRS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 328,
+                            ClaimCode = "InstallmentSaleInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 329,
+                            ClaimCode = "InstallmentSaleOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 330,
+                            ClaimCode = "InstallmentSaleReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 331,
+                            ClaimCode = "InstallmentSaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 332,
+                            ClaimCode = "InstallmentSales",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 333,
+                            ClaimCode = "InstallmentCommissionChange",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 334,
+                            ClaimCode = "ChangePriceIS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 335,
+                            ClaimCode = "DeleteInvoiceIS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 336,
+                            ClaimCode = "DeleteLineIS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 337,
+                            ClaimCode = "RetailPurchaseInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 338,
+                            ClaimCode = "RetailPurchaseOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 339,
+                            ClaimCode = "RetailPurchaseReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 340,
+                            ClaimCode = "ChangePriceRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 341,
+                            ClaimCode = "DeleteInvoiceRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 342,
+                            ClaimCode = "DeleteLineRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 343,
+                            ClaimCode = "Count",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 344,
+                            ClaimCode = "CountIn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 345,
+                            ClaimCode = "CountOut",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 346,
+                            ClaimCode = "ChangePriceCN",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 347,
+                            ClaimCode = "ChangePriceCI",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 348,
+                            ClaimCode = "ChangePriceCO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 349,
+                            ClaimCode = "DeleteInvoiceCN",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 350,
+                            ClaimCode = "DeleteInvoiceCI",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 351,
+                            ClaimCode = "DeleteInvoiceCO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 352,
+                            ClaimCode = "DeleteLineCN",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 353,
+                            ClaimCode = "DeleteLineCI",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 354,
+                            ClaimCode = "DeleteLineCO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 355,
+                            ClaimCode = "InventoryTransfer",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 356,
+                            ClaimCode = "InventoryTransferReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 357,
+                            ClaimCode = "TransferApproval",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 358,
+                            ClaimCode = "Waybill",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 359,
+                            ClaimCode = "WaybillIn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 360,
+                            ClaimCode = "WaybillOut",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 361,
+                            ClaimCode = "DeleteInvoiceIT",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 362,
+                            ClaimCode = "DeleteLineIT",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 363,
+                            ClaimCode = "CashRegs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 364,
+                            ClaimCode = "CashTransfer",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 365,
+                            ClaimCode = "MakePayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 366,
+                            ClaimCode = "ReceivePayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 367,
+                            ClaimCode = "DeletePayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 368,
+                            ClaimCode = "PaymentDetail",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 369,
+                            ClaimCode = "Expense",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 370,
+                            ClaimCode = "DailyExpense",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 371,
+                            ClaimCode = "ExpenseOfInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 372,
+                            ClaimCode = "DeleteInvoiceEX",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 373,
+                            ClaimCode = "DeleteLineEX",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 374,
+                            ClaimCode = "ChangePriceEX",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 375,
+                            ClaimCode = "Products",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 376,
+                            ClaimCode = "PriceList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 377,
+                            ClaimCode = "ProductDiscountList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 378,
+                            ClaimCode = "CampaignList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 379,
+                            ClaimCode = "BarcodeOperations",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 380,
+                            ClaimCode = "ProductFeatureType",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 381,
+                            ClaimCode = "CurrAccs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 382,
+                            ClaimCode = "CurrAccCreditLimit",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 383,
+                            ClaimCode = "CreditList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 384,
+                            ClaimCode = "LoyaltyCards",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 385,
+                            ClaimCode = "LoyaltyPrograms",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 386,
+                            ClaimCode = "BonusEarn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 387,
+                            ClaimCode = "BonusPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 388,
+                            ClaimCode = "CrmActivityList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 389,
+                            ClaimCode = "StoreList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 390,
+                            ClaimCode = "WarehouseList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 391,
+                            ClaimCode = "TerminalList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 392,
+                            ClaimCode = "ChangeStore",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 393,
+                            ClaimCode = "DocumentLockTakeover",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 394,
+                            ClaimCode = "UnlockGracePeriodInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 395,
+                            ClaimCode = "UnlockGracePeriodPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 396,
+                            ClaimCode = "EditLockedInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 397,
+                            ClaimCode = "EditLockedPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 398,
+                            ClaimCode = "Attendances",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 399,
+                            ClaimCode = "Leaves",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 400,
+                            ClaimCode = "Shifts",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 401,
+                            ClaimCode = "EmployeeShifts",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 402,
+                            ClaimCode = "SalesBonusPlans",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 403,
+                            ClaimCode = "SalesBonusAssignments",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 404,
+                            ClaimCode = "SalesBonusTxns",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 405,
+                            ClaimCode = "SalesBonusCalculate",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 406,
+                            ClaimCode = "ButunHesabatlar",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 407,
+                            ClaimCode = "NotificationCenter",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 408,
+                            ClaimCode = "RetailSaleInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 409,
+                            ClaimCode = "RetailSaleOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 410,
+                            ClaimCode = "RetailSaleReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 411,
+                            ClaimCode = "RetailSaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 412,
+                            ClaimCode = "PosDiscount",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 413,
+                            ClaimCode = "PosNewInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 414,
+                            ClaimCode = "AllowUnderPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 415,
+                            ClaimCode = "ChangePriceRS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 416,
+                            ClaimCode = "DeleteInvoiceRS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 417,
+                            ClaimCode = "DeleteLineRS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 418,
+                            ClaimCode = "InstallmentSaleInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 419,
+                            ClaimCode = "InstallmentSaleOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 420,
+                            ClaimCode = "InstallmentSaleReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 421,
+                            ClaimCode = "InstallmentSaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 422,
+                            ClaimCode = "InstallmentSales",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 423,
+                            ClaimCode = "InstallmentCommissionChange",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 424,
+                            ClaimCode = "ChangePriceIS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 425,
+                            ClaimCode = "DeleteInvoiceIS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 426,
+                            ClaimCode = "DeleteLineIS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 427,
+                            ClaimCode = "RetailPurchaseInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 428,
+                            ClaimCode = "RetailPurchaseOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 429,
+                            ClaimCode = "RetailPurchaseReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 430,
+                            ClaimCode = "ChangePriceRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 431,
+                            ClaimCode = "DeleteInvoiceRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 432,
+                            ClaimCode = "DeleteLineRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 433,
+                            ClaimCode = "Count",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 434,
+                            ClaimCode = "CountIn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 435,
+                            ClaimCode = "CountOut",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 436,
+                            ClaimCode = "ChangePriceCN",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 437,
+                            ClaimCode = "ChangePriceCI",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 438,
+                            ClaimCode = "ChangePriceCO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 439,
+                            ClaimCode = "DeleteInvoiceCN",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 440,
+                            ClaimCode = "DeleteInvoiceCI",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 441,
+                            ClaimCode = "DeleteInvoiceCO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 442,
+                            ClaimCode = "DeleteLineCN",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 443,
+                            ClaimCode = "DeleteLineCI",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 444,
+                            ClaimCode = "DeleteLineCO",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 445,
+                            ClaimCode = "InventoryTransfer",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 446,
+                            ClaimCode = "InventoryTransferReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 447,
+                            ClaimCode = "TransferApproval",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 448,
+                            ClaimCode = "Waybill",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 449,
+                            ClaimCode = "WaybillIn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 450,
+                            ClaimCode = "WaybillOut",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 451,
+                            ClaimCode = "DeleteInvoiceIT",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 452,
+                            ClaimCode = "DeleteLineIT",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 453,
+                            ClaimCode = "CashRegs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 454,
+                            ClaimCode = "CashTransfer",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 455,
+                            ClaimCode = "MakePayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 456,
+                            ClaimCode = "ReceivePayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 457,
+                            ClaimCode = "DeletePayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 458,
+                            ClaimCode = "PaymentDetail",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 459,
+                            ClaimCode = "Expense",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 460,
+                            ClaimCode = "DailyExpense",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 461,
+                            ClaimCode = "ExpenseOfInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 462,
+                            ClaimCode = "DeleteInvoiceEX",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 463,
+                            ClaimCode = "DeleteLineEX",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 464,
+                            ClaimCode = "ChangePriceEX",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 465,
+                            ClaimCode = "Products",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 466,
+                            ClaimCode = "PriceList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 467,
+                            ClaimCode = "ProductDiscountList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 468,
+                            ClaimCode = "CampaignList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 469,
+                            ClaimCode = "BarcodeOperations",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 470,
+                            ClaimCode = "ProductFeatureType",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 471,
+                            ClaimCode = "CurrAccs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 472,
+                            ClaimCode = "CurrAccCreditLimit",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 473,
+                            ClaimCode = "CreditList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 474,
+                            ClaimCode = "LoyaltyCards",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 475,
+                            ClaimCode = "LoyaltyPrograms",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 476,
+                            ClaimCode = "BonusEarn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 477,
+                            ClaimCode = "BonusPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 478,
+                            ClaimCode = "CrmActivityList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 479,
+                            ClaimCode = "StoreList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 480,
+                            ClaimCode = "WarehouseList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 481,
+                            ClaimCode = "TerminalList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 482,
+                            ClaimCode = "ChangeStore",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 483,
+                            ClaimCode = "DocumentLockTakeover",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 484,
+                            ClaimCode = "UnlockGracePeriodInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 485,
+                            ClaimCode = "UnlockGracePeriodPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 486,
+                            ClaimCode = "EditLockedInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 487,
+                            ClaimCode = "EditLockedPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 488,
+                            ClaimCode = "Attendances",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 489,
+                            ClaimCode = "Leaves",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 490,
+                            ClaimCode = "Shifts",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 491,
+                            ClaimCode = "EmployeeShifts",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 492,
+                            ClaimCode = "SalesBonusPlans",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 493,
+                            ClaimCode = "SalesBonusAssignments",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 494,
+                            ClaimCode = "SalesBonusTxns",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 495,
+                            ClaimCode = "SalesBonusCalculate",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 496,
+                            ClaimCode = "ButunHesabatlar",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 497,
+                            ClaimCode = "NotificationCenter",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 498,
+                            ClaimCode = "WholesaleInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 499,
+                            ClaimCode = "WholesaleOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 500,
+                            ClaimCode = "WholesaleReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 501,
+                            ClaimCode = "WholesaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 502,
+                            ClaimCode = "ChangePriceWS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 503,
+                            ClaimCode = "DeleteInvoiceWS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 504,
+                            ClaimCode = "DeleteLineWS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 505,
+                            ClaimCode = "WholePurchaseInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 506,
+                            ClaimCode = "WholePurchaseOrder",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 507,
+                            ClaimCode = "WholePurchaseReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 508,
+                            ClaimCode = "WholePurchaseReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 509,
+                            ClaimCode = "ChangePriceWP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 510,
+                            ClaimCode = "DeleteInvoiceWP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 511,
+                            ClaimCode = "DeleteLineWP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 512,
+                            ClaimCode = "Column_ProductCost",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 513,
+                            ClaimCode = "ChangeExchangeRate",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 514,
+                            ClaimCode = "CurrencyList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 515,
+                            ClaimCode = "PaymentMethodList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 516,
+                            ClaimCode = "PaymentPlanList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 517,
+                            ClaimCode = "Departments",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 518,
+                            ClaimCode = "Positions",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 519,
+                            ClaimCode = "EmploymentTypes",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 520,
+                            ClaimCode = "EmployeePositions",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 521,
+                            ClaimCode = "EmployeeContracts",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 522,
+                            ClaimCode = "PayrollPeriods",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 523,
+                            ClaimCode = "PayrollList",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 524,
+                            ClaimCode = "GoogleContactWizard",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 525,
+                            ClaimCode = "ProductFeatureAi",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 526,
+                            ClaimCode = "InvoiceAiOcr",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 527,
+                            ClaimCode = "NotificationRules",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 528,
+                            ClaimCode = "NotificationTemplates",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
                         });
                 });
 
@@ -13717,9 +16136,9 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrSalesBonusTxn", b =>
                 {
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
-                        .WithMany()
+                        .WithMany("TrSalesBonusTxns")
                         .HasForeignKey("InvoiceHeaderId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Foxoft.Models.TrPaymentHeader", "TrPaymentHeader")
                         .WithMany()
@@ -14211,6 +16630,8 @@ namespace Foxoft.Migrations
                     b.Navigation("TrLoyaltyTxns");
 
                     b.Navigation("TrPaymentHeaders");
+
+                    b.Navigation("TrSalesBonusTxns");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceLine", b =>

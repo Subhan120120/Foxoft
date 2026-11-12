@@ -221,7 +221,6 @@ namespace Foxoft
             Ribbon = ribbon;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Bonus Plan Assignments";
-            Load += FormSalesBonusAssignmentList_Load;
             ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
