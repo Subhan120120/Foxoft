@@ -1,6 +1,7 @@
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
@@ -44,8 +45,11 @@ namespace Foxoft
                 if (e.Info.IsRowIndicator && e.RowHandle >= 0) e.Info.DisplayText = (e.RowHandle + 1).ToString();
             };
 
-            var repoType = new RepositoryItemComboBox();
-            repoType.Items.AddRange(Enum.GetNames(typeof(PayrollItemType)));
+            var repoType = new RepositoryItemImageComboBox();
+            foreach (PayrollItemType type in Enum.GetValues<PayrollItemType>())
+            {
+                repoType.Items.Add(new ImageComboBoxItem(PayrollTexts.GetPayrollItemTypeName(type), type));
+            }
 
             var repoAmount = new RepositoryItemCalcEdit();
             repoAmount.DisplayFormat.FormatString = "n2";
@@ -159,7 +163,7 @@ namespace Foxoft
                     x.Id, 
                     x.PeriodYear,
                     x.PeriodMonth,
-                    PeriodName = $"{x.PeriodYear:0000}-{x.PeriodMonth:00}" + (x.IsClosed ? " (Closed)" : "")
+                    PeriodName = $"{x.PeriodYear:0000}-{x.PeriodMonth:00}" + (x.IsClosed ? $" ({Properties.Resources.Entity_TrPayrollPeriod_IsClosed})" : "")
                 })
                 .ToList();
             lkpPeriod.Properties.DataSource = periods;

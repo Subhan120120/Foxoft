@@ -21805,5 +21805,47 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_PayrollEdit_SalesBonusLoaded", resourceCulture);
             }
         }
+
+        public static string Enum_PayrollItemType_Salary {
+            get {
+                return ResourceManager.GetString("Enum_PayrollItemType_Salary", resourceCulture);
+            }
+        }
+
+        public static string Enum_PayrollItemType_Bonus {
+            get {
+                return ResourceManager.GetString("Enum_PayrollItemType_Bonus", resourceCulture);
+            }
+        }
+
+        public static string Enum_PayrollItemType_Overtime {
+            get {
+                return ResourceManager.GetString("Enum_PayrollItemType_Overtime", resourceCulture);
+            }
+        }
+
+        public static string Enum_PayrollItemType_Tax {
+            get {
+                return ResourceManager.GetString("Enum_PayrollItemType_Tax", resourceCulture);
+            }
+        }
+
+        public static string Enum_PayrollItemType_Insurance {
+            get {
+                return ResourceManager.GetString("Enum_PayrollItemType_Insurance", resourceCulture);
+            }
+        }
+
+        public static string Enum_PayrollItemType_Deduction {
+            get {
+                return ResourceManager.GetString("Enum_PayrollItemType_Deduction", resourceCulture);
+            }
+        }
+
+        public static string Enum_PayrollItemType_Other {
+            get {
+                return ResourceManager.GetString("Enum_PayrollItemType_Other", resourceCulture);
+            }
+        }
     }
 }

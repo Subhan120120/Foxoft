@@ -7629,4 +7629,25 @@ Google account: {1}</value>
   <data name="Form_PayrollEdit_SalesBonusLoaded" xml:space="preserve">
     <value>Sales bonus of {0:n2} loaded ({1} pending transactions).</value>
   </data>
+  <data name="Enum_PayrollItemType_Salary" xml:space="preserve">
+    <value>Salary</value>
+  </data>
+  <data name="Enum_PayrollItemType_Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="Enum_PayrollItemType_Overtime" xml:space="preserve">
+    <value>Overtime</value>
+  </data>
+  <data name="Enum_PayrollItemType_Tax" xml:space="preserve">
+    <value>Tax</value>
+  </data>
+  <data name="Enum_PayrollItemType_Insurance" xml:space="preserve">
+    <value>Insurance</value>
+  </data>
+  <data name="Enum_PayrollItemType_Deduction" xml:space="preserve">
+    <value>Deduction</value>
+  </data>
+  <data name="Enum_PayrollItemType_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
 </root>

@@ -7629,4 +7629,25 @@ Google hesabı: {1}</value>
   <data name="Form_PayrollEdit_SalesBonusLoaded" xml:space="preserve">
     <value>{0:n2} məbləğində satış bonusu gətirildi ({1} gözləyən əməliyyat).</value>
   </data>
+  <data name="Enum_PayrollItemType_Salary" xml:space="preserve">
+    <value>Maaş</value>
+  </data>
+  <data name="Enum_PayrollItemType_Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="Enum_PayrollItemType_Overtime" xml:space="preserve">
+    <value>Əlavə İş</value>
+  </data>
+  <data name="Enum_PayrollItemType_Tax" xml:space="preserve">
+    <value>Vergi</value>
+  </data>
+  <data name="Enum_PayrollItemType_Insurance" xml:space="preserve">
+    <value>Sığorta</value>
+  </data>
+  <data name="Enum_PayrollItemType_Deduction" xml:space="preserve">
+    <value>Tutulma</value>
+  </data>
+  <data name="Enum_PayrollItemType_Other" xml:space="preserve">
+    <value>Digər</value>
+  </data>
 </root>

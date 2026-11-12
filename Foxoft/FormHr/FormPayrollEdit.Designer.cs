@@ -144,7 +144,7 @@ namespace Foxoft
             // 
             this.rpgExport.ItemLinks.Add(this.bBI_SendWhatsapp);
             this.rpgExport.Name = "rpgExport";
-            this.rpgExport.Text = "Export";
+            this.rpgExport.Text = Foxoft.Properties.Resources.Common_Export;
 
             // 
             // ribbonStatusBar1
