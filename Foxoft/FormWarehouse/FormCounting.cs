@@ -32,7 +32,7 @@ namespace Foxoft
 
             this.relatedInvoiceId = relatedInvoiceId;
             this.rawInvoiceLines = invoiceLines ?? new List<TrInvoiceLine>();
-            this.countingVM = AutoMapper<TrInvoiceLine, CountingLineVM>.MapList(rawInvoiceLines);
+            this.countingVM = LoadAndAggregateCountingLines();
             LUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
 
             if (!string.IsNullOrEmpty(Authorization.StoreCode) && LUE_StoreCode.EditValue == null)
@@ -47,42 +47,12 @@ namespace Foxoft
         {
             if (e.Page == welcomeWizardPage1)
             {
-                countingVM = AutoMapper<TrInvoiceLine, CountingLineVM>.MapList(rawInvoiceLines);
+                countingVM = LoadAndAggregateCountingLines();
 
                 if (checkEdit_AutoAddCostPrice.Checked)
                 {
                     ApplyProductCosts(countingVM);
                 }
-
-                // Aggregate identical products
-                countingVM = countingVM
-                    .GroupBy(x => new
-                    {
-                        x.ProductCode,
-                        x.SerialNumberCode,
-                        x.CurrencyCode,
-                        x.UnitOfMeasureId,
-                        x.Price,
-                        x.PriceLoc,
-                        x.ExchangeRate,
-                        x.PosDiscount,
-                        x.VatRate,
-                        x.ProductCost
-                    })
-                    .Select(g =>
-                    {
-                        var first = g.First();
-                        first.Qty = g.Sum(x => x.Qty);
-                        first.QtyIn = g.Sum(x => x.QtyIn);
-                        first.QtyOut = g.Sum(x => x.QtyOut);
-                        first.Amount = g.Sum(x => x.Amount);
-                        first.AmountLoc = g.Sum(x => x.AmountLoc);
-                        first.NetAmount = g.Sum(x => x.NetAmount);
-                        first.NetAmountLoc = g.Sum(x => x.NetAmountLoc);
-                        first.Barcode = g.FirstOrDefault(x => !string.IsNullOrEmpty(x.Barcode))?.Barcode ?? first.Barcode;
-                        return first;
-                    })
-                    .ToList();
 
                 string warehouseCode = LUE_WarehouseCode.EditValue?.ToString();
 
@@ -100,6 +70,98 @@ namespace Foxoft
             {
 
             }
+        }
+
+        private List<CountingLineVM> LoadAndAggregateCountingLines()
+        {
+            var validRawLines = rawInvoiceLines
+                .Where(x => !string.IsNullOrWhiteSpace(x.ProductCode))
+                .ToList();
+
+            var mappedLines = AutoMapper<TrInvoiceLine, CountingLineVM>.MapList(validRawLines, (src, dest) =>
+            {
+                if (dest.Qty == 0 && (src.QtyIn != 0 || src.QtyOut != 0))
+                    dest.Qty = src.QtyIn != 0 ? src.QtyIn : src.QtyOut;
+                if (dest.QtyIn == 0 && dest.Qty != 0)
+                    dest.QtyIn = dest.Qty;
+                if (string.IsNullOrWhiteSpace(dest.Barcode) && !string.IsNullOrWhiteSpace(src.Barcode))
+                    dest.Barcode = src.Barcode;
+            });
+
+            var aggregated = mappedLines
+                .GroupBy(x => new
+                {
+                    ProductCode = x.ProductCode.Trim(),
+                    SerialNumberCode = string.IsNullOrWhiteSpace(x.SerialNumberCode) ? string.Empty : x.SerialNumberCode.Trim()
+                })
+                .Select(g =>
+                {
+                    var first = g.First();
+
+                    decimal totalQty = g.Sum(x => x.Qty);
+                    decimal totalQtyIn = g.Sum(x => x.QtyIn != 0 ? x.QtyIn : x.Qty);
+                    decimal totalQtyOut = g.Sum(x => x.QtyOut);
+
+                    if (totalQty == 0 && totalQtyIn > 0)
+                        totalQty = totalQtyIn;
+
+                    var linesWithPrice = g.Where(x => x.Price > 0).ToList();
+                    decimal price = 0m;
+                    if (linesWithPrice.Count > 0)
+                    {
+                        decimal sumQtyPrice = linesWithPrice.Sum(x => (x.Qty != 0 ? x.Qty : x.QtyIn) * x.Price);
+                        decimal sumQty = linesWithPrice.Sum(x => (x.Qty != 0 ? x.Qty : x.QtyIn));
+                        price = sumQty > 0 ? Math.Round(sumQtyPrice / sumQty, 4) : linesWithPrice[0].Price;
+                    }
+                    else
+                    {
+                        price = first.Price;
+                    }
+
+                    float exchangeRate = g.Select(x => x.ExchangeRate).FirstOrDefault(r => r > 0);
+                    if (exchangeRate == 0) exchangeRate = 1;
+
+                    var linesWithCost = g.Where(x => x.ProductCost.HasValue && x.ProductCost.Value > 0).ToList();
+                    decimal? productCost = null;
+                    if (linesWithCost.Count > 0)
+                    {
+                        decimal sumQtyCost = linesWithCost.Sum(x => (x.Qty != 0 ? x.Qty : x.QtyIn) * x.ProductCost.Value);
+                        decimal sumQty = linesWithCost.Sum(x => (x.Qty != 0 ? x.Qty : x.QtyIn));
+                        productCost = sumQty > 0 ? Math.Round(sumQtyCost / sumQty, 4) : linesWithCost[0].ProductCost;
+                    }
+                    else
+                    {
+                        productCost = g.Select(x => x.ProductCost).FirstOrDefault(c => c.HasValue && c.Value > 0) ?? (price > 0 ? price : null);
+                    }
+
+                    var descriptions = g.Select(x => x.LineDescription)
+                        .Where(d => !string.IsNullOrWhiteSpace(d))
+                        .Select(d => d.Trim())
+                        .Distinct()
+                        .ToList();
+
+                    first.ProductCode = g.Key.ProductCode;
+                    first.SerialNumberCode = string.IsNullOrEmpty(g.Key.SerialNumberCode) ? null : g.Key.SerialNumberCode;
+                    first.Qty = totalQty;
+                    first.QtyIn = totalQtyIn;
+                    first.QtyOut = totalQtyOut;
+                    first.Barcode = g.Select(x => x.Barcode).FirstOrDefault(b => !string.IsNullOrWhiteSpace(b)) ?? first.Barcode;
+                    first.UnitOfMeasureId = g.Select(x => x.UnitOfMeasureId).FirstOrDefault(u => u.HasValue && u.Value > 0) ?? first.UnitOfMeasureId;
+                    first.CurrencyCode = g.Select(x => x.CurrencyCode).FirstOrDefault(c => !string.IsNullOrWhiteSpace(c))
+                        ?? Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
+                    first.ExchangeRate = exchangeRate;
+                    first.Price = price;
+                    first.PriceLoc = Math.Round(price / (decimal)exchangeRate, 4);
+                    first.ProductCost = productCost;
+                    first.PosDiscount = g.Select(x => x.PosDiscount).FirstOrDefault(d => d > 0);
+                    first.VatRate = g.Select(x => x.VatRate).FirstOrDefault(v => v > 0);
+                    first.LineDescription = descriptions.Count > 0 ? string.Join("; ", descriptions) : null;
+
+                    return first;
+                })
+                .ToList();
+
+            return aggregated;
         }
 
         private void ApplyProductCosts(List<CountingLineVM> lines)
@@ -384,6 +446,19 @@ namespace Foxoft
                 DcProduct dcProduct = efMethods.SelectProduct(productCode, new byte[] { 1 });
 
                 e.Value = dcProduct?.ProductDesc;
+            }
+        }
+
+        private void gridView1_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            if (e.Column == colQty)
+            {
+                if (gridView1.GetRow(e.RowHandle) is CountingLineVM row)
+                {
+                    row.QtyIn = row.Qty;
+                    row.Difference = row.Qty - row.Balance;
+                    gridView1.UpdateCurrentRow();
+                }
             }
         }
     }

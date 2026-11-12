@@ -211,6 +211,7 @@ namespace Foxoft
             gridView1.OptionsView.ShowFooter = true;
             gridView1.OptionsView.ShowGroupPanel = false;
             gridView1.CustomUnboundColumnData += gridView1_CustomUnboundColumnData;
+            gridView1.CellValueChanged += gridView1_CellValueChanged;
             // 
             // colInvoiceLineId
             // 

@@ -4786,6 +4786,11 @@ namespace Foxoft
 
         private void BBI_CountingStock_ItemClick(object sender, ItemClickEventArgs e)
         {
+            this.Validate();
+            trInvoiceLinesBindingSource.EndEdit();
+            gV_InvoiceLine.CloseEditor();
+            gV_InvoiceLine.UpdateCurrentRow();
+
             var bindingList = trInvoiceLinesBindingSource.DataSource as BindingList<TrInvoiceLine>;
             List<TrInvoiceLine> invoiceLines = bindingList?.ToList();
 
