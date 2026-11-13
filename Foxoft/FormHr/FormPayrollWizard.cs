@@ -198,6 +198,10 @@ namespace Foxoft
                 .Where(x => x.PayrollPeriodId == periodId && employeeCodes.Contains(x.CurrAccCode))
                 .ToList();
 
+            var timesheets = db.TrMonthlyTimesheets.AsNoTracking()
+                .Where(t => t.Year == period.PeriodYear && t.Month == period.PeriodMonth && employeeCodes.Contains(t.CurrAccCode))
+                .ToList();
+
             var localCurrencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
             var defaultCurrency = currencies.FirstOrDefault(c => string.Equals(c.CurrencyCode?.Trim(), localCurrencyCode?.Trim(), StringComparison.OrdinalIgnoreCase)) ?? currencies.FirstOrDefault();
 
@@ -269,10 +273,31 @@ namespace Foxoft
 
                     existingNetSalaryLoc = existingPayroll.NetSalary;
                 }
+                else
+                {
+                    // Davamiyyət tabeli (TrMonthlyTimesheet) məlumatları əsasında əməkhaqqı göstəricilərini təklif et
+                    var timesheet = timesheets.FirstOrDefault(t => t.CurrAccCode == emp.CurrAccCode);
+                    if (timesheet != null && baseSalary > 0 && timesheet.ScheduledDays > 0)
+                    {
+                        if (timesheet.ApprovedOvertimeHours > 0)
+                        {
+                            decimal hourlyRate = baseSalary / (timesheet.ScheduledDays * 8m);
+                            overtime = Math.Round(timesheet.ApprovedOvertimeHours * hourlyRate * 2.0m, 2);
+                        }
+
+                        if (timesheet.UnexcusedAbsenceDays > 0)
+                        {
+                            decimal dailyRate = baseSalary / timesheet.ScheduledDays;
+                            deduction = Math.Round(timesheet.UnexcusedAbsenceDays * dailyRate, 2);
+                        }
+                    }
+                }
 
                 // Balance calculation:
                 decimal currentDbBalance = efMethods.SelectCurrAccBalance(emp.CurrAccCode, DateTime.Now);
                 decimal previousBalance = currentDbBalance - existingNetSalaryLoc;
+
+                var empTimesheet = timesheets.FirstOrDefault(t => t.CurrAccCode == emp.CurrAccCode);
 
                 var vm = new PayrollWizardEmployeeVM
                 {
@@ -291,7 +316,13 @@ namespace Foxoft
                     ExchangeRate = exRate,
                     AlreadyExists = alreadyExists,
                     ExistingPayrollHeaderId = existingId,
-                    PreviousBalance = previousBalance
+                    PreviousBalance = previousBalance,
+                    ScheduledDays = empTimesheet?.ScheduledDays ?? 0,
+                    WorkedDays = empTimesheet?.WorkedDays ?? 0,
+                    UnexcusedAbsenceDays = empTimesheet?.UnexcusedAbsenceDays ?? 0,
+                    LateMinutes = empTimesheet?.LateMinutes ?? 0,
+                    ApprovedOvertimeHours = empTimesheet?.ApprovedOvertimeHours ?? 0,
+                    PaidLeaveDays = empTimesheet?.PaidLeaveDays ?? 0
                 };
 
                 string defaultPayCurr = lkpPaymentCurrency.EditValue?.ToString() ?? (Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN");

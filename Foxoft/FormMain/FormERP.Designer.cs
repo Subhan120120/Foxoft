@@ -143,6 +143,11 @@ namespace Foxoft
             ACE_EmployeeContracts = new AccordionControlElement();
             ACE_PayrollPeriods = new AccordionControlElement();
             ACE_Attendances = new AccordionControlElement();
+            ACE_DailyAttendance = new AccordionControlElement();
+            ACE_AttendanceCalculationWizard = new AccordionControlElement();
+            ACE_WorkSchedules = new AccordionControlElement();
+            ACE_LeaveRequests = new AccordionControlElement();
+            ACE_AttendanceSettings = new AccordionControlElement();
             ACE_PayrollList = new AccordionControlElement();
             ACE_SalesBonusPlans = new AccordionControlElement();
             ACE_SalesBonusAssignments = new AccordionControlElement();
@@ -902,7 +907,10 @@ namespace Foxoft
             // 
             // aCE_HumanResource
             // 
-            aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_Attendances, ACE_PayrollList, ACE_SalesBonusPlans, ACE_SalesBonusAssignments, ACE_SalesBonusTxns, ACE_CrmActivityList });
+            aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] {
+                ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts,
+                ACE_WorkSchedules, ACE_DailyAttendance, ACE_AttendanceCalculationWizard, ACE_LeaveRequests, ACE_Attendances, ACE_AttendanceSettings,
+                ACE_PayrollPeriods, ACE_PayrollList, ACE_SalesBonusPlans, ACE_SalesBonusAssignments, ACE_SalesBonusTxns, ACE_CrmActivityList });
             aCE_HumanResource.Expanded = true;
             aCE_HumanResource.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage");
             aCE_HumanResource.Name = "aCE_HumanResource";
@@ -956,6 +964,36 @@ namespace Foxoft
             ACE_Attendances.Name = "ACE_Attendances";
             ACE_Attendances.Style = ElementStyle.Item;
             ACE_Attendances.Text = Resources.ERP_ACE_Attendances;
+            // 
+            // ACE_DailyAttendance
+            // 
+            ACE_DailyAttendance.Name = "ACE_DailyAttendance";
+            ACE_DailyAttendance.Style = ElementStyle.Item;
+            ACE_DailyAttendance.Text = Resources.ERP_ACE_DailyAttendance;
+            // 
+            // ACE_AttendanceCalculationWizard
+            // 
+            ACE_AttendanceCalculationWizard.Name = "ACE_AttendanceCalculationWizard";
+            ACE_AttendanceCalculationWizard.Style = ElementStyle.Item;
+            ACE_AttendanceCalculationWizard.Text = Resources.ERP_ACE_AttendanceWizard;
+            // 
+            // ACE_WorkSchedules
+            // 
+            ACE_WorkSchedules.Name = "ACE_WorkSchedules";
+            ACE_WorkSchedules.Style = ElementStyle.Item;
+            ACE_WorkSchedules.Text = Resources.ERP_ACE_WorkSchedules;
+            // 
+            // ACE_LeaveRequests
+            // 
+            ACE_LeaveRequests.Name = "ACE_LeaveRequests";
+            ACE_LeaveRequests.Style = ElementStyle.Item;
+            ACE_LeaveRequests.Text = Resources.ERP_ACE_LeaveRequests;
+            // 
+            // ACE_AttendanceSettings
+            // 
+            ACE_AttendanceSettings.Name = "ACE_AttendanceSettings";
+            ACE_AttendanceSettings.Style = ElementStyle.Item;
+            ACE_AttendanceSettings.Text = Resources.ERP_ACE_AttendanceSettings;
             // 
             // ACE_PayrollList
             // 
@@ -1272,6 +1310,11 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_EmployeeContracts;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PayrollPeriods;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Attendances;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_DailyAttendance;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_AttendanceCalculationWizard;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WorkSchedules;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_LeaveRequests;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_AttendanceSettings;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_TransferApproval;
     }
 }

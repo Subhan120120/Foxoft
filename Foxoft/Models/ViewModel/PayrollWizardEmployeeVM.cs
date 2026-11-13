@@ -17,6 +17,12 @@ namespace Foxoft.Models.ViewModel
         private decimal _deduction;
         private decimal _otherDeductions;
         private decimal _salesBonus;
+        private int _scheduledDays;
+        private int _workedDays;
+        private int _unexcusedAbsenceDays;
+        private int _lateMinutes;
+        private decimal _approvedOvertimeHours;
+        private int _paidLeaveDays;
         private string _currencyCode = Properties.Settings.Default.AppSetting?.LocalCurrencyCode ?? "AZN";
         private float _exchangeRate = 1f;
         private bool _alreadyExists;
@@ -171,6 +177,42 @@ namespace Foxoft.Models.ViewModel
                     OnPropertyChanged(nameof(BalanceAfterPayroll));
                 }
             }
+        }
+
+        public int ScheduledDays
+        {
+            get => _scheduledDays;
+            set { if (_scheduledDays != value) { _scheduledDays = value; OnPropertyChanged(); } }
+        }
+
+        public int WorkedDays
+        {
+            get => _workedDays;
+            set { if (_workedDays != value) { _workedDays = value; OnPropertyChanged(); } }
+        }
+
+        public int UnexcusedAbsenceDays
+        {
+            get => _unexcusedAbsenceDays;
+            set { if (_unexcusedAbsenceDays != value) { _unexcusedAbsenceDays = value; OnPropertyChanged(); } }
+        }
+
+        public int LateMinutes
+        {
+            get => _lateMinutes;
+            set { if (_lateMinutes != value) { _lateMinutes = value; OnPropertyChanged(); } }
+        }
+
+        public decimal ApprovedOvertimeHours
+        {
+            get => _approvedOvertimeHours;
+            set { if (_approvedOvertimeHours != value) { _approvedOvertimeHours = value; OnPropertyChanged(); } }
+        }
+
+        public int PaidLeaveDays
+        {
+            get => _paidLeaveDays;
+            set { if (_paidLeaveDays != value) { _paidLeaveDays = value; OnPropertyChanged(); } }
         }
 
         /// <summary>Satış bonusunun əməkhaqqı valyutasına çevrilmiş dəyəri (AmountLoc = Amount / ExchangeRate qaydası ilə).</summary>

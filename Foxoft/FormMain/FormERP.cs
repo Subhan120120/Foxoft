@@ -213,6 +213,11 @@ namespace Foxoft
                 case "EmployeeContracts": ShowExistForm<FormEmployeeContractList>(); break;
                 case "PayrollPeriods": ShowExistForm<FormPayrollPeriodList>(); break;
                 case "Attendances": ShowExistForm<FormAttendanceList>(); break;
+                case "DailyAttendance": ShowExistForm<FormDailyAttendanceManager>(); break;
+                case "AttendanceCalculationWizard": ShowNewForm<FormAttendanceCalculationWizard>(); break;
+                case "WorkSchedules": ShowExistForm<FormWorkScheduleList>(); break;
+                case "LeaveRequests": ShowExistForm<FormLeaveRequestList>(); break;
+                case "AttendanceSettings": ShowNewForm<FormAttendanceSettings>(); break;
                 case "PayrollList": ShowExistForm<FormPayrollList>(); break;
                 case "SalesBonusPlans": ShowExistForm<FormSalesBonusPlanList>(); break;
                 case "SalesBonusAssignments": ShowExistForm<FormSalesBonusAssignmentList>(); break;
@@ -333,6 +338,11 @@ namespace Foxoft
             this.ACE_EmployeeContracts.Name = "EmployeeContracts";
             this.ACE_PayrollPeriods.Name = "PayrollPeriods";
             this.ACE_Attendances.Name = "Attendances";
+            this.ACE_DailyAttendance.Name = "DailyAttendance";
+            this.ACE_AttendanceCalculationWizard.Name = "AttendanceCalculationWizard";
+            this.ACE_WorkSchedules.Name = "WorkSchedules";
+            this.ACE_LeaveRequests.Name = "LeaveRequests";
+            this.ACE_AttendanceSettings.Name = "AttendanceSettings";
             this.ACE_PayrollList.Name = "PayrollList";
             this.ACE_SalesBonusPlans.Name = "SalesBonusPlans";
             this.ACE_SalesBonusAssignments.Name = "SalesBonusAssignments";

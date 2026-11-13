@@ -30,6 +30,12 @@ namespace Foxoft.Models
             TrPayrollHeaders = new HashSet<TrPayrollHeader>();
             TrLeaves = new HashSet<TrLeave>();
             TrEmployeeShifts = new HashSet<TrEmployeeShift>();
+            TrEmployeeWorkSchedules = new HashSet<TrEmployeeWorkSchedule>();
+            HrLeaveRequests = new HashSet<HrLeaveRequest>();
+            HrEmployeeLeaveBalances = new HashSet<HrEmployeeLeaveBalance>();
+            TrAttendanceLogs = new HashSet<TrAttendanceLog>();
+            TrOvertimeRequests = new HashSet<TrOvertimeRequest>();
+            TrMonthlyTimesheets = new HashSet<TrMonthlyTimesheet>();
             TrCurrAccRelations = new HashSet<TrCurrAccRelation>();
             RelatedTrCurrAccRelations = new HashSet<TrCurrAccRelation>();
             TrUserStores = new HashSet<TrUserStore>();
@@ -204,6 +210,12 @@ namespace Foxoft.Models
         public virtual ICollection<TrAttendance> TrAttendances { get; set; }
         public virtual ICollection<TrLeave> TrLeaves { get; set; }
         public virtual ICollection<TrEmployeeShift> TrEmployeeShifts { get; set; }
+        public virtual ICollection<TrEmployeeWorkSchedule> TrEmployeeWorkSchedules { get; set; }
+        public virtual ICollection<HrLeaveRequest> HrLeaveRequests { get; set; }
+        public virtual ICollection<HrEmployeeLeaveBalance> HrEmployeeLeaveBalances { get; set; }
+        public virtual ICollection<TrAttendanceLog> TrAttendanceLogs { get; set; }
+        public virtual ICollection<TrOvertimeRequest> TrOvertimeRequests { get; set; }
+        public virtual ICollection<TrMonthlyTimesheet> TrMonthlyTimesheets { get; set; }
 
         public virtual ICollection<TrPayrollHeader> TrPayrollHeaders { get; set; }
         public virtual DcCurrAccType DcCurrAccType { get; set; }

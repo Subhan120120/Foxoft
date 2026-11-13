@@ -7650,4 +7650,169 @@ Google account: {1}</value>
   <data name="Enum_PayrollItemType_Other" xml:space="preserve">
     <value>Other</value>
   </data>
+  <data name="Common_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Common_Store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="Common_All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Common_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Common_Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="Common_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Common_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Common_Break" xml:space="preserve">
+    <value>Break (min)</value>
+  </data>
+  <data name="Common_Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="ERP_ACE_WorkSchedules" xml:space="preserve">
+    <value>Work Schedules</value>
+  </data>
+  <data name="ERP_ACE_DailyAttendance" xml:space="preserve">
+    <value>Daily Attendance Manager</value>
+  </data>
+  <data name="ERP_ACE_AttendanceWizard" xml:space="preserve">
+    <value>Attendance Calculation Wizard</value>
+  </data>
+  <data name="ERP_ACE_LeaveRequests" xml:space="preserve">
+    <value>Leave &amp; Permission Requests</value>
+  </data>
+  <data name="ERP_ACE_AttendanceSettings" xml:space="preserve">
+    <value>Attendance Settings</value>
+  </data>
+  <data name="Form_DailyAttendance_Caption" xml:space="preserve">
+    <value>Daily Attendance Manager</value>
+  </data>
+  <data name="Form_DailyAttendance_MarkExcused" xml:space="preserve">
+    <value>Mark Excused</value>
+  </data>
+  <data name="Form_DailyAttendance_MarkUnexcused" xml:space="preserve">
+    <value>Mark Unexcused</value>
+  </data>
+  <data name="Form_DailyAttendance_ApproveOvertime" xml:space="preserve">
+    <value>Approve Overtime</value>
+  </data>
+  <data name="Form_DailyAttendance_Recalculate" xml:space="preserve">
+    <value>Recalculate Day</value>
+  </data>
+  <data name="Form_DailyAttendance_AllStatus" xml:space="preserve">
+    <value>All Statuses</value>
+  </data>
+  <data name="Form_DailyAttendance_SavedSuccess" xml:space="preserve">
+    <value>Attendance records saved successfully.</value>
+  </data>
+  <data name="Form_AttendanceWizard_Caption" xml:space="preserve">
+    <value>Attendance Calculation Wizard</value>
+  </data>
+  <data name="Form_AttendanceWizard_WelcomeTitle" xml:space="preserve">
+    <value>Welcome to Attendance Calculation Wizard</value>
+  </data>
+  <data name="Form_AttendanceWizard_WelcomeText" xml:space="preserve">
+    <value>This wizard analyzes employee punch logs, work schedules, and approved leaves to calculate daily attendance and overtime.</value>
+  </data>
+  <data name="Form_AttendanceWizard_DatePage" xml:space="preserve">
+    <value>Date &amp; Filter Selection</value>
+  </data>
+  <data name="Form_AttendanceWizard_SettingsPage" xml:space="preserve">
+    <value>Calculation Settings Review</value>
+  </data>
+  <data name="Form_AttendanceWizard_PreviewPage" xml:space="preserve">
+    <value>Calculation Results &amp; Preview</value>
+  </data>
+  <data name="Form_AttendanceWizard_CompleteTitle" xml:space="preserve">
+    <value>Attendance Calculation Complete</value>
+  </data>
+  <data name="Form_AttendanceSettings_Caption" xml:space="preserve">
+    <value>Attendance Settings</value>
+  </data>
+  <data name="Form_AttendanceSettings_General" xml:space="preserve">
+    <value>General Settings</value>
+  </data>
+  <data name="Form_AttendanceSettings_Late" xml:space="preserve">
+    <value>Late Calculation Settings</value>
+  </data>
+  <data name="Form_AttendanceSettings_EarlyExitOvertime" xml:space="preserve">
+    <value>Early Exit &amp; Overtime Settings</value>
+  </data>
+  <data name="Form_AttendanceSettings_Notifications" xml:space="preserve">
+    <value>Notification Settings</value>
+  </data>
+  <data name="Form_WorkScheduleList_Caption" xml:space="preserve">
+    <value>Work Schedules</value>
+  </data>
+  <data name="Form_WorkSchedule_Caption_New" xml:space="preserve">
+    <value>New Work Schedule</value>
+  </data>
+  <data name="Form_WorkSchedule_Caption_Edit" xml:space="preserve">
+    <value>Edit Work Schedule</value>
+  </data>
+  <data name="Form_LeaveRequestList_Caption" xml:space="preserve">
+    <value>Leave &amp; Permission Requests</value>
+  </data>
+  <data name="Form_LeaveRequest_Caption_New" xml:space="preserve">
+    <value>New Leave Request</value>
+  </data>
+  <data name="Form_LeaveRequest_Caption_Edit" xml:space="preserve">
+    <value>Edit Leave Request</value>
+  </data>
+  <data name="Form_LeaveRequest_Approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="Form_LeaveRequest_Reject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="Entity_Attendance_Status" xml:space="preserve">
+    <value>Attendance Status</value>
+  </data>
+  <data name="Entity_Attendance_PlannedCheckIn" xml:space="preserve">
+    <value>Planned Check In</value>
+  </data>
+  <data name="Entity_Attendance_PlannedCheckOut" xml:space="preserve">
+    <value>Planned Check Out</value>
+  </data>
+  <data name="Entity_Attendance_EffectiveStart" xml:space="preserve">
+    <value>Effective Start Time</value>
+  </data>
+  <data name="Entity_Attendance_LateMinutes" xml:space="preserve">
+    <value>Late (min)</value>
+  </data>
+  <data name="Entity_Attendance_EarlyExitMinutes" xml:space="preserve">
+    <value>Early Exit (min)</value>
+  </data>
+  <data name="Entity_Attendance_OvertimeMinutes" xml:space="preserve">
+    <value>Overtime (min)</value>
+  </data>
+  <data name="Entity_Attendance_ApprovedOvertimeMinutes" xml:space="preserve">
+    <value>Approved Overtime (min)</value>
+  </data>
+  <data name="Form_AttendanceWizard_HelpTitle" xml:space="preserve">
+    <value>Settings Guide &amp; Examples</value>
+  </data>
+  <data name="Form_AttendanceWizard_LateActualDesc" xml:space="preserve">
+    <value>&lt;b&gt;Actual (Actual Delay):&lt;/b&gt; When the grace period ({0} min) is exceeded, the late duration is calculated in full from the scheduled start time.&lt;br&gt;&lt;color=Gray&gt;Example:&lt;/color&gt; Shift starts at 09:00, arrival is 09:07 &amp;rarr; &lt;b&gt;Late: {1} minutes&lt;/b&gt; (since {0} min grace was exceeded).</value>
+  </data>
+  <data name="Form_AttendanceWizard_LateAfterGraceDesc" xml:space="preserve">
+    <value>&lt;b&gt;AfterGrace (Delay After Grace):&lt;/b&gt; When the grace period is exceeded, only the duration beyond the grace period is counted as late.&lt;br&gt;&lt;color=Gray&gt;Example:&lt;/color&gt; Shift starts at 09:00, arrival is 09:07 ({0} min grace deducted) &amp;rarr; &lt;b&gt;Late: {1} minutes&lt;/b&gt; (7 - {0} = {1}).</value>
+  </data>
+  <data name="Form_AttendanceWizard_OTAutoDesc" xml:space="preserve">
+    <value>&lt;b&gt;Auto (Automatic):&lt;/b&gt; Any hours worked beyond the scheduled shift are automatically approved as overtime.</value>
+  </data>
+  <data name="Form_AttendanceWizard_OTPreApprovedDesc" xml:space="preserve">
+    <value>&lt;b&gt;PreApproved (Pre-approved only):&lt;/b&gt; Overtime is counted only if a manager-approved overtime request (TrOvertimeRequests) exists.</value>
+  </data>
+  <data name="Form_AttendanceWizard_GeneralHelpDesc" xml:space="preserve">
+    <value>&lt;b&gt;Grace Period ({0} min):&lt;/b&gt; Permissible late buffer without penalty (check-in within this period has Late = 0).&lt;br&gt;&lt;b&gt;Debounce ({1} min):&lt;/b&gt; Duplicate punch logs within this window on the same device are ignored.</value>
+  </data>
 </root>

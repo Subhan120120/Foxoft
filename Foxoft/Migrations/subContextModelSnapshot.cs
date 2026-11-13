@@ -229,6 +229,111 @@ namespace Foxoft.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcAttendanceSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AllowAttendanceCorrection")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowLateCorrection")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowManualEntry")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AttendanceEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<byte>("AttendanceMethod")
+                        .HasColumnType("tinyint");
+
+                    b.Property<bool>("AutoCalculateAttendance")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AutoCloseDay")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("DebounceMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("DefaultWorkScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("EarlyExitGracePeriodMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GracePeriodMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("LateApprovalRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<byte>("LateCalculationMethod")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("LateRoundingMethod")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("MinOvertimeMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("NotifyHrOnLate")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("NotifyManagerOnAbsence")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("NotifyOnMissingCheckOut")
+                        .HasColumnType("bit");
+
+                    b.Property<byte>("OvertimePolicy")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("OvertimeRoundingMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("RequireApproval")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DefaultWorkScheduleId");
+
+                    b.ToTable("DcAttendanceSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AllowAttendanceCorrection = true,
+                            AllowLateCorrection = true,
+                            AllowManualEntry = true,
+                            AttendanceEnabled = true,
+                            AttendanceMethod = (byte)3,
+                            AutoCalculateAttendance = true,
+                            AutoCloseDay = false,
+                            DebounceMinutes = 2,
+                            DefaultWorkScheduleId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            EarlyExitGracePeriodMinutes = 5,
+                            GracePeriodMinutes = 5,
+                            LateApprovalRequired = false,
+                            LateCalculationMethod = (byte)1,
+                            LateRoundingMethod = (byte)0,
+                            MinOvertimeMinutes = 15,
+                            NotifyHrOnLate = false,
+                            NotifyManagerOnAbsence = false,
+                            NotifyOnMissingCheckOut = false,
+                            OvertimePolicy = (byte)1,
+                            OvertimeRoundingMinutes = 0,
+                            RequireApproval = false
+                        });
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcBackupJob", b =>
                 {
                     b.Property<int>("BackupJobId")
@@ -5669,6 +5774,289 @@ namespace Foxoft.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcWorkSchedule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ScheduleCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ScheduleName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<byte>("ScheduleType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<decimal>("WeeklyHours")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScheduleCode")
+                        .IsUnique();
+
+                    b.ToTable("DcWorkSchedules");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Description = "Bazar ertəsi - Cümə 09:00 - 18:00, 13:00 - 14:00 nahar",
+                            IsActive = true,
+                            ScheduleCode = "WS-5DAY",
+                            ScheduleName = "Standart 5 günlük (09:00 - 18:00)",
+                            ScheduleType = (byte)1,
+                            WeeklyHours = 40.00m
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Description = "Bazar ertəsi - Şənbə 09:00 - 17:00",
+                            IsActive = true,
+                            ScheduleCode = "WS-6DAY",
+                            ScheduleName = "Standart 6 günlük (09:00 - 17:00)",
+                            ScheduleType = (byte)2,
+                            WeeklyHours = 48.00m
+                        });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcWorkScheduleDay", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BreakDurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan?>("BreakEndTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan?>("BreakStartTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<bool>("IsWorkDay")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PlannedWorkMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<Guid>("WorkScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkScheduleId");
+
+                    b.ToTable("DcWorkScheduleDays");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-000000000001"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 1,
+                            EndTime = new TimeSpan(0, 18, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 480,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("11111111-1111-1111-1111-111111111111")
+                        },
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-000000000002"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 2,
+                            EndTime = new TimeSpan(0, 18, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 480,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("11111111-1111-1111-1111-111111111111")
+                        },
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-000000000003"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 3,
+                            EndTime = new TimeSpan(0, 18, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 480,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("11111111-1111-1111-1111-111111111111")
+                        },
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-000000000004"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 4,
+                            EndTime = new TimeSpan(0, 18, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 480,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("11111111-1111-1111-1111-111111111111")
+                        },
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-000000000005"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 5,
+                            EndTime = new TimeSpan(0, 18, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 480,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("11111111-1111-1111-1111-111111111111")
+                        },
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-000000000006"),
+                            BreakDurationMinutes = 0,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 6,
+                            EndTime = new TimeSpan(0, 0, 0, 0, 0),
+                            IsWorkDay = false,
+                            PlannedWorkMinutes = 0,
+                            StartTime = new TimeSpan(0, 0, 0, 0, 0),
+                            WorkScheduleId = new Guid("11111111-1111-1111-1111-111111111111")
+                        },
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-000000000000"),
+                            BreakDurationMinutes = 0,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 0,
+                            EndTime = new TimeSpan(0, 0, 0, 0, 0),
+                            IsWorkDay = false,
+                            PlannedWorkMinutes = 0,
+                            StartTime = new TimeSpan(0, 0, 0, 0, 0),
+                            WorkScheduleId = new Guid("11111111-1111-1111-1111-111111111111")
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-000000000001"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 1,
+                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 420,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("22222222-2222-2222-2222-222222222222")
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-000000000002"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 2,
+                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 420,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("22222222-2222-2222-2222-222222222222")
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-000000000003"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 3,
+                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 420,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("22222222-2222-2222-2222-222222222222")
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-000000000004"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 4,
+                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 420,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("22222222-2222-2222-2222-222222222222")
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-000000000005"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 5,
+                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 420,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("22222222-2222-2222-2222-222222222222")
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-000000000006"),
+                            BreakDurationMinutes = 60,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 6,
+                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            IsWorkDay = true,
+                            PlannedWorkMinutes = 420,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            WorkScheduleId = new Guid("22222222-2222-2222-2222-222222222222")
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-000000000000"),
+                            BreakDurationMinutes = 0,
+                            BreakEndTime = new TimeSpan(0, 14, 0, 0, 0),
+                            BreakStartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            DayOfWeek = 0,
+                            EndTime = new TimeSpan(0, 0, 0, 0, 0),
+                            IsWorkDay = false,
+                            PlannedWorkMinutes = 0,
+                            StartTime = new TimeSpan(0, 0, 0, 0, 0),
+                            WorkScheduleId = new Guid("22222222-2222-2222-2222-222222222222")
+                        });
+                });
+
             modelBuilder.Entity("Foxoft.Models.Entity.DocumentLock", b =>
                 {
                     b.Property<Guid>("LockId")
@@ -7757,6 +8145,54 @@ namespace Foxoft.Migrations
                             ClaimCode = "SalesBonusCalculate",
                             CategoryId = 23,
                             ClaimDesc = "Satıcı Bonusu Hesablama və Düzəliş",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DailyAttendance",
+                            CategoryId = 23,
+                            ClaimDesc = "Gündəlik Davamiyyət İdarəsi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "AttendanceCalculationWizard",
+                            CategoryId = 23,
+                            ClaimDesc = "Davamiyyət Hesablama Sihirbazı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "WorkSchedules",
+                            CategoryId = 23,
+                            ClaimDesc = "İş Qrafikləri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "LeaveRequests",
+                            CategoryId = 23,
+                            ClaimDesc = "İcazələr və Məzuniyyətlər",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "AttendanceSettings",
+                            CategoryId = 23,
+                            ClaimDesc = "Davamiyyət Ayarları",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "AttendanceLogs",
+                            CategoryId = 23,
+                            ClaimDesc = "Davamiyyət Logları",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         });
@@ -11576,6 +12012,102 @@ namespace Foxoft.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 529,
+                            ClaimCode = "DailyAttendance",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 530,
+                            ClaimCode = "AttendanceCalculationWizard",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 531,
+                            ClaimCode = "WorkSchedules",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 532,
+                            ClaimCode = "LeaveRequests",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 533,
+                            ClaimCode = "AttendanceSettings",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 534,
+                            ClaimCode = "AttendanceLogs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 535,
+                            ClaimCode = "DailyAttendance",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 536,
+                            ClaimCode = "AttendanceCalculationWizard",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 537,
+                            ClaimCode = "WorkSchedules",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 538,
+                            ClaimCode = "LeaveRequests",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 539,
+                            ClaimCode = "AttendanceSettings",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 540,
+                            ClaimCode = "AttendanceLogs",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
                         });
                 });
 
@@ -11655,6 +12187,277 @@ namespace Foxoft.Migrations
                     b.ToTable((string)null);
 
                     b.ToView("GetNextDocNumResult", (string)null);
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrEmployeeLeaveBalance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<Guid>("LeaveTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("RemainingDays")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<decimal>("TotalEntitledDays")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<decimal>("UsedDays")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.HasIndex("LeaveTypeId");
+
+                    b.ToTable("HrEmployeeLeaveBalances");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrLeaveApproval", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ApprovalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ApproverCurrAccCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("LeaveRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApproverCurrAccCode");
+
+                    b.HasIndex("LeaveRequestId");
+
+                    b.ToTable("HrLeaveApprovals");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrLeaveRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedUserName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("LeaveTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("RequestNumber")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.Property<decimal>("TotalDays")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<decimal>("TotalHours")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.HasIndex("LeaveTypeId");
+
+                    b.ToTable("HrLeaveRequests");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrLeaveRequestDay", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("DurationHours")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<TimeSpan?>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<bool>("IsHalfDay")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("LeaveRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan?>("StartTime")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeaveRequestId");
+
+                    b.ToTable("HrLeaveRequestDays");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrLeaveType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("AffectAttendance")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("DefaultDaysPerYear")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHourly")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequiresApproval")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TypeCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeCode")
+                        .IsUnique();
+
+                    b.ToTable("HrLeaveTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333331"),
+                            AffectAttendance = true,
+                            DefaultDaysPerYear = 21,
+                            IsActive = true,
+                            IsHourly = false,
+                            IsPaid = true,
+                            RequiresApproval = true,
+                            TypeCode = "AnnualLeave",
+                            TypeName = "Əsas Məzuniyyət"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333332"),
+                            AffectAttendance = true,
+                            DefaultDaysPerYear = 14,
+                            IsActive = true,
+                            IsHourly = false,
+                            IsPaid = true,
+                            RequiresApproval = true,
+                            TypeCode = "SickLeave",
+                            TypeName = "Xəstəlik Məzuniyyəti"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            AffectAttendance = true,
+                            DefaultDaysPerYear = 0,
+                            IsActive = true,
+                            IsHourly = false,
+                            IsPaid = false,
+                            RequiresApproval = true,
+                            TypeCode = "UnpaidLeave",
+                            TypeName = "Ödənişsiz İcazə"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333334"),
+                            AffectAttendance = true,
+                            DefaultDaysPerYear = 0,
+                            IsActive = true,
+                            IsHourly = true,
+                            IsPaid = false,
+                            RequiresApproval = true,
+                            TypeCode = "PersonalPermission",
+                            TypeName = "Şəxsi İcazə (Saatlıq/Günlük)"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333335"),
+                            AffectAttendance = true,
+                            DefaultDaysPerYear = 0,
+                            IsActive = true,
+                            IsHourly = false,
+                            IsPaid = true,
+                            RequiresApproval = true,
+                            TypeCode = "BusinessTrip",
+                            TypeName = "Ezamiyyət"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333336"),
+                            AffectAttendance = true,
+                            DefaultDaysPerYear = 0,
+                            IsActive = true,
+                            IsHourly = false,
+                            IsPaid = true,
+                            RequiresApproval = true,
+                            TypeCode = "DayOff",
+                            TypeName = "İstirahət / Əvəzləmə Günü"
+                        });
                 });
 
             modelBuilder.Entity("Foxoft.Models.MigrationHistory", b =>
@@ -11819,6 +12622,18 @@ namespace Foxoft.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("ApprovedOvertimeMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("AttendanceStatus")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("BreakMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CalculatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("CheckInTime")
                         .HasColumnType("datetime2");
 
@@ -11827,10 +12642,45 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("CurrAccCode")
                         .IsRequired()
+                        .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("EarlyExitMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("EffectiveStartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsManualOverride")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LateMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("LeaveRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("OvertimeMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("PlannedCheckInTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PlannedCheckOutTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PlannedWorkMinutes")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("WorkDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("WorkScheduleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("WorkedMinutes")
                         .HasColumnType("int");
@@ -11839,7 +12689,60 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("CurrAccCode");
 
+                    b.HasIndex("LeaveRequestId");
+
+                    b.HasIndex("WorkScheduleId");
+
                     b.ToTable("TrAttendances");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrAttendanceLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedUserName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("DeviceCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("IgnoreReason")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsIgnored")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("LogDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("PunchType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("SourceMethod")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.ToTable("TrAttendanceLogs");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrBackupLog", b =>
@@ -12608,6 +13511,39 @@ namespace Foxoft.Migrations
                     b.HasIndex("ShiftId");
 
                     b.ToTable("TrEmployeeShifts");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrEmployeeWorkSchedule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("WorkScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.HasIndex("WorkScheduleId");
+
+                    b.ToTable("TrEmployeeWorkSchedules");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrHierarchyFeatureType", b =>
@@ -13390,6 +14326,82 @@ namespace Foxoft.Migrations
                     b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrMonthlyTimesheet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("ApprovedOvertimeHours")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<DateTime>("CalculatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("EarlyExitMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExcusedAbsenceDays")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsLocked")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LateMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("PaidLeaveDays")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("PayrollPeriodId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ScheduledDays")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SickLeaveDays")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalOvertimeHours")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<int>("UnexcusedAbsenceDays")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnpaidLeaveDays")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkedDays")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("WorkedHours")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PayrollPeriodId");
+
+                    b.HasIndex("CurrAccCode", "Year", "Month")
+                        .IsUnique();
+
+                    b.ToTable("TrMonthlyTimesheets");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrNotification", b =>
                 {
                     b.Property<long>("NotificationId")
@@ -13655,6 +14667,52 @@ namespace Foxoft.Migrations
                         .IsUnique();
 
                     b.ToTable("TrNotificationRecipients", (string)null);
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrOvertimeRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApprovedByCurrAccCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime?>("ApprovedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("OvertimeMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime>("WorkDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApprovedByCurrAccCode");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.ToTable("TrOvertimeRequests");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
@@ -14615,6 +15673,16 @@ namespace Foxoft.Migrations
                     b.Navigation("DcUnitOfMeasure");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcAttendanceSetting", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcWorkSchedule", "DefaultWorkSchedule")
+                        .WithMany()
+                        .HasForeignKey("DefaultWorkScheduleId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DefaultWorkSchedule");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcCurrAcc", b =>
                 {
                     b.HasOne("Foxoft.Models.DcPaymentType", "DcPaymentType")
@@ -15003,6 +16071,17 @@ namespace Foxoft.Migrations
                     b.Navigation("DcStore");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcWorkScheduleDay", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcWorkSchedule", "WorkSchedule")
+                        .WithMany("Days")
+                        .HasForeignKey("WorkScheduleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("WorkSchedule");
+                });
+
             modelBuilder.Entity("Foxoft.Models.Entity.Report.DcReport", b =>
                 {
                     b.HasOne("Foxoft.Models.Entity.Report.DcReportCategory", "DcReportCategory")
@@ -15168,6 +16247,73 @@ namespace Foxoft.Migrations
                     b.Navigation("DcRole");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.HrEmployeeLeaveBalance", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("HrEmployeeLeaveBalances")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.HrLeaveType", "LeaveType")
+                        .WithMany("Balances")
+                        .HasForeignKey("LeaveTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("LeaveType");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrLeaveApproval", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "ApproverCurrAcc")
+                        .WithMany()
+                        .HasForeignKey("ApproverCurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Foxoft.Models.HrLeaveRequest", "LeaveRequest")
+                        .WithMany("Approvals")
+                        .HasForeignKey("LeaveRequestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ApproverCurrAcc");
+
+                    b.Navigation("LeaveRequest");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrLeaveRequest", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("HrLeaveRequests")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.HrLeaveType", "LeaveType")
+                        .WithMany("LeaveRequests")
+                        .HasForeignKey("LeaveTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("LeaveType");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrLeaveRequestDay", b =>
+                {
+                    b.HasOne("Foxoft.Models.HrLeaveRequest", "LeaveRequest")
+                        .WithMany("RequestDays")
+                        .HasForeignKey("LeaveRequestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("LeaveRequest");
+                });
+
             modelBuilder.Entity("Foxoft.Models.ProductBalance", b =>
                 {
                     b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
@@ -15213,6 +16359,31 @@ namespace Foxoft.Migrations
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
                         .WithMany("TrAttendances")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.HrLeaveRequest", "LeaveRequest")
+                        .WithMany("Attendances")
+                        .HasForeignKey("LeaveRequestId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Foxoft.Models.DcWorkSchedule", "WorkSchedule")
+                        .WithMany("Attendances")
+                        .HasForeignKey("WorkScheduleId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("LeaveRequest");
+
+                    b.Navigation("WorkSchedule");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrAttendanceLog", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("TrAttendanceLogs")
                         .HasForeignKey("CurrAccCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -15490,6 +16661,25 @@ namespace Foxoft.Migrations
                     b.Navigation("DcCurrAcc");
 
                     b.Navigation("Shift");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrEmployeeWorkSchedule", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("TrEmployeeWorkSchedules")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcWorkSchedule", "WorkSchedule")
+                        .WithMany("EmployeeWorkSchedules")
+                        .HasForeignKey("WorkScheduleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("WorkSchedule");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrHierarchyFeatureType", b =>
@@ -15775,6 +16965,24 @@ namespace Foxoft.Migrations
                     b.Navigation("DcCurrAcc");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrMonthlyTimesheet", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("TrMonthlyTimesheets")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcPayrollPeriod", "PayrollPeriod")
+                        .WithMany()
+                        .HasForeignKey("PayrollPeriodId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("PayrollPeriod");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrNotification", b =>
                 {
                     b.HasOne("Foxoft.Models.DcNotificationType", "DcNotificationType")
@@ -15845,6 +17053,24 @@ namespace Foxoft.Migrations
                     b.Navigation("DcCurrAcc");
 
                     b.Navigation("TrNotification");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrOvertimeRequest", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "ApprovedByCurrAcc")
+                        .WithMany()
+                        .HasForeignKey("ApprovedByCurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("TrOvertimeRequests")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ApprovedByCurrAcc");
+
+                    b.Navigation("DcCurrAcc");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
@@ -16258,12 +17484,18 @@ namespace Foxoft.Migrations
 
                     b.Navigation("DcStoreTrPaymentHeaders");
 
+                    b.Navigation("HrEmployeeLeaveBalances");
+
+                    b.Navigation("HrLeaveRequests");
+
                     b.Navigation("RelatedTrCurrAccRelations");
 
                     b.Navigation("SettingStore")
                         .IsRequired();
 
                     b.Navigation("ToCashRegTrPaymentHeaders");
+
+                    b.Navigation("TrAttendanceLogs");
 
                     b.Navigation("TrAttendances");
 
@@ -16277,6 +17509,8 @@ namespace Foxoft.Migrations
 
                     b.Navigation("TrEmployeeShifts");
 
+                    b.Navigation("TrEmployeeWorkSchedules");
+
                     b.Navigation("TrInstallmentGuarantors");
 
                     b.Navigation("TrInvoiceHeaders");
@@ -16284,6 +17518,10 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceLines");
 
                     b.Navigation("TrLeaves");
+
+                    b.Navigation("TrMonthlyTimesheets");
+
+                    b.Navigation("TrOvertimeRequests");
 
                     b.Navigation("TrPaymentHeaders");
 
@@ -16546,6 +17784,15 @@ namespace Foxoft.Migrations
                     b.Navigation("TrCampaignWarehouses");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcWorkSchedule", b =>
+                {
+                    b.Navigation("Attendances");
+
+                    b.Navigation("Days");
+
+                    b.Navigation("EmployeeWorkSchedules");
+                });
+
             modelBuilder.Entity("Foxoft.Models.Entity.Report.DcReport", b =>
                 {
                     b.Navigation("DcReportVariables");
@@ -16601,6 +17848,22 @@ namespace Foxoft.Migrations
                     b.Navigation("TrRoleClaims");
 
                     b.Navigation("TrUserRoles");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrLeaveRequest", b =>
+                {
+                    b.Navigation("Approvals");
+
+                    b.Navigation("Attendances");
+
+                    b.Navigation("RequestDays");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.HrLeaveType", b =>
+                {
+                    b.Navigation("Balances");
+
+                    b.Navigation("LeaveRequests");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrBarcodeOperationHeader", b =>

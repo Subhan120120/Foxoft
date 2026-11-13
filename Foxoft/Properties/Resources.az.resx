@@ -7650,4 +7650,169 @@ Google hesabı: {1}</value>
   <data name="Enum_PayrollItemType_Other" xml:space="preserve">
     <value>Digər</value>
   </data>
+  <data name="Common_Date" xml:space="preserve">
+    <value>Tarix</value>
+  </data>
+  <data name="Common_Store" xml:space="preserve">
+    <value>Mağaza / Filial</value>
+  </data>
+  <data name="Common_All" xml:space="preserve">
+    <value>Hamısı</value>
+  </data>
+  <data name="Common_Filter" xml:space="preserve">
+    <value>Filtr</value>
+  </data>
+  <data name="Common_Operation" xml:space="preserve">
+    <value>Əməliyyat</value>
+  </data>
+  <data name="Common_Success" xml:space="preserve">
+    <value>Uğurlu</value>
+  </data>
+  <data name="Common_Note" xml:space="preserve">
+    <value>Qeyd</value>
+  </data>
+  <data name="Common_Break" xml:space="preserve">
+    <value>Fasilə (dəq)</value>
+  </data>
+  <data name="Common_Hours" xml:space="preserve">
+    <value>Saat</value>
+  </data>
+  <data name="ERP_ACE_WorkSchedules" xml:space="preserve">
+    <value>İş Qrafikləri</value>
+  </data>
+  <data name="ERP_ACE_DailyAttendance" xml:space="preserve">
+    <value>Gündəlik Davamiyyət İdarəsi</value>
+  </data>
+  <data name="ERP_ACE_AttendanceWizard" xml:space="preserve">
+    <value>Davamiyyət Hesablama Sihirbazı</value>
+  </data>
+  <data name="ERP_ACE_LeaveRequests" xml:space="preserve">
+    <value>İcazə və Məzuniyyətlər</value>
+  </data>
+  <data name="ERP_ACE_AttendanceSettings" xml:space="preserve">
+    <value>Davamiyyət Ayarları</value>
+  </data>
+  <data name="Form_DailyAttendance_Caption" xml:space="preserve">
+    <value>Gündəlik Davamiyyət İdarəsi</value>
+  </data>
+  <data name="Form_DailyAttendance_MarkExcused" xml:space="preserve">
+    <value>İcazəli Qeyd Et</value>
+  </data>
+  <data name="Form_DailyAttendance_MarkUnexcused" xml:space="preserve">
+    <value>Üzrsüz Qeyd Et</value>
+  </data>
+  <data name="Form_DailyAttendance_ApproveOvertime" xml:space="preserve">
+    <value>Əlavə İşi Təsdiqlə</value>
+  </data>
+  <data name="Form_DailyAttendance_Recalculate" xml:space="preserve">
+    <value>Günü Hesabla</value>
+  </data>
+  <data name="Form_DailyAttendance_AllStatus" xml:space="preserve">
+    <value>Bütün Statuslar</value>
+  </data>
+  <data name="Form_DailyAttendance_SavedSuccess" xml:space="preserve">
+    <value>Davamiyyət qeydləri uğurla yadda saxlanıldı.</value>
+  </data>
+  <data name="Form_AttendanceWizard_Caption" xml:space="preserve">
+    <value>Davamiyyət Hesablama Sihirbazı</value>
+  </data>
+  <data name="Form_AttendanceWizard_WelcomeTitle" xml:space="preserve">
+    <value>Davamiyyət Hesablama Sihirbazına Xoş Gəlmisiniz</value>
+  </data>
+  <data name="Form_AttendanceWizard_WelcomeText" xml:space="preserve">
+    <value>Bu sihirbaz qeyd olunan tarix intervalı üzrə işçilərin giriş-çıxış loglarını, qrafiklərini və icazələrini təhlil edərək davamiyyət qeydlərini avtomatik hesablayır.</value>
+  </data>
+  <data name="Form_AttendanceWizard_DatePage" xml:space="preserve">
+    <value>Tarix və Filtrlər</value>
+  </data>
+  <data name="Form_AttendanceWizard_SettingsPage" xml:space="preserve">
+    <value>Hesablama Qaydaları</value>
+  </data>
+  <data name="Form_AttendanceWizard_PreviewPage" xml:space="preserve">
+    <value>Hesablama Nəticələri və Önizləmə</value>
+  </data>
+  <data name="Form_AttendanceWizard_CompleteTitle" xml:space="preserve">
+    <value>Hesablama Tamamlandı</value>
+  </data>
+  <data name="Form_AttendanceSettings_Caption" xml:space="preserve">
+    <value>Davamiyyət Ayarları</value>
+  </data>
+  <data name="Form_AttendanceSettings_General" xml:space="preserve">
+    <value>Ümumi Ayarlar</value>
+  </data>
+  <data name="Form_AttendanceSettings_Late" xml:space="preserve">
+    <value>Gecikmə Ayarları</value>
+  </data>
+  <data name="Form_AttendanceSettings_EarlyExitOvertime" xml:space="preserve">
+    <value>Erkən Çıxış və Əlavə İş (Overtime)</value>
+  </data>
+  <data name="Form_AttendanceSettings_Notifications" xml:space="preserve">
+    <value>Bildiriş Ayarları</value>
+  </data>
+  <data name="Form_WorkScheduleList_Caption" xml:space="preserve">
+    <value>İş Qrafikləri</value>
+  </data>
+  <data name="Form_WorkSchedule_Caption_New" xml:space="preserve">
+    <value>Yeni İş Qrafiki</value>
+  </data>
+  <data name="Form_WorkSchedule_Caption_Edit" xml:space="preserve">
+    <value>İş Qrafikini Redaktə Et</value>
+  </data>
+  <data name="Form_LeaveRequestList_Caption" xml:space="preserve">
+    <value>İcazə və Məzuniyyətlər</value>
+  </data>
+  <data name="Form_LeaveRequest_Caption_New" xml:space="preserve">
+    <value>Yeni İcazə / Məzuniyyət Müraciəti</value>
+  </data>
+  <data name="Form_LeaveRequest_Caption_Edit" xml:space="preserve">
+    <value>Müraciəti Redaktə Et</value>
+  </data>
+  <data name="Form_LeaveRequest_Approve" xml:space="preserve">
+    <value>Təsdiqlə</value>
+  </data>
+  <data name="Form_LeaveRequest_Reject" xml:space="preserve">
+    <value>İmtina Et</value>
+  </data>
+  <data name="Entity_Attendance_Status" xml:space="preserve">
+    <value>Davamiyyət Statusu</value>
+  </data>
+  <data name="Entity_Attendance_PlannedCheckIn" xml:space="preserve">
+    <value>Plan Giriş</value>
+  </data>
+  <data name="Entity_Attendance_PlannedCheckOut" xml:space="preserve">
+    <value>Plan Çıxış</value>
+  </data>
+  <data name="Entity_Attendance_EffectiveStart" xml:space="preserve">
+    <value>Faktiki Başlama</value>
+  </data>
+  <data name="Entity_Attendance_LateMinutes" xml:space="preserve">
+    <value>Gecikmə (dəq)</value>
+  </data>
+  <data name="Entity_Attendance_EarlyExitMinutes" xml:space="preserve">
+    <value>Erkən Çıxış (dəq)</value>
+  </data>
+  <data name="Entity_Attendance_OvertimeMinutes" xml:space="preserve">
+    <value>Əlavə İş (dəq)</value>
+  </data>
+  <data name="Entity_Attendance_ApprovedOvertimeMinutes" xml:space="preserve">
+    <value>Təsdiqli Əlavə İş (dəq)</value>
+  </data>
+  <data name="Form_AttendanceWizard_HelpTitle" xml:space="preserve">
+    <value>Ayarların İzahı və Nümunələr</value>
+  </data>
+  <data name="Form_AttendanceWizard_LateActualDesc" xml:space="preserve">
+    <value>&lt;b&gt;Actual (Faktiki Gecikmə):&lt;/b&gt; Güzəşt müddəti ({0} dəq) aşıldıqda, gecikmə cədvəl üzrə işə başlama vaxtından etibarən tam hesablanır.&lt;br&gt;&lt;color=Gray&gt;Nümunə:&lt;/color&gt; Qrafik 09:00, giriş 09:07 olduqda ({0} dəq güzəşt aşıldığı üçün) &amp;rarr; &lt;b&gt;Gecikmə: {1} dəqiqə&lt;/b&gt;.</value>
+  </data>
+  <data name="Form_AttendanceWizard_LateAfterGraceDesc" xml:space="preserve">
+    <value>&lt;b&gt;AfterGrace (Güzəştdən Sonrakı Gecikmə):&lt;/b&gt; Güzəşt müddəti aşıldıqda, yalnız güzəştdən artıq qalan fərq gecikmə hesab edilir.&lt;br&gt;&lt;color=Gray&gt;Nümunə:&lt;/color&gt; Qrafik 09:00, giriş 09:07 olduqda ({0} dəq güzəşt çıxılır) &amp;rarr; &lt;b&gt;Gecikmə: {1} dəqiqə&lt;/b&gt; (7 - {0} = {1}).</value>
+  </data>
+  <data name="Form_AttendanceWizard_OTAutoDesc" xml:space="preserve">
+    <value>&lt;b&gt;Auto (Avtomatik):&lt;/b&gt; Qrafikdən artıq qalan bütün iş saatları avtomatik olaraq əlavə iş (Overtime) kimi təsdiqlənir.</value>
+  </data>
+  <data name="Form_AttendanceWizard_OTPreApprovedDesc" xml:space="preserve">
+    <value>&lt;b&gt;PreApproved (Əvvəlcədən Təsdiqli):&lt;/b&gt; Əlavə iş yalnız rəhbər tərəfindən sistemdə qeyd edilmiş 'Artıq iş icazəsi' olduqda tanınır.</value>
+  </data>
+  <data name="Form_AttendanceWizard_GeneralHelpDesc" xml:space="preserve">
+    <value>&lt;b&gt;Güzəşt Müddəti ({0} dəq):&lt;/b&gt; İşə başlama vaxtından sonra cəriməsiz (gecikmə = 0) qəbul edilən tolerantlıq dəqiqəsidir.&lt;br&gt;&lt;b&gt;Təkrar Oxuma ({1} dəq):&lt;/b&gt; Eyni cihazda bu müddət ərzində vurulan təkrar vuruşlar (dublikatlar) avtomatik kənarlaşdırılır.</value>
+  </data>
 </root>

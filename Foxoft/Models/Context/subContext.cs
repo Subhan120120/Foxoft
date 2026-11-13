@@ -101,6 +101,18 @@ namespace Foxoft.Models
         public DbSet<TrEmployeeContract> TrEmployeeContracts { get; set; }
         public DbSet<TrEmployeeContractAddendum> TrEmployeeContractAddenda { get; set; }
         public DbSet<TrAttendance> TrAttendances { get; set; }
+        public DbSet<DcWorkSchedule> DcWorkSchedules { get; set; }
+        public DbSet<DcWorkScheduleDay> DcWorkScheduleDays { get; set; }
+        public DbSet<TrEmployeeWorkSchedule> TrEmployeeWorkSchedules { get; set; }
+        public DbSet<DcAttendanceSetting> DcAttendanceSettings { get; set; }
+        public DbSet<HrLeaveType> HrLeaveTypes { get; set; }
+        public DbSet<HrLeaveRequest> HrLeaveRequests { get; set; }
+        public DbSet<HrLeaveRequestDay> HrLeaveRequestDays { get; set; }
+        public DbSet<HrLeaveApproval> HrLeaveApprovals { get; set; }
+        public DbSet<HrEmployeeLeaveBalance> HrEmployeeLeaveBalances { get; set; }
+        public DbSet<TrAttendanceLog> TrAttendanceLogs { get; set; }
+        public DbSet<TrOvertimeRequest> TrOvertimeRequests { get; set; }
+        public DbSet<TrMonthlyTimesheet> TrMonthlyTimesheets { get; set; }
         public DbSet<DcPayrollPeriod> DcPayrollPeriods { get; set; }
         public DbSet<TrPayrollHeader> TrPayrollHeaders { get; set; }
         public DbSet<TrPayrollLine> TrPayrollLines { get; set; }
@@ -319,6 +331,7 @@ namespace Foxoft.Models
 
             ConfigurePaymentTypeMappings(modelBuilder);
             ConfigureNotificationModel(modelBuilder);
+            ConfigureAttendanceModel(modelBuilder);
 
             InitializeHasData(modelBuilder);
 
@@ -1019,7 +1032,13 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "SalesBonusPlans", ClaimDesc = "Satıcı Bonus Planları", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "SalesBonusAssignments", ClaimDesc = "Bonus Plan Təyinatları", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "SalesBonusTxns", ClaimDesc = "Satıcı Bonus Jurnalı", ClaimTypeId = 1, CategoryId = 23 },
-                new DcClaim { ClaimCode = "SalesBonusCalculate", ClaimDesc = "Satıcı Bonusu Hesablama və Düzəliş", ClaimTypeId = 1, CategoryId = 23 }
+                new DcClaim { ClaimCode = "SalesBonusCalculate", ClaimDesc = "Satıcı Bonusu Hesablama və Düzəliş", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "DailyAttendance", ClaimDesc = "Gündəlik Davamiyyət İdarəsi", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "AttendanceCalculationWizard", ClaimDesc = "Davamiyyət Hesablama Sihirbazı", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "WorkSchedules", ClaimDesc = "İş Qrafikləri", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "LeaveRequests", ClaimDesc = "İcazələr və Məzuniyyətlər", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "AttendanceSettings", ClaimDesc = "Davamiyyət Ayarları", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "AttendanceLogs", ClaimDesc = "Davamiyyət Logları", ClaimTypeId = 1, CategoryId = 23 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -1463,7 +1482,19 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 525, RoleCode = "Manager", ClaimCode = "ProductFeatureAi" },
                 new TrRoleClaim { RoleClaimId = 526, RoleCode = "Manager", ClaimCode = "InvoiceAiOcr" },
                 new TrRoleClaim { RoleClaimId = 527, RoleCode = "Manager", ClaimCode = "NotificationRules" },
-                new TrRoleClaim { RoleClaimId = 528, RoleCode = "Manager", ClaimCode = "NotificationTemplates" }
+                new TrRoleClaim { RoleClaimId = 528, RoleCode = "Manager", ClaimCode = "NotificationTemplates" },
+                new TrRoleClaim { RoleClaimId = 529, RoleCode = "Admin", ClaimCode = "DailyAttendance" },
+                new TrRoleClaim { RoleClaimId = 530, RoleCode = "Admin", ClaimCode = "AttendanceCalculationWizard" },
+                new TrRoleClaim { RoleClaimId = 531, RoleCode = "Admin", ClaimCode = "WorkSchedules" },
+                new TrRoleClaim { RoleClaimId = 532, RoleCode = "Admin", ClaimCode = "LeaveRequests" },
+                new TrRoleClaim { RoleClaimId = 533, RoleCode = "Admin", ClaimCode = "AttendanceSettings" },
+                new TrRoleClaim { RoleClaimId = 534, RoleCode = "Admin", ClaimCode = "AttendanceLogs" },
+                new TrRoleClaim { RoleClaimId = 535, RoleCode = "Manager", ClaimCode = "DailyAttendance" },
+                new TrRoleClaim { RoleClaimId = 536, RoleCode = "Manager", ClaimCode = "AttendanceCalculationWizard" },
+                new TrRoleClaim { RoleClaimId = 537, RoleCode = "Manager", ClaimCode = "WorkSchedules" },
+                new TrRoleClaim { RoleClaimId = 538, RoleCode = "Manager", ClaimCode = "LeaveRequests" },
+                new TrRoleClaim { RoleClaimId = 539, RoleCode = "Manager", ClaimCode = "AttendanceSettings" },
+                new TrRoleClaim { RoleClaimId = 540, RoleCode = "Manager", ClaimCode = "AttendanceLogs" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
@@ -2076,6 +2107,215 @@ namespace Foxoft.Models
                 entity.HasOne(d => d.DcCurrAccRelationType)
                     .WithMany(p => p.TrCurrAccRelations)
                     .HasForeignKey(d => d.RelationTypeId)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
+        }
+
+        private static void ConfigureAttendanceModel(ModelBuilder modelBuilder)
+        {
+            var schedule5DayId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+            var schedule6DayId = Guid.Parse("22222222-2222-2222-2222-222222222222");
+
+            modelBuilder.Entity<DcWorkSchedule>().HasData(
+                new DcWorkSchedule
+                {
+                    Id = schedule5DayId,
+                    ScheduleCode = "WS-5DAY",
+                    ScheduleName = "Standart 5 günlük (09:00 - 18:00)",
+                    ScheduleType = WorkScheduleType.Standard5Days,
+                    WeeklyHours = 40.00m,
+                    IsActive = true,
+                    Description = "Bazar ertəsi - Cümə 09:00 - 18:00, 13:00 - 14:00 nahar"
+                },
+                new DcWorkSchedule
+                {
+                    Id = schedule6DayId,
+                    ScheduleCode = "WS-6DAY",
+                    ScheduleName = "Standart 6 günlük (09:00 - 17:00)",
+                    ScheduleType = WorkScheduleType.Standard6Days,
+                    WeeklyHours = 48.00m,
+                    IsActive = true,
+                    Description = "Bazar ertəsi - Şənbə 09:00 - 17:00"
+                }
+            );
+
+            // 5 Günlük Qrafik Günləri
+            modelBuilder.Entity<DcWorkScheduleDay>().HasData(
+                new DcWorkScheduleDay { Id = Guid.Parse("11111111-1111-1111-1111-000000000001"), WorkScheduleId = schedule5DayId, DayOfWeek = DayOfWeek.Monday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(18, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 480 },
+                new DcWorkScheduleDay { Id = Guid.Parse("11111111-1111-1111-1111-000000000002"), WorkScheduleId = schedule5DayId, DayOfWeek = DayOfWeek.Tuesday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(18, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 480 },
+                new DcWorkScheduleDay { Id = Guid.Parse("11111111-1111-1111-1111-000000000003"), WorkScheduleId = schedule5DayId, DayOfWeek = DayOfWeek.Wednesday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(18, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 480 },
+                new DcWorkScheduleDay { Id = Guid.Parse("11111111-1111-1111-1111-000000000004"), WorkScheduleId = schedule5DayId, DayOfWeek = DayOfWeek.Thursday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(18, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 480 },
+                new DcWorkScheduleDay { Id = Guid.Parse("11111111-1111-1111-1111-000000000005"), WorkScheduleId = schedule5DayId, DayOfWeek = DayOfWeek.Friday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(18, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 480 },
+                new DcWorkScheduleDay { Id = Guid.Parse("11111111-1111-1111-1111-000000000006"), WorkScheduleId = schedule5DayId, DayOfWeek = DayOfWeek.Saturday, IsWorkDay = false, StartTime = TimeSpan.Zero, EndTime = TimeSpan.Zero, BreakDurationMinutes = 0, PlannedWorkMinutes = 0 },
+                new DcWorkScheduleDay { Id = Guid.Parse("11111111-1111-1111-1111-000000000000"), WorkScheduleId = schedule5DayId, DayOfWeek = DayOfWeek.Sunday, IsWorkDay = false, StartTime = TimeSpan.Zero, EndTime = TimeSpan.Zero, BreakDurationMinutes = 0, PlannedWorkMinutes = 0 },
+
+                // 6 Günlük Qrafik Günləri
+                new DcWorkScheduleDay { Id = Guid.Parse("22222222-2222-2222-2222-000000000001"), WorkScheduleId = schedule6DayId, DayOfWeek = DayOfWeek.Monday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(17, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 420 },
+                new DcWorkScheduleDay { Id = Guid.Parse("22222222-2222-2222-2222-000000000002"), WorkScheduleId = schedule6DayId, DayOfWeek = DayOfWeek.Tuesday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(17, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 420 },
+                new DcWorkScheduleDay { Id = Guid.Parse("22222222-2222-2222-2222-000000000003"), WorkScheduleId = schedule6DayId, DayOfWeek = DayOfWeek.Wednesday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(17, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 420 },
+                new DcWorkScheduleDay { Id = Guid.Parse("22222222-2222-2222-2222-000000000004"), WorkScheduleId = schedule6DayId, DayOfWeek = DayOfWeek.Thursday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(17, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 420 },
+                new DcWorkScheduleDay { Id = Guid.Parse("22222222-2222-2222-2222-000000000005"), WorkScheduleId = schedule6DayId, DayOfWeek = DayOfWeek.Friday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(17, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 420 },
+                new DcWorkScheduleDay { Id = Guid.Parse("22222222-2222-2222-2222-000000000006"), WorkScheduleId = schedule6DayId, DayOfWeek = DayOfWeek.Saturday, IsWorkDay = true, StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(17, 0, 0), BreakStartTime = new TimeSpan(13, 0, 0), BreakEndTime = new TimeSpan(14, 0, 0), BreakDurationMinutes = 60, PlannedWorkMinutes = 420 },
+                new DcWorkScheduleDay { Id = Guid.Parse("22222222-2222-2222-2222-000000000000"), WorkScheduleId = schedule6DayId, DayOfWeek = DayOfWeek.Sunday, IsWorkDay = false, StartTime = TimeSpan.Zero, EndTime = TimeSpan.Zero, BreakDurationMinutes = 0, PlannedWorkMinutes = 0 }
+            );
+
+            // Məzuniyyət və İcazə Növləri
+            modelBuilder.Entity<HrLeaveType>().HasData(
+                new HrLeaveType { Id = Guid.Parse("33333333-3333-3333-3333-333333333331"), TypeCode = "AnnualLeave", TypeName = "Əsas Məzuniyyət", IsPaid = true, AffectAttendance = true, RequiresApproval = true, IsHourly = false, DefaultDaysPerYear = 21, IsActive = true },
+                new HrLeaveType { Id = Guid.Parse("33333333-3333-3333-3333-333333333332"), TypeCode = "SickLeave", TypeName = "Xəstəlik Məzuniyyəti", IsPaid = true, AffectAttendance = true, RequiresApproval = true, IsHourly = false, DefaultDaysPerYear = 14, IsActive = true },
+                new HrLeaveType { Id = Guid.Parse("33333333-3333-3333-3333-333333333333"), TypeCode = "UnpaidLeave", TypeName = "Ödənişsiz İcazə", IsPaid = false, AffectAttendance = true, RequiresApproval = true, IsHourly = false, DefaultDaysPerYear = 0, IsActive = true },
+                new HrLeaveType { Id = Guid.Parse("33333333-3333-3333-3333-333333333334"), TypeCode = "PersonalPermission", TypeName = "Şəxsi İcazə (Saatlıq/Günlük)", IsPaid = false, AffectAttendance = true, RequiresApproval = true, IsHourly = true, DefaultDaysPerYear = 0, IsActive = true },
+                new HrLeaveType { Id = Guid.Parse("33333333-3333-3333-3333-333333333335"), TypeCode = "BusinessTrip", TypeName = "Ezamiyyət", IsPaid = true, AffectAttendance = true, RequiresApproval = true, IsHourly = false, DefaultDaysPerYear = 0, IsActive = true },
+                new HrLeaveType { Id = Guid.Parse("33333333-3333-3333-3333-333333333336"), TypeCode = "DayOff", TypeName = "İstirahət / Əvəzləmə Günü", IsPaid = true, AffectAttendance = true, RequiresApproval = true, IsHourly = false, DefaultDaysPerYear = 0, IsActive = true }
+            );
+
+            // Standart Davamiyyət Ayarları
+            modelBuilder.Entity<DcAttendanceSetting>().HasData(
+                new DcAttendanceSetting
+                {
+                    Id = 1,
+                    AttendanceEnabled = true,
+                    DefaultWorkScheduleId = schedule5DayId,
+                    AttendanceMethod = AttendanceMethod.Both,
+                    RequireApproval = false,
+                    AllowManualEntry = true,
+                    AllowAttendanceCorrection = true,
+                    AutoCalculateAttendance = true,
+                    AutoCloseDay = false,
+                    DebounceMinutes = 2,
+                    GracePeriodMinutes = 5,
+                    LateCalculationMethod = LateCalculationMethod.Actual,
+                    LateRoundingMethod = LateRoundingMethod.None,
+                    AllowLateCorrection = true,
+                    LateApprovalRequired = false,
+                    EarlyExitGracePeriodMinutes = 5,
+                    OvertimePolicy = OvertimePolicy.Auto,
+                    MinOvertimeMinutes = 15,
+                    OvertimeRoundingMinutes = 0,
+                    NotifyHrOnLate = false,
+                    NotifyManagerOnAbsence = false,
+                    NotifyOnMissingCheckOut = false
+                }
+            );
+
+            // Foreign Key and Delete Behaviors
+            modelBuilder.Entity<DcWorkScheduleDay>(entity =>
+            {
+                entity.HasOne(d => d.WorkSchedule)
+                    .WithMany(p => p.Days)
+                    .HasForeignKey(d => d.WorkScheduleId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrEmployeeWorkSchedule>(entity =>
+            {
+                entity.HasOne(d => d.DcCurrAcc)
+                    .WithMany(p => p.TrEmployeeWorkSchedules)
+                    .HasForeignKey(d => d.CurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.WorkSchedule)
+                    .WithMany(p => p.EmployeeWorkSchedules)
+                    .HasForeignKey(d => d.WorkScheduleId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<HrLeaveRequest>(entity =>
+            {
+                entity.HasOne(d => d.DcCurrAcc)
+                    .WithMany(p => p.HrLeaveRequests)
+                    .HasForeignKey(d => d.CurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.LeaveType)
+                    .WithMany(p => p.LeaveRequests)
+                    .HasForeignKey(d => d.LeaveTypeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<HrLeaveRequestDay>(entity =>
+            {
+                entity.HasOne(d => d.LeaveRequest)
+                    .WithMany(p => p.RequestDays)
+                    .HasForeignKey(d => d.LeaveRequestId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<HrLeaveApproval>(entity =>
+            {
+                entity.HasOne(d => d.LeaveRequest)
+                    .WithMany(p => p.Approvals)
+                    .HasForeignKey(d => d.LeaveRequestId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.ApproverCurrAcc)
+                    .WithMany()
+                    .HasForeignKey(d => d.ApproverCurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<HrEmployeeLeaveBalance>(entity =>
+            {
+                entity.HasOne(d => d.DcCurrAcc)
+                    .WithMany(p => p.HrEmployeeLeaveBalances)
+                    .HasForeignKey(d => d.CurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.LeaveType)
+                    .WithMany(p => p.Balances)
+                    .HasForeignKey(d => d.LeaveTypeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrAttendanceLog>(entity =>
+            {
+                entity.HasOne(d => d.DcCurrAcc)
+                    .WithMany(p => p.TrAttendanceLogs)
+                    .HasForeignKey(d => d.CurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrAttendance>(entity =>
+            {
+                entity.HasOne(d => d.DcCurrAcc)
+                    .WithMany(p => p.TrAttendances)
+                    .HasForeignKey(d => d.CurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.WorkSchedule)
+                    .WithMany(p => p.Attendances)
+                    .HasForeignKey(d => d.WorkScheduleId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(d => d.LeaveRequest)
+                    .WithMany(p => p.Attendances)
+                    .HasForeignKey(d => d.LeaveRequestId)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<TrOvertimeRequest>(entity =>
+            {
+                entity.HasOne(d => d.DcCurrAcc)
+                    .WithMany(p => p.TrOvertimeRequests)
+                    .HasForeignKey(d => d.CurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.ApprovedByCurrAcc)
+                    .WithMany()
+                    .HasForeignKey(d => d.ApprovedByCurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TrMonthlyTimesheet>(entity =>
+            {
+                entity.HasOne(d => d.DcCurrAcc)
+                    .WithMany(p => p.TrMonthlyTimesheets)
+                    .HasForeignKey(d => d.CurrAccCode)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.PayrollPeriod)
+                    .WithMany()
+                    .HasForeignKey(d => d.PayrollPeriodId)
                     .OnDelete(DeleteBehavior.SetNull);
             });
         }
