@@ -7716,6 +7716,30 @@ Google account: {1}</value>
   <data name="Form_DailyAttendance_SavedSuccess" xml:space="preserve">
     <value>Attendance records saved successfully.</value>
   </data>
+  <data name="Form_DailyAttendance_FutureDateWarning" xml:space="preserve">
+    <value>Attendance calculation cannot be performed for future dates.</value>
+  </data>
+  <data name="Form_DailyAttendance_RecalculateConfirm" xml:space="preserve">
+    <value>Do you want to recalculate attendance for {0}? Any existing un-overridden records will be updated.</value>
+  </data>
+  <data name="Form_DailyAttendance_RecalculatedSuccess" xml:space="preserve">
+    <value>Attendance for the selected day was successfully recalculated.</value>
+  </data>
+  <data name="Form_DailyAttendance_DeleteConfirm" xml:space="preserve">
+    <value>Are you sure you want to delete {0} selected attendance record(s)?</value>
+  </data>
+  <data name="Form_DailyAttendance_SelectRowsToDelete" xml:space="preserve">
+    <value>Please select at least one record to delete.</value>
+  </data>
+  <data name="Form_DailyAttendance_DeleteSuccess" xml:space="preserve">
+    <value>Selected attendance records were deleted.</value>
+  </data>
+  <data name="Form_AttendanceList_DeleteMultipleConfirm" xml:space="preserve">
+    <value>Are you sure you want to delete {0} selected attendance record(s)?</value>
+  </data>
+  <data name="Common_SelectRowToDelete" xml:space="preserve">
+    <value>Please select at least one row to delete.</value>
+  </data>
   <data name="Form_AttendanceWizard_Caption" xml:space="preserve">
     <value>Attendance Calculation Wizard</value>
   </data>

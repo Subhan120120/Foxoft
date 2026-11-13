@@ -7716,6 +7716,30 @@ Google hesabı: {1}</value>
   <data name="Form_DailyAttendance_SavedSuccess" xml:space="preserve">
     <value>Davamiyyət qeydləri uğurla yadda saxlanıldı.</value>
   </data>
+  <data name="Form_DailyAttendance_FutureDateWarning" xml:space="preserve">
+    <value>Gələcək tarixlər üçün davamiyyət hesablanması aparıla bilməz.</value>
+  </data>
+  <data name="Form_DailyAttendance_RecalculateConfirm" xml:space="preserve">
+    <value>{0} tarixi üçün davamiyyəti yenidən hesablamaq istədiyinizdən əminsiniz? Əl ilə dəyişdirilməyən qeydlər yenilənəcəkdir.</value>
+  </data>
+  <data name="Form_DailyAttendance_RecalculatedSuccess" xml:space="preserve">
+    <value>Seçilmiş gün üçün davamiyyət uğurla yenidən hesablandı.</value>
+  </data>
+  <data name="Form_DailyAttendance_DeleteConfirm" xml:space="preserve">
+    <value>Seçilmiş {0} davamiyyət qeydini silmək istədiyinizdən əminsiniz?</value>
+  </data>
+  <data name="Form_DailyAttendance_SelectRowsToDelete" xml:space="preserve">
+    <value>Zəhmət olmasa silmək üçün ən azı bir qeyd seçin.</value>
+  </data>
+  <data name="Form_DailyAttendance_DeleteSuccess" xml:space="preserve">
+    <value>Seçilmiş davamiyyət qeydləri silindi.</value>
+  </data>
+  <data name="Form_AttendanceList_DeleteMultipleConfirm" xml:space="preserve">
+    <value>Seçilmiş {0} davamiyyət qeydini silmək istədiyinizdən əminsiniz?</value>
+  </data>
+  <data name="Common_SelectRowToDelete" xml:space="preserve">
+    <value>Zəhmət olmasa silmək üçün ən azı bir sətir seçin.</value>
+  </data>
   <data name="Form_AttendanceWizard_Caption" xml:space="preserve">
     <value>Davamiyyət Hesablama Sihirbazı</value>
   </data>

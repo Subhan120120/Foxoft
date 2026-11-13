@@ -106,6 +106,7 @@ namespace Foxoft
             {
                 ClearControlsAddNew();
                 BBI_MergeCurrAcc.Enabled = false;
+                BBI_Info.Enabled = false;
             }
             else
             {
@@ -120,7 +121,9 @@ namespace Foxoft
                 //    //|| dcCurrAcc.PhoneNum.Trim() == "+"
                 //    )
                 //    dcCurrAcc.PhoneNum = null;
-                BBI_MergeCurrAcc.Enabled = efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode);
+                bool exists = efMethods.EntityExists<DcCurrAcc>(dcCurrAcc.CurrAccCode);
+                BBI_MergeCurrAcc.Enabled = exists;
+                BBI_Info.Enabled = exists;
             }
         }
 
@@ -206,6 +209,7 @@ namespace Foxoft
                 SaveImage();
 
                 BBI_MergeCurrAcc.Enabled = true;
+                BBI_Info.Enabled = true;
 
                 DialogResult = DialogResult.OK;
             }
@@ -416,6 +420,22 @@ namespace Foxoft
         {
             FormCurrAccRelationList frm = new(dcCurrAcc.CurrAccCode);
             frm.ShowDialog();
+        }
+
+        private void BBI_Info_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (dcCurrAcc == null || string.IsNullOrEmpty(dcCurrAcc.CurrAccCode))
+                return;
+
+            string createdUser = efMethods.GetUserDisplayName(dcCurrAcc.CreatedUserName);
+            string updatedUser = efMethods.GetUserDisplayName(dcCurrAcc.LastUpdatedUserName);
+
+            string createdUserName = ReflectionExt.GetDisplayName<DcCurrAcc>(x => x.CreatedUserName) + ": " + createdUser;
+            string createdDate = ReflectionExt.GetDisplayName<DcCurrAcc>(x => x.CreatedDate) + ": " + (dcCurrAcc.CreatedDate == default ? string.Empty : dcCurrAcc.CreatedDate.ToString());
+            string updatedUserName = ReflectionExt.GetDisplayName<DcCurrAcc>(x => x.LastUpdatedUserName) + ": " + updatedUser;
+            string updatedDateText = ReflectionExt.GetDisplayName<DcCurrAcc>(x => x.LastUpdatedDate) + ": " + (dcCurrAcc.LastUpdatedDate == default ? string.Empty : dcCurrAcc.LastUpdatedDate.ToString());
+
+            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDateText, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void PhoneNumTextEdit_Validating(object sender, CancelEventArgs e)

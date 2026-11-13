@@ -21980,6 +21980,54 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_DailyAttendance_FutureDateWarning {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_FutureDateWarning", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_RecalculateConfirm {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_RecalculateConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_RecalculatedSuccess {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_RecalculatedSuccess", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_DeleteConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_SelectRowsToDelete {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_SelectRowsToDelete", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_DeleteSuccess {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_DeleteSuccess", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceList_DeleteMultipleConfirm {
+            get {
+                return ResourceManager.GetString("Form_AttendanceList_DeleteMultipleConfirm", resourceCulture);
+            }
+        }
+
+        public static string Common_SelectRowToDelete {
+            get {
+                return ResourceManager.GetString("Common_SelectRowToDelete", resourceCulture);
+            }
+        }
+
         public static string Form_AttendanceWizard_Caption {
             get {
                 return ResourceManager.GetString("Form_AttendanceWizard_Caption", resourceCulture);

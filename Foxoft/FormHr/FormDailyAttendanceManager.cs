@@ -75,6 +75,7 @@ namespace Foxoft
             btnApproveOvertime.ItemClick += (_, __) => ApproveSelectedOvertime();
             btnRecalculate.ItemClick += (_, __) => RecalculateDay();
             btnSave.ItemClick += (_, __) => SaveChanges();
+            btnDelete.ItemClick += (_, __) => DeleteSelected();
             btnClose.ItemClick += (_, __) => Close();
 
             gridView1.RowStyle += GridView1_RowStyle;
@@ -107,25 +108,17 @@ namespace Foxoft
 
             string? storeCode = barEditStore.EditValue?.ToString();
 
-            // Mövcud qeydləri gətir
-            var attendances = db.TrAttendances
+            // Mövcud qeydləri gətir (filtrlər dəyişdikdə avtomatik sətir yaradılmır, yalnız mövcud qeydlər oxunur)
+            IQueryable<TrAttendance> query = db.TrAttendances
                 .Include(a => a.DcCurrAcc)
                 .Include(a => a.WorkSchedule)
                 .Include(a => a.LeaveRequest).ThenInclude(l => l!.LeaveType)
-                .Where(a => a.WorkDate.Date == selectedDate.Date)
-                .ToList();
+                .Where(a => a.WorkDate.Date == selectedDate.Date);
 
-            // Əgər seçilmiş gün üçün hələ davamiyyət qeydləri yoxdursa, avtomatik hesabla
-            if (!attendances.Any())
-            {
-                calcService.CalculateAttendance(selectedDate.Date, selectedDate.Date, storeCode, null, null, null, true);
-                attendances = db.TrAttendances
-                    .Include(a => a.DcCurrAcc)
-                    .Include(a => a.WorkSchedule)
-                    .Include(a => a.LeaveRequest).ThenInclude(l => l!.LeaveType)
-                    .Where(a => a.WorkDate.Date == selectedDate.Date)
-                    .ToList();
-            }
+            if (!string.IsNullOrWhiteSpace(storeCode))
+                query = query.Where(a => a.DcCurrAcc.StoreCode == storeCode);
+
+            var attendances = query.ToList();
 
             var empCodes = attendances.Select(a => a.CurrAccCode).Distinct().ToList();
 
@@ -287,113 +280,181 @@ namespace Foxoft
             }
         }
 
+        private List<DailyAttendanceVM> GetSelectedItems()
+        {
+            var list = new List<DailyAttendanceVM>();
+            var selectedRowHandles = gridView1.GetSelectedRows();
+            foreach (var handle in selectedRowHandles)
+            {
+                if (handle >= 0 && gridView1.GetRow(handle) is DailyAttendanceVM item)
+                    list.Add(item);
+            }
+            if (!list.Any() && gridView1.GetFocusedRow() is DailyAttendanceVM focused)
+                list.Add(focused);
+
+            return list;
+        }
+
         private void MarkSelectedExcused()
         {
-            var selectedRow = gridView1.GetFocusedRow() as DailyAttendanceVM;
-            if (selectedRow == null) return;
+            var selectedRows = GetSelectedItems();
+            if (!selectedRows.Any()) return;
 
-            // Standart üzrlü icazə növü tap (PersonalPermission və ya digər)
             var leaveType = db.HrLeaveTypes.FirstOrDefault(x => x.TypeCode == "PersonalPermission")
                             ?? db.HrLeaveTypes.FirstOrDefault();
 
-            selectedRow.AttendanceStatus = AttendanceStatus.AbsentExcused;
-            selectedRow.LeaveTypeName = leaveType?.TypeName ?? Properties.Resources.Form_DailyAttendance_MarkExcused;
-            selectedRow.IsManualOverride = true;
-            selectedRow.Notes = "HR tərəfindən icazəli qeyd edildi";
+            var ids = selectedRows.Select(x => x.Id).ToList();
+            var entities = db.TrAttendances.Where(x => ids.Contains(x.Id)).ToList();
 
-            var att = db.TrAttendances.FirstOrDefault(x => x.Id == selectedRow.Id);
-            if (att != null)
+            foreach (var row in selectedRows)
             {
-                att.AttendanceStatus = AttendanceStatus.AbsentExcused;
-                att.IsManualOverride = true;
-                att.Notes = selectedRow.Notes;
+                row.AttendanceStatus = AttendanceStatus.AbsentExcused;
+                row.LeaveTypeName = leaveType?.TypeName ?? Properties.Resources.Form_DailyAttendance_MarkExcused;
+                row.IsManualOverride = true;
+                row.Notes = Properties.Resources.Form_DailyAttendance_MarkExcused;
+
+                var att = entities.FirstOrDefault(x => x.Id == row.Id);
+                if (att != null)
+                {
+                    att.AttendanceStatus = AttendanceStatus.AbsentExcused;
+                    att.IsManualOverride = true;
+                    att.Notes = row.Notes;
+                }
             }
 
-            gridView1.RefreshRow(gridView1.FocusedRowHandle);
+            gridView1.RefreshData();
         }
 
         private void MarkSelectedUnexcused()
         {
-            var selectedRow = gridView1.GetFocusedRow() as DailyAttendanceVM;
-            if (selectedRow == null) return;
+            var selectedRows = GetSelectedItems();
+            if (!selectedRows.Any()) return;
 
-            selectedRow.AttendanceStatus = AttendanceStatus.AbsentUnexcused;
-            selectedRow.LeaveTypeName = null;
-            selectedRow.IsManualOverride = true;
-            selectedRow.Notes = "HR tərəfindən üzrsüz qeyd edildi";
+            var ids = selectedRows.Select(x => x.Id).ToList();
+            var entities = db.TrAttendances.Where(x => ids.Contains(x.Id)).ToList();
 
-            var att = db.TrAttendances.FirstOrDefault(x => x.Id == selectedRow.Id);
-            if (att != null)
+            foreach (var row in selectedRows)
             {
-                att.AttendanceStatus = AttendanceStatus.AbsentUnexcused;
-                att.IsManualOverride = true;
-                att.Notes = selectedRow.Notes;
-                att.LeaveRequestId = null;
+                row.AttendanceStatus = AttendanceStatus.AbsentUnexcused;
+                row.LeaveTypeName = null;
+                row.IsManualOverride = true;
+                row.Notes = Properties.Resources.Form_DailyAttendance_MarkUnexcused;
+
+                var att = entities.FirstOrDefault(x => x.Id == row.Id);
+                if (att != null)
+                {
+                    att.AttendanceStatus = AttendanceStatus.AbsentUnexcused;
+                    att.IsManualOverride = true;
+                    att.Notes = row.Notes;
+                    att.LeaveRequestId = null;
+                }
             }
 
-            gridView1.RefreshRow(gridView1.FocusedRowHandle);
+            gridView1.RefreshData();
         }
 
         private void MarkSelectedRestDay()
         {
-            var selectedRow = gridView1.GetFocusedRow() as DailyAttendanceVM;
-            if (selectedRow == null) return;
+            var selectedRows = GetSelectedItems();
+            if (!selectedRows.Any()) return;
 
-            selectedRow.AttendanceStatus = AttendanceStatus.RestDay;
-            selectedRow.LeaveTypeName = null;
-            selectedRow.PlannedCheckInTime = null;
-            selectedRow.PlannedCheckOutTime = null;
-            selectedRow.LateMinutes = 0;
-            selectedRow.EarlyExitMinutes = 0;
-            selectedRow.OvertimeMinutes = 0;
-            selectedRow.ApprovedOvertimeMinutes = 0;
-            selectedRow.WorkedMinutes = 0;
-            selectedRow.IsManualOverride = true;
-            selectedRow.Notes = "Manual istirahət günü təyin edildi";
+            var ids = selectedRows.Select(x => x.Id).ToList();
+            var entities = db.TrAttendances.Where(x => ids.Contains(x.Id)).ToList();
 
-            var att = db.TrAttendances.FirstOrDefault(x => x.Id == selectedRow.Id);
-            if (att != null)
+            foreach (var row in selectedRows)
             {
-                att.AttendanceStatus = AttendanceStatus.RestDay;
-                att.PlannedWorkMinutes = 0;
-                att.PlannedCheckInTime = null;
-                att.PlannedCheckOutTime = null;
-                att.LateMinutes = 0;
-                att.EarlyExitMinutes = 0;
-                att.OvertimeMinutes = 0;
-                att.ApprovedOvertimeMinutes = 0;
-                att.WorkedMinutes = 0;
-                att.IsManualOverride = true;
-                att.Notes = selectedRow.Notes;
-                att.LeaveRequestId = null;
+                row.AttendanceStatus = AttendanceStatus.RestDay;
+                row.LeaveTypeName = null;
+                row.PlannedCheckInTime = null;
+                row.PlannedCheckOutTime = null;
+                row.LateMinutes = 0;
+                row.EarlyExitMinutes = 0;
+                row.OvertimeMinutes = 0;
+                row.ApprovedOvertimeMinutes = 0;
+                row.WorkedMinutes = 0;
+                row.IsManualOverride = true;
+                row.Notes = Properties.Resources.Form_DailyAttendance_MarkRestDay;
+
+                var att = entities.FirstOrDefault(x => x.Id == row.Id);
+                if (att != null)
+                {
+                    att.AttendanceStatus = AttendanceStatus.RestDay;
+                    att.PlannedWorkMinutes = 0;
+                    att.PlannedCheckInTime = null;
+                    att.PlannedCheckOutTime = null;
+                    att.LateMinutes = 0;
+                    att.EarlyExitMinutes = 0;
+                    att.OvertimeMinutes = 0;
+                    att.ApprovedOvertimeMinutes = 0;
+                    att.WorkedMinutes = 0;
+                    att.IsManualOverride = true;
+                    att.Notes = row.Notes;
+                    att.LeaveRequestId = null;
+                }
             }
 
-            gridView1.RefreshRow(gridView1.FocusedRowHandle);
+            gridView1.RefreshData();
         }
 
         private void ApproveSelectedOvertime()
         {
-            var selectedRow = gridView1.GetFocusedRow() as DailyAttendanceVM;
-            if (selectedRow == null) return;
+            var selectedRows = GetSelectedItems();
+            if (!selectedRows.Any()) return;
 
-            if (selectedRow.OvertimeMinutes <= 0)
+            var withOt = selectedRows.Where(x => x.OvertimeMinutes > 0).ToList();
+            if (!withOt.Any())
             {
-                XtraMessageBox.Show(this, "Bu işçi üçün əlavə iş vaxtı qeydə alınmayıb.", Properties.Resources.Common_Attention,
+                XtraMessageBox.Show(this, Properties.Resources.Common_Attention, Properties.Resources.Common_Attention,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            selectedRow.ApprovedOvertimeMinutes = selectedRow.OvertimeMinutes;
-            selectedRow.IsManualOverride = true;
+            var ids = withOt.Select(x => x.Id).ToList();
+            var entities = db.TrAttendances.Where(x => ids.Contains(x.Id)).ToList();
 
-            var att = db.TrAttendances.FirstOrDefault(x => x.Id == selectedRow.Id);
-            if (att != null)
+            foreach (var row in withOt)
             {
-                att.ApprovedOvertimeMinutes = selectedRow.OvertimeMinutes;
-                att.IsManualOverride = true;
+                row.ApprovedOvertimeMinutes = row.OvertimeMinutes;
+                row.IsManualOverride = true;
+
+                var att = entities.FirstOrDefault(x => x.Id == row.Id);
+                if (att != null)
+                {
+                    att.ApprovedOvertimeMinutes = row.OvertimeMinutes;
+                    att.IsManualOverride = true;
+                }
             }
 
-            gridView1.RefreshRow(gridView1.FocusedRowHandle);
+            gridView1.RefreshData();
+        }
+
+        private void DeleteSelected()
+        {
+            var selectedRows = GetSelectedItems();
+            if (!selectedRows.Any())
+            {
+                XtraMessageBox.Show(this, Properties.Resources.Form_DailyAttendance_SelectRowsToDelete, Properties.Resources.Common_Attention,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string confirmMsg = string.Format(Properties.Resources.Form_DailyAttendance_DeleteConfirm, selectedRows.Count);
+            if (XtraMessageBox.Show(this, confirmMsg, Properties.Resources.Common_Confirm,
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            var ids = selectedRows.Select(x => x.Id).ToList();
+            var entitiesToDelete = db.TrAttendances.Where(x => ids.Contains(x.Id)).ToList();
+            if (entitiesToDelete.Any())
+            {
+                db.TrAttendances.RemoveRange(entitiesToDelete);
+                db.SaveChanges();
+            }
+
+            LoadData();
+
+            XtraMessageBox.Show(this, Properties.Resources.Form_DailyAttendance_DeleteSuccess, Properties.Resources.Common_Success,
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void RecalculateDay()
@@ -401,12 +462,24 @@ namespace Foxoft
             if (barEditDate.EditValue is not DateTime selectedDate)
                 selectedDate = DateTime.Today;
 
+            if (selectedDate.Date > DateTime.Today)
+            {
+                XtraMessageBox.Show(this, Properties.Resources.Form_DailyAttendance_FutureDateWarning, Properties.Resources.Common_Attention,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             string? storeCode = barEditStore.EditValue?.ToString();
+
+            string confirmMsg = string.Format(Properties.Resources.Form_DailyAttendance_RecalculateConfirm, selectedDate.ToString("dd.MM.yyyy"));
+            if (XtraMessageBox.Show(this, confirmMsg, Properties.Resources.Common_Confirm,
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
 
             calcService.CalculateAttendance(selectedDate.Date, selectedDate.Date, storeCode, null, null, null, true);
             LoadData();
 
-            XtraMessageBox.Show(this, "Seçilmiş gün üçün davamiyyət yenidən hesablandı.", Properties.Resources.Common_Success,
+            XtraMessageBox.Show(this, Properties.Resources.Form_DailyAttendance_RecalculatedSuccess, Properties.Resources.Common_Success,
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

@@ -4,6 +4,7 @@ using DevExpress.XtraEditors;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -72,6 +73,32 @@ namespace Foxoft
             return prop == null ? null : (Guid?)prop.GetValue(row);
         }
 
+        private List<Guid> GetSelectedIds()
+        {
+            var ids = new List<Guid>();
+            var rowHandles = gridView1.GetSelectedRows();
+            foreach (var handle in rowHandles)
+            {
+                if (handle >= 0)
+                {
+                    var row = gridView1.GetRow(handle);
+                    if (row != null)
+                    {
+                        var prop = row.GetType().GetProperty("Id");
+                        if (prop?.GetValue(row) is Guid g)
+                            ids.Add(g);
+                    }
+                }
+            }
+            if (!ids.Any())
+            {
+                var focused = FocusedId();
+                if (focused.HasValue)
+                    ids.Add(focused.Value);
+            }
+            return ids;
+        }
+
         private void NewItem()
         {
             using var f = new FormAttendanceEdit(null);
@@ -91,18 +118,32 @@ namespace Foxoft
 
         private void DeleteItem()
         {
-            var id = FocusedId();
-            if (id == null) return;
+            var ids = GetSelectedIds();
+            if (!ids.Any())
+            {
+                XtraMessageBox.Show(this,
+                    Properties.Resources.Common_SelectRowToDelete,
+                    Properties.Resources.Common_Attention,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
 
-            if (XtraMessageBox.Show(this, Properties.Resources.Form_AttendanceList_DeleteConfirm, Properties.Resources.Common_Confirm,
+            string message = ids.Count == 1
+                ? Properties.Resources.Form_AttendanceList_DeleteConfirm
+                : string.Format(Properties.Resources.Form_AttendanceList_DeleteMultipleConfirm, ids.Count);
+
+            if (XtraMessageBox.Show(this, message, Properties.Resources.Common_Confirm,
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            var entity = db.TrAttendances.FirstOrDefault(x => x.Id == id.Value);
-            if (entity == null) return;
+            var entities = db.TrAttendances.Where(x => ids.Contains(x.Id)).ToList();
+            if (entities.Any())
+            {
+                db.TrAttendances.RemoveRange(entities);
+                db.SaveChanges();
+            }
 
-            db.TrAttendances.Remove(entity);
-            db.SaveChanges();
             LoadData();
         }
     }

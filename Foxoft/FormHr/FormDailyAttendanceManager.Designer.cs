@@ -31,6 +31,7 @@ namespace Foxoft
             this.btnApproveOvertime = new DevExpress.XtraBars.BarButtonItem();
             this.btnRecalculate = new DevExpress.XtraBars.BarButtonItem();
             this.btnSave = new DevExpress.XtraBars.BarButtonItem();
+            this.btnDelete = new DevExpress.XtraBars.BarButtonItem();
             this.btnClose = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonGroupFilter = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -61,6 +62,7 @@ namespace Foxoft
                 this.btnApproveOvertime,
                 this.btnRecalculate,
                 this.btnSave,
+                this.btnDelete,
                 this.btnClose
             });
             this.ribbon.Location = new System.Drawing.Point(0, 0);
@@ -168,6 +170,12 @@ namespace Foxoft
             this.btnSave.Id = 9;
             this.btnSave.Name = "btnSave";
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Caption = Foxoft.Properties.Resources.Common_Delete;
+            this.btnDelete.Id = 13;
+            this.btnDelete.Name = "btnDelete";
+            // 
             // btnClose
             // 
             this.btnClose.Caption = Foxoft.Properties.Resources.Common_Close;
@@ -200,6 +208,7 @@ namespace Foxoft
             this.ribbonGroupActions.ItemLinks.Add(this.btnApproveOvertime);
             this.ribbonGroupActions.ItemLinks.Add(this.btnRecalculate);
             this.ribbonGroupActions.ItemLinks.Add(this.btnSave);
+            this.ribbonGroupActions.ItemLinks.Add(this.btnDelete);
             this.ribbonGroupActions.ItemLinks.Add(this.btnClose);
             this.ribbonGroupActions.Name = "ribbonGroupActions";
             this.ribbonGroupActions.Text = Foxoft.Properties.Resources.Common_Operation;
@@ -221,6 +230,9 @@ namespace Foxoft
             // 
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsSelection.MultiSelect = true;
+            this.gridView1.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+            this.gridView1.OptionsSelection.ShowCheckBoxSelectorInColumnHeader = DevExpress.Utils.DefaultBoolean.True;
             this.gridView1.OptionsView.ShowFooter = true;
             this.gridView1.OptionsView.ShowGroupPanel = false;
             // 
@@ -264,6 +276,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem btnApproveOvertime;
         private DevExpress.XtraBars.BarButtonItem btnRecalculate;
         private DevExpress.XtraBars.BarButtonItem btnSave;
+        private DevExpress.XtraBars.BarButtonItem btnDelete;
         private DevExpress.XtraBars.BarButtonItem btnClose;
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
