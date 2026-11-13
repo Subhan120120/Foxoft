@@ -81,5 +81,16 @@ namespace Foxoft.Models
         public bool NotifyManagerOnAbsence { get; set; } = false;
 
         public bool NotifyOnMissingCheckOut { get; set; } = false;
+
+        /// <summary>
+        /// Həftəlik Avtomatik Üzən İstirahət Günü (Floating Rest Day):
+        /// Həftə ərzində gəlmədiyi ilk günü avtomatik istirahət günü (RestDay) kimi qəbul edir.
+        /// </summary>
+        public bool AutoFloatingRestDayEnabled { get; set; } = true;
+
+        /// <summary>
+        /// Həftəlik avtomatik tanınan maksimum istirahət günü sayı (standart: 1 gün)
+        /// </summary>
+        public int MaxWeeklyRestDays { get; set; } = 1;
     }
 }

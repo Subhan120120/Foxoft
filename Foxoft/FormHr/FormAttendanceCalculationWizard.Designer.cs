@@ -37,6 +37,7 @@ namespace Foxoft
             this.cmbOvertimePolicy = new DevExpress.XtraEditors.ComboBoxEdit();
             this.spDebounce = new DevExpress.XtraEditors.SpinEdit();
             this.chkGenerateTimesheet = new DevExpress.XtraEditors.CheckEdit();
+            this.chkAutoFloatingRestDay = new DevExpress.XtraEditors.CheckEdit();
             this.lblLateMethodDesc = new DevExpress.XtraEditors.LabelControl();
             this.lblOvertimePolicyDesc = new DevExpress.XtraEditors.LabelControl();
             this.lblGeneralHelpDesc = new DevExpress.XtraEditors.LabelControl();
@@ -46,6 +47,7 @@ namespace Foxoft
             this.layoutItemOTPolicy = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutItemDebounce = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutItemTimesheet = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutItemAutoFloatingRestDay = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutGroupHelp = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutItemLateDesc = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutItemOTDesc = new DevExpress.XtraLayout.LayoutControlItem();
@@ -80,12 +82,14 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.cmbOvertimePolicy.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spDebounce.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkGenerateTimesheet.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkAutoFloatingRestDay.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemGrace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemLateMethod)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemOTPolicy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemDebounce)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemTimesheet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutItemAutoFloatingRestDay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutGroupHelp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemLateDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemOTDesc)).BeginInit();
@@ -240,6 +244,7 @@ namespace Foxoft
             this.layoutControlSettings.Controls.Add(this.cmbOvertimePolicy);
             this.layoutControlSettings.Controls.Add(this.spDebounce);
             this.layoutControlSettings.Controls.Add(this.chkGenerateTimesheet);
+            this.layoutControlSettings.Controls.Add(this.chkAutoFloatingRestDay);
             this.layoutControlSettings.Controls.Add(this.lblLateMethodDesc);
             this.layoutControlSettings.Controls.Add(this.lblOvertimePolicyDesc);
             this.layoutControlSettings.Controls.Add(this.lblGeneralHelpDesc);
@@ -280,6 +285,12 @@ namespace Foxoft
             this.chkGenerateTimesheet.EditValue = true;
             this.chkGenerateTimesheet.Name = "chkGenerateTimesheet";
             this.chkGenerateTimesheet.Properties.Caption = "Aylıq tabeli (Timesheet göstəricilərini) də formalaşdır";
+            // 
+            // chkAutoFloatingRestDay
+            // 
+            this.chkAutoFloatingRestDay.EditValue = true;
+            this.chkAutoFloatingRestDay.Name = "chkAutoFloatingRestDay";
+            this.chkAutoFloatingRestDay.Properties.Caption = Foxoft.Properties.Resources.Form_AttendanceWizard_AutoFloatingRestDay;
             // 
             // lblLateMethodDesc
             // 
@@ -324,6 +335,7 @@ namespace Foxoft
                 this.layoutItemOTPolicy,
                 this.layoutItemDebounce,
                 this.layoutItemTimesheet,
+                this.layoutItemAutoFloatingRestDay,
                 this.layoutGroupHelp
             });
             this.layoutControlGroupSettings.Name = "layoutControlGroupSettings";
@@ -375,6 +387,15 @@ namespace Foxoft
             this.layoutItemTimesheet.TextSize = new System.Drawing.Size(0, 0);
             this.layoutItemTimesheet.TextVisible = false;
             // 
+            // layoutItemAutoFloatingRestDay
+            // 
+            this.layoutItemAutoFloatingRestDay.Control = this.chkAutoFloatingRestDay;
+            this.layoutItemAutoFloatingRestDay.Location = new System.Drawing.Point(0, 140);
+            this.layoutItemAutoFloatingRestDay.Name = "layoutItemAutoFloatingRestDay";
+            this.layoutItemAutoFloatingRestDay.Size = new System.Drawing.Size(908, 28);
+            this.layoutItemAutoFloatingRestDay.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutItemAutoFloatingRestDay.TextVisible = false;
+            // 
             // layoutGroupHelp
             // 
             this.layoutGroupHelp.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -382,9 +403,9 @@ namespace Foxoft
                 this.layoutItemOTDesc,
                 this.layoutItemGeneralHelp
             });
-            this.layoutGroupHelp.Location = new System.Drawing.Point(0, 140);
+            this.layoutGroupHelp.Location = new System.Drawing.Point(0, 168);
             this.layoutGroupHelp.Name = "layoutGroupHelp";
-            this.layoutGroupHelp.Size = new System.Drawing.Size(908, 295);
+            this.layoutGroupHelp.Size = new System.Drawing.Size(908, 267);
             this.layoutGroupHelp.Text = Foxoft.Properties.Resources.Form_AttendanceWizard_HelpTitle;
             // 
             // layoutItemLateDesc
@@ -502,12 +523,14 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.cmbOvertimePolicy.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spDebounce.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkGenerateTimesheet.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkAutoFloatingRestDay.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemGrace)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemLateMethod)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemOTPolicy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemDebounce)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemTimesheet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutItemAutoFloatingRestDay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutGroupHelp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemLateDesc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutItemOTDesc)).EndInit();
@@ -544,11 +567,13 @@ namespace Foxoft
         private DevExpress.XtraEditors.ComboBoxEdit cmbOvertimePolicy;
         private DevExpress.XtraEditors.SpinEdit spDebounce;
         private DevExpress.XtraEditors.CheckEdit chkGenerateTimesheet;
+        private DevExpress.XtraEditors.CheckEdit chkAutoFloatingRestDay;
         private DevExpress.XtraLayout.LayoutControlItem layoutItemGrace;
         private DevExpress.XtraLayout.LayoutControlItem layoutItemLateMethod;
         private DevExpress.XtraLayout.LayoutControlItem layoutItemOTPolicy;
         private DevExpress.XtraLayout.LayoutControlItem layoutItemDebounce;
         private DevExpress.XtraLayout.LayoutControlItem layoutItemTimesheet;
+        private DevExpress.XtraLayout.LayoutControlItem layoutItemAutoFloatingRestDay;
         private DevExpress.XtraLayout.LayoutControlGroup layoutGroupHelp;
         private DevExpress.XtraEditors.LabelControl lblLateMethodDesc;
         private DevExpress.XtraLayout.LayoutControlItem layoutItemLateDesc;

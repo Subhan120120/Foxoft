@@ -71,6 +71,7 @@ namespace Foxoft
 
             btnMarkExcused.ItemClick += (_, __) => MarkSelectedExcused();
             btnMarkUnexcused.ItemClick += (_, __) => MarkSelectedUnexcused();
+            btnMarkRestDay.ItemClick += (_, __) => MarkSelectedRestDay();
             btnApproveOvertime.ItemClick += (_, __) => ApproveSelectedOvertime();
             btnRecalculate.ItemClick += (_, __) => RecalculateDay();
             btnSave.ItemClick += (_, __) => SaveChanges();
@@ -325,6 +326,43 @@ namespace Foxoft
             if (att != null)
             {
                 att.AttendanceStatus = AttendanceStatus.AbsentUnexcused;
+                att.IsManualOverride = true;
+                att.Notes = selectedRow.Notes;
+                att.LeaveRequestId = null;
+            }
+
+            gridView1.RefreshRow(gridView1.FocusedRowHandle);
+        }
+
+        private void MarkSelectedRestDay()
+        {
+            var selectedRow = gridView1.GetFocusedRow() as DailyAttendanceVM;
+            if (selectedRow == null) return;
+
+            selectedRow.AttendanceStatus = AttendanceStatus.RestDay;
+            selectedRow.LeaveTypeName = null;
+            selectedRow.PlannedCheckInTime = null;
+            selectedRow.PlannedCheckOutTime = null;
+            selectedRow.LateMinutes = 0;
+            selectedRow.EarlyExitMinutes = 0;
+            selectedRow.OvertimeMinutes = 0;
+            selectedRow.ApprovedOvertimeMinutes = 0;
+            selectedRow.WorkedMinutes = 0;
+            selectedRow.IsManualOverride = true;
+            selectedRow.Notes = "Manual istirahət günü təyin edildi";
+
+            var att = db.TrAttendances.FirstOrDefault(x => x.Id == selectedRow.Id);
+            if (att != null)
+            {
+                att.AttendanceStatus = AttendanceStatus.RestDay;
+                att.PlannedWorkMinutes = 0;
+                att.PlannedCheckInTime = null;
+                att.PlannedCheckOutTime = null;
+                att.LateMinutes = 0;
+                att.EarlyExitMinutes = 0;
+                att.OvertimeMinutes = 0;
+                att.ApprovedOvertimeMinutes = 0;
+                att.WorkedMinutes = 0;
                 att.IsManualOverride = true;
                 att.Notes = selectedRow.Notes;
                 att.LeaveRequestId = null;

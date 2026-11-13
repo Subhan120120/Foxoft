@@ -258,6 +258,9 @@ namespace Foxoft.Migrations
                     b.Property<bool>("AutoCloseDay")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("AutoFloatingRestDayEnabled")
+                        .HasColumnType("bit");
+
                     b.Property<int>("DebounceMinutes")
                         .HasColumnType("int");
 
@@ -278,6 +281,9 @@ namespace Foxoft.Migrations
 
                     b.Property<byte>("LateRoundingMethod")
                         .HasColumnType("tinyint");
+
+                    b.Property<int>("MaxWeeklyRestDays")
+                        .HasColumnType("int");
 
                     b.Property<int>("MinOvertimeMinutes")
                         .HasColumnType("int");
@@ -317,6 +323,7 @@ namespace Foxoft.Migrations
                             AttendanceMethod = (byte)3,
                             AutoCalculateAttendance = true,
                             AutoCloseDay = false,
+                            AutoFloatingRestDayEnabled = true,
                             DebounceMinutes = 2,
                             DefaultWorkScheduleId = new Guid("11111111-1111-1111-1111-111111111111"),
                             EarlyExitGracePeriodMinutes = 5,
@@ -324,6 +331,7 @@ namespace Foxoft.Migrations
                             LateApprovalRequired = false,
                             LateCalculationMethod = (byte)1,
                             LateRoundingMethod = (byte)0,
+                            MaxWeeklyRestDays = 1,
                             MinOvertimeMinutes = 15,
                             NotifyHrOnLate = false,
                             NotifyManagerOnAbsence = false,

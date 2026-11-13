@@ -21950,6 +21950,12 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_DailyAttendance_MarkRestDay {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_MarkRestDay", resourceCulture);
+            }
+        }
+
         public static string Form_DailyAttendance_ApproveOvertime {
             get {
                 return ResourceManager.GetString("Form_DailyAttendance_ApproveOvertime", resourceCulture);
@@ -22043,6 +22049,252 @@ namespace Foxoft.Properties {
         public static string Form_AttendanceSettings_Notifications {
             get {
                 return ResourceManager.GetString("Form_AttendanceSettings_Notifications", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Tab_General {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Tab_General", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Tab_Late {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Tab_Late", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Tab_Overtime {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Tab_Overtime", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Tab_Notifications {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Tab_Notifications", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_GeneralMain {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_GeneralMain", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_FloatingRest {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_FloatingRest", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_LateCalc {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_LateCalc", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_EarlyExit {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_EarlyExit", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_LateHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_LateHelp", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_OvertimeSettings {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_OvertimeSettings", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_OvertimeHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_OvertimeHelp", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_NotificationTriggers {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_NotificationTriggers", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_NotificationHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_NotificationHelp", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_AttendanceEnabled {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_AttendanceEnabled", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_DefaultSchedule {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_DefaultSchedule", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_AttendanceMethod {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_AttendanceMethod", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_DebounceMinutes {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_DebounceMinutes", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_RequireApproval {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_RequireApproval", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_AllowManualEntry {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_AllowManualEntry", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_AllowAttendanceCorrection {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_AllowAttendanceCorrection", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_AutoCalculate {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_AutoCalculate", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_AutoCloseDay {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_AutoCloseDay", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_AutoFloatingRestDay {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_AutoFloatingRestDay", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_MaxWeeklyRestDays {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_MaxWeeklyRestDays", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_GracePeriod {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_GracePeriod", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_LateCalculationMethod {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_LateCalculationMethod", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_LateRoundingMethod {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_LateRoundingMethod", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_AllowLateCorrection {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_AllowLateCorrection", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_LateApprovalRequired {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_LateApprovalRequired", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_EarlyExitGracePeriod {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_EarlyExitGracePeriod", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_OvertimePolicy {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_OvertimePolicy", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_MinOvertimeMinutes {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_MinOvertimeMinutes", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_OvertimeRoundingMinutes {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_OvertimeRoundingMinutes", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_NotifyHrOnLate {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_NotifyHrOnLate", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_NotifyManagerOnAbsence {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_NotifyManagerOnAbsence", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_NotifyOnMissingCheckOut {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_NotifyOnMissingCheckOut", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_FloatingRestHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_FloatingRestHelp", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_LateHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_LateHelp", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_OvertimeHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_OvertimeHelp", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_NotificationHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_NotificationHelp", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_SaveSuccess {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_SaveSuccess", resourceCulture);
             }
         }
 
@@ -22175,6 +22427,18 @@ namespace Foxoft.Properties {
         public static string Form_AttendanceWizard_GeneralHelpDesc {
             get {
                 return ResourceManager.GetString("Form_AttendanceWizard_GeneralHelpDesc", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceWizard_AutoFloatingRestDay {
+            get {
+                return ResourceManager.GetString("Form_AttendanceWizard_AutoFloatingRestDay", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceWizard_FloatingRestDayHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceWizard_FloatingRestDayHelp", resourceCulture);
             }
         }
     }

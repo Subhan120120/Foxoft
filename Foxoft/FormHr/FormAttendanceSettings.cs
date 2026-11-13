@@ -68,6 +68,8 @@ namespace Foxoft
             chkAllowAttendanceCorrection.Checked = entity.AllowAttendanceCorrection;
             chkAutoCalculate.Checked = entity.AutoCalculateAttendance;
             chkAutoCloseDay.Checked = entity.AutoCloseDay;
+            chkAutoFloatingRestDay.Checked = entity.AutoFloatingRestDayEnabled;
+            spMaxWeeklyRestDays.Value = entity.MaxWeeklyRestDays;
 
             spGracePeriod.Value = entity.GracePeriodMinutes;
             cmbLateCalculationMethod.SelectedItem = entity.LateCalculationMethod;
@@ -96,6 +98,8 @@ namespace Foxoft
             entity.AllowAttendanceCorrection = chkAllowAttendanceCorrection.Checked;
             entity.AutoCalculateAttendance = chkAutoCalculate.Checked;
             entity.AutoCloseDay = chkAutoCloseDay.Checked;
+            entity.AutoFloatingRestDayEnabled = chkAutoFloatingRestDay.Checked;
+            entity.MaxWeeklyRestDays = (int)spMaxWeeklyRestDays.Value;
 
             entity.GracePeriodMinutes = (int)spGracePeriod.Value;
             entity.LateCalculationMethod = cmbLateCalculationMethod.SelectedItem is LateCalculationMethod lm ? lm : LateCalculationMethod.Actual;
@@ -117,7 +121,7 @@ namespace Foxoft
 
             db.SaveChanges();
 
-            XtraMessageBox.Show(this, "Davamiyyət ayarları uğurla yadda saxlanıldı.", Properties.Resources.Common_Success,
+            XtraMessageBox.Show(this, Properties.Resources.Form_AttendanceSettings_SaveSuccess, Properties.Resources.Common_Success,
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             DialogResult = DialogResult.OK;
             Close();

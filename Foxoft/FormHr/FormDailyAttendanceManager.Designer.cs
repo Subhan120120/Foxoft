@@ -27,6 +27,7 @@ namespace Foxoft
             this.btnRefresh = new DevExpress.XtraBars.BarButtonItem();
             this.btnMarkExcused = new DevExpress.XtraBars.BarButtonItem();
             this.btnMarkUnexcused = new DevExpress.XtraBars.BarButtonItem();
+            this.btnMarkRestDay = new DevExpress.XtraBars.BarButtonItem();
             this.btnApproveOvertime = new DevExpress.XtraBars.BarButtonItem();
             this.btnRecalculate = new DevExpress.XtraBars.BarButtonItem();
             this.btnSave = new DevExpress.XtraBars.BarButtonItem();
@@ -56,6 +57,7 @@ namespace Foxoft
                 this.btnRefresh,
                 this.btnMarkExcused,
                 this.btnMarkUnexcused,
+                this.btnMarkRestDay,
                 this.btnApproveOvertime,
                 this.btnRecalculate,
                 this.btnSave,
@@ -142,6 +144,12 @@ namespace Foxoft
             this.btnMarkUnexcused.Id = 6;
             this.btnMarkUnexcused.Name = "btnMarkUnexcused";
             // 
+            // btnMarkRestDay
+            // 
+            this.btnMarkRestDay.Caption = Foxoft.Properties.Resources.Form_DailyAttendance_MarkRestDay;
+            this.btnMarkRestDay.Id = 12;
+            this.btnMarkRestDay.Name = "btnMarkRestDay";
+            // 
             // btnApproveOvertime
             // 
             this.btnApproveOvertime.Caption = Foxoft.Properties.Resources.Form_DailyAttendance_ApproveOvertime;
@@ -188,6 +196,7 @@ namespace Foxoft
             // 
             this.ribbonGroupActions.ItemLinks.Add(this.btnMarkExcused);
             this.ribbonGroupActions.ItemLinks.Add(this.btnMarkUnexcused);
+            this.ribbonGroupActions.ItemLinks.Add(this.btnMarkRestDay);
             this.ribbonGroupActions.ItemLinks.Add(this.btnApproveOvertime);
             this.ribbonGroupActions.ItemLinks.Add(this.btnRecalculate);
             this.ribbonGroupActions.ItemLinks.Add(this.btnSave);
@@ -251,6 +260,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem btnRefresh;
         private DevExpress.XtraBars.BarButtonItem btnMarkExcused;
         private DevExpress.XtraBars.BarButtonItem btnMarkUnexcused;
+        private DevExpress.XtraBars.BarButtonItem btnMarkRestDay;
         private DevExpress.XtraBars.BarButtonItem btnApproveOvertime;
         private DevExpress.XtraBars.BarButtonItem btnRecalculate;
         private DevExpress.XtraBars.BarButtonItem btnSave;

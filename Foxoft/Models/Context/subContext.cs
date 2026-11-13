@@ -2194,7 +2194,9 @@ namespace Foxoft.Models
                     OvertimeRoundingMinutes = 0,
                     NotifyHrOnLate = false,
                     NotifyManagerOnAbsence = false,
-                    NotifyOnMissingCheckOut = false
+                    NotifyOnMissingCheckOut = false,
+                    AutoFloatingRestDayEnabled = true,
+                    MaxWeeklyRestDays = 1
                 }
             );
 

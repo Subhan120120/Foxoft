@@ -68,10 +68,13 @@ namespace Foxoft
             cmbOvertimePolicy.Properties.Items.Add(OvertimePolicy.PreApproved);
             cmbOvertimePolicy.SelectedItem = settings.OvertimePolicy;
 
+            chkAutoFloatingRestDay.Checked = settings.AutoFloatingRestDayEnabled;
+
             cmbLateMethod.SelectedIndexChanged += (_, __) => UpdateHelpDescriptions();
             spGracePeriod.ValueChanged += (_, __) => UpdateHelpDescriptions();
             cmbOvertimePolicy.SelectedIndexChanged += (_, __) => UpdateHelpDescriptions();
             spDebounce.ValueChanged += (_, __) => UpdateHelpDescriptions();
+            chkAutoFloatingRestDay.CheckedChanged += (_, __) => UpdateHelpDescriptions();
 
             UpdateHelpDescriptions();
         }
@@ -104,7 +107,12 @@ namespace Foxoft
             }
 
             // General help (Grace & Debounce)
-            lblGeneralHelpDesc.Text = string.Format(Properties.Resources.Form_AttendanceWizard_GeneralHelpDesc, grace, debounce);
+            string helpText = string.Format(Properties.Resources.Form_AttendanceWizard_GeneralHelpDesc, grace, debounce);
+            if (chkAutoFloatingRestDay.Checked)
+            {
+                helpText += "<br>" + Properties.Resources.Form_AttendanceWizard_FloatingRestDayHelp;
+            }
+            lblGeneralHelpDesc.Text = helpText;
         }
 
         private void WizardControl1_SelectedPageChanging(object sender, WizardPageChangingEventArgs e)
@@ -135,7 +143,9 @@ namespace Foxoft
                 GracePeriodMinutes = (int)spGracePeriod.Value,
                 DebounceMinutes = (int)spDebounce.Value,
                 LateCalculationMethod = cmbLateMethod.SelectedItem is LateCalculationMethod lm ? lm : LateCalculationMethod.Actual,
-                OvertimePolicy = cmbOvertimePolicy.SelectedItem is OvertimePolicy op ? op : OvertimePolicy.Auto
+                OvertimePolicy = cmbOvertimePolicy.SelectedItem is OvertimePolicy op ? op : OvertimePolicy.Auto,
+                AutoFloatingRestDayEnabled = chkAutoFloatingRestDay.Checked,
+                MaxWeeklyRestDays = 1
             };
 
             string? storeCode = lkpStore.EditValue?.ToString();
@@ -178,7 +188,9 @@ namespace Foxoft
                 GracePeriodMinutes = (int)spGracePeriod.Value,
                 DebounceMinutes = (int)spDebounce.Value,
                 LateCalculationMethod = cmbLateMethod.SelectedItem is LateCalculationMethod lm ? lm : LateCalculationMethod.Actual,
-                OvertimePolicy = cmbOvertimePolicy.SelectedItem is OvertimePolicy op ? op : OvertimePolicy.Auto
+                OvertimePolicy = cmbOvertimePolicy.SelectedItem is OvertimePolicy op ? op : OvertimePolicy.Auto,
+                AutoFloatingRestDayEnabled = chkAutoFloatingRestDay.Checked,
+                MaxWeeklyRestDays = 1
             };
 
             string? storeCode = lkpStore.EditValue?.ToString();

@@ -443,12 +443,92 @@ namespace Foxoft.AppCode.Service
                 }
             }
 
+            // 6. Həftəlik Avtomatik Üzən İstirahət Günü (Auto Floating Rest Day)
+            if (settings.AutoFloatingRestDayEnabled && settings.MaxWeeklyRestDays > 0)
+            {
+                ApplyAutoFloatingRestDays(result.ProcessedAttendances, settings.MaxWeeklyRestDays, db);
+
+                // Statistikaları yenidən yekunlaşdır
+                result.PresentCount = result.ProcessedAttendances.Count(a => a.AttendanceStatus == AttendanceStatus.Present);
+                result.LateCount = result.ProcessedAttendances.Count(a => a.AttendanceStatus == AttendanceStatus.Late);
+                result.EarlyExitCount = result.ProcessedAttendances.Count(a => a.AttendanceStatus == AttendanceStatus.EarlyExit);
+                result.ExcusedAbsenceCount = result.ProcessedAttendances.Count(a => a.AttendanceStatus == AttendanceStatus.AbsentExcused ||
+                                                                                   a.AttendanceStatus == AttendanceStatus.SickLeave ||
+                                                                                   a.AttendanceStatus == AttendanceStatus.BusinessTrip);
+                result.UnexcusedAbsenceCount = result.ProcessedAttendances.Count(a => a.AttendanceStatus == AttendanceStatus.AbsentUnexcused);
+                result.RestDayCount = result.ProcessedAttendances.Count(a => a.AttendanceStatus == AttendanceStatus.RestDay);
+                result.TotalLateMinutes = result.ProcessedAttendances.Sum(a => a.LateMinutes);
+                result.TotalOvertimeMinutes = result.ProcessedAttendances.Sum(a => a.ApprovedOvertimeMinutes);
+            }
+
             if (saveToDb)
             {
                 db.SaveChanges();
             }
 
             return result;
+        }
+
+        private static DateTime GetWeekStart(DateTime d)
+        {
+            int diff = (7 + (d.DayOfWeek - DayOfWeek.Monday)) % 7;
+            return d.Date.AddDays(-1 * diff);
+        }
+
+        private void ApplyAutoFloatingRestDays(List<TrAttendance> attendances, int maxWeeklyRestDays, subContext dbContext)
+        {
+            var empGroups = attendances.GroupBy(a => a.CurrAccCode);
+
+            foreach (var empGroup in empGroups)
+            {
+                var empCode = empGroup.Key;
+                var weekGroups = empGroup.GroupBy(a => GetWeekStart(a.WorkDate));
+
+                foreach (var week in weekGroups)
+                {
+                    DateTime weekStart = week.Key;
+                    DateTime weekEnd = weekStart.AddDays(6);
+
+                    // Bu həftə üzrə mövcud siyahıda olmayan, lakin bazada qeyd edilmiş digər istirahət günlərini yoxla
+                    var currentAttIds = week.Select(w => w.Id).ToList();
+                    int outsideRestDays = dbContext.TrAttendances.AsNoTracking()
+                        .Count(a => a.CurrAccCode == empCode &&
+                                    a.WorkDate >= weekStart && a.WorkDate <= weekEnd &&
+                                    !currentAttIds.Contains(a.Id) &&
+                                    a.AttendanceStatus == AttendanceStatus.RestDay);
+
+                    int existingRestDays = week.Count(a => a.AttendanceStatus == AttendanceStatus.RestDay) + outsideRestDays;
+                    int neededRestDays = maxWeeklyRestDays - existingRestDays;
+
+                    if (neededRestDays <= 0)
+                        continue;
+
+                    // Bu həftə üzrə logu olmayan, icazəsi olmayan və manual redaktə olunmamış qayıblar
+                    var unexcusedDays = week
+                        .Where(a => a.AttendanceStatus == AttendanceStatus.AbsentUnexcused &&
+                                    !a.IsManualOverride &&
+                                    a.CheckInTime == null &&
+                                    a.CheckOutTime == null &&
+                                    a.LeaveRequestId == null)
+                        .OrderBy(a => a.WorkDate)
+                        .Take(neededRestDays)
+                        .ToList();
+
+                    foreach (var restDayAtt in unexcusedDays)
+                    {
+                        restDayAtt.AttendanceStatus = AttendanceStatus.RestDay;
+                        restDayAtt.PlannedWorkMinutes = 0;
+                        restDayAtt.PlannedCheckInTime = null;
+                        restDayAtt.PlannedCheckOutTime = null;
+                        restDayAtt.LateMinutes = 0;
+                        restDayAtt.EarlyExitMinutes = 0;
+                        restDayAtt.WorkedMinutes = 0;
+                        restDayAtt.OvertimeMinutes = 0;
+                        restDayAtt.ApprovedOvertimeMinutes = 0;
+                        restDayAtt.Notes = "Avtomatik üzən istirahət günü (Floating Rest Day)";
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -506,7 +586,7 @@ namespace Foxoft.AppCode.Service
                 }
 
                 sheet.PayrollPeriodId = payrollPeriod?.Id;
-                sheet.ScheduledDays = grp.Count(a => a.PlannedWorkMinutes > 0);
+                sheet.ScheduledDays = grp.Count(a => a.PlannedWorkMinutes > 0 && a.AttendanceStatus != AttendanceStatus.RestDay);
                 sheet.WorkedDays = grp.Count(a => a.WorkedMinutes > 0 ||
                                                   a.AttendanceStatus == AttendanceStatus.Present ||
                                                   a.AttendanceStatus == AttendanceStatus.Late ||
