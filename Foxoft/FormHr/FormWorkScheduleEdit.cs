@@ -1,5 +1,6 @@
 using DevExpress.XtraEditors;
 using Foxoft.Models;
+using Foxoft.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,20 +10,6 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public class WorkScheduleDayVM
-    {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public DayOfWeek DayOfWeek { get; set; }
-        public string DayName => DayOfWeek.ToString();
-        public bool IsWorkDay { get; set; } = true;
-        public TimeSpan StartTime { get; set; } = new TimeSpan(9, 0, 0);
-        public TimeSpan EndTime { get; set; } = new TimeSpan(18, 0, 0);
-        public TimeSpan? BreakStartTime { get; set; } = new TimeSpan(13, 0, 0);
-        public TimeSpan? BreakEndTime { get; set; } = new TimeSpan(14, 0, 0);
-        public int BreakDurationMinutes { get; set; } = 60;
-        public int PlannedWorkMinutes { get; set; } = 480;
-    }
-
     public partial class FormWorkScheduleEdit : XtraForm
     {
         private readonly subContext db = new();
@@ -30,9 +17,17 @@ namespace Foxoft
         private DcWorkSchedule entity;
         private BindingList<WorkScheduleDayVM> daysList = new();
 
+        public FormWorkScheduleEdit() : this(null)
+        {
+        }
+
         public FormWorkScheduleEdit(Guid? scheduleId)
         {
             InitializeComponent();
+
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                return;
+
             id = scheduleId;
 
             Text = id == null ? Properties.Resources.Form_WorkSchedule_Caption_New : Properties.Resources.Form_WorkSchedule_Caption_Edit;

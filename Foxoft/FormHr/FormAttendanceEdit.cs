@@ -48,10 +48,10 @@ namespace Foxoft
         {
             if (dtCheckIn.EditValue is DateTime inTime && dtCheckOut.EditValue is DateTime outTime)
             {
-                if (outTime >= inTime)
-                {
-                    spMinutes.Value = (decimal)(outTime - inTime).TotalMinutes;
-                }
+                var span = outTime.TimeOfDay - inTime.TimeOfDay;
+                if (span < TimeSpan.Zero)
+                    span = span.Add(TimeSpan.FromDays(1));
+                spMinutes.Value = (decimal)span.TotalMinutes;
             }
         }
 
@@ -95,18 +95,35 @@ namespace Foxoft
                 return;
             }
 
+            DateTime workDate = dtWorkDate.DateTime.Date;
             entity.CurrAccCode = btnEmployee.EditValue?.ToString();
-            entity.WorkDate = dtWorkDate.DateTime.Date;
-            entity.CheckInTime = dtCheckIn.EditValue == null ? null : (DateTime?)dtCheckIn.DateTime;
-            entity.CheckOutTime = dtCheckOut.EditValue == null ? null : (DateTime?)dtCheckOut.DateTime;
-            entity.WorkedMinutes = (int)spMinutes.Value;
+            entity.WorkDate = workDate;
 
-            if (entity.CheckInTime != null && entity.CheckOutTime != null && entity.CheckOutTime < entity.CheckInTime)
+            if (dtCheckIn.EditValue is DateTime inTime)
             {
-                XtraMessageBox.Show(this, Properties.Resources.Validation_CheckOutBeforeCheckIn, Properties.Resources.Common_Attention,
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                entity.CheckInTime = workDate.AddHours(inTime.Hour).AddMinutes(inTime.Minute).AddSeconds(inTime.Second);
             }
+            else
+            {
+                entity.CheckInTime = null;
+            }
+
+            if (dtCheckOut.EditValue is DateTime outTime)
+            {
+                var outDate = workDate.AddHours(outTime.Hour).AddMinutes(outTime.Minute).AddSeconds(outTime.Second);
+                if (entity.CheckInTime != null && outDate < entity.CheckInTime)
+                {
+                    outDate = outDate.AddDays(1);
+                }
+                entity.CheckOutTime = outDate;
+            }
+            else
+            {
+                entity.CheckOutTime = null;
+            }
+
+            entity.WorkedMinutes = (int)spMinutes.Value;
+            entity.IsManualOverride = true;
 
             if (!EntityValidationHelper.TryValidate(entity, out var msg))
             {

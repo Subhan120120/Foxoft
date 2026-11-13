@@ -7734,6 +7734,42 @@ Google hesabı: {1}</value>
   <data name="Form_DailyAttendance_DeleteSuccess" xml:space="preserve">
     <value>Seçilmiş davamiyyət qeydləri silindi.</value>
   </data>
+  <data name="Form_DailyAttendance_ViewTimeline" xml:space="preserve">
+    <value>Xronologiya</value>
+  </data>
+  <data name="Form_DailyAttendance_ViewDay" xml:space="preserve">
+    <value>Gün</value>
+  </data>
+  <data name="Form_DailyAttendance_ViewWorkWeek" xml:space="preserve">
+    <value>İş Həftəsi</value>
+  </data>
+  <data name="Form_DailyAttendance_ViewMonth" xml:space="preserve">
+    <value>Ay</value>
+  </data>
+  <data name="Form_DailyAttendance_ViewAgenda" xml:space="preserve">
+    <value>Gündəlik</value>
+  </data>
+  <data name="Form_DailyAttendance_ViewsGroup" xml:space="preserve">
+    <value>Görünüşlər</value>
+  </data>
+  <data name="Form_DailyAttendance_NavigationGroup" xml:space="preserve">
+    <value>Naviqasiya</value>
+  </data>
+  <data name="Form_DailyAttendance_Today" xml:space="preserve">
+    <value>Bugün</value>
+  </data>
+  <data name="Form_DailyAttendance_Previous" xml:space="preserve">
+    <value>Əvvəlki</value>
+  </data>
+  <data name="Form_DailyAttendance_Next" xml:space="preserve">
+    <value>Növbəti</value>
+  </data>
+  <data name="Form_DailyAttendance_Calendar" xml:space="preserve">
+    <value>Təqvim</value>
+  </data>
+  <data name="Form_DailyAttendance_NoRecordSelected" xml:space="preserve">
+    <value>Zəhmət olmasa bir davamiyyət qeydi seçin.</value>
+  </data>
   <data name="Form_AttendanceList_DeleteMultipleConfirm" xml:space="preserve">
     <value>Seçilmiş {0} davamiyyət qeydini silmək istədiyinizdən əminsiniz?</value>
   </data>

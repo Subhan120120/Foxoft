@@ -22016,6 +22016,78 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_DailyAttendance_ViewTimeline {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_ViewTimeline", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_ViewDay {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_ViewDay", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_ViewWorkWeek {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_ViewWorkWeek", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_ViewMonth {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_ViewMonth", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_ViewAgenda {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_ViewAgenda", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_ViewsGroup {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_ViewsGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_NavigationGroup {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_NavigationGroup", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_Today {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_Today", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_Previous {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_Previous", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_Next {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_Next", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_Calendar {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_Calendar", resourceCulture);
+            }
+        }
+
+        public static string Form_DailyAttendance_NoRecordSelected {
+            get {
+                return ResourceManager.GetString("Form_DailyAttendance_NoRecordSelected", resourceCulture);
+            }
+        }
+
         public static string Form_AttendanceList_DeleteMultipleConfirm {
             get {
                 return ResourceManager.GetString("Form_AttendanceList_DeleteMultipleConfirm", resourceCulture);
