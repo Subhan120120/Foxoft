@@ -21932,6 +21932,78 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string ERP_ACE_AttendanceLogs {
+            get {
+                return ResourceManager.GetString("ERP_ACE_AttendanceLogs", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceLogList_Caption {
+            get {
+                return ResourceManager.GetString("Form_AttendanceLogList_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceLogList_ImportExcel {
+            get {
+                return ResourceManager.GetString("Form_AttendanceLogList_ImportExcel", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceLogList_ImportSuccess {
+            get {
+                return ResourceManager.GetString("Form_AttendanceLogList_ImportSuccess", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceLogList_AskRecalculate {
+            get {
+                return ResourceManager.GetString("Form_AttendanceLogList_AskRecalculate", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceLogList_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("Form_AttendanceLogList_DeleteConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceLogList_SelectRowsToDelete {
+            get {
+                return ResourceManager.GetString("Form_AttendanceLogList_SelectRowsToDelete", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceLogList_DeleteSuccess {
+            get {
+                return ResourceManager.GetString("Form_AttendanceLogList_DeleteSuccess", resourceCulture);
+            }
+        }
+
+        public static string Common_StartDate {
+            get {
+                return ResourceManager.GetString("Common_StartDate", resourceCulture);
+            }
+        }
+
+        public static string Common_EndDate {
+            get {
+                return ResourceManager.GetString("Common_EndDate", resourceCulture);
+            }
+        }
+
+        public static string Common_CreatedDate {
+            get {
+                return ResourceManager.GetString("Common_CreatedDate", resourceCulture);
+            }
+        }
+
+        public static string Common_Author {
+            get {
+                return ResourceManager.GetString("Common_Author", resourceCulture);
+            }
+        }
+
         public static string Form_DailyAttendance_Caption {
             get {
                 return ResourceManager.GetString("Form_DailyAttendance_Caption", resourceCulture);

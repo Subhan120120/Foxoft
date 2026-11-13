@@ -42,6 +42,7 @@ namespace Foxoft
             this.btnEdit = new DevExpress.XtraBars.BarButtonItem();
             this.btnSave = new DevExpress.XtraBars.BarButtonItem();
             this.btnDelete = new DevExpress.XtraBars.BarButtonItem();
+            this.btnAttendanceLogs = new DevExpress.XtraBars.BarButtonItem();
             this.btnClose = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonGroupFilter = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -90,6 +91,7 @@ namespace Foxoft
                 this.btnEdit,
                 this.btnSave,
                 this.btnDelete,
+                this.btnAttendanceLogs,
                 this.btnClose
             });
             this.ribbon.Location = new System.Drawing.Point(0, 0);
@@ -257,6 +259,12 @@ namespace Foxoft
             this.btnDelete.Id = 20;
             this.btnDelete.Name = "btnDelete";
             // 
+            // btnAttendanceLogs
+            // 
+            this.btnAttendanceLogs.Caption = Foxoft.Properties.Resources.Form_AttendanceLogList_Caption;
+            this.btnAttendanceLogs.Id = 24;
+            this.btnAttendanceLogs.Name = "btnAttendanceLogs";
+            // 
             // btnClose
             // 
             this.btnClose.Caption = Foxoft.Properties.Resources.Common_Close;
@@ -311,6 +319,7 @@ namespace Foxoft
             this.ribbonGroupActions.ItemLinks.Add(this.btnEdit);
             this.ribbonGroupActions.ItemLinks.Add(this.btnSave);
             this.ribbonGroupActions.ItemLinks.Add(this.btnDelete);
+            this.ribbonGroupActions.ItemLinks.Add(this.btnAttendanceLogs);
             this.ribbonGroupActions.ItemLinks.Add(this.btnClose);
             this.ribbonGroupActions.Name = "ribbonGroupActions";
             this.ribbonGroupActions.Text = Foxoft.Properties.Resources.Common_Operation;
@@ -440,6 +449,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem btnEdit;
         private DevExpress.XtraBars.BarButtonItem btnSave;
         private DevExpress.XtraBars.BarButtonItem btnDelete;
+        private DevExpress.XtraBars.BarButtonItem btnAttendanceLogs;
         private DevExpress.XtraBars.BarButtonItem btnClose;
         private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
         private DevExpress.XtraScheduler.DateNavigator dateNavigator1;

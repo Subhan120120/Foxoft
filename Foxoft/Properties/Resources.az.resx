@@ -7692,6 +7692,42 @@ Google hesabı: {1}</value>
   <data name="ERP_ACE_AttendanceSettings" xml:space="preserve">
     <value>Davamiyyət Ayarları</value>
   </data>
+  <data name="ERP_ACE_AttendanceLogs" xml:space="preserve">
+    <value>Davamiyyət Loqları</value>
+  </data>
+  <data name="Form_AttendanceLogList_Caption" xml:space="preserve">
+    <value>Davamiyyət Loqları</value>
+  </data>
+  <data name="Form_AttendanceLogList_ImportExcel" xml:space="preserve">
+    <value>Excel-dən İdxal Et</value>
+  </data>
+  <data name="Form_AttendanceLogList_ImportSuccess" xml:space="preserve">
+    <value>İdxal uğurla tamamlandı.&#x0a;Yüklənən: {0}&#x0a;Ötürülən (təkrarlar): {1}&#x0a;Xətalar: {2}</value>
+  </data>
+  <data name="Form_AttendanceLogList_AskRecalculate" xml:space="preserve">
+    <value>İdxal edilmiş tarix aralığı ({0:dd.MM.yyyy} - {1:dd.MM.yyyy}) üçün davamiyyəti indi hesablamaq istəyirsiniz?</value>
+  </data>
+  <data name="Form_AttendanceLogList_DeleteConfirm" xml:space="preserve">
+    <value>Seçilmiş {0} davamiyyət loqunu silmək istədiyinizdən əminsiniz?</value>
+  </data>
+  <data name="Form_AttendanceLogList_SelectRowsToDelete" xml:space="preserve">
+    <value>Zəhmət olmasa silmək üçün ən azı bir loq seçin.</value>
+  </data>
+  <data name="Form_AttendanceLogList_DeleteSuccess" xml:space="preserve">
+    <value>Seçilmiş davamiyyət loqları silindi.</value>
+  </data>
+  <data name="Common_StartDate" xml:space="preserve">
+    <value>Başlanğıc Tarixi</value>
+  </data>
+  <data name="Common_EndDate" xml:space="preserve">
+    <value>Bitmə Tarixi</value>
+  </data>
+  <data name="Common_CreatedDate" xml:space="preserve">
+    <value>Yaradılma Tarixi</value>
+  </data>
+  <data name="Common_Author" xml:space="preserve">
+    <value>Müəllif</value>
+  </data>
   <data name="Form_DailyAttendance_Caption" xml:space="preserve">
     <value>Gündəlik Davamiyyət İdarəsi</value>
   </data>

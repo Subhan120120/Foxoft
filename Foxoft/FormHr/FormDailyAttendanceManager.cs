@@ -58,6 +58,7 @@ namespace Foxoft
             btnEdit.ItemClick += (_, __) => EditSelected();
             btnSave.ItemClick += (_, __) => SaveChanges();
             btnDelete.ItemClick += (_, __) => DeleteSelected();
+            btnAttendanceLogs.ItemClick += (_, __) => OpenAttendanceLogs();
             btnClose.ItemClick += (_, __) => Close();
 
             schedulerControl1.AppointmentViewInfoCustomizing += SchedulerControl1_AppointmentViewInfoCustomizing;
@@ -799,6 +800,14 @@ namespace Foxoft
             db.SaveChanges();
             XtraMessageBox.Show(this, Properties.Resources.Form_DailyAttendance_SavedSuccess,
                 Properties.Resources.Common_Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void OpenAttendanceLogs()
+        {
+            DateTime? selectedDate = barEditDate.EditValue as DateTime?;
+            using var form = new FormAttendanceLogList(selectedDate);
+            form.ShowDialog(this);
+            LoadData();
         }
     }
 }

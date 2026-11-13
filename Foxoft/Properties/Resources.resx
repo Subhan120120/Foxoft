@@ -7692,6 +7692,42 @@ Google account: {1}</value>
   <data name="ERP_ACE_AttendanceSettings" xml:space="preserve">
     <value>Attendance Settings</value>
   </data>
+  <data name="ERP_ACE_AttendanceLogs" xml:space="preserve">
+    <value>Attendance Logs</value>
+  </data>
+  <data name="Form_AttendanceLogList_Caption" xml:space="preserve">
+    <value>Attendance Logs</value>
+  </data>
+  <data name="Form_AttendanceLogList_ImportExcel" xml:space="preserve">
+    <value>Import from Excel</value>
+  </data>
+  <data name="Form_AttendanceLogList_ImportSuccess" xml:space="preserve">
+    <value>Import completed successfully.&#x0a;Imported: {0}&#x0a;Skipped (Duplicates): {1}&#x0a;Errors: {2}</value>
+  </data>
+  <data name="Form_AttendanceLogList_AskRecalculate" xml:space="preserve">
+    <value>Do you want to recalculate attendance for the imported date range ({0:dd.MM.yyyy} - {1:dd.MM.yyyy}) now?</value>
+  </data>
+  <data name="Form_AttendanceLogList_DeleteConfirm" xml:space="preserve">
+    <value>Are you sure you want to delete {0} selected attendance log(s)?</value>
+  </data>
+  <data name="Form_AttendanceLogList_SelectRowsToDelete" xml:space="preserve">
+    <value>Please select at least one log to delete.</value>
+  </data>
+  <data name="Form_AttendanceLogList_DeleteSuccess" xml:space="preserve">
+    <value>Selected attendance logs were deleted.</value>
+  </data>
+  <data name="Common_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="Common_EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="Common_CreatedDate" xml:space="preserve">
+    <value>Created Date</value>
+  </data>
+  <data name="Common_Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
   <data name="Form_DailyAttendance_Caption" xml:space="preserve">
     <value>Daily Attendance Manager</value>
   </data>

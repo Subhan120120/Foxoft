@@ -118,6 +118,7 @@ namespace Foxoft.Models
         Biometric = 1,
         RfidCard = 2,
         MobileWeb = 3,
-        Manual = 4
+        Manual = 4,
+        ExcelImport = 5
     }
 }
