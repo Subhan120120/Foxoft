@@ -512,8 +512,11 @@ namespace Foxoft
             {
                 ApplyExpenseDefaultCashRegisterByStore(trInvoiceHeader.StoreCode);
 
-                trInvoiceHeader.CashRegisterCode = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId, GetInvoiceCashRegPaymentTypeFilter());
-                btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
+                string? terminalCashReg = efMethods.SelectCashRegisterByTerminal(Settings.Default.TerminalId, GetInvoiceCashRegPaymentTypeFilter());
+                if (!string.IsNullOrEmpty(terminalCashReg))
+                {
+                    btn_CashRegCode.EditValue = trInvoiceHeader.CashRegisterCode;
+                }
             }
 
             if (IsInstallmentProcess())
@@ -4861,7 +4864,7 @@ namespace Foxoft
 
         private void ApplyExpenseDefaultCashRegisterByStore(string storeCode)
         {
-            if (dcProcess?.ProcessCode != "EX" || trInvoiceHeader is null || string.IsNullOrWhiteSpace(storeCode))
+            if (!new string[] { "EX", "EI" }.Contains(dcProcess?.ProcessCode) || trInvoiceHeader is null || string.IsNullOrWhiteSpace(storeCode))
                 return;
 
             trInvoiceHeader.CashRegisterCode = efMethods.SelectDefaultCashRegister(storeCode, GetInvoiceCashRegPaymentTypeFilter());
@@ -4870,7 +4873,7 @@ namespace Foxoft
 
         private PaymentType? GetInvoiceCashRegPaymentTypeFilter()
         {
-            return dcProcess?.ProcessCode == "EX" ? null : PaymentType.Cash;
+            return new string[] { "EX", "EI" }.Contains(dcProcess?.ProcessCode) ? null : PaymentType.Cash;
         }
 
         private void Btn_CashRegCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
