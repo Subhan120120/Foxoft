@@ -22460,6 +22460,120 @@ namespace Foxoft.Properties {
             }
         }
 
+        public static string Form_AttendanceSettings_Tab_WebSecurity {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Tab_WebSecurity", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Group_WebSecurity {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Group_WebSecurity", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_RequireDynamicQrCode {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_RequireDynamicQrCode", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_RequireGpsGeofencing {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_RequireGpsGeofencing", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_RequireDeviceLock {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_RequireDeviceLock", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_WebSecurityHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_WebSecurityHelp", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Tab_DeviceLocks {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Tab_DeviceLocks", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Store {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Store", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Latitude {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Latitude", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Longitude {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Longitude", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_Radius {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_Radius", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_AllowedWifiIps {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_AllowedWifiIps", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_RequireWifiIp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_RequireWifiIp", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_SaveStoreRule {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_SaveStoreRule", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_ResetDeviceLock {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_ResetDeviceLock", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_ResetDeviceConfirm {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_ResetDeviceConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_DeviceUnlocked {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_DeviceUnlocked", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_RefreshDevices {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_RefreshDevices", resourceCulture);
+            }
+        }
+
+        public static string Form_AttendanceSettings_DeviceLockHelp {
+            get {
+                return ResourceManager.GetString("Form_AttendanceSettings_DeviceLockHelp", resourceCulture);
+            }
+        }
+
         public static string Form_AttendanceSettings_FloatingRestHelp {
             get {
                 return ResourceManager.GetString("Form_AttendanceSettings_FloatingRestHelp", resourceCulture);

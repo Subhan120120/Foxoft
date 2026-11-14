@@ -1,4 +1,5 @@
 using DevExpress.XtraEditors;
+using Foxoft.AppCode.Service;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,6 +11,7 @@ namespace Foxoft
     public partial class FormAttendanceSettings : XtraForm
     {
         private readonly subContext db = new();
+        private readonly AttendanceConfigStore configStore = new();
         private DcAttendanceSetting entity;
 
         public FormAttendanceSettings()
@@ -17,10 +19,126 @@ namespace Foxoft
             InitializeComponent();
 
             InitDropdowns();
+            InitStoreDropdown();
             LoadSettings();
+            LoadDeviceLocks();
+
+            lkpRuleStore.EditValueChanged += (_, __) => LoadStoreRule();
+            btnSaveStoreRule.Click += (_, __) => SaveStoreRule();
+            btnRefreshDevices.Click += (_, __) => LoadDeviceLocks();
+            repoBtnUnlock.ButtonClick += RepoBtnUnlock_ButtonClick;
 
             btnSave.Click += (_, __) => SaveSettings();
             btnCancel.Click += (_, __) => Close();
+        }
+
+        private void InitStoreDropdown()
+        {
+            var stores = db.DcCurrAccs.AsNoTracking()
+                .Where(x => !x.IsDisabled && x.CurrAccTypeCode == CurrAccType.Store)
+                .OrderBy(x => x.CurrAccCode)
+                .Select(x => new { x.CurrAccCode, StoreName = x.CurrAccCode + " - " + x.CurrAccDesc })
+                .ToList();
+
+            lkpRuleStore.Properties.DataSource = stores;
+            lkpRuleStore.Properties.DisplayMember = "StoreName";
+            lkpRuleStore.Properties.ValueMember = "CurrAccCode";
+
+            if (stores.Any())
+            {
+                lkpRuleStore.EditValue = stores.First().CurrAccCode;
+                LoadStoreRule();
+            }
+        }
+
+        private void LoadStoreRule()
+        {
+            string? storeCode = lkpRuleStore.EditValue as string;
+            if (string.IsNullOrEmpty(storeCode))
+            {
+                spRuleLat.Value = 0;
+                spRuleLon.Value = 0;
+                spRuleRadius.Value = 0;
+                txtRuleIps.Text = string.Empty;
+                chkStoreEnforceWifi.Checked = false;
+                return;
+            }
+
+            var rule = configStore.GetStoreRule(storeCode, lkpRuleStore.Text);
+            spRuleLat.Value = (decimal)rule.Latitude;
+            spRuleLon.Value = (decimal)rule.Longitude;
+            spRuleRadius.Value = (decimal)rule.AllowedRadiusMeters;
+            txtRuleIps.Text = rule.AllowedWifiIps != null ? string.Join(", ", rule.AllowedWifiIps) : string.Empty;
+            chkStoreEnforceWifi.Checked = rule.EnforceWifiIp;
+        }
+
+        private void SaveStoreRule()
+        {
+            string? storeCode = lkpRuleStore.EditValue as string;
+            if (string.IsNullOrEmpty(storeCode))
+                return;
+
+            var ipList = (txtRuleIps.Text ?? string.Empty)
+                .Split(new[] { ',', ';', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim())
+                .Where(x => !string.IsNullOrEmpty(x))
+                .Distinct()
+                .ToList();
+
+            var rule = new StoreAttendanceRule
+            {
+                StoreCode = storeCode,
+                StoreName = lkpRuleStore.Text,
+                Latitude = (double)spRuleLat.Value,
+                Longitude = (double)spRuleLon.Value,
+                AllowedRadiusMeters = (double)spRuleRadius.Value,
+                AllowedWifiIps = ipList,
+                EnforceQr = true,
+                EnforceWifiIp = chkStoreEnforceWifi.Checked,
+                EnforceGps = true,
+                EnforceDeviceLock = true
+            };
+
+            configStore.SaveStoreRule(rule);
+
+            XtraMessageBox.Show(this, Properties.Resources.Form_AttendanceSettings_SaveSuccess, Properties.Resources.Common_Success,
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void LoadDeviceLocks()
+        {
+            var locks = configStore.GetAllDeviceLocks();
+            gcDeviceLocks.DataSource = locks;
+        }
+
+        private void RepoBtnUnlock_ButtonClick(object? sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            int rowHandle = gvDeviceLocks.FocusedRowHandle;
+            if (rowHandle < 0)
+                return;
+
+            if (gvDeviceLocks.GetRow(rowHandle) is not EmployeeDeviceLock deviceLock)
+                return;
+
+            string displayName = !string.IsNullOrWhiteSpace(deviceLock.EmployeeName)
+                ? deviceLock.EmployeeName
+                : deviceLock.CurrAccCode;
+
+            string confirmMessage = string.Format(
+                Properties.Resources.Form_AttendanceSettings_ResetDeviceConfirm,
+                displayName);
+
+            if (XtraMessageBox.Show(this, confirmMessage, Properties.Resources.Form_AttendanceSettings_ResetDeviceLock,
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                bool success = configStore.UnlockDevice(deviceLock.CurrAccCode);
+                if (success)
+                {
+                    XtraMessageBox.Show(this, Properties.Resources.Form_AttendanceSettings_DeviceUnlocked,
+                        Properties.Resources.Common_Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadDeviceLocks();
+                }
+            }
         }
 
         private void InitDropdowns()
@@ -85,6 +203,10 @@ namespace Foxoft
             chkNotifyHrOnLate.Checked = entity.NotifyHrOnLate;
             chkNotifyManagerOnAbsence.Checked = entity.NotifyManagerOnAbsence;
             chkNotifyOnMissingCheckOut.Checked = entity.NotifyOnMissingCheckOut;
+
+            chkRequireDynamicQrCode.Checked = entity.RequireDynamicQrCode;
+            chkRequireGpsGeofencing.Checked = entity.RequireGpsGeofencing;
+            chkRequireDeviceLock.Checked = entity.RequireDeviceLock;
         }
 
         private void SaveSettings()
@@ -115,6 +237,10 @@ namespace Foxoft
             entity.NotifyHrOnLate = chkNotifyHrOnLate.Checked;
             entity.NotifyManagerOnAbsence = chkNotifyManagerOnAbsence.Checked;
             entity.NotifyOnMissingCheckOut = chkNotifyOnMissingCheckOut.Checked;
+
+            entity.RequireDynamicQrCode = chkRequireDynamicQrCode.Checked;
+            entity.RequireGpsGeofencing = chkRequireGpsGeofencing.Checked;
+            entity.RequireDeviceLock = chkRequireDeviceLock.Checked;
 
             if (db.Entry(entity).State == EntityState.Detached)
                 db.DcAttendanceSettings.Add(entity);

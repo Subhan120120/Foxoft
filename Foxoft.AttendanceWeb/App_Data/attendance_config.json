@@ -1,0 +1,65 @@
+{
+  "StoreRules": [
+    {
+      "StoreCode": "TEST_STORE",
+      "StoreName": "TEST_STORE",
+      "Latitude": 40.4093,
+      "Longitude": 49.8671,
+      "AllowedRadiusMeters": 100,
+      "AllowedWifiIps": [
+        "127.0.0.1",
+        "5.83.213.109"
+      ],
+      "EnforceWifiIp": false,
+      "EnforceGps": true,
+      "EnforceQr": true,
+      "EnforceDeviceLock": true
+    },
+    {
+      "StoreCode": "1100",
+      "StoreName": "FILIAL 20",
+      "Latitude": 40.4093,
+      "Longitude": 49.8671,
+      "AllowedRadiusMeters": 100,
+      "AllowedWifiIps": [
+        "127.0.0.1",
+        "::1"
+      ],
+      "EnforceWifiIp": false,
+      "EnforceGps": true,
+      "EnforceQr": true,
+      "EnforceDeviceLock": true
+    },
+    {
+      "StoreCode": "mgz01",
+      "StoreName": "mgz01 - M\u0259rk\u0259z Ma\u011Faza",
+      "Latitude": 40.4093,
+      "Longitude": 49.8671,
+      "AllowedRadiusMeters": 50,
+      "AllowedWifiIps": [
+        "127.0.0.1",
+        "5.83.213.109"
+      ],
+      "EnforceWifiIp": false,
+      "EnforceGps": true,
+      "EnforceQr": true,
+      "EnforceDeviceLock": true
+    },
+    {
+      "StoreCode": "mgz04",
+      "StoreName": "LG Ma\u011Faza",
+      "Latitude": 40.4093,
+      "Longitude": 49.8671,
+      "AllowedRadiusMeters": 100,
+      "AllowedWifiIps": [
+        "127.0.0.1",
+        "::1"
+      ],
+      "EnforceWifiIp": false,
+      "EnforceGps": true,
+      "EnforceQr": true,
+      "EnforceDeviceLock": true
+    }
+  ],
+  "DeviceLocks": []
+}

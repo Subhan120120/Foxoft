@@ -7956,6 +7956,63 @@ Google hesabı: {1}</value>
   <data name="Form_AttendanceSettings_NotifyOnMissingCheckOut" xml:space="preserve">
     <value>Çıxış Qeydiyyatı Olmadıqda Xəbərdarlıq Et</value>
   </data>
+  <data name="Form_AttendanceSettings_Tab_WebSecurity" xml:space="preserve">
+    <value>Web &amp; Mobil Təhlükəsizlik</value>
+  </data>
+  <data name="Form_AttendanceSettings_Group_WebSecurity" xml:space="preserve">
+    <value>Web Davamiyyət Təhlükəsizlik Yoxlamaları</value>
+  </data>
+  <data name="Form_AttendanceSettings_RequireDynamicQrCode" xml:space="preserve">
+    <value>Dinamik QR Kod Yoxlanışı (Ekran)</value>
+  </data>
+  <data name="Form_AttendanceSettings_RequireGpsGeofencing" xml:space="preserve">
+    <value>GPS Geofencing (Radius Yoxlanışı)</value>
+  </data>
+  <data name="Form_AttendanceSettings_RequireDeviceLock" xml:space="preserve">
+    <value>Cihaz Tokeni (Device Lock — 1 Telefon = 1 Profil)</value>
+  </data>
+  <data name="Form_AttendanceSettings_WebSecurityHelp" xml:space="preserve">
+    <value>Qeyd: Bu seçimlər işçilər mobil web tətbiq (Foxoft.AttendanceWeb) vasitəsilə işə giriş və çıxışlarını qeyd edərkən hansı təhlükəsizlik qaydalarının tələb olunacağını təyin edir. Deaktiv edildikdə müvafiq yoxlama atlanır.</value>
+  </data>
+  <data name="Form_AttendanceSettings_Tab_DeviceLocks" xml:space="preserve">
+    <value>Cihaz Kilidləri (Device Locks)</value>
+  </data>
+  <data name="Form_AttendanceSettings_Store" xml:space="preserve">
+    <value>Filial:</value>
+  </data>
+  <data name="Form_AttendanceSettings_Latitude" xml:space="preserve">
+    <value>GPS Enliyi (Latitude):</value>
+  </data>
+  <data name="Form_AttendanceSettings_Longitude" xml:space="preserve">
+    <value>GPS Uzunluğu (Longitude):</value>
+  </data>
+  <data name="Form_AttendanceSettings_Radius" xml:space="preserve">
+    <value>İcazə Verilən Radius (metr):</value>
+  </data>
+  <data name="Form_AttendanceSettings_AllowedWifiIps" xml:space="preserve">
+    <value>Statik Wi-Fi IP Ünvanları:</value>
+  </data>
+  <data name="Form_AttendanceSettings_RequireWifiIp" xml:space="preserve">
+    <value>Statik Wi-Fi IP Yoxlanışı Tələb Edilsin</value>
+  </data>
+  <data name="Form_AttendanceSettings_SaveStoreRule" xml:space="preserve">
+    <value>Filial Qaydalarını Saxla</value>
+  </data>
+  <data name="Form_AttendanceSettings_ResetDeviceLock" xml:space="preserve">
+    <value>Kilidi Sıfırla</value>
+  </data>
+  <data name="Form_AttendanceSettings_ResetDeviceConfirm" xml:space="preserve">
+    <value>"{0}" adlı işçinin cihaz kilidini sıfırlamaq istəyirsiniz? O, yeni telefondan qeydiyyatdan keçə biləcək.</value>
+  </data>
+  <data name="Form_AttendanceSettings_DeviceUnlocked" xml:space="preserve">
+    <value>Cihaz kilidi uğurla sıfırlandı.</value>
+  </data>
+  <data name="Form_AttendanceSettings_RefreshDevices" xml:space="preserve">
+    <value>Cihazları Yenilə</value>
+  </data>
+  <data name="Form_AttendanceSettings_DeviceLockHelp" xml:space="preserve">
+    <value>Hər bir işçi yalnız özünün təhkim olunmuş telefonundan işə giriş/çıxış edə bilər. İşçi telefonunu dəyişdikdə və ya itirdikdə kilidi buradan sıfırlaya bilərsiniz.</value>
+  </data>
   <data name="Form_AttendanceSettings_FloatingRestHelp" xml:space="preserve">
     <value>Qeyd: Həftə ərzində (B.e - Bazar) qrafik üzrə iş günü olub, lakin işçinin işə gəlmədiyi ilk gün(lər) təyin olunmuş limit daxilində avtomatik 'İstirahət günü' kimi tanınır. Limiti aşan sonrakı buraxılmış günlər isə sistem tərəfindən 'Üzrsüz qayıb' olaraq qeyd edilir.</value>
   </data>

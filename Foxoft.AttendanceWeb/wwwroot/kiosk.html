@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foxoft Kiosk - Dinamik QR Ekranı</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);">
+  <div class="container kiosk-container">
+    <header class="app-header" style="border-bottom-color: rgba(255,255,255,0.1);">
+      <div class="brand">
+        <div class="brand-logo">F</div>
+        <div class="brand-text">
+          <h1>Foxoft Kiosk</h1>
+          <p>Obyektin Dinamik Davamiyyət Terminalı</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <select id="selectStore" class="form-select" style="width: auto; padding: 6px 12px; font-size: 13px;" onchange="changeStore()">
+          <option value="">Filial seçin...</option>
+        </select>
+        <a href="index.html" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">Mobil App</a>
+      </div>
+    </header>
+
+    <div class="card" style="background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); padding: 30px 20px;">
+      <h2 id="kioskStoreTitle" style="font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 4px;">
+        Filial Yüklənir...
+      </h2>
+      <p id="kioskClock" style="font-size: 18px; color: var(--accent); font-weight: 600; margin-bottom: 20px;">
+        00:00:00
+      </p>
+
+      <!-- Dynamic QR Box -->
+      <div class="kiosk-qr-box" id="qrContainer">
+        <img id="kioskQrImage" class="kiosk-qr-img" src="" alt="Dinamik QR Kod">
+      </div>
+
+      <!-- Countdown Visual Timer -->
+      <div>
+        <div class="timer-circle">
+          <span>&#9203;</span>
+          <span>Yenilənir: <strong id="kioskTimerSeconds">20</strong> san</span>
+        </div>
+      </div>
+
+      <!-- Quick Copy Button for testing -->
+      <div style="margin-top: 15px;">
+        <button onclick="copyQrToken()" class="btn btn-secondary" style="padding: 6px 14px; font-size: 12px;">
+          QR Kod Mətnini Kopyala (Test)
+        </button>
+      </div>
+
+      <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+        <p style="font-size: 14px; color: #cbd5e1; font-weight: 500;">
+          &#128241; Mobil telefonunuzla <strong>Foxoft Attendance Web App</strong>-i açın və bu kodu oxudun.
+        </p>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+          * Təhlükəsizlik məqsədilə QR kod hər 20 saniyədən bir avtomatik dəyişir və təkrar istifadəyə qapalıdır.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentStoreCode = '';
+    let currentToken = '';
+    let countdownTimer = null;
+    let secondsLeft = 20;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      startClock();
+      await loadStores();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const storeFromUrl = urlParams.get('store');
+      if (storeFromUrl) {
+        currentStoreCode = storeFromUrl;
+        document.getElementById('selectStore').value = storeFromUrl;
+      } else {
+        const savedStore = localStorage.getItem('foxoft_kiosk_store');
+        if (savedStore) {
+          currentStoreCode = savedStore;
+          document.getElementById('selectStore').value = savedStore;
+        }
+      }
+
+      if (currentStoreCode) {
+        fetchNextQr();
+      }
+    });
+
+    function startClock() {
+      setInterval(() => {
+        const now = new Date();
+        document.getElementById('kioskClock').textContent = now.toLocaleDateString('az-AZ', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        }) + ' - ' + now.toLocaleTimeString('az-AZ');
+      }, 1000);
+    }
+
+    async function loadStores() {
+      try {
+        const res = await fetch('/api/attendance/stores');
+        if (res.ok) {
+          const stores = await res.json();
+          const select = document.getElementById('selectStore');
+          select.innerHTML = '<option value="">Filial seçin...</option>';
+          stores.forEach(st => {
+            const opt = document.createElement('option');
+            opt.value = st.storeCode;
+            opt.textContent = st.storeName;
+            select.appendChild(opt);
+          });
+
+          // Əgər heç bir filial seçilməyibsə və ən azı 1 filial varsa, birincini seçirik
+          if (!currentStoreCode && stores.length > 0) {
+            currentStoreCode = stores[0].storeCode;
+            select.value = currentStoreCode;
+          }
+        }
+      } catch (e) {
+        console.error('Filiallar yüklənmədi', e);
+      }
+    }
+
+    function changeStore() {
+      const select = document.getElementById('selectStore');
+      currentStoreCode = select.value;
+      if (currentStoreCode) {
+        localStorage.setItem('foxoft_kiosk_store', currentStoreCode);
+        fetchNextQr();
+      }
+    }
+
+    async function fetchNextQr() {
+      if (!currentStoreCode) return;
+
+      clearInterval(countdownTimer);
+
+      try {
+        const res = await fetch('/api/attendance/kiosk-qr?storeCode=' + encodeURIComponent(currentStoreCode));
+        if (res.ok) {
+          const data = await res.json();
+          currentToken = data.qrToken;
+          document.getElementById('kioskStoreTitle').textContent = data.storeName || currentStoreCode;
+          document.getElementById('kioskQrImage').src = data.qrBase64;
+
+          secondsLeft = data.validitySeconds || 20;
+          document.getElementById('kioskTimerSeconds').textContent = secondsLeft;
+
+          countdownTimer = setInterval(() => {
+            secondsLeft--;
+            if (secondsLeft <= 0) {
+              clearInterval(countdownTimer);
+              fetchNextQr();
+            } else {
+              document.getElementById('kioskTimerSeconds').textContent = secondsLeft;
+            }
+          }, 1000);
+        }
+      } catch (err) {
+        console.error('QR gətirilmədi', err);
+        // 5 saniyə sonra təkrar yoxla
+        setTimeout(fetchNextQr, 5000);
+      }
+    }
+
+    function copyQrToken() {
+      if (!currentToken) return;
+      navigator.clipboard.writeText(currentToken).then(() => {
+        alert('QR Token kopyalandı! Mobil app-də yapışdıraraq yoxlaya bilərsiniz.');
+      }).catch(err => {
+        prompt('QR Token:', currentToken);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -2196,7 +2196,10 @@ namespace Foxoft.Models
                     NotifyManagerOnAbsence = false,
                     NotifyOnMissingCheckOut = false,
                     AutoFloatingRestDayEnabled = true,
-                    MaxWeeklyRestDays = 1
+                    MaxWeeklyRestDays = 1,
+                    RequireDynamicQrCode = true,
+                    RequireGpsGeofencing = true,
+                    RequireDeviceLock = true
                 }
             );
 

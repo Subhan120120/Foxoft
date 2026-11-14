@@ -7956,6 +7956,63 @@ Google account: {1}</value>
   <data name="Form_AttendanceSettings_NotifyOnMissingCheckOut" xml:space="preserve">
     <value>Warn on Missing Check-Out</value>
   </data>
+  <data name="Form_AttendanceSettings_Tab_WebSecurity" xml:space="preserve">
+    <value>Web &amp; Mobile Security</value>
+  </data>
+  <data name="Form_AttendanceSettings_Group_WebSecurity" xml:space="preserve">
+    <value>Web Attendance Security Checks</value>
+  </data>
+  <data name="Form_AttendanceSettings_RequireDynamicQrCode" xml:space="preserve">
+    <value>Dynamic QR Code Check (Screen)</value>
+  </data>
+  <data name="Form_AttendanceSettings_RequireGpsGeofencing" xml:space="preserve">
+    <value>GPS Geofencing (Radius Check)</value>
+  </data>
+  <data name="Form_AttendanceSettings_RequireDeviceLock" xml:space="preserve">
+    <value>Device Token (Device Lock - 1 Device = 1 Profile)</value>
+  </data>
+  <data name="Form_AttendanceSettings_WebSecurityHelp" xml:space="preserve">
+    <value>Note: These options determine which security checks are enforced when employees check in or out via the mobile web application. When disabled, the corresponding verification is skipped.</value>
+  </data>
+  <data name="Form_AttendanceSettings_Tab_DeviceLocks" xml:space="preserve">
+    <value>Device Locks</value>
+  </data>
+  <data name="Form_AttendanceSettings_Store" xml:space="preserve">
+    <value>Branch / Store:</value>
+  </data>
+  <data name="Form_AttendanceSettings_Latitude" xml:space="preserve">
+    <value>GPS Latitude:</value>
+  </data>
+  <data name="Form_AttendanceSettings_Longitude" xml:space="preserve">
+    <value>GPS Longitude:</value>
+  </data>
+  <data name="Form_AttendanceSettings_Radius" xml:space="preserve">
+    <value>Allowed Radius (meters):</value>
+  </data>
+  <data name="Form_AttendanceSettings_AllowedWifiIps" xml:space="preserve">
+    <value>Static Wi-Fi IP Addresses:</value>
+  </data>
+  <data name="Form_AttendanceSettings_RequireWifiIp" xml:space="preserve">
+    <value>Require Static Wi-Fi IP Verification</value>
+  </data>
+  <data name="Form_AttendanceSettings_SaveStoreRule" xml:space="preserve">
+    <value>Save Branch Security Rules</value>
+  </data>
+  <data name="Form_AttendanceSettings_ResetDeviceLock" xml:space="preserve">
+    <value>Reset Lock</value>
+  </data>
+  <data name="Form_AttendanceSettings_ResetDeviceConfirm" xml:space="preserve">
+    <value>Do you want to reset the device lock for employee "{0}"? They will be able to register from a new device.</value>
+  </data>
+  <data name="Form_AttendanceSettings_DeviceUnlocked" xml:space="preserve">
+    <value>Device lock was successfully reset.</value>
+  </data>
+  <data name="Form_AttendanceSettings_RefreshDevices" xml:space="preserve">
+    <value>Refresh Devices</value>
+  </data>
+  <data name="Form_AttendanceSettings_DeviceLockHelp" xml:space="preserve">
+    <value>Each employee can only check in/out from their authorized device. If an employee changes or loses their device, reset the lock here.</value>
+  </data>
   <data name="Form_AttendanceSettings_FloatingRestHelp" xml:space="preserve">
     <value>Note: During the week (Mon-Sun), unworked scheduled days up to the weekly limit are automatically designated as 'Rest Day'. Any additional missed days beyond the limit are recorded as 'Absent Unexcused'.</value>
   </data>

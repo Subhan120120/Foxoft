@@ -92,5 +92,20 @@ namespace Foxoft.Models
         /// Həftəlik avtomatik tanınan maksimum istirahət günü sayı (standart: 1 gün)
         /// </summary>
         public int MaxWeeklyRestDays { get; set; } = 1;
+
+        /// <summary>
+        /// Web Davamiyyət: Dinamik QR Kod təhlükəsizlik yoxlanışı (Ekran QR)
+        /// </summary>
+        public bool RequireDynamicQrCode { get; set; } = true;
+
+        /// <summary>
+        /// Web Davamiyyət: GPS Geofencing (Radius) təhlükəsizlik yoxlanışı
+        /// </summary>
+        public bool RequireGpsGeofencing { get; set; } = true;
+
+        /// <summary>
+        /// Web Davamiyyət: Cihaz Tokeni (Device Lock — bir telefondan yalnız bir profil)
+        /// </summary>
+        public bool RequireDeviceLock { get; set; } = true;
     }
 }

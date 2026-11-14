@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foxoft Attendance - İnzibatçı Paneli</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container admin-container">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo">A</div>
+        <div class="brand-text">
+          <h1>İdarəetmə Paneli</h1>
+          <p>Filial Təhlükəsizliyi, Cihaz Kilidləri və Qeydlər</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">Mobil App</a>
+        <a href="kiosk.html" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">Kiosk</a>
+      </div>
+    </header>
+
+    <div id="adminAlert" class="alert" style="display: none;"></div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('storesTab', this)">Filial Tənzimləmələri</button>
+      <button class="tab-btn" onclick="switchTab('devicesTab', this)">Cihaz Kilidləri (Device Locks)</button>
+      <button class="tab-btn" onclick="switchTab('logsTab', this)">Canlı Qeydlər (TrAttendanceLogs)</button>
+    </div>
+
+    <!-- TAB 1: FILIAL TƏNZİMLƏMƏLƏRİ -->
+    <div id="storesTab" class="card">
+      <div class="card-title">
+        <span>Filial Təhlükəsizlik Qaydaları</span>
+        <button onclick="loadRules()" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;">Yenilə</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Tənzimlənəcək Filialı Seçin</label>
+        <select id="selRuleStore" class="form-select" onchange="onSelectRuleStore()">
+          <option value="">Yüklənir...</option>
+        </select>
+      </div>
+
+      <form id="ruleForm" onsubmit="saveStoreRule(event)">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <!-- Left Column: GPS & Radius -->
+          <div>
+            <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--accent);">GPS Geofencing</h4>
+            <div class="form-group">
+              <label class="form-label">Filialın GPS Enliyi (Latitude)</label>
+              <input type="number" step="0.000001" id="ruleLat" class="form-input" required placeholder="Məs: 40.4093">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Filialın GPS Uzunluğu (Longitude)</label>
+              <input type="number" step="0.000001" id="ruleLon" class="form-input" required placeholder="Məs: 49.8671">
+            </div>
+            <div class="form-group">
+              <label class="form-label">İcazə Verilən Radius (Metr ilə)</label>
+              <input type="number" step="1" id="ruleRadius" class="form-input" required value="100" placeholder="Məs: 100">
+            </div>
+            <button type="button" onclick="detectCurrentGps()" class="btn btn-secondary" style="font-size: 12px; margin-bottom: 14px;">
+              &#127757; Mənim Cari Yerimi Təyin Et (GPS)
+            </button>
+          </div>
+
+          <!-- Right Column: Wi-Fi IP -->
+          <div>
+            <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--accent);">Obyektin Statik Wi-Fi IP-si</h4>
+            <div class="form-group">
+              <label class="form-label">İcazəli IP Ünvanları (vergüllə ayırın)</label>
+              <textarea id="ruleIps" class="form-input" rows="4" placeholder="Məsələn: 85.132.44.10, 192.168.1.*, 127.0.0.1"></textarea>
+              <span style="font-size: 11px; color: var(--text-muted);">
+                * Obyektin internet çıxış (statik) IP-si və ya Wi-Fi subneti.
+              </span>
+            </div>
+            <button type="button" onclick="addMyCurrentIp()" class="btn btn-secondary" style="font-size: 12px; margin-bottom: 14px;">
+              &#128246; Mənim Cari IP-mi Əlavə Et
+            </button>
+          </div>
+        </div>
+
+        <!-- Security Enforcement Checkboxes -->
+        <div style="border-top: 1px solid var(--card-border); padding-top: 14px; margin-top: 10px;">
+          <h4 style="font-size: 14px; margin-bottom: 10px; color: #fff;">Təhlükəsizlik Yoxlamalarının İcrası</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+              <input type="checkbox" id="ruleEnforceQr" checked>
+              <span>Dinamik QR Kod (Ekran) Tələb Edilsin</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+              <input type="checkbox" id="ruleEnforceWifi">
+              <span>Statik Wi-Fi IP Yoxlanışı Tələb Edilsin</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+              <input type="checkbox" id="ruleEnforceGps" checked>
+              <span>GPS Geofencing (Radius) Tələb Edilsin</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+              <input type="checkbox" id="ruleEnforceDeviceLock" checked>
+              <span>Cihaz Kilidi (1 Telefon = 1 Profil) Tələb Edilsin</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" id="btnSaveRule" class="btn btn-primary" style="margin-top: 20px; padding: 10px 24px;">
+          Tənzimləmələri Yadda Saxla
+        </button>
+      </form>
+    </div>
+
+    <!-- TAB 2: CİHAZ KİLİDLƏRİ (DEVICE LOCKS) -->
+    <div id="devicesTab" class="card" style="display: none;">
+      <div class="card-title">
+        <span>Təsdiqlənmiş Cihazlar (Bir telefondan yalnız bir profil)</span>
+        <button onclick="loadDevices()" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;">Yenilə</button>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+        Hər bir işçi yalnız özünün təhkim olunmuş telefonundan işə giriş/çıxış edə bilər. İşçi telefonunu dəyişdikdə kilidi buradan sıfırlaya bilərsiniz.
+      </p>
+
+      <div style="overflow-x: auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>İşçi Kodu</th>
+              <th>İşçi Adı</th>
+              <th>Cihaz Modeli</th>
+              <th>Cihaz Tokeni</th>
+              <th>Qeydiyyat Tarixi</th>
+              <th>Son İstifadasi</th>
+              <th>Əməliyyat</th>
+            </tr>
+          </thead>
+          <tbody id="devicesTableBody">
+            <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Yüklənir...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3: ATTENDANCE LOGS -->
+    <div id="logsTab" class="card" style="display: none;">
+      <div class="card-title">
+        <span>Canlı Davamiyyət Jurnalı (TrAttendanceLogs)</span>
+        <button onclick="loadLogs()" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;">Yenilə</button>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Tarix / Vaxt</th>
+              <th>İşçi</th>
+              <th>Növ</th>
+              <th>Məkan / Koordinat</th>
+              <th>Mənbə</th>
+              <th>Cihaz</th>
+            </tr>
+          </thead>
+          <tbody id="logsTableBody">
+            <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Yüklənir...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/qr-scanner.js"></script>
+  <script>
+    let rulesList = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadRules();
+    });
+
+    function showAdminAlert(msg, type = 'info') {
+      const box = document.getElementById('adminAlert');
+      box.className = 'alert alert-' + type;
+      box.textContent = msg;
+      box.style.display = 'flex';
+      setTimeout(() => { box.style.display = 'none'; }, 4000);
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.getElementById('storesTab').style.display = 'none';
+      document.getElementById('devicesTab').style.display = 'none';
+      document.getElementById('logsTab').style.display = 'none';
+
+      document.getElementById(tabId).style.display = 'block';
+
+      if (tabId === 'devicesTab') loadDevices();
+      if (tabId === 'logsTab') loadLogs();
+    }
+
+    async function loadRules() {
+      try {
+        const res = await fetch('/api/admin/rules');
+        if (res.ok) {
+          rulesList = await res.json();
+          const sel = document.getElementById('selRuleStore');
+          sel.innerHTML = '';
+          rulesList.forEach(r => {
+            const opt = document.createElement('option');
+            opt.value = r.storeCode;
+            opt.textContent = (r.storeName || r.storeCode) + ' (' + r.storeCode + ')';
+            sel.appendChild(opt);
+          });
+          onSelectRuleStore();
+        }
+      } catch (e) {
+        showAdminAlert('Qaydalar yüklənmədi: ' + e.message, 'danger');
+      }
+    }
+
+    function onSelectRuleStore() {
+      const storeCode = document.getElementById('selRuleStore').value;
+      const rule = rulesList.find(r => r.storeCode === storeCode);
+      if (!rule) return;
+
+      document.getElementById('ruleLat').value = rule.latitude || 40.4093;
+      document.getElementById('ruleLon').value = rule.longitude || 49.8671;
+      document.getElementById('ruleRadius').value = rule.allowedRadiusMeters || 100;
+      document.getElementById('ruleIps').value = (rule.allowedWifiIps || []).join(', ');
+
+      document.getElementById('ruleEnforceQr').checked = rule.enforceQr !== false;
+      document.getElementById('ruleEnforceWifi').checked = !!rule.enforceWifiIp;
+      document.getElementById('ruleEnforceGps').checked = rule.enforceGps !== false;
+      document.getElementById('ruleEnforceDeviceLock').checked = rule.enforceDeviceLock !== false;
+    }
+
+    async function saveStoreRule(e) {
+      e.preventDefault();
+      const storeCode = document.getElementById('selRuleStore').value;
+      if (!storeCode) return;
+
+      const rule = rulesList.find(r => r.storeCode === storeCode) || { storeCode: storeCode };
+
+      rule.latitude = parseFloat(document.getElementById('ruleLat').value);
+      rule.longitude = parseFloat(document.getElementById('ruleLon').value);
+      rule.allowedRadiusMeters = parseFloat(document.getElementById('ruleRadius').value);
+
+      const ipsRaw = document.getElementById('ruleIps').value;
+      rule.allowedWifiIps = ipsRaw.split(',').map(s => s.trim()).filter(s => s.length > 0);
+
+      rule.enforceQr = document.getElementById('ruleEnforceQr').checked;
+      rule.enforceWifiIp = document.getElementById('ruleEnforceWifi').checked;
+      rule.enforceGps = document.getElementById('ruleEnforceGps').checked;
+      rule.enforceDeviceLock = document.getElementById('ruleEnforceDeviceLock').checked;
+
+      try {
+        const res = await fetch('/api/admin/rules', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(rule)
+        });
+
+        if (res.ok) {
+          showAdminAlert('Tənzimləmələr uğurla yadda saxlanıldı!', 'success');
+        } else {
+          showAdminAlert('Yadda saxlama xətası.', 'danger');
+        }
+      } catch (err) {
+        showAdminAlert('Şəbəkə xətası: ' + err.message, 'danger');
+      }
+    }
+
+    async function detectCurrentGps() {
+      try {
+        showAdminAlert('GPS koordinatları oxunur...', 'info');
+        const pos = await FoxoftDevice.getCurrentLocation();
+        document.getElementById('ruleLat').value = pos.latitude.toFixed(6);
+        document.getElementById('ruleLon').value = pos.longitude.toFixed(6);
+        showAdminAlert('Cari koordinatlar təyin edildi! (Dəqiqlik: ' + pos.accuracy.toFixed(0) + 'm)', 'success');
+      } catch (err) {
+        showAdminAlert('GPS xətası: ' + err.message, 'danger');
+      }
+    }
+
+    async function addMyCurrentIp() {
+      try {
+        const res = await fetch('/api/admin/my-ip');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.clientIp) {
+            const ta = document.getElementById('ruleIps');
+            let val = ta.value.trim();
+            if (val && !val.includes(data.clientIp)) {
+              ta.value = val + ', ' + data.clientIp;
+            } else if (!val) {
+              ta.value = data.clientIp;
+            }
+            showAdminAlert('Cari IP (' + data.clientIp + ') siyahıya əlavə edildi.', 'success');
+          }
+        }
+      } catch (err) {
+        showAdminAlert('IP oxunmadı: ' + err.message, 'danger');
+      }
+    }
+
+    // ===================================
+    // TAB 2: DEVICE LOCKS
+    // ===================================
+    async function loadDevices() {
+      const tbody = document.getElementById('devicesTableBody');
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Yüklənir...</td></tr>';
+
+      try {
+        const res = await fetch('/api/admin/devices');
+        if (res.ok) {
+          const devices = await res.json();
+          if (devices.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 20px;">Qeydiyyatda olan cihaz tapılmadı.</td></tr>';
+            return;
+          }
+
+          let html = '';
+          devices.forEach(d => {
+            const regDate = new Date(d.registeredAt).toLocaleString('az-AZ');
+            const lastDate = new Date(d.lastUsedAt).toLocaleString('az-AZ');
+            const shortToken = d.deviceId.length > 18 ? d.deviceId.substring(0, 18) + '...' : d.deviceId;
+
+            html += `
+              <tr>
+                <td><strong>${d.currAccCode}</strong></td>
+                <td>${d.employeeName || '-'}</td>
+                <td>${d.deviceName || 'Web Browser'}</td>
+                <td style="font-family: monospace; font-size: 11px;" title="${d.deviceId}">${shortToken}</td>
+                <td>${regDate}</td>
+                <td>${lastDate}</td>
+                <td>
+                  <button onclick="unlockEmployee('${d.currAccCode}', '${d.employeeName}')" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px; background: rgba(220, 38, 38, 0.3); color: #f87171; border: 1px solid rgba(220, 38, 38, 0.4);">
+                    Kilidi Sıfırla
+                  </button>
+                </td>
+              </tr>
+            `;
+          });
+          tbody.innerHTML = html;
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color: #f87171;">Xəta: ' + e.message + '</td></tr>';
+      }
+    }
+
+    async function unlockEmployee(currAccCode, name) {
+      if (!confirm(`"${name || currAccCode}" adlı işçinin cihaz kilidini sıfırlamaq istəyirsiniz? O, yeni bir telefondan daxil ola biləcək.`)) {
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin/devices/unlock', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currAccCode: currAccCode })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showAdminAlert(data.message, 'success');
+          loadDevices();
+        } else {
+          showAdminAlert(data.message || 'Sıfırlama xətası.', 'danger');
+        }
+      } catch (e) {
+        showAdminAlert('Şəbəkə xətası: ' + e.message, 'danger');
+      }
+    }
+
+    // ===================================
+    // TAB 3: LOGS
+    // ===================================
+    async function loadLogs() {
+      const tbody = document.getElementById('logsTableBody');
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Yüklənir...</td></tr>';
+
+      try {
+        const res = await fetch('/api/admin/logs?limit=50');
+        if (res.ok) {
+          const logs = await res.json();
+          if (logs.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;">Daxil edilmiş log tapılmadı.</td></tr>';
+            return;
+          }
+
+          let html = '';
+          logs.forEach(l => {
+            const dt = new Date(l.logDateTime).toLocaleString('az-AZ');
+            const isCheckIn = (l.punchTypeDesc || '').includes('Giriş');
+            const badgeClass = isCheckIn ? 'badge-success' : 'badge-danger';
+
+            html += `
+              <tr>
+                <td style="font-weight: 600;">${dt}</td>
+                <td><strong>${l.employeeName}</strong> <span style="font-size: 11px; color: var(--text-muted);">(${l.currAccCode})</span></td>
+                <td><span class="badge ${badgeClass}">${l.punchTypeDesc}</span></td>
+                <td style="font-size: 12px;">${l.location || '-'}</td>
+                <td><span class="badge badge-info">${l.sourceMethod}</span></td>
+                <td style="font-size: 11px; font-family: monospace;">${l.deviceCode || '-'}</td>
+              </tr>
+            `;
+          });
+          tbody.innerHTML = html;
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color: #f87171;">Xəta: ' + e.message + '</td></tr>';
+      }
+    }
+  </script>
+</body>
+</html>

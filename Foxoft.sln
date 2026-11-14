@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foxoft.BackupWorker", "Foxo
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{90194B38-B34E-4497-A8CE-A813C598A4E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foxoft.AttendanceWeb", "Foxoft.AttendanceWeb\Foxoft.AttendanceWeb.csproj", "{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,18 @@ Global
 		{90194B38-B34E-4497-A8CE-A813C598A4E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90194B38-B34E-4497-A8CE-A813C598A4E0}.Release|x64.ActiveCfg = Release|x64
 		{90194B38-B34E-4497-A8CE-A813C598A4E0}.Release|x86.ActiveCfg = Release|x86
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Debug|x64.Build.0 = Debug|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Debug|x86.Build.0 = Debug|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Release|x64.ActiveCfg = Release|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Release|x64.Build.0 = Release|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Release|x86.ActiveCfg = Release|Any CPU
+		{AC8A8E6E-CCF5-4222-B5E8-1EE065E4C57A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

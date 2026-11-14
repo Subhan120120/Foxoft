@@ -306,6 +306,15 @@ namespace Foxoft.Migrations
                     b.Property<bool>("RequireApproval")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("RequireDeviceLock")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequireDynamicQrCode")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequireGpsGeofencing")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DefaultWorkScheduleId");
@@ -338,7 +347,10 @@ namespace Foxoft.Migrations
                             NotifyOnMissingCheckOut = false,
                             OvertimePolicy = (byte)1,
                             OvertimeRoundingMinutes = 0,
-                            RequireApproval = false
+                            RequireApproval = false,
+                            RequireDeviceLock = true,
+                            RequireDynamicQrCode = true,
+                            RequireGpsGeofencing = true
                         });
                 });
 

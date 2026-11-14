@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Foxoft Attendance - İşçi Portalı</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo">F</div>
+        <div class="brand-text">
+          <h1>Foxoft Attendance</h1>
+          <p>Davamiyyət və İş Qeydiyyatı</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="kiosk.html" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" title="QR Kiosk Ekranı">Kiosk</a>
+        <a href="admin.html" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" title="İdarəetmə Paneli">Admin</a>
+      </div>
+    </header>
+
+    <!-- Alert Message Area -->
+    <div id="alertBox" style="display: none;" class="alert"></div>
+
+    <!-- 1. LOGIN SECTION -->
+    <div id="loginSection" class="card">
+      <div class="card-title">
+        <span>İşçi Girişi</span>
+        <span class="badge badge-info">Təhlükəsiz Sistem</span>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+        Davamiyyəti qeyd etmək üçün işçi kodu və şifrənizi daxil edin.
+      </p>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">İşçi Kodu</label>
+          <input type="text" id="loginCurrAccCode" class="form-input" placeholder="Məs: 1001 və ya IS-01" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Şifrə və ya FİN kod</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="Şifrəni daxil edin" autocomplete="current-password">
+        </div>
+        <button type="submit" id="btnLogin" class="btn btn-primary btn-block">
+          Daxil Ol
+        </button>
+      </form>
+    </div>
+
+    <!-- 2. MAIN ATTENDANCE SECTION (Logged In) -->
+    <div id="mainSection" style="display: none;">
+      <!-- Profile Card -->
+      <div class="card">
+        <div class="profile-box">
+          <div class="avatar" id="avatarInitial">İ</div>
+          <div class="profile-info" style="flex: 1;">
+            <h2 id="employeeName">İşçi Adı</h2>
+            <p id="employeeStore">Filial: Əsas Filial</p>
+            <div style="margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap;">
+              <span id="badgeDevice" class="badge badge-success">Cihaz Kilidi Aktiv</span>
+              <span class="badge badge-info" id="liveClock">00:00:00</span>
+            </div>
+          </div>
+          <button onclick="handleLogout()" class="btn btn-secondary" style="padding: 8px 12px; font-size: 12px;">Çıxış</button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="card">
+        <div class="card-title">
+          <span>Davamiyyət Qeydiyyatı</span>
+          <span style="font-size: 12px; color: var(--accent);">Dinamik QR + GPS</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+          Obyektdəki ekranda görünən Dinamik QR Kodu skan edin:
+        </p>
+
+        <div class="punch-grid">
+          <button onclick="startPunch(1)" class="btn-punch btn-checkin" id="btnCheckIn">
+            <span class="btn-punch-icon">&#10004;</span>
+            <span>İŞƏ GİRİŞ</span>
+            <span class="btn-punch-sub">Check-In Qeydi</span>
+          </button>
+
+          <button onclick="startPunch(2)" class="btn-punch btn-checkout" id="btnCheckOut">
+            <span class="btn-punch-icon">&#10140;</span>
+            <span>İŞDƏN ÇIXIŞ</span>
+            <span class="btn-punch-sub">Check-Out Qeydi</span>
+          </button>
+        </div>
+
+        <button onclick="startPunch(0)" class="btn btn-secondary btn-block" style="margin-top: 10px;">
+          Avtomatik Təyin Et (Auto-Detect)
+        </button>
+      </div>
+
+      <!-- Security Parameters Checklist -->
+      <div class="card">
+        <div class="card-title">
+          <span>Təhlükəsizlik Göstəriciləri</span>
+        </div>
+        <div class="security-list">
+          <div class="security-item">
+            <div class="security-item-title">
+              <span>&#128274;</span>
+              <span>Cihaz Kilidi (Device Lock)</span>
+            </div>
+            <span id="statusDevice" class="badge badge-success">Təsdiqlənib</span>
+          </div>
+          <div class="security-item">
+            <div class="security-item-title">
+              <span>&#128246;</span>
+              <span>Şəbəkə / Wi-Fi IP</span>
+            </div>
+            <span id="statusIp" class="badge badge-info">Yoxlanılır...</span>
+          </div>
+          <div class="security-item">
+            <div class="security-item-title">
+              <span>&#127757;</span>
+              <span>GPS Geofencing</span>
+            </div>
+            <span id="statusGps" class="badge badge-warning">Oxunur...</span>
+          </div>
+          <div class="security-item">
+            <div class="security-item-title">
+              <span>&#9889;</span>
+              <span>Dinamik QR Ekranı</span>
+            </div>
+            <span class="badge badge-info">20 san. vaxt</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Logs -->
+      <div class="card">
+        <div class="card-title">
+          <span>Bugünkü Hərəkətlərim</span>
+          <button onclick="loadTodayHistory()" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;">Yenilə</button>
+        </div>
+        <div id="logsContainer">
+          <p style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 10px;">Hələ ki qeyd yoxdur.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Scanner Modal -->
+  <div id="scannerModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 style="font-size: 17px; font-weight: 600;" id="modalPunchTitle">QR Kodu Skan Edin</h3>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+        Kameranı obyektdəki ekranda görünən Dinamik QR Koda tərəf tutun.
+      </p>
+
+      <div class="scanner-video-box">
+        <video id="scannerVideo" playsinline></video>
+        <div class="scanner-target"></div>
+      </div>
+
+      <!-- Fallback manual input in case camera is blocked or testing -->
+      <div style="margin-top: 10px;">
+        <input type="text" id="manualQrInput" class="form-input" placeholder="QR kod mətnini yapışdırın (test üçün)" style="font-size: 12px; padding: 8px;">
+        <button onclick="submitManualQr()" class="btn btn-secondary btn-block" style="margin-top: 6px; padding: 8px; font-size: 13px;">Kodu Təsdiqlə</button>
+      </div>
+
+      <button onclick="closeScanner()" class="btn btn-secondary btn-block" style="margin-top: 10px;">
+        Ləğv Et
+      </button>
+    </div>
+  </div>
+
+  <script src="js/qr-scanner.js"></script>
+  <script>
+    let currentUser = null;
+    let selectedPunchType = 0;
+    let scanner = null;
+    let cachedLocation = null;
+
+    // Səhifə yüklənəndə
+    document.addEventListener('DOMContentLoaded', () => {
+      startLiveClock();
+      checkSavedSession();
+      checkClientIp();
+      fetchLocationSilently();
+    });
+
+    function startLiveClock() {
+      setInterval(() => {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('az-AZ');
+        const el = document.getElementById('liveClock');
+        if (el) el.textContent = timeStr;
+      }, 1000);
+    }
+
+    async function checkClientIp() {
+      try {
+        const res = await fetch('/api/attendance/client-info');
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('statusIp').textContent = data.clientIp || 'Aktiv';
+        }
+      } catch (e) {
+        document.getElementById('statusIp').textContent = 'Qoşulu';
+      }
+    }
+
+    async function fetchLocationSilently() {
+      try {
+        cachedLocation = await FoxoftDevice.getCurrentLocation();
+        document.getElementById('statusGps').className = 'badge badge-success';
+        document.getElementById('statusGps').textContent = 'GPS Aktiv (' + cachedLocation.accuracy.toFixed(0) + 'm)';
+      } catch (err) {
+        document.getElementById('statusGps').className = 'badge badge-warning';
+        document.getElementById('statusGps').textContent = 'Məkan gözlənilir';
+      }
+    }
+
+    function showAlert(msg, type = 'info') {
+      const box = document.getElementById('alertBox');
+      box.className = 'alert alert-' + type;
+      box.textContent = msg;
+      box.style.display = 'flex';
+      setTimeout(() => {
+        box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 50);
+    }
+
+    function checkSavedSession() {
+      const saved = localStorage.getItem('foxoft_user_session');
+      if (saved) {
+        try {
+          currentUser = JSON.parse(saved);
+          showMainSection();
+        } catch (e) {
+          localStorage.removeItem('foxoft_user_session');
+        }
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const code = document.getElementById('loginCurrAccCode').value.trim();
+      const pass = document.getElementById('loginPassword').value;
+      const deviceId = FoxoftDevice.getDeviceId();
+      const deviceName = FoxoftDevice.getDeviceName();
+
+      const btn = document.getElementById('btnLogin');
+      btn.disabled = true;
+      btn.textContent = 'Giriş edilir...';
+
+      try {
+        const res = await fetch('/api/attendance/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            currAccCode: code,
+            password: pass,
+            deviceId: deviceId,
+            deviceName: deviceName
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          currentUser = data;
+          localStorage.setItem('foxoft_user_session', JSON.stringify(data));
+          showAlert('Xoş gəldiniz, ' + data.employeeName + '!', 'success');
+          showMainSection();
+        } else {
+          showAlert(data.message || 'Giriş uğursuz oldu.', 'danger');
+        }
+      } catch (err) {
+        showAlert('Server ilə əlaqə qurulmadı: ' + err.message, 'danger');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Daxil Ol';
+      }
+    }
+
+    function showMainSection() {
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('mainSection').style.display = 'block';
+
+      document.getElementById('employeeName').textContent = currentUser.employeeName || currentUser.currAccCode;
+      document.getElementById('avatarInitial').textContent = (currentUser.employeeName || 'İ').charAt(0).toUpperCase();
+      document.getElementById('employeeStore').textContent = 'Filial: ' + (currentUser.storeName || currentUser.storeCode || 'Təyin edilməyib');
+
+      const devBadge = document.getElementById('badgeDevice');
+      if (currentUser.isDeviceLocked) {
+        devBadge.textContent = 'Bu Cihaza Kilidlənib';
+        devBadge.className = 'badge badge-success';
+      } else {
+        devBadge.textContent = 'Cihaz Təhkim Ediləcək';
+        devBadge.className = 'badge badge-info';
+      }
+
+      loadTodayHistory();
+    }
+
+    function handleLogout() {
+      if (confirm('Hesabdan çıxmaq istədiyinizə əminsiniz?')) {
+        localStorage.removeItem('foxoft_user_session');
+        currentUser = null;
+        document.getElementById('mainSection').style.display = 'none';
+        document.getElementById('loginSection').style.display = 'block';
+        showAlert('Hesabdan çıxış edildi.', 'info');
+      }
+    }
+
+    async function loadTodayHistory() {
+      if (!currentUser) return;
+      try {
+        const res = await fetch('/api/attendance/history?currAccCode=' + encodeURIComponent(currentUser.currAccCode));
+        if (res.ok) {
+          const list = await res.json();
+          renderHistory(list);
+        }
+      } catch (e) {
+        console.error('Tarixçə yüklənmədi', e);
+      }
+    }
+
+    function renderHistory(logs) {
+      const container = document.getElementById('logsContainer');
+      if (!logs || logs.length === 0) {
+        container.innerHTML = '<p style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 10px;">Bugün hələ ki heç bir giriş/çıxış qeydə alınmayıb.</p>';
+        return;
+      }
+
+      let html = '';
+      logs.forEach(log => {
+        const d = new Date(log.logDateTime);
+        const timeStr = d.toLocaleTimeString('az-AZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const isCheckIn = log.punchTypeDesc.includes('Giriş') || log.punchTypeDesc.includes('CheckIn');
+        const badgeClass = isCheckIn ? 'badge-success' : 'badge-danger';
+
+        html += `
+          <div class="log-item">
+            <div class="log-meta">
+              <h4><span class="badge ${badgeClass}" style="margin-right: 6px;">${log.punchTypeDesc}</span></h4>
+              <p>${log.location || 'Mobile Web'}</p>
+            </div>
+            <div class="log-time">${timeStr}</div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // ===================================
+    // PUNCH WORKFLOW
+    // ===================================
+    async function startPunch(type) {
+      selectedPunchType = type;
+      const typeTitle = type === 1 ? 'İşə Giriş (Check-In)' :
+                        type === 2 ? 'İşdən Çıxış (Check-Out)' : 'Davamiyyət Qeydiyyatı';
+
+      document.getElementById('modalPunchTitle').textContent = typeTitle;
+      document.getElementById('scannerModal').style.display = 'flex';
+
+      // Əvvəlcə dərhal arxa planda GPS koordinatlarını yeniləyirik
+      try {
+        cachedLocation = await FoxoftDevice.getCurrentLocation();
+        document.getElementById('statusGps').className = 'badge badge-success';
+        document.getElementById('statusGps').textContent = 'GPS Hazır (' + cachedLocation.accuracy.toFixed(0) + 'm)';
+      } catch (e) {
+        console.warn('GPS yenilənməsi xətası:', e.message);
+      }
+
+      const video = document.getElementById('scannerVideo');
+      scanner = new QrCameraScanner(video, (scannedQr) => {
+        closeScanner();
+        executePunch(scannedQr);
+      });
+
+      try {
+        await scanner.start();
+      } catch (err) {
+        console.warn('Kamera birbaşa açılmadı:', err.message);
+      }
+    }
+
+    function closeScanner() {
+      if (scanner) {
+        scanner.stop();
+        scanner = null;
+      }
+      document.getElementById('scannerModal').style.display = 'none';
+    }
+
+    function submitManualQr() {
+      const val = document.getElementById('manualQrInput').value.trim();
+      if (!val) {
+        alert('Zəhmət olmasa QR kod mətnini daxil edin.');
+        return;
+      }
+      closeScanner();
+      executePunch(val);
+    }
+
+    async function executePunch(qrToken) {
+      if (!currentUser) return;
+
+      showAlert('Təhlükəsizlik yoxlanılır (QR, IP, GPS, Cihaz)...', 'info');
+
+      // Əgər koordinatlar hələ yoxdursa almağa çalışırıq
+      if (!cachedLocation) {
+        try {
+          cachedLocation = await FoxoftDevice.getCurrentLocation();
+        } catch (e) {
+          // GPS olmadan göndəriləcək, server GPS yoxlanışını qiymətləndirəcək
+        }
+      }
+
+      const payload = {
+        currAccCode: currentUser.currAccCode,
+        punchType: selectedPunchType,
+        qrToken: qrToken,
+        deviceId: FoxoftDevice.getDeviceId(),
+        deviceName: FoxoftDevice.getDeviceName(),
+        latitude: cachedLocation ? cachedLocation.latitude : null,
+        longitude: cachedLocation ? cachedLocation.longitude : null,
+        accuracy: cachedLocation ? cachedLocation.accuracy : null
+      };
+
+      try {
+        const res = await fetch('/api/attendance/punch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showAlert(data.message + ' (Saat: ' + data.time + ')', 'success');
+          loadTodayHistory();
+        } else {
+          showAlert(data.message || 'Qeydiyyat uğursuz oldu.', 'danger');
+        }
+      } catch (err) {
+        showAlert('Şəbəkə xətası: ' + err.message, 'danger');
+      }
+    }
+  </script>
+</body>
+</html>
