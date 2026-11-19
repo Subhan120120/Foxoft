@@ -108,6 +108,18 @@ namespace Foxoft.Migrations
                     b.Property<string>("OpenAIModel")
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("NumberDecimalDigits")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NumberDecimalSeparator")
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("NumberGroupSeparator")
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int?>("QuantityDecimalDigits")
+                        .HasColumnType("int");
+
                     b.Property<byte>("OverpaymentMode")
                         .HasColumnType("tinyint");
 

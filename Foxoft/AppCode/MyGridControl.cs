@@ -13,6 +13,7 @@ using DevExpress.XtraGrid.Registrator;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraGrid.Columns;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -70,6 +71,52 @@ namespace Foxoft
             DisableHeaderClickSorting(this);
             FilterEditorCreated -= gV_ProductList_FilterEditorCreated;
             FilterEditorCreated += gV_ProductList_FilterEditorCreated;
+            ShownEditor -= MyGridView_ShownEditor;
+            ShownEditor += MyGridView_ShownEditor;
+            CustomColumnDisplayText -= MyGridView_CustomColumnDisplayText;
+            CustomColumnDisplayText += MyGridView_CustomColumnDisplayText;
+        }
+
+        private void MyGridView_ShownEditor(object? sender, EventArgs e)
+        {
+            AppNumberFormat.ConfigureActiveEditor(this);
+        }
+
+        private void MyGridView_CustomColumnDisplayText(object? sender, CustomColumnDisplayTextEventArgs e)
+        {
+            if (AppNumberFormat.IsQuantityColumn(e.Column) && e.Value != null)
+            {
+                e.DisplayText = AppNumberFormat.FormatQuantity(e.Value);
+            }
+        }
+
+        protected override void OnColumnAdded(GridColumn column)
+        {
+            base.OnColumnAdded(column);
+            ConfigureColumnFormat(column);
+        }
+
+        public override void PopulateColumns()
+        {
+            base.PopulateColumns();
+            foreach (GridColumn col in Columns)
+                ConfigureColumnFormat(col);
+        }
+
+        private void ConfigureColumnFormat(GridColumn col)
+        {
+            if (AppNumberFormat.IsQuantityColumn(col))
+            {
+                col.DisplayFormat.FormatType = FormatType.Numeric;
+                col.DisplayFormat.FormatString = AppNumberFormat.QuantityFormatString;
+                foreach (DevExpress.XtraGrid.GridSummaryItem item in col.Summary)
+                {
+                    if (string.IsNullOrEmpty(item.DisplayFormat) || item.DisplayFormat == "{0:n2}" || item.DisplayFormat == "{0:N2}")
+                    {
+                        item.DisplayFormat = AppNumberFormat.QuantitySummaryFormatString;
+                    }
+                }
+            }
         }
 
         private void gV_ProductList_FilterEditorCreated(object sender, FilterControlEventArgs e)

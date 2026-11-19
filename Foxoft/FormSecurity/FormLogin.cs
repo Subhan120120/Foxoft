@@ -476,6 +476,11 @@ namespace Foxoft
                 CultureInfo.DefaultThreadCurrentCulture = culture;
                 CultureInfo.DefaultThreadCurrentUICulture = culture;
 
+                AppNumberFormat.Apply(Settings.Default.AppSetting?.NumberDecimalSeparator,
+                                      Settings.Default.AppSetting?.NumberGroupSeparator,
+                                      Settings.Default.AppSetting?.NumberDecimalDigits,
+                                      Settings.Default.AppSetting?.QuantityDecimalDigits);
+
                 Hide();
                 if (isErp)
                 {

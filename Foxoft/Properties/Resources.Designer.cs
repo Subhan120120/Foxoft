@@ -22747,5 +22747,71 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Form_AttendanceWizard_FloatingRestDayHelp", resourceCulture);
             }
         }
+
+        public static string Entity_AppSetting_NumberDecimalSeparator {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_NumberDecimalSeparator", resourceCulture);
+            }
+        }
+
+        public static string Entity_AppSetting_NumberGroupSeparator {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_NumberGroupSeparator", resourceCulture);
+            }
+        }
+
+        public static string Entity_AppSetting_NumberDecimalDigits {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_NumberDecimalDigits", resourceCulture);
+            }
+        }
+
+        public static string Entity_AppSetting_AmountDecimalDigits {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AmountDecimalDigits", resourceCulture);
+            }
+        }
+
+        public static string Entity_AppSetting_QuantityDecimalDigits {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_QuantityDecimalDigits", resourceCulture);
+            }
+        }
+
+        public static string Form_AppSetting_Group_NumberFormat {
+            get {
+                return ResourceManager.GetString("Form_AppSetting_Group_NumberFormat", resourceCulture);
+            }
+        }
+
+        public static string Common_Default_System {
+            get {
+                return ResourceManager.GetString("Common_Default_System", resourceCulture);
+            }
+        }
+
+        public static string Common_Space {
+            get {
+                return ResourceManager.GetString("Common_Space", resourceCulture);
+            }
+        }
+
+        public static string Common_None {
+            get {
+                return ResourceManager.GetString("Common_None", resourceCulture);
+            }
+        }
+
+        public static string Common_Dot {
+            get {
+                return ResourceManager.GetString("Common_Dot", resourceCulture);
+            }
+        }
+
+        public static string Common_Comma {
+            get {
+                return ResourceManager.GetString("Common_Comma", resourceCulture);
+            }
+        }
     }
 }

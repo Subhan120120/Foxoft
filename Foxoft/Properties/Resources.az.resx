@@ -8102,4 +8102,37 @@ Google hesabı: {1}</value>
   <data name="Form_AttendanceWizard_FloatingRestDayHelp" xml:space="preserve">
     <value>&lt;b&gt;Avtomatik Üzən İstirahət (Floating Rest Day):&lt;/b&gt; Hər həftə (B.E–Bazar) işçinin gəlmədiyi İLK gün avtomatik olaraq qanuni istirahət günü (RestDay) tanınır. Həmin həftə əlavə olaraq gəlmədiyi digər günlər isə avtomatik Üzrsüz Qayıb kimi qeyd edilir.</value>
   </data>
+  <data name="Entity_AppSetting_NumberDecimalSeparator" xml:space="preserve">
+    <value>Kəsr Ayrıcı</value>
+  </data>
+  <data name="Entity_AppSetting_NumberGroupSeparator" xml:space="preserve">
+    <value>Qrup / Minlik Ayrıcı</value>
+  </data>
+  <data name="Entity_AppSetting_NumberDecimalDigits" xml:space="preserve">
+    <value>Məbləğ Kəsr Rəqəmlərinin Sayı</value>
+  </data>
+  <data name="Entity_AppSetting_AmountDecimalDigits" xml:space="preserve">
+    <value>Məbləğ Kəsr Rəqəmlərinin Sayı</value>
+  </data>
+  <data name="Entity_AppSetting_QuantityDecimalDigits" xml:space="preserve">
+    <value>Say Kəsr Rəqəmlərinin Sayı</value>
+  </data>
+  <data name="Form_AppSetting_Group_NumberFormat" xml:space="preserve">
+    <value>Rəqəm Formatı</value>
+  </data>
+  <data name="Common_Default_System" xml:space="preserve">
+    <value>Sistem (Default)</value>
+  </data>
+  <data name="Common_Space" xml:space="preserve">
+    <value>Boşluq ( )</value>
+  </data>
+  <data name="Common_None" xml:space="preserve">
+    <value>Yoxdur</value>
+  </data>
+  <data name="Common_Dot" xml:space="preserve">
+    <value>Nöqtə (.)</value>
+  </data>
+  <data name="Common_Comma" xml:space="preserve">
+    <value>Vergül (,)</value>
+  </data>
 </root>

@@ -22,6 +22,7 @@ namespace Foxoft
             EfMethods efMethods = new();
 
             AppFontSettings.Apply();
+            AppNumberFormat.Apply();
             SplashScreenManager.ShowForm(typeof(SplashScreenStartup));
 
             //if (Debugger.IsAttached)
@@ -79,10 +80,12 @@ namespace Foxoft
                 try
                 {
                     AppFontSettings.ApplyFromDatabase();
+                    AppNumberFormat.ApplyFromDatabase();
                 }
                 catch
                 {
                     AppFontSettings.Apply();
+                    AppNumberFormat.Apply();
                 }
 
                 Application.Run(new FormLogin());

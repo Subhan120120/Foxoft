@@ -152,6 +152,20 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_AppSetting_OpenAIModel), ResourceType = typeof(Resources))]
         public string? OpenAIModel { get; set; } = "gpt-4o";
 
+        [Column(TypeName = "nvarchar(10)")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_NumberDecimalSeparator), ResourceType = typeof(Resources))]
+        public string? NumberDecimalSeparator { get; set; }
+
+        [Column(TypeName = "nvarchar(10)")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_NumberGroupSeparator), ResourceType = typeof(Resources))]
+        public string? NumberGroupSeparator { get; set; }
+
+        [Display(Name = nameof(Resources.Entity_AppSetting_AmountDecimalDigits), ResourceType = typeof(Resources))]
+        public int? NumberDecimalDigits { get; set; }
+
+        [Display(Name = nameof(Resources.Entity_AppSetting_QuantityDecimalDigits), ResourceType = typeof(Resources))]
+        public int? QuantityDecimalDigits { get; set; }
+
 
 
         [ForeignKey("LocalCurrencyCode")]

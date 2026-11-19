@@ -1001,10 +1001,11 @@ namespace Foxoft
         private string FormatLocalCurrency(decimal amount)
         {
             string currencyCode = Settings.Default.AppSetting?.LocalCurrencyCode ?? string.Empty;
+            string formattedAmount = AppNumberFormat.FormatAmount(amount);
 
             return string.IsNullOrWhiteSpace(currencyCode)
-                ? $"{amount:n2}"
-                : $"{amount:n2} {currencyCode}";
+                ? formattedAmount
+                : $"{formattedAmount} {currencyCode}";
         }
 
         private void ShowPrintCount()
@@ -1779,17 +1780,7 @@ namespace Foxoft
         //BaseEdit editorCustom;
         private void gV_InvoiceLine_ShownEditor(object sender, EventArgs e)
         {
-            if (new Type[] { typeof(decimal), typeof(float), typeof(Single) }.Contains(gV_InvoiceLine.FocusedColumn.ColumnType))
-            {
-                TextEdit? editor = gV_InvoiceLine.ActiveEditor as TextEdit;
-                if (editor != null)
-                {
-                    CultureInfo customCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
-                    customCulture.NumberFormat.NumberDecimalSeparator = ".";
-                    editor.Properties.Mask.MaskType = MaskType.Numeric;
-                    editor.Properties.Mask.Culture = customCulture; // Ensure '.' is used
-                }
-            }
+            AppNumberFormat.ConfigureActiveEditor(gV_InvoiceLine);
 
             // Double-click lookup shortcut is disabled for now. Keep this block for future use.
             //GridView view = sender as GridView;
@@ -4536,14 +4527,9 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
         {
-            if (new GridColumn[] { colQty, colBalance }.Contains(e.Column) && e.Value is decimal decimalValue)
+            if (new GridColumn[] { colQty, colBalance }.Contains(e.Column) && e.Value != null)
             {
-                //e.DisplayText = decimalValue.ToString("0.##");// Display without ".00" if there are no decimals
-
-                //if (e.DisplayText.EndsWith("."))
-                //{
-                //    e.DisplayText = e.DisplayText.Replace(".", "");
-                //}
+                e.DisplayText = AppNumberFormat.FormatQuantity(e.Value);
             }
         }
 

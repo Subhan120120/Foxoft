@@ -8102,4 +8102,37 @@ Google account: {1}</value>
   <data name="Form_AttendanceWizard_FloatingRestDayHelp" xml:space="preserve">
     <value>&lt;b&gt;Floating Rest Day:&lt;/b&gt; The first missing day of each calendar week (Mon-Sun) without punch or leave is automatically marked as an entitled Rest Day. Any additional absent days in that week are recorded as Unexcused Absence.</value>
   </data>
+  <data name="Entity_AppSetting_NumberDecimalSeparator" xml:space="preserve">
+    <value>Decimal Separator</value>
+  </data>
+  <data name="Entity_AppSetting_NumberGroupSeparator" xml:space="preserve">
+    <value>Group Separator</value>
+  </data>
+  <data name="Entity_AppSetting_NumberDecimalDigits" xml:space="preserve">
+    <value>Amount Decimal Digits</value>
+  </data>
+  <data name="Entity_AppSetting_AmountDecimalDigits" xml:space="preserve">
+    <value>Amount Decimal Digits</value>
+  </data>
+  <data name="Entity_AppSetting_QuantityDecimalDigits" xml:space="preserve">
+    <value>Quantity Decimal Digits</value>
+  </data>
+  <data name="Form_AppSetting_Group_NumberFormat" xml:space="preserve">
+    <value>Number Format</value>
+  </data>
+  <data name="Common_Default_System" xml:space="preserve">
+    <value>System (Default)</value>
+  </data>
+  <data name="Common_Space" xml:space="preserve">
+    <value>Space ( )</value>
+  </data>
+  <data name="Common_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Common_Dot" xml:space="preserve">
+    <value>Dot (.)</value>
+  </data>
+  <data name="Common_Comma" xml:space="preserve">
+    <value>Comma (,)</value>
+  </data>
 </root>

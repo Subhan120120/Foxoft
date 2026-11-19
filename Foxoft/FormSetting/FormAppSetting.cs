@@ -27,6 +27,7 @@ namespace Foxoft
         {
             InitializeComponent();
             BindCheckedCombo();
+            InitNumberFormatControls();
         }
 
         private void FormAppSetting_Load(object sender, EventArgs e)
@@ -98,6 +99,7 @@ namespace Foxoft
 
             OverpaymentModeImageComboBoxEdit.EditValue = (int)AppSetting.OverpaymentMode;
             SetSelectedIdsManual(AppSetting.POSFindProductBy);
+            LoadNumberFormatFromSetting();
         }
 
 
@@ -116,6 +118,10 @@ namespace Foxoft
                 appSettingBindingSource.EndEdit();
                 AppSetting.POSFindProductBy = POSFindProductByCheckedComboBoxEdit.EditValue?.ToString()?.Trim() ?? "";
                 AppSetting.AppFontSize = AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize);
+                AppSetting.NumberDecimalSeparator = GetSelectedDecimalSeparator();
+                AppSetting.NumberGroupSeparator = GetSelectedGroupSeparator();
+                AppSetting.NumberDecimalDigits = GetSelectedAmountDecimalDigits();
+                AppSetting.QuantityDecimalDigits = GetSelectedQuantityDecimalDigits();
 
                 if (OverpaymentModeImageComboBoxEdit.EditValue is int modeVal)
                     AppSetting.OverpaymentMode = (OverpaymentMode)modeVal;
@@ -125,10 +131,10 @@ namespace Foxoft
 
                 dbContext.SaveChanges();
 
-
-
                 Settings.Default.AppSetting = AppSetting;
                 Settings.Default.Save();
+
+                AppNumberFormat.Apply(AppSetting.NumberDecimalSeparator, AppSetting.NumberGroupSeparator, AppSetting.NumberDecimalDigits, AppSetting.QuantityDecimalDigits);
 
                 if (AppFontSettings.NormalizeFontSize(AppSetting.AppFontSize) != previousFontSize)
                     XtraMessageBox.Show(Resources.Message_AppFontSizeRestartRequired, Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -139,6 +145,193 @@ namespace Foxoft
             {
                 XtraMessageBox.Show(ex.Message, Resources.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private bool _isInitializingNumberFormat = false;
+
+        private void InitNumberFormatControls()
+        {
+            cbeNumberDecimalSeparator.Properties.Items.Clear();
+            cbeNumberDecimalSeparator.Properties.Items.AddRange(new object[]
+            {
+                Resources.Common_Default_System,
+                Resources.Common_Dot,
+                Resources.Common_Comma
+            });
+
+            cbeNumberGroupSeparator.Properties.Items.Clear();
+            cbeNumberGroupSeparator.Properties.Items.AddRange(new object[]
+            {
+                Resources.Common_Default_System,
+                Resources.Common_Space,
+                Resources.Common_Comma,
+                Resources.Common_Dot,
+                Resources.Common_None
+            });
+
+            cbeNumberDecimalDigits.Properties.Items.Clear();
+            cbeNumberDecimalDigits.Properties.Items.AddRange(new object[]
+            {
+                Resources.Common_Default_System,
+                "0",
+                "1",
+                "2",
+                "3",
+                "4"
+            });
+
+            cbeQuantityDecimalDigits.Properties.Items.Clear();
+            cbeQuantityDecimalDigits.Properties.Items.AddRange(new object[]
+            {
+                Resources.Common_Default_System,
+                "0",
+                "1",
+                "2",
+                "3",
+                "4"
+            });
+
+            cbeNumberDecimalSeparator.SelectedIndexChanged += (s, e) => OnNumberFormatChanged();
+            cbeNumberGroupSeparator.SelectedIndexChanged += (s, e) => OnNumberFormatChanged();
+            cbeNumberDecimalDigits.SelectedIndexChanged += (s, e) => OnNumberFormatChanged();
+            cbeQuantityDecimalDigits.SelectedIndexChanged += (s, e) => OnNumberFormatChanged();
+        }
+
+        private void LoadNumberFormatFromSetting()
+        {
+            _isInitializingNumberFormat = true;
+            try
+            {
+                string dec = AppSetting?.NumberDecimalSeparator ?? string.Empty;
+                if (dec == ".")
+                    cbeNumberDecimalSeparator.SelectedItem = Resources.Common_Dot;
+                else if (dec == ",")
+                    cbeNumberDecimalSeparator.SelectedItem = Resources.Common_Comma;
+                else
+                    cbeNumberDecimalSeparator.SelectedItem = Resources.Common_Default_System;
+
+                string grp = AppSetting?.NumberGroupSeparator ?? string.Empty;
+                if (grp == " ")
+                    cbeNumberGroupSeparator.SelectedItem = Resources.Common_Space;
+                else if (grp == ",")
+                    cbeNumberGroupSeparator.SelectedItem = Resources.Common_Comma;
+                else if (grp == ".")
+                    cbeNumberGroupSeparator.SelectedItem = Resources.Common_Dot;
+                else if (string.Equals(grp, "None", StringComparison.OrdinalIgnoreCase) || (AppSetting?.NumberGroupSeparator != null && grp == ""))
+                    cbeNumberGroupSeparator.SelectedItem = Resources.Common_None;
+                else
+                    cbeNumberGroupSeparator.SelectedItem = Resources.Common_Default_System;
+
+                int? digits = AppSetting?.NumberDecimalDigits;
+                if (digits.HasValue && digits.Value >= 0 && digits.Value <= 4)
+                    cbeNumberDecimalDigits.SelectedItem = digits.Value.ToString();
+                else
+                    cbeNumberDecimalDigits.SelectedItem = Resources.Common_Default_System;
+
+                int? qtyDigits = AppSetting?.QuantityDecimalDigits;
+                if (qtyDigits.HasValue && qtyDigits.Value >= 0 && qtyDigits.Value <= 4)
+                    cbeQuantityDecimalDigits.SelectedItem = qtyDigits.Value.ToString();
+                else
+                    cbeQuantityDecimalDigits.SelectedItem = Resources.Common_Default_System;
+            }
+            finally
+            {
+                _isInitializingNumberFormat = false;
+            }
+
+            UpdateNumberFormatPreview();
+        }
+
+        private string? GetSelectedDecimalSeparator()
+        {
+            string? sel = cbeNumberDecimalSeparator.SelectedItem?.ToString();
+            if (sel == Resources.Common_Dot)
+                return ".";
+            if (sel == Resources.Common_Comma)
+                return ",";
+            return null; // System default
+        }
+
+        private string? GetSelectedGroupSeparator()
+        {
+            string? sel = cbeNumberGroupSeparator.SelectedItem?.ToString();
+            if (sel == Resources.Common_Space)
+                return " ";
+            if (sel == Resources.Common_Comma)
+                return ",";
+            if (sel == Resources.Common_Dot)
+                return ".";
+            if (sel == Resources.Common_None)
+                return "None";
+            return null; // System default
+        }
+
+        private int? GetSelectedAmountDecimalDigits()
+        {
+            string? sel = cbeNumberDecimalDigits.SelectedItem?.ToString();
+            if (int.TryParse(sel, out int val) && val >= 0)
+                return val;
+            return null; // System default
+        }
+
+        private int? GetSelectedQuantityDecimalDigits()
+        {
+            string? sel = cbeQuantityDecimalDigits.SelectedItem?.ToString();
+            if (int.TryParse(sel, out int val) && val >= 0)
+                return val;
+            return null; // System default
+        }
+
+        private void OnNumberFormatChanged()
+        {
+            if (_isInitializingNumberFormat)
+                return;
+
+            string? dec = GetSelectedDecimalSeparator();
+            string? grp = GetSelectedGroupSeparator();
+
+            // Prevent selecting the same character for both decimal and grouping
+            if (dec != null && grp != null && dec == grp)
+            {
+                _isInitializingNumberFormat = true;
+                cbeNumberGroupSeparator.SelectedItem = dec == "." ? Resources.Common_Comma : Resources.Common_Dot;
+                _isInitializingNumberFormat = false;
+            }
+
+            UpdateNumberFormatPreview();
+        }
+
+        private void UpdateNumberFormatPreview()
+        {
+            string? dec = GetSelectedDecimalSeparator();
+            string? grp = GetSelectedGroupSeparator();
+            int? amountDigits = GetSelectedAmountDecimalDigits();
+            int? qtyDigits = GetSelectedQuantityDecimalDigits();
+
+            var sysCulture = System.Globalization.CultureInfo.InstalledUICulture ?? System.Globalization.CultureInfo.CurrentCulture;
+            string actualDec = dec ?? sysCulture.NumberFormat.NumberDecimalSeparator;
+            string actualGrp = grp == "None" ? "" : (grp ?? sysCulture.NumberFormat.NumberGroupSeparator);
+            int actualAmountDigits = amountDigits ?? (sysCulture.NumberFormat.NumberDecimalDigits >= 0 ? sysCulture.NumberFormat.NumberDecimalDigits : 2);
+
+            if (actualDec == actualGrp && !string.IsNullOrEmpty(actualGrp))
+                actualGrp = actualDec == "." ? "," : ".";
+
+            var previewCulture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.CurrentCulture.Clone();
+            previewCulture.NumberFormat.NumberDecimalSeparator = actualDec;
+            previewCulture.NumberFormat.NumberGroupSeparator = actualGrp;
+            previewCulture.NumberFormat.NumberDecimalDigits = actualAmountDigits;
+
+            string qtyFormat = AppNumberFormat.BuildQuantityFormatString(qtyDigits);
+
+            decimal sampleAmount = 1234.5678m;
+            decimal sampleQtyInt = 15m;
+            decimal sampleQtyFrac = 15.375m;
+
+            string amountPreview = sampleAmount.ToString($"n{actualAmountDigits}", previewCulture);
+            string qtyIntPreview = sampleQtyInt.ToString(qtyFormat, previewCulture);
+            string qtyFracPreview = sampleQtyFrac.ToString(qtyFormat, previewCulture);
+
+            lblNumberFormatPreview.Text = $"{amountPreview} | {qtyIntPreview} / {qtyFracPreview}";
         }
 
         private void Btn_OptimizeDatabaseIndexes_Click(object sender, EventArgs e)
