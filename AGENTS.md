@@ -157,3 +157,17 @@ When registering a new menu entry in the main ERP navigation tree:
 
 - **STRICT PROHIBITION**: Never execute commands that apply migrations directly to databases (e.g., `dotnet ef database update`, `Update-Database`, or executing DDL scripts against active databases).
 - Migrations may only be scaffolded or generated (`dotnet ef migrations add <MigrationName>`), never applied automatically.
+
+---
+
+## 9. Clean & Minimal Code Standards (KISS, YAGNI, Zero Redundant Null Checks)
+
+- **Minimum Kod (KISS & YAGNI)**:
+  - Eyni əməliyyatı təkrar edən kod yazmamaq (DRY).
+- **Lazımsız NULL Yoxlamaları**:
+  - `null` gəlməyəcəyi məlum olan dəyişənlərə və nəticələrə əlavə `null` yoxlaması qoymamaq (`if (x == null)`, `?.`, `??`).
+  - Məlumat bazasında sütunun `NOT NULL` olduğu məlumdursa, əlavə `ISNULL`, `COALESCE` və ya `null` yoxlaması yazmamaq. Yalnız real `null` ehtimalı olan yerlərdə yoxlama aparmaq.
+- **Alternativləri Çoxaltmamaq (Tək Optimal Həll)**:
+  - Qaranti olsun deyə eyni nəticəyə aparan 2-3 fərqli üsulu tətbiq etməmək.
+- **Ətraflı Skill**: [.agents/skills/clean-concise-code/SKILL.md](file:///c:/Users/Administrator/source/repos/Foxoft/.agents/skills/clean-concise-code/SKILL.md)
+
