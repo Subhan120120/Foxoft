@@ -66,6 +66,7 @@ namespace Foxoft
                 BBI_ProductStaticPriceList.Enabled = true;
                 BBI_Scales.Enabled = true;
                 BBI_MergeProduct.Enabled = true;
+                BBI_Info.Enabled = true;
             }
 
             LUE_ProductTypeCode.Properties.DataSource = efMethods.SelectEntities<DcProductType>();
@@ -133,7 +134,10 @@ namespace Foxoft
             dbContext = new subContext();
 
             if (string.IsNullOrEmpty(dcProduct.ProductCode))
+            {
                 ClearControlsAddNew();
+                BBI_Info.Enabled = false;
+            }
             else
             {
                 dbContext.DcProducts.Where(x => x.ProductCode == dcProduct.ProductCode)
@@ -143,6 +147,10 @@ namespace Foxoft
                                     .Load();
 
                 dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
+                dcProduct = dcProductsBindingSource.Current as DcProduct ?? dcProduct;
+
+                bool exists = efMethods.ProductExist(dcProduct.ProductCode);
+                BBI_Info.Enabled = exists;
             }
         }
 
@@ -879,6 +887,9 @@ namespace Foxoft
 
                 SaveImage();
 
+                BBI_MergeProduct.Enabled = true;
+                BBI_Info.Enabled = true;
+
                 DialogResult = DialogResult.OK;
             }
             else
@@ -925,6 +936,7 @@ namespace Foxoft
                 BBI_ProductStaticPriceList.Enabled = true;
                 BBI_Scales.Enabled = true;
                 BBI_MergeProduct.Enabled = true;
+                BBI_Info.Enabled = true;
 
                 LoadProduct();
             }
@@ -1006,6 +1018,22 @@ namespace Foxoft
         private void MergeProducts(string sourceProductCode, string targetProductCode)
         {
             efMethods.MergeProducts(sourceProductCode, targetProductCode);
+        }
+
+        private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (string.IsNullOrEmpty(dcProduct.ProductCode))
+                return;
+
+            string createdUser = efMethods.GetUserDisplayName(dcProduct.CreatedUserName);
+            string updatedUser = efMethods.GetUserDisplayName(dcProduct.LastUpdatedUserName);
+
+            string createdUserName = ReflectionExt.GetDisplayName<DcProduct>(x => x.CreatedUserName) + ": " + createdUser;
+            string createdDate = ReflectionExt.GetDisplayName<DcProduct>(x => x.CreatedDate) + ": " + (dcProduct.CreatedDate == default ? string.Empty : dcProduct.CreatedDate.ToString());
+            string updatedUserName = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastUpdatedUserName) + ": " + updatedUser;
+            string updatedDateText = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastUpdatedDate) + ": " + (dcProduct.LastUpdatedDate == default ? string.Empty : dcProduct.LastUpdatedDate.ToString());
+
+            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDateText, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

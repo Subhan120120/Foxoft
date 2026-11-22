@@ -75,6 +75,7 @@ namespace Foxoft
             BBI_ProductStaticPriceList = new DevExpress.XtraBars.BarButtonItem();
             BBI_Scales = new DevExpress.XtraBars.BarButtonItem();
             BBI_MergeProduct = new DevExpress.XtraBars.BarButtonItem();
+            BBI_Info = new DevExpress.XtraBars.BarButtonItem();
             bar3 = new DevExpress.XtraBars.Bar();
             barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -558,8 +559,8 @@ namespace Foxoft
             barManager1.DockControls.Add(barDockControlLeft);
             barManager1.DockControls.Add(barDockControlRight);
             barManager1.Form = this;
-            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_ProductFeature, BBI_ProductDiscount, BBI_ProductBarcode, BBI_GalleryLoad, BBI_GalleryDelete, BBI_GalleryPaste, BBI_GalleryCopy, BBI_ProductStaticPriceList, BBI_Scales, BBI_ProductFeatureClone, BBI_MergeProduct });
-            barManager1.MaxItemId = 13;
+            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_ProductFeature, BBI_ProductDiscount, BBI_ProductBarcode, BBI_GalleryLoad, BBI_GalleryDelete, BBI_GalleryPaste, BBI_GalleryCopy, BBI_ProductStaticPriceList, BBI_Scales, BBI_ProductFeatureClone, BBI_MergeProduct, BBI_Info });
+            barManager1.MaxItemId = 14;
             barManager1.StatusBar = bar3;
             // 
             // bar1
@@ -568,7 +569,7 @@ namespace Foxoft
             bar1.DockCol = 0;
             bar1.DockRow = 1;
             bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
-            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductFeature), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_ProductFeatureClone, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductDiscount), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductBarcode), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductStaticPriceList), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_Scales, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_MergeProduct, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph) });
+            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductFeature), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_ProductFeatureClone, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductDiscount), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductBarcode), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductStaticPriceList), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_Scales, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_MergeProduct, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.None, BBI_Info, "", false, false, true, 0) });
             bar1.Text = "Tools";
             // 
             // BBI_ProductFeature
@@ -639,6 +640,16 @@ namespace Foxoft
             BBI_MergeProduct.Name = "BBI_MergeProduct";
             BBI_MergeProduct.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             BBI_MergeProduct.ItemClick += BBI_MergeProduct_ItemClick;
+            // 
+            // BBI_Info
+            // 
+            BBI_Info.Caption = Resources.Common_Info;
+            BBI_Info.Enabled = false;
+            BBI_Info.Id = 13;
+            BBI_Info.ImageOptions.ImageUri.Uri = "About";
+            BBI_Info.Name = "BBI_Info";
+            BBI_Info.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            BBI_Info.ItemClick += BBI_Info_ItemClick;
             // 
             // bar3
             // 
@@ -1209,5 +1220,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForBalanceWarningLevel;
         private DevExpress.XtraBars.BarButtonItem BBI_ProductFeatureClone;
         private DevExpress.XtraBars.BarButtonItem BBI_MergeProduct;
+        private DevExpress.XtraBars.BarButtonItem BBI_Info;
     }
 }
