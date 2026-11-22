@@ -38,6 +38,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new SkinRibbonGalleryBarItem();
@@ -103,11 +104,11 @@ namespace Foxoft
             accordionControlSeparator5 = new AccordionControlSeparator();
             aCE_InventoryTransfer = new AccordionControlElement();
             ACE_CashTransfer = new AccordionControlElement();
+            aCE_PaymentDetail = new AccordionControlElement();
             accordionControlSeparator7 = new AccordionControlSeparator();
             aCE_Expense = new AccordionControlElement();
             aCE_DailyExpense = new AccordionControlElement();
             aCE_ExpenseOfInvoice = new AccordionControlElement();
-            aCE_PaymentDetail = new AccordionControlElement();
             accordionControlSeparator1 = new AccordionControlSeparator();
             ACE_InstallmentSales = new AccordionControlElement();
             ACE_Group_InventoryCount = new AccordionControlElement();
@@ -141,13 +142,13 @@ namespace Foxoft
             ACE_EmploymentTypes = new AccordionControlElement();
             ACE_EmployeePositions = new AccordionControlElement();
             ACE_EmployeeContracts = new AccordionControlElement();
-            ACE_PayrollPeriods = new AccordionControlElement();
-            ACE_Attendances = new AccordionControlElement();
+            ACE_WorkSchedules = new AccordionControlElement();
             ACE_DailyAttendance = new AccordionControlElement();
             ACE_AttendanceCalculationWizard = new AccordionControlElement();
-            ACE_WorkSchedules = new AccordionControlElement();
             ACE_LeaveRequests = new AccordionControlElement();
+            ACE_Attendances = new AccordionControlElement();
             ACE_AttendanceSettings = new AccordionControlElement();
+            ACE_PayrollPeriods = new AccordionControlElement();
             ACE_PayrollList = new AccordionControlElement();
             ACE_SalesBonusPlans = new AccordionControlElement();
             ACE_SalesBonusAssignments = new AccordionControlElement();
@@ -696,6 +697,13 @@ namespace Foxoft
             ACE_CashTransfer.Style = ElementStyle.Item;
             ACE_CashTransfer.Text = Resources.ERP_ACE_CashTransfers;
             // 
+            // aCE_PaymentDetail
+            // 
+            aCE_PaymentDetail.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_PaymentDetail.ImageOptions.SvgImage");
+            aCE_PaymentDetail.Name = "aCE_PaymentDetail";
+            aCE_PaymentDetail.Style = ElementStyle.Item;
+            aCE_PaymentDetail.Text = Resources.ERP_ACE_PaymentDetail;
+            // 
             // accordionControlSeparator7
             // 
             accordionControlSeparator7.Name = "accordionControlSeparator7";
@@ -720,13 +728,6 @@ namespace Foxoft
             aCE_ExpenseOfInvoice.Name = "aCE_ExpenseOfInvoice";
             aCE_ExpenseOfInvoice.Style = ElementStyle.Item;
             aCE_ExpenseOfInvoice.Text = Resources.ERP_ACE_ExpenseOfInvoice;
-            // 
-            // aCE_PaymentDetail
-            // 
-            aCE_PaymentDetail.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_PaymentDetail.ImageOptions.SvgImage");
-            aCE_PaymentDetail.Name = "aCE_PaymentDetail";
-            aCE_PaymentDetail.Style = ElementStyle.Item;
-            aCE_PaymentDetail.Text = Resources.ERP_ACE_PaymentDetail;
             // 
             // accordionControlSeparator1
             // 
@@ -907,10 +908,7 @@ namespace Foxoft
             // 
             // aCE_HumanResource
             // 
-            aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] {
-                ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts,
-                ACE_WorkSchedules, ACE_DailyAttendance, ACE_AttendanceCalculationWizard, ACE_LeaveRequests, ACE_Attendances, ACE_AttendanceSettings,
-                ACE_PayrollPeriods, ACE_PayrollList, ACE_SalesBonusPlans, ACE_SalesBonusAssignments, ACE_SalesBonusTxns, ACE_CrmActivityList });
+            aCE_HumanResource.Elements.AddRange(new AccordionControlElement[] { ACE_Departments, ACE_Positions, ACE_EmploymentTypes, ACE_EmployeePositions, ACE_EmployeeContracts, ACE_PayrollPeriods, ACE_PayrollList, ACE_WorkSchedules, ACE_DailyAttendance, ACE_AttendanceCalculationWizard, ACE_LeaveRequests, ACE_Attendances, ACE_AttendanceSettings, ACE_SalesBonusPlans, ACE_SalesBonusAssignments, ACE_SalesBonusTxns, ACE_CrmActivityList });
             aCE_HumanResource.Expanded = true;
             aCE_HumanResource.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage");
             aCE_HumanResource.Name = "aCE_HumanResource";
@@ -951,12 +949,33 @@ namespace Foxoft
             ACE_EmployeeContracts.Style = ElementStyle.Item;
             ACE_EmployeeContracts.Text = Resources.ERP_ACE_EmployeeContracts;
             // 
-            // ACE_PayrollPeriods
+            // ACE_WorkSchedules
             // 
-            ACE_PayrollPeriods.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollPeriods.ImageOptions.SvgImage");
-            ACE_PayrollPeriods.Name = "ACE_PayrollPeriods";
-            ACE_PayrollPeriods.Style = ElementStyle.Item;
-            ACE_PayrollPeriods.Text = Resources.ERP_ACE_PayrollPeriods;
+            ACE_WorkSchedules.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WorkSchedules.ImageOptions.SvgImage");
+            ACE_WorkSchedules.Name = "ACE_WorkSchedules";
+            ACE_WorkSchedules.Style = ElementStyle.Item;
+            ACE_WorkSchedules.Text = Resources.ERP_ACE_WorkSchedules;
+            // 
+            // ACE_DailyAttendance
+            // 
+            ACE_DailyAttendance.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_DailyAttendance.ImageOptions.SvgImage");
+            ACE_DailyAttendance.Name = "ACE_DailyAttendance";
+            ACE_DailyAttendance.Style = ElementStyle.Item;
+            ACE_DailyAttendance.Text = Resources.ERP_ACE_DailyAttendance;
+            // 
+            // ACE_AttendanceCalculationWizard
+            // 
+            ACE_AttendanceCalculationWizard.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_AttendanceCalculationWizard.ImageOptions.SvgImage");
+            ACE_AttendanceCalculationWizard.Name = "ACE_AttendanceCalculationWizard";
+            ACE_AttendanceCalculationWizard.Style = ElementStyle.Item;
+            ACE_AttendanceCalculationWizard.Text = Resources.ERP_ACE_AttendanceWizard;
+            // 
+            // ACE_LeaveRequests
+            // 
+            ACE_LeaveRequests.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_LeaveRequests.ImageOptions.SvgImage");
+            ACE_LeaveRequests.Name = "ACE_LeaveRequests";
+            ACE_LeaveRequests.Style = ElementStyle.Item;
+            ACE_LeaveRequests.Text = Resources.ERP_ACE_LeaveRequests;
             // 
             // ACE_Attendances
             // 
@@ -965,35 +984,19 @@ namespace Foxoft
             ACE_Attendances.Style = ElementStyle.Item;
             ACE_Attendances.Text = Resources.ERP_ACE_Attendances;
             // 
-            // ACE_DailyAttendance
-            // 
-            ACE_DailyAttendance.Name = "ACE_DailyAttendance";
-            ACE_DailyAttendance.Style = ElementStyle.Item;
-            ACE_DailyAttendance.Text = Resources.ERP_ACE_DailyAttendance;
-            // 
-            // ACE_AttendanceCalculationWizard
-            // 
-            ACE_AttendanceCalculationWizard.Name = "ACE_AttendanceCalculationWizard";
-            ACE_AttendanceCalculationWizard.Style = ElementStyle.Item;
-            ACE_AttendanceCalculationWizard.Text = Resources.ERP_ACE_AttendanceWizard;
-            // 
-            // ACE_WorkSchedules
-            // 
-            ACE_WorkSchedules.Name = "ACE_WorkSchedules";
-            ACE_WorkSchedules.Style = ElementStyle.Item;
-            ACE_WorkSchedules.Text = Resources.ERP_ACE_WorkSchedules;
-            // 
-            // ACE_LeaveRequests
-            // 
-            ACE_LeaveRequests.Name = "ACE_LeaveRequests";
-            ACE_LeaveRequests.Style = ElementStyle.Item;
-            ACE_LeaveRequests.Text = Resources.ERP_ACE_LeaveRequests;
-            // 
             // ACE_AttendanceSettings
             // 
+            ACE_AttendanceSettings.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_AttendanceSettings.ImageOptions.SvgImage");
             ACE_AttendanceSettings.Name = "ACE_AttendanceSettings";
             ACE_AttendanceSettings.Style = ElementStyle.Item;
             ACE_AttendanceSettings.Text = Resources.ERP_ACE_AttendanceSettings;
+            // 
+            // ACE_PayrollPeriods
+            // 
+            ACE_PayrollPeriods.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollPeriods.ImageOptions.SvgImage");
+            ACE_PayrollPeriods.Name = "ACE_PayrollPeriods";
+            ACE_PayrollPeriods.Style = ElementStyle.Item;
+            ACE_PayrollPeriods.Text = Resources.ERP_ACE_PayrollPeriods;
             // 
             // ACE_PayrollList
             // 
@@ -1001,30 +1004,30 @@ namespace Foxoft
             ACE_PayrollList.Name = "ACE_PayrollList";
             ACE_PayrollList.Style = ElementStyle.Item;
             ACE_PayrollList.Text = Resources.ERP_ACE_PayrollList;
-            //
+            // 
             // ACE_SalesBonusPlans
-            //
-            ACE_SalesBonusPlans.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollList.ImageOptions.SvgImage");
+            // 
+            ACE_SalesBonusPlans.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_SalesBonusPlans.ImageOptions.SvgImage");
             ACE_SalesBonusPlans.Name = "ACE_SalesBonusPlans";
             ACE_SalesBonusPlans.Style = ElementStyle.Item;
             ACE_SalesBonusPlans.Text = Resources.ERP_ACE_SalesBonusPlans;
-            //
+            // 
             // ACE_SalesBonusAssignments
-            //
-            ACE_SalesBonusAssignments.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_EmployeePositions.ImageOptions.SvgImage");
+            // 
+            ACE_SalesBonusAssignments.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_SalesBonusAssignments.ImageOptions.SvgImage");
             ACE_SalesBonusAssignments.Name = "ACE_SalesBonusAssignments";
             ACE_SalesBonusAssignments.Style = ElementStyle.Item;
             ACE_SalesBonusAssignments.Text = Resources.ERP_ACE_SalesBonusAssignments;
-            //
+            // 
             // ACE_SalesBonusTxns
-            //
-            ACE_SalesBonusTxns.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PayrollPeriods.ImageOptions.SvgImage");
+            // 
+            ACE_SalesBonusTxns.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_SalesBonusTxns.ImageOptions.SvgImage");
             ACE_SalesBonusTxns.Name = "ACE_SalesBonusTxns";
             ACE_SalesBonusTxns.Style = ElementStyle.Item;
             ACE_SalesBonusTxns.Text = Resources.ERP_ACE_SalesBonusTxns;
-            //
+            // 
             // ACE_CrmActivityList
-            //
+            // 
             ACE_CrmActivityList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_CrmActivityList.ImageOptions.SvgImage");
             ACE_CrmActivityList.Name = "ACE_CrmActivityList";
             ACE_CrmActivityList.Style = ElementStyle.Item;
@@ -1047,7 +1050,7 @@ namespace Foxoft
             // 
             // ACE_Users
             // 
-            ACE_Users.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccRole.ImageOptions.SvgImage");
+            ACE_Users.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Users.ImageOptions.SvgImage");
             ACE_Users.Name = "ACE_Users";
             ACE_Users.Style = ElementStyle.Item;
             ACE_Users.Text = Resources.ERP_ACE_MainUsers;
