@@ -102,12 +102,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
 
-                    b.Property<string>("OpenAIApiKey")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OpenAIModel")
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<int?>("NumberDecimalDigits")
                         .HasColumnType("int");
 
@@ -117,8 +111,11 @@ namespace Foxoft.Migrations
                     b.Property<string>("NumberGroupSeparator")
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int?>("QuantityDecimalDigits")
-                        .HasColumnType("int");
+                    b.Property<string>("OpenAIApiKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OpenAIModel")
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<byte>("OverpaymentMode")
                         .HasColumnType("tinyint");
@@ -148,6 +145,9 @@ namespace Foxoft.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
+
+                    b.Property<int?>("QuantityDecimalDigits")
+                        .HasColumnType("int");
 
                     b.Property<string>("RarExePath")
                         .HasColumnType("nvarchar(max)");
@@ -8227,6 +8227,14 @@ namespace Foxoft.Migrations
                             ClaimDesc = "Davamiyyət Logları",
                             ClaimTypeId = (byte)1,
                             Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "BonusCardNum",
+                            CategoryId = 19,
+                            ClaimDesc = "Bonus Kart Nömrəsi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         });
                 });
 
@@ -12140,6 +12148,46 @@ namespace Foxoft.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 541,
+                            ClaimCode = "BonusCardNum",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 542,
+                            ClaimCode = "BonusCardNum",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Cashier"
+                        },
+                        new
+                        {
+                            RoleClaimId = 543,
+                            ClaimCode = "BonusCardNum",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "StoreManager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 544,
+                            ClaimCode = "BonusCardNum",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Manager"
+                        },
+                        new
+                        {
+                            RoleClaimId = 545,
+                            ClaimCode = "BonusCardNum",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Creditor"
                         });
                 });
 

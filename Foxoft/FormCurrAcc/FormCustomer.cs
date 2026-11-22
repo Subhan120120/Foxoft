@@ -31,8 +31,8 @@ namespace Foxoft
             else
                 txtEdit_CurrAccCode.EditValue = efMethods.GetNextDocNum(true, "C", "CurrAccCode", "DcCurrAccs", 4);
 
-            bool hasBonusEarn = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn");
-            if (!hasBonusEarn)
+            bool hasBonusCardNum = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusCardNum");
+            if (!hasBonusCardNum)
                 lCI_CardNum.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
         }
 

@@ -49,8 +49,8 @@ namespace Foxoft
             if (!currAccHasClaimCreditLimit)
                 ItemForCreditLimit.Visibility = LayoutVisibility.Never;
 
-            bool currAccHasBonusEarn = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusEarn");
-            if (!currAccHasBonusEarn)
+            bool currAccHasBonusCardNum = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "BonusCardNum");
+            if (!currAccHasBonusCardNum)
                 ItemForBonusCardNum.Visibility = LayoutVisibility.Never;
         }
         public FormCurrAcc(string currAccCode)

@@ -1038,7 +1038,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "WorkSchedules", ClaimDesc = "İş Qrafikləri", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "LeaveRequests", ClaimDesc = "İcazələr və Məzuniyyətlər", ClaimTypeId = 1, CategoryId = 23 },
                 new DcClaim { ClaimCode = "AttendanceSettings", ClaimDesc = "Davamiyyət Ayarları", ClaimTypeId = 1, CategoryId = 23 },
-                new DcClaim { ClaimCode = "AttendanceLogs", ClaimDesc = "Davamiyyət Logları", ClaimTypeId = 1, CategoryId = 23 }
+                new DcClaim { ClaimCode = "AttendanceLogs", ClaimDesc = "Davamiyyət Logları", ClaimTypeId = 1, CategoryId = 23 },
+                new DcClaim { ClaimCode = "BonusCardNum", ClaimDesc = "Bonus Kart Nömrəsi", ClaimTypeId = 1, CategoryId = 19 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -1494,7 +1495,12 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 537, RoleCode = "Manager", ClaimCode = "WorkSchedules" },
                 new TrRoleClaim { RoleClaimId = 538, RoleCode = "Manager", ClaimCode = "LeaveRequests" },
                 new TrRoleClaim { RoleClaimId = 539, RoleCode = "Manager", ClaimCode = "AttendanceSettings" },
-                new TrRoleClaim { RoleClaimId = 540, RoleCode = "Manager", ClaimCode = "AttendanceLogs" }
+                new TrRoleClaim { RoleClaimId = 540, RoleCode = "Manager", ClaimCode = "AttendanceLogs" },
+                new TrRoleClaim { RoleClaimId = 541, RoleCode = "Admin", ClaimCode = "BonusCardNum" },
+                new TrRoleClaim { RoleClaimId = 542, RoleCode = "Cashier", ClaimCode = "BonusCardNum" },
+                new TrRoleClaim { RoleClaimId = 543, RoleCode = "StoreManager", ClaimCode = "BonusCardNum" },
+                new TrRoleClaim { RoleClaimId = 544, RoleCode = "Manager", ClaimCode = "BonusCardNum" },
+                new TrRoleClaim { RoleClaimId = 545, RoleCode = "Creditor", ClaimCode = "BonusCardNum" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
