@@ -56,7 +56,7 @@ namespace Foxoft.AppCode
 
         public static string BuildQuantityFormatString(int? digits)
         {
-            int maxDigits = digits.HasValue && digits.Value >= 0 ? Math.Clamp(digits.Value, 0, 10) : 3;
+            int maxDigits = digits.HasValue && digits.Value >= 0 ? Math.Clamp(digits.Value, 0, 10) : 4;
             if (maxDigits == 0)
                 return "#,##0";
             return $"#,##0.{new string('#', maxDigits)}";

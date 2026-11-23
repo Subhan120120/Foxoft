@@ -20,10 +20,6 @@ namespace Foxoft.Migrations
                 oldClrType: typeof(decimal),
                 oldType: "decimal(18,2)");
 
-            migrationBuilder.InsertData(
-                table: "DcClaims",
-                columns: new[] { "ClaimCode", "CategoryId", "ClaimDesc", "ClaimTypeId" },
-                values: new object[] { "UnitOfMeasureList", 18, "Ölçü Vahidləri", (byte)1 });
 
             migrationBuilder.UpdateData(
                 table: "DcUnitOfMeasures",
@@ -53,10 +49,6 @@ namespace Foxoft.Migrations
                 column: "IsBasic",
                 value: true);
 
-            migrationBuilder.InsertData(
-                table: "DcUnitOfMeasures",
-                columns: new[] { "UnitOfMeasureId", "ConversionRate", "IsBasic", "IsDisabled", "Level", "ParentUnitOfMeasureId", "UnitOfMeasureDesc" },
-                values: new object[] { 5, 0.001m, false, false, (byte)1, 2, "gram" });
 
         }
 

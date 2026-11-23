@@ -52,13 +52,14 @@ namespace Foxoft
                             IsBasic = u.IsBasic
                         };
                     }
+                    _cache = dict;
                 }
                 catch
                 {
-                    // Fallback for design-time or disconnected context
+                    // Fallback for design-time or disconnected context without poisoning cache
+                    return dict;
                 }
 
-                _cache = dict;
                 return _cache;
             }
         }

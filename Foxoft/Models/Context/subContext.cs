@@ -1,4 +1,4 @@
-﻿using Foxoft.AppCode;
+using Foxoft.AppCode;
 using Foxoft.Models.Entity;
 using Foxoft.Models.Entity.Report;
 using Foxoft.Models.Entity.RoleClaim;
@@ -508,6 +508,14 @@ namespace Foxoft.Models
 
                 entity.Property(e => e.InvoiceLineId)
                       .ValueGeneratedNever();
+
+                entity.Property(e => e.QtyIn)
+                      .HasPrecision(18, 6)
+                      .HasColumnType("decimal(18, 6)");
+
+                entity.Property(e => e.QtyOut)
+                      .HasPrecision(18, 6)
+                      .HasColumnType("decimal(18, 6)");
             });
 
             modelBuilder.Entity<DcPriceType>(entity =>

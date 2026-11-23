@@ -13,27 +13,8 @@ namespace Foxoft.Models
     {
         private decimal GetMultiplierToBasic()
         {
-            if (DcUnitOfMeasure != null)
-            {
-                decimal multiplier = 1m;
-                DcUnitOfMeasure? current = DcUnitOfMeasure;
-                var visited = new System.Collections.Generic.HashSet<int>();
-
-                while (current != null && !current.IsBasic && visited.Add(current.UnitOfMeasureId))
-                {
-                    multiplier *= current.ConversionRate > 0 ? current.ConversionRate : 1m;
-                    current = current.ParentUnitOfMeasure;
-                }
-
-                if (current != null && current.IsBasic)
-                    return multiplier > 0 ? multiplier : 1m;
-            }
-
             int? uomId = UnitOfMeasureId ?? DcUnitOfMeasure?.UnitOfMeasureId;
-            if (uomId.HasValue)
-                return UnitOfMeasureHelper.GetConversionMultiplierToBasic(uomId.Value);
-
-            return 1m;
+            return uomId.HasValue ? UnitOfMeasureHelper.GetConversionMultiplierToBasic(uomId.Value) : 1m;
         }
 
         private decimal ConvertToBasicUOM(decimal qty)
@@ -101,11 +82,13 @@ namespace Foxoft.Models
         }
 
         [DefaultValueSql("0")]
+        [Column(TypeName = "decimal(18, 6)")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_QtyIn), ResourceType = typeof(Resources))]
         [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public decimal QtyIn { get; set; }
 
         [DefaultValueSql("0")]
+        [Column(TypeName = "decimal(18, 6)")]
         [Display(Name = nameof(Resources.Entity_InvoiceLine_QtyOut), ResourceType = typeof(Resources))]
         [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public decimal QtyOut { get; set; }

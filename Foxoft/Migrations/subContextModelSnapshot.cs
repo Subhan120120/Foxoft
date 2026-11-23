@@ -13010,7 +13010,8 @@ namespace Foxoft.Migrations
 
                     b.Property<decimal>("Qty")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18, 6)")
                         .HasDefaultValue(1m);
 
                     b.HasKey("Id");
@@ -14154,12 +14155,14 @@ namespace Foxoft.Migrations
 
                     b.Property<decimal>("QtyIn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18, 6)")
                         .HasDefaultValueSql("0");
 
                     b.Property<decimal>("QtyOut")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18, 6)")
                         .HasDefaultValueSql("0");
 
                     b.Property<Guid?>("RelatedLineId")
@@ -15365,7 +15368,8 @@ namespace Foxoft.Migrations
 
                     b.Property<decimal>("Qty")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18, 6)")
                         .HasDefaultValue(1m);
 
                     b.HasKey("Id");
