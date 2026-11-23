@@ -19,6 +19,7 @@ namespace Foxoft.Models
         [ForeignKey(nameof(DcUnitOfMeasure))]
         public int UnitOfMeasureId { get; set; }
 
+        [Column(TypeName = "decimal(18, 6)")]
         [Display(Name = nameof(Resources.Entity_ProductUnitOfMeasure_ConversionRate), ResourceType = typeof(Resources))]
         public decimal ConversionRate { get; set; }
     }

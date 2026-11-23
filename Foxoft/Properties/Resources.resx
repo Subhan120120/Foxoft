@@ -8189,4 +8189,10 @@ Google account: {1}</value>
   <data name="ERP_ACE_UnitOfMeasures" xml:space="preserve">
     <value>Units of Measure</value>
   </data>
+  <data name="Form_UnitOfMeasureEdit_ReverseRate" xml:space="preserve">
+    <value>Reverse Ratio (1 Parent = X This)</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_ParentRequired" xml:space="preserve">
+    <value>Parent unit must be selected for derived unit.</value>
+  </data>
 </root>

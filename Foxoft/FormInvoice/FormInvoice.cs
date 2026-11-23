@@ -1,4 +1,4 @@
-﻿
+
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
@@ -1161,6 +1161,20 @@ namespace Foxoft
         {
             if (e.Value is null)
                 return;
+
+            if (e.Column == colUnitOfMeasureId)
+            {
+                var line = gV_InvoiceLine.GetRow(e.RowHandle) as TrInvoiceLine;
+                if (line is not null)
+                {
+                    line.DcUnitOfMeasure = null;
+                    decimal qty = line.Qty;
+                    line.Qty = qty;
+                    gV_InvoiceLine.RefreshRow(e.RowHandle);
+                    UpdatePaidLabels();
+                }
+                return;
+            }
 
             if (e.Column == colPurchasePrice || e.Column == colWholesalePrice || e.Column == colRetailPrice)
             {
@@ -4505,8 +4519,12 @@ namespace Foxoft
 
         private void repoBtnEdit_UnitOfMeasure_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            FormCommonList<DcUnitOfMeasure> formCommon = new("", nameof(DcUnitOfMeasure.UnitOfMeasureId));
-            formCommon.ShowDialog();
+            using FormUnitOfMeasureList formList = new(true);
+            if (formList.ShowDialog(this) == DialogResult.OK && formList.SelectedUnitOfMeasureId.HasValue)
+            {
+                repoLUE_UnitOfMeasure.DataSource = efMethods.SelectEntities<DcUnitOfMeasure>();
+                gV_InvoiceLine.SetFocusedRowCellValue(colUnitOfMeasureId, formList.SelectedUnitOfMeasureId.Value);
+            }
         }
 
         private void repoLUE_UnitOfMeasure_PopupFilter(object sender, PopupFilterEventArgs e)

@@ -22921,5 +22921,17 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("ERP_ACE_UnitOfMeasures", resourceCulture);
             }
         }
+
+        public static string Form_UnitOfMeasureEdit_ReverseRate {
+            get {
+                return ResourceManager.GetString("Form_UnitOfMeasureEdit_ReverseRate", resourceCulture);
+            }
+        }
+
+        public static string Validation_UnitOfMeasure_ParentRequired {
+            get {
+                return ResourceManager.GetString("Validation_UnitOfMeasure_ParentRequired", resourceCulture);
+            }
+        }
     }
 }

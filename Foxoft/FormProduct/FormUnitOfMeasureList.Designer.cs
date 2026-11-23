@@ -17,6 +17,7 @@ namespace Foxoft
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.btnNew = new DevExpress.XtraBars.BarButtonItem();
             this.btnEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -36,16 +37,22 @@ namespace Foxoft
             this.gridView1 = new MyGridView();
             this.colUnitOfMeasureId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colUnitOfMeasureDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colIsBasic = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoCheckEditIsBasic = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.colParentDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colConversionRate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colFormula = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLevel = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colIsBasic = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colIsDisabled = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colProductCount = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colIsDisabled = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoCheckEditIsDisabled = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCheckEditIsBasic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCheckEditIsDisabled)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbon
@@ -68,7 +75,7 @@ namespace Foxoft
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
-            this.ribbon.Size = new System.Drawing.Size(1020, 158);
+            this.ribbon.Size = new System.Drawing.Size(1040, 158);
             // 
             // btnNew
             // 
@@ -169,7 +176,10 @@ namespace Foxoft
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.MenuManager = this.ribbon;
             this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(1020, 520);
+            this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repoCheckEditIsBasic,
+            this.repoCheckEditIsDisabled});
+            this.gridControl1.Size = new System.Drawing.Size(1040, 520);
             this.gridControl1.TabIndex = 1;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -179,13 +189,13 @@ namespace Foxoft
             this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colUnitOfMeasureId,
             this.colUnitOfMeasureDesc,
+            this.colIsBasic,
             this.colParentDesc,
             this.colConversionRate,
             this.colFormula,
             this.colLevel,
-            this.colIsBasic,
-            this.colIsDisabled,
-            this.colProductCount});
+            this.colProductCount,
+            this.colIsDisabled});
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.Editable = false;
@@ -195,12 +205,14 @@ namespace Foxoft
             // 
             // colUnitOfMeasureId
             // 
+            this.colUnitOfMeasureId.AppearanceCell.Options.UseTextOptions = true;
+            this.colUnitOfMeasureId.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colUnitOfMeasureId.Caption = Foxoft.Properties.Resources.Entity_UnitOfMeasure_Id;
             this.colUnitOfMeasureId.FieldName = "UnitOfMeasureId";
             this.colUnitOfMeasureId.Name = "colUnitOfMeasureId";
             this.colUnitOfMeasureId.Visible = true;
             this.colUnitOfMeasureId.VisibleIndex = 0;
-            this.colUnitOfMeasureId.Width = 70;
+            this.colUnitOfMeasureId.Width = 65;
             // 
             // colUnitOfMeasureDesc
             // 
@@ -211,25 +223,44 @@ namespace Foxoft
             this.colUnitOfMeasureDesc.VisibleIndex = 1;
             this.colUnitOfMeasureDesc.Width = 140;
             // 
+            // colIsBasic
+            // 
+            this.colIsBasic.AppearanceCell.Options.UseTextOptions = true;
+            this.colIsBasic.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colIsBasic.Caption = Foxoft.Properties.Resources.Entity_UnitOfMeasure_IsBasic;
+            this.colIsBasic.ColumnEdit = this.repoCheckEditIsBasic;
+            this.colIsBasic.FieldName = "IsBasic";
+            this.colIsBasic.Name = "colIsBasic";
+            this.colIsBasic.Visible = true;
+            this.colIsBasic.VisibleIndex = 2;
+            this.colIsBasic.Width = 85;
+            // 
+            // repoCheckEditIsBasic
+            // 
+            this.repoCheckEditIsBasic.AutoHeight = false;
+            this.repoCheckEditIsBasic.Name = "repoCheckEditIsBasic";
+            // 
             // colParentDesc
             // 
             this.colParentDesc.Caption = Foxoft.Properties.Resources.Entity_UnitOfMeasure_ParentId;
             this.colParentDesc.FieldName = "ParentDesc";
             this.colParentDesc.Name = "colParentDesc";
             this.colParentDesc.Visible = true;
-            this.colParentDesc.VisibleIndex = 2;
-            this.colParentDesc.Width = 140;
+            this.colParentDesc.VisibleIndex = 3;
+            this.colParentDesc.Width = 130;
             // 
             // colConversionRate
             // 
+            this.colConversionRate.AppearanceCell.Options.UseTextOptions = true;
+            this.colConversionRate.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.colConversionRate.Caption = Foxoft.Properties.Resources.Entity_UnitOfMeasure_ConversionRate;
-            this.colConversionRate.DisplayFormat.FormatString = "n4";
+            this.colConversionRate.DisplayFormat.FormatString = "0.######";
             this.colConversionRate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colConversionRate.FieldName = "ConversionRate";
             this.colConversionRate.Name = "colConversionRate";
             this.colConversionRate.Visible = true;
-            this.colConversionRate.VisibleIndex = 3;
-            this.colConversionRate.Width = 110;
+            this.colConversionRate.VisibleIndex = 4;
+            this.colConversionRate.Width = 115;
             // 
             // colFormula
             // 
@@ -237,8 +268,8 @@ namespace Foxoft
             this.colFormula.FieldName = "Formula";
             this.colFormula.Name = "colFormula";
             this.colFormula.Visible = true;
-            this.colFormula.VisibleIndex = 4;
-            this.colFormula.Width = 180;
+            this.colFormula.VisibleIndex = 5;
+            this.colFormula.Width = 240;
             // 
             // colLevel
             // 
@@ -248,45 +279,57 @@ namespace Foxoft
             this.colLevel.FieldName = "Level";
             this.colLevel.Name = "colLevel";
             this.colLevel.Visible = true;
-            this.colLevel.VisibleIndex = 5;
-            this.colLevel.Width = 75;
-            // 
-            // colIsBasic
-            // 
-            this.colIsBasic.Caption = Foxoft.Properties.Resources.Entity_UnitOfMeasure_IsBasic;
-            this.colIsBasic.FieldName = "IsBasic";
-            this.colIsBasic.Name = "colIsBasic";
-            this.colIsBasic.Visible = true;
-            this.colIsBasic.VisibleIndex = 6;
-            this.colIsBasic.Width = 85;
-            // 
-            // colIsDisabled
-            // 
-            this.colIsDisabled.Caption = Foxoft.Properties.Resources.Common_IsDisabled;
-            this.colIsDisabled.FieldName = "IsDisabled";
-            this.colIsDisabled.Name = "colIsDisabled";
-            this.colIsDisabled.Visible = true;
-            this.colIsDisabled.VisibleIndex = 7;
-            this.colIsDisabled.Width = 85;
+            this.colLevel.VisibleIndex = 6;
+            this.colLevel.Width = 65;
             // 
             // colProductCount
             // 
             this.colProductCount.AppearanceCell.Options.UseTextOptions = true;
             this.colProductCount.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.colProductCount.Caption = Foxoft.Properties.Resources.Entity_UnitOfMeasure_ProductCount;
+            this.colProductCount.DisplayFormat.FormatString = "n0";
+            this.colProductCount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colProductCount.FieldName = "ProductCount";
             this.colProductCount.Name = "colProductCount";
             this.colProductCount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ProductCount", "{0:n0}")});
             this.colProductCount.Visible = true;
-            this.colProductCount.VisibleIndex = 8;
-            this.colProductCount.Width = 95;
+            this.colProductCount.VisibleIndex = 7;
+            this.colProductCount.Width = 90;
+            // 
+            // colIsDisabled
+            // 
+            this.colIsDisabled.AppearanceCell.Options.UseTextOptions = true;
+            this.colIsDisabled.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colIsDisabled.Caption = Foxoft.Properties.Resources.Common_IsDisabled;
+            this.colIsDisabled.ColumnEdit = this.repoCheckEditIsDisabled;
+            this.colIsDisabled.FieldName = "IsDisabled";
+            this.colIsDisabled.Name = "colIsDisabled";
+            this.colIsDisabled.Visible = true;
+            this.colIsDisabled.VisibleIndex = 8;
+            this.colIsDisabled.Width = 75;
+            // 
+            // repoCheckEditIsDisabled
+            // 
+            this.repoCheckEditIsDisabled.AutoHeight = false;
+            this.repoCheckEditIsDisabled.Name = "repoCheckEditIsDisabled";
+            // 
+            // popupMenu1
+            // 
+            this.popupMenu1.ItemLinks.Add(this.btnNew);
+            this.popupMenu1.ItemLinks.Add(this.btnEdit);
+            this.popupMenu1.ItemLinks.Add(this.btnDelete);
+            this.popupMenu1.ItemLinks.Add(this.btnRefresh);
+            this.popupMenu1.ItemLinks.Add(this.btnSetBasic);
+            this.popupMenu1.ItemLinks.Add(this.btnToggleActive);
+            this.popupMenu1.Name = "popupMenu1";
+            this.popupMenu1.Ribbon = this.ribbon;
             // 
             // FormUnitOfMeasureList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1020, 678);
+            this.ClientSize = new System.Drawing.Size(1040, 678);
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.ribbon);
             this.Name = "FormUnitOfMeasureList";
@@ -296,6 +339,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCheckEditIsBasic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCheckEditIsDisabled)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,12 +368,15 @@ namespace Foxoft
         private MyGridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn colUnitOfMeasureId;
         private DevExpress.XtraGrid.Columns.GridColumn colUnitOfMeasureDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn colIsBasic;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repoCheckEditIsBasic;
         private DevExpress.XtraGrid.Columns.GridColumn colParentDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colConversionRate;
         private DevExpress.XtraGrid.Columns.GridColumn colFormula;
         private DevExpress.XtraGrid.Columns.GridColumn colLevel;
-        private DevExpress.XtraGrid.Columns.GridColumn colIsBasic;
-        private DevExpress.XtraGrid.Columns.GridColumn colIsDisabled;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCount;
+        private DevExpress.XtraGrid.Columns.GridColumn colIsDisabled;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repoCheckEditIsDisabled;
+        private DevExpress.XtraBars.PopupMenu popupMenu1;
     }
 }

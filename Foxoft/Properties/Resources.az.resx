@@ -8189,4 +8189,10 @@ Google hesabı: {1}</value>
   <data name="ERP_ACE_UnitOfMeasures" xml:space="preserve">
     <value>Ölçü Vahidləri</value>
   </data>
+  <data name="Form_UnitOfMeasureEdit_ReverseRate" xml:space="preserve">
+    <value>Tərs Nisbət (1 Ana = X Bu)</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_ParentRequired" xml:space="preserve">
+    <value>Törəmə vahid üçün ana ölçü vahidi seçilməlidir.</value>
+  </data>
 </root>

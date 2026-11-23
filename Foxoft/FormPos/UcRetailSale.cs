@@ -1465,6 +1465,10 @@ namespace Foxoft
         {
             gV_InvoiceLine.AddNewRow();
 
+            var line = gV_InvoiceLine.GetFocusedRow() as TrInvoiceLine;
+            if (line is not null)
+                line.UnitOfMeasureId = dcProduct.DefaultUnitOfMeasureId;
+
             gV_InvoiceLine.SetFocusedRowCellValue(colProductCode, dcProduct.ProductCode);
             gV_InvoiceLine.SetFocusedRowCellValue(col_Price, dcProduct.RetailPrice);
             gV_InvoiceLine.SetFocusedRowCellValue(colQtyOut, trInvoiceHeader?.IsReturn == true ? -qty : qty);

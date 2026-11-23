@@ -1,6 +1,7 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Foxoft
         private readonly subContext db = new();
         private readonly int? id;
         private DcUnitOfMeasure entity = null!;
+        private bool isUpdatingRate;
 
         public int SavedUnitOfMeasureId { get; private set; }
 
@@ -23,15 +25,19 @@ namespace Foxoft
             id = unitOfMeasureId;
 
             Text = id == null
-                ? Properties.Resources.Form_UnitOfMeasureEdit_Caption_New
-                : Properties.Resources.Form_UnitOfMeasureEdit_Caption_Edit;
+                ? Resources.Form_UnitOfMeasureEdit_Caption_New
+                : Resources.Form_UnitOfMeasureEdit_Caption_Edit;
 
             btnSave.Click += (_, __) => Save();
             btnCancel.Click += (_, __) => DialogResult = DialogResult.Cancel;
+
             lkpParent.ButtonClick += LkpParent_ButtonClick;
             lkpParent.EditValueChanged += (_, __) => OnParentChanged();
+            chkIsBasic.CheckedChanged += (_, __) => OnIsBasicChanged();
+
             txtDesc.TextChanged += (_, __) => UpdateFormula();
-            spnConversionRate.EditValueChanged += (_, __) => UpdateFormula();
+            spnConversionRate.EditValueChanged += (_, __) => OnConversionRateChanged();
+            spnReverseRate.EditValueChanged += (_, __) => OnReverseRateChanged();
 
             Load += (_, __) => LoadEntity();
         }
@@ -68,13 +74,115 @@ namespace Foxoft
             lkpParent.Properties.DataSource = allUnits;
 
             txtDesc.Text = entity.UnitOfMeasureDesc;
-            lkpParent.EditValue = entity.ParentUnitOfMeasureId;
-            spnConversionRate.Value = entity.ConversionRate > 0 ? entity.ConversionRate : 1m;
-            spnLevel.Value = entity.Level;
             chkIsBasic.Checked = entity.IsBasic;
+            lkpParent.EditValue = entity.ParentUnitOfMeasureId;
+
+            decimal rate = entity.ConversionRate > 0 ? entity.ConversionRate : 1m;
+            spnConversionRate.Value = rate;
+            spnReverseRate.Value = rate > 0 ? Math.Round(1m / rate, 6) : 1m;
+            spnLevel.Value = entity.Level;
             chkIsDisabled.Checked = entity.IsDisabled;
 
+            ApplyBasicState(entity.IsBasic);
             UpdateFormula();
+        }
+
+        private void OnIsBasicChanged()
+        {
+            bool isBasic = chkIsBasic.Checked;
+            ApplyBasicState(isBasic);
+            UpdateFormula();
+        }
+
+        private void ApplyBasicState(bool isBasic)
+        {
+            if (isBasic)
+            {
+                lkpParent.EditValue = null;
+                lkpParent.ReadOnly = true;
+                spnConversionRate.Value = 1m;
+                spnConversionRate.ReadOnly = true;
+                spnReverseRate.Value = 1m;
+                spnReverseRate.ReadOnly = true;
+                spnLevel.Value = 0;
+            }
+            else
+            {
+                lkpParent.ReadOnly = false;
+                spnConversionRate.ReadOnly = false;
+                spnReverseRate.ReadOnly = false;
+                UpdateLevelFromParent();
+            }
+        }
+
+        private void OnParentChanged()
+        {
+            if (!chkIsBasic.Checked)
+            {
+                UpdateLevelFromParent();
+            }
+            UpdateFormula();
+        }
+
+        private void UpdateLevelFromParent()
+        {
+            if (lkpParent.EditValue is int parentId)
+            {
+                DcUnitOfMeasure? parent = db.DcUnitOfMeasures.AsNoTracking()
+                    .FirstOrDefault(x => x.UnitOfMeasureId == parentId);
+                if (parent != null)
+                    spnLevel.Value = (byte)Math.Min(255, parent.Level + 1);
+            }
+            else
+            {
+                spnLevel.Value = 0;
+            }
+        }
+
+        private void OnConversionRateChanged()
+        {
+            if (isUpdatingRate) return;
+
+            decimal rate = spnConversionRate.Value;
+            if (rate > 0)
+            {
+                isUpdatingRate = true;
+                spnReverseRate.Value = Math.Round(1m / rate, 6);
+                isUpdatingRate = false;
+            }
+            UpdateFormula();
+        }
+
+        private void OnReverseRateChanged()
+        {
+            if (isUpdatingRate) return;
+
+            decimal rev = spnReverseRate.Value;
+            if (rev > 0)
+            {
+                isUpdatingRate = true;
+                spnConversionRate.Value = Math.Round(1m / rev, 6);
+                isUpdatingRate = false;
+            }
+            UpdateFormula();
+        }
+
+        private void UpdateFormula()
+        {
+            string desc = string.IsNullOrWhiteSpace(txtDesc.Text) ? "?" : txtDesc.Text.Trim();
+
+            if (chkIsBasic.Checked || lkpParent.EditValue is not int)
+            {
+                lblFormula.Text = $"1 {desc} ({Resources.Entity_UnitOfMeasure_IsBasic})";
+            }
+            else
+            {
+                string parentDesc = lkpParent.Text;
+                decimal rate = spnConversionRate.Value;
+                decimal rev = spnReverseRate.Value;
+
+                lblFormula.Text = $"1 {desc} = {rate:0.######} {parentDesc}   \u21D4   1 {parentDesc} = {rev:0.######} {desc}";
+            }
         }
 
         private HashSet<int> GetDescendantIds(int rootId, List<DcUnitOfMeasure> list)
@@ -96,95 +204,82 @@ namespace Foxoft
             return result;
         }
 
-        private void OnParentChanged()
+        private bool ValidateData()
         {
-            if (lkpParent.EditValue is int parentId)
-            {
-                DcUnitOfMeasure? parent = db.DcUnitOfMeasures.AsNoTracking()
-                    .FirstOrDefault(x => x.UnitOfMeasureId == parentId);
-                if (parent != null)
-                    spnLevel.Value = (byte)Math.Min(255, parent.Level + 1);
-            }
-            else
-            {
-                spnLevel.Value = 0;
-            }
+            dxErrorProvider1.ClearErrors();
+            bool isValid = true;
 
-            UpdateFormula();
-        }
-
-        private void UpdateFormula()
-        {
-            string desc = string.IsNullOrWhiteSpace(txtDesc.Text) ? "?" : txtDesc.Text.Trim();
-            decimal rate = spnConversionRate.Value;
-
-            if (lkpParent.EditValue is int parentId)
-            {
-                string parentDesc = lkpParent.Text;
-                lblFormula.Text = $"1 {desc} = {rate:G29} {parentDesc}";
-            }
-            else
-            {
-                lblFormula.Text = $"1 {desc} (Baza vahid)";
-            }
-        }
-
-        private void Save()
-        {
             string desc = txtDesc.Text?.Trim() ?? "";
             if (string.IsNullOrWhiteSpace(desc))
             {
-                XtraMessageBox.Show(this, Properties.Resources.Validation_UnitOfMeasure_DescRequired,
-                    Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtDesc.Focus();
-                return;
+                dxErrorProvider1.SetError(txtDesc, Resources.Validation_UnitOfMeasure_DescRequired);
+                isValid = false;
             }
-
-            bool exists = db.DcUnitOfMeasures.Any(x =>
-                x.UnitOfMeasureDesc.ToLower() == desc.ToLower() &&
-                x.UnitOfMeasureId != (id ?? 0));
-            if (exists)
+            else
             {
-                XtraMessageBox.Show(this, Properties.Resources.Validation_UnitOfMeasure_DescExists,
-                    Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtDesc.Focus();
-                return;
+                bool exists = db.DcUnitOfMeasures.Any(x =>
+                    x.UnitOfMeasureDesc.ToLower() == desc.ToLower() &&
+                    x.UnitOfMeasureId != (id ?? 0));
+                if (exists)
+                {
+                    dxErrorProvider1.SetError(txtDesc, Resources.Validation_UnitOfMeasure_DescExists);
+                    isValid = false;
+                }
             }
 
+            bool isBasic = chkIsBasic.Checked;
             int? selectedParentId = (int?)lkpParent.EditValue;
+
+            if (!isBasic && !selectedParentId.HasValue)
+            {
+                dxErrorProvider1.SetError(lkpParent, Resources.Validation_UnitOfMeasure_ParentRequired);
+                isValid = false;
+            }
+
             if (id.HasValue && selectedParentId.HasValue)
             {
                 if (selectedParentId.Value == id.Value)
                 {
-                    XtraMessageBox.Show(this, Properties.Resources.Validation_UnitOfMeasure_ParentSelf,
-                        Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    dxErrorProvider1.SetError(lkpParent, Resources.Validation_UnitOfMeasure_ParentSelf);
+                    isValid = false;
                 }
-
-                List<DcUnitOfMeasure> allUnits = db.DcUnitOfMeasures.AsNoTracking().ToList();
-                HashSet<int> descendants = GetDescendantIds(id.Value, allUnits);
-                if (descendants.Contains(selectedParentId.Value))
+                else
                 {
-                    XtraMessageBox.Show(this, Properties.Resources.Validation_UnitOfMeasure_ParentCycle,
-                        Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    List<DcUnitOfMeasure> allUnits = db.DcUnitOfMeasures.AsNoTracking().ToList();
+                    HashSet<int> descendants = GetDescendantIds(id.Value, allUnits);
+                    if (descendants.Contains(selectedParentId.Value))
+                    {
+                        dxErrorProvider1.SetError(lkpParent, Resources.Validation_UnitOfMeasure_ParentCycle);
+                        isValid = false;
+                    }
                 }
             }
 
-            decimal rate = spnConversionRate.Value;
-            if (rate <= 0)
+            if (spnConversionRate.Value <= 0)
             {
-                XtraMessageBox.Show(this, Properties.Resources.Validation_UnitOfMeasure_ConversionRatePositive,
-                    Properties.Resources.Common_Attention, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                spnConversionRate.Focus();
-                return;
+                dxErrorProvider1.SetError(spnConversionRate, Resources.Validation_UnitOfMeasure_ConversionRatePositive);
+                isValid = false;
             }
+
+            return isValid;
+        }
+
+        private void Save()
+        {
+            if (!ValidateData())
+                return;
+
+            string desc = txtDesc.Text.Trim();
+            bool isBasic = chkIsBasic.Checked;
+            int? selectedParentId = isBasic ? null : (int?)lkpParent.EditValue;
+            decimal rate = isBasic ? 1m : spnConversionRate.Value;
+            byte level = isBasic ? (byte)0 : (byte)spnLevel.Value;
 
             entity.UnitOfMeasureDesc = desc;
+            entity.IsBasic = isBasic;
             entity.ParentUnitOfMeasureId = selectedParentId;
             entity.ConversionRate = rate;
-            entity.Level = (byte)spnLevel.Value;
-            entity.IsBasic = chkIsBasic.Checked;
+            entity.Level = level;
             entity.IsDisabled = chkIsDisabled.Checked;
 
             if (id == null)
@@ -193,6 +288,7 @@ namespace Foxoft
                 db.Entry(entity).State = EntityState.Modified;
 
             db.SaveChanges();
+            UnitOfMeasureHelper.InvalidateCache();
             SavedUnitOfMeasureId = entity.UnitOfMeasureId;
             DialogResult = DialogResult.OK;
         }

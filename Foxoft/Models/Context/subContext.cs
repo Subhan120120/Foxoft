@@ -405,11 +405,17 @@ namespace Foxoft.Models
             });
 
             // for using DcUnitOfMeasure.ParentUnitOfMeasure
-            modelBuilder.Entity<DcUnitOfMeasure>()
-                .HasOne(u => u.ParentUnitOfMeasure)
-                .WithMany(u => u.ChildUnitOfMeasures)
-                .HasForeignKey(u => u.ParentUnitOfMeasureId)
-                .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete loops
+            modelBuilder.Entity<DcUnitOfMeasure>(entity =>
+            {
+                entity.Property(e => e.ConversionRate)
+                    .HasPrecision(18, 6)
+                    .HasColumnType("decimal(18, 6)");
+
+                entity.HasOne(u => u.ParentUnitOfMeasure)
+                    .WithMany(u => u.ChildUnitOfMeasures)
+                    .HasForeignKey(u => u.ParentUnitOfMeasureId)
+                    .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete loops
+            });
 
             //EntityTypeBuilder deleted = modelBuilder.Entity<TrInvoiceHeaderDeleted>()
             //    .ToTable("TrInvoiceHeaderDeleteds")
@@ -1655,10 +1661,11 @@ namespace Foxoft.Models
             );
 
             modelBuilder.Entity<DcUnitOfMeasure>().HasData(
-                new DcUnitOfMeasure { UnitOfMeasureId = 1, UnitOfMeasureDesc = "ədəd", ConversionRate = 1, Level = 0 },
-                new DcUnitOfMeasure { UnitOfMeasureId = 2, UnitOfMeasureDesc = "kq", ConversionRate = 1, Level = 0 },
-                new DcUnitOfMeasure { UnitOfMeasureId = 3, UnitOfMeasureDesc = "metr", ConversionRate = 1, Level = 0 },
-                new DcUnitOfMeasure { UnitOfMeasureId = 4, UnitOfMeasureDesc = "litr", ConversionRate = 1, Level = 0 }
+                new DcUnitOfMeasure { UnitOfMeasureId = 1, UnitOfMeasureDesc = "ədəd", ConversionRate = 1m, Level = 0, IsBasic = true },
+                new DcUnitOfMeasure { UnitOfMeasureId = 2, UnitOfMeasureDesc = "kq", ConversionRate = 1m, Level = 0, IsBasic = true },
+                new DcUnitOfMeasure { UnitOfMeasureId = 3, UnitOfMeasureDesc = "metr", ConversionRate = 1m, Level = 0, IsBasic = true },
+                new DcUnitOfMeasure { UnitOfMeasureId = 4, UnitOfMeasureDesc = "litr", ConversionRate = 1m, Level = 0, IsBasic = true },
+                new DcUnitOfMeasure { UnitOfMeasureId = 5, UnitOfMeasureDesc = "gram", ParentUnitOfMeasureId = 2, ConversionRate = 0.001m, Level = 1, IsBasic = false }
             );
 
             modelBuilder.Entity<DcBarcodeType>().HasData(

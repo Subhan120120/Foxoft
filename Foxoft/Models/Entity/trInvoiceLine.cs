@@ -11,32 +11,41 @@ namespace Foxoft.Models
     [Display(Name = nameof(Resources.Entity_InvoiceLine), ResourceType = typeof(Resources))]
     public partial class TrInvoiceLine : BaseEntity
     {
-        private decimal ConvertToBasicUOM(decimal qty)
+        private decimal GetMultiplierToBasic()
         {
-            decimal multiplier = 1;
-            DcUnitOfMeasure currentUOM = this.DcUnitOfMeasure;
-
-            while (currentUOM != null && !currentUOM.IsBasic)
+            if (DcUnitOfMeasure != null)
             {
-                multiplier *= currentUOM.ConversionRate;
-                currentUOM = currentUOM.ParentUnitOfMeasure;
+                decimal multiplier = 1m;
+                DcUnitOfMeasure? current = DcUnitOfMeasure;
+                var visited = new System.Collections.Generic.HashSet<int>();
+
+                while (current != null && !current.IsBasic && visited.Add(current.UnitOfMeasureId))
+                {
+                    multiplier *= current.ConversionRate > 0 ? current.ConversionRate : 1m;
+                    current = current.ParentUnitOfMeasure;
+                }
+
+                if (current != null && current.IsBasic)
+                    return multiplier > 0 ? multiplier : 1m;
             }
 
+            int? uomId = UnitOfMeasureId ?? DcUnitOfMeasure?.UnitOfMeasureId;
+            if (uomId.HasValue)
+                return UnitOfMeasureHelper.GetConversionMultiplierToBasic(uomId.Value);
+
+            return 1m;
+        }
+
+        private decimal ConvertToBasicUOM(decimal qty)
+        {
+            decimal multiplier = GetMultiplierToBasic();
             return qty * multiplier;
         }
 
         private decimal ConvertFromBasicUOM(decimal qtyIn)
         {
-            decimal divider = 1;
-            DcUnitOfMeasure currentUOM = this.DcUnitOfMeasure;
-
-            while (currentUOM != null && !currentUOM.IsBasic)
-            {
-                divider *= currentUOM.ConversionRate;
-                currentUOM = currentUOM.ParentUnitOfMeasure;
-            }
-
-            return divider == 0 ? qtyIn : qtyIn / divider;
+            decimal multiplier = GetMultiplierToBasic();
+            return multiplier == 0 ? qtyIn : qtyIn / multiplier;
         }
 
         [Key]
@@ -101,9 +110,22 @@ namespace Foxoft.Models
         [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public decimal QtyOut { get; set; }
 
+        private int? _unitOfMeasureId;
         [Display(Name = nameof(Resources.Entity_InvoiceLine_UnitOfMeasureId), ResourceType = typeof(Resources))]
         [ForeignKey(nameof(DcUnitOfMeasure))]
-        public int? UnitOfMeasureId { get; set; }
+        public int? UnitOfMeasureId
+        {
+            get => _unitOfMeasureId;
+            set
+            {
+                if (_unitOfMeasureId != value)
+                {
+                    _unitOfMeasureId = value;
+                    if (_dcUnitOfMeasure != null && _dcUnitOfMeasure.UnitOfMeasureId != value)
+                        _dcUnitOfMeasure = null;
+                }
+            }
+        }
 
         [Column(TypeName = "money")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.####}")]
@@ -283,7 +305,17 @@ namespace Foxoft.Models
             }
         }
         public virtual DcSerialNumber DcSerialNumber { get; set; }
-        public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
+        private DcUnitOfMeasure? _dcUnitOfMeasure;
+        public virtual DcUnitOfMeasure DcUnitOfMeasure
+        {
+            get => _dcUnitOfMeasure;
+            set
+            {
+                _dcUnitOfMeasure = value;
+                if (value != null)
+                    _unitOfMeasureId = value.UnitOfMeasureId;
+            }
+        }
         public virtual DcCurrency DcCurrency { get; set; }
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual trInvoiceLineExt TrInvoiceLineExt { get; set; }

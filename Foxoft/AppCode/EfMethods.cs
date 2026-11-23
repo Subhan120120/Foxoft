@@ -1017,7 +1017,7 @@ END
                 result.Add(unit);
 
                 // Recurse to parent
-                if (unit.ParentUnitOfMeasureId != 0)
+                if (unit.ParentUnitOfMeasureId is > 0)
                     Collect(unit.ParentUnitOfMeasureId);
 
                 // Recurse to children

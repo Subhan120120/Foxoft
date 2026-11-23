@@ -27,6 +27,7 @@ namespace Foxoft.Models
         [Display(Name = nameof(Resources.Entity_UnitOfMeasure_ParentId), ResourceType = typeof(Resources))]
         public int? ParentUnitOfMeasureId { get; set; }
 
+        [Column(TypeName = "decimal(18, 6)")]
         [Display(Name = nameof(Resources.Entity_UnitOfMeasure_ConversionRate), ResourceType = typeof(Resources))]
         public decimal ConversionRate { get; set; }
 
