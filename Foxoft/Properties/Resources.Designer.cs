@@ -22813,5 +22813,113 @@ namespace Foxoft.Properties {
                 return ResourceManager.GetString("Common_Comma", resourceCulture);
             }
         }
+
+        public static string Form_UnitOfMeasureList_Caption {
+            get {
+                return ResourceManager.GetString("Form_UnitOfMeasureList_Caption", resourceCulture);
+            }
+        }
+
+        public static string Form_UnitOfMeasureEdit_Caption_New {
+            get {
+                return ResourceManager.GetString("Form_UnitOfMeasureEdit_Caption_New", resourceCulture);
+            }
+        }
+
+        public static string Form_UnitOfMeasureEdit_Caption_Edit {
+            get {
+                return ResourceManager.GetString("Form_UnitOfMeasureEdit_Caption_Edit", resourceCulture);
+            }
+        }
+
+        public static string Form_UnitOfMeasureList_DeleteConfirm {
+            get {
+                return ResourceManager.GetString("Form_UnitOfMeasureList_DeleteConfirm", resourceCulture);
+            }
+        }
+
+        public static string Form_UnitOfMeasureList_CannotDeleteUsed {
+            get {
+                return ResourceManager.GetString("Form_UnitOfMeasureList_CannotDeleteUsed", resourceCulture);
+            }
+        }
+
+        public static string Form_UnitOfMeasureList_SetBasicSuccess {
+            get {
+                return ResourceManager.GetString("Form_UnitOfMeasureList_SetBasicSuccess", resourceCulture);
+            }
+        }
+
+        public static string Validation_UnitOfMeasure_DescRequired {
+            get {
+                return ResourceManager.GetString("Validation_UnitOfMeasure_DescRequired", resourceCulture);
+            }
+        }
+
+        public static string Validation_UnitOfMeasure_DescExists {
+            get {
+                return ResourceManager.GetString("Validation_UnitOfMeasure_DescExists", resourceCulture);
+            }
+        }
+
+        public static string Validation_UnitOfMeasure_ParentSelf {
+            get {
+                return ResourceManager.GetString("Validation_UnitOfMeasure_ParentSelf", resourceCulture);
+            }
+        }
+
+        public static string Validation_UnitOfMeasure_ParentCycle {
+            get {
+                return ResourceManager.GetString("Validation_UnitOfMeasure_ParentCycle", resourceCulture);
+            }
+        }
+
+        public static string Validation_UnitOfMeasure_ConversionRatePositive {
+            get {
+                return ResourceManager.GetString("Validation_UnitOfMeasure_ConversionRatePositive", resourceCulture);
+            }
+        }
+
+        public static string Common_SetBasic {
+            get {
+                return ResourceManager.GetString("Common_SetBasic", resourceCulture);
+            }
+        }
+
+        public static string Common_ToggleActive {
+            get {
+                return ResourceManager.GetString("Common_ToggleActive", resourceCulture);
+            }
+        }
+
+        public static string Common_ExportExcel {
+            get {
+                return ResourceManager.GetString("Common_ExportExcel", resourceCulture);
+            }
+        }
+
+        public static string Common_ExportPdf {
+            get {
+                return ResourceManager.GetString("Common_ExportPdf", resourceCulture);
+            }
+        }
+
+        public static string Entity_UnitOfMeasure_Formula {
+            get {
+                return ResourceManager.GetString("Entity_UnitOfMeasure_Formula", resourceCulture);
+            }
+        }
+
+        public static string Entity_UnitOfMeasure_ProductCount {
+            get {
+                return ResourceManager.GetString("Entity_UnitOfMeasure_ProductCount", resourceCulture);
+            }
+        }
+
+        public static string ERP_ACE_UnitOfMeasures {
+            get {
+                return ResourceManager.GetString("ERP_ACE_UnitOfMeasures", resourceCulture);
+            }
+        }
     }
 }

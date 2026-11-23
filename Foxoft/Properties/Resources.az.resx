@@ -8135,4 +8135,58 @@ Google hesabı: {1}</value>
   <data name="Common_Comma" xml:space="preserve">
     <value>Vergül (,)</value>
   </data>
+  <data name="Form_UnitOfMeasureList_Caption" xml:space="preserve">
+    <value>Ölçü Vahidləri</value>
+  </data>
+  <data name="Form_UnitOfMeasureEdit_Caption_New" xml:space="preserve">
+    <value>Yeni Ölçü Vahidi</value>
+  </data>
+  <data name="Form_UnitOfMeasureEdit_Caption_Edit" xml:space="preserve">
+    <value>Ölçü Vahidində Düzəliş</value>
+  </data>
+  <data name="Form_UnitOfMeasureList_DeleteConfirm" xml:space="preserve">
+    <value>Seçilmiş ölçü vahidini silmək istədiyinizə əminsiniz?</value>
+  </data>
+  <data name="Form_UnitOfMeasureList_CannotDeleteUsed" xml:space="preserve">
+    <value>Bu ölçü vahidi məhsullarda, fakturalarda və ya ana vahid kimi istifadə edildiyi üçün silinə bilməz!</value>
+  </data>
+  <data name="Form_UnitOfMeasureList_SetBasicSuccess" xml:space="preserve">
+    <value>Ölçü vahidi əsas vahid kimi təyin edildi.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_DescRequired" xml:space="preserve">
+    <value>Ölçü vahidinin adı boş ola bilməz.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_DescExists" xml:space="preserve">
+    <value>Bu adda ölçü vahidi artıq mövcuddur.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_ParentSelf" xml:space="preserve">
+    <value>Ölçü vahidi özünün ana vahidi ola bilməz.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_ParentCycle" xml:space="preserve">
+    <value>Dövri asılılıq aşkarlandı! Alt vahid ana vahid kimi seçilə bilməz.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_ConversionRatePositive" xml:space="preserve">
+    <value>Çevirmə nisbəti sıfırdan böyük olmalıdır.</value>
+  </data>
+  <data name="Common_SetBasic" xml:space="preserve">
+    <value>Əsas Vahid Et</value>
+  </data>
+  <data name="Common_ToggleActive" xml:space="preserve">
+    <value>Aktiv / Deaktiv</value>
+  </data>
+  <data name="Common_ExportExcel" xml:space="preserve">
+    <value>Excel-ə İxrac</value>
+  </data>
+  <data name="Common_ExportPdf" xml:space="preserve">
+    <value>PDF-ə İxrac</value>
+  </data>
+  <data name="Entity_UnitOfMeasure_Formula" xml:space="preserve">
+    <value>Çevirmə İzahı</value>
+  </data>
+  <data name="Entity_UnitOfMeasure_ProductCount" xml:space="preserve">
+    <value>Məhsul Sayı</value>
+  </data>
+  <data name="ERP_ACE_UnitOfMeasures" xml:space="preserve">
+    <value>Ölçü Vahidləri</value>
+  </data>
 </root>

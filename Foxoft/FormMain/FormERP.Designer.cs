@@ -130,6 +130,7 @@ namespace Foxoft
             aCE_CurrAccsDisabled = new AccordionControlElement();
             accordionControlSeparator8 = new AccordionControlSeparator();
             ACE_ProductDiscounts = new AccordionControlElement();
+            ACE_UnitOfMeasures = new AccordionControlElement();
             ACE_ProductFeatureType = new AccordionControlElement();
             ACE_CurrAccFeatureType = new AccordionControlElement();
             ACE_InvoiceLineFeatureType = new AccordionControlElement();
@@ -826,7 +827,7 @@ namespace Foxoft
             // 
             // aCE_Operation
             // 
-            aCE_Operation.Elements.AddRange(new AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_InvoiceLineFeatureType, ACE_LoyaltyCards, ACE_LoyaltyPrograms, ACE_CampaignList });
+            aCE_Operation.Elements.AddRange(new AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_UnitOfMeasures, ACE_ProductFeatureType, ACE_CurrAccFeatureType, ACE_InvoiceLineFeatureType, ACE_LoyaltyCards, ACE_LoyaltyPrograms, ACE_CampaignList });
             aCE_Operation.Expanded = true;
             aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
             aCE_Operation.Name = "aCE_Operation";
@@ -863,6 +864,13 @@ namespace Foxoft
             ACE_ProductDiscounts.Name = "ACE_ProductDiscounts";
             ACE_ProductDiscounts.Style = ElementStyle.Item;
             ACE_ProductDiscounts.Text = Resources.ERP_ACE_ProductDiscounts;
+            // 
+            // ACE_UnitOfMeasures
+            // 
+            ACE_UnitOfMeasures.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_UnitOfMeasures.ImageOptions.SvgImage");
+            ACE_UnitOfMeasures.Name = "ACE_UnitOfMeasures";
+            ACE_UnitOfMeasures.Style = ElementStyle.Item;
+            ACE_UnitOfMeasures.Text = Resources.ERP_ACE_UnitOfMeasures;
             // 
             // ACE_ProductFeatureType
             // 
@@ -1319,6 +1327,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_LeaveRequests;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_AttendanceSettings;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_TransferApproval;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_UnitOfMeasures;
     }
 }
 

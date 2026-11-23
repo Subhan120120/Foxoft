@@ -1035,5 +1035,27 @@ namespace Foxoft
 
             XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDateText, Resources.Common_Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void LUE_DefaultUnitOfMeasureId_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            if (e.Button.Kind == DevExpress.XtraEditors.Controls.ButtonPredefines.Plus)
+            {
+                using FormUnitOfMeasureEdit f = new(null);
+                if (f.ShowDialog(this) == DialogResult.OK)
+                {
+                    LUE_DefaultUnitOfMeasureId.Properties.DataSource = efMethods.SelectEntities<DcUnitOfMeasure>();
+                    LUE_DefaultUnitOfMeasureId.EditValue = f.SavedUnitOfMeasureId;
+                }
+            }
+            else if (e.Button.Kind == DevExpress.XtraEditors.Controls.ButtonPredefines.Search)
+            {
+                using FormUnitOfMeasureList f = new(true);
+                if (f.ShowDialog(this) == DialogResult.OK && f.SelectedUnitOfMeasureId.HasValue)
+                {
+                    LUE_DefaultUnitOfMeasureId.Properties.DataSource = efMethods.SelectEntities<DcUnitOfMeasure>();
+                    LUE_DefaultUnitOfMeasureId.EditValue = f.SelectedUnitOfMeasureId.Value;
+                }
+            }
+        }
     }
 }

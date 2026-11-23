@@ -8135,4 +8135,58 @@ Google account: {1}</value>
   <data name="Common_Comma" xml:space="preserve">
     <value>Comma (,)</value>
   </data>
+  <data name="Form_UnitOfMeasureList_Caption" xml:space="preserve">
+    <value>Units of Measure</value>
+  </data>
+  <data name="Form_UnitOfMeasureEdit_Caption_New" xml:space="preserve">
+    <value>New Unit of Measure</value>
+  </data>
+  <data name="Form_UnitOfMeasureEdit_Caption_Edit" xml:space="preserve">
+    <value>Edit Unit of Measure</value>
+  </data>
+  <data name="Form_UnitOfMeasureList_DeleteConfirm" xml:space="preserve">
+    <value>Are you sure you want to delete the selected unit of measure?</value>
+  </data>
+  <data name="Form_UnitOfMeasureList_CannotDeleteUsed" xml:space="preserve">
+    <value>This unit of measure cannot be deleted because it is used in products, invoices, or as a parent unit!</value>
+  </data>
+  <data name="Form_UnitOfMeasureList_SetBasicSuccess" xml:space="preserve">
+    <value>Unit of measure set as basic successfully.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_DescRequired" xml:space="preserve">
+    <value>Unit of measure name is required.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_DescExists" xml:space="preserve">
+    <value>A unit of measure with this name already exists.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_ParentSelf" xml:space="preserve">
+    <value>A unit of measure cannot be its own parent unit.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_ParentCycle" xml:space="preserve">
+    <value>Cyclic dependency detected! A descendant unit cannot be selected as parent.</value>
+  </data>
+  <data name="Validation_UnitOfMeasure_ConversionRatePositive" xml:space="preserve">
+    <value>Conversion rate must be greater than zero.</value>
+  </data>
+  <data name="Common_SetBasic" xml:space="preserve">
+    <value>Set as Basic</value>
+  </data>
+  <data name="Common_ToggleActive" xml:space="preserve">
+    <value>Active / Inactive</value>
+  </data>
+  <data name="Common_ExportExcel" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="Common_ExportPdf" xml:space="preserve">
+    <value>Export to PDF</value>
+  </data>
+  <data name="Entity_UnitOfMeasure_Formula" xml:space="preserve">
+    <value>Conversion Description</value>
+  </data>
+  <data name="Entity_UnitOfMeasure_ProductCount" xml:space="preserve">
+    <value>Product Count</value>
+  </data>
+  <data name="ERP_ACE_UnitOfMeasures" xml:space="preserve">
+    <value>Units of Measure</value>
+  </data>
 </root>

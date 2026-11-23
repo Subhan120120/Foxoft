@@ -195,6 +195,7 @@ namespace Foxoft
                 case "PriceList": ShowNewForm<FormPriceList>(); break;
                 case "CampaignList": ShowExistForm<FormCampaignList>(); break;
                 case "ProductDiscountList": ShowExistForm<FormCommonList<DcDiscount>>("", nameof(DcDiscount.DiscountId)); break;
+                case "UnitOfMeasureList": ShowExistForm<FormUnitOfMeasureList>(); break;
                 case "RetailSaleOrder": ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null, true); break;
                 case "Session": ShowExistForm<FormDocumentLock>(); break;
                 case "ProductFeatureType": ShowExistForm<FormHierarchyFeatureType>(); break;
@@ -320,6 +321,7 @@ namespace Foxoft
             this.ACE_AppSettings.Name = "Parameters";
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_ProductDiscounts.Name = "ProductDiscountList";
+            this.ACE_UnitOfMeasures.Name = "UnitOfMeasureList";
             this.ACE_CampaignList.Name = "CampaignList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
             this.ACE_CurrAccFeatureType.Name = "CurrAccFeatureType";

@@ -541,7 +541,12 @@ namespace Foxoft
             LUE_DefaultUnitOfMeasureId.Name = "LUE_DefaultUnitOfMeasureId";
             LUE_DefaultUnitOfMeasureId.Properties.Appearance.Options.UseTextOptions = true;
             LUE_DefaultUnitOfMeasureId.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
-            LUE_DefaultUnitOfMeasureId.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_DefaultUnitOfMeasureId.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus),
+                new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Search)
+            });
+            LUE_DefaultUnitOfMeasureId.ButtonClick += LUE_DefaultUnitOfMeasureId_ButtonClick;
             LUE_DefaultUnitOfMeasureId.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureId", Resources.Entity_UnitOfMeasure_Id), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureDesc", Resources.Entity_UnitOfMeasure_Desc) });
             LUE_DefaultUnitOfMeasureId.Properties.DisplayMember = "UnitOfMeasureDesc";
             LUE_DefaultUnitOfMeasureId.Properties.NullText = "";
