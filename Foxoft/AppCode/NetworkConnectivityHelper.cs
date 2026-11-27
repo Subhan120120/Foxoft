@@ -1,5 +1,5 @@
 using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -57,6 +57,7 @@ namespace Foxoft.AppCode
 
                 bool wasOffline = !_lastKnownStatus;
                 bool probeSuccess = await ProbeConnectivityAsync(ct).ConfigureAwait(false);
+                ct.ThrowIfCancellationRequested();
 
                 _lastKnownStatus = probeSuccess;
                 _lastCheckedTime = DateTime.UtcNow;
@@ -143,60 +144,32 @@ namespace Foxoft.AppCode
 
         private static async Task<bool> ProbeConnectivityAsync(CancellationToken ct)
         {
-            // 1. Fast parallel TCP handshake to primary anycast DNS/HTTPS servers (port 443)
-            // Port 443 is used because port 53 is often blocked on corporate/guest Wi-Fi networks.
-            try
+            using var probeCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            probeCts.CancelAfter(_httpClient.Timeout);
+            var token = probeCts.Token;
+
+            // Start web requests immediately so proxy-only networks get the full timeout.
+            var pending = new List<Task<bool>>
             {
-                using var fastCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
-                fastCts.CancelAfter(TimeSpan.FromMilliseconds(1500));
+                ProbeHttpEndpointAsync("https://www.gstatic.com/generate_204", token),
+                ProbeHttpEndpointAsync("http://www.msftconnecttest.com/connecttest.txt", token),
+                ProbeTcpPortAsync("1.1.1.1", 443, token),
+                ProbeTcpPortAsync("8.8.8.8", 443, token)
+            };
 
-                var probe1 = ProbeTcpPortAsync("1.1.1.1", 443, fastCts.Token);
-                var probe2 = ProbeTcpPortAsync("8.8.8.8", 443, fastCts.Token);
-
-                var completed = await Task.WhenAny(probe1, probe2).ConfigureAwait(false);
+            while (pending.Count > 0)
+            {
+                var completed = await Task.WhenAny(pending).ConfigureAwait(false);
                 if (await completed.ConfigureAwait(false))
                 {
-                    fastCts.Cancel();
+                    probeCts.Cancel();
                     return true;
                 }
 
-                var remaining = (completed == probe1) ? probe2 : probe1;
-                if (await remaining.ConfigureAwait(false))
-                    return true;
-            }
-            catch (OperationCanceledException) when (!ct.IsCancellationRequested)
-            {
-                // Fast probe timed out, fall through to HTTP fallback
-            }
-            catch
-            {
-                // Fall through to HTTP fallback
+                pending.Remove(completed);
             }
 
-            // 2. HTTP probe fallback to standard NCSI / generate_204 endpoints
-            // Handles enterprise proxies and captive portal environments.
-            try
-            {
-                using var httpCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
-                httpCts.CancelAfter(TimeSpan.FromSeconds(2));
-
-                var http1 = ProbeHttpEndpointAsync("http://www.gstatic.com/generate_204", httpCts.Token);
-                var http2 = ProbeHttpEndpointAsync("http://www.msftconnecttest.com/connecttest.txt", httpCts.Token);
-
-                var completedHttp = await Task.WhenAny(http1, http2).ConfigureAwait(false);
-                if (await completedHttp.ConfigureAwait(false))
-                {
-                    httpCts.Cancel();
-                    return true;
-                }
-
-                var remainingHttp = (completedHttp == http1) ? http2 : http1;
-                return await remainingHttp.ConfigureAwait(false);
-            }
-            catch
-            {
-                return false;
-            }
+            return false;
         }
 
         private static async Task<bool> ProbeTcpPortAsync(string host, int port, CancellationToken ct)
