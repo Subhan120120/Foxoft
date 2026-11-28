@@ -76,6 +76,8 @@ namespace Foxoft.AppCode.Services
             ValidateImportedHeader(plan._headerTable, captions, context, plan.Errors, validateHeaderValues: false);
 
             plan._lines.AddRange(ReadImportedLines(plan._lineTable, captions, context, plan.Errors));
+            if (IsTransferProcess(context.Process) && plan._lines.Count == 0 && !plan.HasErrors)
+                plan.Errors.Add($"{captions.SheetLines}: {Resources.Form_Invoice_NoLines}");
             plan._features.AddRange(ReadImportedLineFeatures(plan._featureTable, captions, plan._lines, plan.Errors));
 
             return plan;

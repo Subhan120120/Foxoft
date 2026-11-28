@@ -33,6 +33,7 @@ using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -2077,11 +2078,10 @@ namespace Foxoft
 
             List<(string ProductCode, string WarehouseCode)> stockWarningTargets = GetInvoiceStockWarningTargets();
 
-            dbContext.SaveChanges(false, Authorization.CurrAccCode);
-
-            if (new[] { "IT" }.Contains(trInvoiceHeader.ProcessCode)
-                && Settings.Default.AppSetting.TransferAutoApprove)
-                InitilizeTransfer();
+            if (trInvoiceHeader.ProcessCode == "IT" && Settings.Default.AppSetting.TransferAutoApprove)
+                SaveAutoApprovedTransfer();
+            else
+                dbContext.SaveChanges(false, Authorization.CurrAccCode);
 
             dbContext.ChangeTracker.AcceptAllChanges();
             ScanProductStockWarningsAfterSave(stockWarningTargets);
@@ -2393,60 +2393,72 @@ namespace Foxoft
             }
         }
 
-
-        Guid quidHead;
-        private void InitilizeTransfer()
+        private void SaveAutoApprovedTransfer()
         {
-            IEnumerable<EntityEntry> entityEntries = dbContext.ChangeTracker.Entries();
-
-            EntityEntry? entryHeader = entityEntries.FirstOrDefault(x => x.Entity is TrInvoiceHeader);
-
-            if (entryHeader is not null)
+            dbContext.Database.CreateExecutionStrategy().Execute(() =>
             {
-                TrInvoiceHeader trIH = (TrInvoiceHeader)entryHeader.CurrentValues.ToObject();
+                using var transaction = dbContext.Database.BeginTransaction();
+                dbContext.SaveChanges(false, Authorization.CurrAccCode);
 
-                string invoHeadStr = trIH.InvoiceHeaderId.ToString();
+                // Keep receiving rows out of the form's Local binding lists.
+                var options = new DbContextOptionsBuilder<subContext>()
+                    .UseSqlServer(dbContext.Database.GetDbConnection()).Options;
+                using subContext receivingDb = new(options);
+                receivingDb.Database.UseTransaction(transaction.GetDbTransaction());
+                SyncTransferDestination(dbContext, trInvoiceHeader, receivingDb);
+                receivingDb.SaveChanges(Authorization.CurrAccCode);
+                transaction.Commit();
+            });
+        }
 
-                quidHead = Guid.Parse(invoHeadStr.Replace(invoHeadStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
-
-                using subContext context2 = new();
-
-                var newWarehouseCode = trIH.ToWarehouseCode ?? trIH.WarehouseCode; // fallback
-                var newToWarehouseCode = trIH.WarehouseCode ?? trIH.ToWarehouseCode;
-
-                TrInvoiceHeader copyTrIH = trIH;
-                copyTrIH.InvoiceHeaderId = quidHead;
-                copyTrIH.WarehouseCode = newWarehouseCode;
-                copyTrIH.ToWarehouseCode = newToWarehouseCode;
-                copyTrIH.StoreCode = trIH.CurrAccCode ??= trIH.StoreCode;
-                copyTrIH.IsMainTF = false;
-
-
-                context2.Entry(copyTrIH).State = entryHeader.State;
-
-                context2.SaveChanges(Authorization.CurrAccCode);
+        private static void SyncTransferDestination(subContext sourceDb, TrInvoiceHeader sourceHeader, subContext receivingDb)
+        {
+            static Guid DestinationId(Guid sourceId)
+            {
+                string id = sourceId.ToString();
+                return Guid.Parse(id.Replace(id[..8], "00000000"));
             }
 
-            EntityEntry? entryLine = entityEntries.FirstOrDefault(x => x.Entity is TrInvoiceLine);
+            Guid headerId = DestinationId(sourceHeader.InvoiceHeaderId);
+            var existingHeader = receivingDb.TrInvoiceHeaders.Include(x => x.TrInvoiceLines)
+                .SingleOrDefault(x => x.InvoiceHeaderId == headerId);
+            var header = (TrInvoiceHeader)sourceDb.Entry(sourceHeader).CurrentValues.ToObject();
+            header.InvoiceHeaderId = headerId;
+            header.WarehouseCode = sourceHeader.ToWarehouseCode ?? sourceHeader.WarehouseCode;
+            header.ToWarehouseCode = sourceHeader.WarehouseCode ?? sourceHeader.ToWarehouseCode;
+            header.StoreCode = sourceHeader.CurrAccCode ?? sourceHeader.StoreCode;
+            header.CurrAccCode = header.StoreCode;
+            header.IsMainTF = false;
 
-            if (entryLine is not null)
+            if (existingHeader is null)
+                receivingDb.TrInvoiceHeaders.Add(header);
+            else if (sourceDb.Entry(sourceHeader).State != EntityState.Unchanged)
+                receivingDb.Entry(existingHeader).CurrentValues.SetValues(header);
+
+            var existingLines = (existingHeader ?? header).TrInvoiceLines.ToDictionary(x => x.InvoiceLineId);
+            foreach (var entry in sourceDb.ChangeTracker.Entries<TrInvoiceLine>()
+                .Where(x => x.Entity.InvoiceHeaderId == sourceHeader.InvoiceHeaderId))
             {
-                TrInvoiceLine trIL = (TrInvoiceLine)entryLine.CurrentValues.ToObject();
+                Guid lineId = DestinationId(entry.Entity.InvoiceLineId);
+                existingLines.TryGetValue(lineId, out var existingLine);
+                if (entry.State == EntityState.Deleted)
+                {
+                    if (existingLine != null)
+                        receivingDb.TrInvoiceLines.Remove(existingLine);
+                    continue;
+                }
+                if (existingLine != null && entry.State == EntityState.Unchanged)
+                    continue;
 
-                string invoLineStr = trIL.InvoiceLineId.ToString();
-                Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
-
-                using subContext context2 = new();
-
-                TrInvoiceLine newTrIL = trIL;
-                newTrIL.InvoiceHeaderId = quidHead;
-                newTrIL.InvoiceLineId = quidLine;
-                newTrIL.QtyIn = trIL.QtyOut;
-                newTrIL.QtyOut -= trIL.QtyOut;
-
-                context2.Entry(newTrIL).State = entryLine.State;
-
-                context2.SaveChanges(Authorization.CurrAccCode);
+                var line = (TrInvoiceLine)entry.CurrentValues.ToObject();
+                line.InvoiceHeaderId = headerId;
+                line.InvoiceLineId = lineId;
+                line.QtyIn = entry.Entity.QtyOut;
+                line.QtyOut = 0m;
+                if (existingLine is null)
+                    receivingDb.TrInvoiceLines.Add(line);
+                else
+                    receivingDb.Entry(existingLine).CurrentValues.SetValues(line);
             }
         }
 
@@ -3845,7 +3857,7 @@ namespace Foxoft
             catch (Exception ex)
             {
                 XtraMessageBox.Show(
-                    $"{Resources.Common_ErrorOccurred}\n{ex.Message}",
+                    $"{Resources.Common_ErrorOccurred}\n{ex.GetBaseException().Message}",
                     Resources.Common_Error,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -3916,7 +3928,6 @@ namespace Foxoft
 
             string previousCurrAccCode = trInvoiceHeader.CurrAccCode;
             bool oldLoading = _isLoading;
-            bool hasApplyErrors = false;
             _isLoading = true;
             gV_InvoiceLine.GridControl.BeginUpdate();
             gV_InvoiceLine.BeginUpdate();
@@ -3924,9 +3935,8 @@ namespace Foxoft
             try
             {
                 service.ApplyImportPlan(plan, context, applyHeader);
-                hasApplyErrors = plan.HasErrors;
 
-                if (!hasApplyErrors)
+                if (!plan.HasErrors)
                 {
                     if (applyHeader)
                         SyncImportedHeaderEditors(previousCurrAccCode);
@@ -3934,11 +3944,6 @@ namespace Foxoft
                     trInvoiceHeadersBindingSource.ResetCurrentItem();
                     trInvoiceLinesBindingSource.ResetBindings(false);
                     gV_InvoiceLine.RefreshData();
-                    UpdateInstallmentLabels();
-                    UpdatePaidLabels();
-
-                    if (dataLayoutControl1.IsValid(out _))
-                        SaveInvoice();
                 }
             }
             finally
@@ -3948,8 +3953,24 @@ namespace Foxoft
                 _isLoading = oldLoading;
             }
 
-            if (hasApplyErrors)
+            if (plan.HasErrors)
+            {
                 ShowExcelImportErrors(plan.Errors);
+                return;
+            }
+
+            if (!dataLayoutControl1.IsValid(dxErrorProvider1, out var errors))
+            {
+                ShowExcelImportErrors(errors);
+                return;
+            }
+
+            if (SaveInvoice())
+            {
+                UpdateInstallmentLabels();
+                UpdatePaidLabels();
+                XtraMessageBox.Show(this, Resources.Common_SavedSuccessfully);
+            }
         }
 
         private bool ConfirmApplyImportedHeader()
